@@ -1,21 +1,11 @@
 /* ============================================================
    config.js — App configuration (teacher password, etc.)
-   Version: 1.0.0
-
-   HOW TO CHANGE THE TEACHER PASSWORD:
-   1. Open browser console on any page.
-   2. Run: await TeacherAuth.hash('YourNewPassword')
-   3. Copy the hash output.
-   4. Paste it below as TEACHER_PASSWORD_HASH.
-   5. Commit and push.
-
-   DEFAULT PASSWORD: "teacher2026"
-   ⚠️ CHANGE THIS BEFORE DEPLOYING!
+   Version: 1.0.1
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '1.0.0',
+  VERSION: '1.0.1',
 
   // SHA-256 hash of the teacher password.
   // Default password: "teacher2026"
