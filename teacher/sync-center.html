@@ -15,7 +15,10 @@
         <h1>📥 Sync Center</h1>
         <span class="version">v1.0.0</span>
       </div>
-      <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+      <nav style="display:flex;gap:8px;">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </nav>
     </div>
   </header>
 
@@ -31,7 +34,6 @@
         <button class="sync-tab" data-tab="bulk">📦 Bulk Import</button>
       </div>
 
-      <!-- By Code -->
       <div id="panel-code" class="sync-panel">
         <label class="form-label">Enter Sync Code from Student</label>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -42,7 +44,6 @@
         <p class="form-hint">Students generate codes from their dashboard. Paste the code here.</p>
       </div>
 
-      <!-- By JSON -->
       <div id="panel-json" class="sync-panel hidden">
         <div class="drop-zone" id="drop-zone">
           <div class="drop-icon">📄</div>
@@ -53,7 +54,6 @@
         </div>
       </div>
 
-      <!-- Bulk -->
       <div id="panel-bulk" class="sync-panel hidden">
         <div class="drop-zone" id="drop-zone-bulk">
           <div class="drop-icon">📦</div>
@@ -65,7 +65,6 @@
 
     </div>
 
-    <!-- Import Preview -->
     <div id="import-preview-container" class="hidden">
       <h3 style="margin:24px 0 12px;color:var(--color-primary-dark);">📋 Preview & Confirm</h3>
       <div id="import-preview"></div>
@@ -75,7 +74,6 @@
       </div>
     </div>
 
-    <!-- Sync Log -->
     <div class="card" style="margin-top:24px;">
       <h3 style="color:var(--color-primary-dark);">📜 Sync Log</h3>
       <div id="sync-log"><p class="text-muted text-small">No syncs yet in this session.</p></div>
@@ -87,15 +85,16 @@
     <p>Sync Center · v1.0.0</p>
   </footer>
 
+  <script src="../config.js"></script>
   <script src="../assets/js/app.js"></script>
   <script src="../assets/js/store.js"></script>
   <script src="../assets/js/security.js"></script>
   <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
   <script>
     let pendingImports = [];
     const syncLog = [];
 
-    /* ---------- Tabs ---------- */
     APP.$$('.sync-tab').forEach((tab) => {
       tab.addEventListener('click', () => {
         APP.$$('.sync-tab').forEach((t) => t.classList.remove('active'));
@@ -107,7 +106,6 @@
       });
     });
 
-    /* ---------- By Code ---------- */
     document.getElementById('btn-import-code').addEventListener('click', async () => {
       const code = document.getElementById('sync-code-input').value.trim().toUpperCase();
       if (!code) return APP.toast('Enter a sync code first.', 'warning');
@@ -120,7 +118,6 @@
       renderPreview();
     });
 
-    /* ---------- JSON File ---------- */
     const dropZone = document.getElementById('drop-zone');
     const filePicker = document.getElementById('file-picker');
 
@@ -152,7 +149,6 @@
       }
     }
 
-    /* ---------- Bulk ---------- */
     const dropZoneBulk = document.getElementById('drop-zone-bulk');
     const filePickerBulk = document.getElementById('file-picker-bulk');
 
@@ -183,7 +179,6 @@
       renderPreview();
     }
 
-    /* ---------- Render Preview ---------- */
     function renderPreview() {
       const container = document.getElementById('import-preview-container');
       const preview = document.getElementById('import-preview');
@@ -223,7 +218,6 @@
       }).join('');
     }
 
-    /* ---------- Confirm Import ---------- */
     document.getElementById('btn-confirm-import').addEventListener('click', () => {
       let imported = 0, rejected = 0;
 
@@ -235,12 +229,10 @@
         }
         try {
           const p = imp.payload;
-          // Save or merge user
           const existing = Store.getUser(p.student.lrn);
           const merged = existing ? { ...existing, ...p.student } : p.student;
           Store.saveUser(merged);
 
-          // Merge progress
           const currentProg = Store.getProgress(p.student.lrn);
           ['biol1', 'biol2'].forEach((subj) => {
             if (p.progress?.[subj]) {
@@ -255,7 +247,6 @@
           });
           Store.saveProgress(p.student.lrn, currentProg);
 
-          // Merge scores (latest timestamp wins)
           const currentScores = Store.getScores(p.student.lrn);
           ['biol1', 'biol2'].forEach((subj) => {
             if (p.scores?.[subj]) {
@@ -288,7 +279,6 @@
       document.getElementById('import-preview-container').classList.add('hidden');
     });
 
-    /* ---------- Sync Log ---------- */
     function renderLog() {
       const el = document.getElementById('sync-log');
       if (!syncLog.length) {
