@@ -1,6 +1,6 @@
 /* ============================================================
    teacher-auth.js — Password gate for teacher/gradebook pages
-   Version: 1.0.0
+   Version: 1.0.1
    ============================================================ */
 
 const TeacherAuth = (() => {
@@ -47,7 +47,7 @@ const TeacherAuth = (() => {
 
   function logout() {
     sessionStorage.removeItem(SESSION_KEY);
-    window.location.href = getRootPath() + 'teacher-login.html';
+    window.location.replace(getRootPath() + 'teacher-login.html');
   }
 
   function touch() {
@@ -101,7 +101,7 @@ const TeacherAuth = (() => {
     if (!isLoggedIn()) {
       const here = window.location.pathname + window.location.search;
       sessionStorage.setItem('gba_teacher_return', here);
-      window.location.href = getRootPath() + 'teacher-login.html';
+      window.location.replace(getRootPath() + 'teacher-login.html');
       return false;
     }
     return true;
@@ -115,10 +115,27 @@ const TeacherAuth = (() => {
   };
 })();
 
-/* ---------- Auto-guard on load + activity tracking ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-  if (!TeacherAuth.guard()) return;
-  ['click', 'keydown', 'mousemove', 'scroll'].forEach((evt) => {
-    document.addEventListener(evt, TeacherAuth.touch, { passive: true });
+/* ---------- Auto-guard on load (skips login page + student pages) ---------- */
+(function autoGuard() {
+  const filename = window.location.pathname.split('/').pop();
+  const path = window.location.pathname;
+
+  // Skip the login page — otherwise infinite redirect loop
+  if (filename === 'teacher-login.html') return;
+
+  // Only guard teacher/classrecord pages
+  const isTeacherPage =
+    filename === 'instructor.html' ||
+    filename === 'classrecord.html' ||
+    path.includes('/teacher/') ||
+    path.includes('/classrecord/');
+
+  if (!isTeacherPage) return;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!TeacherAuth.guard()) return;
+    ['click', 'keydown', 'mousemove', 'scroll'].forEach((evt) => {
+      document.addEventListener(evt, TeacherAuth.touch, { passive: true });
+    });
   });
-});
+})();
