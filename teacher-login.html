@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔒 Teacher Access</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v1.0.1</span>
       </div>
       <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Student App</a>
     </div>
@@ -53,7 +53,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Teacher Login · v1.0.0</p>
+    <p>Teacher Login · v1.0.1</p>
   </footer>
 
   <script src="config.js"></script>
@@ -61,6 +61,14 @@
   <script src="assets/js/teacher-auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // If already logged in, skip the form
+      if (TeacherAuth.isLoggedIn()) {
+        const returnTo = sessionStorage.getItem('gba_teacher_return') || 'instructor.html';
+        sessionStorage.removeItem('gba_teacher_return');
+        window.location.replace(returnTo);
+        return;
+      }
+
       const form = document.getElementById('teacher-login-form');
       const input = document.getElementById('teacher-password');
       const err = document.getElementById('teacher-error');
@@ -100,7 +108,7 @@
           if (window.APP && APP.toast) APP.toast('✅ Access granted', 'success');
           const returnTo = sessionStorage.getItem('gba_teacher_return') || 'instructor.html';
           sessionStorage.removeItem('gba_teacher_return');
-          setTimeout(() => (window.location.href = returnTo), 400);
+          setTimeout(() => window.location.replace(returnTo), 400);
         } else {
           const attempts = TeacherAuth.recordFailedAttempt();
           const left = CONFIG.TEACHER_MAX_ATTEMPTS - attempts;
