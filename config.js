@@ -9,7 +9,7 @@ const CONFIG = {
 
   // SHA-256 hash of the teacher password.
   // Default password: "teacher2026"
-  TEACHER_PASSWORD_HASH: 'e2f8fa8d3a8a8f8b4c2c4c6e1a0f9e8d7c6b5a4938271605142332415069789a',
+  TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
 
   // Session duration (ms). 30 minutes.
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
