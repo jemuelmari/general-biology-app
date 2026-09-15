@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Login — General Biology</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔒 Teacher Access</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Student App</a>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:480px;padding-top:64px;padding-bottom:64px;">
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">🔑 Enter Teacher Password</span>
+      </div>
+
+      <p class="text-muted text-small" style="margin-bottom:16px;">
+        This area is restricted to teachers. Students cannot access the Teacher Application or Gradebook.
+      </p>
+
+      <form id="teacher-login-form">
+        <div class="form-group">
+          <label class="form-label" for="teacher-password">Password</label>
+          <input type="password" id="teacher-password" class="form-control"
+                 placeholder="Enter password" autocomplete="current-password" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" id="teacher-submit">
+          Unlock Access →
+        </button>
+
+        <div id="teacher-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
+        <div id="teacher-lockout" class="alert alert-warning hidden" style="margin-top:16px;"></div>
+      </form>
+
+      <p class="text-small text-muted" style="margin-top:16px;">
+        Forgot the password? Contact the system administrator or check <code>config.js</code>.
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Teacher Login · v1.0.0</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/teacher-auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('teacher-login-form');
+      const input = document.getElementById('teacher-password');
+      const err = document.getElementById('teacher-error');
+      const lock = document.getElementById('teacher-lockout');
+      const btn = document.getElementById('teacher-submit');
+
+      function updateLockUI() {
+        if (TeacherAuth.isLockedOut()) {
+          const secs = Math.ceil(TeacherAuth.lockoutRemaining() / 1000);
+          lock.textContent = `🔒 Too many wrong attempts. Try again in ${secs}s.`;
+          lock.classList.remove('hidden');
+          btn.disabled = true;
+          input.disabled = true;
+          setTimeout(updateLockUI, 1000);
+        } else {
+          lock.classList.add('hidden');
+          btn.disabled = false;
+          input.disabled = false;
+        }
+      }
+
+      updateLockUI();
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        err.classList.add('hidden');
+
+        if (TeacherAuth.isLockedOut()) return;
+
+        const password = input.value;
+        if (!password) return;
+
+        const ok = await TeacherAuth.verify(password);
+
+        if (ok) {
+          TeacherAuth.login();
+          if (window.APP && APP.toast) APP.toast('✅ Access granted', 'success');
+          const returnTo = sessionStorage.getItem('gba_teacher_return') || 'instructor.html';
+          sessionStorage.removeItem('gba_teacher_return');
+          setTimeout(() => (window.location.href = returnTo), 400);
+        } else {
+          const attempts = TeacherAuth.recordFailedAttempt();
+          const left = CONFIG.TEACHER_MAX_ATTEMPTS - attempts;
+          if (left <= 0) {
+            err.textContent = '❌ Wrong password. Access locked for 5 minutes.';
+            updateLockUI();
+          } else {
+            err.textContent = `❌ Wrong password. ${left} attempt(s) left.`;
+          }
+          err.classList.remove('hidden');
+          input.value = '';
+          input.focus();
+        }
+      });
+
+      input.focus();
+    });
+  </script>
+</body>
+</html>
