@@ -18,6 +18,7 @@
       <nav style="display:flex;gap:8px;">
         <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Student View</a>
         <a href="classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Class Record</a>
+        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
       </nav>
     </div>
   </header>
@@ -42,11 +43,13 @@
     <p>Teacher Application · v1.0.0 · Aligned with DO 015, s. 2026</p>
   </footer>
 
+  <script src="config.js"></script>
   <script src="assets/js/app.js"></script>
   <script src="assets/js/store.js"></script>
   <script src="assets/js/security.js"></script>
   <script src="assets/js/transmutation.js"></script>
   <script src="assets/js/sync.js"></script>
   <script src="assets/js/teacher.js"></script>
+  <script src="assets/js/teacher-auth.js"></script>
 </body>
 </html>
