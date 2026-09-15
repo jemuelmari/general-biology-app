@@ -1,0 +1,80 @@
+{
+  "subject": "General Biology 1",
+  "code": "STEM_BIO11/12",
+  "gradeLevel": "Grade 11/12",
+  "quarters": "1st to 2nd Quarter",
+  "hours": "40 hours / 10 weeks per quarter",
+  "description": "This subject is designed to enhance the understanding of the principles and concepts in the study of biology, particularly life processes at the cellular and molecular levels. It also covers the transformation of energy in organisms.",
+  "contentAreas": [
+    {
+      "id": "cell",
+      "title": "Cell",
+      "contentStandard": "The learners demonstrate an understanding of: 1. Cell Theory 2. Cell Structure and Functions 3. Prokaryotic vs Eukaryotic Cells 4. Cell Types 5. Cell Modifications",
+      "performanceStandard": "The learners shall be able to: 1. construct a 3D model of a plant/animal/bacterial cell using recyclable materials 2. construct a cell membrane model from indigenous or recyclable materials",
+      "competencies": [
+        { "code": "STEM_BIO11/12-Ia-c-1", "desc": "Explain the postulates of the cell theory", "quarter": 1, "week": "1" },
+        { "code": "STEM_BIO11/12-Ia-c-2", "desc": "Describe the structure and function of major and subcellular organelles", "quarter": 1, "week": "1" },
+        { "code": "STEM_BIO11/12-Ia-c-3", "desc": "Distinguish prokaryotic and eukaryotic cells according to their distinguishing features", "quarter": 1, "week": "2" },
+        { "code": "STEM_BIO11/12-Ia-c-4", "desc": "Classify different cell types (plant/animal tissues) and specify the function(s) of each", "quarter": 1, "week": "2" },
+        { "code": "STEM_BIO11/12-Ia-c-5", "desc": "Describe some cell modifications that lead to adaptation to carry out specialized functions (e.g., microvilli, root hair)", "quarter": 1, "week": "2" }
+      ]
+    },
+    {
+      "id": "cell-cycle",
+      "title": "Cell Cycle (Mitosis & Meiosis)",
+      "contentStandard": "The learners demonstrate an understanding of the cell cycle and its control points.",
+      "performanceStandard": "The learners shall be able to describe the stages of mitosis and meiosis.",
+      "competencies": [
+        { "code": "STEM_BIO11/12-Id-f-6", "desc": "Characterize the phases of the cell cycle and their control points", "quarter": 1, "week": "3" },
+        { "code": "STEM_BIO11/12-Id-f-7", "desc": "Describe the stages of mitosis/meiosis given 2n=6", "quarter": 1, "week": "3" },
+        { "code": "STEM_BIO11/12-Id-f-8", "desc": "Discuss crossing over and recombination in meiosis", "quarter": 1, "week": "3" },
+        { "code": "STEM_BIO11/12-Id-f-9", "desc": "Explain the significance or applications of mitosis/meiosis", "quarter": 1, "week": "3" },
+        { "code": "STEM_BIO11/12-Id-f-10", "desc": "Identify disorders and diseases that result from the malfunction of the cell during the cell cycle", "quarter": 1, "week": "3" }
+      ]
+    },
+    {
+      "id": "transport",
+      "title": "Transport Mechanisms",
+      "contentStandard": "The learners demonstrate an understanding of transport mechanisms in cells.",
+      "performanceStandard": "The learners shall be able to explain transport mechanisms in cells.",
+      "competencies": [
+        { "code": "STEM_BIO11/12-Ig-h-11", "desc": "Describe the structural components of the cell membrane", "quarter": 1, "week": "4" },
+        { "code": "STEM_BIO11/12-Ig-h-12", "desc": "Relate the structure and composition of the cell membrane to its function", "quarter": 1, "week": "4" },
+        { "code": "STEM_BIO11/12-Ig-h-13", "desc": "Explain transport mechanisms in cells (diffusion, osmosis, facilitated transport, active transport)", "quarter": 1, "week": "4" },
+        { "code": "STEM_BIO11/12-Ig-h-14", "desc": "Differentiate exocytosis and endocytosis", "quarter": 1, "week": "4" }
+      ]
+    },
+    {
+      "id": "biomolecules",
+      "title": "Biological Molecules",
+      "contentStandard": "The learners demonstrate an understanding of the structures and functions of biological molecules.",
+      "performanceStandard": "The learners shall be able to categorize biological molecules and explain their roles in metabolism.",
+      "competencies": [
+        { "code": "STEM_BIO11/12-II-i-j-15", "desc": "Categorize the biological molecules (lipids, carbohydrates, proteins, and nucleic acids) according to their structure and function", "quarter": 2, "week": "5" },
+        { "code": "STEM_BIO11/12-II-i-j-16", "desc": "Explain the role of each biological molecule in specific metabolic processes", "quarter": 2, "week": "5" },
+        { "code": "STEM_BIO11/12-II-i-j-17", "desc": "Describe the components of an enzyme", "quarter": 2, "week": "6" },
+        { "code": "STEM_BIO11/12-II-i-j-18", "desc": "Explain oxidation/reduction reactions", "quarter": 2, "week": "6" }
+      ]
+    },
+    {
+      "id": "energy",
+      "title": "Energy Transformation (Photosynthesis & Respiration)",
+      "contentStandard": "The learners demonstrate an understanding of photosynthesis and cellular respiration.",
+      "performanceStandard": "The learners shall be able to explain the major features and chemical events of photosynthesis and respiration.",
+      "competencies": [
+        { "code": "STEM_BIO11/12-IIa-j-1", "desc": "Explain coupled reaction processes and describe the role of ATP in energy coupling and transfer", "quarter": 2, "week": "7" },
+        { "code": "STEM_BIO11/12-IIa-j-2", "desc": "Describe the major features and chemical events in photosynthesis and respiration", "quarter": 2, "week": "7" },
+        { "code": "STEM_BIO11/12-IIa-j-3", "desc": "Explain the importance of chlorophyll and other pigments", "quarter": 2, "week": "7" },
+        { "code": "STEM_BIO11/12-IIa-j-4", "desc": "Describe the patterns of electron flow through light reaction events", "quarter": 2, "week": "7" },
+        { "code": "STEM_BIO11/12-IIa-j-5", "desc": "Describe the significant events of the Calvin cycle", "quarter": 2, "week": "7" },
+        { "code": "STEM_BIO11/12-IIa-j-6", "desc": "Differentiate aerobic from anaerobic respiration", "quarter": 2, "week": "8" },
+        { "code": "STEM_BIO11/12-IIa-j-7", "desc": "Explain the major features and sequence the chemical events of cellular respiration", "quarter": 2, "week": "8" },
+        { "code": "STEM_BIO11/12-IIa-j-8", "desc": "Distinguish major features of glycolysis, Krebs cycle, electron transport system, and chemiosmosis", "quarter": 2, "week": "8" },
+        { "code": "STEM_BIO11/12-IIa-j-9", "desc": "Describe reactions that produce and consume ATP", "quarter": 2, "week": "9" },
+        { "code": "STEM_BIO11/12-IIa-j-10", "desc": "Describe the role of oxygen in respiration and describe pathways of electron flow in the absence of oxygen", "quarter": 2, "week": "9" },
+        { "code": "STEM_BIO11/12-IIa-j-11", "desc": "Compute the number of ATPs needed or gained in photosynthesis and respiration", "quarter": 2, "week": "10" },
+        { "code": "STEM_BIO11/12-IIa-j-12", "desc": "Explain the advantages and disadvantages of fermentation and aerobic respiration", "quarter": 2, "week": "10" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Statistical Reports — Class Record</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+</head>
+<body>
+
+  <header class="app-header" style="background:linear-gradient(135deg,#4a148c,#6a1b9a);">
+    <div class="container flex-between">
+      <div>
+        <h1>📈 Statistical Reports</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Class Record</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end;">
+        <div style="flex:1;min-width:200px;">
+          <label class="form-label">Subject</label>
+          <select id="rpt-subject" class="form-control">
+            <option value="biol1">General Biology 1</option>
+            <option value="biol2">General Biology 2</option>
+          </select>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <label class="form-label">Exam Type</label>
+          <select id="rpt-exam" class="form-control">
+            <option value="st1">Summative Test 1</option>
+            <option value="st2">Summative Test 2</option>
+            <option value="te">Term Exam</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid" id="rpt-stats"></div>
+
+    <div class="report-grid" id="rpt-reports"></div>
+
+    <div class="card" style="margin-top:24px;">
+      <h3 style="color:var(--color-primary-dark);">📋 Per-Student Scores</h3>
+      <div id="rpt-student-table"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer"><p>Reports · v1.0.0</p></footer>
+
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const subjSel = document.getElementById('rpt-subject');
+      const examSel = document.getElementById('rpt-exam');
+
+      subjSel.addEventListener('change', render);
+      examSel.addEventListener('change', render);
+
+      function render() {
+        const subject = subjSel.value;
+        const exam = examSel.value;
+        const assessmentId = `${subject}-${exam}`;
+
+        const users = Store.getAllUsers();
+        const entries = [];
+
+        users.forEach((u) => {
+          const scores = Store.getScores(u.lrn)[subject] || {};
+          const data = exam === 'te' ? scores.te?.[assessmentId] : scores.st?.[assessmentId];
+          if (data && data.total) {
+            entries.push({
+              user: u,
+              score: data.score,
+              total: data.total,
+              percent: Math.round((data.score / data.total) * 100),
+              passed: data.passed
+            });
+          }
+        });
+
+        const statsEl = document.getElementById('rpt-stats');
+        const reportsEl = document.getElementById('rpt-reports');
+        const tableEl = document.getElementById('rpt-student-table');
+
+        if (!entries.length) {
+          statsEl.innerHTML = '';
+          reportsEl.innerHTML = '';
+          tableEl.innerHTML = `<div class="alert alert-info">No submissions for ${assessmentId.toUpperCase()} yet.</div>`;
+          return;
+        }
+
+        const avg = entries.reduce((a, e) => a + e.percent, 0) / entries.length;
+        const passing = entries.filter((e) => e.passed).length;
+        const highest = Math.max(...entries.map((e) => e.percent));
+        const lowest = Math.min(...entries.map((e) => e.percent));
+
+        statsEl.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-value">${entries.length}</div>
+            <div class="stat-label">Submissions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${avg.toFixed(1)}%</div>
+            <div class="stat-label">Class Average (MPS)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${passing}/${entries.length}</div>
+            <div class="stat-label">Passing</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${highest}%</div>
+            <div class="stat-label">Highest</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${lowest}%</div>
+            <div class="stat-label">Lowest</div>
+          </div>
+        `;
+
+        // Score distribution brackets
+        const brackets = [
+          { label: '70–75', min: 70, max: 75 },
+          { label: '76–80', min: 76, max: 80 },
+          { label: '81–85', min: 81, max: 85 },
+          { label: '86–90', min: 86, max: 90 },
+          { label: '91–95', min: 91, max: 95 },
+          { label: '96–100', min: 96, max: 100 }
+        ];
+
+        const dist = brackets.map((b) => {
+          const n = entries.filter((e) => e.percent >= b.min && e.percent <= b.max).length;
+          return { ...b, count: n, pct: Math.round((n / entries.length) * 100) };
+        });
+
+        // PL distribution
+        const plMap = {};
+        entries.forEach((e) => {
+          const lvl = Transmutation.proficiencyLevel(e.percent);
+          plMap[lvl.level] = (plMap[lvl.level] || 0) + 1;
+        });
+
+        reportsEl.innerHTML = `
+          <div class="report-card">
+            <h4>📊 Score Distribution</h4>
+            ${dist.map((b) => `
+              <div class="distribution-row">
+                <span class="distribution-label">${b.label}</span>
+                <div class="distribution-bar">
+                  <div class="distribution-fill" style="width:${b.pct}%;">${b.pct}%</div>
+                </div>
+                <span class="distribution-count">${b.count}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="report-card">
+            <h4>🎓 Proficiency Level (PL)</h4>
+            ${Object.entries(plMap).map(([lvl, n]) => `
+              <div class="distribution-row">
+                <span class="distribution-label">${lvl}</span>
+                <div class="distribution-bar">
+                  <div class="distribution-fill" style="width:${Math.round((n / entries.length) * 100)}%;">
+                    ${Math.round((n / entries.length) * 100)}%
+                  </div>
+                </div>
+                <span class="distribution-count">${n}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+
+        tableEl.innerHTML = `
+          <table class="gradebook-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Section</th>
+                <th>Score</th>
+                <th>%</th>
+                <th>PL</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${entries.sort((a, b) => b.percent - a.percent).map((e) => {
+                const pl = Transmutation.proficiencyLevel(e.percent);
+                return `
+                  <tr>
+                    <td class="student-name">${e.user.lastName}, ${e.user.firstName}</td>
+                    <td>${e.user.section}</td>
+                    <td>${e.score}/${e.total}</td>
+                    <td>${e.percent}%</td>
+                    <td><span class="pl-indicator pl-${pl.key}">${pl.level}</span></td>
+                    <td>${e.passed ? '✅' : '❌'}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      render();
+    });
+  </script>
+</body>
+</html>

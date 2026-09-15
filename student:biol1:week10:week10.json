@@ -1,0 +1,210 @@
+{
+  "week": 10,
+  "title": "Fermentation vs Aerobic Respiration",
+  "days": [
+    {
+      "n": 1,
+      "title": "ATP Computation Practice",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compute ATP yields for respiration stages.</li><li>Compute ATP needs for photosynthesis.</li><li>Interpret ATP yield problems.</li><li>Compare photosynthesis and respiration energetics.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>ATP yield</strong> — total ATP produced.</li><li><strong>ATP need</strong> — total ATP consumed.</li><li><strong>Efficiency</strong> — energy captured vs. total energy.</li></ul><h3>📚 Lesson Content</h3><h4>A. Respiration ATP Yield</h4><ul><li>Glycolysis: 2 ATP + 2 NADH</li><li>Pyruvate oxidation: 2 NADH</li><li>Krebs: 2 ATP + 6 NADH + 2 FADH₂</li><li>ETC: 10 NADH × 2.5 + 2 FADH₂ × 1.5 = 25 + 3 = 28 ATP</li><li><strong>Total: ~32 ATP</strong></li></ul><h4>B. Photosynthesis ATP Need</h4><ul><li>Per CO₂: 3 ATP + 2 NADPH</li><li>Per glucose (6 CO₂): 18 ATP + 12 NADPH</li></ul><h4>C. Efficiency Comparison</h4><ul><li>Respiration captures ~34% of glucose energy as ATP.</li><li>Photosynthesis captures ~1% of solar energy.</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "atp-compute-master",
+        "badgeName": "ATP Compute Master",
+        "badgeIcon": "🧮",
+        "pairs": [
+          { "key": "gly", "left": "Glycolysis ATP", "right": "2" },
+          { "key": "krebs", "left": "Krebs ATP", "right": "2" },
+          { "key": "etc", "left": "ETC ATP", "right": "~28" },
+          { "key": "total", "left": "Total ATP", "right": "~32" },
+          { "key": "photo", "left": "Photosynthesis ATP used", "right": "18 per glucose" },
+          { "key": "naph", "left": "NADPH used", "right": "12 per glucose" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 15,
+        "badgeId": "atp-problem-solver",
+        "badgeName": "ATP Problem Solver",
+        "badgeIcon": "🔢",
+        "scenarios": [
+          { "text": "If 5 glucose are fully oxidized, how many ATP (approx)?", "choices": [{ "label": "160 ✓", "correct": true }, { "label": "100", "correct": false }, { "label": "32", "correct": false }] },
+          { "text": "How many ATP are needed to fix 12 CO₂?", "choices": [{ "label": "18", "correct": false }, { "label": "36 ✓", "correct": true }, { "label": "72", "correct": false }] },
+          { "text": "If 10 NADH pass through the ETC, ATP produced (approx)?", "choices": [{ "label": "10", "correct": false }, { "label": "25 ✓", "correct": true }, { "label": "50", "correct": false }] },
+          { "text": "How many ATP needed to build 3 glucose?", "choices": [{ "label": "18", "correct": false }, { "label": "54 ✓", "correct": true }, { "label": "108", "correct": false }] },
+          { "text": "Total ATP from 2 glucose (aerobic):", "choices": [{ "label": "32", "correct": false }, { "label": "64 ✓", "correct": true }, { "label": "100", "correct": false }] },
+          { "text": "If fermentation occurs, ATP per glucose is:", "choices": [{ "label": "2 ✓", "correct": true }, { "label": "32", "correct": false }, { "label": "36", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "atp-compute-escape",
+        "badgeName": "ATP Compute Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "How many ATP are needed to make 2 glucose in the Calvin cycle?", "choices": [{ "label": "18", "correct": false }, { "label": "36", "correct": true }, { "label": "54", "correct": false }, { "label": "72", "correct": false }] },
+          { "text": "How many ATP does 4 NADH yield in the ETC (modern)?", "choices": [{ "label": "4", "correct": false }, { "label": "6", "correct": false }, { "label": "10", "correct": true }, { "label": "14", "correct": false }] },
+          { "text": "Total ATP per glucose (modern estimate):", "choices": [{ "label": "18", "correct": false }, { "label": "30", "correct": false }, { "label": "32", "correct": true }, { "label": "38", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Respiration total: ~32 ATP per glucose (modern).",
+        "Photosynthesis needs 18 ATP + 12 NADPH per glucose.",
+        "NADH yields 2.5 ATP; FADH₂ yields 1.5 ATP.",
+        "ATP computation is essential for bioenergetics."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Advantages of Fermentation",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain the advantages of fermentation.</li><li>Describe situations where fermentation is beneficial.</li><li>Relate fermentation to real-world applications.</li><li>Compare fermentation to aerobic respiration.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Fermentation</strong> — anaerobic ATP production.</li><li><strong>Rapid ATP</strong> — fast but low yield.</li><li><strong>Applications</strong> — food, industry, medicine.</li></ul><h3>📚 Lesson Content</h3><h4>A. Advantages of Fermentation</h4><ul><li>Works without oxygen — useful in low-O₂ environments</li><li>Very fast — quick ATP for short bursts</li><li>Regenerates NAD⁺ to keep glycolysis going</li><li>Used in food production (bread, cheese, yogurt, beer)</li><li>Used in biofuel production (ethanol)</li></ul><h4>B. Where It Happens</h4><ul><li>Muscle cells during intense exercise</li><li>Yeast in fermentation vats</li><li>Bacteria in yogurt and cheese</li></ul><h4>C. Real-Life Examples</h4><ul><li>Sprinting (lactic acid)</li><li>Bread rising (CO₂ from yeast)</li><li>Yogurt fermentation (lactic acid bacteria)</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "ferm-master",
+        "badgeName": "Fermentation Master",
+        "badgeIcon": "🍞",
+        "pairs": [
+          { "key": "fast", "left": "Fast ATP", "right": "Advantage of fermentation" },
+          { "key": "no-o2", "left": "No O₂ needed", "right": "Advantage of fermentation" },
+          { "key": "nad", "left": "Regenerates NAD⁺", "right": "Keeps glycolysis running" },
+          { "key": "bread", "left": "Bread rising", "right": "Yeast fermentation" },
+          { "key": "yogurt", "left": "Yogurt", "right": "Lactic acid bacteria" },
+          { "key": "sprint", "left": "Sprinting", "right": "Lactic acid in muscles" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "ferm-detective",
+        "badgeName": "Fermentation Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "No oxygen available for respiration.", "choices": [{ "label": "Fermentation can still occur ✓", "correct": true }, { "label": "Cell dies", "correct": false }] },
+          { "text": "Very fast ATP needed for sprinting.", "choices": [{ "label": "Fermentation ✓", "correct": true }, { "label": "Aerobic respiration", "correct": false }] },
+          { "text": "Bread dough rises.", "choices": [{ "label": "Yeast fermentation ✓", "correct": true }, { "label": "Photosynthesis", "correct": false }] },
+          { "text": "Yogurt is produced.", "choices": [{ "label": "Lactic acid fermentation ✓", "correct": true }, { "label": "Aerobic respiration", "correct": false }] },
+          { "text": "Biofuel ethanol production.", "choices": [{ "label": "Fermentation ✓", "correct": true }, { "label": "Krebs cycle", "correct": false }] },
+          { "text": "Fermentation advantage over aerobic respiration:", "choices": [{ "label": "Faster, no O₂ needed ✓", "correct": true }, { "label": "Higher ATP yield", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "ferm-escape",
+        "badgeName": "Fermentation Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Which is a key advantage of fermentation?", "choices": [{ "label": "Higher ATP yield", "correct": false }, { "label": "Works without oxygen", "correct": true }, { "label": "Uses the ETC", "correct": false }, { "label": "Produces O₂", "correct": false }] },
+          { "text": "Fermentation regenerates which molecule?", "choices": [{ "label": "NAD⁺", "correct": true }, { "label": "ATP", "correct": false }, { "label": "Glucose", "correct": false }, { "label": "O₂", "correct": false }] },
+          { "text": "Which food product uses fermentation?", "choices": [{ "label": "Yogurt", "correct": true }, { "label": "Fresh orange juice", "correct": false }, { "label": "Grilled chicken", "correct": false }, { "label": "Salad", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Fermentation works without oxygen.",
+        "It is fast but yields only 2 ATP per glucose.",
+        "Regenerates NAD⁺ to sustain glycolysis.",
+        "Widely used in food and industry."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Advantages of Aerobic Respiration",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain the advantages of aerobic respiration.</li><li>Compare ATP yield to fermentation.</li><li>Describe why most organisms use aerobic respiration.</li><li>Analyze trade-offs between aerobic and anaerobic strategies.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>High ATP yield</strong> — 32 ATP per glucose.</li><li><strong>Complete oxidation</strong> — glucose → CO₂ + H₂O.</li><li><strong>Sustained energy</strong> — supports long-term activity.</li></ul><h3>📚 Lesson Content</h3><h4>A. Advantages of Aerobic Respiration</h4><ul><li>Produces ~32 ATP per glucose (16× fermentation)</li><li>Sustains long-term activity (endurance exercise)</li><li>Powers large organisms with high energy needs</li><li>Allows complex multicellular life</li></ul><h4>B. Comparison Table</h4><table><thead><tr><th>Feature</th><th>Fermentation</th><th>Aerobic</th></tr></thead><tbody><tr><td>O₂</td><td>Not required</td><td>Required</td></tr><tr><td>ATP</td><td>2</td><td>~32</td></tr><tr><td>Speed</td><td>Fast</td><td>Slower</td></tr><tr><td>Sustainability</td><td>Short bursts</td><td>Long-term</td></tr><tr><td>Location</td><td>Cytoplasm</td><td>Cytoplasm + mitochondria</td></tr></tbody></table>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "aerobic-master",
+        "badgeName": "Aerobic Master",
+        "badgeIcon": "🫁",
+        "pairs": [
+          { "key": "high", "left": "High ATP yield", "right": "Advantage of aerobic" },
+          { "key": "sust", "left": "Sustained energy", "right": "Advantage of aerobic" },
+          { "key": "endo", "left": "Endurance exercise", "right": "Uses aerobic respiration" },
+          { "key": "mito", "left": "Mitochondria", "right": "Location of Krebs + ETC" },
+          { "key": "total", "left": "Total ATP", "right": "~32 per glucose" },
+          { "key": "need", "left": "Requires", "right": "Oxygen" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "aerobic-detective",
+        "badgeName": "Aerobic Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "Running a marathon.", "choices": [{ "label": "Aerobic ✓", "correct": true }, { "label": "Fermentation", "correct": false }] },
+          { "text": "High ATP yield is required.", "choices": [{ "label": "Aerobic ✓", "correct": true }, { "label": "Fermentation", "correct": false }] },
+          { "text": "Oxygen is available.", "choices": [{ "label": "Aerobic ✓", "correct": true }, { "label": "Fermentation", "correct": false }] },
+          { "text": "Produces 32 ATP per glucose.", "choices": [{ "label": "Aerobic ✓", "correct": true }, { "label": "Fermentation", "correct": false }] },
+          { "text": "Long-term sustainable energy.", "choices": [{ "label": "Aerobic ✓", "correct": true }, { "label": "Fermentation", "correct": false }] },
+          { "text": "Uses mitochondria.", "choices": [{ "label": "Aerobic ✓", "correct": true }, { "label": "Fermentation", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "aerobic-escape",
+        "badgeName": "Aerobic Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "How much ATP does aerobic respiration produce per glucose?", "choices": [{ "label": "2", "correct": false }, { "label": "18", "correct": false }, { "label": "32", "correct": true }, { "label": "100", "correct": false }] },
+          { "text": "Why can't fermentation sustain long exercise?", "choices": [{ "label": "Too much ATP", "correct": false }, { "label": "Low ATP yield", "correct": true }, { "label": "No NAD⁺", "correct": false }, { "label": "No CO₂", "correct": false }] },
+          { "text": "Which process happens in mitochondria?", "choices": [{ "label": "Glycolysis", "correct": false }, { "label": "Fermentation", "correct": false }, { "label": "Krebs cycle & ETC", "correct": true }, { "label": "Lactic acid production", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Aerobic respiration produces ~32 ATP per glucose.",
+        "It sustains long-term activity.",
+        "Requires oxygen and mitochondria.",
+        "It powers complex multicellular life."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Real-World Applications & Synthesis",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Synthesize knowledge of photosynthesis and respiration.</li><li>Analyze real-world applications.</li><li>Compare fermentation and aerobic respiration strategies.</li><li>Evaluate biological trade-offs.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Trade-offs</strong> — speed vs. yield.</li><li><strong>Applications</strong> — medicine, industry, sports.</li><li><strong>Synthesis</strong> — energy flow across life.</li></ul><h3>📚 Lesson Content</h3><h4>A. Real-World Applications</h4><table><thead><tr><th>Area</th><th>Application</th></tr></thead><tbody><tr><td>Food industry</td><td>Fermentation for bread, beer, cheese, yogurt</td></tr><tr><td>Medicine</td><td>Cancer cells use aerobic glycolysis (Warburg effect)</td></tr><tr><td>Sports science</td><td>Training to increase mitochondria for endurance</td></tr><tr><td>Biofuels</td><td>Ethanol from yeast fermentation</td></tr><tr><td>Agriculture</td><td>Photosynthesis for crop yield</td></tr></tbody></table><h4>B. Photosynthesis + Respiration = Life's Energy Cycle</h4><ul><li>Photosynthesis converts light → chemical energy (glucose)</li><li>Respiration converts chemical energy → ATP</li><li>Products of one are reactants of the other</li></ul><h4>C. Key Trade-offs</h4><ul><li>Fermentation: fast but low yield</li><li>Aerobic: slower but high yield</li><li>Cells use both depending on conditions</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "application-master",
+        "badgeName": "Application Master",
+        "badgeIcon": "🌟",
+        "pairs": [
+          { "key": "food", "left": "Bread, cheese, yogurt", "right": "Fermentation applications" },
+          { "key": "med", "left": "Cancer cells", "right": "Use aerobic glycolysis" },
+          { "key": "sport", "left": "Endurance training", "right": "Increases mitochondria" },
+          { "key": "bio", "left": "Ethanol fuel", "right": "Yeast fermentation" },
+          { "key": "agri", "left": "Crop yield", "right": "Depends on photosynthesis" },
+          { "key": "cycle", "left": "Carbon cycle", "right": "Photosynthesis + respiration" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "synthesis-pro",
+        "badgeName": "Synthesis Pro",
+        "badgeIcon": "🔗",
+        "scenarios": [
+          { "text": "Which process produces oxygen?", "choices": [{ "label": "Photosynthesis ✓", "correct": true }, { "label": "Respiration", "correct": false }, { "label": "Fermentation", "correct": false }] },
+          { "text": "Which process uses oxygen?", "choices": [{ "label": "Photosynthesis", "correct": false }, { "label": "Aerobic respiration ✓", "correct": true }, { "label": "Fermentation", "correct": false }] },
+          { "text": "Which produces CO₂?", "choices": [{ "label": "Only respiration ✓", "correct": true }, { "label": "Only photosynthesis", "correct": false }, { "label": "Neither", "correct": false }] },
+          { "text": "Which uses CO₂?", "choices": [{ "label": "Photosynthesis ✓", "correct": true }, { "label": "Respiration", "correct": false }, { "label": "Fermentation", "correct": false }] },
+          { "text": "Which yields more ATP per glucose?", "choices": [{ "label": "Aerobic ✓", "correct": true }, { "label": "Anaerobic", "correct": false }, { "label": "Both equal", "correct": false }] },
+          { "text": "Which is faster?", "choices": [{ "label": "Fermentation ✓", "correct": true }, { "label": "Aerobic", "correct": false }, { "label": "Both equal", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week10-master",
+        "badgeName": "Week 10 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "Which process produces oxygen as a byproduct?", "choices": [{ "label": "Photosynthesis", "correct": true }, { "label": "Respiration", "correct": false }, { "label": "Fermentation", "correct": false }, { "label": "Krebs cycle", "correct": false }] },
+          { "text": "Which is the key disadvantage of fermentation?", "choices": [{ "label": "Slow speed", "correct": false }, { "label": "Low ATP yield", "correct": true }, { "label": "Requires oxygen", "correct": false }, { "label": "Produces O₂", "correct": false }] },
+          { "text": "Which application uses fermentation?", "choices": [{ "label": "Bread-making", "correct": true }, { "label": "Photosynthesis research", "correct": false }, { "label": "Kidney dialysis", "correct": false }, { "label": "DNA sequencing", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Photosynthesis and respiration form life's energy cycle.",
+        "Trade-offs: speed (fermentation) vs. yield (aerobic).",
+        "Both pathways are used in different conditions.",
+        "Applications span food, medicine, sports, and energy."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "week": 5,
+  "title": "Biological Molecules",
+  "days": [
+    {
+      "n": 1,
+      "title": "Carbohydrates",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure of carbohydrates.</li><li>Differentiate monosaccharides, disaccharides, and polysaccharides.</li><li>Explain the functions of carbohydrates.</li><li>Identify food sources.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Monosaccharide</strong> — single sugar unit (glucose, fructose).</li><li><strong>Disaccharide</strong> — two sugar units (sucrose, lactose).</li><li><strong>Polysaccharide</strong> — many sugar units (starch, glycogen, cellulose).</li><li><strong>Glycosidic bond</strong> — bond between sugar units.</li></ul><h3>📚 Lesson Content</h3><h4>A. Structure</h4><p>Carbohydrates contain C, H, O in a 1:2:1 ratio (CH₂O)ₙ. They are the body's primary quick-energy source.</p><h4>B. Types</h4><table><thead><tr><th>Type</th><th>Example</th><th>Function</th></tr></thead><tbody><tr><td>Monosaccharide</td><td>Glucose, fructose</td><td>Immediate energy</td></tr><tr><td>Disaccharide</td><td>Sucrose, lactose</td><td>Transport sugar</td></tr><tr><td>Polysaccharide</td><td>Starch (plants), glycogen (animals), cellulose (cell walls)</td><td>Storage & structure</td></tr></tbody></table><h4>C. Functions in Metabolism</h4><ul><li>Primary source of ATP via cellular respiration</li><li>Structural component (cellulose in plant cell walls)</li><li>Energy storage (glycogen in liver and muscle)</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "carbs-master",
+        "badgeName": "Carb Master",
+        "badgeIcon": "🍞",
+        "pairs": [
+          { "key": "mono", "left": "Monosaccharide", "right": "Single sugar (glucose)" },
+          { "key": "di", "left": "Disaccharide", "right": "Two sugars (sucrose)" },
+          { "key": "poly", "left": "Polysaccharide", "right": "Many sugars (starch)" },
+          { "key": "glyco", "left": "Glycogen", "right": "Animal energy storage" },
+          { "key": "cell", "left": "Cellulose", "right": "Plant cell wall" },
+          { "key": "starch", "left": "Starch", "right": "Plant energy storage" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "carb-detective",
+        "badgeName": "Carb Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "Glucose is an example of:", "choices": [{ "label": "Monosaccharide ✓", "correct": true }, { "label": "Disaccharide", "correct": false }, { "label": "Polysaccharide", "correct": false }] },
+          { "text": "Sucrose (table sugar) is a:", "choices": [{ "label": "Monosaccharide", "correct": false }, { "label": "Disaccharide ✓", "correct": true }, { "label": "Polysaccharide", "correct": false }] },
+          { "text": "Starch is a:", "choices": [{ "label": "Monosaccharide", "correct": false }, { "label": "Disaccharide", "correct": false }, { "label": "Polysaccharide ✓", "correct": true }] },
+          { "text": "Which is found in plant cell walls?", "choices": [{ "label": "Glycogen", "correct": false }, { "label": "Cellulose ✓", "correct": true }, { "label": "Glucose", "correct": false }] },
+          { "text": "Which is the body's stored form of glucose in animals?", "choices": [{ "label": "Glycogen ✓", "correct": true }, { "label": "Cellulose", "correct": false }, { "label": "Sucrose", "correct": false }] },
+          { "text": "Primary function of carbohydrates in metabolism:", "choices": [{ "label": "Genetic information", "correct": false }, { "label": "Quick energy", "correct": true }, { "label": "Long-term insulation", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "carb-escape",
+        "badgeName": "Carb Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "What is the chemical ratio of C:H:O in carbohydrates?", "choices": [{ "label": "1:2:1", "correct": true }, { "label": "2:1:1", "correct": false }, { "label": "1:1:1", "correct": false }, { "label": "1:1:2", "correct": false }] },
+          { "text": "Which polysaccharide is found in plant cell walls?", "choices": [{ "label": "Starch", "correct": false }, { "label": "Glycogen", "correct": false }, { "label": "Cellulose", "correct": true }, { "label": "Sucrose", "correct": false }] },
+          { "text": "Which carbohydrate is the primary energy currency in cells?", "choices": [{ "label": "Cellulose", "correct": false }, { "label": "Glucose", "correct": true }, { "label": "Starch", "correct": false }, { "label": "Lactose", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Carbohydrates contain C, H, O in a 1:2:1 ratio.",
+        "Three types: monosaccharides, disaccharides, polysaccharides.",
+        "Primary function is quick energy; also structural (cellulose) and storage (glycogen).",
+        "Glucose is the key energy molecule in cells."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Lipids",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure of lipids.</li><li>Differentiate triglycerides, phospholipids, and steroids.</li><li>Explain the functions of lipids.</li><li>Relate lipid structure to function.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Lipid</strong> — hydrophobic biological molecule.</li><li><strong>Triglyceride</strong> — glycerol + 3 fatty acids (fat/oil).</li><li><strong>Phospholipid</strong> — glycerol + 2 fatty acids + phosphate group.</li><li><strong>Steroid</strong> — four fused rings (e.g., cholesterol, testosterone).</li></ul><h3>📚 Lesson Content</h3><h4>A. Types of Lipids</h4><table><thead><tr><th>Type</th><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td>Triglyceride</td><td>Glycerol + 3 fatty acids</td><td>Energy storage, insulation</td></tr><tr><td>Phospholipid</td><td>Glycerol + 2 fatty acids + phosphate</td><td>Cell membranes</td></tr><tr><td>Steroid</td><td>Four fused rings</td><td>Hormones, cholesterol</td></tr></tbody></table><h4>B. Saturated vs Unsaturated Fats</h4><ul><li><strong>Saturated</strong> — no double bonds; solid at room temperature (butter)</li><li><strong>Unsaturated</strong> — one or more double bonds; liquid at room temperature (olive oil)</li></ul><h4>C. Functions in Metabolism</h4><ul><li>Long-term energy storage</li><li>Structural component of membranes</li><li>Hormone synthesis (steroids)</li><li>Thermal insulation</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "lipid-master",
+        "badgeName": "Lipid Master",
+        "badgeIcon": "🧈",
+        "pairs": [
+          { "key": "tri", "left": "Triglyceride", "right": "Glycerol + 3 fatty acids" },
+          { "key": "phos", "left": "Phospholipid", "right": "Glycerol + 2 fatty acids + phosphate" },
+          { "key": "ster", "left": "Steroid", "right": "Four fused rings" },
+          { "key": "sat", "left": "Saturated fat", "right": "Solid at room temp" },
+          { "key": "unsat", "left": "Unsaturated fat", "right": "Liquid at room temp" },
+          { "key": "chol", "left": "Cholesterol", "right": "Membrane fluidity + steroid precursor" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "lipid-detective",
+        "badgeName": "Lipid Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "A triglyceride is made of:", "choices": [{ "label": "Glycerol + 3 fatty acids ✓", "correct": true }, { "label": "Glucose + fructose", "correct": false }, { "label": "Amino acids", "correct": false }] },
+          { "text": "Which lipid forms cell membranes?", "choices": [{ "label": "Triglyceride", "correct": false }, { "label": "Phospholipid ✓", "correct": true }, { "label": "Steroid", "correct": false }] },
+          { "text": "Cholesterol is a:", "choices": [{ "label": "Triglyceride", "correct": false }, { "label": "Phospholipid", "correct": false }, { "label": "Steroid ✓", "correct": true }] },
+          { "text": "Butter is an example of:", "choices": [{ "label": "Saturated fat ✓", "correct": true }, { "label": "Unsaturated fat", "correct": false }, { "label": "Phospholipid", "correct": false }] },
+          { "text": "Olive oil is an example of:", "choices": [{ "label": "Saturated fat", "correct": false }, { "label": "Unsaturated fat ✓", "correct": true }, { "label": "Steroid", "correct": false }] },
+          { "text": "Primary function of stored fat:", "choices": [{ "label": "Quick energy", "correct": false }, { "label": "Long-term energy & insulation ✓", "correct": true }, { "label": "Genetic info", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "lipid-escape",
+        "badgeName": "Lipid Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "What makes lipids hydrophobic?", "choices": [{ "label": "Phosphate groups", "correct": false }, { "label": "Long hydrocarbon chains", "correct": true }, { "label": "Amino groups", "correct": false }, { "label": "Ring structures", "correct": false }] },
+          { "text": "Which lipid type is a component of cell membranes?", "choices": [{ "label": "Triglyceride", "correct": false }, { "label": "Phospholipid", "correct": true }, { "label": "Wax", "correct": false }, { "label": "Cholesterol ester", "correct": false }] },
+          { "text": "Which of the following is NOT a function of lipids?", "choices": [{ "label": "Energy storage", "correct": false }, { "label": "Hormone synthesis", "correct": false }, { "label": "Genetic information storage", "correct": true }, { "label": "Insulation", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Lipids are hydrophobic molecules.",
+        "Three main types: triglycerides, phospholipids, steroids.",
+        "Functions: energy storage, membranes, hormones, insulation.",
+        "Saturated fats are solid; unsaturated fats are liquid at room temperature."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Proteins",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure of proteins.</li><li>Explain the four levels of protein structure.</li><li>List the functions of proteins.</li><li>Relate protein structure to function.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Amino acid</strong> — the monomer of proteins.</li><li><strong>Peptide bond</strong> — bond between amino acids.</li><li><strong>Denaturation</strong> — loss of protein shape/function.</li><li><strong>Primary, secondary, tertiary, quaternary</strong> — four levels of protein structure.</li></ul><h3>📚 Lesson Content</h3><h4>A. Amino Acids</h4><p>20 different amino acids. Each has an amino group (–NH₂), a carboxyl group (–COOH), and a variable R group.</p><h4>B. Levels of Protein Structure</h4><table><thead><tr><th>Level</th><th>Description</th></tr></thead><tbody><tr><td>Primary</td><td>Sequence of amino acids</td></tr><tr><td>Secondary</td><td>Alpha helix or beta sheet (H-bonds)</td></tr><tr><td>Tertiary</td><td>3D folding of the whole chain</td></tr><tr><td>Quaternary</td><td>Multiple chains (e.g., hemoglobin)</td></tr></tbody></table><h4>C. Functions of Proteins</h4><ul><li>Enzymes (catalysts)</li><li>Structural (collagen, keratin)</li><li>Transport (hemoglobin)</li><li>Signaling (hormones like insulin)</li><li>Defense (antibodies)</li><li>Movement (actin, myosin)</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "protein-master",
+        "badgeName": "Protein Master",
+        "badgeIcon": "🥚",
+        "pairs": [
+          { "key": "aa", "left": "Amino acid", "right": "Monomer of proteins" },
+          { "key": "pep", "left": "Peptide bond", "right": "Connects amino acids" },
+          { "key": "prim", "left": "Primary structure", "right": "Amino acid sequence" },
+          { "key": "sec", "left": "Secondary", "right": "Alpha helix or beta sheet" },
+          { "key": "tert", "left": "Tertiary", "right": "3D folding" },
+          { "key": "quat", "left": "Quaternary", "right": "Multiple chains" },
+          { "key": "denat", "left": "Denaturation", "right": "Loss of shape/function" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "protein-detective",
+        "badgeName": "Protein Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "The monomer of proteins is:", "choices": [{ "label": "Amino acid ✓", "correct": true }, { "label": "Glucose", "correct": false }, { "label": "Fatty acid", "correct": false }] },
+          { "text": "An alpha helix is part of which level?", "choices": [{ "label": "Primary", "correct": false }, { "label": "Secondary ✓", "correct": true }, { "label": "Tertiary", "correct": false }] },
+          { "text": "The amino acid sequence is which level?", "choices": [{ "label": "Primary ✓", "correct": true }, { "label": "Secondary", "correct": false }, { "label": "Tertiary", "correct": false }] },
+          { "text": "Hemoglobin has 4 subunits. This is:", "choices": [{ "label": "Primary", "correct": false }, { "label": "Secondary", "correct": false }, { "label": "Quaternary ✓", "correct": true }] },
+          { "text": "Cooking an egg denatures its proteins because:", "choices": [{ "label": "Heat breaks bonds, losing shape ✓", "correct": true }, { "label": "Water is added", "correct": false }, { "label": "Proteins are made", "correct": false }] },
+          { "text": "Antibodies are proteins that:", "choices": [{ "label": "Store energy", "correct": false }, { "label": "Defend against pathogens ✓", "correct": true }, { "label": "Carry oxygen", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "protein-escape",
+        "badgeName": "Protein Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "How many standard amino acids are there?", "choices": [{ "label": "10", "correct": false }, { "label": "20", "correct": true }, { "label": "30", "correct": false }, { "label": "50", "correct": false }] },
+          { "text": "What is denaturation?", "choices": [{ "label": "Building a protein", "correct": false }, { "label": "Loss of protein shape and function", "correct": true }, { "label": "Adding amino acids", "correct": false }, { "label": "Forming peptide bonds", "correct": false }] },
+          { "text": "Which is NOT a function of proteins?", "choices": [{ "label": "Enzymes", "correct": false }, { "label": "Structural support", "correct": false }, { "label": "Genetic information storage", "correct": true }, { "label": "Transport", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Proteins are polymers of amino acids.",
+        "Four levels: primary, secondary, tertiary, quaternary.",
+        "Functions: enzymes, structure, transport, signaling, defense, movement.",
+        "Denaturation destroys protein function."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Nucleic Acids & Roles in Metabolism",
+      "competency": "STEM_BIO11/12-II-i-j-15, -16",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure of nucleic acids.</li><li>Differentiate DNA from RNA.</li><li>Explain the roles of biological molecules in metabolism.</li><li>Summarize the four biomolecules.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Nucleotide</strong> — monomer of nucleic acids (sugar + phosphate + base).</li><li><strong>DNA</strong> — deoxyribonucleic acid; stores genetic info.</li><li><strong>RNA</strong> — ribonucleic acid; transmits genetic info.</li><li><strong>ATP</strong> — energy currency of the cell.</li></ul><h3>📚 Lesson Content</h3><h4>A. Nucleotide Structure</h4><p>Each nucleotide has: a pentose sugar, a phosphate group, and a nitrogenous base.</p><h4>B. DNA vs RNA</h4><table><thead><tr><th>Feature</th><th>DNA</th><th>RNA</th></tr></thead><tbody><tr><td>Sugar</td><td>Deoxyribose</td><td>Ribose</td></tr><tr><td>Strands</td><td>Double helix</td><td>Single strand</td></tr><tr><td>Bases</td><td>A, T, G, C</td><td>A, U, G, C</td></tr><tr><td>Function</td><td>Genetic storage</td><td>Protein synthesis</td></tr></tbody></table><h4>C. Roles in Metabolism</h4><ul><li><strong>Carbohydrates:</strong> quick energy (ATP)</li><li><strong>Lipids:</strong> long-term energy & membranes</li><li><strong>Proteins:</strong> enzymes catalyze reactions</li><li><strong>Nucleic acids:</strong> store and transmit genetic info</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "nucleic-master",
+        "badgeName": "Nucleic Master",
+        "badgeIcon": "🧬",
+        "pairs": [
+          { "key": "nuc", "left": "Nucleotide", "right": "Monomer of nucleic acids" },
+          { "key": "dna", "left": "DNA", "right": "Stores genetic info" },
+          { "key": "rna", "left": "RNA", "right": "Transmits genetic info" },
+          { "key": "deoxy", "left": "Deoxyribose", "right": "DNA sugar" },
+          { "key": "rib", "left": "Ribose", "right": "RNA sugar" },
+          { "key": "uracil", "left": "Uracil", "right": "Base in RNA only" },
+          { "key": "thym", "left": "Thymine", "right": "Base in DNA only" },
+          { "key": "atp", "left": "ATP", "right": "Energy currency" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "metabolism-master",
+        "badgeName": "Metabolism Master",
+        "badgeIcon": "⚡",
+        "scenarios": [
+          { "text": "Quick energy source in cells.", "choices": [{ "label": "Carbohydrates ✓", "correct": true }, { "label": "Lipids", "correct": false }, { "label": "Nucleic acids", "correct": false }] },
+          { "text": "Long-term energy storage.", "choices": [{ "label": "Carbohydrates", "correct": false }, { "label": "Lipids ✓", "correct": true }, { "label": "Nucleic acids", "correct": false }] },
+          { "text": "Catalyzes metabolic reactions.", "choices": [{ "label": "Proteins ✓", "correct": true }, { "label": "Carbohydrates", "correct": false }, { "label": "Lipids", "correct": false }] },
+          { "text": "Stores genetic information.", "choices": [{ "label": "DNA ✓", "correct": true }, { "label": "RNA", "correct": false }, { "label": "ATP", "correct": false }] },
+          { "text": "Carries genetic info from DNA to ribosomes.", "choices": [{ "label": "RNA ✓", "correct": true }, { "label": "DNA", "correct": false }, { "label": "Protein", "correct": false }] },
+          { "text": "Primary energy currency of the cell.", "choices": [{ "label": "ATP ✓", "correct": true }, { "label": "DNA", "correct": false }, { "label": "Glucose", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week5-master",
+        "badgeName": "Week 5 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "What are the three components of a nucleotide?", "choices": [{ "label": "Sugar, phosphate, base", "correct": true }, { "label": "Glycerol, fatty acids, phosphate", "correct": false }, { "label": "Amino, carboxyl, R group", "correct": false }, { "label": "Glucose, fructose, sucrose", "correct": false }] },
+          { "text": "Which base is found in RNA but not DNA?", "choices": [{ "label": "Thymine", "correct": false }, { "label": "Uracil", "correct": true }, { "label": "Adenine", "correct": false }, { "label": "Guanine", "correct": false }] },
+          { "text": "Which biomolecule catalyzes metabolic reactions?", "choices": [{ "label": "Carbohydrates", "correct": false }, { "label": "Lipids", "correct": false }, { "label": "Proteins (enzymes)", "correct": true }, { "label": "Nucleic acids", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Nucleotides are the monomers of nucleic acids.",
+        "DNA stores genetic info; RNA transmits it.",
+        "Each biomolecule plays a unique role in metabolism.",
+        "ATP is the energy currency produced from carbohydrates and lipids."
+      ]
+    }
+  ]
+}

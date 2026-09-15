@@ -1,0 +1,212 @@
+{
+  "week": 3,
+  "title": "Mendelian Genetics",
+  "days": [
+    {
+      "n": 1,
+      "title": "Mendel's Laws of Inheritance",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe Mendel's experiments.</li><li>State his three laws of inheritance.</li><li>Differentiate genotype from phenotype.</li><li>Define key genetic terms.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Allele</strong> — alternative form of a gene.</li><li><strong>Genotype</strong> — genetic makeup (e.g., Tt).</li><li><strong>Phenotype</strong> — observable trait (e.g., tall).</li><li><strong>Homozygous</strong> — two identical alleles.</li><li><strong>Heterozygous</strong> — two different alleles.</li></ul><h3>📚 Lesson Content</h3><h4>A. Mendel's Experiments</h4><p>Gregor Mendel (1860s) crossed pea plants to study inheritance. He tracked traits like flower color, seed shape, and plant height.</p><h4>B. Mendel's Laws</h4><table><thead><tr><th>Law</th><th>Statement</th></tr></thead><tbody><tr><td><strong>Law of Dominance</strong></td><td>One allele masks the other in heterozygotes</td></tr><tr><td><strong>Law of Segregation</strong></td><td>Alleles separate during gamete formation</td></tr><tr><td><strong>Law of Independent Assortment</strong></td><td>Genes for different traits sort independently</td></tr></tbody></table><h4>C. Key Notation</h4><ul><li><strong>Dominant allele:</strong> uppercase (T)</li><li><strong>Recessive allele:</strong> lowercase (t)</li><li>Genotypes: TT, Tt, tt</li><li>Phenotypes: tall (TT, Tt), short (tt)</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "mendel-master",
+        "badgeName": "Mendel Master",
+        "badgeIcon": "🌱",
+        "pairs": [
+          { "key": "allele", "left": "Allele", "right": "Alternative form of a gene" },
+          { "key": "geno", "left": "Genotype", "right": "Genetic makeup" },
+          { "key": "pheno", "left": "Phenotype", "right": "Observable trait" },
+          { "key": "homo", "left": "Homozygous", "right": "Two identical alleles" },
+          { "key": "hetero", "left": "Heterozygous", "right": "Two different alleles" },
+          { "key": "dom", "left": "Law of Dominance", "right": "One allele masks the other" },
+          { "key": "seg", "left": "Law of Segregation", "right": "Alleles separate" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "mendel-detective",
+        "badgeName": "Mendel Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "An organism has alleles Tt.", "choices": [{ "label": "Heterozygous ✓", "correct": true }, { "label": "Homozygous", "correct": false }] },
+          { "text": "An organism has alleles TT.", "choices": [{ "label": "Homozygous dominant ✓", "correct": true }, { "label": "Heterozygous", "correct": false }] },
+          { "text": "An organism shows a tall phenotype.", "choices": [{ "label": "Phenotype ✓", "correct": true }, { "label": "Genotype", "correct": false }] },
+          { "text": "Tt shows the tall phenotype.", "choices": [{ "label": "Law of Dominance ✓", "correct": true }, { "label": "Law of Segregation", "correct": false }] },
+          { "text": "Alleles separate during gamete formation.", "choices": [{ "label": "Law of Segregation ✓", "correct": true }, { "label": "Law of Dominance", "correct": false }] },
+          { "text": "Seed shape and flower color sort independently.", "choices": [{ "label": "Independent Assortment ✓", "correct": true }, { "label": "Segregation", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "mendel-escape",
+        "badgeName": "Mendel Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Who is considered the father of genetics?", "choices": [{ "label": "Darwin", "correct": false }, { "label": "Mendel", "correct": true }, { "label": "Mendel", "correct": false }, { "label": "Morgan", "correct": false }] },
+          { "text": "The Law of Segregation states that:", "choices": [{ "label": "Alleles separate during gamete formation", "correct": true }, { "label": "All alleles are dominant", "correct": false }, { "label": "Genes don't sort", "correct": false }, { "label": "Alleles fuse", "correct": false }] },
+          { "text": "An organism with Tt is:", "choices": [{ "label": "Homozygous dominant", "correct": false }, { "label": "Heterozygous", "correct": true }, { "label": "Homozygous recessive", "correct": false }, { "label": "Pure-breeding", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Mendel studied inheritance using pea plants.",
+        "Three laws: Dominance, Segregation, Independent Assortment.",
+        "Genotype is genetic makeup; phenotype is observable.",
+        "Homozygous = two same alleles; heterozygous = two different."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Monohybrid Crosses & Punnett Squares",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Predict offspring genotypes with a Punnett square.</li><li>Calculate phenotypic and genotypic ratios.</li><li>Interpret monohybrid crosses.</li><li>Distinguish genotype from phenotype ratios.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Punnett square</strong> — grid showing possible offspring genotypes.</li><li><strong>Monohybrid cross</strong> — tracks one trait.</li><li><strong>Phenotypic ratio</strong> — ratio of visible traits.</li><li><strong>Genotypic ratio</strong> — ratio of genetic makeups.</li></ul><h3>📚 Lesson Content</h3><h4>A. Tt × Tt Cross</h4><table><thead><tr><th></th><th>T</th><th>t</th></tr></thead><tbody><tr><td><strong>T</strong></td><td>TT</td><td>Tt</td></tr><tr><td><strong>t</strong></td><td>Tt</td><td>tt</td></tr></tbody></table><ul><li>Genotypes: 1 TT : 2 Tt : 1 tt (1:2:1)</li><li>Phenotypes: 3 Tall : 1 Short</li></ul><h4>B. TT × tt Cross</h4><ul><li>All offspring: Tt (all tall)</li></ul><h4>C. Tt × tt (Testcross)</h4><ul><li>1 Tt : 1 tt → 1 tall : 1 short</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "punnett-master",
+        "badgeName": "Punnett Master",
+        "badgeIcon": "⬜",
+        "pairs": [
+          { "key": "pun", "left": "Punnett square", "right": "Grid for predicting genotypes" },
+          { "key": "mono", "left": "Monohybrid cross", "right": "Tracks one trait" },
+          { "key": "TtTt", "left": "Tt × Tt phenotypes", "right": "3:1" },
+          { "key": "TtTt2", "left": "Tt × Tt genotypes", "right": "1:2:1" },
+          { "key": "TTtt", "left": "TT × tt", "right": "All Tt (all tall)" },
+          { "key": "Tttt", "left": "Tt × tt", "right": "1 tall : 1 short" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 15,
+        "badgeId": "cross-pro",
+        "badgeName": "Cross Pro",
+        "badgeIcon": "🔢",
+        "scenarios": [
+          { "text": "Tt × Tt → what % tall?", "choices": [{ "label": "75% ✓", "correct": true }, { "label": "50%", "correct": false }, { "label": "25%", "correct": false }] },
+          { "text": "Tt × Tt → what % short?", "choices": [{ "label": "25% ✓", "correct": true }, { "label": "50%", "correct": false }, { "label": "75%", "correct": false }] },
+          { "text": "TT × tt → what % tall?", "choices": [{ "label": "100% ✓", "correct": true }, { "label": "50%", "correct": false }, { "label": "75%", "correct": false }] },
+          { "text": "Tt × tt → what % short?", "choices": [{ "label": "50% ✓", "correct": true }, { "label": "25%", "correct": false }, { "label": "100%", "correct": false }] },
+          { "text": "Tt × Tt → genotypic ratio:", "choices": [{ "label": "1:2:1 ✓", "correct": true }, { "label": "3:1", "correct": false }, { "label": "1:1", "correct": false }] },
+          { "text": "TT × Tt → what % heterozygous?", "choices": [{ "label": "50% ✓", "correct": true }, { "label": "25%", "correct": false }, { "label": "100%", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "punnett-escape",
+        "badgeName": "Punnett Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "A Tt × Tt cross gives what phenotypic ratio?", "choices": [{ "label": "1:1", "correct": false }, { "label": "3:1", "correct": true }, { "label": "1:2:1", "correct": false }, { "label": "9:3:3:1", "correct": false }] },
+          { "text": "A Tt × Tt cross gives what genotypic ratio?", "choices": [{ "label": "1:2:1", "correct": true }, { "label": "3:1", "correct": false }, { "label": "1:1", "correct": false }, { "label": "2:1", "correct": false }] },
+          { "text": "A testcross of Tt × tt produces:", "choices": [{ "label": "All tall", "correct": false }, { "label": "All short", "correct": false }, { "label": "1 tall : 1 short", "correct": true }, { "label": "3 tall : 1 short", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Punnett squares predict offspring genotypes.",
+        "Tt × Tt: 3:1 phenotypic ratio, 1:2:1 genotypic ratio.",
+        "TT × tt: all tall.",
+        "Testcross (Tt × tt): 1:1."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Dihybrid Crosses",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Set up a dihybrid cross.</li><li>Predict offspring from two traits.</li><li>Identify the 9:3:3:1 ratio.</li><li>Apply the law of independent assortment.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Dihybrid cross</strong> — tracks two traits at once.</li><li><strong>Independent assortment</strong> — alleles for different genes sort independently.</li><li><strong>9:3:3:1</strong> — the classic dihybrid phenotypic ratio.</li></ul><h3>📚 Lesson Content</h3><h4>A. RrYy × RrYy Cross</h4><p>R = round, r = wrinkled; Y = yellow, y = green.</p><table><thead><tr><th></th><th>RY</th><th>Ry</th><th>rY</th><th>ry</th></tr></thead><tbody><tr><td><strong>RY</strong></td><td>RRYY</td><td>RRYy</td><td>RrYY</td><td>RrYy</td></tr><tr><td><strong>Ry</strong></td><td>RRYy</td><td>RRyy</td><td>RrYy</td><td>Rryy</td></tr><tr><td><strong>rY</strong></td><td>RrYY</td><td>RrYy</td><td>rrYY</td><td>rrYy</td></tr><tr><td><strong>ry</strong></td><td>RrYy</td><td>Rryy</td><td>rrYy</td><td>rryy</td></tr></tbody></table><h4>B. Phenotypic Ratio</h4><ul><li><strong>9</strong> — Round, Yellow</li><li><strong>3</strong> — Round, Green</li><li><strong>3</strong> — Wrinkled, Yellow</li><li><strong>1</strong> — Wrinkled, Green</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "dihybrid-master",
+        "badgeName": "Dihybrid Master",
+        "badgeIcon": "🎯",
+        "pairs": [
+          { "key": "di", "left": "Dihybrid cross", "right": "Tracks two traits" },
+          { "key": "ind", "left": "Independent assortment", "right": "Different genes sort independently" },
+          { "key": "ratio", "left": "9:3:3:1", "right": "Classic dihybrid phenotypic ratio" },
+          { "key": "9", "left": "Round Yellow", "right": "9 parts" },
+          { "key": "3a", "left": "Round Green", "right": "3 parts" },
+          { "key": "3b", "left": "Wrinkled Yellow", "right": "3 parts" },
+          { "key": "1", "left": "Wrinkled Green", "right": "1 part" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 15,
+        "badgeId": "dihybrid-pro",
+        "badgeName": "Dihybrid Pro",
+        "badgeIcon": "🧮",
+        "scenarios": [
+          { "text": "RrYy × RrYy → Round Yellow?", "choices": [{ "label": "9/16 ✓", "correct": true }, { "label": "3/16", "correct": false }, { "label": "1/16", "correct": false }] },
+          { "text": "RrYy × RrYy → Round Green?", "choices": [{ "label": "3/16 ✓", "correct": true }, { "label": "9/16", "correct": false }, { "label": "1/16", "correct": false }] },
+          { "text": "RrYy × RrYy → Wrinkled Yellow?", "choices": [{ "label": "3/16 ✓", "correct": true }, { "label": "9/16", "correct": false }, { "label": "1/16", "correct": false }] },
+          { "text": "RrYy × RrYy → Wrinkled Green?", "choices": [{ "label": "1/16 ✓", "correct": true }, { "label": "3/16", "correct": false }, { "label": "9/16", "correct": false }] },
+          { "text": "How many possible gametes from RrYy?", "choices": [{ "label": "4 ✓", "correct": true }, { "label": "2", "correct": false }, { "label": "8", "correct": false }] },
+          { "text": "RrYy × rryy → what ratio?", "choices": [{ "label": "1:1:1:1 ✓", "correct": true }, { "label": "9:3:3:1", "correct": false }, { "label": "3:1", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "dihybrid-escape",
+        "badgeName": "Dihybrid Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "What is the classic dihybrid phenotypic ratio?", "choices": [{ "label": "3:1", "correct": false }, { "label": "1:2:1", "correct": false }, { "label": "9:3:3:1", "correct": true }, { "label": "1:1:1:1", "correct": false }] },
+          { "text": "How many gamete types can an RrYy parent make?", "choices": [{ "label": "2", "correct": false }, { "label": "4", "correct": true }, { "label": "8", "correct": false }, { "label": "16", "correct": false }] },
+          { "text": "Which law explains the 9:3:3:1 ratio?", "choices": [{ "label": "Segregation", "correct": false }, { "label": "Independent Assortment", "correct": true }, { "label": "Dominance", "correct": false }, { "label": "Linkage", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Dihybrid crosses track two traits.",
+        "9:3:3:1 is the classic ratio.",
+        "4 possible gamete types from a heterozygous parent.",
+        "Independent assortment explains the ratio."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Testcrosses & Pedigree Basics",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain the purpose of a testcross.</li><li>Determine unknown genotypes.</li><li>Interpret basic pedigree charts.</li><li>Trace inheritance through a family.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Testcross</strong> — crossing with a homozygous recessive to reveal genotype.</li><li><strong>Pedigree</strong> — diagram of inheritance in a family.</li><li><strong>Carrier</strong> — heterozygote that doesn't show the trait.</li></ul><h3>📚 Lesson Content</h3><h4>A. Testcross</h4><p>Cross an organism with dominant phenotype (but unknown genotype) with a homozygous recessive:</p><ul><li>If all offspring show dominant → parent was homozygous (TT)</li><li>If 1:1 ratio → parent was heterozygous (Tt)</li></ul><h4>B. Pedigree Symbols</h4><ul><li>□ Male · ○ Female · ■/● Affected</li><li>Horizontal line = mating</li><li>Vertical line = offspring</li></ul><h4>C. Reading a Pedigree</h4><ul><li>Track traits through generations</li><li>Identify carriers</li><li>Determine dominant vs recessive inheritance</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "pedigree-master",
+        "badgeName": "Pedigree Master",
+        "badgeIcon": "👪",
+        "pairs": [
+          { "key": "tc", "left": "Testcross", "right": "Cross with homozygous recessive" },
+          { "key": "ped", "left": "Pedigree", "right": "Family inheritance diagram" },
+          { "key": "car", "left": "Carrier", "right": "Heterozygote without trait" },
+          { "key": "male", "left": "Square symbol", "right": "Male" },
+          { "key": "female", "left": "Circle symbol", "right": "Female" },
+          { "key": "line", "left": "Horizontal line", "right": "Mating" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 15,
+        "badgeId": "testcross-pro",
+        "badgeName": "Testcross Pro",
+        "badgeIcon": "🎯",
+        "scenarios": [
+          { "text": "Unknown tall plant × tt → all tall offspring. Parent is:", "choices": [{ "label": "TT ✓", "correct": true }, { "label": "Tt", "correct": false }, { "label": "tt", "correct": false }] },
+          { "text": "Unknown tall plant × tt → 1:1 tall:short. Parent is:", "choices": [{ "label": "TT", "correct": false }, { "label": "Tt ✓", "correct": true }, { "label": "tt", "correct": false }] },
+          { "text": "A pedigree with affected individuals in every generation. Likely:", "choices": [{ "label": "Dominant ✓", "correct": true }, { "label": "Recessive", "correct": false }] },
+          { "text": "Two unaffected parents have an affected child. Likely:", "choices": [{ "label": "Recessive ✓", "correct": true }, { "label": "Dominant", "correct": false }] },
+          { "text": "Heterozygote who doesn't show a recessive trait is called:", "choices": [{ "label": "Carrier ✓", "correct": true }, { "label": "Affected", "correct": false }, { "label": "Homozygous", "correct": false }] },
+          { "text": "Pedigree symbol: ○ with a line through it.", "choices": [{ "label": "Deceased female ✓", "correct": true }, { "label": "Affected male", "correct": false }, { "label": "Carrier", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week3-bio2-master",
+        "badgeName": "Week 3 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "What is the purpose of a testcross?", "choices": [{ "label": "Reveal unknown genotype", "correct": true }, { "label": "Create mutations", "correct": false }, { "label": "Increase diversity", "correct": false }, { "label": "Reduce traits", "correct": false }] },
+          { "text": "A heterozygous tall plant is crossed with a short plant. What is the expected ratio?", "choices": [{ "label": "All tall", "correct": false }, { "label": "1:1 tall:short", "correct": true }, { "label": "3:1", "correct": false }, { "label": "All short", "correct": false }] },
+          { "text": "In a pedigree, an unaffected parent who carries a recessive allele is called a:", "choices": [{ "label": "Carrier", "correct": true }, { "label": "Homozygous dominant", "correct": false }, { "label": "Affected", "correct": false }, { "label": "Mutant", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Testcross reveals unknown genotypes.",
+        "If all offspring show dominant, parent is homozygous.",
+        "If 1:1, parent is heterozygous.",
+        "Pedigrees trace inheritance across generations."
+      ]
+    }
+  ]
+}

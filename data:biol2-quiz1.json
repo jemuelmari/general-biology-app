@@ -1,0 +1,230 @@
+{
+  "assessmentId": "biol2-quiz1",
+  "subject": "biol2",
+  "type": "quiz",
+  "title": "Quiz 1 — Organismal Biology & Genetics Foundations",
+  "timeLimit": 1200,
+  "passingScore": 80,
+  "items": [
+    {
+      "id": "q1-01",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which of the following is a distinguishing feature of the plant shoot system?",
+      "options": [
+        { "key": "a", "label": "Contains leaves, stems, and flowers", "correct": true },
+        { "key": "b", "label": "Contains root hairs", "correct": false },
+        { "key": "c", "label": "Contains gills", "correct": false },
+        { "key": "d", "label": "Contains alveoli", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-02",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which plant tissue transports water and minerals from roots to leaves?",
+      "options": [
+        { "key": "a", "label": "Phloem", "correct": false },
+        { "key": "b", "label": "Xylem", "correct": true },
+        { "key": "c", "label": "Epidermis", "correct": false },
+        { "key": "d", "label": "Cambium", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-03",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which structure in plants is responsible for gas exchange?",
+      "options": [
+        { "key": "a", "label": "Xylem", "correct": false },
+        { "key": "b", "label": "Phloem", "correct": false },
+        { "key": "c", "label": "Stomata", "correct": true },
+        { "key": "d", "label": "Cuticle", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-04",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which animal organ system is primarily responsible for gas exchange?",
+      "options": [
+        { "key": "a", "label": "Circulatory", "correct": false },
+        { "key": "b", "label": "Respiratory", "correct": true },
+        { "key": "c", "label": "Digestive", "correct": false },
+        { "key": "d", "label": "Excretory", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-05",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which animal system releases hormones to regulate long-term body functions?",
+      "options": [
+        { "key": "a", "label": "Nervous", "correct": false },
+        { "key": "b", "label": "Endocrine", "correct": true },
+        { "key": "c", "label": "Immune", "correct": false },
+        { "key": "d", "label": "Digestive", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-06",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which organ is responsible for filtering blood and producing urine?",
+      "options": [
+        { "key": "a", "label": "Liver", "correct": false },
+        { "key": "b", "label": "Kidney", "correct": true },
+        { "key": "c", "label": "Pancreas", "correct": false },
+        { "key": "d", "label": "Spleen", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-07",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "What is the primary difference between plant and animal nutrition?",
+      "options": [
+        { "key": "a", "label": "Plants are autotrophic; animals are heterotrophic", "correct": true },
+        { "key": "b", "label": "Plants are heterotrophic; animals are autotrophic", "correct": false },
+        { "key": "c", "label": "Both are autotrophic", "correct": false },
+        { "key": "d", "label": "Both are heterotrophic", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-08",
+      "competency": "STEM_BIO11/12-IVi-j-2",
+      "text": "Which of the following best describes homeostasis?",
+      "options": [
+        { "key": "a", "label": "Rapid growth of an organism", "correct": false },
+        { "key": "b", "label": "Maintenance of a stable internal environment", "correct": true },
+        { "key": "c", "label": "Production of gametes", "correct": false },
+        { "key": "d", "label": "Movement from place to place", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-09",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "text": "Which of the following is an example of a negative feedback loop?",
+      "options": [
+        { "key": "a", "label": "Blood clotting cascade", "correct": false },
+        { "key": "b", "label": "Regulation of blood glucose by insulin", "correct": true },
+        { "key": "c", "label": "Uterine contractions during childbirth", "correct": false },
+        { "key": "d", "label": "Production of milk during breastfeeding", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-10",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "text": "Sweating when body temperature rises is an example of:",
+      "options": [
+        { "key": "a", "label": "Positive feedback", "correct": false },
+        { "key": "b", "label": "Negative feedback", "correct": true },
+        { "key": "c", "label": "Feedforward control", "correct": false },
+        { "key": "d", "label": "Neutral feedback", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-11",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "What is the expected phenotypic ratio of a monohybrid cross between two heterozygous parents (Tt × Tt)?",
+      "options": [
+        { "key": "a", "label": "1:1", "correct": false },
+        { "key": "b", "label": "3:1", "correct": true },
+        { "key": "c", "label": "1:2:1", "correct": false },
+        { "key": "d", "label": "9:3:3:1", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-12",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "Which of Mendel's laws states that alleles separate during gamete formation?",
+      "options": [
+        { "key": "a", "label": "Law of Dominance", "correct": false },
+        { "key": "b", "label": "Law of Segregation", "correct": true },
+        { "key": "c", "label": "Law of Independent Assortment", "correct": false },
+        { "key": "d", "label": "Law of Linkage", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-13",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "An organism with genotype Bb is described as:",
+      "options": [
+        { "key": "a", "label": "Homozygous dominant", "correct": false },
+        { "key": "b", "label": "Homozygous recessive", "correct": false },
+        { "key": "c", "label": "Heterozygous", "correct": true },
+        { "key": "d", "label": "Pure-breeding", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-14",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "A dihybrid cross between two heterozygous organisms (RrYy × RrYy) produces what phenotypic ratio?",
+      "options": [
+        { "key": "a", "label": "3:1", "correct": false },
+        { "key": "b", "label": "1:2:1", "correct": false },
+        { "key": "c", "label": "9:3:3:1", "correct": true },
+        { "key": "d", "label": "1:1:1:1", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-15",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "text": "Which chromosome pair determines sex in humans?",
+      "options": [
+        { "key": "a", "label": "Chromosome 21", "correct": false },
+        { "key": "b", "label": "The X and Y chromosomes", "correct": true },
+        { "key": "c", "label": "Chromosome 1", "correct": false },
+        { "key": "d", "label": "Mitochondrial DNA", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-16",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "text": "Why are X-linked recessive disorders more common in males?",
+      "options": [
+        { "key": "a", "label": "Males have two X chromosomes", "correct": false },
+        { "key": "b", "label": "Males have only one X chromosome, so one recessive allele is enough to express the disorder", "correct": true },
+        { "key": "c", "label": "Males do not inherit X chromosomes", "correct": false },
+        { "key": "d", "label": "Females are immune to X-linked disorders", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-17",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "text": "In incomplete dominance, the heterozygote shows:",
+      "options": [
+        { "key": "a", "label": "The dominant phenotype", "correct": false },
+        { "key": "b", "label": "The recessive phenotype", "correct": false },
+        { "key": "c", "label": "A blended intermediate phenotype", "correct": true },
+        { "key": "d", "label": "Both phenotypes separately", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-18",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "text": "In codominance, the heterozygote shows:",
+      "options": [
+        { "key": "a", "label": "A blend of the two traits", "correct": false },
+        { "key": "b", "label": "Both traits expressed distinctly", "correct": true },
+        { "key": "c", "label": "Only the dominant trait", "correct": false },
+        { "key": "d", "label": "Only the recessive trait", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-19",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "Which of the following correctly describes the structure of DNA?",
+      "options": [
+        { "key": "a", "label": "Single-stranded helix", "correct": false },
+        { "key": "b", "label": "Double-stranded helix with complementary base pairing", "correct": true },
+        { "key": "c", "label": "Triple-stranded helix", "correct": false },
+        { "key": "d", "label": "Flat linear chain", "correct": false }
+      ]
+    },
+    {
+      "id": "q1-20",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "Which nitrogenous base pairs with adenine in DNA?",
+      "options": [
+        { "key": "a", "label": "Guanine", "correct": false },
+        { "key": "b", "label": "Cytosine", "correct": false },
+        { "key": "c", "label": "Thymine", "correct": true },
+        { "key": "d", "label": "Uracil", "correct": false }
+      ]
+    }
+  ]
+}

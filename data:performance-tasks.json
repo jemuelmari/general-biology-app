@@ -1,0 +1,84 @@
+{
+  "biol1": {
+    "subject": "General Biology 1",
+    "tasks": [
+      {
+        "id": "biol1-pt1",
+        "title": "Performance Task 1 — Cell & Cell Cycle (Weeks 1–4)",
+        "coverage": "Weeks 1–4",
+        "maxScore": 100,
+        "options": [
+          { "key": "A", "label": "3D Cell Model (recyclable materials) — individual" },
+          { "key": "B", "label": "Cell Membrane Model — individual" },
+          { "key": "C", "label": "Mitosis/Meiosis Stop-Motion Video — individual" },
+          { "key": "D", "label": "Transport Mechanisms Poster — individual" }
+        ]
+      },
+      {
+        "id": "biol1-pt2",
+        "title": "Performance Task 2 — Biomolecules, Enzymes & Photosynthesis (Weeks 5–8)",
+        "coverage": "Weeks 5–8",
+        "maxScore": 100,
+        "options": [
+          { "key": "A", "label": "Enzyme Activity Lab Report (catalase/yeast) — individual" },
+          { "key": "B", "label": "Photosynthesis Pigment Extraction — individual" },
+          { "key": "C", "label": "Biomolecule Concept Map — individual" },
+          { "key": "D", "label": "Redox Reaction Demonstration — individual" }
+        ]
+      },
+      {
+        "id": "biol1-pt3",
+        "title": "Performance Task 3 — Respiration, ATP & Fermentation (Weeks 9–10)",
+        "coverage": "Weeks 9–10",
+        "maxScore": 100,
+        "options": [
+          { "key": "A", "label": "Fermentation vs Aerobic Respiration Poster — individual" },
+          { "key": "B", "label": "ATP Accounting Worksheet — individual" },
+          { "key": "C", "label": "Cellular Respiration Flowchart — individual" },
+          { "key": "D", "label": "Anaerobic Pathways Diagram — individual" }
+        ]
+      }
+    ]
+  },
+  "biol2": {
+    "subject": "General Biology 2",
+    "tasks": [
+      {
+        "id": "biol2-pt1",
+        "title": "Performance Task 1 — Organismal Biology & Genetics (Weeks 1–4)",
+        "coverage": "Weeks 1–4",
+        "maxScore": 100,
+        "options": [
+          { "key": "A", "label": "Homeostasis Role-Play/Dramatization — individual" },
+          { "key": "B", "label": "Organ System Comparative Chart — individual" },
+          { "key": "C", "label": "Pedigree Analysis (family trait) — individual" },
+          { "key": "D", "label": "Punnett Square Portfolio — individual" }
+        ]
+      },
+      {
+        "id": "biol2-pt2",
+        "title": "Performance Task 2 — DNA, Protein Synthesis & Evolution (Weeks 5–8)",
+        "coverage": "Weeks 5–8",
+        "maxScore": 100,
+        "options": [
+          { "key": "A", "label": "DNA Model (molecular structure) — individual" },
+          { "key": "B", "label": "Protein Synthesis Flowchart — individual" },
+          { "key": "C", "label": "GMO Research Paper/Case Study — individual" },
+          { "key": "D", "label": "Recombinant DNA Poster — individual" }
+        ]
+      },
+      {
+        "id": "biol2-pt3",
+        "title": "Performance Task 3 — Evolution Evidence & Systematics (Weeks 9–10)",
+        "coverage": "Weeks 9–10",
+        "maxScore": 100,
+        "options": [
+          { "key": "A", "label": "Phylogenetic Tree/Cladogram Construction — individual" },
+          { "key": "B", "label": "Fossil Evidence Analysis — individual" },
+          { "key": "C", "label": "Descent with Modification Diagram — individual" },
+          { "key": "D", "label": "3-Domain vs 5-Kingdom Comparison — individual" }
+        ]
+      }
+    ]
+  }
+}

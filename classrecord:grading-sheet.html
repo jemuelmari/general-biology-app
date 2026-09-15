@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grading Sheet — Individual Student</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+</head>
+<body>
+
+  <header class="app-header" style="background:linear-gradient(135deg,#4a148c,#6a1b9a);">
+    <div class="container flex-between">
+      <div>
+        <h1>📄 Grading Sheet</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Class Record</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:900px;">
+
+    <div class="card">
+      <label class="form-label">Select Student</label>
+      <select id="student-picker" class="form-control"></select>
+    </div>
+
+    <div id="grading-sheet-body"></div>
+
+  </main>
+
+  <footer class="app-footer"><p>Grading Sheet · v1.0.0</p></footer>
+
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const picker = document.getElementById('student-picker');
+      const users = Store.getAllUsers();
+
+      if (!users.length) {
+        document.getElementById('grading-sheet-body').innerHTML =
+          '<div class="alert alert-info">No students on this device.</div>';
+        return;
+      }
+
+      picker.innerHTML = users.map((u) =>
+        `<option value="${u.lrn}">${u.lastName}, ${u.firstName} — ${APP.formatLRN(u.lrn)}</option>`
+      ).join('');
+
+      picker.addEventListener('change', render);
+      render();
+
+      function render() {
+        const lrn = picker.value;
+        const user = Store.getUser(lrn);
+        if (!user) return;
+
+        const scores = Store.getScores(lrn);
+
+        const body = document.getElementById('grading-sheet-body');
+
+        body.innerHTML = `
+          <div class="card">
+            <h2 style="color:var(--color-primary-dark);">${user.lastName}, ${user.firstName} ${user.middleName || ''}</h2>
+            <p class="text-muted text-small">LRN: ${APP.formatLRN(user.lrn)} · Grade ${user.gradeLevel} — ${user.section}</p>
+          </div>
+
+          ${['biol1', 'biol2'].map((subj) => renderSubject(subj, scores[subj] || {})).join('')}
+        `;
+      }
+
+      function renderSubject(subject, data) {
+        const quizzes = Object.entries(data.quizzes || {});
+        const sts = Object.entries(data.st || {});
+        const pts = Object.entries(data.pt || {});
+        const te = data.te ? Object.entries(data.te) : [];
+
+        return `
+          <div class="card">
+            <h3 style="color:var(--color-primary-dark);">${subject === 'biol1' ? 'General Biology 1' : 'General Biology 2'}</h3>
+
+            <h4 style="margin-top:12px;color:var(--color-primary-dark);">📝 Written Works (Quizzes)</h4>
+            ${quizzes.length ? `
+              <table class="table">
+                <thead><tr><th>Assessment</th><th>Score</th><th>%</th><th>Passed</th></tr></thead>
+                <tbody>
+                  ${quizzes.map(([id, d]) => `
+                    <tr>
+                      <td>${id}</td>
+                      <td>${d.score}/${d.total}</td>
+                      <td>${Math.round((d.score / d.total) * 100)}%</td>
+                      <td>${d.passed ? '✅' : '❌'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            ` : '<p class="text-muted text-small">No quizzes recorded.</p>'}
+
+            <h4 style="margin-top:16px;color:var(--color-primary-dark);">📋 Summative Tests</h4>
+            ${sts.length ? `
+              <table class="table">
+                <thead><tr><th>Assessment</th><th>Score</th><th>%</th><th>Passed</th></tr></thead>
+                <tbody>
+                  ${sts.map(([id, d]) => `
+                    <tr>
+                      <td>${id}</td>
+                      <td>${d.score}/${d.total}</td>
+                      <td>${Math.round((d.score / d.total) * 100)}%</td>
+                      <td>${d.passed ? '✅' : '❌'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            ` : '<p class="text-muted text-small">No STs recorded.</p>'}
+
+            <h4 style="margin-top:16px;color:var(--color-primary-dark);">🎨 Performance Tasks</h4>
+            ${pts.length ? `
+              <table class="table">
+                <thead><tr><th>Task</th><th>Option</th><th>Score</th></tr></thead>
+                <tbody>
+                  ${pts.map(([id, d]) => `
+                    <tr>
+                      <td>${id}</td>
+                      <td>${d.option || '—'}</td>
+                      <td>${d.score != null ? `${d.score}/${d.maxScore || 100}` : '<em>Not graded</em>'}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            ` : '<p class="text-muted text-small">No PTs recorded.</p>'}
+
+            ${te.length ? `
+              <h4 style="margin-top:16px;color:var(--color-primary-dark);">🎓 Term Exam</h4>
+              <table class="table">
+                <tbody>
+                  ${te.map(([id, d]) => `
+                    <tr><td>${id}</td><td>${d.score}/${d.total}</td><td>${Math.round((d.score / d.total) * 100)}%</td></tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            ` : ''}
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>

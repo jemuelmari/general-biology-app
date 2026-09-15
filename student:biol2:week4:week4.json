@@ -1,0 +1,211 @@
+{
+  "week": 4,
+  "title": "Sex Linkage & Recombination",
+  "days": [
+    {
+      "n": 1,
+      "title": "Sex Chromosomes & Sex Determination",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe sex chromosomes.</li><li>Explain sex determination in humans.</li><li>Differentiate autosomes from sex chromosomes.</li><li>Identify disorders of sex chromosome number.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Autosomes</strong> — the 22 pairs of non-sex chromosomes.</li><li><strong>Sex chromosomes</strong> — X and Y chromosomes.</li><li><strong>XX</strong> — female; <strong>XY</strong> — male.</li><li><strong>SRY gene</strong> — on Y chromosome; triggers male development.</li></ul><h3>📚 Lesson Content</h3><h4>A. Human Chromosomes</h4><ul><li>Total: 46 chromosomes (23 pairs)</li><li>22 pairs = autosomes</li><li>1 pair = sex chromosomes (XX or XY)</li></ul><h4>B. Sex Determination</h4><p>The father determines the sex of the child — he can pass an X or a Y.</p><table><thead><tr><th>Father</th><th>Mother</th><th>Offspring</th></tr></thead><tbody><tr><td>X</td><td>X</td><td>XX (female)</td></tr><tr><td>Y</td><td>X</td><td>XY (male)</td></tr></tbody></table><h4>C. Sex Chromosome Disorders</h4><table><thead><tr><th>Condition</th><th>Genotype</th></tr></thead><tbody><tr><td>Turner syndrome</td><td>XO</td></tr><tr><td>Klinefelter syndrome</td><td>XXY</td></tr><tr><td>Triple X syndrome</td><td>XXX</td></tr></tbody></table>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "sex-chrom-master",
+        "badgeName": "Sex Chrom Master",
+        "badgeIcon": "🧬",
+        "pairs": [
+          { "key": "auto", "left": "Autosomes", "right": "22 pairs of non-sex chromosomes" },
+          { "key": "sex", "left": "Sex chromosomes", "right": "X and Y" },
+          { "key": "female", "left": "XX", "right": "Female" },
+          { "key": "male", "left": "XY", "right": "Male" },
+          { "key": "sry", "left": "SRY gene", "right": "Triggers male development" },
+          { "key": "turner", "left": "Turner syndrome", "right": "XO" },
+          { "key": "kline", "left": "Klinefelter syndrome", "right": "XXY" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "sex-detective",
+        "badgeName": "Sex Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "An individual has XX chromosomes.", "choices": [{ "label": "Female ✓", "correct": true }, { "label": "Male", "correct": false }] },
+          { "text": "An individual has XY chromosomes.", "choices": [{ "label": "Female", "correct": false }, { "label": "Male ✓", "correct": true }] },
+          { "text": "A person has 45 chromosomes with a single X.", "choices": [{ "label": "Turner syndrome ✓", "correct": true }, { "label": "Klinefelter", "correct": false }] },
+          { "text": "A person has XXY chromosomes.", "choices": [{ "label": "Klinefelter syndrome ✓", "correct": true }, { "label": "Turner", "correct": false }] },
+          { "text": "The father passes on the sex chromosome.", "choices": [{ "label": "True — X or Y ✓", "correct": true }, { "label": "False — mother does", "correct": false }] },
+          { "text": "The SRY gene is located on:", "choices": [{ "label": "Y chromosome ✓", "correct": true }, { "label": "X chromosome", "correct": false }, { "label": "Autosome 21", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "sex-det-escape",
+        "badgeName": "Sex Determination Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "How many pairs of autosomes do humans have?", "choices": [{ "label": "22", "correct": true }, { "label": "23", "correct": false }, { "label": "1", "correct": false }, { "label": "46", "correct": false }] },
+          { "text": "Who determines the sex of a human child?", "choices": [{ "label": "Father (X or Y)", "correct": true }, { "label": "Mother (X only)", "correct": false }, { "label": "Both equally", "correct": false }, { "label": "Random chance alone", "correct": false }] },
+          { "text": "Which condition results from XXY?", "choices": [{ "label": "Turner syndrome", "correct": false }, { "label": "Klinefelter syndrome", "correct": true }, { "label": "Down syndrome", "correct": false }, { "label": "Triple X", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Humans have 22 pairs of autosomes and 1 pair of sex chromosomes.",
+        "Females: XX; Males: XY.",
+        "Father determines sex of the offspring.",
+        "SRY gene on Y chromosome triggers male development."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "X-Linked Inheritance Patterns",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain X-linked inheritance.</li><li>Describe why males are more often affected.</li><li>Predict offspring from X-linked crosses.</li><li>Identify X-linked disorders.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>X-linked gene</strong> — gene carried on the X chromosome.</li><li><strong>Hemizygous</strong> — males have only one X, so one allele determines the trait.</li><li><strong>Carrier</strong> — a female with one recessive allele who doesn't show the trait.</li></ul><h3>📚 Lesson Content</h3><h4>A. Why Males Are Affected More</h4><p>Males have only one X chromosome. If that X carries a recessive allele, the male will show the trait. Females must inherit two recessive alleles to be affected.</p><h4>B. Examples of X-Linked Recessive Disorders</h4><ul><li>Hemophilia A</li><li>Red-green color blindness</li><li>Duchenne muscular dystrophy</li></ul><h4>C. Cross Example</h4><p>Carrier mother (XᶜX) × normal father (XY):</p><ul><li>Daughters: 50% carriers, 50% normal</li><li>Sons: 50% affected, 50% normal</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "xlink-master",
+        "badgeName": "X-Link Master",
+        "badgeIcon": "🔗",
+        "pairs": [
+          { "key": "xlink", "left": "X-linked gene", "right": "Carried on X chromosome" },
+          { "key": "hemi", "left": "Hemizygous", "right": "Only one copy of a gene" },
+          { "key": "carrier", "left": "Carrier", "right": "Female with one recessive allele" },
+          { "key": "hemo", "left": "Hemophilia", "right": "X-linked recessive disorder" },
+          { "key": "cblind", "left": "Color blindness", "right": "X-linked recessive" },
+          { "key": "dmd", "left": "Duchenne MD", "right": "X-linked recessive" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "xlink-detective",
+        "badgeName": "X-Link Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "A male inherits one recessive X allele.", "choices": [{ "label": "Affected ✓", "correct": true }, { "label": "Carrier", "correct": false }, { "label": "Normal", "correct": false }] },
+          { "text": "A female inherits one recessive X allele.", "choices": [{ "label": "Affected", "correct": false }, { "label": "Carrier ✓", "correct": true }, { "label": "Normal", "correct": false }] },
+          { "text": "XᶜX × XY → what % of sons affected?", "choices": [{ "label": "50% ✓", "correct": true }, { "label": "25%", "correct": false }, { "label": "100%", "correct": false }] },
+          { "text": "XᶜX × XY → what % of daughters carriers?", "choices": [{ "label": "50% ✓", "correct": true }, { "label": "25%", "correct": false }, { "label": "100%", "correct": false }] },
+          { "text": "XᶜXᶜ × XY → sons affected?", "choices": [{ "label": "All ✓", "correct": true }, { "label": "Half", "correct": false }, { "label": "None", "correct": false }] },
+          { "text": "Which disorder is X-linked recessive?", "choices": [{ "label": "Hemophilia A ✓", "correct": true }, { "label": "Cystic fibrosis", "correct": false }, { "label": "Huntington's", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "xlink-escape",
+        "badgeName": "X-Link Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Why are males more affected by X-linked recessive disorders?", "choices": [{ "label": "They have two X chromosomes", "correct": false }, { "label": "They have only one X chromosome", "correct": true }, { "label": "They have a Y chromosome mutation", "correct": false }, { "label": "They inherit more mutations", "correct": false }] },
+          { "text": "A female with one recessive X allele is:", "choices": [{ "label": "Affected", "correct": false }, { "label": "Carrier", "correct": true }, { "label": "Homozygous dominant", "correct": false }, { "label": "Hemizygous", "correct": false }] },
+          { "text": "Which of the following is an X-linked recessive disorder?", "choices": [{ "label": "Hemophilia", "correct": true }, { "label": "Diabetes", "correct": false }, { "label": "Turner syndrome", "correct": false }, { "label": "Sickle-cell anemia", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "X-linked genes are on the X chromosome.",
+        "Males are hemizygous for X-linked genes.",
+        "Females need two recessive alleles to be affected.",
+        "Examples: hemophilia, color blindness, DMD."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Y-Linked Traits & Sex-Linked Disorders",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe Y-linked traits.</li><li>Explain inheritance patterns of Y-linked traits.</li><li>Distinguish sex-linked from sex-influenced traits.</li><li>Identify common sex-linked disorders.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Y-linked</strong> — genes on the Y chromosome.</li><li><strong>Holandric</strong> — passed from father to all sons.</li><li><strong>Sex-influenced</strong> — trait expressed differently in males and females.</li></ul><h3>📚 Lesson Content</h3><h4>A. Y-Linked Traits</h4><ul><li>Only males have a Y chromosome</li><li>Traits passed father → all sons</li><li>Examples: hairy ears, some fertility genes</li></ul><h4>B. Sex-Influenced Traits</h4><ul><li>Autosomal genes, but expression differs by sex</li><li>Example: pattern baldness (more common in males)</li></ul><h4>C. Sex-Linked Disorders (Summary)</h4><table><thead><tr><th>Disorder</th><th>Type</th></tr></thead><tbody><tr><td>Hemophilia A</td><td>X-linked recessive</td></tr><tr><td>Color blindness</td><td>X-linked recessive</td></tr><tr><td>Duchenne muscular dystrophy</td><td>X-linked recessive</td></tr><tr><td>Hairy ears</td><td>Y-linked</td></tr><tr><td>Pattern baldness</td><td>Sex-influenced</td></tr></tbody></table>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "ylink-master",
+        "badgeName": "Y-Link Master",
+        "badgeIcon": "🎯",
+        "pairs": [
+          { "key": "ylink", "left": "Y-linked", "right": "Genes on Y chromosome" },
+          { "key": "hol", "left": "Holandric", "right": "Father → all sons" },
+          { "key": "sexinf", "left": "Sex-influenced", "right": "Expressed differently by sex" },
+          { "key": "bald", "left": "Pattern baldness", "right": "Sex-influenced trait" },
+          { "key": "hairy", "left": "Hairy ears", "right": "Y-linked trait" },
+          { "key": "hemo", "left": "Hemophilia", "right": "X-linked recessive" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "ylink-detective",
+        "badgeName": "Y-Link Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "A trait is passed from father to all sons.", "choices": [{ "label": "Y-linked ✓", "correct": true }, { "label": "X-linked", "correct": false }] },
+          { "text": "A trait affects males more due to hormones.", "choices": [{ "label": "Sex-influenced ✓", "correct": true }, { "label": "Y-linked", "correct": false }] },
+          { "text": "Hairy ears are passed from father to sons.", "choices": [{ "label": "Y-linked ✓", "correct": true }, { "label": "X-linked", "correct": false }] },
+          { "text": "Pattern baldness affects males more.", "choices": [{ "label": "Sex-influenced ✓", "correct": true }, { "label": "Y-linked", "correct": false }] },
+          { "text": "Hemophilia is passed from carrier mother to son.", "choices": [{ "label": "X-linked ✓", "correct": true }, { "label": "Y-linked", "correct": false }] },
+          { "text": "Traits on the Y chromosome:", "choices": [{ "label": "Only in males ✓", "correct": true }, { "label": "Only in females", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "ylink-escape",
+        "badgeName": "Y-Link Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Y-linked traits are passed:", "choices": [{ "label": "Father → all sons", "correct": true }, { "label": "Mother → daughters", "correct": false }, { "label": "Father → daughters", "correct": false }, { "label": "Mother → sons", "correct": false }] },
+          { "text": "Pattern baldness is an example of:", "choices": [{ "label": "Y-linked", "correct": false }, { "label": "Sex-influenced", "correct": true }, { "label": "X-linked recessive", "correct": false }, { "label": "Autosomal dominant", "correct": false }] },
+          { "text": "Which of the following is Y-linked?", "choices": [{ "label": "Hemophilia", "correct": false }, { "label": "Hairy ears", "correct": true }, { "label": "Color blindness", "correct": false }, { "label": "DMD", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Y-linked traits pass father → sons.",
+        "Sex-influenced traits differ by sex due to hormones.",
+        "X-linked recessive disorders affect males more.",
+        "Hairy ears = Y-linked; pattern baldness = sex-influenced."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Recombination & Gene Linkage",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define genetic recombination.</li><li>Explain crossing over and its role.</li><li>Define gene linkage and map units.</li><li>Interpret recombination frequencies.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Recombination</strong> — new combinations of alleles from crossing over.</li><li><strong>Linked genes</strong> — genes close together on the same chromosome.</li><li><strong>Map unit (centimorgan)</strong> — 1% recombination frequency.</li></ul><h3>📚 Lesson Content</h3><h4>A. Recombination</h4><p>During Prophase I of meiosis, homologous chromosomes exchange segments (crossing over). This creates new allele combinations.</p><h4>B. Linked Genes</h4><ul><li>Genes on the same chromosome tend to be inherited together</li><li>The closer they are, the less likely they'll be separated by crossing over</li></ul><h4>C. Recombination Frequency</h4><ul><li>RF = (number of recombinants) / (total offspring) × 100%</li><li>1% RF = 1 map unit (centimorgan)</li><li>Used to build genetic maps</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "recomb-master",
+        "badgeName": "Recombination Master",
+        "badgeIcon": "🔀",
+        "pairs": [
+          { "key": "recomb", "left": "Recombination", "right": "New allele combinations" },
+          { "key": "linked", "left": "Linked genes", "right": "Close on same chromosome" },
+          { "key": "map", "left": "Map unit", "right": "1% recombination frequency" },
+          { "key": "cross", "left": "Crossing over", "right": "Exchange in Prophase I" },
+          { "key": "rf", "left": "Recombination frequency", "right": "Recombinants / total × 100" },
+          { "key": "cm", "left": "Centimorgan", "right": "Same as 1 map unit" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "recomb-detective",
+        "badgeName": "Recombination Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "Two genes close together on a chromosome.", "choices": [{ "label": "Linked ✓", "correct": true }, { "label": "Unlinked", "correct": false }] },
+          { "text": "10 out of 100 offspring show a new allele combo.", "choices": [{ "label": "10% RF = 10 map units ✓", "correct": true }, { "label": "50% RF", "correct": false }] },
+          { "text": "Crossing over occurs in:", "choices": [{ "label": "Prophase I ✓", "correct": true }, { "label": "Anaphase II", "correct": false }, { "label": "Metaphase I", "correct": false }] },
+          { "text": "Genes on different chromosomes assort:", "choices": [{ "label": "Independently ✓", "correct": true }, { "label": "Together", "correct": false }] },
+          { "text": "25% RF = how many centimorgans?", "choices": [{ "label": "25 ✓", "correct": true }, { "label": "50", "correct": false }, { "label": "2.5", "correct": false }] },
+          { "text": "Recombination increases:", "choices": [{ "label": "Genetic diversity ✓", "correct": true }, { "label": "Chromosome number", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week4-bio2-master",
+        "badgeName": "Week 4 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "Linked genes are:", "choices": [{ "label": "Close together on the same chromosome", "correct": true }, { "label": "On different chromosomes", "correct": false }, { "label": "Always dominant", "correct": false }, { "label": "Always recessive", "correct": false }] },
+          { "text": "1% recombination frequency equals:", "choices": [{ "label": "1 map unit", "correct": true }, { "label": "10 map units", "correct": false }, { "label": "100 map units", "correct": false }, { "label": "0 map units", "correct": false }] },
+          { "text": "Crossing over occurs during:", "choices": [{ "label": "Prophase I of meiosis", "correct": true }, { "label": "Anaphase II", "correct": false }, { "label": "Mitosis", "correct": false }, { "label": "Cytokinesis", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Recombination produces new allele combinations.",
+        "Linked genes are on the same chromosome.",
+        "RF = (recombinants / total) × 100%.",
+        "1% RF = 1 map unit (centimorgan)."
+      ]
+    }
+  ]
+}

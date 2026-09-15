@@ -1,0 +1,61 @@
+{
+  "subject": "General Biology 2",
+  "code": "STEM_BIO11/12",
+  "gradeLevel": "Grade 11/12",
+  "quarters": "3rd to 4th Quarter",
+  "hours": "40 hours / 10 weeks per quarter",
+  "description": "This subject is designed to enhance the understanding of the principles and concepts in the study of biology, particularly heredity and variation, and the diversity of living organisms, their structure, function, and evolution.",
+  "contentAreas": [
+    {
+      "id": "organismal",
+      "title": "Organismal Biology",
+      "contentStandard": "The learners demonstrate an understanding of: 1. Plant and Animal Organ Systems and their Functions 2. Feedback Mechanisms",
+      "performanceStandard": "The learners shall be able to develop a presentation (e.g., role-playing, dramatization, and other forms of multimedia) to show how an organism maintains homeostasis through the interaction of the various organ systems in the body.",
+      "competencies": [
+        { "code": "STEM_BIO11/12-IVa-h-1", "desc": "Compare and contrast the following processes in plants and animals: reproduction, development, nutrition, gas exchange, transport/circulation, regulation of body fluids, chemical and nervous control, immune systems, and sensory and motor mechanisms", "quarter": 4, "week": "1" },
+        { "code": "STEM_BIO11/12-IVi-j-2", "desc": "Explain how some organisms maintain steady internal conditions that possess various structures and processes", "quarter": 4, "week": "2" },
+        { "code": "STEM_BIO11/12-IVi-j-3", "desc": "Describe examples of homeostasis (e.g., temperature regulation, osmotic balance, and glucose levels) and the major features of feedback loops that produce such homeostasis", "quarter": 4, "week": "2" }
+      ]
+    },
+    {
+      "id": "genetics",
+      "title": "Genetics",
+      "contentStandard": "The learners demonstrate an understanding of heredity and variation.",
+      "performanceStandard": "The learners shall be able to: 1. make a pedigree analysis in the learner's family using a simple genetic trait 2. make a research paper/case study/poster on genetic diseases 3. make a diagram showing the evolution of a domesticated crop 4. differentiate the 3-Domain Scheme from the 5-Kingdom Scheme of classification of living things",
+      "competencies": [
+        { "code": "STEM_BIO11/12-IIIa-b-1", "desc": "Predict genotypes and phenotypes of parents and offspring using the laws of inheritance", "quarter": 3, "week": "3" },
+        { "code": "STEM_BIO11/12-IIIa-b-2", "desc": "Explain sex linkage and recombination", "quarter": 3, "week": "4" },
+        { "code": "STEM_BIO11/12-IIIa-b-3", "desc": "Describe modifications to Mendel's classic ratios (gene interaction)", "quarter": 3, "week": "5" },
+        { "code": "STEM_BIO11/12-IIIa-b-4", "desc": "Illustrate the molecular structure of DNA, RNA, and proteins", "quarter": 3, "week": "5" },
+        { "code": "STEM_BIO11/12-IIIa-b-5", "desc": "Diagram the steps in DNA replication and protein synthesis", "quarter": 3, "week": "6" },
+        { "code": "STEM_BIO11/12-IIIa-b-6", "desc": "Outline the processes involved in genetic engineering", "quarter": 3, "week": "7" },
+        { "code": "STEM_BIO11/12-IIIa-b-7", "desc": "Discuss the applications of recombinant DNA", "quarter": 3, "week": "7" }
+      ]
+    },
+    {
+      "id": "evolution",
+      "title": "Evolution and Origin of Biodiversity",
+      "contentStandard": "The learners demonstrate an understanding of relevance, mechanisms, evidence/bases, and theories of evolution.",
+      "performanceStandard": "The learners shall be able to explain the mechanisms and evidence of evolution.",
+      "competencies": [
+        { "code": "STEM_BIO11/12-IIIC-g-8", "desc": "Describe general features of the history of life on Earth, including generally accepted dates and sequence of the geologic time scale and characteristics of major groups of organisms present during these time periods", "quarter": 3, "week": "8" },
+        { "code": "STEM_BIO11/12-IIIC-g-9", "desc": "Explain the mechanisms that produce change in populations from generation to generation (e.g., artificial selection, natural selection, genetic drift, mutation, recombination)", "quarter": 3, "week": "8" },
+        { "code": "STEM_BIO11/12-IIIC-g-10", "desc": "Show patterns of descent with modification from common ancestors to produce the organismal diversity observed today", "quarter": 3, "week": "9" },
+        { "code": "STEM_BIO11/12-IIIC-g-11", "desc": "Trace the development of evolutionary thought", "quarter": 3, "week": "9" },
+        { "code": "STEM_BIO11/12-IIIC-g-12", "desc": "Explain evidences of evolution (e.g., biogeography, fossil record, DNA/protein sequences, homology, and embryology)", "quarter": 3, "week": "9" },
+        { "code": "STEM_BIO11/12-IIIC-g-13", "desc": "Infer evolutionary relationships among organisms using the evidence of evolution", "quarter": 3, "week": "9" }
+      ]
+    },
+    {
+      "id": "systematics",
+      "title": "Systematics Based on Evolutionary Relationships",
+      "contentStandard": "The learners demonstrate an understanding of basic taxonomic concepts and principles, description, nomenclature, identification, and classification.",
+      "performanceStandard": "The learners shall be able to describe species diversity and cladistics.",
+      "competencies": [
+        { "code": "STEM_BIO11/12-IIIH-j-14", "desc": "Explain how the structural and developmental characteristics and relatedness of DNA sequences are used in classifying living things", "quarter": 3, "week": "10" },
+        { "code": "STEM_BIO11/12-IIIH-j-15", "desc": "Identify the unique/distinctive characteristics of a specific taxon relative to other taxa", "quarter": 3, "week": "10" },
+        { "code": "STEM_BIO11/12-IIIH-j-16", "desc": "Describe species diversity and cladistics, including the types of evidence and procedures that can be used to establish evolutionary relationships", "quarter": 3, "week": "10" }
+      ]
+    }
+  ]
+}

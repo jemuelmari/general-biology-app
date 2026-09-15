@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>General Biology Online Modular Application</title>
+  <meta name="description" content="DepEd-aligned online modular application for General Biology 1 & 2 — Grade 12" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/student.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🧬 General Biology Online Modular Application</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav>
+        <a href="instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Teacher</a>
+        <a href="classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Gradebook</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container" style="padding-top:48px;padding-bottom:64px;">
+    <div class="container-narrow text-center">
+      <h1 style="font-size:2.5rem;color:var(--color-primary-dark);margin-bottom:8px;">
+        Welcome, Biology Learner!
+      </h1>
+      <p style="font-size:1.1rem;color:var(--color-text-muted);margin-bottom:32px;">
+        Your interactive journey through General Biology 1 & 2
+      </p>
+    </div>
+
+    <!-- Entry cards -->
+    <div class="dashboard-grid" style="max-width:800px;margin:0 auto;">
+
+      <a href="student/login.html" class="subject-card" style="text-decoration:none;">
+        <div style="font-size:2.5rem;margin-bottom:8px;">🎓</div>
+        <h3>Student Login</h3>
+        <p class="text-muted text-small">Log in with your LRN to access lessons, activities, and assessments.</p>
+      </a>
+
+      <a href="student/dashboard.html" class="subject-card" style="text-decoration:none;border-top-color:var(--color-accent);">
+        <div style="font-size:2.5rem;margin-bottom:8px;">📚</div>
+        <h3>Continue Learning</h3>
+        <p class="text-muted text-small">If you're already logged in, jump straight to your dashboard.</p>
+      </a>
+
+    </div>
+
+    <!-- Features -->
+    <div style="max-width:800px;margin:48px auto 0;">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">✨ What's Inside</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+          <div>
+            <div style="font-size:1.5rem;">🎮</div>
+            <strong>Gamified Lessons</strong>
+            <p class="text-small text-muted">Earn points and badges as you learn.</p>
+          </div>
+          <div>
+            <div style="font-size:1.5rem;">📊</div>
+            <strong>Track Progress</strong>
+            <p class="text-small text-muted">See your scores, standing, and mastery in real time.</p>
+          </div>
+          <div>
+            <div style="font-size:1.5rem;">💾</div>
+            <strong>Sync & Backup</strong>
+            <p class="text-small text-muted">Send progress to your teacher via sync code or JSON.</p>
+          </div>
+          <div>
+            <div style="font-size:1.5rem;">🧠</div>
+            <strong>Remediation</strong>
+            <p class="text-small text-muted">Targeted review if you fall below 80% on any Summative Test.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>General Biology Online Modular Application · v1.0.0</p>
+    <p class="text-small">Aligned with DepEd K to 12 Curriculum Guide & DO 015, s. 2026</p>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Redirect to dashboard if already logged in
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = Store.getCurrentUser();
+      if (user) {
+        const link = document.querySelector('a[href="student/dashboard.html"]');
+        if (link) link.href = 'student/dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>

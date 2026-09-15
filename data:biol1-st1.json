@@ -1,0 +1,340 @@
+{
+  "assessmentId": "biol1-st1",
+  "subject": "biol1",
+  "type": "st",
+  "title": "Summative Test 1 — Cell, Cell Cycle, Transport (Weeks 1–4)",
+  "timeLimit": 1800,
+  "passingScore": 80,
+  "items": [
+    {
+      "id": "st1-01",
+      "competency": "STEM_BIO11/12-Ia-c-1",
+      "text": "Which of the following correctly lists the three postulates of the cell theory?",
+      "options": [
+        { "key": "a", "label": "All organisms are made of cells; cells are the basic unit of life; cells come from pre-existing cells", "correct": true },
+        { "key": "b", "label": "All cells have nuclei; all cells divide; all cells contain DNA", "correct": false },
+        { "key": "c", "label": "Cells are visible to the naked eye; cells are all the same; cells are immortal", "correct": false },
+        { "key": "d", "label": "All cells photosynthesize; cells contain chlorophyll; cells produce ATP", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-02",
+      "competency": "STEM_BIO11/12-Ia-c-1",
+      "text": "Which scientist first observed living cells under a microscope?",
+      "options": [
+        { "key": "a", "label": "Robert Hooke", "correct": false },
+        { "key": "b", "label": "Anton van Leeuwenhoek", "correct": true },
+        { "key": "c", "label": "Matthias Schleiden", "correct": false },
+        { "key": "d", "label": "Rudolf Virchow", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-03",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "text": "Which of the following organelles is NOT membrane-bound?",
+      "options": [
+        { "key": "a", "label": "Ribosome", "correct": true },
+        { "key": "b", "label": "Mitochondrion", "correct": false },
+        { "key": "c", "label": "Golgi apparatus", "correct": false },
+        { "key": "d", "label": "Lysosome", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-04",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "text": "Which organelle is responsible for modifying, sorting, and packaging proteins for secretion?",
+      "options": [
+        { "key": "a", "label": "Smooth ER", "correct": false },
+        { "key": "b", "label": "Golgi apparatus", "correct": true },
+        { "key": "c", "label": "Lysosome", "correct": false },
+        { "key": "d", "label": "Peroxisome", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-05",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "text": "Which cellular structure contains digestive enzymes for breaking down waste?",
+      "options": [
+        { "key": "a", "label": "Lysosome", "correct": true },
+        { "key": "b", "label": "Ribosome", "correct": false },
+        { "key": "c", "label": "Nucleolus", "correct": false },
+        { "key": "d", "label": "Vacuole", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-06",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "text": "Which organelle performs detoxification of drugs and poisons?",
+      "options": [
+        { "key": "a", "label": "Rough ER", "correct": false },
+        { "key": "b", "label": "Smooth ER", "correct": true },
+        { "key": "c", "label": "Golgi apparatus", "correct": false },
+        { "key": "d", "label": "Mitochondrion", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-07",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "text": "Which of the following is the site of ribosome assembly?",
+      "options": [
+        { "key": "a", "label": "Nucleolus", "correct": true },
+        { "key": "b", "label": "Nuclear envelope", "correct": false },
+        { "key": "c", "label": "Chromatin", "correct": false },
+        { "key": "d", "label": "Cytoplasm", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-08",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "text": "Which of the following is found in BOTH prokaryotic and eukaryotic cells?",
+      "options": [
+        { "key": "a", "label": "Ribosomes", "correct": true },
+        { "key": "b", "label": "Membrane-bound nucleus", "correct": false },
+        { "key": "c", "label": "Mitochondria", "correct": false },
+        { "key": "d", "label": "Endoplasmic reticulum", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-09",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "text": "Which statement about prokaryotes is TRUE?",
+      "options": [
+        { "key": "a", "label": "They have a membrane-bound nucleus", "correct": false },
+        { "key": "b", "label": "They lack membrane-bound organelles", "correct": true },
+        { "key": "c", "label": "They have linear chromosomes", "correct": false },
+        { "key": "d", "label": "They are always multicellular", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-10",
+      "competency": "STEM_BIO11/12-Ia-c-4",
+      "text": "Which type of animal tissue connects, supports, and protects other tissues?",
+      "options": [
+        { "key": "a", "label": "Epithelial", "correct": false },
+        { "key": "b", "label": "Connective", "correct": true },
+        { "key": "c", "label": "Muscle", "correct": false },
+        { "key": "d", "label": "Nervous", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-11",
+      "competency": "STEM_BIO11/12-Ia-c-4",
+      "text": "Which plant tissue is responsible for transporting water?",
+      "options": [
+        { "key": "a", "label": "Xylem", "correct": true },
+        { "key": "b", "label": "Phloem", "correct": false },
+        { "key": "c", "label": "Epidermis", "correct": false },
+        { "key": "d", "label": "Parenchyma", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-12",
+      "competency": "STEM_BIO11/12-Ia-c-5",
+      "text": "Root hairs are examples of:",
+      "options": [
+        { "key": "a", "label": "Cell modifications that increase surface area for absorption", "correct": true },
+        { "key": "b", "label": "Cell modifications for movement", "correct": false },
+        { "key": "c", "label": "Cell modifications for reproduction", "correct": false },
+        { "key": "d", "label": "Diseased cells", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-13",
+      "competency": "STEM_BIO11/12-Id-f-6",
+      "text": "Which phase of the cell cycle is characterized by cell growth and preparation for DNA synthesis?",
+      "options": [
+        { "key": "a", "label": "G1 phase", "correct": true },
+        { "key": "b", "label": "S phase", "correct": false },
+        { "key": "c", "label": "G2 phase", "correct": false },
+        { "key": "d", "label": "M phase", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-14",
+      "competency": "STEM_BIO11/12-Id-f-6",
+      "text": "Which checkpoint ensures that DNA replication is complete before mitosis begins?",
+      "options": [
+        { "key": "a", "label": "G1 checkpoint", "correct": false },
+        { "key": "b", "label": "G2 checkpoint", "correct": true },
+        { "key": "c", "label": "M checkpoint", "correct": false },
+        { "key": "d", "label": "S checkpoint", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-15",
+      "competency": "STEM_BIO11/12-Id-f-7",
+      "text": "During which stage of mitosis do sister chromatids separate and move to opposite poles?",
+      "options": [
+        { "key": "a", "label": "Prophase", "correct": false },
+        { "key": "b", "label": "Metaphase", "correct": false },
+        { "key": "c", "label": "Anaphase", "correct": true },
+        { "key": "d", "label": "Telophase", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-16",
+      "competency": "STEM_BIO11/12-Id-f-7",
+      "text": "How many daughter cells are produced at the end of meiosis?",
+      "options": [
+        { "key": "a", "label": "2", "correct": false },
+        { "key": "b", "label": "4", "correct": true },
+        { "key": "c", "label": "6", "correct": false },
+        { "key": "d", "label": "8", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-17",
+      "competency": "STEM_BIO11/12-Id-f-8",
+      "text": "Crossing over occurs during which stage of meiosis?",
+      "options": [
+        { "key": "a", "label": "Prophase I", "correct": true },
+        { "key": "b", "label": "Metaphase I", "correct": false },
+        { "key": "c", "label": "Anaphase II", "correct": false },
+        { "key": "d", "label": "Telophase II", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-18",
+      "competency": "STEM_BIO11/12-Id-f-8",
+      "text": "What is the result of crossing over?",
+      "options": [
+        { "key": "a", "label": "Identical daughter cells", "correct": false },
+        { "key": "b", "label": "New combinations of alleles on chromosomes", "correct": true },
+        { "key": "c", "label": "Doubled chromosome number", "correct": false },
+        { "key": "d", "label": "Loss of genetic material", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-19",
+      "competency": "STEM_BIO11/12-Id-f-9",
+      "text": "Which of the following is a real-life application of mitosis?",
+      "options": [
+        { "key": "a", "label": "Wound healing and tissue repair", "correct": true },
+        { "key": "b", "label": "Gamete formation", "correct": false },
+        { "key": "c", "label": "Genetic diversity", "correct": false },
+        { "key": "d", "label": "Reduction division", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-20",
+      "competency": "STEM_BIO11/12-Id-f-10",
+      "text": "Which of the following disorders results from failure of cell cycle control?",
+      "options": [
+        { "key": "a", "label": "Cancer", "correct": true },
+        { "key": "b", "label": "Diabetes", "correct": false },
+        { "key": "c", "label": "Anemia", "correct": false },
+        { "key": "d", "label": "Hemophilia", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-21",
+      "competency": "STEM_BIO11/12-Ig-h-11",
+      "text": "Which component of the plasma membrane is responsible for regulating fluidity?",
+      "options": [
+        { "key": "a", "label": "Cholesterol", "correct": true },
+        { "key": "b", "label": "Phospholipids", "correct": false },
+        { "key": "c", "label": "Glycoproteins", "correct": false },
+        { "key": "d", "label": "Integral proteins", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-22",
+      "competency": "STEM_BIO11/12-Ig-h-12",
+      "text": "Which structure of the plasma membrane enables cell-to-cell recognition?",
+      "options": [
+        { "key": "a", "label": "Glycolipids and glycoproteins", "correct": true },
+        { "key": "b", "label": "Cholesterol", "correct": false },
+        { "key": "c", "label": "Phospholipid tails", "correct": false },
+        { "key": "d", "label": "Cytoskeleton", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-23",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "text": "Which process requires a carrier protein but NO energy (ATP)?",
+      "options": [
+        { "key": "a", "label": "Simple diffusion", "correct": false },
+        { "key": "b", "label": "Facilitated diffusion", "correct": true },
+        { "key": "c", "label": "Active transport", "correct": false },
+        { "key": "d", "label": "Endocytosis", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-24",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "text": "Movement of water across a semipermeable membrane is called:",
+      "options": [
+        { "key": "a", "label": "Osmosis", "correct": true },
+        { "key": "b", "label": "Diffusion", "correct": false },
+        { "key": "c", "label": "Active transport", "correct": false },
+        { "key": "d", "label": "Phagocytosis", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-25",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "text": "A cell placed in a hypertonic solution will:",
+      "options": [
+        { "key": "a", "label": "Swell and burst", "correct": false },
+        { "key": "b", "label": "Shrink due to water loss", "correct": true },
+        { "key": "c", "label": "Remain the same", "correct": false },
+        { "key": "d", "label": "Absorb more water", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-26",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "text": "Which of the following is an example of active transport?",
+      "options": [
+        { "key": "a", "label": "Oxygen entering a cell", "correct": false },
+        { "key": "b", "label": "Sodium-potassium pump", "correct": true },
+        { "key": "c", "label": "Water moving via osmosis", "correct": false },
+        { "key": "d", "label": "Glucose entering via channel protein", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-27",
+      "competency": "STEM_BIO11/12-Ig-h-14",
+      "text": "Which process brings large particles INTO the cell?",
+      "options": [
+        { "key": "a", "label": "Exocytosis", "correct": false },
+        { "key": "b", "label": "Endocytosis", "correct": true },
+        { "key": "c", "label": "Osmosis", "correct": false },
+        { "key": "d", "label": "Simple diffusion", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-28",
+      "competency": "STEM_BIO11/12-Ig-h-14",
+      "text": "Which process releases materials OUT of the cell using vesicles?",
+      "options": [
+        { "key": "a", "label": "Endocytosis", "correct": false },
+        { "key": "b", "label": "Phagocytosis", "correct": false },
+        { "key": "c", "label": "Exocytosis", "correct": true },
+        { "key": "d", "label": "Pinocytosis", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-29",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "text": "Which transport mechanism does NOT require the cell to expend energy?",
+      "options": [
+        { "key": "a", "label": "Passive transport", "correct": true },
+        { "key": "b", "label": "Active transport", "correct": false },
+        { "key": "c", "label": "Endocytosis", "correct": false },
+        { "key": "d", "label": "Exocytosis", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-30",
+      "competency": "STEM_BIO11/12-Ig-h-11",
+      "text": "Which of the following best describes the arrangement of phospholipids in a membrane?",
+      "options": [
+        { "key": "a", "label": "Hydrophilic tails inward, hydrophobic heads outward", "correct": false },
+        { "key": "b", "label": "Hydrophilic heads outward, hydrophobic tails inward", "correct": true },
+        { "key": "c", "label": "All heads and tails randomly distributed", "correct": false },
+        { "key": "d", "label": "Only hydrophobic tails present", "correct": false }
+      ]
+    }
+  ]
+}

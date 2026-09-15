@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 8 — Lesson</title>
+  <link rel="stylesheet" href="../../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../../assets/css/student.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔬 Week 8 · Lesson</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+    <div class="daily-score-bar" id="daily-score-bar"></div>
+    <div id="lesson-content"></div>
+    <div class="activity-card"><div id="activity-1"></div></div>
+    <div class="activity-card"><div id="activity-2"></div></div>
+    <div class="activity-card"><div id="formative"></div></div>
+    <div class="card" id="lesson-footer"></div>
+  </main>
+
+  <footer class="app-footer"><p>General Biology 1 · Week 8 · v1.0.0</p></footer>
+
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../../../assets/js/store.js"></script>
+  <script src="../../../assets/js/security.js"></script>
+  <script src="../../../assets/js/lesson-engine.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const dayNum = parseInt(params.get('day') || '1');
+      const res = await fetch('week8.json');
+      const week = await res.json();
+      const day = week.days.find((d) => d.n === dayNum);
+      if (!day) { document.getElementById('lesson-content').innerHTML = '<div class="alert alert-danger">Lesson not found.</div>'; return; }
+      document.title = `Day ${day.n} — ${day.title}`;
+      document.body.dataset.next = dayNum < 4 ? `day.html?day=${dayNum + 1}` : 'index.html';
+
+      document.getElementById('lesson-content').innerHTML = `
+        <div class="card lesson-content">
+          <h2>📖 ${day.title}</h2>
+          <p class="text-muted text-small">Competency: ${day.competency}</p>
+          ${day.content}
+        </div>
+      `;
+      document.getElementById('lesson-footer').innerHTML = `
+        <h3>📌 Key Takeaways</h3>
+        <ul>${day.takeaways.map((t) => `<li>${t}</li>`).join('')}</ul>
+        <h3>📚 References</h3>
+        <ul class="text-small text-muted">
+          <li>Reece, J. B. et al. (2011). <em>Campbell Biology</em> (9th ed.). Pearson.</li>
+          <li>DepEd K to 12 Curriculum Guide — Biology 1 (August 2016).</li>
+        </ul>
+      `;
+      Lesson.init({ subject: 'biol1', week: 8, day: day.n, title: day.title, maxPoints: 300 });
+      Lesson.renderMatchGame('activity-1', day.activity1);
+      Lesson.renderScenarioGame('activity-2', day.activity2);
+      Lesson.renderEscapeRoom('formative', day.formative);
+    });
+  </script>
+</body>
+</html>

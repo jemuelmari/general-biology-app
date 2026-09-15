@@ -1,0 +1,34 @@
+/* ============================================================
+   quiz.css — Quiz / ST / TE styles
+   Version: 1.0.0
+   ============================================================ */
+
+/* Prevent text selection during assessments */
+.quiz-active {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+/* Print protection */
+@media print {
+  body.quiz-active * { display: none !important; }
+  body.quiz-active::after {
+    content: "Printing is disabled during assessments.";
+    font-size: 20px;
+    display: block;
+  }
+}
+
+/* Quiz option hover */
+.quiz-option:hover {
+  border-color: var(--color-primary) !important;
+  background: var(--color-primary-light) !important;
+}
+
+/* Radio input visual */
+.quiz-option input[type="radio"] {
+  accent-color: var(--color-primary);
+  width: 18px;
+  height: 18px;
+}

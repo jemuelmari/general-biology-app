@@ -1,0 +1,212 @@
+{
+  "week": 7,
+  "title": "Photosynthesis",
+  "days": [
+    {
+      "n": 1,
+      "title": "Coupled Reactions & ATP",
+      "competency": "STEM_BIO11/12-IIa-j-1",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define coupled reactions.</li><li>Explain the role of ATP in energy coupling.</li><li>Describe ATP structure and hydrolysis.</li><li>Explain energy transfer in cells.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>ATP</strong> — adenosine triphosphate; the energy currency of the cell.</li><li><strong>Energy coupling</strong> — using exergonic reactions to drive endergonic ones.</li><li><strong>Exergonic</strong> — releases energy.</li><li><strong>Endergonic</strong> — absorbs energy.</li></ul><h3>📚 Lesson Content</h3><h4>A. ATP Structure</h4><p>ATP = adenine + ribose + 3 phosphate groups. The bonds between phosphate groups store energy.</p><h4>B. ATP Hydrolysis</h4><p>ATP + H₂O → ADP + Pi + Energy. This releases ~7.3 kcal/mol.</p><h4>C. Energy Coupling</h4><p>Cells use the energy from ATP hydrolysis to drive endergonic reactions (e.g., protein synthesis, active transport).</p><h4>D. Coupled Reactions in Photosynthesis</h4><p>Light reactions (exergonic, produce ATP/NADPH) are coupled to the Calvin cycle (endergonic, uses ATP/NADPH to build glucose).</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "atp-master",
+        "badgeName": "ATP Master",
+        "badgeIcon": "⚡",
+        "pairs": [
+          { "key": "atp", "left": "ATP", "right": "Energy currency of the cell" },
+          { "key": "exer", "left": "Exergonic", "right": "Releases energy" },
+          { "key": "ender", "left": "Endergonic", "right": "Absorbs energy" },
+          { "key": "coup", "left": "Energy coupling", "right": "Exergonic drives endergonic" },
+          { "key": "hydro", "left": "ATP hydrolysis", "right": "ATP → ADP + Pi + Energy" },
+          { "key": "struct", "left": "ATP structure", "right": "Adenine + ribose + 3 phosphates" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "coupling-detective",
+        "badgeName": "Coupling Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "ATP loses a phosphate group.", "choices": [{ "label": "Hydrolysis ✓", "correct": true }, { "label": "Synthesis", "correct": false }, { "label": "Denaturation", "correct": false }] },
+          { "text": "A reaction releases energy.", "choices": [{ "label": "Exergonic ✓", "correct": true }, { "label": "Endergonic", "correct": false }] },
+          { "text": "A reaction requires energy input.", "choices": [{ "label": "Exergonic", "correct": false }, { "label": "Endergonic ✓", "correct": true }] },
+          { "text": "ATP powers active transport.", "choices": [{ "label": "Energy coupling ✓", "correct": true }, { "label": "Denaturation", "correct": false }, { "label": "Osmosis", "correct": false }] },
+          { "text": "Light reactions produce ATP and NADPH.", "choices": [{ "label": "For the Calvin cycle ✓", "correct": true }, { "label": "For glycolysis", "correct": false }, { "label": "For fermentation", "correct": false }] },
+          { "text": "ATP has how many phosphate groups?", "choices": [{ "label": "1", "correct": false }, { "label": "2", "correct": false }, { "label": "3", "correct": true }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "coupling-escape",
+        "badgeName": "Coupling Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "What does ATP stand for?", "choices": [{ "label": "Adenosine triphosphate", "correct": true }, { "label": "Adenine trinucleotide", "correct": false }, { "label": "Ammonium triphosphate", "correct": false }, { "label": "Adenosine diphosphate", "correct": false }] },
+          { "text": "Energy coupling refers to:", "choices": [{ "label": "Two exergonic reactions together", "correct": false }, { "label": "An exergonic reaction driving an endergonic one", "correct": true }, { "label": "Two endergonic reactions together", "correct": false }, { "label": "Denaturing enzymes", "correct": false }] },
+          { "text": "When ATP is hydrolyzed, it becomes:", "choices": [{ "label": "AMP + 2 Pi", "correct": false }, { "label": "ADP + Pi", "correct": true }, { "label": "Adenine only", "correct": false }, { "label": "NADH", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "ATP is the energy currency of the cell.",
+        "Exergonic reactions release energy; endergonic reactions absorb energy.",
+        "Energy coupling links them.",
+        "Light reactions and Calvin cycle are coupled."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Pigments & Light Absorption",
+      "competency": "STEM_BIO11/12-IIa-j-2, -3",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the major features of photosynthesis.</li><li>Identify the pigments involved.</li><li>Explain light absorption and reflection.</li><li>Relate pigments to their roles.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Chlorophyll a</strong> — primary pigment; absorbs blue-violet and red.</li><li><strong>Chlorophyll b</strong> — accessory pigment; absorbs blue and orange.</li><li><strong>Carotenoids</strong> — accessory pigments; absorb blue-green; protect chlorophyll.</li><li><strong>Action spectrum</strong> — wavelengths that drive photosynthesis.</li></ul><h3>📚 Lesson Content</h3><h4>A. Photosynthesis Overview</h4><p>6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂</p><p>Occurs in chloroplasts. Two stages: light reactions (thylakoid) and Calvin cycle (stroma).</p><h4>B. Pigments</h4><table><thead><tr><th>Pigment</th><th>Absorbs</th><th>Role</th></tr></thead><tbody><tr><td>Chlorophyll a</td><td>Blue-violet, red</td><td>Primary pigment</td></tr><tr><td>Chlorophyll b</td><td>Blue, orange</td><td>Accessory pigment</td></tr><tr><td>Carotenoids</td><td>Blue-green</td><td>Accessory + photoprotection</td></tr></tbody></table><h4>C. Why Leaves Are Green</h4><p>Chlorophyll reflects green light — that's why we see leaves as green.</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "pigment-master",
+        "badgeName": "Pigment Master",
+        "badgeIcon": "🎨",
+        "pairs": [
+          { "key": "chla", "left": "Chlorophyll a", "right": "Primary pigment" },
+          { "key": "chlb", "left": "Chlorophyll b", "right": "Accessory pigment" },
+          { "key": "car", "left": "Carotenoids", "right": "Accessory + photoprotection" },
+          { "key": "action", "left": "Action spectrum", "right": "Wavelengths that drive photosynthesis" },
+          { "key": "green", "left": "Leaves appear green", "right": "Chlorophyll reflects green" },
+          { "key": "light", "left": "Light reactions", "right": "Occur in thylakoid" },
+          { "key": "calvin", "left": "Calvin cycle", "right": "Occurs in stroma" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "light-detective",
+        "badgeName": "Light Detective",
+        "badgeIcon": "🔎",
+        "scenarios": [
+          { "text": "Primary pigment of photosynthesis.", "choices": [{ "label": "Chlorophyll a ✓", "correct": true }, { "label": "Chlorophyll b", "correct": false }, { "label": "Carotenoid", "correct": false }] },
+          { "text": "Accessory pigment that protects from excess light.", "choices": [{ "label": "Carotenoid ✓", "correct": true }, { "label": "Chlorophyll a", "correct": false }, { "label": "Chlorophyll b", "correct": false }] },
+          { "text": "Leaves appear green because:", "choices": [{ "label": "Chlorophyll reflects green light ✓", "correct": true }, { "label": "Green is absorbed", "correct": false }, { "label": "Chloroplasts are green", "correct": false }] },
+          { "text": "The light reactions occur in the:", "choices": [{ "label": "Thylakoid membrane ✓", "correct": true }, { "label": "Stroma", "correct": false }, { "label": "Cytoplasm", "correct": false }] },
+          { "text": "The Calvin cycle occurs in the:", "choices": [{ "label": "Stroma ✓", "correct": true }, { "label": "Thylakoid", "correct": false }, { "label": "Mitochondria", "correct": false }] },
+          { "text": "The overall equation for photosynthesis:", "choices": [{ "label": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂ ✓", "correct": true }, { "label": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "pigment-escape",
+        "badgeName": "Pigment Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Which pigment is the primary photosynthetic pigment?", "choices": [{ "label": "Chlorophyll b", "correct": false }, { "label": "Chlorophyll a", "correct": true }, { "label": "Carotenoid", "correct": false }, { "label": "Xanthophyll", "correct": false }] },
+          { "text": "Why do leaves appear green?", "choices": [{ "label": "Chlorophyll absorbs green", "correct": false }, { "label": "Chlorophyll reflects green", "correct": true }, { "label": "Carotenoids reflect green", "correct": false }, { "label": "Green is the color of glucose", "correct": false }] },
+          { "text": "Which pigment protects chlorophyll from excess light?", "choices": [{ "label": "Chlorophyll b", "correct": false }, { "label": "Carotenoids", "correct": true }, { "label": "Chlorophyll a", "correct": false }, { "label": "Phycobilin", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Photosynthesis: 6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂.",
+        "Chlorophyll a is the primary pigment; b and carotenoids are accessory.",
+        "Chlorophyll reflects green light.",
+        "Light reactions occur in thylakoid; Calvin cycle in stroma."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Light Reactions — Electron Flow",
+      "competency": "STEM_BIO11/12-IIa-j-4",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the light reactions.</li><li>Trace the path of electrons.</li><li>Explain photosystems I and II.</li><li>Describe ATP and NADPH production.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Photosystem II (PSII)</strong> — splits water; produces O₂.</li><li><strong>Photosystem I (PSI)</strong> — produces NADPH.</li><li><strong>Electron transport chain (ETC)</strong> — passes electrons between photosystems.</li><li><strong>Chemiosmosis</strong> — ATP production via H⁺ gradient.</li></ul><h3>📚 Lesson Content</h3><h4>A. Path of Electrons</h4><ol><li>Light excites electrons in PSII</li><li>Water is split to replace electrons (O₂ released)</li><li>Electrons travel down ETC, pumping H⁺ into thylakoid</li><li>Electrons reach PSI and are re-excited</li><li>Electrons reduce NADP⁺ to NADPH</li><li>H⁺ flows back through ATP synthase → ATP produced</li></ol><h4>B. Products of Light Reactions</h4><ul><li><strong>ATP</strong> — energy for Calvin cycle</li><li><strong>NADPH</strong> — reducing power for Calvin cycle</li><li><strong>O₂</strong> — released as byproduct</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "light-reaction-master",
+        "badgeName": "Light Reaction Master",
+        "badgeIcon": "☀️",
+        "pairs": [
+          { "key": "psii", "left": "Photosystem II", "right": "Splits water; produces O₂" },
+          { "key": "psi", "left": "Photosystem I", "right": "Produces NADPH" },
+          { "key": "etc", "left": "Electron transport chain", "right": "Passes electrons, pumps H⁺" },
+          { "key": "chem", "left": "Chemiosmosis", "right": "ATP via H⁺ gradient" },
+          { "key": "atp", "left": "ATP", "right": "Energy for Calvin cycle" },
+          { "key": "nadph", "left": "NADPH", "right": "Reducing power for Calvin cycle" },
+          { "key": "o2", "left": "O₂", "right": "Byproduct of light reactions" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "electron-flow-pro",
+        "badgeName": "Electron Flow Pro",
+        "badgeIcon": "⚡",
+        "scenarios": [
+          { "text": "Water is split during this step.", "choices": [{ "label": "Photosystem II ✓", "correct": true }, { "label": "Photosystem I", "correct": false }, { "label": "Calvin cycle", "correct": false }] },
+          { "text": "NADPH is produced here.", "choices": [{ "label": "Photosystem I ✓", "correct": true }, { "label": "Photosystem II", "correct": false }, { "label": "Stroma", "correct": false }] },
+          { "text": "H⁺ gradient drives ATP synthesis.", "choices": [{ "label": "Chemiosmosis ✓", "correct": true }, { "label": "Glycolysis", "correct": false }, { "label": "Fermentation", "correct": false }] },
+          { "text": "O₂ is released.", "choices": [{ "label": "From water splitting at PSII ✓", "correct": true }, { "label": "From CO₂", "correct": false }, { "label": "From glucose", "correct": false }] },
+          { "text": "Electrons are passed between photosystems.", "choices": [{ "label": "ETC ✓", "correct": true }, { "label": "Krebs cycle", "correct": false }, { "label": "Calvin cycle", "correct": false }] },
+          { "text": "ATP and NADPH will be used by:", "choices": [{ "label": "Calvin cycle ✓", "correct": true }, { "label": "Glycolysis", "correct": false }, { "label": "Fermentation", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "light-reaction-escape",
+        "badgeName": "Light Reaction Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Which photosystem splits water?", "choices": [{ "label": "Photosystem I", "correct": false }, { "label": "Photosystem II", "correct": true }, { "label": "Both", "correct": false }, { "label": "Neither", "correct": false }] },
+          { "text": "What are the products of the light reactions?", "choices": [{ "label": "Glucose and O₂", "correct": false }, { "label": "ATP, NADPH, O₂", "correct": true }, { "label": "ATP and CO₂", "correct": false }, { "label": "NADH and FADH₂", "correct": false }] },
+          { "text": "The O₂ released during photosynthesis comes from:", "choices": [{ "label": "CO₂", "correct": false }, { "label": "Glucose", "correct": false }, { "label": "Water", "correct": true }, { "label": "ATP", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Light reactions occur in the thylakoid membrane.",
+        "PSII splits water; PSI produces NADPH.",
+        "O₂ is released from water splitting.",
+        "Chemiosmosis produces ATP."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "The Calvin Cycle",
+      "competency": "STEM_BIO11/12-IIa-j-5",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the three phases of the Calvin cycle.</li><li>Explain carbon fixation.</li><li>Describe the role of RuBisCO.</li><li>Explain the products of the Calvin cycle.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Calvin cycle</strong> — light-independent reactions producing glucose.</li><li><strong>Carbon fixation</strong> — attaching CO₂ to an organic molecule.</li><li><strong>RuBisCO</strong> — the enzyme that fixes CO₂.</li><li><strong>G3P</strong> — the product used to make glucose.</li></ul><h3>📚 Lesson Content</h3><h4>A. Three Phases</h4><table><thead><tr><th>Phase</th><th>What Happens</th></tr></thead><tbody><tr><td>1. Carbon fixation</td><td>CO₂ + RuBP → 3-PGA (via RuBisCO)</td></tr><tr><td>2. Reduction</td><td>3-PGA → G3P using ATP and NADPH</td></tr><tr><td>3. Regeneration</td><td>RuBP is regenerated to continue the cycle</td></tr></tbody></table><h4>B. Products</h4><ul><li>For every 3 CO₂, 1 G3P is produced</li><li>Two G3P molecules → 1 glucose</li><li>ATP and NADPH from light reactions power the cycle</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "calvin-master",
+        "badgeName": "Calvin Master",
+        "badgeIcon": "🔄",
+        "pairs": [
+          { "key": "calvin", "left": "Calvin cycle", "right": "Produces glucose" },
+          { "key": "cf", "left": "Carbon fixation", "right": "CO₂ → organic molecule" },
+          { "key": "rub", "left": "RuBisCO", "right": "Fixes CO₂" },
+          { "key": "g3p", "left": "G3P", "right": "Used to make glucose" },
+          { "key": "atp", "left": "ATP", "right": "Powers reduction phase" },
+          { "key": "nadph", "left": "NADPH", "right": "Reducing power" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "calvin-detective",
+        "badgeName": "Calvin Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "CO₂ is attached to RuBP.", "choices": [{ "label": "Carbon fixation ✓", "correct": true }, { "label": "Reduction", "correct": false }, { "label": "Regeneration", "correct": false }] },
+          { "text": "RuBisCO catalyzes the reaction.", "choices": [{ "label": "Carbon fixation ✓", "correct": true }, { "label": "Reduction", "correct": false }, { "label": "Regeneration", "correct": false }] },
+          { "text": "ATP and NADPH are used.", "choices": [{ "label": "Reduction phase ✓", "correct": true }, { "label": "Fixation phase", "correct": false }, { "label": "Regeneration", "correct": false }] },
+          { "text": "RuBP is regenerated.", "choices": [{ "label": "Third phase ✓", "correct": true }, { "label": "First phase", "correct": false }, { "label": "Second phase", "correct": false }] },
+          { "text": "Two G3P molecules form:", "choices": [{ "label": "Glucose ✓", "correct": true }, { "label": "ATP", "correct": false }, { "label": "RuBP", "correct": false }] },
+          { "text": "The Calvin cycle occurs in the:", "choices": [{ "label": "Stroma ✓", "correct": true }, { "label": "Thylakoid", "correct": false }, { "label": "Cytoplasm", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week7-master",
+        "badgeName": "Week 7 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "What is the primary enzyme of carbon fixation?", "choices": [{ "label": "ATP synthase", "correct": false }, { "label": "RuBisCO", "correct": true }, { "label": "Hexokinase", "correct": false }, { "label": "Pepsin", "correct": false }] },
+          { "text": "Where does the Calvin cycle take place?", "choices": [{ "label": "Thylakoid", "correct": false }, { "label": "Stroma", "correct": true }, { "label": "Mitochondria", "correct": false }, { "label": "Cytoplasm", "correct": false }] },
+          { "text": "What powers the Calvin cycle?", "choices": [{ "label": "ATP and NADPH from light reactions", "correct": true }, { "label": "Glucose", "correct": false }, { "label": "O₂", "correct": false }, { "label": "CO₂", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "The Calvin cycle has three phases: fixation, reduction, regeneration.",
+        "RuBisCO fixes CO₂ to RuBP.",
+        "ATP and NADPH from light reactions power the cycle.",
+        "Product: G3P → used to build glucose."
+      ]
+    }
+  ]
+}

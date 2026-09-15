@@ -1,0 +1,251 @@
+/* ============================================================
+   teacher.css — Teacher / Instructor Application styles
+   Version: 1.0.0
+   ============================================================ */
+
+/* ---------- Teacher Header ---------- */
+.teacher-header {
+  background: linear-gradient(135deg, #0d47a1, #1565c0);
+}
+
+/* ---------- Dashboard Stats ---------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.stat-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--color-info);
+}
+
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  line-height: 1;
+}
+
+.stat-card .stat-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: var(--space-xs);
+}
+
+/* ---------- Item Analysis ---------- */
+.item-analysis-table {
+  font-size: 0.85rem;
+}
+
+.item-analysis-table th,
+.item-analysis-table td {
+  padding: 8px 10px;
+}
+
+.difficulty-bar {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.difficulty-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.difficulty-easy   { background: var(--color-success); }
+.difficulty-medium { background: var(--color-warning); }
+.difficulty-hard   { background: var(--color-danger); }
+
+/* ---------- Competency Mastery ---------- */
+.competency-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  gap: var(--space-md);
+}
+
+.competency-row:last-child { border-bottom: none; }
+
+.competency-code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.competency-desc {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.mps-value {
+  font-weight: 700;
+  font-size: 1rem;
+  min-width: 60px;
+  text-align: right;
+}
+
+.mps-high { color: var(--color-success); }
+.mps-mid  { color: var(--color-warning); }
+.mps-low  { color: var(--color-danger); }
+
+/* ---------- Intervention Panel ---------- */
+.intervention-list {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.intervention-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--color-border);
+}
+
+.intervention-card.enrichment { border-left-color: var(--color-enrichment); }
+.intervention-card.on-track   { border-left-color: var(--color-on-track); }
+.intervention-card.remediation{ border-left-color: var(--color-remediation); }
+.intervention-card.urgent     { border-left-color: var(--color-urgent); }
+
+.intervention-card .student-name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.intervention-card .student-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.intervention-card .suggested-action {
+  font-size: 0.85rem;
+  padding: var(--space-sm);
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-sm);
+}
+
+/* ---------- Sync Center ---------- */
+.sync-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--space-lg);
+}
+
+.sync-tab {
+  padding: var(--space-sm) var(--space-md);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sync-tab:hover { color: var(--color-primary); }
+
+.sync-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.sync-panel {
+  padding: var(--space-lg);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.drop-zone {
+  border: 3px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  text-align: center;
+  background: var(--color-surface);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.drop-zone:hover,
+.drop-zone.dragover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.drop-zone .drop-icon { font-size: 3rem; }
+.drop-zone .drop-text { margin-top: var(--space-sm); color: var(--color-text-muted); }
+
+/* ---------- Pending Imports ---------- */
+.import-preview {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.import-preview .preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+}
+
+.import-preview .checksum-ok {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.import-preview .checksum-fail {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* ---------- Teacher Notes ---------- */
+.teacher-notes {
+  background: #fff8e1;
+  border-left: 4px solid var(--color-accent);
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  margin: var(--space-md) 0;
+}
+
+.teacher-notes h4 {
+  color: #8d6e00;
+  margin-bottom: var(--space-sm);
+  font-size: 0.95rem;
+}
+
+.teacher-notes .misconception {
+  background: #fff;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-sm);
+  font-size: 0.85rem;
+}
+
+.teacher-notes .answer-key {
+  background: #e8f5e9;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-sm);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+}

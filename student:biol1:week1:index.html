@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Week 1 — Cell Theory & Cell Structure</title>
+  <link rel="stylesheet" href="../../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../../assets/css/student.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔬 Gen Bio 1 · Week 1</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Weeks</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card">
+      <h2 style="color:var(--color-primary-dark);">Cell Theory & Cell Structure</h2>
+      <p class="text-muted">Competencies: STEM_BIO11/12-Ia-c-1, STEM_BIO11/12-Ia-c-2</p>
+      <p style="margin-top:12px;">This week you'll explore the historical development of the cell theory, the scientists behind it, and the structure and function of the major subcellular organelles.</p>
+    </div>
+
+    <h2 style="margin:24px 0 12px;color:var(--color-primary-dark);">📆 Daily Lessons</h2>
+    <div class="dashboard-grid" id="days-grid"></div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Biology 1 · Week 1 · v1.0.0</p>
+  </footer>
+
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../../../assets/js/store.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = Store.getCurrentUser();
+      if (!user) { window.location.href = '../../login.html'; return; }
+
+      const days = [
+        { n: 1, title: 'The Cell Theory — Historical Development and Postulates', comp: 'Ia-c-1' },
+        { n: 2, title: 'The Plasma Membrane & Cytoplasm', comp: 'Ia-c-2' },
+        { n: 3, title: 'Major Organelles — Nucleus, Ribosomes, ER', comp: 'Ia-c-2' },
+        { n: 4, title: 'Energy & Support Organelles — Mitochondria, Chloroplasts, Cytoskeleton', comp: 'Ia-c-2' }
+      ];
+
+      const progress = Store.getProgress(user.lrn);
+      const done = progress.biol1?.completed || [];
+
+      document.getElementById('days-grid').innerHTML = days.map((d) => {
+        const key = `biol1-w1-d${d.n}`;
+        const completed = done.includes(key);
+        const prevDone = d.n === 1 || done.includes(`biol1-w1-d${d.n - 1}`);
+        const locked = !prevDone;
+
+        return `
+          <div class="subject-card" data-day="${d.n}" style="${locked ? 'opacity:0.5;' : ''}">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="badge badge-info">Day ${d.n}</span>
+              ${completed ? '<span class="badge badge-success">✅ Done</span>' : locked ? '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>' : '<span class="badge badge-warning">▶ Start</span>'}
+            </div>
+            <h3 style="margin-top:8px;font-size:1rem;">${d.title}</h3>
+            <p class="text-small text-muted">${d.comp}</p>
+          </div>
+        `;
+      }).join('');
+
+      document.querySelectorAll('[data-day]').forEach((card) => {
+        card.addEventListener('click', () => {
+          if (card.style.opacity === '0.5') {
+            APP.toast('Complete the previous day first.', 'warning');
+            return;
+          }
+          window.location.href = `day.html?day=${card.dataset.day}`;
+        });
+      });
+    });
+  </script>
+</body>
+</html>

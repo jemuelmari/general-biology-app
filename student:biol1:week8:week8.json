@@ -1,0 +1,211 @@
+{
+  "week": 8,
+  "title": "Cellular Respiration",
+  "days": [
+    {
+      "n": 1,
+      "title": "Aerobic vs Anaerobic Respiration",
+      "competency": "STEM_BIO11/12-IIa-j-6",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Differentiate aerobic from anaerobic respiration.</li><li>Explain the role of oxygen.</li><li>Describe fermentation types.</li><li>Compare ATP yield.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Aerobic respiration</strong> — requires oxygen; produces ~36–38 ATP per glucose.</li><li><strong>Anaerobic respiration</strong> — no oxygen; produces 2 ATP per glucose.</li><li><strong>Fermentation</strong> — anaerobic pathway that regenerates NAD⁺.</li></ul><h3>📚 Lesson Content</h3><h4>A. Aerobic vs Anaerobic</h4><table><thead><tr><th>Feature</th><th>Aerobic</th><th>Anaerobic</th></tr></thead><tbody><tr><td>Oxygen</td><td>Required</td><td>Not required</td></tr><tr><td>ATP yield</td><td>~36–38</td><td>2</td></tr><tr><td>Location</td><td>Cytoplasm + mitochondria</td><td>Cytoplasm</td></tr><tr><td>Products</td><td>CO₂ + H₂O</td><td>Lactic acid or ethanol + CO₂</td></tr></tbody></table><h4>B. Types of Fermentation</h4><ul><li><strong>Lactic acid fermentation</strong> — muscle cells (produces lactate)</li><li><strong>Alcoholic fermentation</strong> — yeast (produces ethanol + CO₂)</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "aerobic-anaerobic",
+        "badgeName": "Aerobic vs Anaerobic",
+        "badgeIcon": "💨",
+        "pairs": [
+          { "key": "aer", "left": "Aerobic", "right": "Requires O₂; ~36 ATP" },
+          { "key": "anaer", "left": "Anaerobic", "right": "No O₂; 2 ATP" },
+          { "key": "lact", "left": "Lactic acid fermentation", "right": "Muscle cells" },
+          { "key": "alc", "left": "Alcoholic fermentation", "right": "Yeast — ethanol + CO₂" },
+          { "key": "loc", "left": "Glycolysis location", "right": "Cytoplasm" },
+          { "key": "krebs-loc", "left": "Krebs cycle location", "right": "Mitochondrial matrix" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "respiration-detective",
+        "badgeName": "Respiration Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "A muscle cell is running low on oxygen.", "choices": [{ "label": "Lactic acid fermentation ✓", "correct": true }, { "label": "Aerobic respiration", "correct": false }] },
+          { "text": "Yeast converts sugar to ethanol and CO₂.", "choices": [{ "label": "Alcoholic fermentation ✓", "correct": true }, { "label": "Aerobic respiration", "correct": false }] },
+          { "text": "Mitochondria are producing most of the ATP.", "choices": [{ "label": "Aerobic respiration ✓", "correct": true }, { "label": "Anaerobic respiration", "correct": false }] },
+          { "text": "Only 2 ATP are produced per glucose.", "choices": [{ "label": "Anaerobic ✓", "correct": true }, { "label": "Aerobic", "correct": false }] },
+          { "text": "CO₂ and H₂O are the final products.", "choices": [{ "label": "Aerobic ✓", "correct": true }, { "label": "Anaerobic", "correct": false }] },
+          { "text": "Bread rises.", "choices": [{ "label": "Alcoholic fermentation ✓", "correct": true }, { "label": "Lactic acid fermentation", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "aer-anaer-escape",
+        "badgeName": "Respiration Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "How much ATP does aerobic respiration produce per glucose?", "choices": [{ "label": "2", "correct": false }, { "label": "~36–38", "correct": true }, { "label": "10", "correct": false }, { "label": "100", "correct": false }] },
+          { "text": "Which fermentation occurs in muscle cells?", "choices": [{ "label": "Alcoholic", "correct": false }, { "label": "Lactic acid", "correct": true }, { "label": "Acetic", "correct": false }, { "label": "Propionic", "correct": false }] },
+          { "text": "What are the final products of aerobic respiration?", "choices": [{ "label": "Ethanol + CO₂", "correct": false }, { "label": "Lactic acid", "correct": false }, { "label": "CO₂ + H₂O", "correct": true }, { "label": "Glucose + O₂", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Aerobic respiration requires O₂ and yields ~36 ATP.",
+        "Anaerobic respiration yields 2 ATP and uses fermentation.",
+        "Lactic acid fermentation occurs in muscles; alcoholic in yeast.",
+        "Both start with glycolysis."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Glycolysis",
+      "competency": "STEM_BIO11/12-IIa-j-7, -8",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the overall process of cellular respiration.</li><li>Explain the steps of glycolysis.</li><li>Identify the products of glycolysis.</li><li>Explain substrate-level phosphorylation.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Glycolysis</strong> — breakdown of glucose into 2 pyruvate.</li><li><strong>Substrate-level phosphorylation</strong> — direct ATP production.</li><li><strong>Net ATP</strong> — 2 ATP per glucose (4 produced − 2 used).</li><li><strong>NADH</strong> — carries electrons to the ETC.</li></ul><h3>📚 Lesson Content</h3><h4>A. Glycolysis Overview</h4><p>Occurs in cytoplasm. Glucose (6C) is split into 2 pyruvate (3C) molecules.</p><h4>B. Two Phases</h4><ul><li><strong>Investment phase</strong> — 2 ATP used to activate glucose</li><li><strong>Payoff phase</strong> — 4 ATP and 2 NADH produced</li></ul><h4>C. Net Products (per glucose)</h4><ul><li>2 ATP (net)</li><li>2 NADH</li><li>2 pyruvate</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "glycolysis-master",
+        "badgeName": "Glycolysis Master",
+        "badgeIcon": "🧪",
+        "pairs": [
+          { "key": "gly", "left": "Glycolysis", "right": "Glucose → 2 pyruvate" },
+          { "key": "loc", "left": "Location", "right": "Cytoplasm" },
+          { "key": "inv", "left": "Investment phase", "right": "Uses 2 ATP" },
+          { "key": "pay", "left": "Payoff phase", "right": "Produces 4 ATP" },
+          { "key": "net", "left": "Net ATP", "right": "2 per glucose" },
+          { "key": "nadh", "left": "NADH", "right": "Carries electrons to ETC" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "glyco-detective",
+        "badgeName": "Glyco Detective",
+        "badgeIcon": "🔎",
+        "scenarios": [
+          { "text": "Glucose is split into two 3-carbon molecules.", "choices": [{ "label": "Glycolysis ✓", "correct": true }, { "label": "Krebs cycle", "correct": false }, { "label": "ETC", "correct": false }] },
+          { "text": "Glycolysis occurs in the:", "choices": [{ "label": "Cytoplasm ✓", "correct": true }, { "label": "Mitochondria", "correct": false }, { "label": "Nucleus", "correct": false }] },
+          { "text": "2 ATP are consumed at the start.", "choices": [{ "label": "Investment phase ✓", "correct": true }, { "label": "Payoff phase", "correct": false }] },
+          { "text": "4 ATP are produced.", "choices": [{ "label": "Payoff phase ✓", "correct": true }, { "label": "Investment phase", "correct": false }] },
+          { "text": "Net ATP from glycolysis:", "choices": [{ "label": "2 ✓", "correct": true }, { "label": "4", "correct": false }, { "label": "36", "correct": false }] },
+          { "text": "NADH is produced.", "choices": [{ "label": "Glycolysis ✓", "correct": true }, { "label": "Fermentation", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "glyco-escape",
+        "badgeName": "Glyco Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "What are the products of glycolysis?", "choices": [{ "label": "2 pyruvate, 2 ATP, 2 NADH", "correct": true }, { "label": "Glucose + O₂", "correct": false }, { "label": "CO₂ + H₂O", "correct": false }, { "label": "Lactic acid only", "correct": false }] },
+          { "text": "Where does glycolysis occur?", "choices": [{ "label": "Cytoplasm", "correct": true }, { "label": "Mitochondria", "correct": false }, { "label": "Chloroplast", "correct": false }, { "label": "Nucleus", "correct": false }] },
+          { "text": "How many net ATP are produced in glycolysis?", "choices": [{ "label": "0", "correct": false }, { "label": "2", "correct": true }, { "label": "4", "correct": false }, { "label": "36", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Glycolysis occurs in the cytoplasm.",
+        "Splits glucose (6C) into 2 pyruvate (3C).",
+        "Net 2 ATP, 2 NADH.",
+        "Two phases: investment and payoff."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Krebs Cycle",
+      "competency": "STEM_BIO11/12-IIa-j-7, -8",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the Krebs cycle.</li><li>Trace the fate of pyruvate.</li><li>Identify the products of the Krebs cycle.</li><li>Explain the role of the Krebs cycle in metabolism.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Pyruvate oxidation</strong> — pyruvate → acetyl-CoA.</li><li><strong>Krebs cycle</strong> — also called the citric acid cycle or TCA cycle.</li><li><strong>Location</strong> — mitochondrial matrix.</li></ul><h3>📚 Lesson Content</h3><h4>A. Pyruvate Oxidation</h4><p>Each pyruvate (3C) loses CO₂ and becomes acetyl-CoA (2C). Produces 1 NADH per pyruvate.</p><h4>B. Krebs Cycle (per acetyl-CoA)</h4><table><thead><tr><th>Product</th><th>Count</th></tr></thead><tbody><tr><td>CO₂</td><td>2</td></tr><tr><td>NADH</td><td>3</td></tr><tr><td>FADH₂</td><td>1</td></tr><tr><td>ATP</td><td>1</td></tr></tbody></table><h4>C. Per Glucose (2 turns)</h4><ul><li>6 NADH</li><li>2 FADH₂</li><li>2 ATP</li><li>4 CO₂</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "krebs-master",
+        "badgeName": "Krebs Master",
+        "badgeIcon": "🔄",
+        "pairs": [
+          { "key": "pyr", "left": "Pyruvate oxidation", "right": "Pyruvate → acetyl-CoA" },
+          { "key": "krebs", "left": "Krebs cycle", "right": "Also called citric acid cycle" },
+          { "key": "loc", "left": "Location", "right": "Mitochondrial matrix" },
+          { "key": "co2", "left": "CO₂ released", "right": "2 per acetyl-CoA" },
+          { "key": "nadh", "left": "NADH", "right": "3 per turn" },
+          { "key": "fadh", "left": "FADH₂", "right": "1 per turn" },
+          { "key": "atp", "left": "ATP", "right": "1 per turn" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "krebs-detective",
+        "badgeName": "Krebs Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "Pyruvate becomes acetyl-CoA.", "choices": [{ "label": "Pyruvate oxidation ✓", "correct": true }, { "label": "Glycolysis", "correct": false }, { "label": "ETC", "correct": false }] },
+          { "text": "The Krebs cycle occurs in:", "choices": [{ "label": "Mitochondrial matrix ✓", "correct": true }, { "label": "Cytoplasm", "correct": false }, { "label": "Nucleus", "correct": false }] },
+          { "text": "CO₂ is released during this process.", "choices": [{ "label": "Krebs cycle ✓", "correct": true }, { "label": "Glycolysis", "correct": false }, { "label": "ETC", "correct": false }] },
+          { "text": "3 NADH, 1 FADH₂, 1 ATP per turn.", "choices": [{ "label": "Krebs ✓", "correct": true }, { "label": "Glycolysis", "correct": false }, { "label": "Fermentation", "correct": false }] },
+          { "text": "The Krebs cycle turns how many times per glucose?", "choices": [{ "label": "1", "correct": false }, { "label": "2 ✓", "correct": true }, { "label": "4", "correct": false }] },
+          { "text": "ATP production in Krebs is by:", "choices": [{ "label": "Substrate-level phosphorylation ✓", "correct": true }, { "label": "Oxidative phosphorylation", "correct": false }, { "label": "Photophosphorylation", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "krebs-escape",
+        "badgeName": "Krebs Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Where does the Krebs cycle occur?", "choices": [{ "label": "Cytoplasm", "correct": false }, { "label": "Mitochondrial matrix", "correct": true }, { "label": "Thylakoid", "correct": false }, { "label": "Nucleus", "correct": false }] },
+          { "text": "How many NADH are produced per turn of the Krebs cycle?", "choices": [{ "label": "1", "correct": false }, { "label": "2", "correct": false }, { "label": "3", "correct": true }, { "label": "4", "correct": false }] },
+          { "text": "What is the role of pyruvate oxidation?", "choices": [{ "label": "Convert pyruvate to acetyl-CoA", "correct": true }, { "label": "Produce ATP", "correct": false }, { "label": "Split glucose", "correct": false }, { "label": "Produce O₂", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Krebs cycle occurs in the mitochondrial matrix.",
+        "Per turn: 3 NADH, 1 FADH₂, 1 ATP, 2 CO₂.",
+        "Per glucose: 2 turns → 6 NADH, 2 FADH₂, 2 ATP.",
+        "Pyruvate oxidation produces acetyl-CoA."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Electron Transport Chain & Chemiosmosis",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the electron transport chain.</li><li>Explain chemiosmosis.</li><li>Explain the role of oxygen.</li><li>Summarize the ATP yield of respiration.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Electron transport chain (ETC)</strong> — series of protein complexes in the inner mitochondrial membrane.</li><li><strong>Chemiosmosis</strong> — ATP production via H⁺ gradient.</li><li><strong>ATP synthase</strong> — enzyme that produces ATP.</li><li><strong>Oxygen</strong> — final electron acceptor; forms water.</li></ul><h3>📚 Lesson Content</h3><h4>A. The ETC</h4><p>NADH and FADH₂ drop electrons at protein complexes. Electrons move through the chain, releasing energy that pumps H⁺ into the intermembrane space.</p><h4>B. Chemiosmosis</h4><p>H⁺ flows back through ATP synthase into the matrix, driving ATP production (~26–28 ATP).</p><h4>C. Oxygen's Role</h4><p>O₂ is the final electron acceptor. It combines with electrons and H⁺ to form H₂O. Without O₂, the ETC backs up.</p><h4>D. Total ATP Yield (Aerobic)</h4><ul><li>Glycolysis: 2 ATP</li><li>Krebs: 2 ATP</li><li>ETC: ~32–34 ATP</li><li><strong>Total: ~36–38 ATP</strong></li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "etc-chem-master",
+        "badgeName": "ETC & Chem Master",
+        "badgeIcon": "⚡",
+        "pairs": [
+          { "key": "etc", "left": "ETC", "right": "Electron transfer in inner membrane" },
+          { "key": "chem", "left": "Chemiosmosis", "right": "ATP via H⁺ gradient" },
+          { "key": "syn", "left": "ATP synthase", "right": "Produces ATP from H⁺ flow" },
+          { "key": "o2", "left": "O₂", "right": "Final electron acceptor" },
+          { "key": "h2o", "left": "Water", "right": "Formed when O₂ accepts electrons" },
+          { "key": "total", "left": "Total ATP", "right": "~36–38 per glucose" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "etc-detective",
+        "badgeName": "ETC Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "NADH drops electrons at protein complexes.", "choices": [{ "label": "ETC ✓", "correct": true }, { "label": "Krebs", "correct": false }, { "label": "Glycolysis", "correct": false }] },
+          { "text": "H⁺ flows back through ATP synthase.", "choices": [{ "label": "Chemiosmosis ✓", "correct": true }, { "label": "Fermentation", "correct": false }, { "label": "Krebs", "correct": false }] },
+          { "text": "O₂ combines with electrons and H⁺.", "choices": [{ "label": "Forms water ✓", "correct": true }, { "label": "Forms glucose", "correct": false }, { "label": "Forms CO₂", "correct": false }] },
+          { "text": "ETC produces the most ATP.", "choices": [{ "label": "~32–34 ATP ✓", "correct": true }, { "label": "2 ATP", "correct": false }, { "label": "0 ATP", "correct": false }] },
+          { "text": "No oxygen → ETC shuts down.", "choices": [{ "label": "Fermentation kicks in ✓", "correct": true }, { "label": "Krebs continues", "correct": false }, { "label": "Glycolysis stops", "correct": false }] },
+          { "text": "Total ATP per glucose (aerobic):", "choices": [{ "label": "~36–38 ✓", "correct": true }, { "label": "2", "correct": false }, { "label": "100", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week8-master",
+        "badgeName": "Week 8 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "What is the final electron acceptor in aerobic respiration?", "choices": [{ "label": "NAD⁺", "correct": false }, { "label": "O₂", "correct": true }, { "label": "FAD", "correct": false }, { "label": "ATP", "correct": false }] },
+          { "text": "Where does the ETC occur?", "choices": [{ "label": "Inner mitochondrial membrane", "correct": true }, { "label": "Cytoplasm", "correct": false }, { "label": "Nucleus", "correct": false }, { "label": "Chloroplast", "correct": false }] },
+          { "text": "How much ATP does the ETC produce per glucose?", "choices": [{ "label": "0", "correct": false }, { "label": "2", "correct": false }, { "label": "~32–34", "correct": true }, { "label": "100", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "ETC transfers electrons through inner mitochondrial membrane.",
+        "Chemiosmosis produces most ATP via H⁺ gradient.",
+        "O₂ is the final electron acceptor → forms water.",
+        "Total aerobic ATP: ~36–38 per glucose."
+      ]
+    }
+  ]
+}

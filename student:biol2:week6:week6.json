@@ -1,0 +1,211 @@
+{
+  "week": 6,
+  "title": "DNA Replication & Protein Synthesis",
+  "days": [
+    {
+      "n": 1,
+      "title": "DNA Replication — Steps & Enzymes",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the steps of DNA replication.</li><li>Identify enzymes involved.</li><li>Explain semi-conservative replication.</li><li>Diagram the replication fork.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Semi-conservative</strong> — each new DNA has one old + one new strand.</li><li><strong>Replication fork</strong> — the Y-shaped region where DNA unwinds.</li><li><strong>Helicase</strong> — unwinds DNA.</li><li><strong>DNA polymerase</strong> — adds nucleotides.</li><li><strong>Ligase</strong> — seals fragments.</li></ul><h3>📚 Lesson Content</h3><h4>A. Steps of Replication</h4><ol><li><strong>Initiation:</strong> Helicase unwinds DNA at origin of replication</li><li><strong>Elongation:</strong> Primase lays RNA primer; DNA polymerase adds nucleotides (5'→3')</li><li><strong>Lagging strand:</strong> Made in Okazaki fragments</li><li><strong>Termination:</strong> Ligase seals fragments; two identical DNA molecules result</li></ol><h4>B. Enzymes Summary</h4><table><thead><tr><th>Enzyme</th><th>Function</th></tr></thead><tbody><tr><td>Helicase</td><td>Unwinds double helix</td></tr><tr><td>Primase</td><td>Synthesizes RNA primer</td></tr><tr><td>DNA polymerase</td><td>Adds DNA nucleotides</td></tr><tr><td>Ligase</td><td>Seals Okazaki fragments</td></tr></tbody></table>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "replication-master",
+        "badgeName": "Replication Master",
+        "badgeIcon": "🧬",
+        "pairs": [
+          { "key": "semi", "left": "Semi-conservative", "right": "One old + one new strand" },
+          { "key": "fork", "left": "Replication fork", "right": "Y-shaped region" },
+          { "key": "heli", "left": "Helicase", "right": "Unwinds double helix" },
+          { "key": "prim", "left": "Primase", "right": "Lays RNA primer" },
+          { "key": "pol", "left": "DNA polymerase", "right": "Adds DNA nucleotides" },
+          { "key": "lig", "left": "Ligase", "right": "Seals Okazaki fragments" },
+          { "key": "oko", "left": "Okazaki fragments", "right": "Lagging strand segments" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "replication-detective",
+        "badgeName": "Replication Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "DNA double helix is unwound.", "choices": [{ "label": "Helicase ✓", "correct": true }, { "label": "Ligase", "correct": false }, { "label": "Primase", "correct": false }] },
+          { "text": "RNA primer is synthesized.", "choices": [{ "label": "Primase ✓", "correct": true }, { "label": "Helicase", "correct": false }, { "label": "Polymerase", "correct": false }] },
+          { "text": "DNA nucleotides are added.", "choices": [{ "label": "DNA polymerase ✓", "correct": true }, { "label": "Primase", "correct": false }, { "label": "Helicase", "correct": false }] },
+          { "text": "Fragments on the lagging strand are sealed.", "choices": [{ "label": "Ligase ✓", "correct": true }, { "label": "Helicase", "correct": false }, { "label": "Primase", "correct": false }] },
+          { "text": "Replication is semi-conservative.", "choices": [{ "label": "Each new DNA has one old + one new strand ✓", "correct": true }, { "label": "Both strands are new", "correct": false }] },
+          { "text": "DNA polymerase adds nucleotides in which direction?", "choices": [{ "label": "5' → 3' ✓", "correct": true }, { "label": "3' → 5'", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "replication-escape",
+        "badgeName": "Replication Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Which enzyme unwinds the DNA double helix?", "choices": [{ "label": "Helicase", "correct": true }, { "label": "Ligase", "correct": false }, { "label": "Primase", "correct": false }, { "label": "Polymerase", "correct": false }] },
+          { "text": "What does semi-conservative mean?", "choices": [{ "label": "Both strands are new", "correct": false }, { "label": "Both strands are old", "correct": false }, { "label": "Each new DNA has one old + one new strand", "correct": true }, { "label": "Only one strand survives", "correct": false }] },
+          { "text": "Which enzyme seals Okazaki fragments?", "choices": [{ "label": "Helicase", "correct": false }, { "label": "Ligase", "correct": true }, { "label": "Primase", "correct": false }, { "label": "Polymerase", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "DNA replication is semi-conservative.",
+        "Helicase unwinds, primase lays primer, polymerase adds nucleotides, ligase seals.",
+        "Leading strand is continuous; lagging strand is in Okazaki fragments.",
+        "Polymerase works 5' → 3'."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Transcription — DNA to mRNA",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the process of transcription.</li><li>Identify the role of RNA polymerase.</li><li>Explain mRNA processing.</li><li>Diagram the flow from DNA to mRNA.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Transcription</strong> — DNA → mRNA.</li><li><strong>RNA polymerase</strong> — enzyme that makes mRNA.</li><li><strong>Template strand</strong> — the DNA strand read by RNA polymerase.</li><li><strong>Codon</strong> — 3 nucleotides coding for an amino acid.</li></ul><h3>📚 Lesson Content</h3><h4>A. Steps of Transcription</h4><ol><li><strong>Initiation:</strong> RNA polymerase binds to the promoter</li><li><strong>Elongation:</strong> RNA polymerase reads the template strand and adds RNA nucleotides</li><li><strong>Termination:</strong> RNA polymerase reaches the terminator; mRNA is released</li></ol><h4>B. mRNA Processing (Eukaryotes)</h4><ul><li>5' cap added</li><li>Poly-A tail added</li><li>Introns removed (splicing)</li><li>Exons joined</li></ul><h4>C. DNA → mRNA Example</h4><p>DNA: TAC GGA TTC → mRNA: AUG CCU AAG</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "transcription-master",
+        "badgeName": "Transcription Master",
+        "badgeIcon": "📝",
+        "pairs": [
+          { "key": "trans", "left": "Transcription", "right": "DNA → mRNA" },
+          { "key": "pol", "left": "RNA polymerase", "right": "Makes mRNA" },
+          { "key": "prom", "left": "Promoter", "right": "Where polymerase binds" },
+          { "key": "term", "left": "Terminator", "right": "Stops transcription" },
+          { "key": "cap", "left": "5' cap", "right": "Added to mRNA in eukaryotes" },
+          { "key": "splice", "left": "Splicing", "right": "Removes introns" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "transcription-detective",
+        "badgeName": "Transcription Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "RNA polymerase binds to DNA.", "choices": [{ "label": "Initiation ✓", "correct": true }, { "label": "Elongation", "correct": false }, { "label": "Termination", "correct": false }] },
+          { "text": "RNA polymerase adds RNA nucleotides.", "choices": [{ "label": "Elongation ✓", "correct": true }, { "label": "Initiation", "correct": false }] },
+          { "text": "Polymerase reaches the terminator.", "choices": [{ "label": "Termination ✓", "correct": true }, { "label": "Initiation", "correct": false }] },
+          { "text": "Introns are removed.", "choices": [{ "label": "mRNA processing ✓", "correct": true }, { "label": "Transcription", "correct": false }] },
+          { "text": "DNA: TAC → mRNA:", "choices": [{ "label": "AUG ✓", "correct": true }, { "label": "TAC", "correct": false }, { "label": "UAC", "correct": false }] },
+          { "text": "DNA: GGA → mRNA:", "choices": [{ "label": "CCU ✓", "correct": true }, { "label": "GGA", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "transcription-escape",
+        "badgeName": "Transcription Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Which enzyme makes mRNA?", "choices": [{ "label": "DNA polymerase", "correct": false }, { "label": "RNA polymerase", "correct": true }, { "label": "Ligase", "correct": false }, { "label": "Helicase", "correct": false }] },
+          { "text": "Where does transcription occur in eukaryotes?", "choices": [{ "label": "Nucleus", "correct": true }, { "label": "Ribosome", "correct": false }, { "label": "Cytoplasm", "correct": false }, { "label": "Mitochondria", "correct": false }] },
+          { "text": "If DNA has TAC, mRNA has:", "choices": [{ "label": "TAC", "correct": false }, { "label": "AUG", "correct": true }, { "label": "UAC", "correct": false }, { "label": "GCA", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Transcription: DNA → mRNA.",
+        "RNA polymerase binds to the promoter.",
+        "mRNA is processed in eukaryotes (cap, tail, splicing).",
+        "DNA TAC → mRNA AUG."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Translation — mRNA to Protein",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the process of translation.</li><li>Explain the roles of mRNA, tRNA, and rRNA.</li><li>Use the codon table.</li><li>Diagram protein synthesis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Translation</strong> — mRNA → protein.</li><li><strong>tRNA</strong> — brings amino acids to ribosome.</li><li><strong>Anticodon</strong> — pairs with mRNA codon.</li><li><strong>Ribosome</strong> — site of translation.</li></ul><h3>📚 Lesson Content</h3><h4>A. Steps of Translation</h4><ol><li><strong>Initiation:</strong> Ribosome binds mRNA at the start codon (AUG)</li><li><strong>Elongation:</strong> tRNA brings amino acids; peptide bonds form</li><li><strong>Termination:</strong> Stop codon reached; polypeptide released</li></ol><h4>B. Codon Table</h4><ul><li>AUG = Methionine (start)</li><li>UAA, UAG, UGA = Stop</li><li>20 amino acids encoded by 64 codons</li></ul><h4>C. Example</h4><p>mRNA: AUG CCU AAG → Met–Pro–Lys</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "translation-master",
+        "badgeName": "Translation Master",
+        "badgeIcon": "🔤",
+        "pairs": [
+          { "key": "trans", "left": "Translation", "right": "mRNA → protein" },
+          { "key": "trna", "left": "tRNA", "right": "Brings amino acids" },
+          { "key": "anti", "left": "Anticodon", "right": "Pairs with mRNA codon" },
+          { "key": "ribo", "left": "Ribosome", "right": "Site of translation" },
+          { "key": "start", "left": "AUG", "right": "Start codon" },
+          { "key": "stop", "left": "UAA/UAG/UGA", "right": "Stop codons" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "translation-detective",
+        "badgeName": "Translation Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "Ribosome binds mRNA at AUG.", "choices": [{ "label": "Initiation ✓", "correct": true }, { "label": "Elongation", "correct": false }, { "label": "Termination", "correct": false }] },
+          { "text": "tRNA brings amino acids.", "choices": [{ "label": "Elongation ✓", "correct": true }, { "label": "Initiation", "correct": false }] },
+          { "text": "Stop codon reached.", "choices": [{ "label": "Termination ✓", "correct": true }, { "label": "Initiation", "correct": false }] },
+          { "text": "mRNA: AUG CCU AAG → ?", "choices": [{ "label": "Met–Pro–Lys ✓", "correct": true }, { "label": "Met–Lys–Pro", "correct": false }, { "label": "Stop", "correct": false }] },
+          { "text": "The codon UAA signals:", "choices": [{ "label": "Stop ✓", "correct": true }, { "label": "Start", "correct": false }, { "label": "Methionine", "correct": false }] },
+          { "text": "The codon AUG signals:", "choices": [{ "label": "Start (Met) ✓", "correct": true }, { "label": "Stop", "correct": false }, { "label": "Proline", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "translation-escape",
+        "badgeName": "Translation Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Which molecule brings amino acids to the ribosome?", "choices": [{ "label": "mRNA", "correct": false }, { "label": "tRNA", "correct": true }, { "label": "rRNA", "correct": false }, { "label": "DNA", "correct": false }] },
+          { "text": "The start codon is:", "choices": [{ "label": "UAA", "correct": false }, { "label": "AUG", "correct": true }, { "label": "UGA", "correct": false }, { "label": "GUA", "correct": false }] },
+          { "text": "Where does translation occur?", "choices": [{ "label": "Nucleus", "correct": false }, { "label": "Ribosome", "correct": true }, { "label": "Mitochondria", "correct": false }, { "label": "Golgi", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Translation: mRNA → protein.",
+        "mRNA is read in codons (3 nucleotides).",
+        "tRNA brings amino acids; anticodon pairs with codon.",
+        "AUG = start; UAA, UAG, UGA = stop."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Mutations & Their Effects",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define genetic mutation.</li><li>Differentiate gene mutations from chromosomal mutations.</li><li>Describe effects of mutations.</li><li>Relate mutations to genetic disorders.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Mutation</strong> — change in DNA sequence.</li><li><strong>Point mutation</strong> — single nucleotide change.</li><li><strong>Frameshift</strong> — insertion/deletion shifts reading frame.</li><li><strong>Chromosomal mutation</strong> — changes in chromosome structure or number.</li></ul><h3>📚 Lesson Content</h3><h4>A. Types of Point Mutations</h4><table><thead><tr><th>Type</th><th>Effect</th></tr></thead><tbody><tr><td>Silent</td><td>No change in amino acid</td></tr><tr><td>Missense</td><td>Different amino acid</td></tr><tr><td>Nonsense</td><td>Premature stop codon</td></tr></tbody></table><h4>B. Frameshift Mutations</h4><ul><li>Insertion or deletion of nucleotides</li><li>Shifts the reading frame</li><li>Usually more severe</li></ul><h4>C. Chromosomal Mutations</h4><ul><li>Deletion, duplication, inversion, translocation</li><li>Aneuploidy (e.g., Down syndrome)</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "mutation-master",
+        "badgeName": "Mutation Master",
+        "badgeIcon": "🧬",
+        "pairs": [
+          { "key": "mut", "left": "Mutation", "right": "Change in DNA sequence" },
+          { "key": "point", "left": "Point mutation", "right": "Single nucleotide change" },
+          { "key": "silent", "left": "Silent", "right": "No amino acid change" },
+          { "key": "mis", "left": "Missense", "right": "Different amino acid" },
+          { "key": "non", "left": "Nonsense", "right": "Premature stop" },
+          { "key": "frame", "left": "Frameshift", "right": "Insertion/deletion shifts frame" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "mutation-detective",
+        "badgeName": "Mutation Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "A single nucleotide change has no effect.", "choices": [{ "label": "Silent ✓", "correct": true }, { "label": "Missense", "correct": false }, { "label": "Nonsense", "correct": false }] },
+          { "text": "A single nucleotide change causes a different amino acid.", "choices": [{ "label": "Missense ✓", "correct": true }, { "label": "Silent", "correct": false }] },
+          { "text": "A mutation creates a premature stop codon.", "choices": [{ "label": "Nonsense ✓", "correct": true }, { "label": "Missense", "correct": false }] },
+          { "text": "One nucleotide is inserted.", "choices": [{ "label": "Frameshift ✓", "correct": true }, { "label": "Point", "correct": false }] },
+          { "text": "An extra chromosome 21 is present.", "choices": [{ "label": "Aneuploidy ✓", "correct": true }, { "label": "Point mutation", "correct": false }] },
+          { "text": "A chromosome segment is reversed.", "choices": [{ "label": "Inversion ✓", "correct": true }, { "label": "Deletion", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week6-bio2-master",
+        "badgeName": "Week 6 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "A mutation that does NOT change the amino acid is:", "choices": [{ "label": "Silent", "correct": true }, { "label": "Missense", "correct": false }, { "label": "Nonsense", "correct": false }, { "label": "Frameshift", "correct": false }] },
+          { "text": "A frameshift mutation is caused by:", "choices": [{ "label": "Substitution", "correct": false }, { "label": "Insertion or deletion", "correct": true }, { "label": "Inversion", "correct": false }, { "label": "Duplication", "correct": false }] },
+          { "text": "A premature stop codon results from which mutation?", "choices": [{ "label": "Silent", "correct": false }, { "label": "Missense", "correct": false }, { "label": "Nonsense", "correct": true }, { "label": "Deletion", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Mutations change the DNA sequence.",
+        "Point mutations: silent, missense, nonsense.",
+        "Frameshift = insertion/deletion.",
+        "Chromosomal mutations include aneuploidy, inversion, translocation."
+      ]
+    }
+  ]
+}

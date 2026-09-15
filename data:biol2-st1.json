@@ -1,0 +1,340 @@
+{
+  "assessmentId": "biol2-st1",
+  "subject": "biol2",
+  "type": "st",
+  "title": "Summative Test 1 — Organismal Biology, Homeostasis & Mendelian Genetics (Weeks 1–4)",
+  "timeLimit": 1800,
+  "passingScore": 80,
+  "items": [
+    {
+      "id": "st1-01",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which animal system transports nutrients, gases, and wastes throughout the body?",
+      "options": [
+        { "key": "a", "label": "Respiratory", "correct": false },
+        { "key": "b", "label": "Circulatory", "correct": true },
+        { "key": "c", "label": "Digestive", "correct": false },
+        { "key": "d", "label": "Endocrine", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-02",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which plant tissue transports sugars both upward and downward?",
+      "options": [
+        { "key": "a", "label": "Xylem", "correct": false },
+        { "key": "b", "label": "Phloem", "correct": true },
+        { "key": "c", "label": "Epidermis", "correct": false },
+        { "key": "d", "label": "Cuticle", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-03",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "What is the primary function of the root system in plants?",
+      "options": [
+        { "key": "a", "label": "Photosynthesis", "correct": false },
+        { "key": "b", "label": "Anchor the plant and absorb water/minerals", "correct": true },
+        { "key": "c", "label": "Produce flowers", "correct": false },
+        { "key": "d", "label": "Gas exchange", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-04",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which animal system defends the body against pathogens?",
+      "options": [
+        { "key": "a", "label": "Immune/Lymphatic", "correct": true },
+        { "key": "b", "label": "Endocrine", "correct": false },
+        { "key": "c", "label": "Digestive", "correct": false },
+        { "key": "d", "label": "Skeletal", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-05",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which of the following is the primary mode of nutrition in plants?",
+      "options": [
+        { "key": "a", "label": "Heterotrophic", "correct": false },
+        { "key": "b", "label": "Autotrophic", "correct": true },
+        { "key": "c", "label": "Saprophytic", "correct": false },
+        { "key": "d", "label": "Parasitic", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-06",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which animal structure is specialized for gas exchange?",
+      "options": [
+        { "key": "a", "label": "Alveoli", "correct": true },
+        { "key": "b", "label": "Stomata", "correct": false },
+        { "key": "c", "label": "Xylem", "correct": false },
+        { "key": "d", "label": "Nephron", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-07",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which system controls rapid responses to stimuli?",
+      "options": [
+        { "key": "a", "label": "Endocrine", "correct": false },
+        { "key": "b", "label": "Nervous", "correct": true },
+        { "key": "c", "label": "Digestive", "correct": false },
+        { "key": "d", "label": "Immune", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-08",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which plant structure is responsible for gas exchange?",
+      "options": [
+        { "key": "a", "label": "Stomata", "correct": true },
+        { "key": "b", "label": "Alveoli", "correct": false },
+        { "key": "c", "label": "Xylem", "correct": false },
+        { "key": "d", "label": "Phloem", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-09",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which of the following correctly pairs an animal system with its function?",
+      "options": [
+        { "key": "a", "label": "Excretory — removes metabolic wastes", "correct": true },
+        { "key": "b", "label": "Respiratory — produces hormones", "correct": false },
+        { "key": "c", "label": "Digestive — pumps blood", "correct": false },
+        { "key": "d", "label": "Nervous — absorbs nutrients", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-10",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "text": "Which of the following is a similarity between plants and animals?",
+      "options": [
+        { "key": "a", "label": "Both perform cellular respiration", "correct": true },
+        { "key": "b", "label": "Both use lungs for gas exchange", "correct": false },
+        { "key": "c", "label": "Both have closed circulatory systems", "correct": false },
+        { "key": "d", "label": "Both are autotrophic", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-11",
+      "competency": "STEM_BIO11/12-IVi-j-2",
+      "text": "Which of the following best defines homeostasis?",
+      "options": [
+        { "key": "a", "label": "Maintenance of a stable internal environment", "correct": true },
+        { "key": "b", "label": "Rapid cell division", "correct": false },
+        { "key": "c", "label": "Production of offspring", "correct": false },
+        { "key": "d", "label": "Growth and development", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-12",
+      "competency": "STEM_BIO11/12-IVi-j-2",
+      "text": "Which statement about homeostasis is TRUE?",
+      "options": [
+        { "key": "a", "label": "It requires no coordination between organ systems", "correct": false },
+        { "key": "b", "label": "It requires integration of multiple organ systems", "correct": true },
+        { "key": "c", "label": "It only occurs in plants", "correct": false },
+        { "key": "d", "label": "It stops after childhood", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-13",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "text": "Which of the following is an example of a negative feedback loop?",
+      "options": [
+        { "key": "a", "label": "Regulation of blood glucose by insulin and glucagon", "correct": true },
+        { "key": "b", "label": "Uterine contractions during childbirth", "correct": false },
+        { "key": "c", "label": "Blood clotting cascade", "correct": false },
+        { "key": "d", "label": "Milk production during breastfeeding", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-14",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "text": "When body temperature rises, which response helps restore homeostasis?",
+      "options": [
+        { "key": "a", "label": "Shivering", "correct": false },
+        { "key": "b", "label": "Sweating and vasodilation", "correct": true },
+        { "key": "c", "label": "Vasoconstriction", "correct": false },
+        { "key": "d", "label": "Increased metabolism", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-15",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "text": "Which best describes a positive feedback loop?",
+      "options": [
+        { "key": "a", "label": "It amplifies the original stimulus", "correct": true },
+        { "key": "b", "label": "It reverses the original stimulus", "correct": false },
+        { "key": "c", "label": "It has no effect on the stimulus", "correct": false },
+        { "key": "d", "label": "It only occurs in plants", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-16",
+      "competency": "STEM_BIO11/12-IVi-j-2",
+      "text": "Osmotic balance refers to the maintenance of:",
+      "options": [
+        { "key": "a", "label": "Water and solute concentrations in the body", "correct": true },
+        { "key": "b", "label": "Body temperature only", "correct": false },
+        { "key": "c", "label": "Blood pH only", "correct": false },
+        { "key": "d", "label": "Hormone levels only", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-17",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "In a cross between Tt and Tt (where T = tall, t = short), what is the expected phenotypic ratio?",
+      "options": [
+        { "key": "a", "label": "1:1", "correct": false },
+        { "key": "b", "label": "3:1", "correct": true },
+        { "key": "c", "label": "1:2:1", "correct": false },
+        { "key": "d", "label": "9:3:3:1", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-18",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "Which of Mendel's laws states that the inheritance of one trait does not affect another?",
+      "options": [
+        { "key": "a", "label": "Law of Segregation", "correct": false },
+        { "key": "b", "label": "Law of Independent Assortment", "correct": true },
+        { "key": "c", "label": "Law of Dominance", "correct": false },
+        { "key": "d", "label": "Law of Linkage", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-19",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "What is the genotype of an organism that shows the dominant trait but has a recessive allele?",
+      "options": [
+        { "key": "a", "label": "Homozygous dominant (AA)", "correct": false },
+        { "key": "b", "label": "Heterozygous (Aa)", "correct": true },
+        { "key": "c", "label": "Homozygous recessive (aa)", "correct": false },
+        { "key": "d", "label": "Cannot be determined", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-20",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "A dihybrid cross RrYy × RrYy produces which phenotypic ratio?",
+      "options": [
+        { "key": "a", "label": "3:1", "correct": false },
+        { "key": "b", "label": "9:3:3:1", "correct": true },
+        { "key": "c", "label": "1:1:1:1", "correct": false },
+        { "key": "d", "label": "1:2:1", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-21",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "text": "In a testcross between a heterozygous tall plant (Tt) and a short plant (tt), what is the expected phenotypic ratio?",
+      "options": [
+        { "key": "a", "label": "1 tall : 1 short", "correct": true },
+        { "key": "b", "label": "3 tall : 1 short", "correct": false },
+        { "key": "c", "label": "All tall", "correct": false },
+        { "key": "d", "label": "All short", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-22",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "text": "Why are X-linked recessive disorders more common in males?",
+      "options": [
+        { "key": "a", "label": "Males have two X chromosomes", "correct": false },
+        { "key": "b", "label": "Males have only one X chromosome, so a single recessive allele is enough", "correct": true },
+        { "key": "c", "label": "Males cannot inherit X-linked traits", "correct": false },
+        { "key": "d", "label": "Females are immune to X-linked disorders", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-23",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "text": "Which of the following is an example of an X-linked disorder?",
+      "options": [
+        { "key": "a", "label": "Hemophilia", "correct": true },
+        { "key": "b", "label": "Cystic fibrosis", "correct": false },
+        { "key": "c", "label": "Sickle-cell anemia", "correct": false },
+        { "key": "d", "label": "Huntington's disease", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-24",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "text": "Recombination refers to:",
+      "options": [
+        { "key": "a", "label": "The exchange of genetic material between chromosomes", "correct": true },
+        { "key": "b", "label": "The duplication of chromosomes", "correct": false },
+        { "key": "c", "label": "The deletion of DNA", "correct": false },
+        { "key": "d", "label": "The formation of gametes", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-25",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "text": "In incomplete dominance, the phenotype of a heterozygote is:",
+      "options": [
+        { "key": "a", "label": "Intermediate between the two homozygotes", "correct": true },
+        { "key": "b", "label": "Identical to the dominant homozygote", "correct": false },
+        { "key": "c", "label": "Identical to the recessive homozygote", "correct": false },
+        { "key": "d", "label": "Always lethal", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-26",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "text": "In codominance, what would the offspring of a red-flowered (RR) and white-flowered (WW) plant look like?",
+      "options": [
+        { "key": "a", "label": "All pink flowers", "correct": false },
+        { "key": "b", "label": "Red and white patches on the same flower", "correct": true },
+        { "key": "c", "label": "All red flowers", "correct": false },
+        { "key": "d", "label": "All white flowers", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-27",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "text": "Multiple alleles refers to:",
+      "options": [
+        { "key": "a", "label": "A gene that has more than two possible alleles in a population", "correct": true },
+        { "key": "b", "label": "An organism with two alleles for a trait", "correct": false },
+        { "key": "c", "label": "A trait controlled by two genes", "correct": false },
+        { "key": "d", "label": "A gene with only one allele", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-28",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "Which of the following correctly describes the structure of DNA?",
+      "options": [
+        { "key": "a", "label": "Double helix with complementary base pairing", "correct": true },
+        { "key": "b", "label": "Single-stranded linear chain", "correct": false },
+        { "key": "c", "label": "Triple helix of nucleotides", "correct": false },
+        { "key": "d", "label": "Branched chain of amino acids", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-29",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "Which nitrogenous base is found in RNA but NOT in DNA?",
+      "options": [
+        { "key": "a", "label": "Thymine", "correct": false },
+        { "key": "b", "label": "Uracil", "correct": true },
+        { "key": "c", "label": "Cytosine", "correct": false },
+        { "key": "d", "label": "Guanine", "correct": false }
+      ]
+    },
+    {
+      "id": "st1-30",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "Which of the following is the correct complementary base pairing in DNA?",
+      "options": [
+        { "key": "a", "label": "A–T and G–C", "correct": true },
+        { "key": "b", "label": "A–G and T–C", "correct": false },
+        { "key": "c", "label": "A–C and G–T", "correct": false },
+        { "key": "d", "label": "A–U and G–C", "correct": false }
+      ]
+    }
+  ]
+}

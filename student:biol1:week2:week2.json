@@ -1,0 +1,211 @@
+{
+  "week": 2,
+  "title": "Cell Types & Modifications",
+  "days": [
+    {
+      "n": 1,
+      "title": "Prokaryotic vs Eukaryotic Cells",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Distinguish prokaryotic from eukaryotic cells.</li><li>Identify key structural differences.</li><li>Give examples of each cell type.</li><li>Explain evolutionary significance.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Prokaryote</strong> — a cell without a membrane-bound nucleus.</li><li><strong>Eukaryote</strong> — a cell with a true nucleus and membrane-bound organelles.</li><li><strong>Nucleoid</strong> — the region in prokaryotes where DNA is concentrated.</li></ul><h3>📚 Lesson Content</h3><h4>A. Defining Features</h4><table><thead><tr><th>Feature</th><th>Prokaryote</th><th>Eukaryote</th></tr></thead><tbody><tr><td>Nucleus</td><td>Absent (nucleoid)</td><td>Present</td></tr><tr><td>Membrane-bound organelles</td><td>Absent</td><td>Present</td></tr><tr><td>Ribosomes</td><td>70S</td><td>80S</td></tr><tr><td>Cell size</td><td>1–5 µm</td><td>10–100 µm</td></tr><tr><td>DNA</td><td>Circular, naked</td><td>Linear, histone-bound</td></tr><tr><td>Cell wall</td><td>Peptidoglycan (bacteria)</td><td>Cellulose (plants), chitin (fungi)</td></tr></tbody></table><h4>B. Examples</h4><ul><li><strong>Prokaryotes:</strong> Bacteria (E. coli), Archaea</li><li><strong>Eukaryotes:</strong> Plants, animals, fungi, protists</li></ul><h4>C. Evolutionary Significance</h4><p>Prokaryotes appeared ~3.5 billion years ago; eukaryotes ~1.5 billion years ago. The endosymbiotic theory explains how eukaryotes arose from prokaryotes engulfing smaller prokaryotes.</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "pro-vs-eu",
+        "badgeName": "Pro vs Eu",
+        "badgeIcon": "🔬",
+        "pairs": [
+          { "key": "nuc", "left": "Nucleus present", "right": "Eukaryote" },
+          { "key": "nuc2", "left": "Nucleoid region", "right": "Prokaryote" },
+          { "key": "rib", "left": "80S ribosomes", "right": "Eukaryote" },
+          { "key": "rib2", "left": "70S ribosomes", "right": "Prokaryote" },
+          { "key": "size", "left": "1–5 µm", "right": "Prokaryote" },
+          { "key": "size2", "left": "10–100 µm", "right": "Eukaryote" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "cell-classifier",
+        "badgeName": "Cell Classifier",
+        "badgeIcon": "🧠",
+        "scenarios": [
+          { "text": "A cell has no membrane-bound nucleus.", "choices": [{ "label": "Prokaryote ✓", "correct": true }, { "label": "Eukaryote", "correct": false }] },
+          { "text": "A cell has mitochondria and ER.", "choices": [{ "label": "Prokaryote", "correct": false }, { "label": "Eukaryote ✓", "correct": true }] },
+          { "text": "A bacterium.", "choices": [{ "label": "Prokaryote ✓", "correct": true }, { "label": "Eukaryote", "correct": false }] },
+          { "text": "A cell with linear chromosomes bound to histones.", "choices": [{ "label": "Prokaryote", "correct": false }, { "label": "Eukaryote ✓", "correct": true }] },
+          { "text": "An organism with a nucleoid region.", "choices": [{ "label": "Prokaryote ✓", "correct": true }, { "label": "Eukaryote", "correct": false }] },
+          { "text": "A plant leaf cell.", "choices": [{ "label": "Prokaryote", "correct": false }, { "label": "Eukaryote ✓", "correct": true }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "prokaryote-pro",
+        "badgeName": "Prokaryote Pro",
+        "badgeIcon": "🎯",
+        "lives": 3,
+        "questions": [
+          { "text": "Which structure is present in eukaryotic cells but absent in prokaryotic cells?", "choices": [{ "label": "Ribosomes", "correct": false }, { "label": "Membrane-bound nucleus", "correct": true }, { "label": "Cell membrane", "correct": false }, { "label": "DNA", "correct": false }] },
+          { "text": "What type of ribosomes do prokaryotes have?", "choices": [{ "label": "70S", "correct": true }, { "label": "80S", "correct": false }, { "label": "60S only", "correct": false }, { "label": "None", "correct": false }] },
+          { "text": "Which of the following is a prokaryote?", "choices": [{ "label": "Yeast", "correct": false }, { "label": "E. coli", "correct": true }, { "label": "Onion cell", "correct": false }, { "label": "Human neuron", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Prokaryotes lack a membrane-bound nucleus; eukaryotes have one.",
+        "Prokaryotes have 70S ribosomes; eukaryotes have 80S.",
+        "Prokaryotic DNA is circular and naked; eukaryotic DNA is linear and histone-bound.",
+        "Endosymbiotic theory explains the origin of eukaryotic organelles."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Plant vs Animal Cells",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compare plant and animal cell structures.</li><li>Identify structures unique to each.</li><li>Relate structure to function.</li><li>Explain why certain organelles are more abundant in specific cells.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell wall</strong> — rigid outer layer in plant cells (cellulose).</li><li><strong>Central vacuole</strong> — large water-storage organelle in plants.</li><li><strong>Chloroplast</strong> — site of photosynthesis in plants.</li><li><strong>Centriole</strong> — aids in cell division in animals.</li></ul><h3>📚 Lesson Content</h3><h4>Structures Unique to Plant Cells</h4><ul><li><strong>Cell wall</strong> — cellulose; provides support and shape</li><li><strong>Chloroplasts</strong> — photosynthesis</li><li><strong>Central vacuole</strong> — stores water; maintains turgor pressure</li><li><strong>Plasmodesmata</strong> — channels between plant cells</li></ul><h4>Structures Unique to Animal Cells</h4><ul><li><strong>Centrioles</strong> — organize spindle fibers during cell division</li><li><strong>Lysosomes</strong> — abundant in animal cells (plants have fewer)</li><li><strong>Flagella/cilia</strong> — movement (some animal cells)</li></ul><h4>Structures in BOTH</h4><ul><li>Plasma membrane, nucleus, mitochondria, ER, Golgi, ribosomes, cytoskeleton</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "plant-vs-animal",
+        "badgeName": "Plant vs Animal",
+        "badgeIcon": "🌱",
+        "pairs": [
+          { "key": "wall", "left": "Cell wall (cellulose)", "right": "Plant only" },
+          { "key": "chloro", "left": "Chloroplast", "right": "Plant only" },
+          { "key": "vac", "left": "Large central vacuole", "right": "Plant only" },
+          { "key": "cent", "left": "Centrioles", "right": "Animal only" },
+          { "key": "lyso", "left": "Numerous lysosomes", "right": "Animal only" },
+          { "key": "mito", "left": "Mitochondria", "right": "Both" },
+          { "key": "nuc", "left": "Nucleus", "right": "Both" },
+          { "key": "rib", "left": "Ribosomes", "right": "Both" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 10,
+        "badgeId": "cell-spotter",
+        "badgeName": "Cell Spotter",
+        "badgeIcon": "🔎",
+        "scenarios": [
+          { "text": "A cell has a large central vacuole and chloroplasts.", "choices": [{ "label": "🌱 Plant ✓", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false }] },
+          { "text": "A cell has centrioles for spindle fiber formation.", "choices": [{ "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal ✓", "correct": true }, { "label": "🌍 Both", "correct": false }] },
+          { "text": "A cell has a plasma membrane and nucleus.", "choices": [{ "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both ✓", "correct": true }] },
+          { "text": "A cell has a rigid cell wall.", "choices": [{ "label": "🌱 Plant ✓", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false }] },
+          { "text": "A cell has mitochondria.", "choices": [{ "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both ✓", "correct": true }] },
+          { "text": "A cell contains plasmodesmata.", "choices": [{ "label": "🌱 Plant ✓", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "cell-compare-master",
+        "badgeName": "Compare Master",
+        "badgeIcon": "🎯",
+        "lives": 3,
+        "questions": [
+          { "text": "Which of the following is found ONLY in plant cells?", "choices": [{ "label": "Mitochondria", "correct": false }, { "label": "Chloroplast", "correct": true }, { "label": "Nucleus", "correct": false }, { "label": "Ribosome", "correct": false }] },
+          { "text": "Which organelle helps organize spindle fibers during animal cell division?", "choices": [{ "label": "Chloroplast", "correct": false }, { "label": "Centriole", "correct": true }, { "label": "Central vacuole", "correct": false }, { "label": "Cell wall", "correct": false }] },
+          { "text": "What is the main function of the central vacuole in plant cells?", "choices": [{ "label": "Photosynthesis", "correct": false }, { "label": "ATP production", "correct": false }, { "label": "Storing water and maintaining turgor", "correct": true }, { "label": "Protein synthesis", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Plant cells have a cell wall, chloroplasts, and a central vacuole.",
+        "Animal cells have centrioles and abundant lysosomes.",
+        "Both cell types share plasma membrane, nucleus, mitochondria, ER, Golgi, and ribosomes."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Plant & Animal Tissue Types",
+      "competency": "STEM_BIO11/12-Ia-c-4",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Classify the four main animal tissue types.</li><li>Describe the three main plant tissue systems.</li><li>Relate tissue structure to function.</li><li>Locate tissues within the organism.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Tissue</strong> — a group of similar cells performing a specific function.</li><li><strong>Epithelial tissue</strong> — covers body surfaces, lines cavities.</li><li><strong>Connective tissue</strong> — binds, supports, protects.</li><li><strong>Muscle tissue</strong> — contracts for movement.</li><li><strong>Nervous tissue</strong> — transmits electrical signals.</li></ul><h3>📚 Lesson Content</h3><h4>A. Animal Tissues</h4><table><thead><tr><th>Type</th><th>Function</th><th>Location</th></tr></thead><tbody><tr><td>Epithelial</td><td>Covering, lining, protection, absorption</td><td>Skin, intestine lining</td></tr><tr><td>Connective</td><td>Binding, support, transport</td><td>Bone, blood, cartilage, fat</td></tr><tr><td>Muscle</td><td>Movement</td><td>Skeletal, smooth, cardiac muscle</td></tr><tr><td>Nervous</td><td>Signaling</td><td>Brain, spinal cord, nerves</td></tr></tbody></table><h4>B. Plant Tissues</h4><table><thead><tr><th>System</th><th>Tissue</th><th>Function</th></tr></thead><tbody><tr><td>Dermal</td><td>Epidermis, cuticle</td><td>Protection</td></tr><tr><td>Ground</td><td>Parenchyma, collenchyma, sclerenchyma</td><td>Photosynthesis, support</td></tr><tr><td>Vascular</td><td>Xylem, phloem</td><td>Transport</td></tr></tbody></table>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "tissue-master",
+        "badgeName": "Tissue Master",
+        "badgeIcon": "🧬",
+        "pairs": [
+          { "key": "epi", "left": "Epithelial", "right": "Covers and lines surfaces" },
+          { "key": "conn", "left": "Connective", "right": "Binds and supports other tissues" },
+          { "key": "musc", "left": "Muscle", "right": "Contracts for movement" },
+          { "key": "nerv", "left": "Nervous", "right": "Transmits electrical signals" },
+          { "key": "epi2", "left": "Epidermis", "right": "Plant dermal tissue" },
+          { "key": "vas", "left": "Vascular tissue", "right": "Xylem + phloem" },
+          { "key": "ground", "left": "Ground tissue", "right": "Photosynthesis + storage" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "tissue-classifier",
+        "badgeName": "Tissue Classifier",
+        "badgeIcon": "🔬",
+        "scenarios": [
+          { "text": "Lines the inside of the small intestine.", "choices": [{ "label": "Epithelial ✓", "correct": true }, { "label": "Connective", "correct": false }, { "label": "Muscle", "correct": false }, { "label": "Nervous", "correct": false }] },
+          { "text": "Transmits signals in the brain.", "choices": [{ "label": "Epithelial", "correct": false }, { "label": "Connective", "correct": false }, { "label": "Muscle", "correct": false }, { "label": "Nervous ✓", "correct": true }] },
+          { "text": "Blood and bone.", "choices": [{ "label": "Epithelial", "correct": false }, { "label": "Connective ✓", "correct": true }, { "label": "Muscle", "correct": false }, { "label": "Nervous", "correct": false }] },
+          { "text": "Skeletal muscle fibers.", "choices": [{ "label": "Epithelial", "correct": false }, { "label": "Connective", "correct": false }, { "label": "Muscle ✓", "correct": true }, { "label": "Nervous", "correct": false }] },
+          { "text": "Transports water in plants.", "choices": [{ "label": "Dermal", "correct": false }, { "label": "Ground", "correct": false }, { "label": "Vascular ✓", "correct": true }, { "label": "Meristem", "correct": false }] },
+          { "text": "Outer protective layer of a leaf.", "choices": [{ "label": "Dermal ✓", "correct": true }, { "label": "Ground", "correct": false }, { "label": "Vascular", "correct": false }, { "label": "Meristem", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "tissue-expert",
+        "badgeName": "Tissue Expert",
+        "badgeIcon": "🎯",
+        "lives": 3,
+        "questions": [
+          { "text": "Which animal tissue covers and lines body surfaces?", "choices": [{ "label": "Connective", "correct": false }, { "label": "Epithelial", "correct": true }, { "label": "Muscle", "correct": false }, { "label": "Nervous", "correct": false }] },
+          { "text": "Which plant tissue transports water and minerals?", "choices": [{ "label": "Phloem", "correct": false }, { "label": "Xylem", "correct": true }, { "label": "Epidermis", "correct": false }, { "label": "Parenchyma", "correct": false }] },
+          { "text": "Blood is an example of which tissue type?", "choices": [{ "label": "Epithelial", "correct": false }, { "label": "Connective", "correct": true }, { "label": "Muscle", "correct": false }, { "label": "Nervous", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Animals have four main tissue types: epithelial, connective, muscle, nervous.",
+        "Plants have three tissue systems: dermal, ground, vascular.",
+        "Structure of each tissue reflects its specific function."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Cell Modifications & Specialization",
+      "competency": "STEM_BIO11/12-Ia-c-5",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe examples of cell modifications.</li><li>Explain how modifications enable specialized functions.</li><li>Relate structure to function at the cellular level.</li><li>Recognize cell modifications in real-world tissues.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell modification</strong> — a structural change that enables a specialized function.</li><li><strong>Surface-area-to-volume ratio</strong> — the reason cells modify their surfaces.</li><li><strong>Differentiation</strong> — process by which cells become specialized.</li></ul><h3>📚 Lesson Content</h3><h4>A. Examples of Cell Modifications</h4><table><thead><tr><th>Cell</th><th>Modification</th><th>Function</th></tr></thead><tbody><tr><td>Intestinal cell</td><td>Microvilli</td><td>Increase surface area for absorption</td></tr><tr><td>Root hair cell</td><td>Root hairs (elongations)</td><td>Increase surface area for water/mineral absorption</td></tr><tr><td>Nerve cell</td><td>Long axon, dendrites</td><td>Transmit signals over long distances</td></tr><tr><td>Red blood cell</td><td>Biconcave, no nucleus</td><td>Maximize O₂ carrying capacity</td></tr><tr><td>Sperm cell</td><td>Flagellum</td><td>Motility</td></tr><tr><td>Guard cell</td><td>Bean-shaped, thick walls</td><td>Open/close stomata</td></tr></tbody></table><h4>B. Why Modifications?</h4><p>Cells modify their structure to maximize surface area, minimize diffusion distance, or perform specialized tasks. This is the cellular basis of differentiation.</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "mod-master",
+        "badgeName": "Modification Master",
+        "badgeIcon": "🎨",
+        "pairs": [
+          { "key": "mv", "left": "Microvilli", "right": "Increase absorption in intestine" },
+          { "key": "rh", "left": "Root hairs", "right": "Absorb water and minerals" },
+          { "key": "axon", "left": "Long axon", "right": "Transmit nerve signals over distance" },
+          { "key": "rbc", "left": "Biconcave RBC", "right": "Maximize O₂ transport" },
+          { "key": "flag", "left": "Flagellum", "right": "Cell motility (sperm)" },
+          { "key": "guard", "left": "Guard cell", "right": "Regulate stomata opening" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "modification-pro",
+        "badgeName": "Modification Pro",
+        "badgeIcon": "🧠",
+        "scenarios": [
+          { "text": "An intestinal cell has many tiny projections on its surface.", "choices": [{ "label": "Microvilli ✓", "correct": true }, { "label": "Cilia", "correct": false }, { "label": "Flagella", "correct": false }] },
+          { "text": "A root cell has a long, thin extension.", "choices": [{ "label": "Microvillus", "correct": false }, { "label": "Root hair ✓", "correct": true }, { "label": "Axon", "correct": false }] },
+          { "text": "A red blood cell lacks a nucleus.", "choices": [{ "label": "To carry more O₂ ✓", "correct": true }, { "label": "To divide faster", "correct": false }, { "label": "To become a nerve cell", "correct": false }] },
+          { "text": "A nerve cell is very long.", "choices": [{ "label": "To absorb nutrients", "correct": false }, { "label": "To transmit signals over distance ✓", "correct": true }, { "label": "To photosynthesize", "correct": false }] },
+          { "text": "A sperm cell has a tail-like structure.", "choices": [{ "label": "Flagellum ✓", "correct": true }, { "label": "Microvillus", "correct": false }, { "label": "Root hair", "correct": false }] },
+          { "text": "A pair of bean-shaped cells controls gas exchange on a leaf.", "choices": [{ "label": "Guard cells ✓", "correct": true }, { "label": "Epidermal cells", "correct": false }, { "label": "Palisade cells", "correct": false }] }
+        ]
+      },
+      "formative": {
+        "badgeId": "modification-escape",
+        "badgeName": "Modification Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Microvilli primarily increase a cell's:", "choices": [{ "label": "Volume", "correct": false }, { "label": "Surface area for absorption", "correct": true }, { "label": "DNA content", "correct": false }, { "label": "Motility", "correct": false }] },
+          { "text": "Which modification allows sperm cells to swim?", "choices": [{ "label": "Microvilli", "correct": false }, { "label": "Flagellum", "correct": true }, { "label": "Cilia", "correct": false }, { "label": "Root hair", "correct": false }] },
+          { "text": "Why do red blood cells lack a nucleus?", "choices": [{ "label": "To carry more oxygen", "correct": true }, { "label": "To divide faster", "correct": false }, { "label": "To photosynthesize", "correct": false }, { "label": "To store water", "correct": false }] }
+        ]
+      },
+      "takeaways": [
+        "Cell modifications are structural changes enabling specialized functions.",
+        "Increasing surface area is a common modification (microvilli, root hairs).",
+        "Some modifications maximize function by losing structures (RBCs lose nuclei).",
+        "Differentiation produces specialized cells from unspecialized ones."
+      ]
+    }
+  ]
+}

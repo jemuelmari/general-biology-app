@@ -1,0 +1,187 @@
+/* ============================================================
+   classrecord.css — Gradebook Application styles
+   Version: 1.0.0
+   ============================================================ */
+
+/* ---------- Gradebook Table ---------- */
+.gradebook-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.gradebook-table th,
+.gradebook-table td {
+  padding: 8px 6px;
+  text-align: center;
+  border: 1px solid var(--color-border);
+}
+
+.gradebook-table th {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.gradebook-table td.student-name {
+  text-align: left;
+  font-weight: 500;
+  background: #fafafa;
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  min-width: 180px;
+}
+
+.gradebook-table .final-grade {
+  font-weight: 700;
+  background: var(--color-primary-light);
+}
+
+.gradebook-table .passing { color: var(--color-success); }
+.gradebook-table .failing { color: var(--color-danger); }
+
+/* ---------- Report Cards ---------- */
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.report-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.report-card h4 {
+  font-size: 0.95rem;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--color-primary-light);
+}
+
+/* ---------- Distribution Bars ---------- */
+.distribution-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font-size: 0.85rem;
+}
+
+.distribution-label {
+  min-width: 80px;
+  font-weight: 500;
+}
+
+.distribution-bar {
+  flex: 1;
+  height: 20px;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.distribution-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: var(--radius-sm);
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.distribution-count {
+  min-width: 60px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* ---------- Proficiency Level ---------- */
+.pl-indicator {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.pl-mastered   { background: #e8f5e9; color: #2e7d32; }
+.pl-closely    { background: #e1f5fe; color: #0277bd; }
+.pl-moving     { background: #fff3e0; color: #ed6c02; }
+.pl-average    { background: #fce4ec; color: #c2185b; }
+.pl-low        { background: #ffebee; color: #c62828; }
+.pl-verylow    { background: #f3e5f5; color: #6a1b9a; }
+.pl-nomastery  { background: #212121; color: #fff; }
+
+/* ---------- Most/Least Learned ---------- */
+.mll-list {
+  list-style: none;
+  padding: 0;
+}
+
+.mll-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+}
+
+.mll-list li:last-child { border-bottom: none; }
+
+.mll-list .mll-code {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  display: block;
+}
+
+.mll-list .mll-desc {
+  flex: 1;
+  margin-right: var(--space-sm);
+}
+
+.mll-list .mll-mps {
+  font-weight: 700;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* ---------- Transmutation Table ---------- */
+.transmutation-table {
+  font-size: 0.8rem;
+}
+
+.transmutation-table td,
+.transmutation-table th {
+  padding: 6px 10px;
+}
+
+.transmutation-table .raw  { background: #fafafa; font-weight: 600; }
+.transmutation-table .final { background: var(--color-primary-light); font-weight: 700; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .gradebook-table { font-size: 0.7rem; }
+  .gradebook-table th,
+  .gradebook-table td { padding: 6px 4px; }
+}
