@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — General Biology</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/student.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🧬 Student Dashboard</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span id="user-pill" class="badge badge-success" style="font-size:0.8rem;"></span>
+        <button id="btn-logout" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <!-- Greeting + standing -->
+    <div id="greeting-card" class="card">
+      <div class="flex-between" style="flex-wrap:wrap;gap:12px;">
+        <div>
+          <h2 id="greeting-name" style="color:var(--color-primary-dark);">Hello!</h2>
+          <p class="text-muted text-small" id="greeting-meta"></p>
+        </div>
+        <div id="standing-badge"></div>
+      </div>
+    </div>
+
+    <!-- Quick stats -->
+    <div class="stats-grid" id="quick-stats"></div>
+
+    <!-- Subjects -->
+    <h2 style="margin-top:24px;margin-bottom:12px;color:var(--color-primary-dark);">📚 Subjects</h2>
+    <div class="dashboard-grid" id="subjects-grid"></div>
+
+    <!-- Badges -->
+    <h2 style="margin-top:32px;margin-bottom:12px;color:var(--color-primary-dark);">🏆 Badges Earned</h2>
+    <div class="card">
+      <div class="flex-between" style="margin-bottom:12px;">
+        <span id="badge-total" class="badge badge-success">🏆 0 badges earned</span>
+        <span class="text-muted text-small" id="badge-week">This week: 0</span>
+      </div>
+      <div class="badge-gallery" id="badge-gallery"></div>
+    </div>
+
+    <!-- Sync & Backup -->
+    <h2 style="margin-top:32px;margin-bottom:12px;color:var(--color-primary-dark);">📤 Sync & Backup</h2>
+    <div class="card">
+      <p class="text-small text-muted" style="margin-bottom:16px;">
+        Send your progress to your teacher, or save a backup file you can upload on another device.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button id="btn-sync-code" class="btn btn-primary">🔑 Generate Sync Code</button>
+        <button id="btn-export-json" class="btn btn-accent">💾 Download Backup (JSON)</button>
+        <button id="btn-import-json" class="btn btn-outline">📥 Restore from Backup</button>
+        <input type="file" id="import-file" accept="application/json" class="hidden" />
+      </div>
+      <div id="sync-output" class="mt-lg"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Biology Online Modular Application · v1.0.0</p>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/backup.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>

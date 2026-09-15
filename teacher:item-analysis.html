@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Item Analysis — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📊 Item Analysis</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card">
+      <h2 style="color:var(--color-primary-dark);">📊 Test Item Analysis</h2>
+      <p class="text-muted">Analyzes student submissions per assessment to identify Most Learned and Least Learned Competencies.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+        <select id="filter-subject" class="form-control" style="max-width:200px;">
+          <option value="biol1">General Biology 1</option>
+          <option value="biol2">General Biology 2</option>
+        </select>
+        <select id="filter-assessment" class="form-control" style="max-width:280px;">
+          <option value="biol1-quiz1">Quiz 1</option>
+          <option value="biol1-st1">Summative Test 1</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="item-analysis-content"></div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Item Analysis · v1.0.0</p>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const subjectSel = document.getElementById('filter-subject');
+      const assessSel = document.getElementById('filter-assessment');
+
+      subjectSel.addEventListener('change', () => {
+        assessSel.innerHTML = subjectSel.value === 'biol1'
+          ? '<option value="biol1-quiz1">Quiz 1</option><option value="biol1-st1">Summative Test 1</option>'
+          : '<option value="biol2-quiz1">Quiz 1</option><option value="biol2-st1">Summative Test 1</option>';
+        render();
+      });
+      assessSel.addEventListener('change', render);
+
+      async function render() {
+        const subject = subjectSel.value;
+        const assessmentId = assessSel.value;
+
+        // Load question bank
+        const fileMap = {
+          'biol1-quiz1': '../data/biol1-quiz1.json',
+          'biol1-st1': '../data/biol1-st1.json',
+          'biol2-quiz1': '../data/biol2-quiz1.json',
+          'biol2-st1': '../data/biol2-st1.json'
+        };
+        const res = await fetch(fileMap[assessmentId]);
+        const bank = await res.json();
+
+        // Gather all students' breakdowns
+        const users = Store.getAllUsers();
+        const allBreakdowns = [];
+        users.forEach((u) => {
+          const scores = Store.getScores(u.lrn);
+          const key = assessmentId.includes('st') ? 'st' : 'quizzes';
+          const data = scores[subject]?.[key]?.[assessmentId]
+                    || scores[subject]?.['st']?.[assessmentId]
+                    || scores[subject]?.['quizzes']?.[assessmentId];
+          if (data?.breakdown) {
+            allBreakdowns.push({ user: u, breakdown: data.breakdown, score: data.score, total: data.total });
+          }
+        });
+
+        const container = document.getElementById('item-analysis-content');
+
+        if (!allBreakdowns.length) {
+          container.innerHTML = `<div class="alert alert-info">No submissions for ${assessmentId} yet.</div>`;
+          return;
+        }
+
+        // Per-item stats
+        const itemStats = bank.items.map((q) => {
+          let correct = 0;
+          allBreakdowns.forEach((b) => {
+            const item = b.breakdown.find((x) => x.id === q.id);
+            if (item?.isCorrect) correct++;
+          });
+          const difficulty = Math.round((correct / allBreakdowns.length) * 100);
+          const diffKey = difficulty >= 66 ? 'easy' : difficulty >= 35 ? 'medium' : 'hard';
+
+          return {
+            id: q.id,
+            competency: q.competency,
+            text: q.text,
+            correct,
+            total: allBreakdowns.length,
+            difficulty,
+            diffKey
+          };
+        });
+
+        // Per-competency MPS
+        const compMap = {};
+        itemStats.forEach((s) => {
+          if (!compMap[s.competency]) compMap[s.competency] = { correct: 0, total: 0, items: 0 };
+          compMap[s.competency].correct += s.correct;
+          compMap[s.competency].total += s.total;
+          compMap[s.competency].items++;
+        });
+
+        const compStats = Object.entries(compMap).map(([code, v]) => ({
+          code,
+          mps: Math.round((v.correct / v.total) * 100),
+          items: v.items
+        })).sort((a, b) => b.mps - a.mps);
+
+        const mostLearned = compStats.slice(0, 3);
+        const leastLearned = [...compStats].reverse().slice(0, 3);
+
+        const overallAvg = Math.round(allBreakdowns.reduce((a, b) => a + (b.score / b.total) * 100, 0) / allBreakdowns.length);
+
+        container.innerHTML = `
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-value">${allBreakdowns.length}</div>
+              <div class="stat-label">Submissions</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">${overallAvg}%</div>
+              <div class="stat-label">Class Average</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">${compStats.length}</div>
+              <div class="stat-label">Competencies Tested</div>
+            </div>
+          </div>
+
+          <div class="report-grid">
+            <div class="report-card">
+              <h4>🏆 Most Learned Competencies</h4>
+              <ul class="mll-list">
+                ${mostLearned.map((c) => `
+                  <li>
+                    <div>
+                      <span class="mll-code">${c.code}</span>
+                      <span class="mll-desc">${c.items} item(s) tested</span>
+                    </div>
+                    <span class="mll-mps" style="color:var(--color-success);">${c.mps}%</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+
+            <div class="report-card">
+              <h4>🚨 Least Learned Competencies</h4>
+              <ul class="mll-list">
+                ${leastLearned.map((c) => `
+                  <li>
+                    <div>
+                      <span class="mll-code">${c.code}</span>
+                      <span class="mll-desc">${c.items} item(s) tested</span>
+                    </div>
+                    <span class="mll-mps" style="color:var(--color-danger);">${c.mps}%</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:24px;">
+            <h3 style="color:var(--color-primary-dark);">📋 Per-Item Difficulty</h3>
+            <table class="table item-analysis-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Competency</th>
+                  <th>Correct</th>
+                  <th>Difficulty</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemStats.map((s, i) => `
+                  <tr>
+                    <td>Q${i + 1}</td>
+                    <td><span class="competency-code">${s.competency}</span></td>
+                    <td>${s.correct}/${s.total}</td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <div class="difficulty-bar" style="flex:1;">
+                          <div class="difficulty-fill difficulty-${s.diffKey}" style="width:${s.difficulty}%;"></div>
+                        </div>
+                        <span style="min-width:42px;text-align:right;">${s.difficulty}%</span>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      render();
+    });
+  </script>
+</body>
+</html>

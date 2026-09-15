@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sync Center — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📥 Sync Center</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:900px;">
+
+    <div class="card">
+      <h2 style="color:var(--color-primary-dark);">📥 Import Student Progress</h2>
+      <p class="text-muted">Choose how you'd like to receive student data.</p>
+
+      <div class="sync-tabs">
+        <button class="sync-tab active" data-tab="code">🔑 By Code</button>
+        <button class="sync-tab" data-tab="json">📄 JSON File</button>
+        <button class="sync-tab" data-tab="bulk">📦 Bulk Import</button>
+      </div>
+
+      <!-- By Code -->
+      <div id="panel-code" class="sync-panel">
+        <label class="form-label">Enter Sync Code from Student</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="text" id="sync-code-input" class="form-control" placeholder="GB12-XXXX-XXXX-XXXXXXXX"
+                 style="flex:1;min-width:240px;font-family:monospace;text-transform:uppercase;" />
+          <button id="btn-import-code" class="btn btn-primary">Import</button>
+        </div>
+        <p class="form-hint">Students generate codes from their dashboard. Paste the code here.</p>
+      </div>
+
+      <!-- By JSON -->
+      <div id="panel-json" class="sync-panel hidden">
+        <div class="drop-zone" id="drop-zone">
+          <div class="drop-icon">📄</div>
+          <div class="drop-text">Drag & drop a student's JSON backup file here</div>
+          <div class="drop-text" style="margin-top:8px;">— or —</div>
+          <button id="btn-pick-json" class="btn btn-primary" style="margin-top:8px;">Choose File</button>
+          <input type="file" id="file-picker" accept="application/json" class="hidden" />
+        </div>
+      </div>
+
+      <!-- Bulk -->
+      <div id="panel-bulk" class="sync-panel hidden">
+        <div class="drop-zone" id="drop-zone-bulk">
+          <div class="drop-icon">📦</div>
+          <div class="drop-text">Drag & drop MULTIPLE JSON files here</div>
+          <button id="btn-pick-bulk" class="btn btn-primary" style="margin-top:8px;">Choose Files</button>
+          <input type="file" id="file-picker-bulk" accept="application/json" multiple class="hidden" />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Import Preview -->
+    <div id="import-preview-container" class="hidden">
+      <h3 style="margin:24px 0 12px;color:var(--color-primary-dark);">📋 Preview & Confirm</h3>
+      <div id="import-preview"></div>
+      <div style="margin-top:16px;display:flex;gap:8px;">
+        <button id="btn-confirm-import" class="btn btn-primary">✅ Confirm Import</button>
+        <button id="btn-cancel-import" class="btn btn-outline">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Sync Log -->
+    <div class="card" style="margin-top:24px;">
+      <h3 style="color:var(--color-primary-dark);">📜 Sync Log</h3>
+      <div id="sync-log"><p class="text-muted text-small">No syncs yet in this session.</p></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Sync Center · v1.0.0</p>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script>
+    let pendingImports = [];
+    const syncLog = [];
+
+    /* ---------- Tabs ---------- */
+    APP.$$('.sync-tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        APP.$$('.sync-tab').forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        ['code', 'json', 'bulk'].forEach((k) => {
+          document.getElementById(`panel-${k}`).classList.add('hidden');
+        });
+        document.getElementById(`panel-${tab.dataset.tab}`).classList.remove('hidden');
+      });
+    });
+
+    /* ---------- By Code ---------- */
+    document.getElementById('btn-import-code').addEventListener('click', async () => {
+      const code = document.getElementById('sync-code-input').value.trim().toUpperCase();
+      if (!code) return APP.toast('Enter a sync code first.', 'warning');
+
+      const result = await Sync.importFromCode(code);
+      if (!result.payload) {
+        return APP.toast(result.error || 'Code not found.', 'danger');
+      }
+      pendingImports = [{ ...result, method: 'code', code }];
+      renderPreview();
+    });
+
+    /* ---------- JSON File ---------- */
+    const dropZone = document.getElementById('drop-zone');
+    const filePicker = document.getElementById('file-picker');
+
+    dropZone.addEventListener('click', () => filePicker.click());
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) await handleJsonFile(file);
+    });
+    filePicker.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) await handleJsonFile(file);
+      e.target.value = '';
+    });
+
+    async function handleJsonFile(file) {
+      try {
+        const result = await Sync.importFromFile(file);
+        pendingImports = [{ ...result, method: 'json', filename: file.name }];
+        renderPreview();
+      } catch (err) {
+        APP.toast('Import failed: ' + err.message, 'danger');
+      }
+    }
+
+    /* ---------- Bulk ---------- */
+    const dropZoneBulk = document.getElementById('drop-zone-bulk');
+    const filePickerBulk = document.getElementById('file-picker-bulk');
+
+    dropZoneBulk.addEventListener('click', () => filePickerBulk.click());
+    dropZoneBulk.addEventListener('dragover', (e) => { e.preventDefault(); dropZoneBulk.classList.add('dragover'); });
+    dropZoneBulk.addEventListener('dragleave', () => dropZoneBulk.classList.remove('dragover'));
+    dropZoneBulk.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      dropZoneBulk.classList.remove('dragover');
+      await handleBulk(Array.from(e.dataTransfer.files));
+    });
+    filePickerBulk.addEventListener('change', async (e) => {
+      await handleBulk(Array.from(e.target.files));
+      e.target.value = '';
+    });
+
+    async function handleBulk(files) {
+      const results = [];
+      for (const file of files) {
+        try {
+          const r = await Sync.importFromFile(file);
+          results.push({ ...r, method: 'json', filename: file.name });
+        } catch (err) {
+          results.push({ valid: false, error: err.message, filename: file.name });
+        }
+      }
+      pendingImports = results;
+      renderPreview();
+    }
+
+    /* ---------- Render Preview ---------- */
+    function renderPreview() {
+      const container = document.getElementById('import-preview-container');
+      const preview = document.getElementById('import-preview');
+      container.classList.remove('hidden');
+
+      preview.innerHTML = pendingImports.map((imp, i) => {
+        const p = imp.payload;
+        const valid = imp.valid;
+        const cls = valid ? 'checksum-ok' : 'checksum-fail';
+
+        if (!p) {
+          return `
+            <div class="import-preview">
+              <div class="preview-header">
+                <strong>❌ ${imp.filename || 'Unknown'}</strong>
+                <span class="checksum-fail">Error: ${imp.error || 'No payload'}</span>
+              </div>
+            </div>
+          `;
+        }
+
+        const s = p.student;
+        return `
+          <div class="import-preview">
+            <div class="preview-header">
+              <div>
+                <strong>${s.lastName}, ${s.firstName} ${s.middleName || ''}</strong>
+                <div class="text-small text-muted">LRN: ${APP.formatLRN(s.lrn)} · Grade ${s.gradeLevel} — ${s.section}</div>
+              </div>
+              <span class="${cls}">${valid ? '✓ Signature Verified' : '✗ Signature Invalid'}</span>
+            </div>
+            <div class="text-small text-muted">
+              Generated: ${APP.formatDate(p.generatedAt)} · Method: ${imp.method}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ---------- Confirm Import ---------- */
+    document.getElementById('btn-confirm-import').addEventListener('click', () => {
+      let imported = 0, rejected = 0;
+
+      pendingImports.forEach((imp) => {
+        if (!imp.valid) {
+          rejected++;
+          syncLog.push({ time: new Date().toISOString(), status: 'rejected', reason: imp.error || 'Invalid signature' });
+          return;
+        }
+        try {
+          const p = imp.payload;
+          // Save or merge user
+          const existing = Store.getUser(p.student.lrn);
+          const merged = existing ? { ...existing, ...p.student } : p.student;
+          Store.saveUser(merged);
+
+          // Merge progress
+          const currentProg = Store.getProgress(p.student.lrn);
+          ['biol1', 'biol2'].forEach((subj) => {
+            if (p.progress?.[subj]) {
+              currentProg[subj] = currentProg[subj] || { weeks: {}, completed: [] };
+              Object.assign(currentProg[subj].weeks || {}, p.progress[subj].weeks || {});
+              const mergedCompleted = new Set([
+                ...(currentProg[subj].completed || []),
+                ...(p.progress[subj].completed || [])
+              ]);
+              currentProg[subj].completed = Array.from(mergedCompleted);
+            }
+          });
+          Store.saveProgress(p.student.lrn, currentProg);
+
+          // Merge scores (latest timestamp wins)
+          const currentScores = Store.getScores(p.student.lrn);
+          ['biol1', 'biol2'].forEach((subj) => {
+            if (p.scores?.[subj]) {
+              currentScores[subj] = currentScores[subj] || {};
+              ['quizzes', 'st', 'pt', 'activities', 'te'].forEach((type) => {
+                if (p.scores[subj][type]) {
+                  currentScores[subj][type] = { ...(currentScores[subj][type] || {}), ...p.scores[subj][type] };
+                }
+              });
+            }
+          });
+          localStorage.setItem(`gba_v1_scores_${p.student.lrn}`, JSON.stringify(currentScores));
+
+          imported++;
+          syncLog.push({ time: new Date().toISOString(), status: 'success', student: p.student.lrn });
+        } catch (err) {
+          rejected++;
+          syncLog.push({ time: new Date().toISOString(), status: 'error', reason: err.message });
+        }
+      });
+
+      APP.toast(`✅ Imported: ${imported} · ❌ Rejected: ${rejected}`, imported ? 'success' : 'warning');
+      pendingImports = [];
+      document.getElementById('import-preview-container').classList.add('hidden');
+      renderLog();
+    });
+
+    document.getElementById('btn-cancel-import').addEventListener('click', () => {
+      pendingImports = [];
+      document.getElementById('import-preview-container').classList.add('hidden');
+    });
+
+    /* ---------- Sync Log ---------- */
+    function renderLog() {
+      const el = document.getElementById('sync-log');
+      if (!syncLog.length) {
+        el.innerHTML = '<p class="text-muted text-small">No syncs yet in this session.</p>';
+        return;
+      }
+      el.innerHTML = syncLog.slice(-20).reverse().map((l) => `
+        <div class="text-small" style="padding:6px 0;border-bottom:1px solid var(--color-border);">
+          ${APP.formatDate(l.time)} — 
+          ${l.status === 'success' ? '✅ Imported' : l.status === 'rejected' ? '❌ Rejected' : '⚠️ Error'}
+          ${l.student ? APP.formatLRN(l.student) : ''}
+          ${l.reason ? `(${l.reason})` : ''}
+        </div>
+      `).join('');
+    }
+
+    renderLog();
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intervention — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🎯 Intervention Recommendations</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card">
+      <h2 style="color:var(--color-primary-dark);">🎯 Student Intervention Classification</h2>
+      <p class="text-muted">Based on Summative Test performance. Thresholds follow the classification table (Enrichment / On Track / Remediation / Urgent).</p>
+    </div>
+
+    <div class="report-grid">
+      <div class="report-card" id="list-enrichment">
+        <h4 style="color:var(--color-enrichment);">🟢 Enrichment (ST avg ≥ 90%)</h4>
+        <div id="body-enrichment"></div>
+      </div>
+      <div class="report-card" id="list-on-track">
+        <h4 style="color:var(--color-on-track);">🔵 On Track (75–89%)</h4>
+        <div id="body-on-track"></div>
+      </div>
+      <div class="report-card" id="list-remediation">
+        <h4 style="color:var(--color-remediation);">🟡 Remediation (65–74%)</h4>
+        <div id="body-remediation"></div>
+      </div>
+      <div class="report-card" id="list-urgent">
+        <h4 style="color:var(--color-urgent);">🔴 Urgent Intervention (&lt; 65%)</h4>
+        <div id="body-urgent"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Intervention · v1.0.0</p>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const users = Store.getAllUsers();
+      const groups = { enrichment: [], 'on-track': [], remediation: [], urgent: [] };
+
+      users.forEach((u) => {
+        let stScores = [];
+        ['biol1', 'biol2'].forEach((s) => {
+          const st = Store.getScores(u.lrn)[s]?.st || {};
+          Object.values(st).forEach((data) => {
+            if (data?.total) stScores.push(data.percent);
+          });
+        });
+
+        if (!stScores.length) return;
+
+        const avg = stScores.reduce((a, b) => a + b, 0) / stScores.length;
+        const cls = Transmutation.classifyStudent(avg);
+        groups[cls.key].push({ user: u, avg: Math.round(avg * 10) / 10 });
+      });
+
+      Object.entries(groups).forEach(([key, list]) => {
+        const container = document.getElementById(`body-${key}`);
+        if (!list.length) {
+          container.innerHTML = '<p class="text-muted text-small">No students in this category.</p>';
+          return;
+        }
+        container.innerHTML = list.map((entry) => {
+          const action = suggestAction(key);
+          return `
+            <div class="intervention-card ${key}" style="margin-bottom:12px;">
+              <div class="student-name">${entry.user.lastName}, ${entry.user.firstName} ${entry.user.middleName || ''}</div>
+              <div class="student-meta">LRN: ${APP.formatLRN(entry.user.lrn)} · ${entry.user.section} · ST Avg: <strong>${entry.avg}%</strong></div>
+              <div class="suggested-action">${action}</div>
+            </div>
+          `;
+        }).join('');
+      });
+
+      function suggestAction(key) {
+        switch (key) {
+          case 'enrichment':
+            return '💡 Provide advanced tasks, research extensions, or peer mentoring roles.';
+          case 'on-track':
+            return '📖 Continue regular instruction; check-in periodically for improvement.';
+          case 'remediation':
+            return '🔁 Assign remediation module; retake similar practice items; teacher consult.';
+          case 'urgent':
+            return '🚨 Immediate one-on-one intervention, remediation module, and parent-teacher conference.';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
