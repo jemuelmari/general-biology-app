@@ -15,7 +15,10 @@
         <h1>📈 Statistical Reports</h1>
         <span class="version">v1.0.0</span>
       </div>
-      <a href="../classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Class Record</a>
+      <nav style="display:flex;gap:8px;">
+        <a href="../classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Class Record</a>
+        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </nav>
     </div>
   </header>
 
@@ -54,9 +57,11 @@
 
   <footer class="app-footer"><p>Reports · v1.0.0</p></footer>
 
+  <script src="../config.js"></script>
   <script src="../assets/js/app.js"></script>
   <script src="../assets/js/store.js"></script>
   <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const subjSel = document.getElementById('rpt-subject');
@@ -126,7 +131,6 @@
           </div>
         `;
 
-        // Score distribution brackets
         const brackets = [
           { label: '70–75', min: 70, max: 75 },
           { label: '76–80', min: 76, max: 80 },
@@ -141,7 +145,6 @@
           return { ...b, count: n, pct: Math.round((n / entries.length) * 100) };
         });
 
-        // PL distribution
         const plMap = {};
         entries.forEach((e) => {
           const lvl = Transmutation.proficiencyLevel(e.percent);
