@@ -1,6 +1,6 @@
 /* ============================================================
    backup.js — Student backup file (download / upload)
-   Version: 1.0.0
+   Version: 1.1.1
    ============================================================ */
 
 const Backup = (() => {
@@ -51,8 +51,22 @@ const Backup = (() => {
   }
 
   /* ---------- Prompt: Keep or Delete on Logout ---------- */
+  /**
+   * Shows a modal asking the student to keep or delete data.
+   * Resolves with: 'keep' | 'delete' | 'cancel' | 'timeout'
+   * Auto-resolves to 'cancel' after 10 seconds to prevent hanging.
+   */
   function promptOnLogout(user) {
     return new Promise((resolve) => {
+      let resolved = false;
+      const finish = (value) => {
+        if (resolved) return;
+        resolved = true;
+        clearTimeout(autoTimer);
+        overlay.remove();
+        resolve(value);
+      };
+
       const overlay = document.createElement('div');
       overlay.style.cssText = `
         position:fixed;inset:0;background:rgba(0,0,0,0.6);
@@ -88,33 +102,54 @@ const Backup = (() => {
             Cancel
           </button>
         </div>
+        <p style="margin:12px 0 0;font-size:0.75rem;color:#9aa0a6;text-align:center;">
+          Auto-logging out in <span id="bk-countdown">10</span>s...
+        </p>
       `;
 
       overlay.appendChild(modal);
       document.body.appendChild(overlay);
 
+      // Countdown timer
+      let secondsLeft = 10;
+      const countdownEl = modal.querySelector('#bk-countdown');
+      const countdownInterval = setInterval(() => {
+        secondsLeft--;
+        if (countdownEl) countdownEl.textContent = secondsLeft;
+        if (secondsLeft <= 0) {
+          clearInterval(countdownInterval);
+          finish('timeout');
+        }
+      }, 1000);
+
+      // Auto-timeout as absolute fallback
+      const autoTimer = setTimeout(() => {
+        clearInterval(countdownInterval);
+        finish('timeout');
+      }, 11000);
+
       modal.querySelector('#bk-keep').onclick = () => {
+        clearInterval(countdownInterval);
         try {
           const fn = downloadBackup(user.lrn);
-          APP.toast(`Backup saved: ${fn}`, 'success', 4000);
+          APP.toast(`Backup saved: ${fn}`, 'success', 3000);
         } catch (e) {
           APP.toast('Backup failed: ' + e.message, 'danger');
         }
-        overlay.remove();
-        resolve('keep');
+        finish('keep');
       };
 
       modal.querySelector('#bk-delete').onclick = () => {
+        clearInterval(countdownInterval);
         if (confirm('Are you sure? This will delete ALL progress for this student on this device.')) {
           Store.deleteUser(user.lrn);
-          overlay.remove();
-          resolve('delete');
+          finish('delete');
         }
       };
 
       modal.querySelector('#bk-cancel').onclick = () => {
-        overlay.remove();
-        resolve('cancel');
+        clearInterval(countdownInterval);
+        finish('cancel');
       };
     });
   }
