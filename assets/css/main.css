@@ -333,3 +333,19 @@ a:hover { text-decoration: underline; }
   .card { padding: var(--space-md); }
   .app-header h1 { font-size: 1rem; }
 }
+/* ---------- Developer Credit ---------- */
+.dev-credit {
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.dev-credit > div:first-child {
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 640px) {
+  .dev-credit {
+    font-size: 0.7rem !important;
+  }
+}
