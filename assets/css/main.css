@@ -349,3 +349,27 @@ a:hover { text-decoration: underline; }
     font-size: 0.7rem !important;
   }
 }
+/* ---------- Fast Navigation (perceived load) ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Prevent layout shift while navigating */
+  overflow-y: scroll;
+}
+
+/* Fade-in on page load for smoothness */
+@keyframes pageFadeIn {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+body > main {
+  animation: pageFadeIn 0.15s ease-out;
+}
+
+/* Logout overlay fade */
+#gba-logout-overlay {
+  transition: opacity 0.15s ease-out;
+}
