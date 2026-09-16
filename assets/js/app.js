@@ -1,13 +1,13 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 1.0.0
+   Version: 1.1.0
    ============================================================ */
 
 const APP = (() => {
   'use strict';
 
-  const VERSION = '1.0.0';
-  const APP_NAME = 'General Biology Online Modular Application';
+  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '1.1.0';
+  const APP_NAME = (typeof CONFIG !== 'undefined' && CONFIG.APP_NAME) || 'General Biology Online Modular Application';
 
   /* ---------- State ---------- */
   const state = {
@@ -139,11 +139,58 @@ const APP = (() => {
     return typeof name === 'string' && name.trim().length >= 2;
   }
 
+  /* ---------- Developer Footer ---------- */
+  function renderDeveloperFooter() {
+    if (typeof CONFIG === 'undefined' || !CONFIG.DEVELOPER) return;
+    const dev = CONFIG.DEVELOPER;
+
+    document.querySelectorAll('.app-footer, footer').forEach((footer) => {
+      // Avoid duplicate injection
+      if (footer.querySelector('.dev-credit')) return;
+
+      const credit = document.createElement('div');
+      credit.className = 'dev-credit';
+      credit.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px solid var(--color-border);font-size:0.75rem;line-height:1.6;';
+      credit.innerHTML = `
+        <div style="font-weight:600;color:var(--color-primary-dark);">${dev.name}</div>
+        <div>${dev.position}</div>
+        <div>${dev.school} · ${dev.district}</div>
+        <div>${dev.division} · ${dev.region}</div>
+        <div>${dev.department}</div>
+      `;
+      footer.appendChild(credit);
+    });
+  }
+
+  /* ---------- Inject Manifest Meta (for installability) ---------- */
+  function injectManifest() {
+    if (document.querySelector('link[rel="manifest"]')) return;
+    const link = document.createElement('link');
+    link.rel = 'manifest';
+    // Compute relative path to root based on current depth
+    const path = window.location.pathname;
+    let prefix = '';
+    if (path.includes('/student/')) prefix = path.includes('/week') ? '../../' : '../';
+    else if (path.includes('/teacher/') || path.includes('/classrecord/')) prefix = '../';
+
+    link.href = prefix + 'manifest.json';
+    document.head.appendChild(link);
+
+    // Theme color
+    const meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    meta.content = '#1b7a3d';
+    document.head.appendChild(meta);
+  }
+
   /* ---------- Init ---------- */
   function init() {
     console.log(`[${APP_NAME}] v${VERSION}`);
     const vEls = $$('.version');
     vEls.forEach((e) => (e.textContent = `v${VERSION}`));
+
+    injectManifest();
+    renderDeveloperFooter();
     Router.init();
   }
 
@@ -160,6 +207,7 @@ const APP = (() => {
     formatLRN,
     validateLRN,
     validateName,
+    renderDeveloperFooter,
     init
   };
 })();
