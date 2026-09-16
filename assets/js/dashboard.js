@@ -1,6 +1,6 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 1.0.0
+   Version: 1.1.1
    ============================================================ */
 
 (() => {
@@ -9,7 +9,7 @@
   /* ---------- Auth guard ---------- */
   const user = Store.getCurrentUser();
   if (!user) {
-    window.location.href = 'login.html';
+    window.location.replace('login.html');
     return;
   }
 
@@ -184,12 +184,38 @@
     e.target.value = '';
   });
 
-  /* ---------- Logout ---------- */
-  APP.$('#btn-logout').addEventListener('click', async () => {
-    const choice = await Backup.promptOnLogout(user);
-    if (choice === 'cancel') return;
+  /* ---------- Log Out (INSTANT) ---------- */
+  APP.$('#btn-logout').addEventListener('click', () => {
+    // Show a brief overlay while we transition
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position:fixed;inset:0;background:rgba(255,255,255,0.95);
+      display:flex;align-items:center;justify-content:center;
+      z-index:99999;font-family:'Segoe UI',sans-serif;
+      transition:opacity 0.15s;
+    `;
+    overlay.innerHTML = `
+      <div style="text-align:center;">
+        <div style="font-size:2rem;">👋</div>
+        <div style="font-weight:600;color:#1b7a3d;margin-top:8px;">Logging out...</div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    // Fire the modal + backup prompt AFTER the page transitions.
+    // Save the intent in sessionStorage so login.html can pick it up.
+    sessionStorage.setItem('gba_logout_pending', JSON.stringify({
+      lrn: user.lrn,
+      at: Date.now()
+    }));
+
+    // Clear session IMMEDIATELY, then redirect with replace()
     Store.clearSession();
-    window.location.href = 'login.html';
+
+    // Give the overlay a moment to appear, then navigate
+    setTimeout(() => {
+      window.location.replace('login.html');
+    }, 150);
   });
 
 })();
