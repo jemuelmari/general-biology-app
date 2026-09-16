@@ -1,10 +1,35 @@
 /* ============================================================
    auth.js — Login, register, multi-user session handling
-   Version: 1.0.0
+   Version: 1.1.1
    ============================================================ */
 
 (() => {
   'use strict';
+
+  /* ---------- Handle pending logout prompt ---------- */
+  function checkPendingLogout() {
+    const pending = sessionStorage.getItem('gba_logout_pending');
+    if (!pending) return;
+    sessionStorage.removeItem('gba_logout_pending');
+
+    try {
+      const { lrn, at } = JSON.parse(pending);
+      // Ignore if older than 60 seconds
+      if (Date.now() - at > 60000) return;
+
+      const user = Store.getUser(lrn);
+      if (!user) return;
+
+      // Show prompt after a short delay so the page settles
+      setTimeout(() => {
+        Backup.promptOnLogout(user).then((choice) => {
+          if (choice === 'keep' || choice === 'delete') {
+            APP.toast('Done!', 'success');
+          }
+        });
+      }, 300);
+    } catch (e) { /* ignore */ }
+  }
 
   /* ---------- Tab switching ---------- */
   const tabs = APP.$$('.sync-tab');
@@ -58,7 +83,7 @@
 
     Store.setSession(lrn);
     APP.toast(`Welcome back, ${user.firstName}!`, 'success');
-    setTimeout(() => (window.location.href = 'dashboard.html'), 600);
+    setTimeout(() => window.location.replace('dashboard.html'), 300);
   });
 
   /* ---------- Register ---------- */
@@ -76,14 +101,12 @@
     const gradeLevel = APP.$('#reg-grade').value;
     const section = APP.$('#reg-section').value;
 
-    // Validations
     if (!APP.validateName(lastName)) return showError(registerError, 'Please enter a valid last name.');
     if (!APP.validateName(firstName)) return showError(registerError, 'Please enter a valid first name.');
     if (!APP.validateLRN(lrn)) return showError(registerError, 'LRN must be exactly 12 digits.');
     if (!gradeLevel) return showError(registerError, 'Please select a grade level.');
     if (!section) return showError(registerError, 'Please select a section.');
 
-    // Duplicate LRN check
     if (Store.getUser(lrn)) {
       return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
     }
@@ -101,7 +124,7 @@
     Store.saveUser(user);
     Store.setSession(lrn);
     APP.toast(`Profile created! Welcome, ${firstName}.`, 'success');
-    setTimeout(() => (window.location.href = 'dashboard.html'), 700);
+    setTimeout(() => window.location.replace('dashboard.html'), 300);
   });
 
   /* ---------- Saved Users ---------- */
@@ -133,7 +156,7 @@
         const lrn = btn.dataset.login;
         Store.setSession(lrn);
         APP.toast('Logged in!', 'success');
-        setTimeout(() => (window.location.href = 'dashboard.html'), 500);
+        setTimeout(() => window.location.replace('dashboard.html'), 200);
       });
     });
 
@@ -156,5 +179,8 @@
   }
 
   /* ---------- Init ---------- */
-  APP.$('#login-lrn').focus();
+  document.addEventListener('DOMContentLoaded', () => {
+    APP.$('#login-lrn').focus();
+    checkPendingLogout();
+  });
 })();
