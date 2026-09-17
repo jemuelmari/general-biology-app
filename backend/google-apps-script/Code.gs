@@ -2,26 +2,12 @@
  * ============================================================
  * Google Apps Script Backend — General Biology App
  * File: Code.gs
- * Version: 1.0.0
+ * Version: 1.2.0
  *
- * Purpose:
- *   - Receive student data (scores, progress, remediation) from the
- *     student web app via POST.
- *   - Return stored student records via GET.
- *   - Support cross-device sync between students and teachers.
- *   - Resolve Sync Codes → payloads.
- *
- * Deployment:
- *   1. Create a Google Sheet (any name).
- *   2. Extensions → Apps Script → paste this file.
- *   3. Deploy → New deployment → Web app.
- *        Execute as: Me
- *        Who has access: Anyone
- *   4. Copy the Web App URL into assets/js/store.js (BACKEND_URL).
+ * Setup: see backend/google-apps-script/README.md
  * ============================================================
  */
 
-/* ---------- Configuration ---------- */
 const SHEET_NAME_RECORDS = 'Records';
 const SHEET_NAME_CODES   = 'SyncCodes';
 const SHEET_NAME_LOG     = 'SyncLog';
@@ -37,11 +23,9 @@ const CODE_HEADERS = [
   'Code', 'LRN', 'PayloadJSON', 'Signature', 'CreatedAt', 'ExpiresAt', 'Used'
 ];
 
-const LOG_HEADERS = [
-  'Timestamp', 'Action', 'LRN', 'Details'
-];
+const LOG_HEADERS = ['Timestamp', 'Action', 'LRN', 'Details'];
 
-/* ---------- Web App Entry Points ---------- */
+/* ---------- Entry Points ---------- */
 
 function doPost(e) {
   try {
@@ -49,22 +33,14 @@ function doPost(e) {
     const action = body.action;
 
     switch (action) {
-      case 'saveProgress':
-        return jsonResponse(handleSaveProgress(body));
-      case 'saveScore':
-        return jsonResponse(handleSaveScore(body));
-      case 'registerSyncCode':
-        return jsonResponse(handleRegisterSyncCode(body));
-      case 'resolveSyncCode':
-        return jsonResponse(handleResolveSyncCode(body));
-      case 'getStudent':
-        return jsonResponse(handleGetStudent(body));
-      case 'getAllStudents':
-        return jsonResponse(handleGetAllStudents(body));
-      case 'ping':
-        return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
-      default:
-        return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
+      case 'saveProgress':        return jsonResponse(handleSaveProgress(body));
+      case 'saveScore':           return jsonResponse(handleSaveScore(body));
+      case 'registerSyncCode':    return jsonResponse(handleRegisterSyncCode(body));
+      case 'resolveSyncCode':     return jsonResponse(handleResolveSyncCode(body));
+      case 'getStudent':          return jsonResponse(handleGetStudent(body));
+      case 'getAllStudents':      return jsonResponse(handleGetAllStudents(body));
+      case 'ping':                return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
+      default:                    return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
     }
   } catch (err) {
     logEvent('ERROR', '', 'doPost error: ' + err.message);
@@ -76,16 +52,11 @@ function doGet(e) {
   const action = e.parameter.action || 'ping';
 
   switch (action) {
-    case 'ping':
-      return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
-    case 'resolveSyncCode':
-      return jsonResponse(handleResolveSyncCode({ code: e.parameter.code }));
-    case 'getStudent':
-      return jsonResponse(handleGetStudent({ lrn: e.parameter.lrn }));
-    case 'getAllStudents':
-      return jsonResponse(handleGetAllStudents({}));
-    default:
-      return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
+    case 'ping':            return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
+    case 'resolveSyncCode': return jsonResponse(handleResolveSyncCode({ code: e.parameter.code }));
+    case 'getStudent':      return jsonResponse(handleGetStudent({ lrn: e.parameter.lrn }));
+    case 'getAllStudents':  return jsonResponse(handleGetAllStudents({}));
+    default:                return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
   }
 }
 
@@ -99,23 +70,13 @@ function handleSaveProgress(body) {
   const payload = JSON.stringify({ progress, subject });
   const now = new Date().toISOString();
 
-  // Append one row per save. Latest wins on read.
   sheet.appendRow([
     lrn,
-    student?.lastName || '',
-    student?.firstName || '',
-    student?.middleName || '',
-    student?.gradeLevel || '',
-    student?.section || '',
-    subject || 'both',
-    'PROGRESS',
-    'progress',
-    '', '', '',
-    '', '', '',
-    now,
-    payload,
-    '',
-    now
+    student?.lastName || '', student?.firstName || '', student?.middleName || '',
+    student?.gradeLevel || '', student?.section || '',
+    subject || 'both', 'PROGRESS', 'progress',
+    '', '', '', '', '', '',
+    now, payload, '', now
   ]);
 
   logEvent('saveProgress', lrn, 'Subject: ' + (subject || 'both'));
@@ -132,24 +93,13 @@ function handleSaveScore(body) {
 
   sheet.appendRow([
     lrn,
-    student?.lastName || '',
-    student?.firstName || '',
-    student?.middleName || '',
-    student?.gradeLevel || '',
-    student?.section || '',
-    subject || '',
-    (type || 'quiz').toUpperCase(),
-    assessmentId,
-    score ?? '',
-    total ?? '',
-    percent ?? '',
-    passed ? 'TRUE' : 'FALSE',
-    autoSubmitted ? 'TRUE' : 'FALSE',
+    student?.lastName || '', student?.firstName || '', student?.middleName || '',
+    student?.gradeLevel || '', student?.section || '',
+    subject || '', (type || 'quiz').toUpperCase(), assessmentId,
+    score ?? '', total ?? '', percent ?? '',
+    passed ? 'TRUE' : 'FALSE', autoSubmitted ? 'TRUE' : 'FALSE',
     tabViolations ?? 0,
-    timestamp || now,
-    payload,
-    '',
-    now
+    timestamp || now, payload, '', now
   ]);
 
   logEvent('saveScore', lrn, assessmentId + ' = ' + score + '/' + total);
@@ -164,15 +114,14 @@ function handleRegisterSyncCode(body) {
   const now = new Date();
   const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
 
-  // Remove previous entries with same code (re-register)
+  // Remove any previous entries with the same code
   const data = sheet.getDataRange().getValues();
   for (let i = data.length - 1; i >= 1; i--) {
     if (data[i][0] === code) sheet.deleteRow(i + 1);
   }
 
   sheet.appendRow([
-    code,
-    lrn,
+    code, lrn,
     JSON.stringify(payload),
     signature || '',
     now.toISOString(),
@@ -198,7 +147,6 @@ function handleResolveSyncCode(body) {
         return { ok: false, error: 'Code expired' };
       }
 
-      // Mark as used
       sheet.getRange(i + 1, 7).setValue('TRUE');
 
       return {
@@ -222,13 +170,9 @@ function handleGetStudent(body) {
   const sheet = getOrCreateSheet(SHEET_NAME_RECORDS, RECORD_HEADERS);
   const data = sheet.getDataRange().getValues();
   const rows = [];
-
   for (let i = 1; i < data.length; i++) {
-    if (String(data[i][0]) === String(lrn)) {
-      rows.push(rowToObject(data[i]));
-    }
+    if (String(data[i][0]) === String(lrn)) rows.push(rowToObject(data[i]));
   }
-
   return { ok: true, lrn, count: rows.length, records: rows };
 }
 
@@ -236,11 +180,7 @@ function handleGetAllStudents() {
   const sheet = getOrCreateSheet(SHEET_NAME_RECORDS, RECORD_HEADERS);
   const data = sheet.getDataRange().getValues();
   const rows = [];
-
-  for (let i = 1; i < data.length; i++) {
-    rows.push(rowToObject(data[i]));
-  }
-
+  for (let i = 1; i < data.length; i++) rows.push(rowToObject(data[i]));
   return { ok: true, count: rows.length, records: rows };
 }
 
@@ -271,9 +211,7 @@ function logEvent(action, lrn, details) {
   try {
     const sheet = getOrCreateSheet(SHEET_NAME_LOG, LOG_HEADERS);
     sheet.appendRow([new Date().toISOString(), action, lrn || '', details || '']);
-  } catch (e) {
-    // Silent
-  }
+  } catch (e) { /* silent */ }
 }
 
 function jsonResponse(obj) {
@@ -282,7 +220,7 @@ function jsonResponse(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-/* ---------- Test Function (run manually in Apps Script) ---------- */
+/* ---------- Test ---------- */
 function testBackend() {
   const result = handleSaveProgress({
     lrn: '123456789012',
