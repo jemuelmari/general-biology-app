@@ -1,0 +1,210 @@
+{
+  "week": 10,
+  "title": "Systematics, Taxonomy & Cladistics",
+  "days": [
+    {
+      "n": 1,
+      "title": "Classification & Taxonomy",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define taxonomy and systematics.</li><li>Describe the hierarchical classification system.</li><li>Apply binomial nomenclature.</li><li>Explain the 3-domain and 5-kingdom schemes.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Taxonomy</strong> — science of naming and classifying organisms.</li><li><strong>Systematics</strong> — study of evolutionary relationships.</li><li><strong>Binomial nomenclature</strong> — two-part naming (Genus species).</li><li><strong>Domain</strong> — largest taxonomic rank.</li></ul><h3>📚 Lesson Content</h3><h4>A. Hierarchical Classification</h4><p>Domain → Kingdom → Phylum → Class → Order → Family → Genus → Species</p><h4>B. Binomial Nomenclature</h4><ul><li>Developed by Linnaeus</li><li>Genus capitalized, species lowercase</li><li>Both italicized</li><li>Example: <em>Homo sapiens</em></li></ul><h4>C. Classification Schemes</h4><table><thead><tr><th>Scheme</th><th>Groups</th></tr></thead><tbody><tr><td>3-Domain</td><td>Bacteria, Archaea, Eukarya</td></tr><tr><td>5-Kingdom</td><td>Monera, Protista, Fungi, Plantae, Animalia</td></tr></tbody></table><h4>D. Why 3-Domain is Preferred</h4><p>Molecular evidence (rRNA) shows Archaea and Bacteria are fundamentally different.</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "taxonomy-master",
+        "badgeName": "Taxonomy Master",
+        "badgeIcon": "📚",
+        "pairs": [
+          { "key": "tax", "left": "Taxonomy", "right": "Naming & classifying" },
+          { "key": "sys", "left": "Systematics", "right": "Study of relationships" },
+          { "key": "bin", "left": "Binomial nomenclature", "right": "Genus + species" },
+          { "key": "dom", "left": "Domain", "right": "Largest rank" },
+          { "key": "3d", "left": "3-Domain", "right": "Bacteria, Archaea, Eukarya" },
+          { "key": "5k", "left": "5-Kingdom", "right": "Monera, Protista, Fungi, Plantae, Animalia" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "tax-detective",
+        "badgeName": "Taxonomy Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "The scientific name Homo sapiens is written:", "choices": [ { "label": "Genus + species, italicized", "correct": true }, { "label": "Both capitalized", "correct": false } ] },
+          { "text": "The largest taxonomic rank is:", "choices": [ { "label": "Domain", "correct": true }, { "label": "Kingdom", "correct": false }, { "label": "Phylum", "correct": false } ] },
+          { "text": "Which domains are prokaryotic?", "choices": [ { "label": "Bacteria + Archaea", "correct": true }, { "label": "Eukarya only", "correct": false } ] },
+          { "text": "Which kingdom is NOT in the 3-domain scheme?", "choices": [ { "label": "Monera", "correct": true }, { "label": "Animalia", "correct": false } ] },
+          { "text": "Which rank is the most specific?", "choices": [ { "label": "Species", "correct": true }, { "label": "Genus", "correct": false }, { "label": "Family", "correct": false } ] },
+          { "text": "Human classification: Homo sapiens belongs to:", "choices": [ { "label": "Animalia, Chordata, Mammalia, Primates", "correct": true }, { "label": "Plantae", "correct": false } ] }
+        ]
+      },
+      "formative": {
+        "badgeId": "tax-escape",
+        "badgeName": "Taxonomy Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Binomial nomenclature was developed by:", "choices": [ { "label": "Darwin", "correct": false }, { "label": "Linnaeus", "correct": true }, { "label": "Mendel", "correct": false }, { "label": "Lamarck", "correct": false } ] },
+          { "text": "Which is the correct way to write a species name?", "choices": [ { "label": "homo sapiens", "correct": false }, { "label": "Homo sapiens (italic)", "correct": true }, { "label": "HOMO SAPIENS", "correct": false }, { "label": "Homo Sapiens", "correct": false } ] },
+          { "text": "Which domains are in the 3-domain system?", "choices": [ { "label": "Bacteria, Archaea, Eukarya", "correct": true }, { "label": "Plants, Animals, Fungi", "correct": false }, { "label": "Monera, Protista, Fungi", "correct": false }, { "label": "Prokaryotes, Eukaryotes, Viruses", "correct": false } ] }
+        ]
+      },
+      "takeaways": [
+        "Taxonomy names & classifies; systematics studies relationships.",
+        "Binomial nomenclature: Genus species.",
+        "Hierarchy: Domain → Kingdom → Phylum → Class → Order → Family → Genus → Species.",
+        "3-Domain is preferred based on molecular evidence."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Taxa & Distinctive Characteristics",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define taxon.</li><li>Identify distinctive characteristics of major taxa.</li><li>Compare members of different kingdoms.</li><li>Explain how DNA helps classify organisms.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Taxon</strong> — any group at any taxonomic level.</li><li><strong>Distinctive characteristics</strong> — features that distinguish a taxon.</li><li><strong>Molecular taxonomy</strong> — uses DNA sequences.</li></ul><h3>📚 Lesson Content</h3><h4>A. Major Kingdoms</h4><table><thead><tr><th>Kingdom</th><th>Distinctive Features</th></tr></thead><tbody><tr><td>Monera (Bacteria/Archaea)</td><td>Prokaryotic, no nucleus</td></tr><tr><td>Protista</td><td>Eukaryotic, mostly unicellular</td></tr><tr><td>Fungi</td><td>Eukaryotic, chitin cell walls, heterotrophic</td></tr><tr><td>Plantae</td><td>Eukaryotic, cellulose cell walls, autotrophic</td></tr><tr><td>Animalia</td><td>Eukaryotic, no cell wall, heterotrophic, motile</td></tr></tbody></table><h4>B. Structural vs Molecular Classification</h4><ul><li>Structural — physical features (morphology)</li><li>Developmental — embryology</li><li>Molecular — DNA/protein sequences</li></ul><h4>C. Example</h4><p>Some organisms that look similar are genetically very different (convergent evolution), and vice versa.</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "taxa-master",
+        "badgeName": "Taxa Master",
+        "badgeIcon": "🌍",
+        "pairs": [
+          { "key": "taxon", "left": "Taxon", "right": "Any group at any level" },
+          { "key": "mon", "left": "Monera", "right": "Prokaryotic" },
+          { "key": "prot", "left": "Protista", "right": "Mostly unicellular eukaryotic" },
+          { "key": "fung", "left": "Fungi", "right": "Chitin cell walls" },
+          { "key": "plan", "left": "Plantae", "right": "Cellulose cell walls, autotrophic" },
+          { "key": "anim", "left": "Animalia", "right": "No cell wall, heterotrophic" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "taxa-detective",
+        "badgeName": "Taxa Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "Organism has chitin cell walls and is heterotrophic.", "choices": [ { "label": "Fungi", "correct": true }, { "label": "Plantae", "correct": false } ] },
+          { "text": "Organism has cellulose cell walls and photosynthesizes.", "choices": [ { "label": "Plantae", "correct": true }, { "label": "Fungi", "correct": false } ] },
+          { "text": "Organism has no cell wall and moves.", "choices": [ { "label": "Animalia", "correct": true }, { "label": "Plantae", "correct": false } ] },
+          { "text": "Organism is prokaryotic.", "choices": [ { "label": "Monera (Bacteria/Archaea)", "correct": true }, { "label": "Protista", "correct": false } ] },
+          { "text": "Unicellular eukaryote.", "choices": [ { "label": "Protista", "correct": true }, { "label": "Fungi", "correct": false } ] },
+          { "text": "Two organisms look alike but are genetically different.", "choices": [ { "label": "Convergent evolution", "correct": true }, { "label": "Homology", "correct": false } ] }
+        ]
+      },
+      "formative": {
+        "badgeId": "taxa-escape",
+        "badgeName": "Taxa Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Fungi are distinguished by:", "choices": [ { "label": "Cellulose walls", "correct": false }, { "label": "Chitin walls", "correct": true }, { "label": "No cell wall", "correct": false }, { "label": "Being prokaryotic", "correct": false } ] },
+          { "text": "Which kingdom has NO cell wall?", "choices": [ { "label": "Plantae", "correct": false }, { "label": "Fungi", "correct": false }, { "label": "Animalia", "correct": true }, { "label": "Monera", "correct": false } ] },
+          { "text": "Which is used to classify organisms by evolutionary relationships?", "choices": [ { "label": "DNA sequences", "correct": true }, { "label": "Color only", "correct": false }, { "label": "Size only", "correct": false }, { "label": "Habitat", "correct": false } ] }
+        ]
+      },
+      "takeaways": [
+        "Taxa are groups at any taxonomic level.",
+        "Each kingdom has distinctive features.",
+        "Structural, developmental, and molecular data help classify organisms.",
+        "Molecular data can reveal hidden relationships."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Species Diversity & Cladistics",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define species diversity.</li><li>Explain cladistics.</li><li>Differentiate ancestral from derived traits.</li><li>Identify shared derived characteristics.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Species diversity</strong> — variety of species in an ecosystem.</li><li><strong>Cladistics</strong> — grouping by shared derived characteristics.</li><li><strong>Ancestral trait</strong> — primitive trait shared with distant ancestors.</li><li><strong>Derived trait</strong> — new trait unique to a group.</li></ul><h3>📚 Lesson Content</h3><h4>A. Species Diversity</h4><ul><li>Species richness — number of species</li><li>Species evenness — how evenly distributed</li><li>Highest in tropical rainforests</li></ul><h4>B. Cladistics</h4><p>Groups organisms based on shared derived characteristics (synapomorphies). A clade includes an ancestor and all its descendants.</p><h4>C. Trait Types</h4><table><thead><tr><th>Trait Type</th><th>Meaning</th></tr></thead><tbody><tr><td>Ancestral (plesiomorphy)</td><td>Old trait, shared broadly</td></tr><tr><td>Derived (apomorphy)</td><td>New trait, unique to a group</td></tr><tr><td>Synapomorphy</td><td>Shared derived trait</td></tr></tbody></table>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "diversity-master",
+        "badgeName": "Diversity Master",
+        "badgeIcon": "🌺",
+        "pairs": [
+          { "key": "div", "left": "Species diversity", "right": "Variety of species" },
+          { "key": "rich", "left": "Species richness", "right": "Number of species" },
+          { "key": "even", "left": "Species evenness", "right": "Distribution of individuals" },
+          { "key": "clad", "left": "Cladistics", "right": "Group by derived traits" },
+          { "key": "anc", "left": "Ancestral trait", "right": "Old, shared broadly" },
+          { "key": "der", "left": "Derived trait", "right": "New, group-specific" },
+          { "key": "syn", "left": "Synapomorphy", "right": "Shared derived trait" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "diversity-detective",
+        "badgeName": "Diversity Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "An ecosystem has 500 species.", "choices": [ { "label": "High species richness", "correct": true }, { "label": "Low diversity", "correct": false } ] },
+          { "text": "A trait is unique to mammals.", "choices": [ { "label": "Derived", "correct": true }, { "label": "Ancestral", "correct": false } ] },
+          { "text": "A trait is shared by all vertebrates.", "choices": [ { "label": "Ancestral", "correct": true }, { "label": "Derived", "correct": false } ] },
+          { "text": "Grouping organisms by shared derived traits.", "choices": [ { "label": "Cladistics", "correct": true }, { "label": "Taxonomy", "correct": false } ] },
+          { "text": "A clade includes:", "choices": [ { "label": "Ancestor + all descendants", "correct": true }, { "label": "Only living species", "correct": false } ] },
+          { "text": "Highest species diversity is in:", "choices": [ { "label": "Tropical rainforests", "correct": true }, { "label": "Deserts", "correct": false } ] }
+        ]
+      },
+      "formative": {
+        "badgeId": "diversity-escape",
+        "badgeName": "Diversity Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Species richness refers to:", "choices": [ { "label": "Number of species", "correct": true }, { "label": "Distribution of individuals", "correct": false }, { "label": "Size of organisms", "correct": false }, { "label": "Genetic diversity", "correct": false } ] },
+          { "text": "Cladistics groups organisms by:", "choices": [ { "label": "Shared derived characteristics", "correct": true }, { "label": "Color", "correct": false }, { "label": "Size", "correct": false }, { "label": "Habitat", "correct": false } ] },
+          { "text": "A synapomorphy is:", "choices": [ { "label": "An ancestral trait", "correct": false }, { "label": "A shared derived trait", "correct": true }, { "label": "A unique mutation", "correct": false }, { "label": "A vestigial structure", "correct": false } ] }
+        ]
+      },
+      "takeaways": [
+        "Species diversity = richness + evenness.",
+        "Highest diversity in tropical rainforests.",
+        "Cladistics groups by shared derived traits.",
+        "Clade = ancestor + all descendants."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Building & Interpreting Cladograms",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Construct a simple cladogram.</li><li>Interpret nodes and branches.</li><li>Identify monophyletic groups.</li><li>Compare cladistics with traditional taxonomy.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cladogram</strong> — branching diagram of relationships.</li><li><strong>Node</strong> — common ancestor point.</li><li><strong>Monophyletic group</strong> — ancestor + all descendants.</li><li><strong>Outgroup</strong> — reference taxon outside the study group.</li></ul><h3>📚 Lesson Content</h3><h4>A. Constructing a Cladogram</h4><ol><li>Choose the group of interest</li><li>Choose an outgroup</li><li>Identify shared derived traits</li><li>Group by shared derived traits</li></ol><h4>B. Reading a Cladogram</h4><ul><li>Nodes = common ancestors</li><li>Branches = lineages</li><li>Tips = species or groups</li><li>Character changes marked on branches</li></ul><h4>C. Example</h4><p>Vertebrate cladogram: Fish → Amphibians → Reptiles → Birds → Mammals. Traits: jaws, lungs, amniotic egg, feathers, hair.</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "cladogram-master",
+        "badgeName": "Cladogram Master",
+        "badgeIcon": "🌳",
+        "pairs": [
+          { "key": "clad", "left": "Cladogram", "right": "Branching diagram" },
+          { "key": "node", "left": "Node", "right": "Common ancestor point" },
+          { "key": "mono", "left": "Monophyletic group", "right": "Ancestor + all descendants" },
+          { "key": "out", "left": "Outgroup", "right": "Reference taxon" },
+          { "key": "char", "left": "Character change", "right": "Marked on branches" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "cladogram-detective",
+        "badgeName": "Cladogram Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "A node indicates:", "choices": [ { "label": "Common ancestor", "correct": true }, { "label": "Extinction", "correct": false } ] },
+          { "text": "A group with ancestor + all descendants.", "choices": [ { "label": "Monophyletic", "correct": true }, { "label": "Paraphyletic", "correct": false } ] },
+          { "text": "A reference species outside the study group.", "choices": [ { "label": "Outgroup", "correct": true }, { "label": "Ingroup", "correct": false } ] },
+          { "text": "First step in constructing a cladogram:", "choices": [ { "label": "Choose the group of interest", "correct": true }, { "label": "Draw nodes", "correct": false } ] },
+          { "text": "Vertebrate trait: lungs appear at:", "choices": [ { "label": "Amphibians", "correct": true }, { "label": "Fish", "correct": false } ] },
+          { "text": "Vertebrate trait: hair is unique to:", "choices": [ { "label": "Mammals", "correct": true }, { "label": "Reptiles", "correct": false } ] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week10-master",
+        "badgeName": "Week 10 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "A node on a cladogram represents:", "choices": [ { "label": "A common ancestor", "correct": true }, { "label": "A modern species", "correct": false }, { "label": "A trait", "correct": false }, { "label": "An extinction", "correct": false } ] },
+          { "text": "An outgroup is:", "choices": [ { "label": "A reference taxon outside the study group", "correct": true }, { "label": "A modern species", "correct": false }, { "label": "A derived trait", "correct": false }, { "label": "A node", "correct": false } ] },
+          { "text": "A monophyletic group includes:", "choices": [ { "label": "Ancestor + all descendants", "correct": true }, { "label": "Only living species", "correct": false }, { "label": "Only derived traits", "correct": false }, { "label": "Ancestor only", "correct": false } ] }
+        ]
+      },
+      "takeaways": [
+        "Cladograms show evolutionary relationships.",
+        "Nodes = common ancestors; branches = lineages.",
+        "Monophyletic group = ancestor + all descendants.",
+        "Outgroup provides a reference point."
+      ]
+    }
+  ]
+}
