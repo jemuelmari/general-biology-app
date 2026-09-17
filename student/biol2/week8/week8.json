@@ -1,0 +1,209 @@
+{
+  "week": 8,
+  "title": "History of Life & Mechanisms of Evolution",
+  "days": [
+    {
+      "n": 1,
+      "title": "Geologic Time Scale & History of Life",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the geologic time scale.</li><li>Identify major eras and periods.</li><li>Explain the sequence of major life events.</li><li>Relate geologic events to biological evolution.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Geologic time scale</strong> — timeline of Earth's history.</li><li><strong>Eons, eras, periods, epochs</strong> — divisions of time.</li><li><strong>Mass extinctions</strong> — events that wiped out many species.</li></ul><h3>📚 Lesson Content</h3><h4>A. Major Divisions</h4><table><thead><tr><th>Era</th><th>Time</th><th>Key Events</th></tr></thead><tbody><tr><td>Precambrian</td><td>4.6B – 541M years ago</td><td>First life, first cells, oxygen atmosphere</td></tr><tr><td>Paleozoic</td><td>541–252M years ago</td><td>Cambrian explosion, first fish, plants, amphibians</td></tr><tr><td>Mesozoic</td><td>252–66M years ago</td><td>Age of reptiles, dinosaurs, first birds and mammals</td></tr><tr><td>Cenozoic</td><td>66M years ago – present</td><td>Age of mammals, first humans</td></tr></tbody></table><h4>B. Mass Extinctions</h4><ul><li>End-Permian (~252 MYA) — 96% of species lost</li><li>End-Cretaceous (~66 MYA) — dinosaurs extinct</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "geologic-master",
+        "badgeName": "Geologic Master",
+        "badgeIcon": "🌍",
+        "pairs": [
+          { "key": "pre", "left": "Precambrian", "right": "First life, first cells" },
+          { "key": "paleo", "left": "Paleozoic", "right": "Cambrian explosion, first fish" },
+          { "key": "meso", "left": "Mesozoic", "right": "Age of reptiles, dinosaurs" },
+          { "key": "ceno", "left": "Cenozoic", "right": "Age of mammals, first humans" },
+          { "key": "perm", "left": "End-Permian extinction", "right": "96% species lost" },
+          { "key": "cret", "left": "End-Cretaceous extinction", "right": "Dinosaurs extinct" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "geologic-detective",
+        "badgeName": "Geologic Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "First single-celled life appeared.", "choices": [ { "label": "Precambrian", "correct": true }, { "label": "Paleozoic", "correct": false } ] },
+          { "text": "Cambrian explosion occurred.", "choices": [ { "label": "Paleozoic", "correct": true }, { "label": "Mesozoic", "correct": false } ] },
+          { "text": "Dinosaurs dominated.", "choices": [ { "label": "Mesozoic", "correct": true }, { "label": "Cenozoic", "correct": false } ] },
+          { "text": "First humans appeared.", "choices": [ { "label": "Cenozoic", "correct": true }, { "label": "Mesozoic", "correct": false } ] },
+          { "text": "Dinosaurs went extinct.", "choices": [ { "label": "End-Cretaceous", "correct": true }, { "label": "End-Permian", "correct": false } ] },
+          { "text": "Largest mass extinction in Earth's history.", "choices": [ { "label": "End-Permian", "correct": true }, { "label": "End-Cretaceous", "correct": false } ] }
+        ]
+      },
+      "formative": {
+        "badgeId": "geologic-escape",
+        "badgeName": "Geologic Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Which era is known as the 'Age of Reptiles'?", "choices": [ { "label": "Precambrian", "correct": false }, { "label": "Paleozoic", "correct": false }, { "label": "Mesozoic", "correct": true }, { "label": "Cenozoic", "correct": false } ] },
+          { "text": "When did the first humans appear?", "choices": [ { "label": "Precambrian", "correct": false }, { "label": "Paleozoic", "correct": false }, { "label": "Mesozoic", "correct": false }, { "label": "Cenozoic", "correct": true } ] },
+          { "text": "Which extinction event killed the dinosaurs?", "choices": [ { "label": "End-Permian", "correct": false }, { "label": "End-Cretaceous", "correct": true }, { "label": "Cambrian", "correct": false }, { "label": "End-Ordovician", "correct": false } ] }
+        ]
+      },
+      "takeaways": [
+        "Geologic time: Precambrian, Paleozoic, Mesozoic, Cenozoic.",
+        "Each era has characteristic life forms.",
+        "Mass extinctions reshape biodiversity.",
+        "Dinosaurs went extinct at end-Cretaceous (~66 MYA)."
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Natural Selection",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define natural selection.</li><li>Explain the conditions for natural selection.</li><li>Describe types of selection.</li><li>Give real-world examples.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Natural selection</strong> — differential survival and reproduction based on heritable traits.</li><li><strong>Fitness</strong> — reproductive success.</li><li><strong>Adaptation</strong> — a trait that increases fitness.</li><li><strong>Directional, stabilizing, disruptive selection</strong> — three patterns.</li></ul><h3>📚 Lesson Content</h3><h4>A. Conditions for Natural Selection</h4><ul><li>Variation exists in the population</li><li>Variation is heritable</li><li>More offspring are produced than can survive</li><li>Some variants have higher fitness</li></ul><h4>B. Types of Selection</h4><table><thead><tr><th>Type</th><th>Effect</th></tr></thead><tbody><tr><td>Directional</td><td>Favors one extreme</td></tr><tr><td>Stabilizing</td><td>Favors the average</td></tr><tr><td>Disruptive</td><td>Favors both extremes</td></tr></tbody></table><h4>C. Example</h4><p>Peppered moths in industrial England: dark moths were favored on soot-covered trees.</p>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "natural-sel-master",
+        "badgeName": "Natural Selection Master",
+        "badgeIcon": "🦋",
+        "pairs": [
+          { "key": "ns", "left": "Natural selection", "right": "Differential survival & reproduction" },
+          { "key": "fit", "left": "Fitness", "right": "Reproductive success" },
+          { "key": "adapt", "left": "Adaptation", "right": "Trait that increases fitness" },
+          { "key": "dir", "left": "Directional selection", "right": "Favors one extreme" },
+          { "key": "stab", "left": "Stabilizing selection", "right": "Favors the average" },
+          { "key": "dis", "left": "Disruptive selection", "right": "Favors both extremes" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "ns-detective",
+        "badgeName": "NS Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "A bird with a larger beak can crack more seeds.", "choices": [ { "label": "Directional", "correct": true }, { "label": "Stabilizing", "correct": false } ] },
+          { "text": "Human birth weight is most often around 3.5 kg.", "choices": [ { "label": "Stabilizing", "correct": true }, { "label": "Directional", "correct": false } ] },
+          { "text": "Two bird beak sizes survive; mid-size doesn't.", "choices": [ { "label": "Disruptive", "correct": true }, { "label": "Directional", "correct": false } ] },
+          { "text": "Dark moths survive better on soot-covered trees.", "choices": [ { "label": "Directional", "correct": true }, { "label": "Disruptive", "correct": false } ] },
+          { "text": "Fitness is defined as:", "choices": [ { "label": "Reproductive success", "correct": true }, { "label": "Strength", "correct": false }, { "label": "Size", "correct": false } ] },
+          { "text": "Natural selection requires:", "choices": [ { "label": "Heritable variation", "correct": true }, { "label": "Random mating only", "correct": false } ] }
+        ]
+      },
+      "formative": {
+        "badgeId": "ns-escape",
+        "badgeName": "Natural Selection Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Natural selection acts on:", "choices": [ { "label": "Genotypes", "correct": false }, { "label": "Phenotypes", "correct": true }, { "label": "Chromosomes", "correct": false }, { "label": "Gametes", "correct": false } ] },
+          { "text": "Which type of selection favors the average?", "choices": [ { "label": "Directional", "correct": false }, { "label": "Stabilizing", "correct": true }, { "label": "Disruptive", "correct": false }, { "label": "Artificial", "correct": false } ] },
+          { "text": "Which is required for natural selection?", "choices": [ { "label": "Random mating", "correct": false }, { "label": "Heritable variation", "correct": true }, { "label": "Low population", "correct": false }, { "label": "Uniform traits", "correct": false } ] }
+        ]
+      },
+      "takeaways": [
+        "Natural selection acts on phenotypes.",
+        "Requires heritable variation and differential fitness.",
+        "Three patterns: directional, stabilizing, disruptive.",
+        "Example: peppered moths."
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Genetic Drift & Gene Flow",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define genetic drift.</li><li>Differentiate bottleneck and founder effects.</li><li>Define gene flow.</li><li>Compare drift and selection.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Genetic drift</strong> — random change in allele frequencies.</li><li><strong>Bottleneck effect</strong> — sharp reduction in population size.</li><li><strong>Founder effect</strong> — new population from a small group.</li><li><strong>Gene flow</strong> — movement of alleles between populations.</li></ul><h3>📚 Lesson Content</h3><h4>A. Genetic Drift</h4><ul><li>Random</li><li>More pronounced in small populations</li><li>Can eliminate beneficial alleles</li></ul><h4>B. Bottleneck vs Founder</h4><table><thead><tr><th>Effect</th><th>Cause</th></tr></thead><tbody><tr><td>Bottleneck</td><td>Population crash (disaster, disease)</td></tr><tr><td>Founder</td><td>Small group colonizes new area</td></tr></tbody></table><h4>C. Gene Flow</h4><ul><li>Moves alleles between populations</li><li>Reduces differences between populations</li><li>Can introduce new alleles</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "drift-master",
+        "badgeName": "Drift Master",
+        "badgeIcon": "🌊",
+        "pairs": [
+          { "key": "drift", "left": "Genetic drift", "right": "Random allele frequency change" },
+          { "key": "bottle", "left": "Bottleneck effect", "right": "Population crash" },
+          { "key": "founder", "left": "Founder effect", "right": "Small group colonizes" },
+          { "key": "flow", "left": "Gene flow", "right": "Movement of alleles" },
+          { "key": "small", "left": "Small populations", "right": "Drift is stronger" },
+          { "key": "reduce", "left": "Gene flow reduces", "right": "Differences between populations" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "drift-detective",
+        "badgeName": "Drift Detective",
+        "badgeIcon": "🕵️",
+        "scenarios": [
+          { "text": "A random disaster kills most of a population.", "choices": [ { "label": "Bottleneck effect", "correct": true }, { "label": "Founder effect", "correct": false } ] },
+          { "text": "A few birds colonize a new island.", "choices": [ { "label": "Founder effect", "correct": true }, { "label": "Bottleneck", "correct": false } ] },
+          { "text": "Alleles move between two populations.", "choices": [ { "label": "Gene flow", "correct": true }, { "label": "Genetic drift", "correct": false } ] },
+          { "text": "Allele frequencies change randomly.", "choices": [ { "label": "Genetic drift", "correct": true }, { "label": "Natural selection", "correct": false } ] },
+          { "text": "A beneficial allele is lost by chance.", "choices": [ { "label": "Genetic drift", "correct": true }, { "label": "Gene flow", "correct": false } ] },
+          { "text": "Migration of individuals between populations.", "choices": [ { "label": "Gene flow", "correct": true }, { "label": "Mutation", "correct": false } ] }
+        ]
+      },
+      "formative": {
+        "badgeId": "drift-escape",
+        "badgeName": "Drift Escapee",
+        "badgeIcon": "🔐",
+        "lives": 3,
+        "questions": [
+          { "text": "Genetic drift is:", "choices": [ { "label": "Random", "correct": true }, { "label": "Directional", "correct": false }, { "label": "Predictable", "correct": false }, { "label": "Adaptive", "correct": false } ] },
+          { "text": "The founder effect occurs when:", "choices": [ { "label": "A small group starts a new population", "correct": true }, { "label": "A disease wipes out a population", "correct": false }, { "label": "Alleles flow in", "correct": false }, { "label": "Mutations occur", "correct": false } ] },
+          { "text": "Gene flow tends to:", "choices": [ { "label": "Increase differences between populations", "correct": false }, { "label": "Reduce differences between populations", "correct": true }, { "label": "Eliminate mutations", "correct": false }, { "label": "Stop selection", "correct": false } ] }
+        ]
+      },
+      "takeaways": [
+        "Genetic drift is random and stronger in small populations.",
+        "Bottleneck and founder effects reduce diversity.",
+        "Gene flow moves alleles between populations.",
+        "Drift and selection are different mechanisms."
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Mutation & Recombination",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain mutation as a source of variation.</li><li>Describe recombination's role.</li><li>Distinguish mutation from selection.</li><li>Explain why variation is essential for evolution.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Mutation</strong> — change in DNA; source of new alleles.</li><li><strong>Recombination</strong> — shuffling of alleles during meiosis.</li><li><strong>Variation</strong> — raw material for evolution.</li></ul><h3>📚 Lesson Content</h3><h4>A. Mutation</h4><ul><li>Only source of NEW alleles</li><li>Random with respect to fitness</li><li>Can be beneficial, neutral, or harmful</li></ul><h4>B. Recombination</h4><ul><li>Crossing over during Prophase I</li><li>Independent assortment</li><li>Shuffles existing alleles into new combinations</li></ul><h4>C. Variation & Evolution</h4><ul><li>Without variation, no evolution by selection</li><li>Mutation + recombination + sexual reproduction → diversity</li></ul>",
+      "activity1": {
+        "timeLimit": 90,
+        "badgeId": "mutation-recomb-master",
+        "badgeName": "Mutation & Recomb Master",
+        "badgeIcon": "🔀",
+        "pairs": [
+          { "key": "mut", "left": "Mutation", "right": "Source of new alleles" },
+          { "key": "recomb", "left": "Recombination", "right": "Shuffles existing alleles" },
+          { "key": "var", "left": "Variation", "right": "Raw material for evolution" },
+          { "key": "rand", "left": "Mutation is", "right": "Random with respect to fitness" },
+          { "key": "cross", "left": "Crossing over", "right": "Prophase I of meiosis" }
+        ]
+      },
+      "activity2": {
+        "timePerCard": 12,
+        "badgeId": "mutation-recomb-pro",
+        "badgeName": "Mutation & Recomb Pro",
+        "badgeIcon": "🧠",
+        "scenarios": [
+          { "text": "A new allele appears in a population.", "choices": [ { "label": "Mutation", "correct": true }, { "label": "Recombination", "correct": false } ] },
+          { "text": "Alleles shuffle into new combinations.", "choices": [ { "label": "Recombination", "correct": true }, { "label": "Mutation", "correct": false } ] },
+          { "text": "Without this, selection cannot act.", "choices": [ { "label": "Variation", "correct": true }, { "label": "Mutation", "correct": false } ] },
+          { "text": "Crossing over creates new combinations.", "choices": [ { "label": "Recombination", "correct": true }, { "label": "Mutation", "correct": false } ] },
+          { "text": "A mutation that doesn't affect fitness.", "choices": [ { "label": "Neutral", "correct": true }, { "label": "Beneficial", "correct": false } ] },
+          { "text": "Mutation is random with respect to:", "choices": [ { "label": "Fitness", "correct": true }, { "label": "Time", "correct": false } ] }
+        ]
+      },
+      "formative": {
+        "badgeId": "week8-master",
+        "badgeName": "Week 8 Master",
+        "badgeIcon": "🏅",
+        "lives": 3,
+        "questions": [
+          { "text": "What is the only source of NEW alleles?", "choices": [ { "label": "Mutation", "correct": true }, { "label": "Recombination", "correct": false }, { "label": "Selection", "correct": false }, { "label": "Gene flow", "correct": false } ] },
+          { "text": "Recombination shuffles existing alleles during:", "choices": [ { "label": "Mitosis", "correct": false }, { "label": "Meiosis", "correct": true }, { "label": "Cytokinesis", "correct": false }, { "label": "Translation", "correct": false } ] },
+          { "text": "Without variation, which process cannot occur?", "choices": [ { "label": "Mutation", "correct": false }, { "label": "Natural selection", "correct": true }, { "label": "Photosynthesis", "correct": false }, { "label": "Mitosis", "correct": false } ] }
+        ]
+      },
+      "takeaways": [
+        "Mutation is the only source of new alleles.",
+        "Recombination shuffles existing alleles.",
+        "Variation is the raw material for evolution.",
+        "Mutation is random with respect to fitness."
+      ]
+    }
+  ]
+}
