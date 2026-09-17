@@ -1,12 +1,12 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 1.1.0
+   Version: 1.6.0
    ============================================================ */
 
 const APP = (() => {
   'use strict';
 
-  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '1.1.0';
+  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '1.6.0';
   const APP_NAME = (typeof CONFIG !== 'undefined' && CONFIG.APP_NAME) || 'General Biology Online Modular Application';
 
   /* ---------- State ---------- */
@@ -130,6 +130,37 @@ const APP = (() => {
     return String(lrn).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
   }
 
+  /* ---------- Name Formatting Helpers ---------- */
+  function toTitleCase(str) {
+    if (!str) return '';
+    return str
+      .toString()
+      .trim()
+      .toLowerCase()
+      .split(/\s+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
+  function toLastNameFormat(str) {
+    if (!str) return '';
+    return str.toString().trim().toUpperCase();
+  }
+
+  function formatFullName(lastName, firstName, middleName) {
+    const last = toLastNameFormat(lastName);
+    const first = toTitleCase(firstName);
+    const middle = middleName ? ' ' + toTitleCase(middleName) : '';
+    return `${last}, ${first}${middle}`.trim();
+  }
+
+  function formatFullNameFML(lastName, firstName, middleName) {
+    const last = toLastNameFormat(lastName);
+    const first = toTitleCase(firstName);
+    const middle = middleName ? ' ' + toTitleCase(middleName) : '';
+    return `${first}${middle} ${last}`.trim();
+  }
+
   /* ---------- Validation ---------- */
   function validateLRN(lrn) {
     return /^\d{12}$/.test(String(lrn).replace(/\D/g, ''));
@@ -145,7 +176,6 @@ const APP = (() => {
     const dev = CONFIG.DEVELOPER;
 
     document.querySelectorAll('.app-footer, footer').forEach((footer) => {
-      // Avoid duplicate injection
       if (footer.querySelector('.dev-credit')) return;
 
       const credit = document.createElement('div');
@@ -162,21 +192,18 @@ const APP = (() => {
     });
   }
 
-  /* ---------- Inject Manifest Meta (for installability) ---------- */
+  /* ---------- Inject Manifest Meta ---------- */
   function injectManifest() {
     if (document.querySelector('link[rel="manifest"]')) return;
     const link = document.createElement('link');
     link.rel = 'manifest';
-    // Compute relative path to root based on current depth
     const path = window.location.pathname;
     let prefix = '';
     if (path.includes('/student/')) prefix = path.includes('/week') ? '../../' : '../';
     else if (path.includes('/teacher/') || path.includes('/classrecord/')) prefix = '../';
-
     link.href = prefix + 'manifest.json';
     document.head.appendChild(link);
 
-    // Theme color
     const meta = document.createElement('meta');
     meta.name = 'theme-color';
     meta.content = '#1b7a3d';
@@ -205,6 +232,10 @@ const APP = (() => {
     formatDate,
     formatTime,
     formatLRN,
+    toTitleCase,
+    toLastNameFormat,
+    formatFullName,
+    formatFullNameFML,
     validateLRN,
     validateName,
     renderDeveloperFooter,
