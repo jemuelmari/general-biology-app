@@ -1,6 +1,6 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 1.1.1
+   Version: 1.2.0
    ============================================================ */
 
 (() => {
@@ -26,16 +26,13 @@
   function computeStanding() {
     const scores = Store.getScores(user.lrn);
     const allSTs = [];
-
     ['biol1', 'biol2'].forEach((subj) => {
       const st = scores[subj]?.st || {};
       Object.values(st).forEach((s) => {
         if (s && s.total) allSTs.push((s.score / s.total) * 100);
       });
     });
-
     if (!allSTs.length) return { label: 'No data yet', key: 'on-track', avg: null };
-
     const avg = allSTs.reduce((a, b) => a + b, 0) / allSTs.length;
     return { ...Transmutation.classifyStudent(avg), avg };
   }
@@ -71,27 +68,14 @@
 
   /* ---------- Subjects ---------- */
   const subjects = [
-    {
-      id: 'biol1',
-      title: 'General Biology 1',
-      desc: 'Cell · Cell Cycle · Transport · Biomolecules · Energy',
-      icon: '🔬',
-      totalWeeks: 10
-    },
-    {
-      id: 'biol2',
-      title: 'General Biology 2',
-      desc: 'Organismal Biology · Genetics · Evolution · Systematics',
-      icon: '🌱',
-      totalWeeks: 10
-    }
+    { id: 'biol1', title: 'General Biology 1', desc: 'Cell · Cell Cycle · Transport · Biomolecules · Energy', icon: '🔬', totalWeeks: 10 },
+    { id: 'biol2', title: 'General Biology 2', desc: 'Organismal Biology · Genetics · Evolution · Systematics', icon: '🌱', totalWeeks: 10 }
   ];
 
   APP.$('#subjects-grid').innerHTML = subjects.map((s) => {
     const done = progress[s.id]?.completed?.length || 0;
     const totalDays = s.totalWeeks * 4;
     const pct = Math.round((done / totalDays) * 100);
-
     return `
       <div class="subject-card" data-subject="${s.id}">
         <div style="font-size:2rem;">${s.icon}</div>
@@ -105,8 +89,7 @@
 
   document.querySelectorAll('[data-subject]').forEach((card) => {
     card.addEventListener('click', () => {
-      const subj = card.dataset.subject;
-      window.location.href = `${subj}/index.html`;
+      window.location.href = `${card.dataset.subject}/index.html`;
     });
   });
 
@@ -137,34 +120,92 @@
     `;
   }).join('');
 
-  /* ---------- Sync: Generate Code ---------- */
-  APP.$('#btn-sync-code').addEventListener('click', async () => {
-    try {
-      const result = await Sync.generateSyncCode(user.lrn, null);
-      APP.$('#sync-output').innerHTML = `
-        <div class="alert alert-success">
-          <strong>✅ Sync Code Generated!</strong>
-          <div style="font-family:monospace;font-size:1.4rem;margin:12px 0;text-align:center;padding:12px;background:#fff;border-radius:6px;">
-            ${result.code}
-          </div>
-          <p class="text-small">Send this code to your teacher. It's valid for the records saved on this device.</p>
-        </div>
+  /* ---------- Sync & Backup UI (HONEST LABELS) ---------- */
+  const syncUI = document.getElementById('sync-output');
+  const syncBtnCode = APP.$('#btn-sync-code');
+  const syncBtnJson = APP.$('#btn-export-json');
+
+  // Update button labels and add mode indicator
+  if (syncBtnCode) {
+    const backendOn = Sync.backendEnabled();
+    syncBtnCode.textContent = backendOn
+      ? '🔑 Generate Sync Code (works anywhere)'
+      : '🔑 Generate Sync Code (this device only)';
+    syncBtnCode.title = backendOn
+      ? 'Works across devices via Google Sheets backend'
+      : 'Only works if the teacher uses the SAME device';
+
+    // Show a warning badge next to the button if not backend-enabled
+    if (!backendOn) {
+      const warn = document.createElement('div');
+      warn.className = 'alert alert-warning';
+      warn.style.cssText = 'margin-top:12px;font-size:0.85rem;';
+      warn.innerHTML = `
+        <strong>⚠️ Sync Code is limited</strong>
+        <p style="margin-top:6px;">Sync Codes currently only work if the teacher uses the <strong>same device</strong>.
+        To send progress from a different device, use <strong>Download Backup (JSON)</strong> instead.</p>
       `;
-      APP.toast('Sync code generated!', 'success');
-    } catch (e) {
-      APP.toast('Failed: ' + e.message, 'danger');
+      syncBtnCode.parentElement.appendChild(warn);
+    } else {
+      const info = document.createElement('div');
+      info.className = 'alert alert-success';
+      info.style.cssText = 'margin-top:12px;font-size:0.85rem;';
+      info.innerHTML = `
+        <strong>✅ Cross-device sync enabled</strong>
+        <p style="margin-top:6px;">Sync Codes work on any device connected to the internet.</p>
+      `;
+      syncBtnCode.parentElement.appendChild(info);
     }
-  });
+  }
+
+  /* ---------- Sync: Generate Code ---------- */
+  if (syncBtnCode) {
+    syncBtnCode.addEventListener('click', async () => {
+      syncBtnCode.disabled = true;
+      syncBtnCode.textContent = '⏳ Generating...';
+
+      try {
+        const result = await Sync.generateSyncCode(user.lrn, null);
+
+        const modeLabel = result.mode === 'backend'
+          ? '<span style="color:var(--color-success);">✅ Works across devices</span>'
+          : '<span style="color:var(--color-warning);">⚠️ Only works on THIS device</span>';
+
+        APP.$('#sync-output').innerHTML = `
+          <div class="alert alert-success">
+            <strong>✅ Sync Code Generated!</strong>
+            <div style="font-family:monospace;font-size:1.4rem;margin:12px 0;text-align:center;padding:12px;background:#fff;border-radius:6px;letter-spacing:1px;">
+              ${result.code}
+            </div>
+            <p class="text-small" style="margin-bottom:8px;">Mode: ${modeLabel}</p>
+            <p class="text-small">${result.mode === 'backend'
+              ? 'Send this code to your teacher — they can import it from any device.'
+              : 'Your teacher must use the SAME device to import this code. Otherwise, use "Download Backup (JSON)" below.'}</p>
+          </div>
+        `;
+        APP.toast('Sync code generated!', 'success');
+      } catch (e) {
+        APP.toast('Failed: ' + e.message, 'danger');
+      } finally {
+        syncBtnCode.disabled = false;
+        syncBtnCode.textContent = Sync.backendEnabled()
+          ? '🔑 Generate Sync Code (works anywhere)'
+          : '🔑 Generate Sync Code (this device only)';
+      }
+    });
+  }
 
   /* ---------- Sync: Export JSON ---------- */
-  APP.$('#btn-export-json').addEventListener('click', async () => {
-    try {
-      const fn = await Sync.exportAsFile(user.lrn, null);
-      APP.toast(`Saved: ${fn}`, 'success');
-    } catch (e) {
-      APP.toast('Export failed: ' + e.message, 'danger');
-    }
-  });
+  if (syncBtnJson) {
+    syncBtnJson.addEventListener('click', async () => {
+      try {
+        const fn = await Sync.exportAsFile(user.lrn, null);
+        APP.toast(`Saved: ${fn}`, 'success');
+      } catch (e) {
+        APP.toast('Export failed: ' + e.message, 'danger');
+      }
+    });
+  }
 
   /* ---------- Sync: Import JSON ---------- */
   APP.$('#btn-import-json').addEventListener('click', () => {
@@ -186,13 +227,11 @@
 
   /* ---------- Log Out (INSTANT) ---------- */
   APP.$('#btn-logout').addEventListener('click', () => {
-    // Show a brief overlay while we transition
     const overlay = document.createElement('div');
     overlay.style.cssText = `
       position:fixed;inset:0;background:rgba(255,255,255,0.95);
       display:flex;align-items:center;justify-content:center;
       z-index:99999;font-family:'Segoe UI',sans-serif;
-      transition:opacity 0.15s;
     `;
     overlay.innerHTML = `
       <div style="text-align:center;">
@@ -202,17 +241,13 @@
     `;
     document.body.appendChild(overlay);
 
-    // Fire the modal + backup prompt AFTER the page transitions.
-    // Save the intent in sessionStorage so login.html can pick it up.
     sessionStorage.setItem('gba_logout_pending', JSON.stringify({
       lrn: user.lrn,
       at: Date.now()
     }));
 
-    // Clear session IMMEDIATELY, then redirect with replace()
     Store.clearSession();
 
-    // Give the overlay a moment to appear, then navigate
     setTimeout(() => {
       window.location.replace('login.html');
     }, 150);
