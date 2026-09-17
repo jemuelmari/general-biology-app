@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Normalize Names — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔤 Normalize Student Names</h1>
+        <span class="version">v1.6.0</span>
+      </div>
+      <nav style="display:flex;gap:8px;">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card">
+      <h2 style="color:var(--color-primary-dark);">🔤 Record Format Cleanup</h2>
+      <p class="text-muted">
+        Fixes existing student records so that names follow the standard format:
+        <strong>LASTNAME (all caps)</strong>, <strong>Firstname Middlename (title case)</strong>.
+        Use this once to fix any pre-existing data.
+      </p>
+      <div id="normalize-actions" style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button id="btn-preview" class="btn btn-outline">👁️ Preview Changes</button>
+        <button id="btn-apply" class="btn btn-primary" disabled>✅ Apply Normalization</button>
+      </div>
+    </div>
+
+    <div id="normalize-preview"></div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Normalize Names · v1.6.0</p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let pendingChanges = [];
+
+      document.getElementById('btn-preview').addEventListener('click', preview);
+      document.getElementById('btn-apply').addEventListener('click', applyChanges);
+
+      function preview() {
+        const users = Store.getAllUsers();
+        pendingChanges = [];
+
+        users.forEach((u) => {
+          const newLast = APP.toLastNameFormat(u.lastName);
+          const newFirst = APP.toTitleCase(u.firstName);
+          const newMiddle = APP.toTitleCase(u.middleName || '');
+
+          const changed =
+            u.lastName !== newLast ||
+            u.firstName !== newFirst ||
+            (u.middleName || '') !== newMiddle;
+
+          if (changed) {
+            pendingChanges.push({
+              lrn: u.lrn,
+              before: {
+                lastName: u.lastName,
+                firstName: u.firstName,
+                middleName: u.middleName || ''
+              },
+              after: {
+                lastName: newLast,
+                firstName: newFirst,
+                middleName: newMiddle
+              }
+            });
+          }
+        });
+
+        const container = document.getElementById('normalize-preview');
+        const applyBtn = document.getElementById('btn-apply');
+
+        if (!pendingChanges.length) {
+          container.innerHTML = `
+            <div class="alert alert-success">
+              ✅ All records already follow the standard format. No changes needed.
+            </div>
+          `;
+          applyBtn.disabled = true;
+          return;
+        }
+
+        applyBtn.disabled = false;
+
+        container.innerHTML = `
+          <div class="card">
+            <h3 style="color:var(--color-primary-dark);">Preview — ${pendingChanges.length} record(s) will be updated</h3>
+            <table class="table" style="margin-top:12px;">
+              <thead>
+                <tr>
+                  <th>LRN</th>
+                  <th>Before</th>
+                  <th>After</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${pendingChanges.map((c) => `
+                  <tr>
+                    <td style="font-family:monospace;font-size:0.8rem;">${APP.formatLRN(c.lrn)}</td>
+                    <td style="color:var(--color-danger);font-size:0.9rem;">
+                      ${c.before.lastName}, ${c.before.firstName} ${c.before.middleName || ''}
+                    </td>
+                    <td style="color:var(--color-success);font-weight:600;font-size:0.9rem;">
+                      ${c.after.lastName}, ${c.after.firstName} ${c.after.middleName || ''}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      function applyChanges() {
+        if (!pendingChanges.length) return;
+        if (!confirm(`Apply normalization to ${pendingChanges.length} record(s)?`)) return;
+
+        let count = 0;
+        pendingChanges.forEach((c) => {
+          const user = Store.getUser(c.lrn);
+          if (!user) return;
+          user.lastName = c.after.lastName;
+          user.firstName = c.after.firstName;
+          user.middleName = c.after.middleName;
+          Store.saveUser(user);
+          count++;
+        });
+
+        APP.toast(`✅ ${count} record(s) normalized!`, 'success');
+        pendingChanges = [];
+        setTimeout(preview, 500);
+      }
+    });
+  </script>
+</body>
+</html>
