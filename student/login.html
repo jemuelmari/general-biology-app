@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🧬 Student Login</h1>
-        <span class="version">v1.6.0</span>
+        <span class="version">v2.1.0</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
     </div>
@@ -58,13 +58,22 @@
           <label class="form-label" for="reg-firstname">First Name *</label>
           <input type="text" id="reg-firstname" class="form-control" required autocomplete="off"
                  placeholder="Juan" />
-          <div class="form-hint">Will be saved as Title Case (e.g., Juan)</div>
+          <div class="form-hint">Will be saved in Title Case (e.g., Juan)</div>
         </div>
         <div class="form-group">
           <label class="form-label" for="reg-middlename">Middle Name</label>
           <input type="text" id="reg-middlename" class="form-control" autocomplete="off"
                  placeholder="Santos" />
-          <div class="form-hint">Optional · Will be saved as Title Case</div>
+          <div class="form-hint">Optional · Saved in Title Case</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-sex">Sex *</label>
+          <select id="reg-sex" class="form-control" required>
+            <option value="">— Select —</option>
+            <option value="Female">♀ Female</option>
+            <option value="Male">♂ Male</option>
+          </select>
+          <div class="form-hint">Used for class records and reporting</div>
         </div>
         <div class="form-group">
           <label class="form-label" for="reg-lrn">LRN (12 digits) *</label>
@@ -76,6 +85,7 @@
           <label class="form-label" for="reg-grade">Grade Level *</label>
           <select id="reg-grade" class="form-control" required>
             <option value="">— Select —</option>
+            <option value="11">Grade 11</option>
             <option value="12" selected>Grade 12</option>
           </select>
         </div>
@@ -110,7 +120,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Biology Online Modular Application · v1.6.0</p>
+    <p>General Biology Online Modular Application · v2.1.0</p>
   </footer>
 
   <script src="../config.js"></script>
