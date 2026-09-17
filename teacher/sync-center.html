@@ -287,4 +287,99 @@
             <div class="preview-header">
               <div>
                 <strong>${s.lastName}, ${s.firstName} ${s.middleName || ''}</strong>
-                <div class="text-small text-muted
+                <div class="text-small text-muted">LRN: ${APP.formatLRN(s.lrn)} · Grade ${s.gradeLevel} — ${s.section}</div>
+                ${sourceBadge}
+              </div>
+              <span class="${cls}">${valid ? '✓ Signature Verified' : '✗ Signature Invalid'}</span>
+            </div>
+            <div class="text-small text-muted">
+              Generated: ${APP.formatDate(p.generatedAt)} · Method: ${imp.method}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ---------- Confirm Import ---------- */
+    document.getElementById('btn-confirm-import').addEventListener('click', () => {
+      let imported = 0, rejected = 0;
+
+      pendingImports.forEach((imp) => {
+        if (!imp.valid) {
+          rejected++;
+          syncLog.push({ time: new Date().toISOString(), status: 'rejected', reason: imp.error || 'Invalid signature' });
+          return;
+        }
+        try {
+          const p = imp.payload;
+          const existing = Store.getUser(p.student.lrn);
+          const merged = existing ? { ...existing, ...p.student } : p.student;
+          Store.saveUser(merged);
+
+          const currentProg = Store.getProgress(p.student.lrn);
+          ['biol1', 'biol2'].forEach((subj) => {
+            if (p.progress?.[subj]) {
+              currentProg[subj] = currentProg[subj] || { weeks: {}, completed: [] };
+              Object.assign(currentProg[subj].weeks || {}, p.progress[subj].weeks || {});
+              const mergedCompleted = new Set([
+                ...(currentProg[subj].completed || []),
+                ...(p.progress[subj].completed || [])
+              ]);
+              currentProg[subj].completed = Array.from(mergedCompleted);
+            }
+          });
+          Store.saveProgress(p.student.lrn, currentProg);
+
+          const currentScores = Store.getScores(p.student.lrn);
+          ['biol1', 'biol2'].forEach((subj) => {
+            if (p.scores?.[subj]) {
+              currentScores[subj] = currentScores[subj] || {};
+              ['quizzes', 'st', 'pt', 'activities', 'te'].forEach((type) => {
+                if (p.scores[subj][type]) {
+                  currentScores[subj][type] = { ...(currentScores[subj][type] || {}), ...p.scores[subj][type] };
+                }
+              });
+            }
+          });
+          localStorage.setItem(`gba_v1_scores_${p.student.lrn}`, JSON.stringify(currentScores));
+
+          imported++;
+          syncLog.push({ time: new Date().toISOString(), status: 'success', student: p.student.lrn });
+        } catch (err) {
+          rejected++;
+          syncLog.push({ time: new Date().toISOString(), status: 'error', reason: err.message });
+        }
+      });
+
+      APP.toast(`✅ Imported: ${imported} · ❌ Rejected: ${rejected}`, imported ? 'success' : 'warning');
+      pendingImports = [];
+      document.getElementById('import-preview-container').classList.add('hidden');
+      renderLog();
+    });
+
+    document.getElementById('btn-cancel-import').addEventListener('click', () => {
+      pendingImports = [];
+      document.getElementById('import-preview-container').classList.add('hidden');
+    });
+
+    /* ---------- Sync Log ---------- */
+    function renderLog() {
+      const el = document.getElementById('sync-log');
+      if (!syncLog.length) {
+        el.innerHTML = '<p class="text-muted text-small">No syncs yet in this session.</p>';
+        return;
+      }
+      el.innerHTML = syncLog.slice(-20).reverse().map((l) => `
+        <div class="text-small" style="padding:6px 0;border-bottom:1px solid var(--color-border);">
+          ${APP.formatDate(l.time)} — 
+          ${l.status === 'success' ? '✅ Imported' : l.status === 'rejected' ? '❌ Rejected' : '⚠️ Error'}
+          ${l.student ? APP.formatLRN(l.student) : ''}
+          ${l.reason ? `(${l.reason})` : ''}
+        </div>
+      `).join('');
+    }
+
+    renderLog();
+  </script>
+</body>
+</html>
