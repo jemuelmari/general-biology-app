@@ -1,12 +1,12 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.3.4
+   Version: 2.3.5
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.4',
+  VERSION: '2.3.5',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -164,7 +164,7 @@ const ActivityGate = (() => {
   let session = null, inited = false;
 
   function init(cfg) {
-    if (inited) { console.log('[ActivityGate] Already initialized, skipping'); return; }
+    if (inited) { console.log('[ActivityGate] Already initialized'); return; }
     console.log('[ActivityGate] init() with:', cfg);
     session = {
       key: `${STORAGE_KEY}${cfg.subject}_w${cfg.week}_d${cfg.day}`,
@@ -179,8 +179,8 @@ const ActivityGate = (() => {
     if (saved) { try { Object.assign(session.states, JSON.parse(saved).states); } catch {} }
     console.log('[ActivityGate] Session:', session.key, session.states);
     inited = true;
-    setTimeout(() => { console.log('[ActivityGate] Running applyUI()'); applyUI(); console.log('[ActivityGate] applyUI() done'); }, 10);
-    setTimeout(() => { console.log('[ActivityGate] Firing ready event'); document.dispatchEvent(new CustomEvent('activity-gate:ready')); }, 20);
+    setTimeout(() => { console.log('[ActivityGate] applyUI()'); applyUI(); }, 10);
+    setTimeout(() => { console.log('[ActivityGate] Fire ready'); document.dispatchEvent(new CustomEvent('activity-gate:ready')); }, 30);
   }
 
   function save() {
@@ -363,7 +363,7 @@ const Lesson = (() => {
   function startAct(sk) {
     const cid = sk === 'activity1' ? 'activity-1' : sk === 'activity2' ? 'activity-2' : 'formative';
     const p = pending[cid];
-    if (!p) { console.warn('[Lesson] No pending activity for', cid); return; }
+    if (!p) { console.warn('[Lesson] No pending for', cid); return; }
     if (p.type === 'match') renderMatch(cid, p.cfg);
     else if (p.type === 'scenario') renderScenario(cid, p.cfg);
     else renderEscape(cid, p.cfg);
@@ -577,6 +577,19 @@ const Lesson = (() => {
 
   return { init, addPoints: addPts, awardBadge, renderMatchGame: regMatch, renderScenarioGame: regScenario, renderEscapeRoom: regEscape };
 })();
+
+/* ============================================================
+   EXPOSE TO WINDOW — CRITICAL FIX
+   ------------------------------------------------------------
+   `const X` at top level does NOT create `window.X`.
+   But `Lesson.init()` checks `window.ActivityGate`.
+   This block attaches everything to `window` so those checks work.
+   ============================================================ */
+window.CONFIG = CONFIG;
+window.APP = APP;
+window.Store = Store;
+window.ActivityGate = ActivityGate;
+window.Lesson = Lesson;
 
 /* ---------- AUTO INIT ---------- */
 document.addEventListener('DOMContentLoaded', () => {
