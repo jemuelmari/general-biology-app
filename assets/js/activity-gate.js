@@ -18,7 +18,6 @@ const ActivityGate = (() => {
       states: { 1: 'unlocked', 2: 'locked', formative: 'locked' }
     };
 
-    // Restore from sessionStorage if re-entering the page
     const saved = sessionStorage.getItem(session.key);
     if (saved) {
       try {
@@ -29,7 +28,6 @@ const ActivityGate = (() => {
 
     console.log('[ActivityGate] Session:', session.key, session.states);
 
-    // Apply locks immediately AND on delays (in case activities render late)
     applyLocks();
     setTimeout(applyLocks, 50);
     setTimeout(applyLocks, 300);
@@ -52,7 +50,6 @@ const ActivityGate = (() => {
 
     if (subject && week && day) return { subject, week, day };
 
-    // Fallback: read from score bar
     const label = document.querySelector('.score-bar-label');
     if (label) {
       const m = label.textContent.match(/Week\s+(\d+)\s*·\s*Day\s+(\d+)/i);
@@ -69,7 +66,7 @@ const ActivityGate = (() => {
   }
 
   /* ============================================================
-     PUBLIC: mark activity complete (called by lesson engine)
+     PUBLIC: mark activity complete
      ============================================================ */
   function complete(activityId) {
     if (!session) {
@@ -100,9 +97,7 @@ const ActivityGate = (() => {
     applyLocks();
   }
 
-  /* ============================================================
-     Apply lock overlays
-     ============================================================ */
+  /* ---------- Apply lock overlays ---------- */
   function applyLocks() {
     if (!session) return;
     applyLock('activity-1', session.states[1]);
@@ -181,7 +176,7 @@ const ActivityGate = (() => {
 })();
 
 /* ============================================================
-   Wrap Lesson render functions to detect completion — EVENT BASED
+   Wrap Lesson render functions to detect completion
    ============================================================ */
 (function wrapLessonRenderers() {
   if (typeof Lesson === 'undefined') {
@@ -206,11 +201,10 @@ const ActivityGate = (() => {
                         : containerId === 'activity-2' ? 2 : null;
     if (!activityNumber) return;
 
-    // Watch with MutationObserver for .correct class additions
     const observer = new MutationObserver(() => {
       if (isMatchComplete(container)) {
         observer.disconnect();
-        console.log('[ActivityGate] Match complete detected');
+        console.log('[ActivityGate] Match complete detected (observer)');
         ActivityGate.complete(activityNumber);
       }
     });
@@ -221,7 +215,6 @@ const ActivityGate = (() => {
       attributeFilter: ['class']
     });
 
-    // Also poll as backup
     const interval = setInterval(() => {
       if (isMatchComplete(container)) {
         clearInterval(interval);
@@ -259,10 +252,8 @@ const ActivityGate = (() => {
                         : containerId === 'activity-2' ? 2 : null;
     if (!activityNumber) return;
 
-    // Total scenarios — from config
     const totalScenarios = (config && config.scenarios) ? config.scenarios.length : 6;
 
-    // Watch the badge text "Question X / Y" for the end state
     const observer = new MutationObserver(() => {
       if (isScenarioComplete(container, totalScenarios)) {
         observer.disconnect();
@@ -286,11 +277,9 @@ const ActivityGate = (() => {
   }
 
   function isScenarioComplete(container, total) {
-    // When done, the container has NO choice-row and NO scenario-card
     const hasChoiceRow = !!container.querySelector('.choice-row');
     const hasCard = !!container.querySelector('.scenario-card');
     if (hasChoiceRow || hasCard) return false;
-    // And there should be content (not empty)
     return container.innerHTML.trim().length > 0;
   }
 
@@ -307,12 +296,10 @@ const ActivityGate = (() => {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const activityNumber = 'formative';
-
     const observer = new MutationObserver(() => {
       if (isEscapeComplete(container)) {
         observer.disconnect();
-        ActivityGate.complete(activityNumber);
+        ActivityGate.complete('formative');
       }
     });
 
@@ -322,7 +309,7 @@ const ActivityGate = (() => {
       if (isEscapeComplete(container)) {
         clearInterval(interval);
         observer.disconnect();
-        ActivityGate.complete(activityNumber);
+        ActivityGate.complete('formative');
       }
     }, 500);
 
