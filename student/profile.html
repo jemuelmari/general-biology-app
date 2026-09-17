@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>👤 My Profile</h1>
-        <span class="version">v2.0.1</span>
+        <span class="version">v2.1.0</span>
       </div>
       <a href="dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -21,7 +21,6 @@
 
   <main class="container" style="max-width:640px;padding-top:24px;padding-bottom:64px;">
 
-    <!-- Profile header card -->
     <div class="card" id="profile-header">
       <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
         <div id="profile-avatar" style="
@@ -39,14 +38,13 @@
       </div>
     </div>
 
-    <!-- Edit form -->
     <div class="card">
       <div class="card-header">
         <span class="card-title">✏️ Edit Your Details</span>
       </div>
 
       <p class="text-muted text-small" style="margin-bottom:16px;">
-        You can update your name, grade level, and section. Your <strong>LRN cannot be changed</strong> since it is your unique identifier.
+        You can update your name, grade level, section, and sex. Your <strong>LRN cannot be changed</strong> since it is your unique identifier.
       </p>
 
       <form id="profile-form">
@@ -81,6 +79,15 @@
         </div>
 
         <div class="form-group">
+          <label class="form-label" for="pf-sex">Sex *</label>
+          <select id="pf-sex" class="form-control" required>
+            <option value="">— Select —</option>
+            <option value="Female">♀ Female</option>
+            <option value="Male">♂ Male</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label class="form-label" for="pf-grade">Grade Level *</label>
           <select id="pf-grade" class="form-control" required>
             <option value="">— Select —</option>
@@ -100,7 +107,6 @@
           </select>
         </div>
 
-        <!-- Live preview -->
         <div style="background:#f5f7fa;padding:14px 16px;border-radius:10px;margin:16px 0;">
           <div style="font-size:0.75rem;color:#5f6368;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;margin-bottom:6px;">
             Preview
@@ -124,7 +130,6 @@
       </form>
     </div>
 
-    <!-- Danger zone -->
     <div class="card" style="border-left:4px solid #c62828;">
       <div class="card-header">
         <span class="card-title" style="color:#c62828;">⚠️ Account Actions</span>
@@ -140,7 +145,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Biology Online Modular Application · v2.0.1</p>
+    <p>General Biology Online Modular Application · v2.1.0</p>
   </footer>
 
   <script src="../config.js"></script>
