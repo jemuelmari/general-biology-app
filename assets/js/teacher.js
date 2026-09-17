@@ -1,6 +1,6 @@
 /* ============================================================
    teacher.js — Teacher dashboard, item analysis, intervention
-   Version: 1.0.0
+   Version: 1.5.0
    ============================================================ */
 
 (() => {
@@ -25,8 +25,6 @@
             totalAssessments++;
             if (stData.passed) totalPassing++;
             stScores.push(stData.percent);
-
-            // Urgent
             if (stData.percent < 65) totalUrgent++;
           }
         });
@@ -60,26 +58,28 @@
       <div class="stat-value">${stats.passRate}%</div>
       <div class="stat-label">Pass Rate</div>
     </div>
-    <div class="stat-card" style="border-left-color:${stats.urgent > 0 ? 'var(--color-urgent)' : 'var(--color-success)'};">
+    <div class="stat-card">
       <div class="stat-value">${stats.avgST}%</div>
       <div class="stat-label">Avg ST Score</div>
     </div>
-    <div class="stat-card" style="border-left-color:var(--color-danger);">
+    <div class="stat-card" style="border-left-color:${stats.urgent > 0 ? 'var(--color-urgent)' : 'var(--color-success)'};">
       <div class="stat-value">${stats.urgent}</div>
       <div class="stat-label">Urgent Cases</div>
     </div>
   `;
 
-  /* ---------- Quick Actions ---------- */
+  /* ---------- Quick Actions (updated with 2 new trackers) ---------- */
   const actions = [
-    { icon: '📥', title: 'Sync Center',    desc: 'Import student progress',       href: 'teacher/sync-center.html' },
-    { icon: '📊', title: 'Item Analysis',  desc: 'Per-item difficulty & MPS',     href: 'teacher/item-analysis.html' },
-    { icon: '🎯', title: 'Intervention',   desc: 'Students needing support',      href: 'teacher/intervention.html' },
-    { icon: '📋', title: 'Class Record',   desc: 'Grades & transmutation',        href: 'classrecord.html' }
+    { icon: '🎮', title: 'Activity Tracker',   desc: 'Track activity completion & badges',  href: 'teacher/activity-tracker.html',   color: '#1b7a3d' },
+    { icon: '📝', title: 'Assessment Tracker', desc: 'Track quiz, ST, TE performance',      href: 'teacher/assessment-tracker.html', color: '#0277bd' },
+    { icon: '📥', title: 'Sync Center',        desc: 'Import student progress',              href: 'teacher/sync-center.html',        color: '#ed6c02' },
+    { icon: '📊', title: 'Item Analysis',      desc: 'Per-item difficulty & MPS',            href: 'teacher/item-analysis.html',      color: '#6a1b9a' },
+    { icon: '🎯', title: 'Intervention',       desc: 'Students needing support',             href: 'teacher/intervention.html',       color: '#c62828' },
+    { icon: '📋', title: 'Class Record',       desc: 'Grades & transmutation',               href: 'classrecord.html',                color: '#455a64' }
   ];
 
   document.getElementById('teacher-actions').innerHTML = actions.map((a) => `
-    <a href="${a.href}" class="subject-card" style="text-decoration:none;border-top-color:#0d47a1;">
+    <a href="${a.href}" class="subject-card" style="text-decoration:none;border-top-color:${a.color};">
       <div style="font-size:2rem;">${a.icon}</div>
       <h3>${a.title}</h3>
       <p class="text-muted text-small">${a.desc}</p>
@@ -126,7 +126,7 @@
     users.forEach((u) => {
       const scores = Store.getScores(u.lrn);
       ['biol1', 'biol2'].forEach((s) => {
-        ['quiz', 'st', 'te'].forEach((type) => {
+        ['quiz', 'quizzes', 'st', 'te'].forEach((type) => {
           const list = scores[s]?.[type] || {};
           Object.entries(list).forEach(([id, data]) => {
             if (data && data.timestamp) {
