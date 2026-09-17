@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔬 Week 1 · Lesson</h1>
-        <span class="version">v2.3.4</span>
+        <span class="version">v2.3.5</span>
       </div>
       <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
     </div>
@@ -28,7 +28,7 @@
     <div class="card" id="lesson-footer"></div>
   </main>
 
-  <footer class="app-footer"><p>General Biology 1 · Week 1 · v2.3.4</p></footer>
+  <footer class="app-footer"><p>General Biology 1 · Week 1 · v2.3.5</p></footer>
 
   <script src="../../../assets/js/bundle.js"></script>
 
@@ -68,10 +68,10 @@
         </ul>
       `;
 
-      Lesson.init({ subject: 'biol1', week: 1, day: day.n, title: day.title, maxPoints: 300 });
-      Lesson.renderMatchGame('activity-1', day.activity1);
-      Lesson.renderScenarioGame('activity-2', day.activity2);
-      Lesson.renderEscapeRoom('formative', day.formative);
+      window.Lesson.init({ subject: 'biol1', week: 1, day: day.n, title: day.title, maxPoints: 300 });
+      window.Lesson.renderMatchGame('activity-1', day.activity1);
+      window.Lesson.renderScenarioGame('activity-2', day.activity2);
+      window.Lesson.renderEscapeRoom('formative', day.formative);
     });
   </script>
 </body>
