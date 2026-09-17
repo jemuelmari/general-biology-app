@@ -1,6 +1,6 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.3.0
+   Version: 2.2.1
    ============================================================ */
 
 const Lesson = (() => {
@@ -30,7 +30,6 @@ const Lesson = (() => {
     renderScoreBar(config.title);
     startLiveTimer();
 
-    // Register with activity gate (if loaded)
     if (window.ActivityGate) ActivityGate.init(config);
   }
 
@@ -198,6 +197,7 @@ const Lesson = (() => {
       }
       if (won) {
         APP.toast('🎉 Activity complete!', 'success');
+        if (window.ActivityGate) ActivityGate.complete(1);
       }
     }
 
@@ -307,6 +307,7 @@ const Lesson = (() => {
         awardBadge(badgeId + '-fast', 'Quick Thinker', '⚡');
       }
       APP.toast(`Activity done! ${correct}/${scenarios.length} correct.`, 'info');
+      if (window.ActivityGate) ActivityGate.complete(2);
     }
   }
 
@@ -426,6 +427,8 @@ const Lesson = (() => {
       }
 
       markDayComplete();
+      if (window.ActivityGate) ActivityGate.complete('formative');
+
       container.querySelector('#escape-next').addEventListener('click', () => {
         const next = document.body.dataset.next;
         if (next) window.location.href = next;
@@ -464,7 +467,7 @@ const Lesson = (() => {
 })();
 
 /* ============================================================
-   Auto-load activity-gate.js (Option B — no HTML edits needed)
+   Auto-load activity-gate.js
    ============================================================ */
 (function autoLoadGate() {
   if (window.ActivityGate) return;
@@ -474,13 +477,16 @@ const Lesson = (() => {
   const isStudentPage = path.includes('/student/');
   if (!isStudentPage) return;
 
-  // Day pages live at student/biolX/weekN/day.html
-  // so the prefix back to the repo root is ../../../ (three levels up)
   const prefix = '../../../';
 
   const s = document.createElement('script');
   s.src = prefix + 'assets/js/activity-gate.js';
   s.async = false;
+  s.onload = () => {
+    console.log('[Lesson] activity-gate.js auto-loaded.');
+    setTimeout(() => {
+      if (window.ActivityGate) ActivityGate.applyLocks();
+    }, 100);
+  };
   document.body.appendChild(s);
-  console.log('[Lesson] activity-gate.js auto-loaded.');
 })();
