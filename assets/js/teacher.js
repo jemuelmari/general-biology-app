@@ -1,6 +1,6 @@
 /* ============================================================
    teacher.js — Teacher dashboard, item analysis, intervention
-   Version: 1.5.0
+   Version: 1.6.0
    ============================================================ */
 
 (() => {
@@ -68,13 +68,14 @@
     </div>
   `;
 
-  /* ---------- Quick Actions (updated with 2 new trackers) ---------- */
+  /* ---------- Quick Actions (7 cards now) ---------- */
   const actions = [
     { icon: '🎮', title: 'Activity Tracker',   desc: 'Track activity completion & badges',  href: 'teacher/activity-tracker.html',   color: '#1b7a3d' },
     { icon: '📝', title: 'Assessment Tracker', desc: 'Track quiz, ST, TE performance',      href: 'teacher/assessment-tracker.html', color: '#0277bd' },
     { icon: '📥', title: 'Sync Center',        desc: 'Import student progress',              href: 'teacher/sync-center.html',        color: '#ed6c02' },
     { icon: '📊', title: 'Item Analysis',      desc: 'Per-item difficulty & MPS',            href: 'teacher/item-analysis.html',      color: '#6a1b9a' },
     { icon: '🎯', title: 'Intervention',       desc: 'Students needing support',             href: 'teacher/intervention.html',       color: '#c62828' },
+    { icon: '🔤', title: 'Normalize Names',    desc: 'Standardize record format',            href: 'teacher/normalize-names.html',    color: '#00695c' },
     { icon: '📋', title: 'Class Record',       desc: 'Grades & transmutation',               href: 'classrecord.html',                color: '#455a64' }
   ];
 
@@ -111,7 +112,7 @@
   } else {
     urgentEl.innerHTML = urgent.slice(0, 5).map((u) => `
       <div class="intervention-card urgent">
-        <div class="student-name">${u.user.lastName}, ${u.user.firstName} ${u.user.middleName || ''}</div>
+        <div class="student-name">${APP.formatFullName(u.user.lastName, u.user.firstName, u.user.middleName)}</div>
         <div class="student-meta">LRN: ${APP.formatLRN(u.user.lrn)} · ${u.user.section} · ${u.subject.toUpperCase()} · ${u.stId.toUpperCase()}</div>
         <div class="suggested-action">
           <strong>Score: ${u.percent}%</strong> — Immediate remediation and parent-teacher conference recommended.
@@ -150,7 +151,7 @@
       const cls = data.passed ? 'on-track' : 'remediation';
       return `
         <div class="intervention-card ${cls}">
-          <div class="student-name">${s.user.lastName}, ${s.user.firstName}</div>
+          <div class="student-name">${APP.formatFullName(s.user.lastName, s.user.firstName, s.user.middleName)}</div>
           <div class="student-meta">${s.subject.toUpperCase()} · ${s.id.toUpperCase()} · ${APP.formatDate(data.timestamp)}</div>
           <div class="suggested-action">
             Score: <strong>${data.score}/${data.total}</strong> (${data.percent}%)
