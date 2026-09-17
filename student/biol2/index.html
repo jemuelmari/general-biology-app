@@ -3,80 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Week 9 — Evolutionary Thought & Evidence</title>
-  <link rel="stylesheet" href="../../../assets/css/main.css" />
-  <link rel="stylesheet" href="../../../assets/css/student.css" />
+  <title>General Biology 2 — Weeks</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/student.css" />
 </head>
 <body>
 
   <header class="app-header">
     <div class="container flex-between">
       <div>
-        <h1>🌱 Gen Bio 2 · Week 9</h1>
+        <h1>🌱 General Biology 2</h1>
         <span class="version">v2.3.6</span>
       </div>
-      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Weeks</a>
+      <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
     <div class="card">
-      <h2 style="color:var(--color-primary-dark);">Evolutionary Thought & Evidence</h2>
-      <p class="text-muted">Competencies: STEM_BIO11/12-IIIC-g-10, -11, -12, -13</p>
-      <p style="margin-top:12px;">This week you'll trace the development of evolutionary thought, examine the evidence for evolution, and infer evolutionary relationships among organisms.</p>
+      <h2 style="color:var(--color-primary-dark);margin-bottom:8px;">Course Overview</h2>
+      <p class="text-muted">Heredity and variation; diversity of living organisms, their structure, function, and evolution.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+        <span class="badge badge-info">19 Competencies</span>
+        <span class="badge badge-info">10 Weeks</span>
+        <span class="badge badge-info">40 Days</span>
+      </div>
     </div>
 
-    <h2 style="margin:24px 0 12px;color:var(--color-primary-dark);">📆 Daily Lessons</h2>
-    <div class="dashboard-grid" id="days-grid"></div>
+    <h2 style="margin:24px 0 12px;color:var(--color-primary-dark);">📅 Weekly Modules</h2>
+    <div class="dashboard-grid" id="weeks-grid"></div>
 
   </main>
 
-  <footer class="app-footer"><p>General Biology 2 · Week 9 · v2.3.6</p></footer>
+  <footer class="app-footer">
+    <p>General Biology 2 · v2.3.6</p>
+  </footer>
 
-  <script src="../../../config.js"></script>
-  <script src="../../../assets/js/app.js"></script>
-  <script src="../../../assets/js/store.js"></script>
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const user = Store.getCurrentUser();
-      if (!user) { window.location.href = '../../login.html'; return; }
-
-      const days = [
-        { n: 1, title: 'Descent with Modification & Common Ancestry', comp: 'IIIC-g-10' },
-        { n: 2, title: 'Development of Evolutionary Thought', comp: 'IIIC-g-11' },
-        { n: 3, title: 'Evidence of Evolution', comp: 'IIIC-g-12' },
-        { n: 4, title: 'Inferring Evolutionary Relationships', comp: 'IIIC-g-13' }
-      ];
+      if (!user) { window.location.href = '../login.html'; return; }
 
       const progress = Store.getProgress(user.lrn);
       const done = progress.biol2?.completed || [];
 
-      document.getElementById('days-grid').innerHTML = days.map((d) => {
-        const key = `biol2-w9-d${d.n}`;
-        const completed = done.includes(key);
-        const prevDone = d.n === 1 || done.includes(`biol2-w9-d${d.n - 1}`);
-        const locked = !prevDone;
+      const weeks = [
+        { n: 1,  title: 'Organismal Biology',                   topics: 'Plant & animal organ systems · Comparative processes' },
+        { n: 2,  title: 'Feedback Mechanisms & Homeostasis',    topics: 'Steady internal conditions · Feedback loops' },
+        { n: 3,  title: 'Mendelian Genetics',                   topics: 'Laws of inheritance · Punnett squares' },
+        { n: 4,  title: 'Sex Linkage & Recombination',          topics: 'X-linked traits · Pedigree analysis' },
+        { n: 5,  title: 'Modifications to Mendel & DNA/RNA',    topics: 'Gene interaction · DNA/RNA/protein structure' },
+        { n: 6,  title: 'DNA Replication & Protein Synthesis',  topics: 'Replication · Transcription · Translation' },
+        { n: 7,  title: 'Genetic Engineering & Recombinant DNA',topics: 'GMO processes · Applications' },
+        { n: 8,  title: 'History of Life & Mechanisms',         topics: 'Geologic time scale · Natural selection · Drift' },
+        { n: 9,  title: 'Evolutionary Thought & Evidence',      topics: 'Descent with modification · Fossil record' },
+        { n: 10, title: 'Systematics, Taxonomy & Cladistics',   topics: 'Classification · Taxa · Cladograms' }
+      ];
+
+      document.getElementById('weeks-grid').innerHTML = weeks.map((w) => {
+        const daysDone = Array.from({ length: 4 }, (_, i) => `biol2-w${w.n}-d${i + 1}`).filter((k) => done.includes(k)).length;
+        const pct = Math.round((daysDone / 4) * 100);
+        const locked = w.n > 1 && !done.includes(`biol2-w${w.n - 1}-d4`);
 
         return `
-          <div class="subject-card" data-day="${d.n}" style="${locked ? 'opacity:0.5;' : ''}">
+          <div class="subject-card" data-week="${w.n}" style="border-top-color:${locked ? '#dadce0' : 'var(--color-primary)'};${locked ? 'opacity:0.5;' : ''}">
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="badge badge-info">Day ${d.n}</span>
-              ${completed ? '<span class="badge badge-success">✅ Done</span>' : locked ? '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>' : '<span class="badge badge-warning">▶ Start</span>'}
+              <h3>Week ${w.n}</h3>
+              ${locked ? '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>' : `<span class="badge badge-success">${pct}%</span>`}
             </div>
-            <h3 style="margin-top:8px;font-size:1rem;">${d.title}</h3>
-            <p class="text-small text-muted">${d.comp}</p>
+            <p style="font-size:0.95rem;font-weight:600;margin:4px 0;">${w.title}</p>
+            <p class="text-muted text-small">${w.topics}</p>
+            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;"></div></div>
+            <p class="text-small text-muted">${daysDone}/4 days complete</p>
           </div>
         `;
       }).join('');
 
-      document.querySelectorAll('[data-day]').forEach((card) => {
+      document.querySelectorAll('[data-week]').forEach((card) => {
         card.addEventListener('click', () => {
+          const n = card.dataset.week;
           if (card.style.opacity === '0.5') {
-            APP.toast('Complete the previous day first.', 'warning');
+            APP.toast('Complete the previous week first.', 'warning');
             return;
           }
-          window.location.href = `day.html?day=${card.dataset.day}`;
+          window.location.href = `week${n}/index.html`;
         });
       });
     });
