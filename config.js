@@ -1,11 +1,11 @@
 /* ============================================================
    config.js — App configuration (teacher password, dev info)
-   Version: 1.1.0
+   Version: 1.2.0
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '1.1.0',
+  VERSION: '1.2.0',
 
   // ---------- Developer Info ----------
   DEVELOPER: {
@@ -18,9 +18,18 @@ const CONFIG = {
     department: 'Department of Education'
   },
 
+  // ---------- Backend (Google Apps Script) ----------
+  // Paste your deployed Web App URL below.
+  // If left blank, sync codes only work on the SAME device.
+  // See backend/google-apps-script/README.md for setup.
+  BACKEND_URL: '',
+
+  // Enable/disable backend features. Auto-set when BACKEND_URL is provided.
+  get backendEnabled() {
+    return this.BACKEND_URL && this.BACKEND_URL.length > 20;
+  },
+
   // ---------- Teacher Password ----------
-  // SHA-256 hash of the teacher password.
-  // Default password: "teacher2026"
   TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
 
   // Session duration (ms). 30 minutes.
