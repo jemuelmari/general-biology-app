@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activity Tracker — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🎮 Activity Tracker</h1>
+        <span class="version">v1.5.0</span>
+      </div>
+      <nav style="display:flex;gap:8px;">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card">
+      <h2 style="color:var(--color-primary-dark);">🎮 Lesson Activity Engagement</h2>
+      <p class="text-muted">
+        Tracks <strong>activity completion</strong> (Match, Scenario, Escape Room), <strong>badges</strong>,
+        and <strong>points earned</strong> — separate from the assessment performance tracking.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+        <select id="at-subject" class="form-control" style="max-width:200px;">
+          <option value="biol1">General Biology 1</option>
+          <option value="biol2">General Biology 2</option>
+        </select>
+        <select id="at-filter" class="form-control" style="max-width:260px;">
+          <option value="all">All Students</option>
+          <option value="behind">Behind (Below 50% Days)</option>
+          <option value="ontrack">On Track (50–89%)</option>
+          <option value="complete">Complete (≥ 90%)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="stats-grid" id="at-stats"></div>
+
+    <div class="card" style="overflow-x:auto;">
+      <h3 style="color:var(--color-primary-dark);margin-bottom:12px;">📋 Activity Completion by Student</h3>
+      <div id="at-table"></div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <h3 style="color:var(--color-primary-dark);">📅 Per-Week Activity Breakdown</h3>
+      <p class="text-muted text-small">Select a student to see their weekly activity progress.</p>
+      <select id="at-student-detail" class="form-control" style="max-width:320px;margin-top:8px;"></select>
+      <div id="at-week-detail" style="margin-top:16px;"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Activity Tracker · v1.5.0</p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/activity-tracker.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const subjectSel = document.getElementById('at-subject');
+      const filterSel = document.getElementById('at-filter');
+      const studentDetailSel = document.getElementById('at-student-detail');
+
+      subjectSel.addEventListener('change', render);
+      filterSel.addEventListener('change', render);
+      studentDetailSel.addEventListener('change', renderWeekDetail);
+
+      function render() {
+        const subject = subjectSel.value;
+        const filter = filterSel.value;
+        const all = ActivityTracker.getAllActivity();
+
+        // Filter
+        let filtered = all;
+        if (filter === 'behind') {
+          filtered = all.filter((s) => s.summary[subject].completionPct < 50);
+        } else if (filter === 'ontrack') {
+          filtered = all.filter((s) => s.summary[subject].completionPct >= 50 && s.summary[subject].completionPct < 90);
+        } else if (filter === 'complete') {
+          filtered = all.filter((s) => s.summary[subject].completionPct >= 90);
+        }
+
+        // Stats
+        const totalStudents = all.length;
+        const avgCompletion = totalStudents
+          ? Math.round(all.reduce((a, s) => a + s.summary[subject].completionPct, 0) / totalStudents)
+          : 0;
+        const totalActivitiesDone = all.reduce((a, s) => a + s.summary[subject].activitiesDone, 0);
+        const totalBadgesEarned = all.reduce((a, s) => a + s.summary[subject].badgesEarned, 0);
+        const behind = all.filter((s) => s.summary[subject].completionPct < 50).length;
+
+        document.getElementById('at-stats').innerHTML = `
+          <div class="stat-card">
+            <div class="stat-value">${totalStudents}</div>
+            <div class="stat-label">Students</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${avgCompletion}%</div>
+            <div class="stat-label">Avg Completion</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${totalActivitiesDone}</div>
+            <div class="stat-label">Activities Done</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${totalBadgesEarned}</div>
+            <div class="stat-label">Badges Earned</div>
+          </div>
+          <div class="stat-card" style="border-left-color:${behind > 0 ? 'var(--color-danger)' : 'var(--color-success)'};">
+            <div class="stat-value">${behind}</div>
+            <div class="stat-label">Behind &lt; 50%</div>
+          </div>
+        `;
+
+        // Table
+        const tableEl = document.getElementById('at-table');
+        if (!filtered.length) {
+          tableEl.innerHTML = `<div class="alert alert-info">No students match this filter.</div>`;
+          return;
+        }
+
+        tableEl.innerHTML = `
+          <table class="gradebook-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Section</th>
+                <th>Days Completed</th>
+                <th>Activities Done</th>
+                <th>Completion</th>
+                <th>Badges</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filtered.map((s) => {
+                const sm = s.summary[subject];
+                const pctColor = sm.completionPct >= 90 ? 'var(--color-success)'
+                              : sm.completionPct >= 50 ? 'var(--color-warning)'
+                              : 'var(--color-danger)';
+                return `
+                  <tr>
+                    <td class="student-name">${s.user.lastName}, ${s.user.firstName}</td>
+                    <td>${s.user.section}</td>
+                    <td>${sm.completedDays}/${sm.totalDays}</td>
+                    <td>${sm.activitiesDone}/${sm.totalActivities}</td>
+                    <td>
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <div style="flex:1;height:8px;background:var(--color-bg);border-radius:4px;overflow:hidden;">
+                          <div style="width:${sm.completionPct}%;height:100%;background:${pctColor};"></div>
+                        </div>
+                        <strong style="color:${pctColor};min-width:44px;text-align:right;">${sm.completionPct}%</strong>
+                      </div>
+                    </td>
+                    <td>🏆 ${sm.badgesEarned}</td>
+                    <td>⭐ ${sm.points}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+
+        // Student dropdown for detail
+        studentDetailSel.innerHTML = all.map((s) =>
+          `<option value="${s.user.lrn}">${s.user.lastName}, ${s.user.firstName} — ${APP.formatLRN(s.user.lrn)}</option>`
+        ).join('');
+        renderWeekDetail();
+      }
+
+      function renderWeekDetail() {
+        const lrn = studentDetailSel.value;
+        const subject = subjectSel.value;
+        if (!lrn) return;
+
+        const dayDetails = ActivityTracker.getDayDetails(lrn, subject);
+
+        let html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">';
+        for (let w = 1; w <= 10; w++) {
+          const days = [1, 2, 3, 4].map((d) => dayDetails[`${subject}-w${w}-d${d}`]);
+          const done = days.filter(Boolean).length;
+          const pct = (done / 4) * 100;
+          const color = pct === 100 ? 'var(--color-success)'
+                      : pct >= 50 ? 'var(--color-warning)'
+                      : 'var(--color-danger)';
+          html += `
+            <div style="padding:10px;border-radius:8px;background:var(--color-bg);border-left:4px solid ${color};">
+              <div style="font-weight:600;font-size:0.85rem;">Week ${w}</div>
+              <div style="display:flex;gap:4px;margin-top:6px;">
+                ${days.map((done, i) => `
+                  <span style="
+                    width:24px;height:24px;border-radius:50%;
+                    display:inline-flex;align-items:center;justify-content:center;
+                    font-size:0.7rem;font-weight:700;
+                    background:${done ? color : 'var(--color-border)'};
+                    color:${done ? '#fff' : '#666'};
+                  ">${i + 1}</span>
+                `).join('')}
+              </div>
+              <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:4px;">${done}/4 days</div>
+            </div>
+          `;
+        }
+        html += '</div>';
+        document.getElementById('at-week-detail').innerHTML = html;
+      }
+
+      render();
+    });
+  </script>
+</body>
+</html>
