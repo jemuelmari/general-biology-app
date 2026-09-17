@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Locked Assessments — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🔒 Locked Assessments</h1>
+        <span class="version">v2.3.6</span>
+      </div>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()">🚪 Log Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="teacher-hero" style="background:linear-gradient(135deg, #b71c1c, #c62828);">
+      <div class="teacher-hero-content">
+        <div class="teacher-hero-text">
+          <h1>🔒 Manage Locked Assessments</h1>
+          <p>Students who submitted an assessment cannot retake it unless you unlock it here.</p>
+        </div>
+        <div class="teacher-hero-actions">
+          <a href="#" onclick="unlockAll(); return false;">🔓 Unlock All</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="la-subject">Subject</label>
+        <select id="la-subject">
+          <option value="">All Subjects</option>
+          <option value="biol1">General Biology 1</option>
+          <option value="biol2">General Biology 2</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="la-search">Search Student</label>
+        <input type="text" id="la-search" placeholder="Type a name or LRN..." />
+      </div>
+    </div>
+
+    <div class="stats-grid" id="la-stats"></div>
+
+    <div id="la-list"></div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Locked Assessments · <span class="version">v2.3.6</span></p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const subjectSel = document.getElementById('la-subject');
+      const searchInput = document.getElementById('la-search');
+
+      subjectSel.addEventListener('change', render);
+      searchInput.addEventListener('input', render);
+
+      render();
+
+      function collectLocks() {
+        const users = APP.sortStudents(Store.getAllUsers(), 'last', 'asc');
+        const locks = [];
+
+        users.forEach((u) => {
+          const prefix = `gba_v1_lock_${u.lrn}_`;
+          Object.keys(localStorage).forEach((key) => {
+            if (key.startsWith(prefix)) {
+              try {
+                const data = JSON.parse(localStorage.getItem(key));
+                const assessmentId = key.replace(prefix, '');
+                const subject = assessmentId.startsWith('biol1') ? 'biol1' : 'biol2';
+                locks.push({ user: u, subject, assessmentId, locked: data, key });
+              } catch (e) { /* ignore */ }
+            }
+          });
+        });
+
+        return locks;
+      }
+
+      function render() {
+        let locks = collectLocks();
+
+        const subject = subjectSel.value;
+        if (subject) locks = locks.filter((l) => l.subject === subject);
+
+        const query = searchInput.value.toLowerCase().trim();
+        if (query) {
+          locks = locks.filter((l) =>
+            `${l.user.lastName} ${l.user.firstName} ${l.user.lrn}`.toLowerCase().includes(query)
+          );
+        }
+
+        document.getElementById('la-stats').innerHTML = `
+          <div class="stat-card red">
+            <div class="stat-value">${locks.length}</div>
+            <div class="stat-label">Total Locked</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-value">${locks.filter((l) => l.subject === 'biol1').length}</div>
+            <div class="stat-label">Bio 1 Locked</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-value">${locks.filter((l) => l.subject === 'biol2').length}</div>
+            <div class="stat-label">Bio 2 Locked</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-value">${locks.filter((l) => l.locked.percent >= 80).length}</div>
+            <div class="stat-label">Passing</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-value">${locks.filter((l) => l.locked.percent < 80).length}</div>
+            <div class="stat-label">Below 80%</div>
+          </div>
+        `;
+
+        const list = document.getElementById('la-list');
+        if (!locks.length) {
+          list.innerHTML = `
+            <div class="alert alert-success">
+              🎉 No locked assessments match your filters. All students can retake any assessment.
+            </div>
+          `;
+          return;
+        }
+
+        list.innerHTML = locks.map((l) => {
+          const avatar = UI.renderAvatar(l.user.firstName, l.user.lastName, l.user.lrn);
+          const percent = l.locked.percent || 0;
+          const color = percent >= 90 ? '#2e7d32'
+                       : percent >= 80 ? '#0277bd'
+                       : percent >= 65 ? '#ed6c02'
+                       : '#c62828';
+          const assessmentLabel = formatAssessmentId(l.assessmentId);
+          return `
+            <div class="intervention-card" style="display:flex;gap:14px;align-items:center;margin-bottom:12px;border-left-color:${color};">
+              ${avatar}
+              <div style="flex:1;">
+                <div class="student-name">
+                  ${APP.formatFullName(l.user.lastName, l.user.firstName, l.user.middleName)}
+                  ${APP.getSexBadge(l.user.sex)}
+                </div>
+                <div class="student-meta">
+                  LRN: ${APP.formatLRN(l.user.lrn)} · ${l.user.section} · ${l.subject.toUpperCase()}
+                </div>
+                <div style="margin-top:8px;font-size:0.9rem;">
+                  <strong>${assessmentLabel}</strong>
+                  <span style="color:${color};font-weight:700;margin-left:8px;">
+                    Score: ${l.locked.score}/${l.locked.total} (${percent}%)
+                  </span>
+                  ${l.locked.lockedAt ? `<span class="text-muted text-small" style="margin-left:8px;">· ${UI.fmtDateRelative(l.locked.lockedAt)}</span>` : ''}
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;flex-direction:column;">
+                <button class="btn btn-primary" style="font-size:0.82rem;padding:8px 14px;" onclick="unlockOne('${l.user.lrn}', '${l.assessmentId}')">
+                  🔓 Unlock
+                </button>
+                <button class="btn btn-outline" style="font-size:0.75rem;padding:6px 10px;" onclick="viewDetails('${l.user.lrn}', '${l.assessmentId}')">
+                  👁️ View
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function formatAssessmentId(id) {
+        const map = {
+          'biol1-quiz1': 'Bio 1 · Quiz 1',
+          'biol1-quiz2': 'Bio 1 · Quiz 2',
+          'biol1-quiz3': 'Bio 1 · Quiz 3',
+          'biol1-st1': 'Bio 1 · Summative Test 1',
+          'biol1-st2': 'Bio 1 · Summative Test 2',
+          'biol1-te': 'Bio 1 · Term Exam',
+          'biol2-quiz1': 'Bio 2 · Quiz 1',
+          'biol2-quiz2': 'Bio 2 · Quiz 2',
+          'biol2-quiz3': 'Bio 2 · Quiz 3',
+          'biol2-st1': 'Bio 2 · Summative Test 1',
+          'biol2-st2': 'Bio 2 · Summative Test 2',
+          'biol2-te': 'Bio 2 · Term Exam'
+        };
+        return map[id] || id;
+      }
+
+      window.unlockOne = function (lrn, assessmentId) {
+        const user = Store.getUser(lrn);
+        const name = user ? APP.formatFullName(user.lastName, user.firstName, user.middleName) : lrn;
+        const label = formatAssessmentId(assessmentId);
+        if (!confirm(`Unlock "${label}" for ${name}?\n\nThe student will be able to retake this assessment from scratch.`)) return;
+        Store.unlockAssessment(lrn, assessmentId);
+        APP.toast('🔓 Assessment unlocked', 'success');
+        render();
+      };
+
+      window.unlockAll = function () {
+        const locks = collectLocks();
+        if (!locks.length) {
+          APP.toast('No locked assessments to unlock.', 'info');
+          return;
+        }
+        if (!confirm(`Unlock ALL ${locks.length} locked assessments?\n\nAll students will be able to retake their assessments.`)) return;
+        locks.forEach((l) => Store.unlockAssessment(l.user.lrn, l.assessmentId));
+        APP.toast(`🔓 ${locks.length} assessments unlocked`, 'success');
+        render();
+      };
+
+      window.viewDetails = function (lrn, assessmentId) {
+        const key = `gba_v1_lock_${lrn}_${assessmentId}`;
+        const data = JSON.parse(localStorage.getItem(key) || '{}');
+        const user = Store.getUser(lrn);
+        const name = user ? APP.formatFullName(user.lastName, user.firstName, user.middleName) : lrn;
+
+        alert(`Assessment Details\n\nStudent: ${name}\nAssessment: ${formatAssessmentId(assessmentId)}\nScore: ${data.score}/${data.total} (${data.percent}%)\nLocked at: ${data.lockedAt ? APP.formatDate(data.lockedAt) : 'Unknown'}`);
+      };
+    });
+  </script>
+</body>
+</html>
