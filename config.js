@@ -1,11 +1,11 @@
 /* ============================================================
    config.js — App configuration (teacher password, dev info)
-   Version: 1.4.2
+   Version: 1.6.0
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '1.2.0',
+  VERSION: '1.6.0',
 
   // ---------- Developer Info ----------
   DEVELOPER: {
@@ -19,12 +19,8 @@ const CONFIG = {
   },
 
   // ---------- Backend (Google Apps Script) ----------
-  // Paste your deployed Web App URL below.
-  // If left blank, sync codes only work on the SAME device.
-  // See backend/google-apps-script/README.md for setup.
   BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyi2fj-Jnmlk7Pp4qhtfuE_lz0zSewtLfRPiAZnPO5A-uA5ICvicE_DPUry_lax69ubuQ/exec',
 
-  // Enable/disable backend features. Auto-set when BACKEND_URL is provided.
   get backendEnabled() {
     return this.BACKEND_URL && this.BACKEND_URL.length > 20;
   },
