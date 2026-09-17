@@ -1,6 +1,6 @@
 /* ============================================================
    auth.js — Login, register, multi-user session handling
-   Version: 2.1.0
+   Version: 2.3.7
    ============================================================ */
 
 (() => {
@@ -29,8 +29,10 @@
     } catch (e) { /* ignore */ }
   }
 
-  /* ---------- Tab switching ---------- */
-  const tabs = APP.$$('.sync-tab');
+  /* ============================================================
+     Tab switching (uses .login-tab and #tab-*)
+     ============================================================ */
+  const tabs = APP.$$('.login-tab');
   const panels = {
     login: APP.$('#tab-login'),
     register: APP.$('#tab-register'),
@@ -61,7 +63,7 @@
   attachLRNFormatter(APP.$('#login-lrn'));
   attachLRNFormatter(APP.$('#reg-lrn'));
 
-  /* ---------- Name auto-formatting ---------- */
+  /* ---------- Name auto-formatting (live, on blur) ---------- */
   function attachNameFormatter(input, mode) {
     if (!input) return;
     input.addEventListener('blur', () => {
@@ -151,14 +153,19 @@
     });
   }
 
-  /* ---------- Saved Users (alphabetical) ---------- */
+  /* ---------- Saved Users ---------- */
   function renderSavedUsers() {
     const list = APP.$('#saved-users-list');
     if (!list) return;
     let users = Store.getAllUsers();
 
     if (!users.length) {
-      list.innerHTML = `<div class="alert alert-info">No saved users on this device yet.</div>`;
+      list.innerHTML = `
+        <div style="text-align:center;padding:32px 16px;">
+          <div style="font-size:2.5rem;opacity:0.4;">👤</div>
+          <p style="color:#90a4ae;font-size:0.9rem;margin:8px 0 0;">No saved users on this device yet.</p>
+        </div>
+      `;
       return;
     }
 
@@ -166,16 +173,24 @@
 
     list.innerHTML = '';
     users.forEach((u) => {
-      const card = APP.el('div', { class: 'intervention-card on-track' });
+      const card = document.createElement('div');
+      card.className = 'saved-user-card';
+      const initials = `${(u.firstName || '?').charAt(0)}${(u.lastName || '?').charAt(0)}`.toUpperCase();
       card.innerHTML = `
-        <div class="student-name">${APP.formatFullName(u.lastName, u.firstName, u.middleName)}</div>
-        <div class="student-meta">
-          LRN: ${APP.formatLRN(u.lrn)} · Grade ${u.gradeLevel} — ${u.section}
-          ${u.sex ? ` · ${APP.getSexBadge(u.sex)}` : ''}
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1b7a3d,#4caf50);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0;">
+          ${initials}
         </div>
-        <div style="display:flex;gap:8px;margin-top:8px;">
-          <button class="btn btn-primary" data-login="${u.lrn}" style="flex:1;font-size:0.85rem;padding:6px 12px;">Log In</button>
-          <button class="btn btn-danger" data-delete="${u.lrn}" style="flex:1;font-size:0.85rem;padding:6px 12px;">Delete</button>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:0.9rem;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+            ${APP.formatFullName(u.lastName, u.firstName, u.middleName)}
+          </div>
+          <div style="font-size:0.75rem;color:#78909c;margin-top:2px;">
+            LRN: ${APP.formatLRN(u.lrn)} · ${u.section}
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-primary" data-login="${u.lrn}" style="font-size:0.8rem;padding:6px 12px;">Log In</button>
+          <button class="btn btn-outline" data-delete="${u.lrn}" style="font-size:0.8rem;padding:6px 10px;color:#c62828;border-color:#c62828;">🗑️</button>
         </div>
       `;
       list.appendChild(card);
