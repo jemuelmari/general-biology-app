@@ -13,36 +13,42 @@
     <div class="container flex-between">
       <div>
         <h1>🌱 Gen Bio 2 · Week 5</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v2.3.6</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Weeks</a>
     </div>
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
     <div class="card">
       <h2 style="color:var(--color-primary-dark);">Modifications to Mendel & DNA/RNA</h2>
       <p class="text-muted">Competencies: STEM_BIO11/12-IIIa-b-3, -4</p>
       <p style="margin-top:12px;">This week you'll explore non-Mendelian inheritance patterns and dive into the molecular structure of DNA, RNA, and proteins.</p>
     </div>
+
     <h2 style="margin:24px 0 12px;color:var(--color-primary-dark);">📆 Daily Lessons</h2>
     <div class="dashboard-grid" id="days-grid"></div>
+
   </main>
 
-  <footer class="app-footer"><p>General Biology 2 · Week 5 · v1.0.0</p></footer>
+  <footer class="app-footer"><p>General Biology 2 · Week 5 · v2.3.6</p></footer>
 
+  <script src="../../../config.js"></script>
   <script src="../../../assets/js/app.js"></script>
   <script src="../../../assets/js/store.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const user = Store.getCurrentUser();
       if (!user) { window.location.href = '../../login.html'; return; }
+
       const days = [
         { n: 1, title: 'Incomplete Dominance & Codominance', comp: 'IIIa-b-3' },
         { n: 2, title: 'Multiple Alleles & Polygenic Traits', comp: 'IIIa-b-3' },
         { n: 3, title: 'DNA & RNA Structure', comp: 'IIIa-b-4' },
         { n: 4, title: 'Protein Structure & the Central Dogma', comp: 'IIIa-b-4' }
       ];
+
       const progress = Store.getProgress(user.lrn);
       const done = progress.biol2?.completed || [];
 
@@ -51,6 +57,7 @@
         const completed = done.includes(key);
         const prevDone = d.n === 1 || done.includes(`biol2-w5-d${d.n - 1}`);
         const locked = !prevDone;
+
         return `
           <div class="subject-card" data-day="${d.n}" style="${locked ? 'opacity:0.5;' : ''}">
             <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -62,9 +69,13 @@
           </div>
         `;
       }).join('');
+
       document.querySelectorAll('[data-day]').forEach((card) => {
         card.addEventListener('click', () => {
-          if (card.style.opacity === '0.5') { APP.toast('Complete the previous day first.', 'warning'); return; }
+          if (card.style.opacity === '0.5') {
+            APP.toast('Complete the previous day first.', 'warning');
+            return;
+          }
           window.location.href = `day.html?day=${card.dataset.day}`;
         });
       });
