@@ -29,6 +29,9 @@ const Lesson = (() => {
 
     renderScoreBar(config.title);
     startLiveTimer();
+
+    // Register this lesson with the activity gate (if loaded)
+    if (window.ActivityGate) ActivityGate.init(config);
   }
 
   /* ---------- Daily Score Bar ---------- */
