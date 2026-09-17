@@ -1,12 +1,23 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 2.2.1
+   Version: 2.3.0
+   ------------------------------------------------------------
+   NEW:
+   - Difficulty-based timers (min 5 min)
+   - 75% pass threshold per activity
+   - Manual start (activities render on `activity:start` event)
+   - Unlimited retakes until passing
+   - Fail-proof score submission
    ============================================================ */
 
 const Lesson = (() => {
   'use strict';
 
   let ctx = null;
+  let pendingActivities = {}; // Stores config for each activity
+  let currentAttempts = {};
+
+  const PASS_THRESHOLD = 0.75; // 75%
 
   /* ---------- Init ---------- */
   function init(config) {
@@ -31,9 +42,96 @@ const Lesson = (() => {
     startLiveTimer();
 
     if (window.ActivityGate) ActivityGate.init(config);
+
+    // Listen for "start activity" events from the gate
+    document.addEventListener('activity:start', (e) => {
+      const activity = e.detail.activity;
+      startActivity(activity);
+    });
   }
 
-  /* ---------- Daily Score Bar ---------- */
+  /* ---------- Difficulty-Based Timer ---------- */
+  function calculateTimeLimit(type, count) {
+    const MIN_SECONDS = 300; // 5 minutes minimum
+
+    if (type === 'match') {
+      // ~20s per pair, min 5 min
+      return Math.max(MIN_SECONDS, count * 20);
+    }
+    if (type === 'scenario') {
+      // ~25s per scenario, min 5 min
+      return Math.max(MIN_SECONDS, count * 25);
+    }
+    if (type === 'escape') {
+      // ~60s per question, min 5 min
+      return Math.max(MIN_SECONDS, count * 60);
+    }
+    return MIN_SECONDS;
+  }
+
+  /* ---------- Register activities for later start ---------- */
+  function registerMatchGame(containerId, config) {
+    const timeLimit = calculateTimeLimit('match', config.pairs.length);
+    pendingActivities[containerId] = {
+      type: 'match',
+      config: { ...config, timeLimit }
+    };
+    // Set data attribute for gate to read
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
+    }
+  }
+
+  function registerScenarioGame(containerId, config) {
+    const timeLimit = calculateTimeLimit('scenario', config.scenarios.length);
+    pendingActivities[containerId] = {
+      type: 'scenario',
+      config: { ...config, timeLimit }
+    };
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
+    }
+  }
+
+  function registerEscapeRoom(containerId, config) {
+    const timeLimit = calculateTimeLimit('escape', config.questions.length);
+    pendingActivities[containerId] = {
+      type: 'escape',
+      config: { ...config, timeLimit }
+    };
+    const container = document.getElementById(containerId);
+    if (container) {
+      container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
+    }
+  }
+
+  /* ---------- Start an activity (triggered by gate) ---------- */
+  function startActivity(stateKey) {
+    const containerId = stateKey === 'activity1' ? 'activity-1'
+                      : stateKey === 'activity2' ? 'activity-2'
+                      : 'formative';
+    const pending = pendingActivities[containerId];
+    if (!pending) {
+      console.warn('[Lesson] No pending activity for', containerId);
+      return;
+    }
+
+    // Increment attempt counter
+    currentAttempts[containerId] = (currentAttempts[containerId] || 0) + 1;
+
+    // Reset score bar values for this attempt (points still accumulate overall)
+    if (pending.type === 'match') {
+      renderMatchGameNow(containerId, pending.config);
+    } else if (pending.type === 'scenario') {
+      renderScenarioGameNow(containerId, pending.config);
+    } else if (pending.type === 'escape') {
+      renderEscapeRoomNow(containerId, pending.config);
+    }
+  }
+
+  /* ---------- Score Bar ---------- */
   function renderScoreBar(title) {
     const bar = document.getElementById('daily-score-bar');
     if (!bar) return;
@@ -46,10 +144,6 @@ const Lesson = (() => {
         <div class="score-bar-stat">
           <span class="value" id="sb-points">0</span>
           <span class="label">Points</span>
-        </div>
-        <div class="score-bar-stat">
-          <span class="value" id="sb-max">/${ctx.maxPoints}</span>
-          <span class="label">Max</span>
         </div>
         <div class="score-bar-stat">
           <span class="value" id="sb-badges">0</span>
@@ -93,12 +187,15 @@ const Lesson = (() => {
     APP.toast(`🏆 Badge earned: ${icon} ${badgeName}`, 'success', 4000);
   }
 
-  /* ---------- Match Game ---------- */
-  function renderMatchGame(containerId, config) {
+  /* ============================================================
+     MATCH GAME
+     ============================================================ */
+  function renderMatchGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const { pairs, timeLimit = 120, pointsCorrect = 10, pointsWrong = -3, bonusFast = 15, badgeId, badgeName, badgeIcon } = config;
+    const { pairs, timeLimit, pointsCorrect = 10, pointsWrong = -3, bonusFast = 15,
+            badgeId, badgeName, badgeIcon } = config;
 
     let leftItems = [...pairs].sort(() => Math.random() - 0.5);
     let rightItems = [...pairs].sort(() => Math.random() - 0.5);
@@ -107,6 +204,7 @@ const Lesson = (() => {
     let wrongCount = 0;
     let timeLeft = timeLimit;
     let timerInterval = null;
+    let finished = false;
 
     container.innerHTML = `
       <div class="activity-header">
@@ -144,14 +242,14 @@ const Lesson = (() => {
     });
 
     function onLeftClick(el) {
-      if (el.classList.contains('correct')) return;
+      if (finished || el.classList.contains('correct')) return;
       leftEl.querySelectorAll('.match-item').forEach((n) => n.classList.remove('selected'));
       el.classList.add('selected');
       selectedLeft = el;
     }
 
     function onRightClick(el) {
-      if (!selectedLeft || el.classList.contains('correct')) return;
+      if (finished || !selectedLeft || el.classList.contains('correct')) return;
 
       const leftKey = selectedLeft.dataset.key;
       const rightKey = el.dataset.key;
@@ -163,7 +261,7 @@ const Lesson = (() => {
         addPoints(pointsCorrect);
         matches++;
         updateScore();
-        if (matches === pairs.length) endGame(true);
+        if (matches === pairs.length) endGame('complete');
       } else {
         el.classList.add('wrong');
         selectedLeft.classList.add('wrong');
@@ -183,57 +281,94 @@ const Lesson = (() => {
       if (el2) el2.textContent = `Matches: ${matches} / ${pairs.length}`;
     }
 
-    function endGame(won) {
+    function endGame(reason) {
+      if (finished) return;
+      finished = true;
       clearInterval(timerInterval);
-      if (won && wrongCount === 0) {
-        addPoints(bonusFast);
-        awardBadge(badgeId + '-flawless', 'Flawless', '🎯');
-      }
-      if (won && (timeLimit - timeLeft) < timeLimit * 0.5) {
-        awardBadge(badgeId + '-fast', 'Speed Scholar', '⚡');
-      }
-      if (won && wrongCount === 0 && (timeLimit - timeLeft) < timeLimit * 0.5) {
+
+      // Score = correct matches ÷ total pairs
+      const scorePercent = Math.round((matches / pairs.length) * 100);
+
+      // Award badges
+      if (scorePercent >= 75) {
+        if (wrongCount === 0) {
+          awardBadge(badgeId + '-flawless', 'Flawless', '🎯');
+          addPoints(bonusFast);
+        }
+        if ((timeLimit - timeLeft) < timeLimit * 0.5) {
+          awardBadge(badgeId + '-fast', 'Speed Scholar', '⚡');
+        }
         awardBadge(badgeId, badgeName, badgeIcon);
       }
-      if (won) {
-        APP.toast('🎉 Activity complete!', 'success');
-        if (window.ActivityGate) ActivityGate.complete(1);
+
+      // Notify gate
+      if (window.ActivityGate) {
+        ActivityGate.completeWithScore(containerId, scorePercent);
+      }
+
+      // Show a local "time's up" message if timer expired
+      if (reason === 'timeout') {
+        APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
+      } else if (scorePercent >= 75) {
+        APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      } else {
+        APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
       }
     }
 
     timerInterval = setInterval(() => {
       timeLeft--;
       const el = container.querySelector('#match-timer');
-      if (el) el.textContent = APP.formatTime(timeLeft);
-      if (timeLeft <= 0) endGame(false);
+      if (el) el.textContent = APP.formatTime(Math.max(0, timeLeft));
+      if (timeLeft <= 0) endGame('timeout');
     }, 1000);
   }
 
-  /* ---------- Scenario Choice Game ---------- */
-  function renderScenarioGame(containerId, config) {
+  /* ============================================================
+     SCENARIO GAME
+     ============================================================ */
+  function renderScenarioGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const { scenarios, timePerCard = 15, pointsCorrect = 8, bonusFast = 3, badgeId, badgeName, badgeIcon } = config;
+    const { scenarios, timeLimit, pointsCorrect = 8, bonusFast = 3,
+            badgeId, badgeName, badgeIcon } = config;
 
     let index = 0;
     let correct = 0;
     let fastAnswers = 0;
     let cardStart = Date.now();
     let cardTimer = null;
+    let finished = false;
+    let totalTimeLeft = timeLimit;
+    let overallTimer = null;
+
+    // Overall time display
+    container.innerHTML = `
+      <div class="activity-header">
+        <span class="activity-title">🎯 Scenario Challenge</span>
+        <span class="activity-timer" id="scenario-overall-timer">${APP.formatTime(totalTimeLeft)}</span>
+      </div>
+      <div id="scenario-body"></div>
+    `;
 
     renderCard();
 
+    overallTimer = setInterval(() => {
+      totalTimeLeft--;
+      const el = container.querySelector('#scenario-overall-timer');
+      if (el) el.textContent = APP.formatTime(Math.max(0, totalTimeLeft));
+      if (totalTimeLeft <= 0) endGame('timeout');
+    }, 1000);
+
     function renderCard() {
-      if (index >= scenarios.length) return endGame();
+      if (finished) return;
+      if (index >= scenarios.length) return endGame('complete');
+
       const sc = scenarios[index];
       cardStart = Date.now();
-
-      container.innerHTML = `
-        <div class="activity-header">
-          <span class="activity-title">🎯 ${sc.prompt || 'Choose the best answer'}</span>
-          <span class="activity-timer" id="scenario-timer">${APP.formatTime(timePerCard)}</span>
-        </div>
+      const body = container.querySelector('#scenario-body');
+      body.innerHTML = `
         <div class="scenario-card">
           <p class="scenario-text">${sc.text}</p>
           <div class="choice-row" id="choice-row"></div>
@@ -243,32 +378,16 @@ const Lesson = (() => {
         </div>
       `;
 
-      const row = container.querySelector('#choice-row');
+      const row = body.querySelector('#choice-row');
       sc.choices.forEach((choice) => {
         const btn = APP.el('button', { class: 'choice-btn', text: choice.label });
         btn.addEventListener('click', () => onChoice(btn, choice, sc));
         row.appendChild(btn);
       });
-
-      startCardTimer();
-    }
-
-    function startCardTimer() {
-      let t = timePerCard;
-      clearInterval(cardTimer);
-      cardTimer = setInterval(() => {
-        t--;
-        const el = container.querySelector('#scenario-timer');
-        if (el) el.textContent = APP.formatTime(t);
-        if (t <= 0) {
-          clearInterval(cardTimer);
-          nextCard();
-        }
-      }, 1000);
     }
 
     function onChoice(btn, choice, sc) {
-      clearInterval(cardTimer);
+      if (finished) return;
       const elapsed = (Date.now() - cardStart) / 1000;
 
       container.querySelectorAll('.choice-btn').forEach((b) => (b.disabled = true));
@@ -290,40 +409,68 @@ const Lesson = (() => {
         });
       }
 
-      setTimeout(nextCard, 1200);
+      setTimeout(() => {
+        index++;
+        renderCard();
+      }, 1200);
     }
 
-    function nextCard() {
-      index++;
-      renderCard();
-    }
+    function endGame(reason) {
+      if (finished) return;
+      finished = true;
+      clearInterval(overallTimer);
 
-    function endGame() {
-      clearInterval(cardTimer);
-      if (correct === scenarios.length) {
-        awardBadge(badgeId, badgeName, badgeIcon);
+      const scorePercent = Math.round((correct / scenarios.length) * 100);
+
+      // Award badges only if passed
+      if (scorePercent >= 75) {
+        if (correct === scenarios.length) {
+          awardBadge(badgeId, badgeName, badgeIcon);
+        }
+        if (fastAnswers >= Math.ceil(scenarios.length * 0.66)) {
+          awardBadge(badgeId + '-fast', 'Quick Thinker', '⚡');
+        }
       }
-      if (fastAnswers >= Math.ceil(scenarios.length * 0.66)) {
-        awardBadge(badgeId + '-fast', 'Quick Thinker', '⚡');
+
+      if (window.ActivityGate) {
+        ActivityGate.completeWithScore(containerId, scorePercent);
       }
-      APP.toast(`Activity done! ${correct}/${scenarios.length} correct.`, 'info');
-      if (window.ActivityGate) ActivityGate.complete(2);
+
+      if (reason === 'timeout') {
+        APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
+      } else if (scorePercent >= 75) {
+        APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      } else {
+        APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
+      }
     }
   }
 
-  /* ---------- Escape Room (Formative Check) ---------- */
-  function renderEscapeRoom(containerId, config) {
+  /* ============================================================
+     ESCAPE ROOM (FORMATIVE)
+     ============================================================ */
+  function renderEscapeRoomNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const { questions, badgeId, badgeName, badgeIcon, lives = 3 } = config;
+    const { questions, badgeId, badgeName, badgeIcon, lives = 3, timeLimit } = config;
 
     let currentLives = lives;
     let earnedKeys = [];
     let index = 0;
     let locked = false;
+    let finished = false;
+    let timeLeft = timeLimit;
+    let timerInterval = null;
 
     renderIntro();
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      const el = document.getElementById('escape-timer');
+      if (el) el.textContent = APP.formatTime(Math.max(0, timeLeft));
+      if (timeLeft <= 0) endGame('timeout');
+    }, 1000);
 
     function renderIntro() {
       container.innerHTML = `
@@ -333,21 +480,25 @@ const Lesson = (() => {
               <div class="score-bar-label">Formative Check</div>
               <div style="font-size:1.2rem;font-weight:600;">🔐 Escape the Cell</div>
             </div>
-            <div class="escape-lives" id="escape-lives">❤️❤️❤️</div>
+            <div style="text-align:right;">
+              <div class="escape-lives" id="escape-lives">❤️❤️❤️</div>
+              <div class="activity-timer" id="escape-timer" style="margin-top:4px;font-size:0.9rem;">${APP.formatTime(timeLeft)}</div>
+            </div>
           </div>
           <div class="escape-result">
             <div class="result-emoji">🗝️</div>
-            <div class="result-title">Unlock 3 keys to escape!</div>
-            <p class="result-message">Answer all ${questions.length} questions correctly. Wrong answers cost 1 life.</p>
-            <button id="escape-start" class="btn btn-accent" style="margin-top:16px;">Start Challenge →</button>
+            <div class="result-title">Unlock ${questions.length} keys to escape!</div>
+            <p class="result-message">Answer all questions. Wrong answers cost 1 life. You need 75% to pass.</p>
+            <button id="escape-begin" class="btn btn-accent" style="margin-top:16px;">Begin Challenge →</button>
           </div>
         </div>
       `;
-      container.querySelector('#escape-start').addEventListener('click', renderQuestion);
+      container.querySelector('#escape-begin').addEventListener('click', renderQuestion);
     }
 
     function renderQuestion() {
-      if (index >= questions.length) return renderVictory();
+      if (finished) return;
+      if (index >= questions.length) return endGame('complete');
       const q = questions[index];
 
       container.innerHTML = `
@@ -357,7 +508,10 @@ const Lesson = (() => {
               <div class="score-bar-label">Question ${index + 1} / ${questions.length}</div>
               <div style="font-size:1rem;">🔐 Escape the Cell</div>
             </div>
-            <div class="escape-lives" id="escape-lives">${'❤️'.repeat(currentLives)}${'🖤'.repeat(lives - currentLives)}</div>
+            <div style="text-align:right;">
+              <div class="escape-lives" id="escape-lives">${'❤️'.repeat(currentLives)}${'🖤'.repeat(lives - currentLives)}</div>
+              <div class="activity-timer" id="escape-timer" style="margin-top:4px;font-size:0.9rem;">${APP.formatTime(Math.max(0, timeLeft))}</div>
+            </div>
           </div>
           <div class="escape-keys" style="justify-content:center;margin-bottom:12px;">
             ${questions.map((_, i) => `<span class="key-icon ${earnedKeys.includes(i) ? 'earned' : ''}">🗝️</span>`).join('')}
@@ -372,13 +526,13 @@ const Lesson = (() => {
       const opts = container.querySelector('#escape-options');
       q.choices.forEach((c, i) => {
         const btn = APP.el('button', { class: 'escape-option', text: `${String.fromCharCode(65 + i)}. ${c.label}` });
-        btn.addEventListener('click', () => onAnswer(btn, c, i));
+        btn.addEventListener('click', () => onAnswer(btn, c));
         opts.appendChild(btn);
       });
     }
 
-    function onAnswer(btn, choice, choiceIdx) {
-      if (locked) return;
+    function onAnswer(btn, choice) {
+      if (locked || finished) return;
       locked = true;
 
       const all = container.querySelectorAll('.escape-option');
@@ -400,60 +554,44 @@ const Lesson = (() => {
         all[correctIdx].classList.add('correct');
 
         if (currentLives <= 0) {
-          setTimeout(renderFailure, 1200);
+          setTimeout(() => endGame('outoflives'), 1200);
         } else {
           setTimeout(() => {
             locked = false;
+            index++;
             renderQuestion();
           }, 1400);
         }
       }
     }
 
-    function renderVictory() {
-      container.innerHTML = `
-        <div class="escape-container">
-          <div class="escape-result">
-            <div class="result-emoji">🎉</div>
-            <div class="result-title">You escaped!</div>
-            <p class="result-message">All ${questions.length} keys collected. Day unlocked.</p>
-            <button id="escape-next" class="btn btn-accent" style="margin-top:16px;">Continue to Next Day →</button>
-          </div>
-        </div>
-      `;
+    function endGame(reason) {
+      if (finished) return;
+      finished = true;
+      clearInterval(timerInterval);
 
-      if (currentLives === lives) {
-        awardBadge(badgeId, badgeName, badgeIcon);
+      const scorePercent = Math.round((earnedKeys.length / questions.length) * 100);
+
+      if (scorePercent >= 75) {
+        if (currentLives === lives) {
+          awardBadge(badgeId, badgeName, badgeIcon);
+        }
+        markDayComplete();
       }
 
-      markDayComplete();
-      if (window.ActivityGate) ActivityGate.complete('formative');
+      if (window.ActivityGate) {
+        ActivityGate.completeWithScore(containerId, scorePercent);
+      }
 
-      container.querySelector('#escape-next').addEventListener('click', () => {
-        const next = document.body.dataset.next;
-        if (next) window.location.href = next;
-        else window.location.href = 'index.html';
-      });
-    }
-
-    function renderFailure() {
-      container.innerHTML = `
-        <div class="escape-container">
-          <div class="escape-result">
-            <div class="result-emoji">💀</div>
-            <div class="result-title">Out of lives!</div>
-            <p class="result-message">Review the lesson content and try again.</p>
-            <button id="escape-retry" class="btn btn-accent" style="margin-top:16px;">Try Again</button>
-          </div>
-        </div>
-      `;
-      container.querySelector('#escape-retry').addEventListener('click', () => {
-        currentLives = lives;
-        earnedKeys = [];
-        index = 0;
-        locked = false;
-        renderIntro();
-      });
+      if (scorePercent >= 75) {
+        APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      } else if (reason === 'timeout') {
+        APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
+      } else if (reason === 'outoflives') {
+        APP.toast(`💀 Out of lives! You scored ${scorePercent}%`, 'warning', 4000);
+      } else {
+        APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
+      }
     }
   }
 
@@ -463,30 +601,14 @@ const Lesson = (() => {
   }
 
   /* ---------- Public API ---------- */
-  return { init, addPoints, awardBadge, renderMatchGame, renderScenarioGame, renderEscapeRoom, markDayComplete };
-})();
-
-/* ============================================================
-   Auto-load activity-gate.js
-   ============================================================ */
-(function autoLoadGate() {
-  if (window.ActivityGate) return;
-  if (document.querySelector('script[src*="activity-gate.js"]')) return;
-
-  const path = window.location.pathname;
-  const isStudentPage = path.includes('/student/');
-  if (!isStudentPage) return;
-
-  const prefix = '../../../';
-
-  const s = document.createElement('script');
-  s.src = prefix + 'assets/js/activity-gate.js';
-  s.async = false;
-  s.onload = () => {
-    console.log('[Lesson] activity-gate.js auto-loaded.');
-    setTimeout(() => {
-      if (window.ActivityGate) ActivityGate.applyLocks();
-    }, 100);
+  return {
+    init,
+    addPoints,
+    awardBadge,
+    // Registration (called by day.html)
+    renderMatchGame: registerMatchGame,
+    renderScenarioGame: registerScenarioGame,
+    renderEscapeRoom: registerEscapeRoom,
+    markDayComplete
   };
-  document.body.appendChild(s);
 })();
