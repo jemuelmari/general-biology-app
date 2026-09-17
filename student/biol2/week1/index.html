@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🌱 Gen Bio 2 · Week 1</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v2.3.6</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Weeks</a>
     </div>
@@ -32,10 +32,9 @@
 
   </main>
 
-  <footer class="app-footer">
-    <p>General Biology 2 · Week 1 · v1.0.0</p>
-  </footer>
+  <footer class="app-footer"><p>General Biology 2 · Week 1 · v2.3.6</p></footer>
 
+  <script src="../../../config.js"></script>
   <script src="../../../assets/js/app.js"></script>
   <script src="../../../assets/js/store.js"></script>
   <script>
@@ -44,9 +43,9 @@
       if (!user) { window.location.href = '../../login.html'; return; }
 
       const days = [
-        { n: 1, title: 'Introduction to Organ Systems',           comp: 'IVa-h-1' },
-        { n: 2, title: 'Animal Organ Systems — Detailed',         comp: 'IVa-h-1' },
-        { n: 3, title: 'Plant Organ Systems — Detailed',          comp: 'IVa-h-1' },
+        { n: 1, title: 'Introduction to Organ Systems', comp: 'IVa-h-1' },
+        { n: 2, title: 'Animal Organ Systems — Detailed', comp: 'IVa-h-1' },
+        { n: 3, title: 'Plant Organ Systems — Detailed', comp: 'IVa-h-1' },
         { n: 4, title: 'Comparative Processes — Reproduction, Nutrition, Gas Exchange', comp: 'IVa-h-1' }
       ];
 
@@ -77,7 +76,7 @@
             APP.toast('Complete the previous day first.', 'warning');
             return;
           }
-          window.location.href = `day${card.dataset.day}.html`;
+          window.location.href = `day.html?day=${card.dataset.day}`;
         });
       });
     });
