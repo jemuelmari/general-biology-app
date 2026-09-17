@@ -10,21 +10,19 @@
 </head>
 <body>
 
-  <!-- Header -->
   <header class="app-header">
     <div class="container flex-between">
       <div>
         <h1>🧬 General Biology Online Modular Application</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v2.1.3</span>
       </div>
-      <nav>
+      <nav style="display:flex;gap:8px;">
         <a href="instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Teacher</a>
         <a href="classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Gradebook</a>
       </nav>
     </div>
   </header>
 
-  <!-- Main -->
   <main class="container" style="padding-top:48px;padding-bottom:64px;">
     <div class="container-narrow text-center">
       <h1 style="font-size:2.5rem;color:var(--color-primary-dark);margin-bottom:8px;">
@@ -35,7 +33,6 @@
       </p>
     </div>
 
-    <!-- Entry cards -->
     <div class="dashboard-grid" style="max-width:800px;margin:0 auto;">
 
       <a href="student/login.html" class="subject-card" style="text-decoration:none;">
@@ -52,7 +49,6 @@
 
     </div>
 
-    <!-- Features -->
     <div style="max-width:800px;margin:48px auto 0;">
       <div class="card">
         <div class="card-header">
@@ -84,15 +80,14 @@
     </div>
   </main>
 
-  <!-- Footer -->
   <footer class="app-footer">
-    <p>General Biology Online Modular Application · v1.0.0</p>
-    <p class="text-small">Aligned with DepEd K to 12 Curriculum Guide & DO 015, s. 2026</p>
+    <p>General Biology Online Modular Application · <span class="version">v2.1.3</span></p>
+    <p class="text-small">Aligned with DepEd K to 12 Curriculum Guide &amp; DO 015, s. 2026</p>
   </footer>
 
+  <script src="config.js"></script>
   <script src="assets/js/app.js"></script>
   <script>
-    // Redirect to dashboard if already logged in
     document.addEventListener('DOMContentLoaded', () => {
       const user = Store.getCurrentUser();
       if (user) {
