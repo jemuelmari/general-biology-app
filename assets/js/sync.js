@@ -1,12 +1,38 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload generation & verification
-   Version: 1.0.0
+   Version: 1.2.0
+
+   Two modes:
+   - BACKEND MODE: Sync codes work across devices (via Google Apps Script)
+   - LOCAL MODE: Sync codes only work on the same device
    ============================================================ */
 
 const Sync = (() => {
   'use strict';
 
   const NS = 'gba_v1_';
+
+  /* ---------- Backend helpers ---------- */
+  function backendEnabled() {
+    return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
+  }
+
+  async function backendPost(body) {
+    const res = await fetch(CONFIG.BACKEND_URL, {
+      method: 'POST',
+      // text/plain avoids CORS preflight in Apps Script
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(body)
+    });
+    return res.json();
+  }
+
+  async function backendGet(params) {
+    const url = new URL(CONFIG.BACKEND_URL);
+    Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+    const res = await fetch(url.toString());
+    return res.json();
+  }
 
   /* ---------- Payload Builder ---------- */
   async function buildPayload(lrn, subject) {
@@ -18,7 +44,7 @@ const Sync = (() => {
     const badges = Store.getBadges(lrn);
 
     const payload = {
-      version: '1.0.0',
+      version: '1.2.0',
       generatedAt: new Date().toISOString(),
       student: {
         lrn: user.lrn,
@@ -42,31 +68,73 @@ const Sync = (() => {
   async function generateSyncCode(lrn, subject) {
     const { payload, signature } = await buildPayload(lrn, subject);
     const json = JSON.stringify(payload);
-    const compressed = _compress(json);
     const signatureShort = signature.slice(0, 8).toUpperCase();
-
-    // Format: GB12-XXXX-XXXX-SIG
     const hash = _shortHash(json).toUpperCase();
     const code = `GB12-${hash.slice(0, 4)}-${hash.slice(4, 8)}-${signatureShort}`;
 
-    // Store locally (student can retrieve later)
+    let mode = 'local';
+
+    // If backend enabled, register the code there for cross-device use
+    if (backendEnabled()) {
+      try {
+        const res = await backendPost({
+          action: 'registerSyncCode',
+          code,
+          lrn,
+          payload,
+          signature
+        });
+        if (res.ok) mode = 'backend';
+        else console.warn('[Sync] Backend register failed:', res.error);
+      } catch (err) {
+        console.warn('[Sync] Backend unreachable, saving locally:', err);
+      }
+    }
+
+    // Always save locally as fallback
     _saveLocalCode(code, { payload, signature });
 
     return {
       code,
       payload,
       signature,
+      mode,
       createdAt: new Date().toISOString()
     };
   }
 
-  /* ---------- Sync Code Lookup ---------- */
-  function lookupSyncCode(code) {
-    const record = _getLocalCode(code);
-    return record || null;
+  /* ---------- Sync Code Lookup (used by teacher) ---------- */
+  async function lookupSyncCode(code) {
+    // Try backend first if enabled
+    if (backendEnabled()) {
+      try {
+        const res = await backendPost({
+          action: 'resolveSyncCode',
+          code
+        });
+        if (res.ok) {
+          return {
+            payload: res.payload,
+            signature: res.signature,
+            source: 'backend',
+            createdAt: res.createdAt
+          };
+        }
+      } catch (err) {
+        console.warn('[Sync] Backend lookup failed, trying local:', err);
+      }
+    }
+
+    // Fall back to local
+    const local = _getLocalCode(code);
+    if (local) {
+      return { ...local, source: 'local' };
+    }
+
+    return null;
   }
 
-  /* ---------- Local code storage (temp) ---------- */
+  /* ---------- Local code storage ---------- */
   function _saveLocalCode(code, data) {
     const codes = JSON.parse(localStorage.getItem(`${NS}sync_codes`) || '{}');
     codes[code] = { ...data, savedAt: new Date().toISOString() };
@@ -127,22 +195,37 @@ const Sync = (() => {
 
   /* ---------- Import Sync Code (Teacher) ---------- */
   async function importFromCode(code) {
-    const record = lookupSyncCode(code);
+    const record = await lookupSyncCode(code);
     if (!record) {
-      return { valid: false, error: 'Code not found on this device' };
+      return {
+        valid: false,
+        error: backendEnabled()
+          ? 'Code not found (checked backend and this device)'
+          : 'Code not found on this device. Enable the backend for cross-device sync.'
+      };
     }
     const valid = await Security.verify(record.payload, record.signature);
-    return { payload: record.payload, signature: record.signature, valid };
+    return {
+      payload: record.payload,
+      signature: record.signature,
+      valid,
+      source: record.source
+    };
+  }
+
+  /* ---------- Health Check ---------- */
+  async function pingBackend() {
+    if (!backendEnabled()) return { ok: false, error: 'No backend URL configured' };
+    try {
+      const res = await backendGet({ action: 'ping' });
+      return res;
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
   }
 
   /* ---------- Helpers ---------- */
-  function _compress(str) {
-    // Simple placeholder; can be swapped for LZ-string later
-    return str;
-  }
-
   function _shortHash(str) {
-    // FNV-1a 32-bit
     let h = 0x811c9dc5;
     for (let i = 0; i < str.length; i++) {
       h ^= str.charCodeAt(i);
@@ -158,11 +241,13 @@ const Sync = (() => {
 
   /* ---------- Public API ---------- */
   return {
+    backendEnabled,
     buildPayload,
     generateSyncCode,
     lookupSyncCode,
     exportAsFile,
     importFromFile,
-    importFromCode
+    importFromCode,
+    pingBackend
   };
 })();
