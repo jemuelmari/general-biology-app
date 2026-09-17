@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔒 Locked Assessments</h1>
-        <span class="version">v2.3.6</span>
+        <span class="version">v2.3.7</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">← Teacher Home</a>
@@ -24,11 +24,13 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
-    <div class="teacher-hero" style="background:linear-gradient(135deg, #b71c1c, #c62828);">
+    <!-- ============ HERO ============ -->
+    <div class="teacher-hero" style="background:linear-gradient(135deg, #7f0000 0%, #b71c1c 50%, #e53935 100%);">
       <div class="teacher-hero-content">
         <div class="teacher-hero-text">
           <h1>🔒 Manage Locked Assessments</h1>
-          <p>Students who submitted an assessment cannot retake it unless you unlock it here.</p>
+          <p>Students who submitted cannot retake unless you unlock them here.</p>
+          <div class="teacher-hero-meta" id="hero-meta"></div>
         </div>
         <div class="teacher-hero-actions">
           <a href="#" onclick="unlockAll(); return false;">🔓 Unlock All</a>
@@ -36,29 +38,37 @@
       </div>
     </div>
 
-    <div class="filter-bar">
-      <div class="filter-group">
-        <label for="la-subject">Subject</label>
-        <select id="la-subject">
-          <option value="">All Subjects</option>
-          <option value="biol1">General Biology 1</option>
-          <option value="biol2">General Biology 2</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label for="la-search">Search Student</label>
-        <input type="text" id="la-search" placeholder="Type a name or LRN..." />
+    <!-- ============ FILTER BAR ============ -->
+    <div class="card" style="padding:20px;margin-bottom:24px;">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:end;">
+        <div style="flex:1;min-width:200px;">
+          <label class="form-label" style="font-size:0.75rem;text-transform:uppercase;font-weight:700;color:#5f6368;">Subject</label>
+          <select id="la-subject" class="form-control">
+            <option value="">All Subjects</option>
+            <option value="biol1">General Biology 1</option>
+            <option value="biol2">General Biology 2</option>
+          </select>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <label class="form-label" style="font-size:0.75rem;text-transform:uppercase;font-weight:700;color:#5f6368;">Search Student</label>
+          <input type="text" id="la-search" class="form-control" placeholder="Type a name or LRN..." />
+        </div>
+        <div>
+          <button id="btn-clear" class="btn btn-outline" style="font-size:0.85rem;">↺ Clear</button>
+        </div>
       </div>
     </div>
 
+    <!-- ============ STAT CARDS ============ -->
     <div class="stats-grid" id="la-stats"></div>
 
+    <!-- ============ LIST ============ -->
     <div id="la-list"></div>
 
   </main>
 
   <footer class="app-footer">
-    <p>Locked Assessments · <span class="version">v2.3.6</span></p>
+    <p>Locked Assessments · <span class="version">v2.3.7</span></p>
   </footer>
 
   <script src="../config.js"></script>
@@ -70,9 +80,15 @@
     document.addEventListener('DOMContentLoaded', () => {
       const subjectSel = document.getElementById('la-subject');
       const searchInput = document.getElementById('la-search');
+      const btnClear = document.getElementById('btn-clear');
 
       subjectSel.addEventListener('change', render);
       searchInput.addEventListener('input', render);
+      btnClear.addEventListener('click', () => {
+        subjectSel.value = '';
+        searchInput.value = '';
+        render();
+      });
 
       render();
 
@@ -110,34 +126,75 @@
           );
         }
 
+        renderHeroMeta(locks);
+        renderStats(locks);
+        renderList(locks);
+      }
+
+      /* ---------- Hero Meta ---------- */
+      function renderHeroMeta(locks) {
+        const el = document.getElementById('hero-meta');
+        if (!el) return;
+
+        const passing = locks.filter((l) => l.locked.percent >= 80).length;
+        const below80 = locks.length - passing;
+
+        el.innerHTML = `
+          <div class="teacher-hero-stat">🔒 <strong>${locks.length}</strong> Total Locked</div>
+          <div class="teacher-hero-stat">✅ <strong>${passing}</strong> Passing</div>
+          <div class="teacher-hero-stat">⚠️ <strong>${below80}</strong> Below 80%</div>
+        `;
+      }
+
+      /* ---------- Stats ---------- */
+      function renderStats(locks) {
+        const biol1Count = locks.filter((l) => l.subject === 'biol1').length;
+        const biol2Count = locks.filter((l) => l.subject === 'biol2').length;
+        const passing = locks.filter((l) => l.locked.percent >= 80).length;
+        const below80 = locks.length - passing;
+
         document.getElementById('la-stats').innerHTML = `
           <div class="stat-card red">
+            <div class="stat-icon">🔒</div>
             <div class="stat-value">${locks.length}</div>
             <div class="stat-label">Total Locked</div>
           </div>
           <div class="stat-card blue">
-            <div class="stat-value">${locks.filter((l) => l.subject === 'biol1').length}</div>
+            <div class="stat-icon">🔬</div>
+            <div class="stat-value">${biol1Count}</div>
             <div class="stat-label">Bio 1 Locked</div>
           </div>
           <div class="stat-card purple">
-            <div class="stat-value">${locks.filter((l) => l.subject === 'biol2').length}</div>
+            <div class="stat-icon">🌱</div>
+            <div class="stat-value">${biol2Count}</div>
             <div class="stat-label">Bio 2 Locked</div>
           </div>
           <div class="stat-card green">
-            <div class="stat-value">${locks.filter((l) => l.locked.percent >= 80).length}</div>
-            <div class="stat-label">Passing</div>
+            <div class="stat-icon">✅</div>
+            <div class="stat-value">${passing}</div>
+            <div class="stat-label">Passing (≥ 80%)</div>
           </div>
           <div class="stat-card amber">
-            <div class="stat-value">${locks.filter((l) => l.locked.percent < 80).length}</div>
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-value">${below80}</div>
             <div class="stat-label">Below 80%</div>
           </div>
         `;
+      }
 
+      /* ---------- List ---------- */
+      function renderList(locks) {
         const list = document.getElementById('la-list');
+
         if (!locks.length) {
           list.innerHTML = `
-            <div class="alert alert-success">
-              🎉 No locked assessments match your filters. All students can retake any assessment.
+            <div style="background:#fff;border-radius:14px;padding:48px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.04);">
+              <div style="font-size:3.5rem;">🎉</div>
+              <h3 style="margin:12px 0 6px;color:#2e7d32;">All Clear!</h3>
+              <p style="color:#5f6368;font-size:0.95rem;margin:0;">
+                No locked assessments match your filters.<br>
+                All students can retake any assessment freely.
+              </p>
             </div>
           `;
           return;
@@ -150,32 +207,45 @@
                        : percent >= 80 ? '#0277bd'
                        : percent >= 65 ? '#ed6c02'
                        : '#c62828';
+          const status = percent >= 80
+            ? '<span class="badge-pill success" style="font-size:0.68rem;">✓ PASSING</span>'
+            : '<span class="badge-pill warning" style="font-size:0.68rem;">⚠ BELOW 80%</span>';
           const assessmentLabel = formatAssessmentId(l.assessmentId);
+          const subjectEmoji = l.subject === 'biol1' ? '🔬' : '🌱';
+
           return `
-            <div class="intervention-card" style="display:flex;gap:14px;align-items:center;margin-bottom:12px;border-left-color:${color};">
+            <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,0.05);border-left:4px solid ${color};margin-bottom:12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
               ${avatar}
-              <div style="flex:1;">
-                <div class="student-name">
-                  ${APP.formatFullName(l.user.lastName, l.user.firstName, l.user.middleName)}
-                  ${APP.getSexBadge(l.user.sex)}
-                </div>
-                <div class="student-meta">
-                  LRN: ${APP.formatLRN(l.user.lrn)} · ${l.user.section} · ${l.subject.toUpperCase()}
-                </div>
-                <div style="margin-top:8px;font-size:0.9rem;">
-                  <strong>${assessmentLabel}</strong>
-                  <span style="color:${color};font-weight:700;margin-left:8px;">
-                    Score: ${l.locked.score}/${l.locked.total} (${percent}%)
+              <div style="flex:1;min-width:220px;">
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+                  <span style="font-weight:700;font-size:0.95rem;color:#1a1a1a;">
+                    ${APP.formatFullName(l.user.lastName, l.user.firstName, l.user.middleName)}
                   </span>
-                  ${l.locked.lockedAt ? `<span class="text-muted text-small" style="margin-left:8px;">· ${UI.fmtDateRelative(l.locked.lockedAt)}</span>` : ''}
+                  ${APP.getSexBadge(l.user.sex)}
+                  ${status}
+                </div>
+                <div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">
+                  LRN: ${APP.formatLRN(l.user.lrn)} · ${l.user.section}
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.88rem;">
+                  <span style="font-weight:600;color:#37474f;">
+                    ${subjectEmoji} ${assessmentLabel}
+                  </span>
+                  <span style="color:${color};font-weight:800;font-size:1rem;">
+                    ${l.locked.score}/${l.locked.total}
+                  </span>
+                  <span style="color:${color};font-weight:700;">
+                    (${percent}%)
+                  </span>
+                  ${l.locked.lockedAt ? `<span style="color:#b0bec5;font-size:0.75rem;">· ${UI.fmtDateRelative(l.locked.lockedAt)}</span>` : ''}
                 </div>
               </div>
-              <div style="display:flex;gap:6px;flex-direction:column;">
-                <button class="btn btn-primary" style="font-size:0.82rem;padding:8px 14px;" onclick="unlockOne('${l.user.lrn}', '${l.assessmentId}')">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-primary" style="font-size:0.82rem;padding:9px 16px;font-weight:600;" onclick="unlockOne('${l.user.lrn}', '${l.assessmentId}')">
                   🔓 Unlock
                 </button>
-                <button class="btn btn-outline" style="font-size:0.75rem;padding:6px 10px;" onclick="viewDetails('${l.user.lrn}', '${l.assessmentId}')">
-                  👁️ View
+                <button class="btn btn-outline" style="font-size:0.82rem;padding:9px 14px;" onclick="viewDetails('${l.user.lrn}', '${l.assessmentId}')">
+                  👁️ Details
                 </button>
               </div>
             </div>
@@ -183,6 +253,7 @@
         }).join('');
       }
 
+      /* ---------- Helpers ---------- */
       function formatAssessmentId(id) {
         const map = {
           'biol1-quiz1': 'Bio 1 · Quiz 1',
