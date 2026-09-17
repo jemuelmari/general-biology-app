@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🧬 Student Login</h1>
-        <span class="version">v1.1.1</span>
+        <span class="version">v1.6.0</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
     </div>
@@ -50,16 +50,21 @@
       <form id="register-form">
         <div class="form-group">
           <label class="form-label" for="reg-lastname">Last Name *</label>
-          <input type="text" id="reg-lastname" class="form-control" required autocomplete="off" />
+          <input type="text" id="reg-lastname" class="form-control" required autocomplete="off"
+                 placeholder="DELA CRUZ" style="text-transform:uppercase;" />
+          <div class="form-hint">Will be saved in ALL CAPS</div>
         </div>
         <div class="form-group">
           <label class="form-label" for="reg-firstname">First Name *</label>
-          <input type="text" id="reg-firstname" class="form-control" required autocomplete="off" />
+          <input type="text" id="reg-firstname" class="form-control" required autocomplete="off"
+                 placeholder="Juan" />
+          <div class="form-hint">Will be saved as Title Case (e.g., Juan)</div>
         </div>
         <div class="form-group">
           <label class="form-label" for="reg-middlename">Middle Name</label>
-          <input type="text" id="reg-middlename" class="form-control" autocomplete="off" />
-          <div class="form-hint">Optional</div>
+          <input type="text" id="reg-middlename" class="form-control" autocomplete="off"
+                 placeholder="Santos" />
+          <div class="form-hint">Optional · Will be saved as Title Case</div>
         </div>
         <div class="form-group">
           <label class="form-label" for="reg-lrn">LRN (12 digits) *</label>
@@ -105,7 +110,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Biology Online Modular Application · v1.1.1</p>
+    <p>General Biology Online Modular Application · v1.6.0</p>
   </footer>
 
   <script src="../config.js"></script>
