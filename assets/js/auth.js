@@ -1,6 +1,6 @@
 /* ============================================================
    auth.js — Login, register, multi-user session handling
-   Version: 1.6.0
+   Version: 2.1.0
    ============================================================ */
 
 (() => {
@@ -61,7 +61,7 @@
   attachLRNFormatter(APP.$('#login-lrn'));
   attachLRNFormatter(APP.$('#reg-lrn'));
 
-  /* ---------- Name auto-formatting (live, on blur) ---------- */
+  /* ---------- Name auto-formatting ---------- */
   function attachNameFormatter(input, mode) {
     if (!input) return;
     input.addEventListener('blur', () => {
@@ -120,12 +120,14 @@
       const lrn = APP.$('#reg-lrn').value.replace(/\D/g, '');
       const gradeLevel = APP.$('#reg-grade').value;
       const section = APP.$('#reg-section').value;
+      const sex = APP.getSexValue(APP.$('#reg-sex')?.value);
 
       if (!APP.validateName(lastName)) return showError(registerError, 'Please enter a valid last name.');
       if (!APP.validateName(firstName)) return showError(registerError, 'Please enter a valid first name.');
       if (!APP.validateLRN(lrn)) return showError(registerError, 'LRN must be exactly 12 digits.');
       if (!gradeLevel) return showError(registerError, 'Please select a grade level.');
       if (!section) return showError(registerError, 'Please select a section.');
+      if (!sex) return showError(registerError, 'Please select your sex.');
 
       if (Store.getUser(lrn)) {
         return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
@@ -138,6 +140,7 @@
         middleName,
         gradeLevel,
         section,
+        sex,
         createdAt: new Date().toISOString()
       };
 
@@ -148,23 +151,28 @@
     });
   }
 
-  /* ---------- Saved Users ---------- */
+  /* ---------- Saved Users (alphabetical) ---------- */
   function renderSavedUsers() {
     const list = APP.$('#saved-users-list');
     if (!list) return;
-    const users = Store.getAllUsers();
+    let users = Store.getAllUsers();
 
     if (!users.length) {
       list.innerHTML = `<div class="alert alert-info">No saved users on this device yet.</div>`;
       return;
     }
 
+    users = APP.sortStudents(users, 'last', 'asc');
+
     list.innerHTML = '';
     users.forEach((u) => {
       const card = APP.el('div', { class: 'intervention-card on-track' });
       card.innerHTML = `
         <div class="student-name">${APP.formatFullName(u.lastName, u.firstName, u.middleName)}</div>
-        <div class="student-meta">LRN: ${APP.formatLRN(u.lrn)} · Grade ${u.gradeLevel} — ${u.section}</div>
+        <div class="student-meta">
+          LRN: ${APP.formatLRN(u.lrn)} · Grade ${u.gradeLevel} — ${u.section}
+          ${u.sex ? ` · ${APP.getSexBadge(u.sex)}` : ''}
+        </div>
         <div style="display:flex;gap:8px;margin-top:8px;">
           <button class="btn btn-primary" data-login="${u.lrn}" style="flex:1;font-size:0.85rem;padding:6px 12px;">Log In</button>
           <button class="btn btn-danger" data-delete="${u.lrn}" style="flex:1;font-size:0.85rem;padding:6px 12px;">Delete</button>
