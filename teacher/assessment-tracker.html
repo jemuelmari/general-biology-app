@@ -13,11 +13,11 @@
     <div class="container flex-between">
       <div>
         <h1>📝 Assessment Tracker</h1>
-        <span class="version">v1.5.0</span>
+        <span class="version">v2.1.2</span>
       </div>
-      <nav style="display:flex;gap:8px;">
-        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
-        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()">🚪 Log Out</button>
       </nav>
     </div>
   </header>
@@ -48,7 +48,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Assessment Tracker · v1.5.0</p>
+    <p>Assessment Tracker · v2.1.2</p>
   </footer>
 
   <script src="../config.js"></script>
@@ -64,7 +64,9 @@
 
       function render() {
         const subject = subjectSel.value;
-        const users = Store.getAllUsers();
+        let users = Store.getAllUsers();
+        // Alphabetical sort
+        users = APP.sortStudents(users, 'last', 'asc');
 
         const data = users.map((u) => {
           const scores = Store.getScores(u.lrn)[subject] || {};
@@ -96,19 +98,19 @@
         };
 
         document.getElementById('at-stats').innerHTML = `
-          <div class="stat-card">
+          <div class="stat-card blue">
             <div class="stat-value">${totals.quizSubmissions}</div>
             <div class="stat-label">Quiz Submissions</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-card purple">
             <div class="stat-value">${totals.stSubmissions}</div>
             <div class="stat-label">ST Submissions</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-card amber">
             <div class="stat-value">${totals.teSubmissions}</div>
             <div class="stat-label">TE Submissions</div>
           </div>
-          <div class="stat-card" style="border-left-color:var(--color-danger);">
+          <div class="stat-card red">
             <div class="stat-value">${totals.remediation}</div>
             <div class="stat-label">Needs Remediation</div>
           </div>
@@ -121,37 +123,39 @@
         }
 
         tableEl.innerHTML = `
-          <table class="gradebook-table">
+          <table class="modern-table">
             <thead>
               <tr>
                 <th>Student</th>
-                <th>Section</th>
-                <th>Quizzes</th>
-                <th>ST1/ST2</th>
-                <th>Term Exam</th>
-                <th>ST Average</th>
-                <th>Status</th>
+                <th style="text-align:center;">Section</th>
+                <th style="text-align:center;">Quizzes</th>
+                <th style="text-align:center;">ST1/ST2</th>
+                <th style="text-align:center;">Term Exam</th>
+                <th style="text-align:center;">ST Average</th>
+                <th style="text-align:center;">Status</th>
               </tr>
             </thead>
             <tbody>
               ${data.map((d) => {
-                const stColor = d.stAvg === null ? 'var(--color-text-muted)'
-                              : d.stAvg >= 90 ? 'var(--color-success)'
-                              : d.stAvg >= 80 ? 'var(--color-info)'
-                              : d.stAvg >= 65 ? 'var(--color-warning)'
-                              : 'var(--color-danger)';
+                const stColor = d.stAvg === null ? '#90a4ae'
+                              : d.stAvg >= 90 ? '#2e7d32'
+                              : d.stAvg >= 80 ? '#0277bd'
+                              : d.stAvg >= 65 ? '#ed6c02'
+                              : '#c62828';
                 const statusBadge = d.status === 'Remediation'
-                  ? '<span class="badge badge-remediation">Remediation</span>'
-                  : '<span class="badge badge-on-track">On Track</span>';
+                  ? '<span class="badge-pill danger">Remediation</span>'
+                  : '<span class="badge-pill info">On Track</span>';
                 return `
                   <tr>
-                    <td class="student-name">${d.user.lastName}, ${d.user.firstName}</td>
-                    <td>${d.user.section}</td>
-                    <td>${d.quizzesTaken}/3</td>
-                    <td>${d.stsTaken}/2</td>
-                    <td>${d.teTaken}/1</td>
-                    <td><strong style="color:${stColor};">${d.stAvg !== null ? d.stAvg + '%' : '—'}</strong></td>
-                    <td>${statusBadge}</td>
+                    <td>${d.user.lastName}, ${d.user.firstName}</td>
+                    <td style="text-align:center;">${d.user.section}</td>
+                    <td style="text-align:center;">${d.quizzesTaken}/3</td>
+                    <td style="text-align:center;">${d.stsTaken}/2</td>
+                    <td style="text-align:center;">${d.teTaken}/1</td>
+                    <td style="text-align:center;font-weight:800;color:${stColor};">
+                      ${d.stAvg !== null ? d.stAvg + '%' : '—'}
+                    </td>
+                    <td style="text-align:center;">${statusBadge}</td>
                   </tr>
                 `;
               }).join('')}
