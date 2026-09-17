@@ -1,12 +1,12 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.3.3
+   Version: 2.3.4
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.3',
+  VERSION: '2.3.4',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -164,7 +164,8 @@ const ActivityGate = (() => {
   let session = null, inited = false;
 
   function init(cfg) {
-    if (inited) return;
+    if (inited) { console.log('[ActivityGate] Already initialized, skipping'); return; }
+    console.log('[ActivityGate] init() with:', cfg);
     session = {
       key: `${STORAGE_KEY}${cfg.subject}_w${cfg.week}_d${cfg.day}`,
       subject: cfg.subject, week: cfg.week, day: cfg.day,
@@ -176,10 +177,10 @@ const ActivityGate = (() => {
     };
     const saved = sessionStorage.getItem(session.key);
     if (saved) { try { Object.assign(session.states, JSON.parse(saved).states); } catch {} }
-    console.log('[ActivityGate] Init:', session.key, session.states);
+    console.log('[ActivityGate] Session:', session.key, session.states);
     inited = true;
-    setTimeout(applyUI, 10);
-    document.dispatchEvent(new CustomEvent('activity-gate:ready'));
+    setTimeout(() => { console.log('[ActivityGate] Running applyUI()'); applyUI(); console.log('[ActivityGate] applyUI() done'); }, 10);
+    setTimeout(() => { console.log('[ActivityGate] Firing ready event'); document.dispatchEvent(new CustomEvent('activity-gate:ready')); }, 20);
   }
 
   function save() {
@@ -309,7 +310,9 @@ const Lesson = (() => {
   let to = null;
 
   function init(cfg) {
+    console.log('[Lesson] init() with:', cfg);
     const user = Store.getCurrentUser();
+    console.log('[Lesson] user:', user ? user.lrn : 'NULL');
     if (!user) { window.location.href = '../../../student/login.html'; return; }
     ctx = { lrn: user.lrn, subject: cfg.subject, week: cfg.week, day: cfg.day, points: 0, badges: [], startTime: Date.now() };
     renderBar(cfg.title);
@@ -318,9 +321,16 @@ const Lesson = (() => {
     to = setTimeout(() => { if (!ready) showTimeout(); }, 15000);
     document.addEventListener('activity:start', (e) => startAct(e.detail.activity));
     document.addEventListener('activity-gate:ready', () => {
+      console.log('[Lesson] Got activity-gate:ready');
       setTimeout(() => { hideLoad(); ready = true; clearTimeout(to); }, 100);
     });
-    if (window.ActivityGate && !window.ActivityGate.isInitialized()) window.ActivityGate.init(cfg);
+    console.log('[Lesson] window.ActivityGate type:', typeof window.ActivityGate);
+    if (window.ActivityGate && !window.ActivityGate.isInitialized()) {
+      console.log('[Lesson] Calling ActivityGate.init()');
+      window.ActivityGate.init(cfg);
+    } else {
+      console.log('[Lesson] Skipped ActivityGate.init()');
+    }
   }
 
   function calcTime(type, n) {
@@ -353,7 +363,7 @@ const Lesson = (() => {
   function startAct(sk) {
     const cid = sk === 'activity1' ? 'activity-1' : sk === 'activity2' ? 'activity-2' : 'formative';
     const p = pending[cid];
-    if (!p) return;
+    if (!p) { console.warn('[Lesson] No pending activity for', cid); return; }
     if (p.type === 'match') renderMatch(cid, p.cfg);
     else if (p.type === 'scenario') renderScenario(cid, p.cfg);
     else renderEscape(cid, p.cfg);
@@ -568,4 +578,7 @@ const Lesson = (() => {
   return { init, addPoints: addPts, awardBadge, renderMatchGame: regMatch, renderScenarioGame: regScenario, renderEscapeRoom: regEscape };
 })();
 
-document.addEventListener('DOMContentLoaded', () => { if (window.APP) APP.init(); });
+/* ---------- AUTO INIT ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.APP) APP.init();
+});
