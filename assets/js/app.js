@@ -1,12 +1,12 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 1.6.0
+   Version: 2.1.0
    ============================================================ */
 
 const APP = (() => {
   'use strict';
 
-  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '1.6.0';
+  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.1.0';
   const APP_NAME = (typeof CONFIG !== 'undefined' && CONFIG.APP_NAME) || 'General Biology Online Modular Application';
 
   /* ---------- State ---------- */
@@ -161,6 +161,86 @@ const APP = (() => {
     return `${first}${middle} ${last}`.trim();
   }
 
+  /* ---------- Sex Helpers ---------- */
+  /**
+   * Get the sex value (M/F). Handles "Male", "Female", "M", "F", "", null.
+   */
+  function getSexValue(sex) {
+    if (!sex) return '';
+    const s = String(sex).trim().toLowerCase();
+    if (s === 'male' || s === 'm') return 'Male';
+    if (s === 'female' || s === 'f') return 'Female';
+    return '';
+  }
+
+  /**
+   * Get a short letter code: "M" or "F".
+   */
+  function getSexCode(sex) {
+    const v = getSexValue(sex);
+    if (v === 'Male') return 'M';
+    if (v === 'Female') return 'F';
+    return '—';
+  }
+
+  /**
+   * Get an icon for sex.
+   */
+  function getSexIcon(sex) {
+    const v = getSexValue(sex);
+    if (v === 'Male') return '♂️';
+    if (v === 'Female') return '♀️';
+    return '';
+  }
+
+  /**
+   * Render a small sex badge.
+   */
+  function getSexBadge(sex) {
+    const v = getSexValue(sex);
+    if (!v) return '<span style="color:#bdbdbd;">—</span>';
+    if (v === 'Male') {
+      return '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:#e3f2fd;color:#0d47a1;font-size:0.72rem;font-weight:700;letter-spacing:0.3px;">♂ M</span>';
+    }
+    return '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:#fce4ec;color:#ad1457;font-size:0.72rem;font-weight:700;letter-spacing:0.3px;">♀ F</span>';
+  }
+
+  /* ---------- Sorting Helpers ---------- */
+
+  /**
+   * Sort an array of student objects alphabetically.
+   * @param {Array} list - objects with { lastName, firstName, ... } or { user: {...} }
+   * @param {string} order - 'last' (default) | 'first'
+   * @param {string} dir - 'asc' (default) | 'desc'
+   */
+  function sortStudents(list, order = 'last', dir = 'asc') {
+    const arr = [...list];
+    const dirMult = dir === 'desc' ? -1 : 1;
+
+    return arr.sort((a, b) => {
+      // Support both { user: {...} } and { ...user } shapes
+      const ua = a.user || a;
+      const ub = b.user || b;
+
+      const aLast = (ua.lastName || '').toUpperCase();
+      const bLast = (ub.lastName || '').toUpperCase();
+      const aFirst = (ua.firstName || '').toUpperCase();
+      const bFirst = (ub.firstName || '').toUpperCase();
+
+      if (order === 'first') {
+        if (aFirst !== bFirst) return aFirst.localeCompare(bFirst) * dirMult;
+        if (aLast !== bLast) return aLast.localeCompare(bLast) * dirMult;
+      } else {
+        if (aLast !== bLast) return aLast.localeCompare(bLast) * dirMult;
+        if (aFirst !== bFirst) return aFirst.localeCompare(bFirst) * dirMult;
+      }
+
+      const aMid = (ua.middleName || '').toUpperCase();
+      const bMid = (ub.middleName || '').toUpperCase();
+      return aMid.localeCompare(bMid) * dirMult;
+    });
+  }
+
   /* ---------- Validation ---------- */
   function validateLRN(lrn) {
     return /^\d{12}$/.test(String(lrn).replace(/\D/g, ''));
@@ -236,6 +316,11 @@ const APP = (() => {
     toLastNameFormat,
     formatFullName,
     formatFullNameFML,
+    getSexValue,
+    getSexCode,
+    getSexIcon,
+    getSexBadge,
+    sortStudents,
     validateLRN,
     validateName,
     renderDeveloperFooter,
