@@ -1,13 +1,12 @@
 /* ============================================================
    teacher.js — Teacher dashboard logic (modern)
-   Version: 2.1.0
+   Version: 2.2.0
    ============================================================ */
 
 (() => {
   'use strict';
 
   let users = Store.getAllUsers();
-  // Always sort alphabetically by default
   users = APP.sortStudents(users, 'last', 'asc');
 
   /* ============================================================
@@ -31,14 +30,25 @@
     }, 0);
     const maleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Male').length;
     const femaleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Female').length;
+    const lockedCount = countAllLocks();
 
     el.innerHTML = `
       <div class="teacher-hero-stat">👥 <strong>${totalStudents}</strong> Students</div>
       <div class="teacher-hero-stat">♂ <strong>${maleCount}</strong> Male</div>
       <div class="teacher-hero-stat">♀ <strong>${femaleCount}</strong> Female</div>
       <div class="teacher-hero-stat">📝 <strong>${totalAssessments}</strong> Submissions</div>
+      ${lockedCount > 0 ? `<div class="teacher-hero-stat" style="background:rgba(255,220,220,0.25);">🔒 <strong>${lockedCount}</strong> Locked</div>` : ''}
     `;
   })();
+
+  function countAllLocks() {
+    let count = 0;
+    users.forEach((u) => {
+      const keys = Object.keys(localStorage).filter((k) => k.startsWith(`gba_v1_lock_${u.lrn}_`));
+      count += keys.length;
+    });
+    return count;
+  }
 
   /* ============================================================
      STATS
@@ -82,6 +92,7 @@
   if (keyStatsEl) {
     const maleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Male').length;
     const femaleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Female').length;
+    const lockedCount = countAllLocks();
     keyStatsEl.innerHTML = [
       UI.renderStatCard({ value: stats.totalStudents, label: 'Total Students', icon: '👥', color: 'blue' }),
       UI.renderStatCard({ value: maleCount, label: 'Male Students', icon: '♂️', color: 'blue' }),
@@ -93,10 +104,10 @@
         color: stats.passRate >= 75 ? 'green' : 'amber'
       }),
       UI.renderStatCard({
-        value: stats.avgST + '%',
-        label: 'Avg ST Score',
-        icon: '📊',
-        color: stats.avgST >= 80 ? 'green' : 'amber'
+        value: lockedCount,
+        label: 'Locked Assessments',
+        icon: '🔒',
+        color: lockedCount > 0 ? 'amber' : 'green'
       }),
       UI.renderStatCard({
         value: stats.urgent,
@@ -110,9 +121,12 @@
   /* ============================================================
      QUICK ACTIONS
      ============================================================ */
+  const lockedCount = countAllLocks();
+
   const actions = [
     { icon: '🎮', title: 'Activity Tracker', desc: 'Track lesson activity completion, badges, and points', href: 'teacher/activity-tracker.html', color: '#1b7a3d', badge: null },
     { icon: '📝', title: 'Assessment Tracker', desc: 'Track quiz, ST, and term exam performance', href: 'teacher/assessment-tracker.html', color: '#0277bd', badge: null },
+    { icon: '🔒', title: 'Locked Assessments', desc: 'Manage locked submissions — unlock for retakes', href: 'teacher/locked-assessments.html', color: '#c62828', badge: lockedCount > 0 ? { text: lockedCount + ' locked', type: 'alert' } : null },
     { icon: '📥', title: 'Sync Center', desc: 'Import student progress from other devices', href: 'teacher/sync-center.html', color: '#ed6c02', badge: { text: 'Cross-device', type: 'info' } },
     { icon: '📊', title: 'Item Analysis', desc: 'Per-item difficulty and Most/Least Learned competencies', href: 'teacher/item-analysis.html', color: '#6a1b9a', badge: null },
     { icon: '🎯', title: 'Intervention', desc: 'Students needing support, auto-classified', href: 'teacher/intervention.html', color: '#c62828', badge: stats.urgent > 0 ? { text: stats.urgent + ' urgent', type: 'alert' } : null },
@@ -164,7 +178,6 @@
     });
   }
 
-  // 1. ST Average Distribution
   (function renderDistSTAvg() {
     const el = document.getElementById('dist-st-avg');
     if (!el) return;
@@ -189,7 +202,6 @@
     }).join('');
   })();
 
-  // 2. Submission Status
   (function renderDistSubmissions() {
     const el = document.getElementById('dist-submissions');
     if (!el) return;
@@ -206,7 +218,6 @@
     ].join('');
   })();
 
-  // 3. Activity Engagement
   (function renderDistActivity() {
     const el = document.getElementById('dist-activity');
     if (!el) return;
@@ -245,7 +256,7 @@
   })();
 
   /* ============================================================
-     URGENT LIST (sorted alphabetically)
+     URGENT LIST
      ============================================================ */
   function getUrgentStudents() {
     const urgent = [];
@@ -260,7 +271,6 @@
         });
       });
     });
-    // Sort by percent ascending first (most urgent), then by name
     return urgent.sort((a, b) => {
       if (a.percent !== b.percent) return a.percent - b.percent;
       return (a.user.lastName || '').localeCompare(b.user.lastName || '');
@@ -309,7 +319,7 @@
   }
 
   /* ============================================================
-     TOP PERFORMERS (sorted by ST avg, then alphabetical)
+     TOP PERFORMERS
      ============================================================ */
   (function renderTopPerformers() {
     const el = document.getElementById('top-performers');
@@ -364,7 +374,7 @@
   })();
 
   /* ============================================================
-     RECENT SUBMISSIONS (sorted newest first)
+     RECENT SUBMISSIONS
      ============================================================ */
   function getRecentSubs() {
     const subs = [];
