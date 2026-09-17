@@ -1,23 +1,23 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 2.3.0
+   Version: 2.3.1
    ------------------------------------------------------------
    NEW:
-   - Difficulty-based timers (min 5 min)
-   - 75% pass threshold per activity
-   - Manual start (activities render on `activity:start` event)
-   - Unlimited retakes until passing
-   - Fail-proof score submission
+   - Loading overlay while scripts initialize
+   - 15-second timeout with retry button
+   - Better error messages for slow connections
    ============================================================ */
 
 const Lesson = (() => {
   'use strict';
 
   let ctx = null;
-  let pendingActivities = {}; // Stores config for each activity
+  let pendingActivities = {};
   let currentAttempts = {};
+  let readyFlag = false;
+  let timeoutHandle = null;
 
-  const PASS_THRESHOLD = 0.75; // 75%
+  const PASS_THRESHOLD = 0.75;
 
   /* ---------- Init ---------- */
   function init(config) {
@@ -41,73 +41,167 @@ const Lesson = (() => {
     renderScoreBar(config.title);
     startLiveTimer();
 
-    if (window.ActivityGate) ActivityGate.init(config);
+    // Show loading indicator immediately
+    showLoadingOverlay();
 
-    // Listen for "start activity" events from the gate
+    // Start timeout — if not ready in 15s, show retry
+    timeoutHandle = setTimeout(() => {
+      if (!readyFlag) {
+        showTimeoutError();
+      }
+    }, 15000);
+
+    if (window.ActivityGate) {
+      ActivityGate.init(config);
+      // ActivityGate.init() calls applyUI() which needs the activity containers
+      // ready. Give the browser a tick.
+      setTimeout(() => {
+        markReady();
+      }, 300);
+    } else {
+      // ActivityGate not loaded yet — wait for it
+      document.addEventListener('activity-gate:ready', () => {
+        markReady();
+      });
+      // Fallback: check every 200ms
+      let checkCount = 0;
+      const checkInterval = setInterval(() => {
+        checkCount++;
+        if (window.ActivityGate) {
+          clearInterval(checkInterval);
+          ActivityGate.init(config);
+          setTimeout(markReady, 300);
+        } else if (checkCount > 75) {
+          // 15 seconds passed
+          clearInterval(checkInterval);
+        }
+      }, 200);
+    }
+
     document.addEventListener('activity:start', (e) => {
-      const activity = e.detail.activity;
-      startActivity(activity);
+      startActivity(e.detail.activity);
+    });
+  }
+
+  function markReady() {
+    readyFlag = true;
+    clearTimeout(timeoutHandle);
+    hideLoadingOverlay();
+  }
+
+  /* ============================================================
+     LOADING OVERLAY
+     ============================================================ */
+  function showLoadingOverlay() {
+    if (document.getElementById('lesson-loading-overlay')) return;
+    const overlay = document.createElement('div');
+    overlay.id = 'lesson-loading-overlay';
+    overlay.style.cssText = `
+      position:fixed;inset:0;z-index:9998;
+      background:rgba(255,255,255,0.92);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Segoe UI',system-ui,sans-serif;
+      transition:opacity 0.3s ease;
+    `;
+    overlay.innerHTML = `
+      <div style="text-align:center;max-width:320px;padding:24px;">
+        <div style="font-size:2.5rem;animation:spin 1.5s linear infinite;display:inline-block;">⏳</div>
+        <div style="font-size:1.1rem;font-weight:600;color:#1b7a3d;margin-top:12px;">
+          Loading activities...
+        </div>
+        <div style="font-size:0.85rem;color:#5f6368;margin-top:8px;">
+          This may take a moment on a slow connection.
+        </div>
+        <div style="width:100%;height:6px;background:#e0e0e0;border-radius:3px;margin-top:16px;overflow:hidden;">
+          <div style="height:100%;width:40%;background:linear-gradient(90deg,#1b7a3d,#4caf50);border-radius:3px;animation:progress 1.5s ease-in-out infinite;"></div>
+        </div>
+      </div>
+      <style>
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes progress {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(300%); }
+        }
+      </style>
+    `;
+    document.body.appendChild(overlay);
+  }
+
+  function hideLoadingOverlay() {
+    const overlay = document.getElementById('lesson-loading-overlay');
+    if (!overlay) return;
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 300);
+  }
+
+  function showTimeoutError() {
+    const overlay = document.getElementById('lesson-loading-overlay');
+    if (!overlay) return;
+    overlay.innerHTML = `
+      <div style="text-align:center;max-width:380px;padding:24px;">
+        <div style="font-size:2.5rem;">📡</div>
+        <div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">
+          Slow connection detected
+        </div>
+        <div style="font-size:0.85rem;color:#5f6368;margin-top:8px;">
+          The lesson is still loading. You can wait or tap retry.
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+          <button id="lesson-retry-btn" style="
+            padding:10px 20px;background:#1b7a3d;color:#fff;border:none;border-radius:8px;
+            font-size:0.9rem;font-weight:600;cursor:pointer;
+          ">🔄 Retry</button>
+          <button id="lesson-wait-btn" style="
+            padding:10px 20px;background:transparent;color:#1b7a3d;border:2px solid #1b7a3d;border-radius:8px;
+            font-size:0.9rem;font-weight:600;cursor:pointer;
+          ">⏳ Keep Waiting</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('lesson-retry-btn').addEventListener('click', () => {
+      location.reload();
+    });
+    document.getElementById('lesson-wait-btn').addEventListener('click', () => {
+      // Extend the timeout
+      showLoadingOverlay();
+      timeoutHandle = setTimeout(() => {
+        if (!readyFlag) showTimeoutError();
+      }, 20000);
     });
   }
 
   /* ---------- Difficulty-Based Timer ---------- */
   function calculateTimeLimit(type, count) {
-    const MIN_SECONDS = 300; // 5 minutes minimum
-
-    if (type === 'match') {
-      // ~20s per pair, min 5 min
-      return Math.max(MIN_SECONDS, count * 20);
-    }
-    if (type === 'scenario') {
-      // ~25s per scenario, min 5 min
-      return Math.max(MIN_SECONDS, count * 25);
-    }
-    if (type === 'escape') {
-      // ~60s per question, min 5 min
-      return Math.max(MIN_SECONDS, count * 60);
-    }
+    const MIN_SECONDS = 300;
+    if (type === 'match') return Math.max(MIN_SECONDS, count * 20);
+    if (type === 'scenario') return Math.max(MIN_SECONDS, count * 25);
+    if (type === 'escape') return Math.max(MIN_SECONDS, count * 60);
     return MIN_SECONDS;
   }
 
-  /* ---------- Register activities for later start ---------- */
+  /* ---------- Register activities ---------- */
   function registerMatchGame(containerId, config) {
     const timeLimit = calculateTimeLimit('match', config.pairs.length);
-    pendingActivities[containerId] = {
-      type: 'match',
-      config: { ...config, timeLimit }
-    };
-    // Set data attribute for gate to read
+    pendingActivities[containerId] = { type: 'match', config: { ...config, timeLimit } };
     const container = document.getElementById(containerId);
-    if (container) {
-      container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
-    }
+    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
   function registerScenarioGame(containerId, config) {
     const timeLimit = calculateTimeLimit('scenario', config.scenarios.length);
-    pendingActivities[containerId] = {
-      type: 'scenario',
-      config: { ...config, timeLimit }
-    };
+    pendingActivities[containerId] = { type: 'scenario', config: { ...config, timeLimit } };
     const container = document.getElementById(containerId);
-    if (container) {
-      container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
-    }
+    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
   function registerEscapeRoom(containerId, config) {
     const timeLimit = calculateTimeLimit('escape', config.questions.length);
-    pendingActivities[containerId] = {
-      type: 'escape',
-      config: { ...config, timeLimit }
-    };
+    pendingActivities[containerId] = { type: 'escape', config: { ...config, timeLimit } };
     const container = document.getElementById(containerId);
-    if (container) {
-      container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
-    }
+    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
-  /* ---------- Start an activity (triggered by gate) ---------- */
+  /* ---------- Start activity ---------- */
   function startActivity(stateKey) {
     const containerId = stateKey === 'activity1' ? 'activity-1'
                       : stateKey === 'activity2' ? 'activity-2'
@@ -117,18 +211,11 @@ const Lesson = (() => {
       console.warn('[Lesson] No pending activity for', containerId);
       return;
     }
-
-    // Increment attempt counter
     currentAttempts[containerId] = (currentAttempts[containerId] || 0) + 1;
 
-    // Reset score bar values for this attempt (points still accumulate overall)
-    if (pending.type === 'match') {
-      renderMatchGameNow(containerId, pending.config);
-    } else if (pending.type === 'scenario') {
-      renderScenarioGameNow(containerId, pending.config);
-    } else if (pending.type === 'escape') {
-      renderEscapeRoomNow(containerId, pending.config);
-    }
+    if (pending.type === 'match') renderMatchGameNow(containerId, pending.config);
+    else if (pending.type === 'scenario') renderScenarioGameNow(containerId, pending.config);
+    else if (pending.type === 'escape') renderEscapeRoomNow(containerId, pending.config);
   }
 
   /* ---------- Score Bar ---------- */
@@ -193,7 +280,6 @@ const Lesson = (() => {
   function renderMatchGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
-
     const { pairs, timeLimit, pointsCorrect = 10, pointsWrong = -3, bonusFast = 15,
             badgeId, badgeName, badgeIcon } = config;
 
@@ -212,14 +298,8 @@ const Lesson = (() => {
         <span class="activity-timer" id="match-timer">${APP.formatTime(timeLeft)}</span>
       </div>
       <div class="match-grid">
-        <div class="match-column">
-          <h4>Left</h4>
-          <div id="match-left"></div>
-        </div>
-        <div class="match-column">
-          <h4>Right</h4>
-          <div id="match-right"></div>
-        </div>
+        <div class="match-column"><h4>Left</h4><div id="match-left"></div></div>
+        <div class="match-column"><h4>Right</h4><div id="match-right"></div></div>
       </div>
       <div class="text-center mt-md">
         <span id="match-score" class="badge badge-info">Matches: 0 / ${pairs.length}</span>
@@ -250,10 +330,8 @@ const Lesson = (() => {
 
     function onRightClick(el) {
       if (finished || !selectedLeft || el.classList.contains('correct')) return;
-
       const leftKey = selectedLeft.dataset.key;
       const rightKey = el.dataset.key;
-
       if (leftKey === rightKey) {
         selectedLeft.classList.remove('selected');
         selectedLeft.classList.add('correct');
@@ -268,10 +346,7 @@ const Lesson = (() => {
         addPoints(pointsWrong);
         wrongCount++;
         const l = selectedLeft;
-        setTimeout(() => {
-          l.classList.remove('wrong', 'selected');
-          el.classList.remove('wrong');
-        }, 500);
+        setTimeout(() => { l.classList.remove('wrong', 'selected'); el.classList.remove('wrong'); }, 500);
       }
       selectedLeft = null;
     }
@@ -285,35 +360,19 @@ const Lesson = (() => {
       if (finished) return;
       finished = true;
       clearInterval(timerInterval);
-
-      // Score = correct matches ÷ total pairs
       const scorePercent = Math.round((matches / pairs.length) * 100);
 
-      // Award badges
       if (scorePercent >= 75) {
-        if (wrongCount === 0) {
-          awardBadge(badgeId + '-flawless', 'Flawless', '🎯');
-          addPoints(bonusFast);
-        }
-        if ((timeLimit - timeLeft) < timeLimit * 0.5) {
-          awardBadge(badgeId + '-fast', 'Speed Scholar', '⚡');
-        }
+        if (wrongCount === 0) { awardBadge(badgeId + '-flawless', 'Flawless', '🎯'); addPoints(bonusFast); }
+        if ((timeLimit - timeLeft) < timeLimit * 0.5) awardBadge(badgeId + '-fast', 'Speed Scholar', '⚡');
         awardBadge(badgeId, badgeName, badgeIcon);
       }
 
-      // Notify gate
-      if (window.ActivityGate) {
-        ActivityGate.completeWithScore(containerId, scorePercent);
-      }
+      if (window.ActivityGate) ActivityGate.completeWithScore(containerId, scorePercent);
 
-      // Show a local "time's up" message if timer expired
-      if (reason === 'timeout') {
-        APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
-      } else if (scorePercent >= 75) {
-        APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
-      } else {
-        APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
-      }
+      if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
+      else if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
     }
 
     timerInterval = setInterval(() => {
@@ -330,7 +389,6 @@ const Lesson = (() => {
   function renderScenarioGameNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
-
     const { scenarios, timeLimit, pointsCorrect = 8, bonusFast = 3,
             badgeId, badgeName, badgeIcon } = config;
 
@@ -338,12 +396,10 @@ const Lesson = (() => {
     let correct = 0;
     let fastAnswers = 0;
     let cardStart = Date.now();
-    let cardTimer = null;
     let finished = false;
     let totalTimeLeft = timeLimit;
     let overallTimer = null;
 
-    // Overall time display
     container.innerHTML = `
       <div class="activity-header">
         <span class="activity-title">🎯 Scenario Challenge</span>
@@ -364,7 +420,6 @@ const Lesson = (() => {
     function renderCard() {
       if (finished) return;
       if (index >= scenarios.length) return endGame('complete');
-
       const sc = scenarios[index];
       cardStart = Date.now();
       const body = container.querySelector('#scenario-body');
@@ -377,7 +432,6 @@ const Lesson = (() => {
           <span class="badge badge-info">Question ${index + 1} / ${scenarios.length}</span>
         </div>
       `;
-
       const row = body.querySelector('#choice-row');
       sc.choices.forEach((choice) => {
         const btn = APP.el('button', { class: 'choice-btn', text: choice.label });
@@ -389,70 +443,43 @@ const Lesson = (() => {
     function onChoice(btn, choice, sc) {
       if (finished) return;
       const elapsed = (Date.now() - cardStart) / 1000;
-
       container.querySelectorAll('.choice-btn').forEach((b) => (b.disabled = true));
-
       if (choice.correct) {
         btn.classList.add('correct');
         addPoints(pointsCorrect);
         correct++;
-        if (elapsed <= 5) {
-          addPoints(bonusFast);
-          fastAnswers++;
-        }
+        if (elapsed <= 5) { addPoints(bonusFast); fastAnswers++; }
       } else {
         btn.classList.add('wrong');
         sc.choices.forEach((c, i) => {
-          if (c.correct) {
-            container.querySelectorAll('.choice-btn')[i].classList.add('correct');
-          }
+          if (c.correct) container.querySelectorAll('.choice-btn')[i].classList.add('correct');
         });
       }
-
-      setTimeout(() => {
-        index++;
-        renderCard();
-      }, 1200);
+      setTimeout(() => { index++; renderCard(); }, 1200);
     }
 
     function endGame(reason) {
       if (finished) return;
       finished = true;
       clearInterval(overallTimer);
-
       const scorePercent = Math.round((correct / scenarios.length) * 100);
-
-      // Award badges only if passed
       if (scorePercent >= 75) {
-        if (correct === scenarios.length) {
-          awardBadge(badgeId, badgeName, badgeIcon);
-        }
-        if (fastAnswers >= Math.ceil(scenarios.length * 0.66)) {
-          awardBadge(badgeId + '-fast', 'Quick Thinker', '⚡');
-        }
+        if (correct === scenarios.length) awardBadge(badgeId, badgeName, badgeIcon);
+        if (fastAnswers >= Math.ceil(scenarios.length * 0.66)) awardBadge(badgeId + '-fast', 'Quick Thinker', '⚡');
       }
-
-      if (window.ActivityGate) {
-        ActivityGate.completeWithScore(containerId, scorePercent);
-      }
-
-      if (reason === 'timeout') {
-        APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
-      } else if (scorePercent >= 75) {
-        APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
-      } else {
-        APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
-      }
+      if (window.ActivityGate) ActivityGate.completeWithScore(containerId, scorePercent);
+      if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
+      else if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
     }
   }
 
   /* ============================================================
-     ESCAPE ROOM (FORMATIVE)
+     ESCAPE ROOM
      ============================================================ */
   function renderEscapeRoomNow(containerId, config) {
     const container = document.getElementById(containerId);
     if (!container) return;
-
     const { questions, badgeId, badgeName, badgeIcon, lives = 3, timeLimit } = config;
 
     let currentLives = lives;
@@ -500,7 +527,6 @@ const Lesson = (() => {
       if (finished) return;
       if (index >= questions.length) return endGame('complete');
       const q = questions[index];
-
       container.innerHTML = `
         <div class="escape-container">
           <div class="escape-header">
@@ -522,7 +548,6 @@ const Lesson = (() => {
           </div>
         </div>
       `;
-
       const opts = container.querySelector('#escape-options');
       q.choices.forEach((c, i) => {
         const btn = APP.el('button', { class: 'escape-option', text: `${String.fromCharCode(65 + i)}. ${c.label}` });
@@ -534,34 +559,20 @@ const Lesson = (() => {
     function onAnswer(btn, choice) {
       if (locked || finished) return;
       locked = true;
-
       const all = container.querySelectorAll('.escape-option');
       all.forEach((b) => (b.disabled = true));
-
       if (choice.correct) {
         btn.classList.add('correct');
         earnedKeys.push(index);
         APP.toast('🔑 Key earned!', 'success', 1500);
-        setTimeout(() => {
-          index++;
-          locked = false;
-          renderQuestion();
-        }, 900);
+        setTimeout(() => { index++; locked = false; renderQuestion(); }, 900);
       } else {
         btn.classList.add('wrong');
         currentLives--;
         const correctIdx = questions[index].choices.findIndex((c) => c.correct);
         all[correctIdx].classList.add('correct');
-
-        if (currentLives <= 0) {
-          setTimeout(() => endGame('outoflives'), 1200);
-        } else {
-          setTimeout(() => {
-            locked = false;
-            index++;
-            renderQuestion();
-          }, 1400);
-        }
+        if (currentLives <= 0) setTimeout(() => endGame('outoflives'), 1200);
+        else setTimeout(() => { locked = false; index++; renderQuestion(); }, 1400);
       }
     }
 
@@ -569,33 +580,19 @@ const Lesson = (() => {
       if (finished) return;
       finished = true;
       clearInterval(timerInterval);
-
       const scorePercent = Math.round((earnedKeys.length / questions.length) * 100);
-
       if (scorePercent >= 75) {
-        if (currentLives === lives) {
-          awardBadge(badgeId, badgeName, badgeIcon);
-        }
+        if (currentLives === lives) awardBadge(badgeId, badgeName, badgeIcon);
         markDayComplete();
       }
-
-      if (window.ActivityGate) {
-        ActivityGate.completeWithScore(containerId, scorePercent);
-      }
-
-      if (scorePercent >= 75) {
-        APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
-      } else if (reason === 'timeout') {
-        APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
-      } else if (reason === 'outoflives') {
-        APP.toast(`💀 Out of lives! You scored ${scorePercent}%`, 'warning', 4000);
-      } else {
-        APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
-      }
+      if (window.ActivityGate) ActivityGate.completeWithScore(containerId, scorePercent);
+      if (scorePercent >= 75) APP.toast(`🎉 Passed! ${scorePercent}%`, 'success', 4000);
+      else if (reason === 'timeout') APP.toast(`⏰ Time's up! You scored ${scorePercent}%`, 'warning', 4000);
+      else if (reason === 'outoflives') APP.toast(`💀 Out of lives! You scored ${scorePercent}%`, 'warning', 4000);
+      else APP.toast(`📖 Score: ${scorePercent}% — need 75% to pass.`, 'warning', 4000);
     }
   }
 
-  /* ---------- Mark Day Complete ---------- */
   function markDayComplete() {
     Store.markDayComplete(ctx.lrn, ctx.subject, ctx.week, ctx.day);
   }
@@ -605,7 +602,6 @@ const Lesson = (() => {
     init,
     addPoints,
     awardBadge,
-    // Registration (called by day.html)
     renderMatchGame: registerMatchGame,
     renderScenarioGame: registerScenarioGame,
     renderEscapeRoom: registerEscapeRoom,
