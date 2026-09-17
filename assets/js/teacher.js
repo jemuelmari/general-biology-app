@@ -1,15 +1,17 @@
 /* ============================================================
    teacher.js — Teacher dashboard logic (modern)
-   Version: 2.0.0
+   Version: 2.1.0
    ============================================================ */
 
 (() => {
   'use strict';
 
-  const users = Store.getAllUsers();
+  let users = Store.getAllUsers();
+  // Always sort alphabetically by default
+  users = APP.sortStudents(users, 'last', 'asc');
 
   /* ============================================================
-     HERO META — Live stats in the hero banner
+     HERO META
      ============================================================ */
   (function renderHeroMeta() {
     const el = document.getElementById('hero-meta');
@@ -27,22 +29,19 @@
       });
       return a + count;
     }, 0);
+    const maleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Male').length;
+    const femaleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Female').length;
 
     el.innerHTML = `
-      <div class="teacher-hero-stat">
-        👥 <strong>${totalStudents}</strong> Students
-      </div>
-      <div class="teacher-hero-stat">
-        📝 <strong>${totalAssessments}</strong> Submissions
-      </div>
-      <div class="teacher-hero-stat">
-        🎮 <strong>${activityData.reduce((a, s) => a + s.summary.biol1.activitiesDone + s.summary.biol2.activitiesDone, 0)}</strong> Activities
-      </div>
+      <div class="teacher-hero-stat">👥 <strong>${totalStudents}</strong> Students</div>
+      <div class="teacher-hero-stat">♂ <strong>${maleCount}</strong> Male</div>
+      <div class="teacher-hero-stat">♀ <strong>${femaleCount}</strong> Female</div>
+      <div class="teacher-hero-stat">📝 <strong>${totalAssessments}</strong> Submissions</div>
     `;
   })();
 
   /* ============================================================
-     COMPUTE KEY STATS
+     STATS
      ============================================================ */
   function computeStats() {
     let totalAssessments = 0;
@@ -79,24 +78,14 @@
 
   const stats = computeStats();
 
-  /* ============================================================
-     RENDER KEY STAT CARDS
-     ============================================================ */
   const keyStatsEl = document.getElementById('key-stats');
   if (keyStatsEl) {
+    const maleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Male').length;
+    const femaleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Female').length;
     keyStatsEl.innerHTML = [
-      UI.renderStatCard({
-        value: stats.totalStudents,
-        label: 'Total Students',
-        icon: '👥',
-        color: 'blue'
-      }),
-      UI.renderStatCard({
-        value: stats.totalAssessments,
-        label: 'ST Submissions',
-        icon: '📝',
-        color: 'purple'
-      }),
+      UI.renderStatCard({ value: stats.totalStudents, label: 'Total Students', icon: '👥', color: 'blue' }),
+      UI.renderStatCard({ value: maleCount, label: 'Male Students', icon: '♂️', color: 'blue' }),
+      UI.renderStatCard({ value: femaleCount, label: 'Female Students', icon: '♀️', color: 'purple' }),
       UI.renderStatCard({
         value: stats.passRate + '%',
         label: 'Pass Rate',
@@ -122,62 +111,13 @@
      QUICK ACTIONS
      ============================================================ */
   const actions = [
-    {
-      icon: '🎮',
-      title: 'Activity Tracker',
-      desc: 'Track lesson activity completion, badges, and points',
-      href: 'teacher/activity-tracker.html',
-      color: '#1b7a3d',
-      badge: null
-    },
-    {
-      icon: '📝',
-      title: 'Assessment Tracker',
-      desc: 'Track quiz, ST, and term exam performance',
-      href: 'teacher/assessment-tracker.html',
-      color: '#0277bd',
-      badge: null
-    },
-    {
-      icon: '📥',
-      title: 'Sync Center',
-      desc: 'Import student progress from other devices',
-      href: 'teacher/sync-center.html',
-      color: '#ed6c02',
-      badge: { text: 'Cross-device', type: 'info' }
-    },
-    {
-      icon: '📊',
-      title: 'Item Analysis',
-      desc: 'Per-item difficulty and Most/Least Learned competencies',
-      href: 'teacher/item-analysis.html',
-      color: '#6a1b9a',
-      badge: null
-    },
-    {
-      icon: '🎯',
-      title: 'Intervention',
-      desc: 'Students needing support, auto-classified',
-      href: 'teacher/intervention.html',
-      color: '#c62828',
-      badge: stats.urgent > 0 ? { text: stats.urgent + ' urgent', type: 'alert' } : null
-    },
-    {
-      icon: '🔤',
-      title: 'Normalize Names',
-      desc: 'Standardize record format across all students',
-      href: 'teacher/normalize-names.html',
-      color: '#00695c',
-      badge: null
-    },
-    {
-      icon: '📋',
-      title: 'Class Record',
-      desc: 'Complete gradebook with transmutation and reports',
-      href: 'classrecord.html',
-      color: '#455a64',
-      badge: null
-    }
+    { icon: '🎮', title: 'Activity Tracker', desc: 'Track lesson activity completion, badges, and points', href: 'teacher/activity-tracker.html', color: '#1b7a3d', badge: null },
+    { icon: '📝', title: 'Assessment Tracker', desc: 'Track quiz, ST, and term exam performance', href: 'teacher/assessment-tracker.html', color: '#0277bd', badge: null },
+    { icon: '📥', title: 'Sync Center', desc: 'Import student progress from other devices', href: 'teacher/sync-center.html', color: '#ed6c02', badge: { text: 'Cross-device', type: 'info' } },
+    { icon: '📊', title: 'Item Analysis', desc: 'Per-item difficulty and Most/Least Learned competencies', href: 'teacher/item-analysis.html', color: '#6a1b9a', badge: null },
+    { icon: '🎯', title: 'Intervention', desc: 'Students needing support, auto-classified', href: 'teacher/intervention.html', color: '#c62828', badge: stats.urgent > 0 ? { text: stats.urgent + ' urgent', type: 'alert' } : null },
+    { icon: '🔤', title: 'Normalize Names', desc: 'Standardize record format across all students', href: 'teacher/normalize-names.html', color: '#00695c', badge: null },
+    { icon: '📋', title: 'Class Record', desc: 'Complete gradebook with transmutation and reports', href: 'classrecord.html', color: '#455a64', badge: null }
   ];
 
   const quickActionsEl = document.getElementById('quick-actions');
@@ -202,10 +142,8 @@
   }
 
   /* ============================================================
-     CLASS DISTRIBUTION REPORTS
+     DISTRIBUTION REPORTS
      ============================================================ */
-
-  // Helper: collect all ST scores per student
   function collectStudentStats() {
     return users.map((u) => {
       const scores = Store.getScores(u.lrn);
@@ -307,7 +245,7 @@
   })();
 
   /* ============================================================
-     URGENT LIST
+     URGENT LIST (sorted alphabetically)
      ============================================================ */
   function getUrgentStudents() {
     const urgent = [];
@@ -322,7 +260,11 @@
         });
       });
     });
-    return urgent.sort((a, b) => a.percent - b.percent);
+    // Sort by percent ascending first (most urgent), then by name
+    return urgent.sort((a, b) => {
+      if (a.percent !== b.percent) return a.percent - b.percent;
+      return (a.user.lastName || '').localeCompare(b.user.lastName || '');
+    });
   }
 
   const urgent = getUrgentStudents();
@@ -342,7 +284,10 @@
           <div class="intervention-card urgent" style="display:flex;gap:14px;align-items:flex-start;">
             ${avatar}
             <div style="flex:1;">
-              <div class="student-name">${APP.formatFullName(u.user.lastName, u.user.firstName, u.user.middleName)}</div>
+              <div class="student-name">
+                ${APP.formatFullName(u.user.lastName, u.user.firstName, u.user.middleName)}
+                ${APP.getSexBadge(u.user.sex)}
+              </div>
               <div class="student-meta">
                 LRN: ${APP.formatLRN(u.user.lrn)} · ${u.user.section} · ${u.subject.toUpperCase()} · ${u.stId.toUpperCase()}
               </div>
@@ -364,7 +309,7 @@
   }
 
   /* ============================================================
-     TOP PERFORMERS
+     TOP PERFORMERS (sorted by ST avg, then alphabetical)
      ============================================================ */
   (function renderTopPerformers() {
     const el = document.getElementById('top-performers');
@@ -376,15 +321,21 @@
       return;
     }
 
-    const top = data.sort((a, b) => b.stAvg - a.stAvg).slice(0, 5);
+    const top = data
+      .sort((a, b) => {
+        if (b.stAvg !== a.stAvg) return b.stAvg - a.stAvg;
+        return (a.user.lastName || '').localeCompare(b.user.lastName || '');
+      })
+      .slice(0, 5);
 
     el.innerHTML = `
       <div class="gradebook-wrapper" style="overflow-x:auto;">
         <table class="modern-table">
           <thead>
             <tr>
-              <th style="width:40px;">#</th>
+              <th style="width:40px;text-align:center;">#</th>
               <th>Student</th>
+              <th style="text-align:center;">Sex</th>
               <th style="text-align:center;">ST Submissions</th>
               <th style="text-align:center;">Average</th>
               <th style="text-align:center;">Proficiency</th>
@@ -397,6 +348,7 @@
                 <tr>
                   <td style="text-align:center;font-size:1.1rem;">${medal}</td>
                   <td>${UI.renderStudentCell(d.user)}</td>
+                  <td style="text-align:center;">${APP.getSexBadge(d.user.sex)}</td>
                   <td style="text-align:center;">${d.stCount}</td>
                   <td style="text-align:center;font-weight:800;color:${UI.getPctHex(d.stAvg)};font-size:0.95rem;">
                     ${d.stAvg.toFixed(1)}%
@@ -412,7 +364,7 @@
   })();
 
   /* ============================================================
-     RECENT SUBMISSIONS
+     RECENT SUBMISSIONS (sorted newest first)
      ============================================================ */
   function getRecentSubs() {
     const subs = [];
@@ -451,7 +403,10 @@
           <div class="intervention-card ${cls}" style="display:flex;gap:14px;align-items:flex-start;">
             ${avatar}
             <div style="flex:1;">
-              <div class="student-name">${APP.formatFullName(s.user.lastName, s.user.firstName, s.user.middleName)}</div>
+              <div class="student-name">
+                ${APP.formatFullName(s.user.lastName, s.user.firstName, s.user.middleName)}
+                ${APP.getSexBadge(s.user.sex)}
+              </div>
               <div class="student-meta">
                 ${s.subject.toUpperCase()} · ${s.id.toUpperCase()} · ${UI.fmtDateRelative(data.timestamp)}
               </div>
