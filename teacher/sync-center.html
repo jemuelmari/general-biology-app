@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📥 Sync Center</h1>
-        <span class="version">v1.0.1</span>
+        <span class="version">v1.2.0</span>
       </div>
       <nav style="display:flex;gap:8px;">
         <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
@@ -24,16 +24,24 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:900px;">
 
+    <!-- Backend status card -->
+    <div class="card" id="backend-status-card">
+      <div id="backend-status-content">
+        <p class="text-muted text-small">Checking backend status...</p>
+      </div>
+    </div>
+
     <div class="card">
       <h2 style="color:var(--color-primary-dark);">📥 Import Student Progress</h2>
       <p class="text-muted">Choose how you'd like to receive student data.</p>
 
       <div class="sync-tabs">
-        <button class="sync-tab active" data-tab="code">🔑 By Code</button>
+        <button class="sync-tab active" data-tab="code">🔑 By Sync Code</button>
         <button class="sync-tab" data-tab="json">📄 JSON File</button>
         <button class="sync-tab" data-tab="bulk">📦 Bulk Import</button>
       </div>
 
+      <!-- By Code -->
       <div id="panel-code" class="sync-panel">
         <label class="form-label">Enter Sync Code from Student</label>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -41,9 +49,13 @@
                  style="flex:1;min-width:240px;font-family:monospace;text-transform:uppercase;" />
           <button id="btn-import-code" class="btn btn-primary">Import</button>
         </div>
-        <p class="form-hint">Students generate codes from their dashboard. Paste the code here.</p>
+        <p class="form-hint">
+          Codes work <strong>only on the same device</strong> unless the backend is configured.
+          Use JSON file for cross-device transfer.
+        </p>
       </div>
 
+      <!-- By JSON -->
       <div id="panel-json" class="sync-panel hidden">
         <div class="drop-zone" id="drop-zone">
           <div class="drop-icon">📄</div>
@@ -52,8 +64,12 @@
           <button id="btn-pick-json" class="btn btn-primary" style="margin-top:8px;">Choose File</button>
           <input type="file" id="file-picker" accept="application/json" class="hidden" />
         </div>
+        <p class="form-hint" style="margin-top:8px;">
+          ✅ <strong>Recommended method</strong> — works from any device.
+        </p>
       </div>
 
+      <!-- Bulk -->
       <div id="panel-bulk" class="sync-panel hidden">
         <div class="drop-zone" id="drop-zone-bulk">
           <div class="drop-icon">📦</div>
@@ -65,6 +81,7 @@
 
     </div>
 
+    <!-- Import Preview -->
     <div id="import-preview-container" class="hidden">
       <h3 style="margin:24px 0 12px;color:var(--color-primary-dark);">📋 Preview & Confirm</h3>
       <div id="import-preview"></div>
@@ -74,6 +91,7 @@
       </div>
     </div>
 
+    <!-- Sync Log -->
     <div class="card" style="margin-top:24px;">
       <h3 style="color:var(--color-primary-dark);">📜 Sync Log</h3>
       <div id="sync-log"><p class="text-muted text-small">No syncs yet in this session.</p></div>
@@ -82,7 +100,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Sync Center · v1.0.1</p>
+    <p>Sync Center · v1.2.0</p>
   </footer>
 
   <script src="../config.js"></script>
@@ -95,6 +113,47 @@
     let pendingImports = [];
     const syncLog = [];
 
+    /* ---------- Backend status check ---------- */
+    (async function checkBackend() {
+      const el = document.getElementById('backend-status-content');
+      const backendOn = Sync.backendEnabled();
+
+      if (!backendOn) {
+        el.innerHTML = `
+          <div class="alert alert-warning" style="margin:0;">
+            <strong>⚠️ Backend not configured</strong>
+            <p style="margin-top:6px;">
+              Sync Codes only work on the <strong>same device</strong>.
+              To enable cross-device sync, deploy the Google Apps Script backend and set
+              <code>CONFIG.BACKEND_URL</code> in <code>config.js</code>.
+            </p>
+            <p style="margin-top:6px;">
+              <strong>Recommendation:</strong> Use <em>JSON File</em> import — it works from any device.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      const result = await Sync.pingBackend();
+      if (result.ok) {
+        el.innerHTML = `
+          <div class="alert alert-success" style="margin:0;">
+            <strong>✅ Backend is online</strong>
+            <p style="margin-top:6px;">Sync Codes work across devices via Google Sheets.</p>
+          </div>
+        `;
+      } else {
+        el.innerHTML = `
+          <div class="alert alert-danger" style="margin:0;">
+            <strong>❌ Backend configured but unreachable</strong>
+            <p style="margin-top:6px;">${result.error || 'Unknown error'}</p>
+          </div>
+        `;
+      }
+    })();
+
+    /* ---------- Tabs ---------- */
     APP.$$('.sync-tab').forEach((tab) => {
       tab.addEventListener('click', () => {
         APP.$$('.sync-tab').forEach((t) => t.classList.remove('active'));
@@ -106,18 +165,32 @@
       });
     });
 
+    /* ---------- By Code ---------- */
     document.getElementById('btn-import-code').addEventListener('click', async () => {
       const code = document.getElementById('sync-code-input').value.trim().toUpperCase();
       if (!code) return APP.toast('Enter a sync code first.', 'warning');
 
-      const result = await Sync.importFromCode(code);
-      if (!result.payload) {
-        return APP.toast(result.error || 'Code not found.', 'danger');
+      const btn = document.getElementById('btn-import-code');
+      btn.disabled = true;
+      btn.textContent = '⏳ Looking up...';
+
+      try {
+        const result = await Sync.importFromCode(code);
+        if (!result.payload) {
+          APP.toast(result.error || 'Code not found.', 'danger', 5000);
+          return;
+        }
+        pendingImports = [{ ...result, method: 'code', code }];
+        renderPreview();
+      } catch (err) {
+        APP.toast('Import failed: ' + err.message, 'danger');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Import';
       }
-      pendingImports = [{ ...result, method: 'code', code }];
-      renderPreview();
     });
 
+    /* ---------- JSON File ---------- */
     const dropZone = document.getElementById('drop-zone');
     const filePicker = document.getElementById('file-picker');
 
@@ -149,6 +222,7 @@
       }
     }
 
+    /* ---------- Bulk ---------- */
     const dropZoneBulk = document.getElementById('drop-zone-bulk');
     const filePickerBulk = document.getElementById('file-picker-bulk');
 
@@ -179,12 +253,13 @@
       renderPreview();
     }
 
+    /* ---------- Render Preview ---------- */
     function renderPreview() {
       const container = document.getElementById('import-preview-container');
       const preview = document.getElementById('import-preview');
       container.classList.remove('hidden');
 
-      preview.innerHTML = pendingImports.map((imp, i) => {
+      preview.innerHTML = pendingImports.map((imp) => {
         const p = imp.payload;
         const valid = imp.valid;
         const cls = valid ? 'checksum-ok' : 'checksum-fail';
@@ -201,101 +276,15 @@
         }
 
         const s = p.student;
+        const sourceBadge = imp.source === 'backend'
+          ? '<span class="badge badge-success" style="font-size:0.7rem;">🌐 From Backend</span>'
+          : imp.source === 'local'
+            ? '<span class="badge badge-warning" style="font-size:0.7rem;">💻 Local Device</span>'
+            : '';
+
         return `
           <div class="import-preview">
             <div class="preview-header">
               <div>
                 <strong>${s.lastName}, ${s.firstName} ${s.middleName || ''}</strong>
-                <div class="text-small text-muted">LRN: ${APP.formatLRN(s.lrn)} · Grade ${s.gradeLevel} — ${s.section}</div>
-              </div>
-              <span class="${cls}">${valid ? '✓ Signature Verified' : '✗ Signature Invalid'}</span>
-            </div>
-            <div class="text-small text-muted">
-              Generated: ${APP.formatDate(p.generatedAt)} · Method: ${imp.method}
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    document.getElementById('btn-confirm-import').addEventListener('click', () => {
-      let imported = 0, rejected = 0;
-
-      pendingImports.forEach((imp) => {
-        if (!imp.valid) {
-          rejected++;
-          syncLog.push({ time: new Date().toISOString(), status: 'rejected', reason: imp.error || 'Invalid signature' });
-          return;
-        }
-        try {
-          const p = imp.payload;
-          const existing = Store.getUser(p.student.lrn);
-          const merged = existing ? { ...existing, ...p.student } : p.student;
-          Store.saveUser(merged);
-
-          const currentProg = Store.getProgress(p.student.lrn);
-          ['biol1', 'biol2'].forEach((subj) => {
-            if (p.progress?.[subj]) {
-              currentProg[subj] = currentProg[subj] || { weeks: {}, completed: [] };
-              Object.assign(currentProg[subj].weeks || {}, p.progress[subj].weeks || {});
-              const mergedCompleted = new Set([
-                ...(currentProg[subj].completed || []),
-                ...(p.progress[subj].completed || [])
-              ]);
-              currentProg[subj].completed = Array.from(mergedCompleted);
-            }
-          });
-          Store.saveProgress(p.student.lrn, currentProg);
-
-          const currentScores = Store.getScores(p.student.lrn);
-          ['biol1', 'biol2'].forEach((subj) => {
-            if (p.scores?.[subj]) {
-              currentScores[subj] = currentScores[subj] || {};
-              ['quizzes', 'st', 'pt', 'activities', 'te'].forEach((type) => {
-                if (p.scores[subj][type]) {
-                  currentScores[subj][type] = { ...(currentScores[subj][type] || {}), ...p.scores[subj][type] };
-                }
-              });
-            }
-          });
-          localStorage.setItem(`gba_v1_scores_${p.student.lrn}`, JSON.stringify(currentScores));
-
-          imported++;
-          syncLog.push({ time: new Date().toISOString(), status: 'success', student: p.student.lrn });
-        } catch (err) {
-          rejected++;
-          syncLog.push({ time: new Date().toISOString(), status: 'error', reason: err.message });
-        }
-      });
-
-      APP.toast(`✅ Imported: ${imported} · ❌ Rejected: ${rejected}`, imported ? 'success' : 'warning');
-      pendingImports = [];
-      document.getElementById('import-preview-container').classList.add('hidden');
-      renderLog();
-    });
-
-    document.getElementById('btn-cancel-import').addEventListener('click', () => {
-      pendingImports = [];
-      document.getElementById('import-preview-container').classList.add('hidden');
-    });
-
-    function renderLog() {
-      const el = document.getElementById('sync-log');
-      if (!syncLog.length) {
-        el.innerHTML = '<p class="text-muted text-small">No syncs yet in this session.</p>';
-        return;
-      }
-      el.innerHTML = syncLog.slice(-20).reverse().map((l) => `
-        <div class="text-small" style="padding:6px 0;border-bottom:1px solid var(--color-border);">
-          ${APP.formatDate(l.time)} — 
-          ${l.status === 'success' ? '✅ Imported' : l.status === 'rejected' ? '❌ Rejected' : '⚠️ Error'}
-          ${l.student ? APP.formatLRN(l.student) : ''}
-          ${l.reason ? `(${l.reason})` : ''}
-        </div>
-      `).join('');
-    }
-
-    renderLog();
-  </script>
-</body>
-</html>
+                <div class="text-small text-muted
