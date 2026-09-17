@@ -3,95 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>General Biology 1 — Weeks</title>
-  <link rel="stylesheet" href="../../assets/css/main.css" />
-  <link rel="stylesheet" href="../../assets/css/student.css" />
+  <title>Week 1 — Cell Theory & Cell Structure</title>
+  <link rel="stylesheet" href="../../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../../assets/css/student.css" />
 </head>
 <body>
 
   <header class="app-header">
     <div class="container flex-between">
       <div>
-        <h1>🔬 General Biology 1</h1>
+        <h1>🔬 Gen Bio 1 · Week 1</h1>
         <span class="version">v2.3.6</span>
       </div>
-      <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
+      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Weeks</a>
     </div>
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
     <div class="card">
-      <h2 style="color:var(--color-primary-dark);margin-bottom:8px;">Course Overview</h2>
-      <p class="text-muted">Life processes at the cellular and molecular levels; transformation of energy in organisms.</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
-        <span class="badge badge-info">32 Competencies</span>
-        <span class="badge badge-info">10 Weeks</span>
-        <span class="badge badge-info">40 Days</span>
-      </div>
+      <h2 style="color:var(--color-primary-dark);">Cell Theory & Cell Structure</h2>
+      <p class="text-muted">Competencies: STEM_BIO11/12-Ia-c-1, STEM_BIO11/12-Ia-c-2</p>
+      <p style="margin-top:12px;">This week you'll explore the historical development of the cell theory, the scientists behind it, and the structure and function of the major subcellular organelles.</p>
     </div>
 
-    <h2 style="margin:24px 0 12px;color:var(--color-primary-dark);">📅 Weekly Modules</h2>
-    <div class="dashboard-grid" id="weeks-grid"></div>
+    <h2 style="margin:24px 0 12px;color:var(--color-primary-dark);">📆 Daily Lessons</h2>
+    <div class="dashboard-grid" id="days-grid"></div>
 
   </main>
 
-  <footer class="app-footer">
-    <p>General Biology 1 · v2.3.6</p>
-  </footer>
+  <footer class="app-footer"><p>General Biology 1 · Week 1 · v2.3.6</p></footer>
 
-  <script src="../../config.js"></script>
-  <script src="../../assets/js/app.js"></script>
-  <script src="../../assets/js/store.js"></script>
-  <script src="../../assets/js/transmutation.js"></script>
+  <script src="../../../config.js"></script>
+  <script src="../../../assets/js/app.js"></script>
+  <script src="../../../assets/js/store.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const user = Store.getCurrentUser();
-      if (!user) { window.location.href = '../login.html'; return; }
+      if (!user) { window.location.href = '../../login.html'; return; }
+
+      const days = [
+        { n: 1, title: 'The Cell Theory — Historical Development and Postulates', comp: 'Ia-c-1' },
+        { n: 2, title: 'The Plasma Membrane & Cytoplasm', comp: 'Ia-c-2' },
+        { n: 3, title: 'Major Organelles — Nucleus, Ribosomes, ER', comp: 'Ia-c-2' },
+        { n: 4, title: 'Energy & Support Organelles — Mitochondria, Chloroplasts, Cytoskeleton', comp: 'Ia-c-2' }
+      ];
 
       const progress = Store.getProgress(user.lrn);
       const done = progress.biol1?.completed || [];
 
-      const weeks = [
-        { n: 1, title: 'Cell Theory & Cell Structure',       topics: 'Cell theory · Organelles · Prokaryotic vs Eukaryotic' },
-        { n: 2, title: 'Cell Types & Modifications',         topics: 'Plant/animal tissues · Microvilli · Root hairs' },
-        { n: 3, title: 'Cell Cycle: Mitosis & Meiosis',      topics: 'Phases · Crossing over · Cell cycle disorders' },
-        { n: 4, title: 'Transport Mechanisms',               topics: 'Diffusion · Osmosis · Active transport · Endo/Exocytosis' },
-        { n: 5, title: 'Biological Molecules: Structure',    topics: 'Carbohydrates · Lipids · Proteins · Nucleic acids' },
-        { n: 6, title: 'Enzymes & Oxidation/Reduction',      topics: 'Enzyme components · Redox reactions' },
-        { n: 7, title: 'Photosynthesis',                     topics: 'Pigments · Light reactions · Calvin cycle' },
-        { n: 8, title: 'Cellular Respiration',               topics: 'Aerobic/Anaerobic · Glycolysis · Krebs · ETS' },
-        { n: 9, title: 'ATP & Oxygen',                       topics: 'ATP accounting · Anaerobic pathways' },
-        { n: 10, title: 'Fermentation vs Aerobic',           topics: 'Pros & cons · Synthesis' }
-      ];
-
-      document.getElementById('weeks-grid').innerHTML = weeks.map((w) => {
-        const daysDone = Array.from({ length: 4 }, (_, i) => `biol1-w${w.n}-d${i + 1}`).filter((k) => done.includes(k)).length;
-        const pct = Math.round((daysDone / 4) * 100);
-        const locked = w.n > 1 && !done.includes(`biol1-w${w.n - 1}-d4`);
+      document.getElementById('days-grid').innerHTML = days.map((d) => {
+        const key = `biol1-w1-d${d.n}`;
+        const completed = done.includes(key);
+        const prevDone = d.n === 1 || done.includes(`biol1-w1-d${d.n - 1}`);
+        const locked = !prevDone;
 
         return `
-          <div class="subject-card" data-week="${w.n}" style="border-top-color:${locked ? '#dadce0' : 'var(--color-primary)'};${locked ? 'opacity:0.5;' : ''}">
+          <div class="subject-card" data-day="${d.n}" style="${locked ? 'opacity:0.5;' : ''}">
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <h3>Week ${w.n}</h3>
-              ${locked ? '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>' : `<span class="badge badge-success">${pct}%</span>`}
+              <span class="badge badge-info">Day ${d.n}</span>
+              ${completed ? '<span class="badge badge-success">✅ Done</span>' : locked ? '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>' : '<span class="badge badge-warning">▶ Start</span>'}
             </div>
-            <p style="font-size:0.95rem;font-weight:600;margin:4px 0;">${w.title}</p>
-            <p class="text-muted text-small">${w.topics}</p>
-            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;"></div></div>
-            <p class="text-small text-muted">${daysDone}/4 days complete</p>
+            <h3 style="margin-top:8px;font-size:1rem;">${d.title}</h3>
+            <p class="text-small text-muted">${d.comp}</p>
           </div>
         `;
       }).join('');
 
-      document.querySelectorAll('[data-week]').forEach((card) => {
+      document.querySelectorAll('[data-day]').forEach((card) => {
         card.addEventListener('click', () => {
-          const n = card.dataset.week;
           if (card.style.opacity === '0.5') {
-            APP.toast('Complete the previous week first.', 'warning');
+            APP.toast('Complete the previous day first.', 'warning');
             return;
           }
-          window.location.href = `week${n}/index.html`;
+          window.location.href = `day.html?day=${card.dataset.day}`;
         });
       });
     });
