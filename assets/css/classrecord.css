@@ -1,8 +1,73 @@
 /* ============================================================
    classrecord.css — Gradebook Application styles
-   Version: 2.0.0
+   Version: 2.1.1
    Modern gradebook design system
    ============================================================ */
+
+/* ============================================================
+   NAVIGATION (matching Teacher App style)
+   ============================================================ */
+.teacher-nav {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.teacher-nav a,
+.teacher-nav button {
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+}
+
+.teacher-nav a:hover,
+.teacher-nav button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.teacher-nav a:active,
+.teacher-nav button:active {
+  transform: translateY(0);
+}
+
+/* Special styling for Log Out — slightly different tone */
+.teacher-nav button {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.teacher-nav button:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: #4a148c;
+  border-color: #fff;
+}
+
+@media (max-width: 640px) {
+  .teacher-nav {
+    gap: 6px;
+  }
+  .teacher-nav a,
+  .teacher-nav button {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+}
 
 /* ============================================================
    HEADER
@@ -113,7 +178,7 @@
 }
 
 /* ============================================================
-   GRADEBOOK TABLE
+   GRADEBOOK TABLE (with borders)
    ============================================================ */
 .gradebook-wrapper {
   background: #fff;
@@ -134,6 +199,7 @@
   border-spacing: 0;
   font-size: 0.8rem;
   min-width: 900px;
+  border: 1px solid #cfd8dc;
 }
 
 .gradebook-table thead th {
@@ -145,8 +211,8 @@
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  border-bottom: 2px solid #e0e0e0;
-  border-right: 1px solid #eceff1;
+  border: 1px solid #cfd8dc;
+  border-bottom: 2px solid #b0bec5;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -162,8 +228,7 @@
 .gradebook-table tbody td {
   padding: 10px 8px;
   text-align: center;
-  border-bottom: 1px solid #f5f5f5;
-  border-right: 1px solid #f5f5f5;
+  border: 1px solid #e0e0e0;
   color: #37474f;
   vertical-align: middle;
   font-size: 0.8rem;
@@ -178,7 +243,8 @@
   left: 0;
   z-index: 5;
   min-width: 220px;
-  border-right: 2px solid #e0e0e0;
+  border: 1px solid #e0e0e0;
+  border-right: 2px solid #b0bec5;
 }
 
 .gradebook-table tbody tr {
@@ -230,7 +296,6 @@
 .gradebook-table .status-badge.pass { background: #e8f5e9; color: #2e7d32; }
 .gradebook-table .status-badge.fail { background: #ffebee; color: #c62828; }
 
-/* Column group headers */
 .gradebook-table .col-group {
   background: linear-gradient(180deg, #ede7f6, #e1d4f5);
   font-size: 0.72rem;
@@ -252,7 +317,7 @@
   border-radius: 14px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  border: 1px solid #e0e0e0;
   transition: all 0.2s ease;
 }
 
@@ -273,7 +338,7 @@
 }
 
 /* ============================================================
-   DISTRIBUTION BARS (preserved + modernized)
+   DISTRIBUTION BARS
    ============================================================ */
 .distribution-row {
   display: flex;
@@ -281,6 +346,12 @@
   gap: 12px;
   margin-bottom: 10px;
   font-size: 0.85rem;
+  border-bottom: 1px solid #f5f5f5;
+  padding-bottom: 10px;
+}
+
+.distribution-row:last-child {
+  border-bottom: none;
 }
 
 .distribution-label {
@@ -296,6 +367,7 @@
   background: #f5f7fa;
   border-radius: 6px;
   overflow: hidden;
+  border: 1px solid #e0e0e0;
 }
 
 .distribution-fill {
@@ -387,18 +459,34 @@
    ============================================================ */
 .transmutation-table {
   font-size: 0.82rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
 }
 
 .transmutation-table td,
 .transmutation-table th {
   padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.transmutation-table thead th {
+  background: #f5f7fa;
+  font-weight: 700;
+  color: #37474f;
+  border: 1px solid #cfd8dc;
+  border-bottom: 2px solid #b0bec5;
+  text-align: left;
 }
 
 .transmutation-table .raw   { background: #fafafa; font-weight: 600; color: #37474f; }
 .transmutation-table .final { background: #f3e5f5; font-weight: 700; color: #4a148c; }
 
 /* ============================================================
-   TABS (Grades / Activities / Reports)
+   TABS
    ============================================================ */
 .cr-tabs {
   display: flex;
@@ -448,7 +536,7 @@
 }
 
 /* ============================================================
-   STAT CARDS (modern purple theme)
+   STAT CARDS
    ============================================================ */
 .cr-stats-grid {
   display: grid;
@@ -500,7 +588,7 @@
 }
 
 /* ============================================================
-   STUDENT LIST (sidebar for selecting student)
+   STUDENT LIST (sidebar)
    ============================================================ */
 .student-list-panel {
   background: #fff;
@@ -577,6 +665,152 @@
 .student-list-item .meta {
   font-size: 0.72rem;
   color: #90a4ae;
+}
+
+/* ============================================================
+   STUDENT CELL (avatars in tables)
+   ============================================================ */
+.student-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.student-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.student-avatar.av-1 { background: linear-gradient(135deg, #1b7a3d, #4caf50); }
+.student-avatar.av-2 { background: linear-gradient(135deg, #0d47a1, #42a5f5); }
+.student-avatar.av-3 { background: linear-gradient(135deg, #ed6c02, #ffb74d); }
+.student-avatar.av-4 { background: linear-gradient(135deg, #6a1b9a, #ab47bc); }
+.student-avatar.av-5 { background: linear-gradient(135deg, #c62828, #ef5350); }
+.student-avatar.av-6 { background: linear-gradient(135deg, #00695c, #26a69a); }
+
+.student-info .name {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+}
+
+.student-info .meta {
+  font-size: 0.75rem;
+  color: #90a4ae;
+}
+
+/* ============================================================
+   PROGRESS BAR / RING
+   ============================================================ */
+.progress-bar-modern {
+  height: 8px;
+  background: #eceff1;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-modern .fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.progress-bar-modern .fill.green  { background: linear-gradient(90deg, #1b7a3d, #4caf50); }
+.progress-bar-modern .fill.blue   { background: linear-gradient(90deg, #0d47a1, #42a5f5); }
+.progress-bar-modern .fill.amber  { background: linear-gradient(90deg, #ed6c02, #ffb74d); }
+.progress-bar-modern .fill.red    { background: linear-gradient(90deg, #c62828, #ef5350); }
+
+.progress-ring {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+
+.progress-ring svg {
+  transform: rotate(-90deg);
+}
+
+.progress-ring .bg {
+  fill: none;
+  stroke: #eceff1;
+  stroke-width: 6;
+}
+
+.progress-ring .fg {
+  fill: none;
+  stroke: #0d47a1;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.progress-ring .label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0d47a1;
+}
+
+/* ============================================================
+   MODERN TABLE (reports, activities)
+   ============================================================ */
+.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.88rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modern-table thead th {
+  background: #f5f7fa;
+  color: #37474f;
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border: 1px solid #cfd8dc;
+  border-bottom: 2px solid #b0bec5;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.modern-table tbody td {
+  padding: 12px 14px;
+  border: 1px solid #e0e0e0;
+  color: #37474f;
+  vertical-align: middle;
+}
+
+.modern-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.modern-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+.modern-table tbody tr:last-child td {
+  border-bottom: 1px solid #e0e0e0;
 }
 
 /* ============================================================
