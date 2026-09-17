@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📋 Class Record</h1>
-        <span class="version">v2.0.0</span>
+        <span class="version">v2.1.0</span>
       </div>
       <nav class="teacher-nav">
         <a href="index.html">🎓 Student View</a>
@@ -25,7 +25,6 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
-    <!-- ============ HERO BANNER ============ -->
     <div class="classrecord-hero">
       <div class="classrecord-hero-content">
         <div>
@@ -33,7 +32,7 @@
           <div class="subtitle">SY 2026–2027 · Adjusted Transmutation (Raw 70 → 75)</div>
         </div>
         <div class="teacher-hero-actions">
-          <button id="btn-export-csv" class="teacher-hero-actions-btn" style="background:rgba(255,255,255,0.95);color:#4a148c;padding:12px 20px;border-radius:10px;border:none;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+          <button id="btn-export-csv" style="background:rgba(255,255,255,0.95);color:#4a148c;padding:12px 20px;border-radius:10px;border:none;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
             📥 Export CSV
           </button>
           <button id="btn-print" style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.6);padding:12px 20px;border-radius:10px;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
@@ -43,7 +42,6 @@
       </div>
     </div>
 
-    <!-- ============ TABS ============ -->
     <div class="cr-tabs" id="cr-tabs">
       <button class="cr-tab active" data-tab="grades">📊 Grades</button>
       <button class="cr-tab" data-tab="activities">🎮 Activity Tracker</button>
@@ -51,7 +49,7 @@
       <button class="cr-tab" data-tab="transmutation">🔄 Transmutation</button>
     </div>
 
-    <!-- ============ TAB: GRADES ============ -->
+    <!-- GRADES TAB -->
     <div id="tab-grades">
       <div class="filter-bar">
         <div class="filter-group">
@@ -65,6 +63,21 @@
           <label for="cr-section">Section</label>
           <select id="cr-section">
             <option value="">All Sections</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="cr-sex">Sex</label>
+          <select id="cr-sex">
+            <option value="">All</option>
+            <option value="Female">♀ Female</option>
+            <option value="Male">♂ Male</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="cr-sort">Sort By</label>
+          <select id="cr-sort">
+            <option value="last">Last Name (A→Z)</option>
+            <option value="first">First Name (A→Z)</option>
           </select>
         </div>
         <div class="filter-group">
@@ -90,7 +103,7 @@
       </div>
     </div>
 
-    <!-- ============ TAB: ACTIVITIES ============ -->
+    <!-- ACTIVITIES TAB -->
     <div id="tab-activities" class="hidden">
       <div class="filter-bar">
         <div class="filter-group">
@@ -118,7 +131,7 @@
       </div>
     </div>
 
-    <!-- ============ TAB: REPORTS ============ -->
+    <!-- REPORTS TAB -->
     <div id="tab-reports" class="hidden">
       <div class="report-grid" id="reports-grid"></div>
 
@@ -133,7 +146,7 @@
       </div>
     </div>
 
-    <!-- ============ TAB: TRANSMUTATION ============ -->
+    <!-- TRANSMUTATION TAB -->
     <div id="tab-transmutation" class="hidden">
       <div class="gradebook-wrapper" style="padding:20px;">
         <h3 style="color:#4a148c;margin:0 0 8px;">🔄 Adjusted Transmutation Table</h3>
@@ -158,7 +171,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Class Record · v2.0.0 · Aligned with DO 015, s. 2026</p>
+    <p>Class Record · v2.1.0 · Aligned with DO 015, s. 2026</p>
   </footer>
 
   <script src="config.js"></script>
