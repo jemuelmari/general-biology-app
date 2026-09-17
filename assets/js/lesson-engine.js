@@ -1,12 +1,12 @@
 /* ============================================================
    lesson-engine.js — Shared gamified activity + formative check
-   Version: 1.0.0
+   Version: 1.3.0
    ============================================================ */
 
 const Lesson = (() => {
   'use strict';
 
-  let ctx = null; // { lrn, subject, week, day, points, badges, startTime }
+  let ctx = null;
 
   /* ---------- Init ---------- */
   function init(config) {
@@ -18,9 +18,9 @@ const Lesson = (() => {
 
     ctx = {
       lrn: user.lrn,
-      subject: config.subject,       // 'biol1' | 'biol2'
-      week: config.week,             // number
-      day: config.day,               // number
+      subject: config.subject,
+      week: config.week,
+      day: config.day,
       points: 0,
       maxPoints: config.maxPoints || 300,
       badges: [],
@@ -30,7 +30,7 @@ const Lesson = (() => {
     renderScoreBar(config.title);
     startLiveTimer();
 
-    // Register this lesson with the activity gate (if loaded)
+    // Register with activity gate (if loaded)
     if (window.ActivityGate) ActivityGate.init(config);
   }
 
@@ -395,7 +395,6 @@ const Lesson = (() => {
       } else {
         btn.classList.add('wrong');
         currentLives--;
-        // Reveal correct
         const correctIdx = questions[index].choices.findIndex((c) => c.correct);
         all[correctIdx].classList.add('correct');
 
@@ -416,7 +415,7 @@ const Lesson = (() => {
           <div class="escape-result">
             <div class="result-emoji">🎉</div>
             <div class="result-title">You escaped!</div>
-            <p class="result-message">All 3 keys collected. Day unlocked.</p>
+            <p class="result-message">All ${questions.length} keys collected. Day unlocked.</p>
             <button id="escape-next" class="btn btn-accent" style="margin-top:16px;">Continue to Next Day →</button>
           </div>
         </div>
@@ -463,32 +462,25 @@ const Lesson = (() => {
   /* ---------- Public API ---------- */
   return { init, addPoints, awardBadge, renderMatchGame, renderScenarioGame, renderEscapeRoom, markDayComplete };
 })();
-/* ---------- Auto-load activity gate if not present ---------- */
+
+/* ============================================================
+   Auto-load activity-gate.js (Option B — no HTML edits needed)
+   ============================================================ */
 (function autoLoadGate() {
   if (window.ActivityGate) return;
   if (document.querySelector('script[src*="activity-gate.js"]')) return;
 
   const path = window.location.pathname;
-  const depth = (path.match(/\//g) || []).length;
-  const prefix = path.includes('/student/') ? '../../../' : '';
+  const isStudentPage = path.includes('/student/');
+  if (!isStudentPage) return;
+
+  // Day pages live at student/biolX/weekN/day.html
+  // so the prefix back to the repo root is ../../../ (three levels up)
+  const prefix = '../../../';
 
   const s = document.createElement('script');
   s.src = prefix + 'assets/js/activity-gate.js';
-  s.onload = () => {
-    if (window.ActivityGate && window.Lesson) {
-      // Config is not accessible here — the day.html's own script
-      // already called Lesson.init(), so we re-init the gate.
-      // Best effort: derive config from the DOM
-      const title = document.querySelector('.score-bar-title')?.textContent || '';
-      const weekMatch = document.querySelector('.score-bar-label')?.textContent?.match(/Week (\d+).*Day (\d+)/);
-      if (weekMatch) {
-        ActivityGate.init({
-          subject: path.includes('/biol1/') ? 'biol1' : 'biol2',
-          week: parseInt(weekMatch[1]),
-          day: parseInt(weekMatch[2])
-        });
-      }
-    }
-  };
+  s.async = false;
   document.body.appendChild(s);
+  console.log('[Lesson] activity-gate.js auto-loaded.');
 })();
