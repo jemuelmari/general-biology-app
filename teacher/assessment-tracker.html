@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assessment Tracker — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+</head>
+<body>
+
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📝 Assessment Tracker</h1>
+        <span class="version">v1.5.0</span>
+      </div>
+      <nav style="display:flex;gap:8px;">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card">
+      <h2 style="color:var(--color-primary-dark);">📝 Assessment Performance</h2>
+      <p class="text-muted">
+        Tracks <strong>Quizzes</strong>, <strong>Summative Tests</strong>, and <strong>Term Exam</strong>
+        performance separately from the activity engagement.
+      </p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+        <select id="at-subject" class="form-control" style="max-width:200px;">
+          <option value="biol1">General Biology 1</option>
+          <option value="biol2">General Biology 2</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="stats-grid" id="at-stats"></div>
+
+    <div class="card" style="overflow-x:auto;">
+      <h3 style="color:var(--color-primary-dark);margin-bottom:12px;">📋 Assessment Overview by Student</h3>
+      <div id="at-table"></div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Assessment Tracker · v1.5.0</p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/transmutation.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const subjectSel = document.getElementById('at-subject');
+      subjectSel.addEventListener('change', render);
+      render();
+
+      function render() {
+        const subject = subjectSel.value;
+        const users = Store.getAllUsers();
+
+        const data = users.map((u) => {
+          const scores = Store.getScores(u.lrn)[subject] || {};
+          const quizzes = Object.values(scores.quizzes || {}).filter((q) => q && q.total);
+          const sts = Object.values(scores.st || {}).filter((s) => s && s.total);
+          const te = Object.values(scores.te || {}).filter((t) => t && t.total);
+          const pts = Object.values(scores.pt || {}).filter((p) => p && p.score != null);
+
+          const avg = (arr) => arr.length ? Math.round(arr.reduce((a, x) => a + (x.score / x.total) * 100, 0) / arr.length) : null;
+
+          return {
+            user: u,
+            quizzesTaken: quizzes.length,
+            stsTaken: sts.length,
+            ptsTaken: pts.length,
+            teTaken: te.length,
+            quizAvg: avg(quizzes),
+            stAvg: avg(sts),
+            teAvg: avg(te),
+            status: (avg(sts) !== null && avg(sts) < 80) ? 'Remediation' : 'On Track'
+          };
+        });
+
+        const totals = {
+          quizSubmissions: data.reduce((a, d) => a + d.quizzesTaken, 0),
+          stSubmissions: data.reduce((a, d) => a + d.stsTaken, 0),
+          teSubmissions: data.reduce((a, d) => a + d.teTaken, 0),
+          remediation: data.filter((d) => d.status === 'Remediation').length
+        };
+
+        document.getElementById('at-stats').innerHTML = `
+          <div class="stat-card">
+            <div class="stat-value">${totals.quizSubmissions}</div>
+            <div class="stat-label">Quiz Submissions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${totals.stSubmissions}</div>
+            <div class="stat-label">ST Submissions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">${totals.teSubmissions}</div>
+            <div class="stat-label">TE Submissions</div>
+          </div>
+          <div class="stat-card" style="border-left-color:var(--color-danger);">
+            <div class="stat-value">${totals.remediation}</div>
+            <div class="stat-label">Needs Remediation</div>
+          </div>
+        `;
+
+        const tableEl = document.getElementById('at-table');
+        if (!data.length) {
+          tableEl.innerHTML = `<div class="alert alert-info">No students registered yet.</div>`;
+          return;
+        }
+
+        tableEl.innerHTML = `
+          <table class="gradebook-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Section</th>
+                <th>Quizzes</th>
+                <th>ST1/ST2</th>
+                <th>Term Exam</th>
+                <th>ST Average</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map((d) => {
+                const stColor = d.stAvg === null ? 'var(--color-text-muted)'
+                              : d.stAvg >= 90 ? 'var(--color-success)'
+                              : d.stAvg >= 80 ? 'var(--color-info)'
+                              : d.stAvg >= 65 ? 'var(--color-warning)'
+                              : 'var(--color-danger)';
+                const statusBadge = d.status === 'Remediation'
+                  ? '<span class="badge badge-remediation">Remediation</span>'
+                  : '<span class="badge badge-on-track">On Track</span>';
+                return `
+                  <tr>
+                    <td class="student-name">${d.user.lastName}, ${d.user.firstName}</td>
+                    <td>${d.user.section}</td>
+                    <td>${d.quizzesTaken}/3</td>
+                    <td>${d.stsTaken}/2</td>
+                    <td>${d.teTaken}/1</td>
+                    <td><strong style="color:${stColor};">${d.stAvg !== null ? d.stAvg + '%' : '—'}</strong></td>
+                    <td>${statusBadge}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
