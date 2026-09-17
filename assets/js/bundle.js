@@ -1,12 +1,16 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.3.5
+   Version: 2.3.6
+   ------------------------------------------------------------
+   NEW in v2.3.6:
+   - Strip "✓" from scenario choice labels before rendering
+     (prevents accidental answer leakage)
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.5',
+  VERSION: '2.3.6',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -309,6 +313,15 @@ const Lesson = (() => {
   let ready = false;
   let to = null;
 
+  /* ⬇️ NEW helper: strip "✓" and similar marker characters */
+  function cleanLabel(label) {
+    if (typeof label !== 'string') return label;
+    return label
+      .replace(/[✓✔✅☑]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
   function init(cfg) {
     console.log('[Lesson] init() with:', cfg);
     const user = Store.getCurrentUser();
@@ -443,7 +456,7 @@ const Lesson = (() => {
   function renderMatch(cid, cfg) {
     const c = document.getElementById(cid);
     if (!c) return;
-    const { pairs, timeLimit, pointsCorrect = 10, pointsWrong = -3, bonusFast = 15, badgeId, badgeName, badgeIcon } = cfg;
+    const { pairs, timeLimit, pointsCorrect = 10, pointsWrong = -3, badgeId, badgeName, badgeIcon } = cfg;
     let L = [...pairs].sort(() => Math.random() - 0.5);
     let R = [...pairs].sort(() => Math.random() - 0.5);
     let sel = null, matches = 0, wrong = 0, tLeft = timeLimit, interval = null, done = false;
@@ -453,8 +466,8 @@ const Lesson = (() => {
       <div class="text-center mt-md"><span id="match-score" class="badge badge-info">Matches: 0 / ${pairs.length}</span></div>
     `;
     const le = c.querySelector('#match-left'), re = c.querySelector('#match-right');
-    L.forEach((it) => { const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: it.left }); e.onclick = () => onL(e); le.appendChild(e); });
-    R.forEach((it) => { const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: it.right }); e.onclick = () => onR(e); re.appendChild(e); });
+    L.forEach((it) => { const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.left) }); e.onclick = () => onL(e); le.appendChild(e); });
+    R.forEach((it) => { const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.right) }); e.onclick = () => onR(e); re.appendChild(e); });
 
     function onL(e) { if (done || e.classList.contains('correct')) return; le.querySelectorAll('.match-item').forEach((n) => n.classList.remove('selected')); e.classList.add('selected'); sel = e; }
     function onR(e) {
@@ -501,7 +514,12 @@ const Lesson = (() => {
       const b = c.querySelector('#scen-body');
       b.innerHTML = `<div class="scenario-card"><p class="scenario-text">${sc.text}</p><div class="choice-row" id="cr"></div></div><div class="text-center mt-md"><span class="badge badge-info">${i + 1} / ${scenarios.length}</span></div>`;
       const row = b.querySelector('#cr');
-      sc.choices.forEach((ch) => { const btn = APP.el('button', { class: 'choice-btn', text: ch.label }); btn.onclick = () => onCh(btn, ch); row.appendChild(btn); });
+      sc.choices.forEach((ch) => {
+        const cleanText = cleanLabel(ch.label);
+        const btn = APP.el('button', { class: 'choice-btn', text: cleanText });
+        btn.onclick = () => onCh(btn, ch);
+        row.appendChild(btn);
+      });
     }
     function onCh(btn, ch) {
       if (done) return;
@@ -550,7 +568,12 @@ const Lesson = (() => {
           <div class="escape-question"><h4>${q.text}</h4><div class="escape-options" id="esc-o"></div></div>
         </div>`;
       const o = c.querySelector('#esc-o');
-      q.choices.forEach((ch, j) => { const b = APP.el('button', { class: 'escape-option', text: `${String.fromCharCode(65 + j)}. ${ch.label}` }); b.onclick = () => ans(b, ch); o.appendChild(b); });
+      q.choices.forEach((ch, j) => {
+        const cleanText = cleanLabel(ch.label);
+        const b = APP.el('button', { class: 'escape-option', text: `${String.fromCharCode(65 + j)}. ${cleanText}` });
+        b.onclick = () => ans(b, ch);
+        o.appendChild(b);
+      });
     }
 
     function ans(btn, ch) {
@@ -578,20 +601,13 @@ const Lesson = (() => {
   return { init, addPoints: addPts, awardBadge, renderMatchGame: regMatch, renderScenarioGame: regScenario, renderEscapeRoom: regEscape };
 })();
 
-/* ============================================================
-   EXPOSE TO WINDOW — CRITICAL FIX
-   ------------------------------------------------------------
-   `const X` at top level does NOT create `window.X`.
-   But `Lesson.init()` checks `window.ActivityGate`.
-   This block attaches everything to `window` so those checks work.
-   ============================================================ */
+/* ---------- EXPOSE TO WINDOW ---------- */
 window.CONFIG = CONFIG;
 window.APP = APP;
 window.Store = Store;
 window.ActivityGate = ActivityGate;
 window.Lesson = Lesson;
 
-/* ---------- AUTO INIT ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   if (window.APP) APP.init();
 });
