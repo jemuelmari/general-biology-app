@@ -1,6 +1,6 @@
 /* ============================================================
    config.js — App configuration (teacher password, dev info)
-   Version: 1.2.0
+   Version: 1.3.0
    ============================================================ */
 
 const CONFIG = {
