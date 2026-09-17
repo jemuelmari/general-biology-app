@@ -1,36 +1,34 @@
 /* ============================================================
    activity-gate.js — Sequential activity locking with retakes
-   Version: 2.3.0
+   Version: 2.3.2
    ------------------------------------------------------------
-   RULES:
-   - Activity 1 available at start
-   - Activity 2 unlocks ONLY after Activity 1 ≥ 75%
-   - Formative unlocks ONLY after Activities 1 & 2 ≥ 75%
-   - Each activity has a difficulty-based timer (min 5 min)
-   - Retakes unlimited until passing score reached
-   - Manual "Start" tap required to begin each activity
-   - Fully fail-proof (survives refresh)
+   FIXED: Fire 'activity-gate:ready' event so lesson-engine
+          knows when it's safe to render activities.
    ============================================================ */
 
 const ActivityGate = (() => {
   'use strict';
 
   const STORAGE_KEY_PREFIX = 'gba_gate_v2_';
-  const PASS_THRESHOLD = 0.75; // 75%
+  const PASS_THRESHOLD = 0.75;
 
   let session = null;
+  let initialized = false;
 
   /* ============================================================
      INIT
      ============================================================ */
   function init(config) {
+    // Prevent double-init
+    if (initialized) return;
+
     session = {
       key: `${STORAGE_KEY_PREFIX}${config.subject}_w${config.week}_d${config.day}`,
       subject: config.subject,
       week: config.week,
       day: config.day,
       states: {
-        activity1: { status: 'ready',   score: 0, attempts: 0 },   // ready | running | passed | failed
+        activity1: { status: 'ready',   score: 0, attempts: 0 },
         activity2: { status: 'locked',  score: 0, attempts: 0 },
         formative: { status: 'locked',  score: 0, attempts: 0 }
       }
@@ -46,7 +44,13 @@ const ActivityGate = (() => {
     }
 
     console.log('[ActivityGate] Init:', session.key, session.states);
-    applyUI();
+    initialized = true;
+
+    // Apply UI immediately (containers exist in HTML)
+    setTimeout(applyUI, 10);
+
+    // Fire ready event so lesson-engine can hide loading overlay
+    document.dispatchEvent(new CustomEvent('activity-gate:ready'));
   }
 
   /* ============================================================
@@ -54,20 +58,20 @@ const ActivityGate = (() => {
      ============================================================ */
   function save() {
     if (!session) return;
-    sessionStorage.setItem(session.key, JSON.stringify({
-      subject: session.subject,
-      week: session.week,
-      day: session.day,
-      states: session.states,
-      updatedAt: new Date().toISOString()
-    }));
+    try {
+      sessionStorage.setItem(session.key, JSON.stringify({
+        subject: session.subject,
+        week: session.week,
+        day: session.day,
+        states: session.states,
+        updatedAt: new Date().toISOString()
+      }));
+    } catch (e) { /* ignore */ }
   }
 
   /* ============================================================
      STATE MUTATIONS
      ============================================================ */
-
-  // Mark activity as running (called when student taps "Start")
   function markRunning(activityId) {
     const key = normalizeKey(activityId);
     if (!session) return;
@@ -77,7 +81,6 @@ const ActivityGate = (() => {
     applyUI();
   }
 
-  // Mark activity complete with score (called by lesson engine)
   function completeWithScore(activityId, scorePercent) {
     if (!session) return;
     const key = normalizeKey(activityId);
@@ -89,7 +92,6 @@ const ActivityGate = (() => {
       st.status = 'passed';
       console.log(`[ActivityGate] ${key} PASSED (${st.score}%)`);
 
-      // Unlock the next stage
       if (key === 'activity1') {
         session.states.activity2.status = 'ready';
         APP.toast('✅ Activity 1 passed! Activity 2 is now available.', 'success', 4000);
@@ -108,12 +110,10 @@ const ActivityGate = (() => {
     applyUI();
   }
 
-  // Reset a single activity for a retake
   function resetActivity(activityId) {
     if (!session) return;
     const key = normalizeKey(activityId);
     session.states[key].status = 'ready';
-    // Keep score & attempts for record-keeping
     save();
     applyUI();
   }
@@ -129,14 +129,16 @@ const ActivityGate = (() => {
 
   function applyStageUI(containerId, stateKey) {
     const container = document.getElementById(containerId);
-    if (!container) return;
+    if (!container) {
+      console.warn('[ActivityGate] Container not found:', containerId);
+      return;
+    }
 
     const parentCard = container.closest('.activity-card') || container.parentElement;
     if (!parentCard) return;
 
     const st = session.states[stateKey];
 
-    // Remove any existing overlay
     parentCard.querySelectorAll('.gate-overlay').forEach((el) => el.remove());
 
     switch (st.status) {
@@ -144,22 +146,17 @@ const ActivityGate = (() => {
         container.style.display = 'none';
         parentCard.appendChild(buildLockedOverlay());
         break;
-
       case 'ready':
         container.style.display = 'none';
         parentCard.appendChild(buildReadyOverlay(stateKey, st));
         break;
-
       case 'running':
-        // Hide overlay, show activity
         container.style.display = '';
         break;
-
       case 'passed':
         container.style.display = 'none';
         parentCard.appendChild(buildPassedOverlay(stateKey, st));
         break;
-
       case 'failed':
         container.style.display = 'none';
         parentCard.appendChild(buildFailedOverlay(stateKey, st));
@@ -173,9 +170,7 @@ const ActivityGate = (() => {
     el.className = 'gate-overlay';
     el.style.cssText = `
       padding:32px 24px;text-align:center;
-      background:#f8f9fa;
-      border:2px dashed #dadce0;
-      border-radius:8px;
+      background:#f8f9fa;border:2px dashed #dadce0;border-radius:8px;
     `;
     el.innerHTML = `
       <div style="font-size:2rem;">🔒</div>
@@ -193,8 +188,7 @@ const ActivityGate = (() => {
     el.style.cssText = `
       padding:32px 24px;text-align:center;
       background:linear-gradient(135deg, #e8f5e9, #c8e6c9);
-      border:2px solid #4caf50;
-      border-radius:8px;
+      border:2px solid #4caf50;border-radius:8px;
     `;
 
     const titles = {
@@ -221,7 +215,7 @@ const ActivityGate = (() => {
       </div>
       ${st.attempts > 0 ? `
         <div style="font-size:0.8rem;margin-top:8px;color:#d84315;">
-          Previous attempt: <strong>${st.score}%</strong> (Attempt #${st.attempts})
+          Previous: <strong>${st.score}%</strong> (Attempt #${st.attempts})
         </div>
       ` : ''}
       <button class="btn btn-primary" style="margin-top:16px;font-size:0.95rem;padding:12px 28px;" data-start="${stateKey}">
@@ -229,7 +223,6 @@ const ActivityGate = (() => {
       </button>
     `;
 
-    // Attach click handler
     setTimeout(() => {
       el.querySelector(`[data-start="${stateKey}"]`)?.addEventListener('click', () => {
         startActivity(stateKey);
@@ -245,8 +238,7 @@ const ActivityGate = (() => {
     el.style.cssText = `
       padding:24px;text-align:center;
       background:linear-gradient(135deg, #e8f5e9, #a5d6a7);
-      border:2px solid #2e7d32;
-      border-radius:8px;
+      border:2px solid #2e7d32;border-radius:8px;
     `;
 
     const isFormative = stateKey === 'formative';
@@ -285,8 +277,7 @@ const ActivityGate = (() => {
     el.style.cssText = `
       padding:32px 24px;text-align:center;
       background:linear-gradient(135deg, #fff3e0, #ffe0b2);
-      border:2px solid #ed6c02;
-      border-radius:8px;
+      border:2px solid #ed6c02;border-radius:8px;
     `;
 
     el.innerHTML = `
@@ -317,7 +308,6 @@ const ActivityGate = (() => {
   /* ---------- Activity Start ---------- */
   function startActivity(stateKey) {
     markRunning(stateKey);
-    // Trigger the lesson engine to re-render this activity
     document.dispatchEvent(new CustomEvent('activity:start', {
       detail: { activity: stateKey }
     }));
@@ -330,8 +320,6 @@ const ActivityGate = (() => {
                       : 'formative';
     const container = document.getElementById(containerId);
     if (!container) return 5;
-
-    // Read from data attribute set by lesson-engine
     const mins = container.dataset.estimatedMinutes;
     return mins ? parseFloat(mins) : 5;
   }
@@ -352,35 +340,8 @@ const ActivityGate = (() => {
     resetActivity,
     applyUI,
     PASS_THRESHOLD,
-    // legacy support
+    isInitialized: () => initialized,
     complete: (id) => completeWithScore(id, 100),
     applyLocks: applyUI
   };
-})();
-
-/* ============================================================
-   Auto-init
-   ============================================================ */
-(function autoInit() {
-  const tryInit = () => {
-    const path = window.location.pathname;
-    const params = new URLSearchParams(window.location.search);
-    let subject = null;
-    if (path.includes('/biol1/')) subject = 'biol1';
-    else if (path.includes('/biol2/')) subject = 'biol2';
-    const weekMatch = path.match(/week(\d+)/i);
-    const week = weekMatch ? parseInt(weekMatch[1]) : null;
-    const day = parseInt(params.get('day') || '0');
-
-    if (subject && week && day) {
-      ActivityGate.init({ subject, week, day });
-      return true;
-    }
-    return false;
-  };
-  if (!tryInit()) {
-    document.addEventListener('DOMContentLoaded', tryInit);
-    setTimeout(tryInit, 500);
-    setTimeout(tryInit, 1500);
-  }
 })();
