@@ -1,11 +1,11 @@
 /* ============================================================
    config.js — App configuration (teacher password, dev info)
-   Version: 2.3.6
+   Version: 2.3.7
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.6',
+  VERSION: '2.3.7',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
