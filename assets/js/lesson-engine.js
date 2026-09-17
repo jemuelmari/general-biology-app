@@ -463,3 +463,32 @@ const Lesson = (() => {
   /* ---------- Public API ---------- */
   return { init, addPoints, awardBadge, renderMatchGame, renderScenarioGame, renderEscapeRoom, markDayComplete };
 })();
+/* ---------- Auto-load activity gate if not present ---------- */
+(function autoLoadGate() {
+  if (window.ActivityGate) return;
+  if (document.querySelector('script[src*="activity-gate.js"]')) return;
+
+  const path = window.location.pathname;
+  const depth = (path.match(/\//g) || []).length;
+  const prefix = path.includes('/student/') ? '../../../' : '';
+
+  const s = document.createElement('script');
+  s.src = prefix + 'assets/js/activity-gate.js';
+  s.onload = () => {
+    if (window.ActivityGate && window.Lesson) {
+      // Config is not accessible here — the day.html's own script
+      // already called Lesson.init(), so we re-init the gate.
+      // Best effort: derive config from the DOM
+      const title = document.querySelector('.score-bar-title')?.textContent || '';
+      const weekMatch = document.querySelector('.score-bar-label')?.textContent?.match(/Week (\d+).*Day (\d+)/);
+      if (weekMatch) {
+        ActivityGate.init({
+          subject: path.includes('/biol1/') ? 'biol1' : 'biol2',
+          week: parseInt(weekMatch[1]),
+          day: parseInt(weekMatch[2])
+        });
+      }
+    }
+  };
+  document.body.appendChild(s);
+})();
