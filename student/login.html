@@ -6,6 +6,216 @@
   <title>Student Login — General Biology</title>
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/student.css" />
+  <style>
+    /* Login page modern styles */
+    .login-hero {
+      background: linear-gradient(135deg, #1b7a3d 0%, #2e9e50 60%, #4caf50 100%);
+      color: #fff;
+      padding: 40px 24px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(27, 122, 61, 0.25);
+      text-align: center;
+    }
+
+    .login-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .login-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .login-hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-hero h2 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin: 0 0 8px;
+      font-weight: 700;
+    }
+
+    .login-hero p {
+      opacity: 0.92;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .login-hero-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* Modern tabs */
+    .login-tabs {
+      display: flex;
+      gap: 4px;
+      background: #f5f7fa;
+      padding: 6px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .login-tab {
+      flex: 1;
+      padding: 12px 16px;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #5f6368;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .login-tab:hover {
+      color: #1b7a3d;
+      background: rgba(27, 122, 61, 0.05);
+    }
+
+    .login-tab.active {
+      background: #fff;
+      color: #1b7a3d;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Form groups */
+    .login-form-group {
+      margin-bottom: 18px;
+    }
+
+    .login-form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #37474f;
+      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .login-form-group input,
+    .login-form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      border: 1.5px solid #cfd8dc;
+      border-radius: 10px;
+      background: #fff;
+      color: #1a1a1a;
+      transition: all 0.15s ease;
+    }
+
+    .login-form-group input:focus,
+    .login-form-group select:focus {
+      outline: none;
+      border-color: #1b7a3d;
+      box-shadow: 0 0 0 4px rgba(27, 122, 61, 0.1);
+    }
+
+    .login-form-group .hint {
+      font-size: 0.72rem;
+      color: #78909c;
+      margin-top: 4px;
+    }
+
+    /* Required asterisk */
+    .req {
+      color: #c62828;
+      margin-left: 2px;
+    }
+
+    /* Consent checkbox */
+    .consent-box {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 14px;
+      background: #f5f7fa;
+      border-radius: 10px;
+      margin: 20px 0;
+      font-size: 0.85rem;
+      color: #546e7a;
+      line-height: 1.5;
+    }
+
+    .consent-box input[type="checkbox"] {
+      margin-top: 3px;
+      accent-color: #1b7a3d;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Primary button */
+    .login-btn {
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #1b7a3d, #2e9e50);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(27, 122, 61, 0.25);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(27, 122, 61, 0.35);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Saved users cards */
+    .saved-user-card {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      background: #fff;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      transition: all 0.15s ease;
+    }
+
+    .saved-user-card:hover {
+      border-color: #1b7a3d;
+      box-shadow: 0 4px 12px rgba(27, 122, 61, 0.1);
+    }
+  </style>
 </head>
 <body>
 
@@ -13,85 +223,94 @@
     <div class="container flex-between">
       <div>
         <h1>🧬 Student Login</h1>
-        <span class="version">v2.1.0</span>
+        <span class="version">v2.3.7</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
     </div>
   </header>
 
-  <main class="container" style="max-width:560px;padding-top:32px;padding-bottom:64px;">
+  <main class="container" style="max-width:540px;padding-top:32px;padding-bottom:64px;">
 
-    <div class="sync-tabs" style="justify-content:center;">
-      <button class="sync-tab active" data-tab="login">Log In</button>
-      <button class="sync-tab" data-tab="register">New Student</button>
-      <button class="sync-tab" data-tab="saved">Saved Users</button>
+    <!-- Hero -->
+    <div class="login-hero">
+      <div class="login-hero-content">
+        <span class="login-hero-icon">🎓</span>
+        <h2>Welcome Back!</h2>
+        <p>Log in with your LRN to continue learning</p>
+      </div>
     </div>
 
+    <!-- Tabs -->
+    <div class="login-tabs">
+      <button class="login-tab active" data-tab="login">🔑 Log In</button>
+      <button class="login-tab" data-tab="register">📝 New Student</button>
+      <button class="login-tab" data-tab="saved">👥 Saved Users</button>
+    </div>
+
+    <!-- LOGIN TAB -->
     <div id="tab-login" class="card">
       <div class="card-header">
         <span class="card-title">🔑 Enter your LRN</span>
       </div>
       <form id="login-form">
-        <div class="form-group">
-          <label class="form-label" for="login-lrn">LRN (12 digits)</label>
-          <input type="text" id="login-lrn" class="form-control" inputmode="numeric"
+        <div class="login-form-group">
+          <label for="login-lrn">LRN (12 digits) <span class="req">*</span></label>
+          <input type="text" id="login-lrn" inputmode="numeric"
                  maxlength="14" placeholder="1234-5678-9012" autocomplete="off" required />
-          <div class="form-hint">Your Learner Reference Number</div>
+          <div class="hint">Your Learner Reference Number</div>
         </div>
-        <button type="submit" class="btn btn-primary btn-full">Log In →</button>
+        <button type="submit" class="login-btn">Log In →</button>
         <div id="login-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
       </form>
     </div>
 
+    <!-- REGISTER TAB -->
     <div id="tab-register" class="card hidden">
       <div class="card-header">
         <span class="card-title">📝 Create Your Profile</span>
       </div>
       <form id="register-form">
-        <div class="form-group">
-          <label class="form-label" for="reg-lastname">Last Name *</label>
-          <input type="text" id="reg-lastname" class="form-control" required autocomplete="off"
+        <div class="login-form-group">
+          <label for="reg-lastname">Last Name <span class="req">*</span></label>
+          <input type="text" id="reg-lastname" required autocomplete="off"
                  placeholder="DELA CRUZ" style="text-transform:uppercase;" />
-          <div class="form-hint">Will be saved in ALL CAPS</div>
+          <div class="hint">Will be saved in ALL CAPS</div>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="reg-firstname">First Name *</label>
-          <input type="text" id="reg-firstname" class="form-control" required autocomplete="off"
-                 placeholder="Juan" />
-          <div class="form-hint">Will be saved in Title Case (e.g., Juan)</div>
+        <div class="login-form-group">
+          <label for="reg-firstname">First Name <span class="req">*</span></label>
+          <input type="text" id="reg-firstname" required autocomplete="off" placeholder="Juan" />
+          <div class="hint">Will be saved in Title Case</div>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="reg-middlename">Middle Name</label>
-          <input type="text" id="reg-middlename" class="form-control" autocomplete="off"
-                 placeholder="Santos" />
-          <div class="form-hint">Optional · Saved in Title Case</div>
+        <div class="login-form-group">
+          <label for="reg-middlename">Middle Name</label>
+          <input type="text" id="reg-middlename" autocomplete="off" placeholder="Santos" />
+          <div class="hint">Optional · Title Case</div>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="reg-sex">Sex *</label>
-          <select id="reg-sex" class="form-control" required>
+        <div class="login-form-group">
+          <label for="reg-sex">Sex <span class="req">*</span></label>
+          <select id="reg-sex" required>
             <option value="">— Select —</option>
             <option value="Female">♀ Female</option>
             <option value="Male">♂ Male</option>
           </select>
-          <div class="form-hint">Used for class records and reporting</div>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="reg-lrn">LRN (12 digits) *</label>
-          <input type="text" id="reg-lrn" class="form-control" inputmode="numeric"
+        <div class="login-form-group">
+          <label for="reg-lrn">LRN (12 digits) <span class="req">*</span></label>
+          <input type="text" id="reg-lrn" inputmode="numeric"
                  maxlength="14" placeholder="1234-5678-9012" required autocomplete="off" />
-          <div class="form-hint">Exactly 12 digits, numeric only</div>
+          <div class="hint">Exactly 12 digits, numeric only</div>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="reg-grade">Grade Level *</label>
-          <select id="reg-grade" class="form-control" required>
+        <div class="login-form-group">
+          <label for="reg-grade">Grade Level <span class="req">*</span></label>
+          <select id="reg-grade" required>
             <option value="">— Select —</option>
             <option value="11">Grade 11</option>
             <option value="12" selected>Grade 12</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="reg-section">Section *</label>
-          <select id="reg-section" class="form-control" required>
+        <div class="login-form-group">
+          <label for="reg-section">Section <span class="req">*</span></label>
+          <select id="reg-section" required>
             <option value="">— Select —</option>
             <option value="GAS" selected>GAS</option>
             <option value="STEM">STEM</option>
@@ -100,16 +319,17 @@
           </select>
         </div>
 
-        <label class="flex gap-sm" style="align-items:flex-start;font-size:0.9rem;margin:16px 0;">
-          <input type="checkbox" id="reg-consent" required style="margin-top:4px;" />
+        <label class="consent-box">
+          <input type="checkbox" id="reg-consent" required />
           <span>I agree that my progress may be saved locally on this device and shared with my teacher via sync code or backup file.</span>
         </label>
 
-        <button type="submit" class="btn btn-primary btn-full">Create Profile →</button>
+        <button type="submit" class="login-btn">Create Profile →</button>
         <div id="register-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
       </form>
     </div>
 
+    <!-- SAVED USERS TAB -->
     <div id="tab-saved" class="card hidden">
       <div class="card-header">
         <span class="card-title">👥 Saved Users on This Device</span>
@@ -120,7 +340,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Biology Online Modular Application · v2.1.0</p>
+    <p>General Biology Online Modular Application · <span class="version">v2.3.7</span></p>
   </footer>
 
   <script src="../config.js"></script>
