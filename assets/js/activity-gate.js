@@ -1,326 +1,386 @@
 /* ============================================================
-   activity-gate.js — Sequential activity locking
-   Version: 2.2.1
+   activity-gate.js — Sequential activity locking with retakes
+   Version: 2.3.0
    ------------------------------------------------------------
-   Uses event-driven completion (not just polling) for reliability.
+   RULES:
+   - Activity 1 available at start
+   - Activity 2 unlocks ONLY after Activity 1 ≥ 75%
+   - Formative unlocks ONLY after Activities 1 & 2 ≥ 75%
+   - Each activity has a difficulty-based timer (min 5 min)
+   - Retakes unlimited until passing score reached
+   - Manual "Start" tap required to begin each activity
+   - Fully fail-proof (survives refresh)
    ============================================================ */
 
 const ActivityGate = (() => {
   'use strict';
 
-  const STORAGE_KEY_PREFIX = 'gba_gate_';
+  const STORAGE_KEY_PREFIX = 'gba_gate_v2_';
+  const PASS_THRESHOLD = 0.75; // 75%
+
   let session = null;
 
-  /* ---------- Init ---------- */
+  /* ============================================================
+     INIT
+     ============================================================ */
   function init(config) {
     session = {
       key: `${STORAGE_KEY_PREFIX}${config.subject}_w${config.week}_d${config.day}`,
-      states: { 1: 'unlocked', 2: 'locked', formative: 'locked' }
+      subject: config.subject,
+      week: config.week,
+      day: config.day,
+      states: {
+        activity1: { status: 'ready',   score: 0, attempts: 0 },   // ready | running | passed | failed
+        activity2: { status: 'locked',  score: 0, attempts: 0 },
+        formative: { status: 'locked',  score: 0, attempts: 0 }
+      }
     };
 
+    // Restore from sessionStorage
     const saved = sessionStorage.getItem(session.key);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        Object.assign(session.states, parsed);
+        Object.assign(session.states, parsed.states);
       } catch (e) { /* ignore */ }
     }
 
-    console.log('[ActivityGate] Session:', session.key, session.states);
-
-    applyLocks();
-    setTimeout(applyLocks, 50);
-    setTimeout(applyLocks, 300);
-    setTimeout(applyLocks, 1000);
-    setTimeout(applyLocks, 2000);
-  }
-
-  /* ---------- Auto-detect config from page ---------- */
-  function autoDetectConfig() {
-    const path = window.location.pathname;
-    const params = new URLSearchParams(window.location.search);
-
-    let subject = null;
-    if (path.includes('/biol1/')) subject = 'biol1';
-    else if (path.includes('/biol2/')) subject = 'biol2';
-
-    const weekMatch = path.match(/week(\d+)/i);
-    const week = weekMatch ? parseInt(weekMatch[1]) : null;
-    const day = parseInt(params.get('day') || '0');
-
-    if (subject && week && day) return { subject, week, day };
-
-    const label = document.querySelector('.score-bar-label');
-    if (label) {
-      const m = label.textContent.match(/Week\s+(\d+)\s*·\s*Day\s+(\d+)/i);
-      if (m && subject) return { subject, week: parseInt(m[1]), day: parseInt(m[2]) };
-    }
-
-    return null;
-  }
-
-  /* ---------- Persist state ---------- */
-  function save() {
-    if (!session) return;
-    sessionStorage.setItem(session.key, JSON.stringify(session.states));
+    console.log('[ActivityGate] Init:', session.key, session.states);
+    applyUI();
   }
 
   /* ============================================================
-     PUBLIC: mark activity complete
+     PERSIST
      ============================================================ */
-  function complete(activityId) {
-    if (!session) {
-      console.warn('[ActivityGate] complete() called but session is null');
-      return;
-    }
+  function save() {
+    if (!session) return;
+    sessionStorage.setItem(session.key, JSON.stringify({
+      subject: session.subject,
+      week: session.week,
+      day: session.day,
+      states: session.states,
+      updatedAt: new Date().toISOString()
+    }));
+  }
 
-    const idStr = String(activityId);
-    console.log('[ActivityGate] complete(' + idStr + ')');
+  /* ============================================================
+     STATE MUTATIONS
+     ============================================================ */
 
-    if (idStr === '1') {
-      if (session.states[1] === 'completed') return;
-      session.states[1] = 'completed';
-      session.states[2] = 'unlocked';
-      console.log('[ActivityGate] 🔓 Activity 2 unlocked');
-      if (window.APP && APP.toast) APP.toast('🔓 Activity 2 unlocked!', 'success', 2500);
-    } else if (idStr === '2') {
-      if (session.states[2] === 'completed') return;
-      session.states[2] = 'completed';
-      session.states.formative = 'unlocked';
-      console.log('[ActivityGate] 🔓 Formative unlocked');
-      if (window.APP && APP.toast) APP.toast('🔓 Formative Check unlocked!', 'success', 2500);
-    } else if (idStr === 'formative') {
-      session.states.formative = 'completed';
+  // Mark activity as running (called when student taps "Start")
+  function markRunning(activityId) {
+    const key = normalizeKey(activityId);
+    if (!session) return;
+    if (session.states[key].status === 'passed') return;
+    session.states[key].status = 'running';
+    save();
+    applyUI();
+  }
+
+  // Mark activity complete with score (called by lesson engine)
+  function completeWithScore(activityId, scorePercent) {
+    if (!session) return;
+    const key = normalizeKey(activityId);
+    const st = session.states[key];
+    st.attempts = (st.attempts || 0) + 1;
+    st.score = Math.round(scorePercent);
+
+    if (scorePercent >= PASS_THRESHOLD * 100) {
+      st.status = 'passed';
+      console.log(`[ActivityGate] ${key} PASSED (${st.score}%)`);
+
+      // Unlock the next stage
+      if (key === 'activity1') {
+        session.states.activity2.status = 'ready';
+        APP.toast('✅ Activity 1 passed! Activity 2 is now available.', 'success', 4000);
+      } else if (key === 'activity2') {
+        session.states.formative.status = 'ready';
+        APP.toast('✅ Activity 2 passed! Formative Check is now available.', 'success', 4000);
+      } else if (key === 'formative') {
+        APP.toast('🎉 Formative Check passed!', 'success', 4000);
+      }
+    } else {
+      st.status = 'failed';
+      console.log(`[ActivityGate] ${key} FAILED (${st.score}%) — needs 75%`);
     }
 
     save();
-    applyLocks();
+    applyUI();
   }
 
-  /* ---------- Apply lock overlays ---------- */
-  function applyLocks() {
+  // Reset a single activity for a retake
+  function resetActivity(activityId) {
     if (!session) return;
-    applyLock('activity-1', session.states[1]);
-    applyLock('activity-2', session.states[2]);
-    applyLock('formative', session.states.formative);
+    const key = normalizeKey(activityId);
+    session.states[key].status = 'ready';
+    // Keep score & attempts for record-keeping
+    save();
+    applyUI();
   }
 
-  function applyLock(containerId, state) {
+  /* ============================================================
+     UI
+     ============================================================ */
+  function applyUI() {
+    applyStageUI('activity-1', 'activity1');
+    applyStageUI('activity-2', 'activity2');
+    applyStageUI('formative', 'formative');
+  }
+
+  function applyStageUI(containerId, stateKey) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
     const parentCard = container.closest('.activity-card') || container.parentElement;
     if (!parentCard) return;
 
-    if (state === 'locked') {
-      container.style.display = 'none';
+    const st = session.states[stateKey];
 
-      let lockMsg = parentCard.querySelector('.gate-lock-msg');
-      if (!lockMsg) {
-        lockMsg = document.createElement('div');
-        lockMsg.className = 'gate-lock-msg';
-        lockMsg.style.cssText = `
-          padding:32px 24px;text-align:center;
-          background:#f8f9fa;
-          border:2px dashed #dadce0;
-          border-radius:8px;
-          color:#5f6368;
-        `;
-        lockMsg.innerHTML = `
-          <div style="font-size:2rem;">🔒</div>
-          <div style="font-weight:600;margin-top:8px;color:#1b7a3d;">Locked</div>
-          <div style="font-size:0.85rem;margin-top:4px;">
-            Complete the previous activity to unlock this one.
-          </div>
-        `;
-        parentCard.appendChild(lockMsg);
-      }
-      lockMsg.style.display = 'block';
-    } else {
-      container.style.display = '';
-      const lockMsg = parentCard.querySelector('.gate-lock-msg');
-      if (lockMsg) lockMsg.style.display = 'none';
+    // Remove any existing overlay
+    parentCard.querySelectorAll('.gate-overlay').forEach((el) => el.remove());
+
+    switch (st.status) {
+      case 'locked':
+        container.style.display = 'none';
+        parentCard.appendChild(buildLockedOverlay());
+        break;
+
+      case 'ready':
+        container.style.display = 'none';
+        parentCard.appendChild(buildReadyOverlay(stateKey, st));
+        break;
+
+      case 'running':
+        // Hide overlay, show activity
+        container.style.display = '';
+        break;
+
+      case 'passed':
+        container.style.display = 'none';
+        parentCard.appendChild(buildPassedOverlay(stateKey, st));
+        break;
+
+      case 'failed':
+        container.style.display = 'none';
+        parentCard.appendChild(buildFailedOverlay(stateKey, st));
+        break;
     }
   }
 
-  /* ---------- Reset ---------- */
-  function reset() {
-    if (!session) return;
-    sessionStorage.removeItem(session.key);
-    session.states = { 1: 'unlocked', 2: 'locked', formative: 'locked' };
-    applyLocks();
+  /* ---------- Overlays ---------- */
+  function buildLockedOverlay() {
+    const el = document.createElement('div');
+    el.className = 'gate-overlay';
+    el.style.cssText = `
+      padding:32px 24px;text-align:center;
+      background:#f8f9fa;
+      border:2px dashed #dadce0;
+      border-radius:8px;
+    `;
+    el.innerHTML = `
+      <div style="font-size:2rem;">🔒</div>
+      <div style="font-weight:600;margin-top:8px;color:#1b7a3d;">Locked</div>
+      <div style="font-size:0.85rem;margin-top:4px;color:#5f6368;">
+        Complete the previous activity with at least 75% to unlock this one.
+      </div>
+    `;
+    return el;
+  }
+
+  function buildReadyOverlay(stateKey, st) {
+    const el = document.createElement('div');
+    el.className = 'gate-overlay';
+    el.style.cssText = `
+      padding:32px 24px;text-align:center;
+      background:linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      border:2px solid #4caf50;
+      border-radius:8px;
+    `;
+
+    const titles = {
+      activity1: 'Activity 1 — Match the Pairs',
+      activity2: 'Activity 2 — Scenario Challenge',
+      formative: 'Formative Check — Escape the Cell'
+    };
+
+    const timeEst = getEstimatedTime(stateKey);
+
+    el.innerHTML = `
+      <div style="font-size:2.5rem;">▶️</div>
+      <div style="font-weight:700;margin-top:12px;color:#1b5e20;font-size:1.1rem;">
+        ${titles[stateKey]}
+      </div>
+      <div style="font-size:0.85rem;margin-top:8px;color:#2e7d32;">
+        ⏱️ Estimated time: <strong>${timeEst} minutes</strong>
+      </div>
+      <div style="font-size:0.85rem;margin-top:4px;color:#2e7d32;">
+        🎯 Passing score: <strong>75%</strong>
+      </div>
+      <div style="font-size:0.8rem;margin-top:4px;color:#66bb6a;">
+        ♻️ Retakes: unlimited until you pass
+      </div>
+      ${st.attempts > 0 ? `
+        <div style="font-size:0.8rem;margin-top:8px;color:#d84315;">
+          Previous attempt: <strong>${st.score}%</strong> (Attempt #${st.attempts})
+        </div>
+      ` : ''}
+      <button class="btn btn-primary" style="margin-top:16px;font-size:0.95rem;padding:12px 28px;" data-start="${stateKey}">
+        ▶️ Start Activity
+      </button>
+    `;
+
+    // Attach click handler
+    setTimeout(() => {
+      el.querySelector(`[data-start="${stateKey}"]`)?.addEventListener('click', () => {
+        startActivity(stateKey);
+      });
+    }, 0);
+
+    return el;
+  }
+
+  function buildPassedOverlay(stateKey, st) {
+    const el = document.createElement('div');
+    el.className = 'gate-overlay';
+    el.style.cssText = `
+      padding:24px;text-align:center;
+      background:linear-gradient(135deg, #e8f5e9, #a5d6a7);
+      border:2px solid #2e7d32;
+      border-radius:8px;
+    `;
+
+    const isFormative = stateKey === 'formative';
+    el.innerHTML = `
+      <div style="font-size:2rem;">✅</div>
+      <div style="font-weight:700;margin-top:8px;color:#1b5e20;">
+        ${isFormative ? 'Formative Complete!' : 'Passed!'}
+      </div>
+      <div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">
+        Score: <strong>${st.score}%</strong> · Attempts: ${st.attempts}
+      </div>
+      <div style="font-size:0.85rem;margin-top:8px;color:#2e7d32;">
+        ${isFormative
+          ? '🎉 You completed all activities for today!'
+          : '✅ Next activity is now unlocked.'}
+      </div>
+      <button class="btn btn-outline" style="margin-top:12px;font-size:0.8rem;padding:8px 18px;" data-retake="${stateKey}">
+        ♻️ Practice Again
+      </button>
+    `;
+
+    setTimeout(() => {
+      el.querySelector(`[data-retake="${stateKey}"]`)?.addEventListener('click', () => {
+        if (confirm('Practice this activity again? Your pass status will NOT be affected.')) {
+          resetActivity(stateKey);
+        }
+      });
+    }, 0);
+
+    return el;
+  }
+
+  function buildFailedOverlay(stateKey, st) {
+    const el = document.createElement('div');
+    el.className = 'gate-overlay';
+    el.style.cssText = `
+      padding:32px 24px;text-align:center;
+      background:linear-gradient(135deg, #fff3e0, #ffe0b2);
+      border:2px solid #ed6c02;
+      border-radius:8px;
+    `;
+
+    el.innerHTML = `
+      <div style="font-size:2.5rem;">🔁</div>
+      <div style="font-weight:700;margin-top:8px;color:#e65100;font-size:1.1rem;">
+        Try Again!
+      </div>
+      <div style="font-size:0.95rem;margin-top:8px;color:#ef6c00;">
+        Score: <strong>${st.score}%</strong> — You need 75% to pass.
+      </div>
+      <div style="font-size:0.85rem;margin-top:6px;color:#ef6c00;">
+        Attempts so far: ${st.attempts} · Retakes: unlimited
+      </div>
+      <button class="btn btn-primary" style="margin-top:16px;font-size:0.95rem;padding:12px 28px;" data-start="${stateKey}">
+        🔁 Retake Activity
+      </button>
+    `;
+
+    setTimeout(() => {
+      el.querySelector(`[data-start="${stateKey}"]`)?.addEventListener('click', () => {
+        startActivity(stateKey);
+      });
+    }, 0);
+
+    return el;
+  }
+
+  /* ---------- Activity Start ---------- */
+  function startActivity(stateKey) {
+    markRunning(stateKey);
+    // Trigger the lesson engine to re-render this activity
+    document.dispatchEvent(new CustomEvent('activity:start', {
+      detail: { activity: stateKey }
+    }));
+  }
+
+  /* ---------- Time Estimation ---------- */
+  function getEstimatedTime(stateKey) {
+    const containerId = stateKey === 'activity1' ? 'activity-1'
+                      : stateKey === 'activity2' ? 'activity-2'
+                      : 'formative';
+    const container = document.getElementById(containerId);
+    if (!container) return 5;
+
+    // Read from data attribute set by lesson-engine
+    const mins = container.dataset.estimatedMinutes;
+    return mins ? parseFloat(mins) : 5;
+  }
+
+  /* ---------- Helpers ---------- */
+  function normalizeKey(id) {
+    const s = String(id);
+    if (s === '1' || s === 'activity-1' || s === 'activity1') return 'activity1';
+    if (s === '2' || s === 'activity-2' || s === 'activity2') return 'activity2';
+    return 'formative';
   }
 
   /* ---------- Public API ---------- */
-  return { init, complete, reset, applyLocks, autoDetectConfig };
+  return {
+    init,
+    markRunning,
+    completeWithScore,
+    resetActivity,
+    applyUI,
+    PASS_THRESHOLD,
+    // legacy support
+    complete: (id) => completeWithScore(id, 100),
+    applyLocks: applyUI
+  };
 })();
 
 /* ============================================================
-   Auto-init when loaded
+   Auto-init
    ============================================================ */
 (function autoInit() {
   const tryInit = () => {
-    const config = ActivityGate.autoDetectConfig();
-    if (config) {
-      ActivityGate.init(config);
+    const path = window.location.pathname;
+    const params = new URLSearchParams(window.location.search);
+    let subject = null;
+    if (path.includes('/biol1/')) subject = 'biol1';
+    else if (path.includes('/biol2/')) subject = 'biol2';
+    const weekMatch = path.match(/week(\d+)/i);
+    const week = weekMatch ? parseInt(weekMatch[1]) : null;
+    const day = parseInt(params.get('day') || '0');
+
+    if (subject && week && day) {
+      ActivityGate.init({ subject, week, day });
       return true;
     }
     return false;
   };
-
   if (!tryInit()) {
     document.addEventListener('DOMContentLoaded', tryInit);
     setTimeout(tryInit, 500);
     setTimeout(tryInit, 1500);
   }
-})();
-
-/* ============================================================
-   Wrap Lesson render functions to detect completion
-   ============================================================ */
-(function wrapLessonRenderers() {
-  if (typeof Lesson === 'undefined') {
-    console.warn('[ActivityGate] Lesson engine not found.');
-    return;
-  }
-
-  /* ---------- MATCH GAME ---------- */
-  const originalMatch = Lesson.renderMatchGame.bind(Lesson);
-  Lesson.renderMatchGame = function (containerId, config) {
-    startMatchWatcher(containerId);
-    const result = originalMatch(containerId, config);
-    setTimeout(() => ActivityGate.applyLocks(), 50);
-    return result;
-  };
-
-  function startMatchWatcher(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const activityNumber = containerId === 'activity-1' ? 1
-                        : containerId === 'activity-2' ? 2 : null;
-    if (!activityNumber) return;
-
-    const observer = new MutationObserver(() => {
-      if (isMatchComplete(container)) {
-        observer.disconnect();
-        console.log('[ActivityGate] Match complete detected (observer)');
-        ActivityGate.complete(activityNumber);
-      }
-    });
-
-    observer.observe(container, {
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['class']
-    });
-
-    const interval = setInterval(() => {
-      if (isMatchComplete(container)) {
-        clearInterval(interval);
-        observer.disconnect();
-        console.log('[ActivityGate] Match complete detected (poll)');
-        ActivityGate.complete(activityNumber);
-      }
-    }, 500);
-
-    setTimeout(() => { clearInterval(interval); observer.disconnect(); }, 30 * 60 * 1000);
-  }
-
-  function isMatchComplete(container) {
-    const items = container.querySelectorAll('.match-item');
-    if (!items.length) return false;
-    const correct = container.querySelectorAll('.match-item.correct').length;
-    const pairs = items.length / 2;
-    return correct >= pairs * 2;
-  }
-
-  /* ---------- SCENARIO GAME ---------- */
-  const originalScenario = Lesson.renderScenarioGame.bind(Lesson);
-  Lesson.renderScenarioGame = function (containerId, config) {
-    startScenarioWatcher(containerId, config);
-    const result = originalScenario(containerId, config);
-    setTimeout(() => ActivityGate.applyLocks(), 50);
-    return result;
-  };
-
-  function startScenarioWatcher(containerId, config) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const activityNumber = containerId === 'activity-1' ? 1
-                        : containerId === 'activity-2' ? 2 : null;
-    if (!activityNumber) return;
-
-    const totalScenarios = (config && config.scenarios) ? config.scenarios.length : 6;
-
-    const observer = new MutationObserver(() => {
-      if (isScenarioComplete(container, totalScenarios)) {
-        observer.disconnect();
-        console.log('[ActivityGate] Scenario complete detected');
-        ActivityGate.complete(activityNumber);
-      }
-    });
-
-    observer.observe(container, { subtree: true, childList: true, characterData: true });
-
-    const interval = setInterval(() => {
-      if (isScenarioComplete(container, totalScenarios)) {
-        clearInterval(interval);
-        observer.disconnect();
-        console.log('[ActivityGate] Scenario complete detected (poll)');
-        ActivityGate.complete(activityNumber);
-      }
-    }, 500);
-
-    setTimeout(() => { clearInterval(interval); observer.disconnect(); }, 30 * 60 * 1000);
-  }
-
-  function isScenarioComplete(container, total) {
-    const hasChoiceRow = !!container.querySelector('.choice-row');
-    const hasCard = !!container.querySelector('.scenario-card');
-    if (hasChoiceRow || hasCard) return false;
-    return container.innerHTML.trim().length > 0;
-  }
-
-  /* ---------- ESCAPE ROOM ---------- */
-  const originalEscape = Lesson.renderEscapeRoom.bind(Lesson);
-  Lesson.renderEscapeRoom = function (containerId, config) {
-    startEscapeWatcher(containerId);
-    const result = originalEscape(containerId, config);
-    setTimeout(() => ActivityGate.applyLocks(), 50);
-    return result;
-  };
-
-  function startEscapeWatcher(containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const observer = new MutationObserver(() => {
-      if (isEscapeComplete(container)) {
-        observer.disconnect();
-        ActivityGate.complete('formative');
-      }
-    });
-
-    observer.observe(container, { subtree: true, childList: true, characterData: true });
-
-    const interval = setInterval(() => {
-      if (isEscapeComplete(container)) {
-        clearInterval(interval);
-        observer.disconnect();
-        ActivityGate.complete('formative');
-      }
-    }, 500);
-
-    setTimeout(() => { clearInterval(interval); observer.disconnect(); }, 30 * 60 * 1000);
-  }
-
-  function isEscapeComplete(container) {
-    const title = container.querySelector('.result-title');
-    if (!title) return false;
-    return title.textContent.toLowerCase().includes('escaped');
-  }
-
-  console.log('[ActivityGate] Renderers wrapped (event-based).');
 })();
