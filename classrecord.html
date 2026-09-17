@@ -9,98 +9,156 @@
 </head>
 <body>
 
-  <header class="app-header" style="background:linear-gradient(135deg,#4a148c,#6a1b9a);">
+  <header class="app-header classrecord-header">
     <div class="container flex-between">
       <div>
         <h1>📋 Class Record</h1>
-        <span class="version">v1.5.0</span>
+        <span class="version">v2.0.0</span>
       </div>
-      <nav style="display:flex;gap:8px;">
-        <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Student</a>
-        <a href="instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Teacher</a>
-        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      <nav class="teacher-nav">
+        <a href="index.html">🎓 Student View</a>
+        <a href="instructor.html">👩‍🏫 Teacher</a>
+        <button onclick="TeacherAuth.logout()">🚪 Log Out</button>
       </nav>
     </div>
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
-    <!-- Tab Navigation -->
-    <div class="sync-tabs" style="margin-bottom:24px;">
-      <button class="sync-tab active" data-crtab="grades">📊 Grades</button>
-      <button class="sync-tab" data-crtab="activities">🎮 Activity Tracker</button>
+    <!-- ============ HERO BANNER ============ -->
+    <div class="classrecord-hero">
+      <div class="classrecord-hero-content">
+        <div>
+          <h1>📊 Student Performance</h1>
+          <div class="subtitle">SY 2026–2027 · Adjusted Transmutation (Raw 70 → 75)</div>
+        </div>
+        <div class="teacher-hero-actions">
+          <button id="btn-export-csv" class="teacher-hero-actions-btn" style="background:rgba(255,255,255,0.95);color:#4a148c;padding:12px 20px;border-radius:10px;border:none;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+            📥 Export CSV
+          </button>
+          <button id="btn-print" style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.6);padding:12px 20px;border-radius:10px;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+            🖨️ Print
+          </button>
+        </div>
+      </div>
     </div>
 
-    <!-- GRADES TAB -->
-    <div id="crtab-grades">
-      <div class="card">
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end;">
-          <div style="flex:1;min-width:200px;">
-            <label class="form-label">Subject</label>
-            <select id="cr-subject" class="form-control">
-              <option value="biol1">General Biology 1</option>
-              <option value="biol2">General Biology 2</option>
-            </select>
-          </div>
-          <div style="flex:1;min-width:200px;">
-            <label class="form-label">School Year</label>
-            <select id="cr-sy" class="form-control">
-              <option value="2026-2027">SY 2026–2027 (Adjusted Transmutation)</option>
-            </select>
-          </div>
-          <div>
-            <button id="btn-export-csv" class="btn btn-primary">📥 Export CSV</button>
-          </div>
+    <!-- ============ TABS ============ -->
+    <div class="cr-tabs" id="cr-tabs">
+      <button class="cr-tab active" data-tab="grades">📊 Grades</button>
+      <button class="cr-tab" data-tab="activities">🎮 Activity Tracker</button>
+      <button class="cr-tab" data-tab="reports">📈 Reports</button>
+      <button class="cr-tab" data-tab="transmutation">🔄 Transmutation</button>
+    </div>
+
+    <!-- ============ TAB: GRADES ============ -->
+    <div id="tab-grades">
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="cr-subject">Subject</label>
+          <select id="cr-subject">
+            <option value="biol1">General Biology 1</option>
+            <option value="biol2">General Biology 2</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="cr-section">Section</label>
+          <select id="cr-section">
+            <option value="">All Sections</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="cr-search">Search Student</label>
+          <input type="text" id="cr-search" placeholder="Type a name or LRN..." />
+        </div>
+        <div class="filter-actions">
+          <button id="btn-clear-filters" style="padding:10px 16px;background:#f5f7fa;border:1px solid #cfd8dc;border-radius:10px;font-family:inherit;font-size:0.85rem;cursor:pointer;color:#546e7a;font-weight:600;">
+            Clear
+          </button>
         </div>
       </div>
 
-      <div class="stats-grid" id="cr-stats"></div>
+      <div class="cr-stats-grid" id="cr-stats"></div>
 
-      <div class="card" style="overflow-x:auto;">
-        <h3 style="color:var(--color-primary-dark);margin-bottom:12px;">📊 Student Grades</h3>
-        <div id="gradebook-container"></div>
+      <div class="gradebook-wrapper">
+        <div class="gradebook-scroll">
+          <table class="gradebook-table" id="gradebook-table">
+            <thead id="gradebook-head"></thead>
+            <tbody id="gradebook-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TAB: ACTIVITIES ============ -->
+    <div id="tab-activities" class="hidden">
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="at-subject">Subject</label>
+          <select id="at-subject">
+            <option value="biol1">General Biology 1</option>
+            <option value="biol2">General Biology 2</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="at-filter">Filter</label>
+          <select id="at-filter">
+            <option value="all">All Students</option>
+            <option value="behind">Behind (&lt; 50%)</option>
+            <option value="ontrack">On Track (50–89%)</option>
+            <option value="complete">Complete (≥ 90%)</option>
+          </select>
+        </div>
       </div>
 
-      <h2 style="color:var(--color-primary-dark);margin:24px 0 12px;">📈 Statistical Reports</h2>
-      <div class="report-grid" id="cr-reports"></div>
+      <div class="cr-stats-grid" id="at-stats"></div>
 
-      <div class="card" style="margin-top:24px;">
-        <h3 style="color:var(--color-primary-dark);">🔄 Transmutation Reference (SY 2026–2027)</h3>
-        <p class="text-muted text-small">Anchor: Raw 70 → Transmuted 75 (passing). SY 2027–2028 will remove transmutation for Grades 4–12.</p>
-        <div style="max-height:300px;overflow-y:auto;margin-top:12px;">
-          <table class="table transmutation-table">
-            <thead><tr><th>Raw</th><th>Transmuted</th><th>Raw</th><th>Transmuted</th><th>Raw</th><th>Transmuted</th></tr></thead>
+      <div class="gradebook-wrapper" style="padding:8px;">
+        <div id="at-table"></div>
+      </div>
+    </div>
+
+    <!-- ============ TAB: REPORTS ============ -->
+    <div id="tab-reports" class="hidden">
+      <div class="report-grid" id="reports-grid"></div>
+
+      <div class="gradebook-wrapper" style="margin-top:24px;padding:20px;">
+        <h3 style="color:#4a148c;margin:0 0 14px;">📋 Per-Student Scores</h3>
+        <div style="overflow-x:auto;">
+          <table class="modern-table" id="report-table">
+            <thead id="report-head"></thead>
+            <tbody id="report-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TAB: TRANSMUTATION ============ -->
+    <div id="tab-transmutation" class="hidden">
+      <div class="gradebook-wrapper" style="padding:20px;">
+        <h3 style="color:#4a148c;margin:0 0 8px;">🔄 Adjusted Transmutation Table</h3>
+        <p style="color:#78909c;font-size:0.85rem;margin:0 0 20px;">
+          Anchor: Raw 70 → Transmuted 75 (passing). SY 2027–2028 removes transmutation for Grades 4–12.
+        </p>
+        <div style="max-height:520px;overflow-y:auto;">
+          <table class="modern-table transmutation-table">
+            <thead>
+              <tr>
+                <th>Raw</th><th>Transmuted</th>
+                <th>Raw</th><th>Transmuted</th>
+                <th>Raw</th><th>Transmuted</th>
+              </tr>
+            </thead>
             <tbody id="transmutation-tbody"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ACTIVITY TRACKER TAB -->
-    <div id="crtab-activities" class="hidden">
-      <div class="card">
-        <h2 style="color:var(--color-primary-dark);">🎮 Activity Engagement</h2>
-        <p class="text-muted">Tracks lesson activity completion, badges earned, and points — separately from assessment performance.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
-          <select id="cr-at-subject" class="form-control" style="max-width:200px;">
-            <option value="biol1">General Biology 1</option>
-            <option value="biol2">General Biology 2</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="stats-grid" id="cr-at-stats"></div>
-
-      <div class="card" style="overflow-x:auto;">
-        <h3 style="color:var(--color-primary-dark);margin-bottom:12px;">📋 Activity Completion</h3>
-        <div id="cr-at-table"></div>
-      </div>
-    </div>
-
   </main>
 
   <footer class="app-footer">
-    <p>Class Record · v1.5.0 · Aligned with DO 015, s. 2026</p>
+    <p>Class Record · v2.0.0 · Aligned with DO 015, s. 2026</p>
   </footer>
 
   <script src="config.js"></script>
@@ -108,92 +166,8 @@
   <script src="assets/js/store.js"></script>
   <script src="assets/js/transmutation.js"></script>
   <script src="assets/js/activity-tracker.js"></script>
+  <script src="assets/js/ui-helpers.js"></script>
   <script src="assets/js/classrecord.js"></script>
   <script src="assets/js/teacher-auth.js"></script>
-  <script>
-    // Tab switching
-    document.querySelectorAll('[data-crtab]').forEach((tab) => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('[data-crtab]').forEach((t) => t.classList.remove('active'));
-        tab.classList.add('active');
-        const key = tab.dataset.crtab;
-        document.getElementById('crtab-grades').classList.toggle('hidden', key !== 'grades');
-        document.getElementById('crtab-activities').classList.toggle('hidden', key !== 'activities');
-        if (key === 'activities') renderActivityTab();
-      });
-    });
-
-    function renderActivityTab() {
-      const subject = document.getElementById('cr-at-subject').value;
-      const all = ActivityTracker.getAllActivity();
-
-      const avgCompletion = all.length
-        ? Math.round(all.reduce((a, s) => a + s.summary[subject].completionPct, 0) / all.length)
-        : 0;
-      const totalActivities = all.reduce((a, s) => a + s.summary[subject].activitiesDone, 0);
-      const totalBadges = all.reduce((a, s) => a + s.summary[subject].badgesEarned, 0);
-
-      document.getElementById('cr-at-stats').innerHTML = `
-        <div class="stat-card">
-          <div class="stat-value">${all.length}</div>
-          <div class="stat-label">Students</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${avgCompletion}%</div>
-          <div class="stat-label">Avg Completion</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${totalActivities}</div>
-          <div class="stat-label">Activities Done</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">${totalBadges}</div>
-          <div class="stat-label">Badges</div>
-        </div>
-      `;
-
-      if (!all.length) {
-        document.getElementById('cr-at-table').innerHTML = `<div class="alert alert-info">No students yet.</div>`;
-        return;
-      }
-
-      document.getElementById('cr-at-table').innerHTML = `
-        <table class="gradebook-table">
-          <thead>
-            <tr>
-              <th>Student</th>
-              <th>Section</th>
-              <th>Days Done</th>
-              <th>Activities</th>
-              <th>Completion</th>
-              <th>Badges</th>
-              <th>Points</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${all.map((s) => {
-              const sm = s.summary[subject];
-              const color = sm.completionPct >= 90 ? 'var(--color-success)'
-                          : sm.completionPct >= 50 ? 'var(--color-warning)'
-                          : 'var(--color-danger)';
-              return `
-                <tr>
-                  <td class="student-name">${s.user.lastName}, ${s.user.firstName}</td>
-                  <td>${s.user.section}</td>
-                  <td>${sm.completedDays}/${sm.totalDays}</td>
-                  <td>${sm.activitiesDone}</td>
-                  <td><strong style="color:${color};">${sm.completionPct}%</strong></td>
-                  <td>🏆 ${sm.badgesEarned}</td>
-                  <td>⭐ ${sm.points}</td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
-      `;
-    }
-
-    document.getElementById('cr-at-subject')?.addEventListener('change', renderActivityTab);
-  </script>
 </body>
 </html>
