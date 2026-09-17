@@ -1,6 +1,6 @@
 /* ============================================================
    activity-tracker.js — Aggregates activity engagement data
-   Version: 1.5.0
+   Version: 2.1.0
    ============================================================ */
 
 const ActivityTracker = (() => {
@@ -8,7 +8,6 @@ const ActivityTracker = (() => {
 
   const NS = 'gba_v1_';
 
-  /* ---------- Public: per-student activity summary ---------- */
   function getStudentActivity(lrn) {
     const user = Store.getUser(lrn);
     if (!user) return null;
@@ -23,18 +22,15 @@ const ActivityTracker = (() => {
       const completedDays = progress[subject]?.completed || [];
       const subjectBadges = badges[subject] || [];
 
-      // Count activities completed (each day has 2 activities + 1 formative = 3)
       const activitiesDone = completedDays.length * 3;
-      const totalDays = 40; // 10 weeks × 4 days
+      const totalDays = 40;
       const totalActivities = totalDays * 3;
 
-      // Count quiz/ST/TE activity for cross-reference
       const quizzesTaken = Object.keys(scores[subject]?.quizzes || {}).length;
       const stsTaken = Object.keys(scores[subject]?.st || {}).length;
       const ptsTaken = Object.keys(scores[subject]?.pt || {}).length;
       const teTaken = Object.keys(scores[subject]?.te || {}).length;
 
-      // Points (aggregate from daily points keys)
       const points = computeSubjectPoints(lrn, subject);
 
       summary[subject] = {
@@ -66,7 +62,6 @@ const ActivityTracker = (() => {
     };
   }
 
-  /* ---------- Compute total points from daily keys ---------- */
   function computeSubjectPoints(lrn, subject) {
     let total = 0;
     const prefix = `${NS}points_${lrn}_${subject}_`;
@@ -82,12 +77,20 @@ const ActivityTracker = (() => {
     return total;
   }
 
-  /* ---------- All students aggregated ---------- */
+  /**
+   * Get all students with activity data, sorted alphabetically by last name.
+   */
   function getAllActivity() {
-    return Store.getAllUsers().map((u) => getStudentActivity(u.lrn)).filter(Boolean);
+    const all = Store.getAllUsers().map((u) => getStudentActivity(u.lrn)).filter(Boolean);
+    // Alphabetical default sort
+    if (window.APP && APP.sortStudents) {
+      return APP.sortStudents(all, 'last', 'asc');
+    }
+    return all.sort((a, b) =>
+      (a.user.lastName || '').localeCompare(b.user.lastName || '')
+    );
   }
 
-  /* ---------- Per-day completion detail ---------- */
   function getDayDetails(lrn, subject) {
     const progress = Store.getProgress(lrn);
     const days = {};
@@ -100,6 +103,5 @@ const ActivityTracker = (() => {
     return days;
   }
 
-  /* ---------- Public API ---------- */
   return { getStudentActivity, getAllActivity, getDayDetails };
 })();
