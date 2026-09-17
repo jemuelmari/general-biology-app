@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>👩‍🏫 Teacher Dashboard</h1>
-        <span class="version">v2.0.0</span>
+        <span class="version">v2.3.7</span>
       </div>
       <nav class="teacher-nav">
         <a href="index.html">🎓 Student View</a>
@@ -25,7 +25,7 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
-    <!-- ============ HERO BANNER ============ -->
+    <!-- ============ HERO ============ -->
     <div class="teacher-hero">
       <div class="teacher-hero-content">
         <div class="teacher-hero-text">
@@ -41,15 +41,21 @@
     </div>
 
     <!-- ============ KEY STATS ============ -->
-    <h2 class="section-title">📊 Class Overview</h2>
+    <div class="section-header">
+      <h2 class="section-title">📊 Class Overview</h2>
+    </div>
     <div class="stats-grid" id="key-stats"></div>
 
     <!-- ============ QUICK ACTIONS ============ -->
-    <h2 class="section-title">🎯 Quick Actions</h2>
+    <div class="section-header">
+      <h2 class="section-title">🎯 Quick Actions</h2>
+    </div>
     <div class="action-grid" id="quick-actions"></div>
 
     <!-- ============ CLASS DISTRIBUTION ============ -->
-    <h2 class="section-title">📈 Class Performance Distribution</h2>
+    <div class="section-header">
+      <h2 class="section-title">📈 Class Performance Distribution</h2>
+    </div>
     <div class="report-grid" id="distribution-reports">
       <div class="report-card">
         <h4>🎓 ST Average Distribution</h4>
@@ -66,21 +72,27 @@
     </div>
 
     <!-- ============ ATTENTION NEEDED ============ -->
-    <h2 class="section-title">🚨 Needs Immediate Attention</h2>
+    <div class="section-header">
+      <h2 class="section-title">🚨 Needs Immediate Attention</h2>
+    </div>
     <div id="urgent-list"></div>
 
     <!-- ============ TOP PERFORMERS ============ -->
-    <h2 class="section-title">🏆 Top Performers</h2>
+    <div class="section-header">
+      <h2 class="section-title">🏆 Top Performers</h2>
+    </div>
     <div id="top-performers"></div>
 
     <!-- ============ RECENT SUBMISSIONS ============ -->
-    <h2 class="section-title">📥 Recent Submissions</h2>
+    <div class="section-header">
+      <h2 class="section-title">📥 Recent Submissions</h2>
+    </div>
     <div id="recent-subs"></div>
 
   </main>
 
   <footer class="app-footer">
-    <p>Teacher Dashboard · v2.0.0 · Aligned with DO 015, s. 2026</p>
+    <p>Teacher Dashboard · <span class="version">v2.3.7</span> · Aligned with DO 015, s. 2026</p>
   </footer>
 
   <script src="config.js"></script>
