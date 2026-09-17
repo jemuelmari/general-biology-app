@@ -1,6 +1,6 @@
 /* ============================================================
    classrecord.js — Gradebook, reports, transmutation
-   Version: 2.0.0
+   Version: 2.1.0
    ============================================================ */
 
 (() => {
@@ -8,7 +8,9 @@
 
   let currentSubject = 'biol1';
   let currentSection = '';
+  let currentSex = '';
   let currentSearch = '';
+  let currentSort = 'last'; // 'last' | 'first'
 
   const WEIGHTS = { ww: 0.25, pt: 0.50, ex: 0.25 };
   const EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
@@ -29,9 +31,7 @@
       tabs.forEach((t) => t.classList.remove('active'));
       tab.classList.add('active');
       const key = tab.dataset.tab;
-      Object.entries(panels).forEach(([k, p]) => {
-        p.classList.toggle('hidden', k !== key);
-      });
+      Object.entries(panels).forEach(([k, p]) => p.classList.toggle('hidden', k !== key));
       if (key === 'activities') renderActivityTab();
       if (key === 'reports') renderReports();
     });
@@ -50,19 +50,16 @@
     return users.map((u) => {
       const scores = Store.getScores(u.lrn)[currentSubject] || {};
 
-      // Written Works (Quizzes)
       const quizzes = Object.values(scores.quizzes || {}).filter((q) => q && q.total);
       const wwAvg = quizzes.length
         ? quizzes.reduce((a, q) => a + pctOf(q.score, q.total), 0) / quizzes.length
         : 0;
 
-      // Performance Tasks
       const pts = Object.values(scores.pt || {}).filter((p) => p && p.score != null);
       const ptAvg = pts.length
         ? pts.reduce((a, p) => a + pctOf(p.score, p.maxScore || 100), 0) / pts.length
         : 0;
 
-      // Summative Tests
       const st1 = scores.st?.[`${currentSubject}-st1`];
       const st2 = scores.st?.[`${currentSubject}-st2`];
       const te = scores.te?.[`${currentSubject}-te`];
@@ -97,6 +94,9 @@
     if (currentSection) {
       result = result.filter((s) => s.user.section === currentSection);
     }
+    if (currentSex) {
+      result = result.filter((s) => APP.getSexValue(s.user.sex) === currentSex);
+    }
     if (currentSearch) {
       const q = currentSearch.toLowerCase();
       result = result.filter((s) =>
@@ -105,11 +105,12 @@
           .includes(q)
       );
     }
-    return result;
+    // Alphabetical sort
+    return APP.sortStudents(result, currentSort, 'asc');
   }
 
   /* ============================================================
-     SUBJECT / SECTION / SEARCH FILTERS
+     FILTERS
      ============================================================ */
   document.getElementById('cr-subject').addEventListener('change', (e) => {
     currentSubject = e.target.value;
@@ -121,6 +122,22 @@
     renderGrades();
   });
 
+  const crSexEl = document.getElementById('cr-sex');
+  if (crSexEl) {
+    crSexEl.addEventListener('change', (e) => {
+      currentSex = e.target.value;
+      renderGrades();
+    });
+  }
+
+  const crSortEl = document.getElementById('cr-sort');
+  if (crSortEl) {
+    crSortEl.addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      renderGrades();
+    });
+  }
+
   document.getElementById('cr-search').addEventListener('input', (e) => {
     currentSearch = e.target.value;
     renderGrades();
@@ -128,8 +145,10 @@
 
   document.getElementById('btn-clear-filters').addEventListener('click', () => {
     currentSection = '';
+    currentSex = '';
     currentSearch = '';
     document.getElementById('cr-section').value = '';
+    if (crSexEl) crSexEl.value = '';
     document.getElementById('cr-search').value = '';
     renderGrades();
   });
@@ -166,6 +185,8 @@
     const highest = withGrades.length
       ? Math.max(...withGrades.map((s) => s.final))
       : 0;
+    const maleCount = students.filter((s) => APP.getSexValue(s.user.sex) === 'Male').length;
+    const femaleCount = students.filter((s) => APP.getSexValue(s.user.sex) === 'Female').length;
 
     const el = document.getElementById('cr-stats');
     el.innerHTML = `
@@ -173,6 +194,16 @@
         <div class="cs-icon">👥</div>
         <div class="cs-value">${students.length}</div>
         <div class="cs-label">Total Students</div>
+      </div>
+      <div class="cr-stat-card blue">
+        <div class="cs-icon">♂️</div>
+        <div class="cs-value">${maleCount}</div>
+        <div class="cs-label">Male</div>
+      </div>
+      <div class="cr-stat-card" style="border-left-color:#ad1457;">
+        <div class="cs-icon">♀️</div>
+        <div class="cs-value">${femaleCount}</div>
+        <div class="cs-label">Female</div>
       </div>
       <div class="cr-stat-card green">
         <div class="cs-icon">✅</div>
@@ -204,6 +235,7 @@
     head.innerHTML = `
       <tr>
         <th rowspan="2" style="vertical-align:bottom;">Student</th>
+        <th rowspan="2" style="vertical-align:bottom;">Sex</th>
         <th rowspan="2" style="vertical-align:bottom;">Section</th>
         <th colspan="3" class="col-group">Written Works (25%)</th>
         <th colspan="2" class="col-group">Summative Tests (30%)</th>
@@ -226,7 +258,7 @@
 
     if (!students.length) {
       body.innerHTML = `
-        <tr><td colspan="11" style="text-align:center;padding:40px;color:#90a4ae;">
+        <tr><td colspan="12" style="text-align:center;padding:40px;color:#90a4ae;">
           No students match the current filters.
         </td></tr>
       `;
@@ -238,8 +270,6 @@
         ? '<td class="empty-cell">—</td>'
         : `<td class="grade-cell">${v}</td>`;
 
-      const q1 = s.user.lrn ? '—' : '—'; // placeholder for individual quiz columns if needed
-      // Simplified: use WW average in Q1 column, blank Q2/Q3 if we don't track per-quiz separately
       const scores = Store.getScores(s.user.lrn)[currentSubject] || {};
       const quizIds = ['quiz1', 'quiz2', 'quiz3'].map((id) => {
         const key = `${currentSubject}-${id}`;
@@ -258,6 +288,7 @@
       return `
         <tr>
           <td class="student-cell">${UI.renderStudentCell(s.user)}</td>
+          <td style="text-align:center;">${APP.getSexBadge(s.user.sex)}</td>
           <td class="section-cell">${s.user.section}</td>
           ${colQuiz(quizIds[0])}
           ${colQuiz(quizIds[1])}
@@ -279,7 +310,8 @@
   function renderActivityTab() {
     const subject = document.getElementById('at-subject').value;
     const filter = document.getElementById('at-filter').value;
-    const all = ActivityTracker.getAllActivity();
+    let all = ActivityTracker.getAllActivity();
+    all = APP.sortStudents(all, 'last', 'asc');
 
     let filtered = all;
     if (filter === 'behind') {
@@ -293,7 +325,6 @@
       filtered = all.filter((s) => s.summary[subject].completionPct >= 90);
     }
 
-    // Stats
     const avgCompletion = all.length
       ? Math.round(all.reduce((a, s) => a + s.summary[subject].completionPct, 0) / all.length)
       : 0;
@@ -343,7 +374,8 @@
         <thead>
           <tr>
             <th>Student</th>
-            <th>Section</th>
+            <th style="text-align:center;">Sex</th>
+            <th style="text-align:center;">Section</th>
             <th style="text-align:center;">Days Done</th>
             <th style="text-align:center;">Activities</th>
             <th style="text-align:center;min-width:200px;">Completion</th>
@@ -359,7 +391,8 @@
             return `
               <tr>
                 <td>${UI.renderStudentCell(s.user)}</td>
-                <td class="section-cell">${s.user.section}</td>
+                <td style="text-align:center;">${APP.getSexBadge(s.user.sex)}</td>
+                <td style="text-align:center;" class="section-cell">${s.user.section}</td>
                 <td style="text-align:center;font-weight:600;">${sm.completedDays}/${sm.totalDays}</td>
                 <td style="text-align:center;">${sm.activitiesDone}</td>
                 <td>
@@ -391,7 +424,6 @@
     const students = applyFilters(getStudentsData());
     const withGrades = students.filter((s) => s.final > 0);
 
-    // 1. Distribution by grade bracket
     const brackets = [
       { label: '96–100', min: 96, max: 100, color: 'linear-gradient(90deg, #1b5e20, #4caf50)' },
       { label: '86–95',  min: 86, max: 95,  color: 'linear-gradient(90deg, #2e7d32, #66bb6a)' },
@@ -406,16 +438,24 @@
       return { ...b, count };
     });
 
-    // 2. Proficiency Level distribution
     const plMap = {};
     withGrades.forEach((s) => {
       const lvl = Transmutation.proficiencyLevel(s.final);
       plMap[lvl.level] = (plMap[lvl.level] || 0) + 1;
     });
 
-    // 3. Component averages
     const avg = (key) => withGrades.length
       ? (withGrades.reduce((a, s) => a + s[key], 0) / withGrades.length).toFixed(1)
+      : '—';
+
+    // Sex breakdown
+    const maleGrades = withGrades.filter((s) => APP.getSexValue(s.user.sex) === 'Male');
+    const femaleGrades = withGrades.filter((s) => APP.getSexValue(s.user.sex) === 'Female');
+    const maleAvg = maleGrades.length
+      ? (maleGrades.reduce((a, s) => a + s.final, 0) / maleGrades.length).toFixed(1)
+      : '—';
+    const femaleAvg = femaleGrades.length
+      ? (femaleGrades.reduce((a, s) => a + s.final, 0) / femaleGrades.length).toFixed(1)
       : '—';
 
     const reportsGrid = document.getElementById('reports-grid');
@@ -432,6 +472,22 @@
               UI.renderDistributionRow(lvl, n, withGrades.length, 'linear-gradient(90deg, #6a1b9a, #ab47bc)')
             ).join('')
           : '<div style="color:#90a4ae;font-size:0.85rem;">No data yet.</div>'}
+      </div>
+
+      <div class="report-card">
+        <h4>♂️♀️ Sex Comparison</h4>
+        <div class="distribution-row">
+          <span class="distribution-label">Male (${maleGrades.length})</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width:${maleAvg}%;background:linear-gradient(90deg, #0d47a1, #42a5f5);">${maleAvg}</div>
+          </div>
+        </div>
+        <div class="distribution-row">
+          <span class="distribution-label">Female (${femaleGrades.length})</span>
+          <div class="distribution-bar">
+            <div class="distribution-fill" style="width:${femaleAvg}%;background:linear-gradient(90deg, #ad1457, #ec407a);">${femaleAvg}</div>
+          </div>
+        </div>
       </div>
 
       <div class="report-card">
@@ -463,13 +519,14 @@
       </div>
     `;
 
-    // Per-student scores table
+    // Per-student table
     const head = document.getElementById('report-head');
     const body = document.getElementById('report-body');
 
     head.innerHTML = `
       <tr>
         <th>Student</th>
+        <th style="text-align:center;">Sex</th>
         <th style="text-align:center;">Section</th>
         <th style="text-align:center;">WW</th>
         <th style="text-align:center;">PT</th>
@@ -484,32 +541,31 @@
       </tr>
     `;
 
-    body.innerHTML = withGrades
-      .sort((a, b) => b.final - a.final)
-      .map((s) => `
-        <tr>
-          <td>${UI.renderStudentCell(s.user)}</td>
-          <td style="text-align:center;" class="section-cell">${s.user.section}</td>
-          <td style="text-align:center;" class="grade-cell">${s.ww}</td>
-          <td style="text-align:center;" class="grade-cell">${s.pt}</td>
-          <td style="text-align:center;" class="grade-cell">${s.st1}</td>
-          <td style="text-align:center;" class="grade-cell">${s.st2}</td>
-          <td style="text-align:center;" class="grade-cell">${s.te}</td>
-          <td style="text-align:center;" class="grade-cell">${s.ex}</td>
-          <td style="text-align:center;color:#90a4ae;font-size:0.8rem;">${s.rawFinal}</td>
-          <td style="text-align:center;font-weight:800;color:${s.passing ? '#2e7d32' : '#c62828'};font-size:0.95rem;">${s.final}</td>
-          <td style="text-align:center;">${UI.renderPLBadge(s.final)}</td>
-          <td style="text-align:center;">
-            ${s.passing ? '<span class="status-badge pass">✓</span>' : '<span class="status-badge fail">✗</span>'}
-          </td>
-        </tr>
-      `).join('') || `
-        <tr><td colspan="12" style="text-align:center;padding:40px;color:#90a4ae;">No data yet.</td></tr>
-      `;
+    body.innerHTML = withGrades.map((s) => `
+      <tr>
+        <td>${UI.renderStudentCell(s.user)}</td>
+        <td style="text-align:center;">${APP.getSexBadge(s.user.sex)}</td>
+        <td style="text-align:center;" class="section-cell">${s.user.section}</td>
+        <td style="text-align:center;" class="grade-cell">${s.ww}</td>
+        <td style="text-align:center;" class="grade-cell">${s.pt}</td>
+        <td style="text-align:center;" class="grade-cell">${s.st1}</td>
+        <td style="text-align:center;" class="grade-cell">${s.st2}</td>
+        <td style="text-align:center;" class="grade-cell">${s.te}</td>
+        <td style="text-align:center;" class="grade-cell">${s.ex}</td>
+        <td style="text-align:center;color:#90a4ae;font-size:0.8rem;">${s.rawFinal}</td>
+        <td style="text-align:center;font-weight:800;color:${s.passing ? '#2e7d32' : '#c62828'};font-size:0.95rem;">${s.final}</td>
+        <td style="text-align:center;">${UI.renderPLBadge(s.final)}</td>
+        <td style="text-align:center;">
+          ${s.passing ? '<span class="status-badge pass">✓</span>' : '<span class="status-badge fail">✗</span>'}
+        </td>
+      </tr>
+    `).join('') || `
+      <tr><td colspan="13" style="text-align:center;padding:40px;color:#90a4ae;">No data yet.</td></tr>
+    `;
   }
 
   /* ============================================================
-     TAB 4: TRANSMUTATION TABLE
+     TAB 4: TRANSMUTATION
      ============================================================ */
   function renderTransmutation() {
     const tbody = document.getElementById('transmutation-tbody');
@@ -540,7 +596,7 @@
   document.getElementById('btn-export-csv').addEventListener('click', () => {
     const students = applyFilters(getStudentsData());
     const headers = [
-      'LRN', 'Last Name', 'First Name', 'Middle Name', 'Grade', 'Section',
+      'LRN', 'Last Name', 'First Name', 'Middle Name', 'Sex', 'Grade', 'Section',
       'WW', 'PT', 'ST1', 'ST2', 'TE', 'EX', 'Raw Final', 'Transmuted', 'Status'
     ];
     const rows = students.map((s) => [
@@ -548,6 +604,7 @@
       s.user.lastName,
       s.user.firstName,
       s.user.middleName || '',
+      APP.getSexValue(s.user.sex) || '',
       s.user.gradeLevel,
       s.user.section,
       s.ww, s.pt, s.st1, s.st2, s.te, s.ex,
@@ -559,9 +616,6 @@
     UI.toast('CSV exported!', 'success');
   });
 
-  /* ============================================================
-     PRINT
-     ============================================================ */
   document.getElementById('btn-print').addEventListener('click', () => {
     window.print();
   });
