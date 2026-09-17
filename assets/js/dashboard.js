@@ -1,6 +1,6 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 1.2.0
+   Version: 1.4.0
    ============================================================ */
 
 (() => {
@@ -17,10 +17,14 @@
   APP.$('#user-pill').textContent =
     `${user.firstName} ${user.lastName.charAt(0)}. · ${user.section}`;
 
-  /* ---------- Greeting ---------- */
+  /* ---------- Hero greeting ---------- */
+  const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+  APP.$('#dash-avatar').textContent = initials;
   APP.$('#greeting-name').textContent = `Hello, ${user.firstName}! 👋`;
-  APP.$('#greeting-meta').textContent =
-    `LRN: ${APP.formatLRN(user.lrn)} · Grade ${user.gradeLevel} — ${user.section}`;
+  APP.$('#greeting-meta').innerHTML = `
+    <span>🎓 LRN: ${APP.formatLRN(user.lrn)}</span>
+    <span>📘 Grade ${user.gradeLevel} — ${user.section}</span>
+  `;
 
   /* ---------- Compute standing ---------- */
   function computeStanding() {
@@ -40,11 +44,9 @@
   const standing = computeStanding();
 
   APP.$('#standing-badge').innerHTML = `
-    <div style="text-align:right;">
-      <div class="badge badge-${standing.key}" style="font-size:0.9rem;padding:8px 16px;">
-        ${standing.label}
-      </div>
-      ${standing.avg !== null ? `<div class="text-small text-muted" style="margin-top:4px;">ST Average: ${standing.avg.toFixed(1)}%</div>` : ''}
+    <div class="dash-hero-badge ${standing.key}">
+      <span class="dot"></span>
+      <span>${standing.label}${standing.avg !== null ? ` · ${standing.avg.toFixed(1)}%` : ''}</span>
     </div>
   `;
 
@@ -53,16 +55,19 @@
   const badges = Store.getBadges(user.lrn);
 
   const stats = [
-    { value: (progress.biol1?.completed?.length || 0), label: 'Bio 1 Days Done' },
-    { value: (progress.biol2?.completed?.length || 0), label: 'Bio 2 Days Done' },
-    { value: (badges.biol1?.length || 0) + (badges.biol2?.length || 0), label: 'Total Badges' },
-    { value: standing.avg !== null ? `${standing.avg.toFixed(0)}%` : '—', label: 'ST Average' }
+    { value: (progress.biol1?.completed?.length || 0), label: 'Bio 1 Days Done', icon: '🔬', color: 'green' },
+    { value: (progress.biol2?.completed?.length || 0), label: 'Bio 2 Days Done', icon: '🌱', color: 'blue' },
+    { value: (badges.biol1?.length || 0) + (badges.biol2?.length || 0), label: 'Total Badges', icon: '🏆', color: 'amber' },
+    { value: standing.avg !== null ? `${standing.avg.toFixed(0)}%` : '—', label: 'ST Average', icon: '📊', color: 'purple' }
   ];
 
   APP.$('#quick-stats').innerHTML = stats.map((s) => `
-    <div class="stat-card">
-      <div class="stat-value">${s.value}</div>
-      <div class="stat-label">${s.label}</div>
+    <div class="qs-card ${s.color}">
+      <div class="qs-icon">${s.icon}</div>
+      <div class="qs-info">
+        <div class="qs-value">${s.value}</div>
+        <div class="qs-label">${s.label}</div>
+      </div>
     </div>
   `).join('');
 
@@ -120,22 +125,15 @@
     `;
   }).join('');
 
-  /* ---------- Sync & Backup UI (HONEST LABELS) ---------- */
-  const syncUI = document.getElementById('sync-output');
+  /* ---------- Sync UI ---------- */
   const syncBtnCode = APP.$('#btn-sync-code');
-  const syncBtnJson = APP.$('#btn-export-json');
 
-  // Update button labels and add mode indicator
   if (syncBtnCode) {
     const backendOn = Sync.backendEnabled();
     syncBtnCode.textContent = backendOn
       ? '🔑 Generate Sync Code (works anywhere)'
       : '🔑 Generate Sync Code (this device only)';
-    syncBtnCode.title = backendOn
-      ? 'Works across devices via Google Sheets backend'
-      : 'Only works if the teacher uses the SAME device';
 
-    // Show a warning badge next to the button if not backend-enabled
     if (!backendOn) {
       const warn = document.createElement('div');
       warn.className = 'alert alert-warning';
@@ -163,14 +161,11 @@
     syncBtnCode.addEventListener('click', async () => {
       syncBtnCode.disabled = true;
       syncBtnCode.textContent = '⏳ Generating...';
-
       try {
         const result = await Sync.generateSyncCode(user.lrn, null);
-
         const modeLabel = result.mode === 'backend'
           ? '<span style="color:var(--color-success);">✅ Works across devices</span>'
           : '<span style="color:var(--color-warning);">⚠️ Only works on THIS device</span>';
-
         APP.$('#sync-output').innerHTML = `
           <div class="alert alert-success">
             <strong>✅ Sync Code Generated!</strong>
@@ -180,7 +175,7 @@
             <p class="text-small" style="margin-bottom:8px;">Mode: ${modeLabel}</p>
             <p class="text-small">${result.mode === 'backend'
               ? 'Send this code to your teacher — they can import it from any device.'
-              : 'Your teacher must use the SAME device to import this code. Otherwise, use "Download Backup (JSON)" below.'}</p>
+              : 'Your teacher must use the SAME device to import this code.'}</p>
           </div>
         `;
         APP.toast('Sync code generated!', 'success');
@@ -196,16 +191,14 @@
   }
 
   /* ---------- Sync: Export JSON ---------- */
-  if (syncBtnJson) {
-    syncBtnJson.addEventListener('click', async () => {
-      try {
-        const fn = await Sync.exportAsFile(user.lrn, null);
-        APP.toast(`Saved: ${fn}`, 'success');
-      } catch (e) {
-        APP.toast('Export failed: ' + e.message, 'danger');
-      }
-    });
-  }
+  APP.$('#btn-export-json').addEventListener('click', async () => {
+    try {
+      const fn = await Sync.exportAsFile(user.lrn, null);
+      APP.toast(`Saved: ${fn}`, 'success');
+    } catch (e) {
+      APP.toast('Export failed: ' + e.message, 'danger');
+    }
+  });
 
   /* ---------- Sync: Import JSON ---------- */
   APP.$('#btn-import-json').addEventListener('click', () => {
@@ -225,7 +218,7 @@
     e.target.value = '';
   });
 
-  /* ---------- Log Out (INSTANT) ---------- */
+  /* ---------- Log Out ---------- */
   APP.$('#btn-logout').addEventListener('click', () => {
     const overlay = document.createElement('div');
     overlay.style.cssText = `
