@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Teacher Application — General Biology</title>
+  <title>Teacher Dashboard — General Biology</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="assets/css/teacher.css" />
 </head>
@@ -12,35 +12,75 @@
   <header class="app-header teacher-header">
     <div class="container flex-between">
       <div>
-        <h1>👩‍🏫 Teacher Application</h1>
-        <span class="version">v1.6.0</span>
+        <h1>👩‍🏫 Teacher Dashboard</h1>
+        <span class="version">v2.0.0</span>
       </div>
-      <nav style="display:flex;gap:8px;">
-        <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Student View</a>
-        <a href="classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Class Record</a>
-        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      <nav class="teacher-nav">
+        <a href="index.html">🎓 Student View</a>
+        <a href="classrecord.html">📋 Class Record</a>
+        <button onclick="TeacherAuth.logout()">🚪 Log Out</button>
       </nav>
     </div>
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
-    <h2 style="color:var(--color-primary-dark);margin-bottom:16px;">📊 Dashboard Overview</h2>
-    <div class="stats-grid" id="teacher-stats"></div>
+    <!-- ============ HERO BANNER ============ -->
+    <div class="teacher-hero">
+      <div class="teacher-hero-content">
+        <div class="teacher-hero-text">
+          <h1>Welcome back, Teacher! 👋</h1>
+          <p>Here's your class overview at a glance</p>
+          <div class="teacher-hero-meta" id="hero-meta"></div>
+        </div>
+        <div class="teacher-hero-actions">
+          <a href="teacher/activity-tracker.html">🎮 Activity Tracker</a>
+          <a href="teacher/assessment-tracker.html" class="outline">📝 Assessment Tracker</a>
+        </div>
+      </div>
+    </div>
 
-    <h2 style="color:var(--color-primary-dark);margin:24px 0 12px;">🎯 Quick Actions</h2>
-    <div class="dashboard-grid" id="teacher-actions"></div>
+    <!-- ============ KEY STATS ============ -->
+    <h2 class="section-title">📊 Class Overview</h2>
+    <div class="stats-grid" id="key-stats"></div>
 
-    <h2 style="color:var(--color-primary-dark);margin:24px 0 12px;">🚨 Needs Immediate Attention</h2>
+    <!-- ============ QUICK ACTIONS ============ -->
+    <h2 class="section-title">🎯 Quick Actions</h2>
+    <div class="action-grid" id="quick-actions"></div>
+
+    <!-- ============ CLASS DISTRIBUTION ============ -->
+    <h2 class="section-title">📈 Class Performance Distribution</h2>
+    <div class="report-grid" id="distribution-reports">
+      <div class="report-card">
+        <h4>🎓 ST Average Distribution</h4>
+        <div id="dist-st-avg"></div>
+      </div>
+      <div class="report-card">
+        <h4>📝 Submission Status</h4>
+        <div id="dist-submissions"></div>
+      </div>
+      <div class="report-card">
+        <h4>🎮 Activity Engagement</h4>
+        <div id="dist-activity"></div>
+      </div>
+    </div>
+
+    <!-- ============ ATTENTION NEEDED ============ -->
+    <h2 class="section-title">🚨 Needs Immediate Attention</h2>
     <div id="urgent-list"></div>
 
-    <h2 style="color:var(--color-primary-dark);margin:24px 0 12px;">📥 Recent Submissions</h2>
+    <!-- ============ TOP PERFORMERS ============ -->
+    <h2 class="section-title">🏆 Top Performers</h2>
+    <div id="top-performers"></div>
+
+    <!-- ============ RECENT SUBMISSIONS ============ -->
+    <h2 class="section-title">📥 Recent Submissions</h2>
     <div id="recent-subs"></div>
 
   </main>
 
   <footer class="app-footer">
-    <p>Teacher Application · v1.6.0 · Aligned with DO 015, s. 2026</p>
+    <p>Teacher Dashboard · v2.0.0 · Aligned with DO 015, s. 2026</p>
   </footer>
 
   <script src="config.js"></script>
@@ -50,6 +90,7 @@
   <script src="assets/js/transmutation.js"></script>
   <script src="assets/js/sync.js"></script>
   <script src="assets/js/activity-tracker.js"></script>
+  <script src="assets/js/ui-helpers.js"></script>
   <script src="assets/js/teacher.js"></script>
   <script src="assets/js/teacher-auth.js"></script>
 </body>
