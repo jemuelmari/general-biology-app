@@ -1,6 +1,6 @@
 /* ============================================================
-   teacher.js — Teacher dashboard logic (modern)
-   Version: 2.2.0
+   teacher.js — Teacher dashboard logic
+   Version: 2.3.7
    ============================================================ */
 
 (() => {
@@ -30,28 +30,20 @@
     }, 0);
     const maleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Male').length;
     const femaleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Female').length;
-    const lockedCount = countAllLocks();
+    const totalActivities = activityData.reduce((a, s) =>
+      a + s.summary.biol1.activitiesDone + s.summary.biol2.activitiesDone, 0);
 
     el.innerHTML = `
       <div class="teacher-hero-stat">👥 <strong>${totalStudents}</strong> Students</div>
       <div class="teacher-hero-stat">♂ <strong>${maleCount}</strong> Male</div>
       <div class="teacher-hero-stat">♀ <strong>${femaleCount}</strong> Female</div>
       <div class="teacher-hero-stat">📝 <strong>${totalAssessments}</strong> Submissions</div>
-      ${lockedCount > 0 ? `<div class="teacher-hero-stat" style="background:rgba(255,220,220,0.25);">🔒 <strong>${lockedCount}</strong> Locked</div>` : ''}
+      <div class="teacher-hero-stat">🎮 <strong>${totalActivities}</strong> Activities</div>
     `;
   })();
 
-  function countAllLocks() {
-    let count = 0;
-    users.forEach((u) => {
-      const keys = Object.keys(localStorage).filter((k) => k.startsWith(`gba_v1_lock_${u.lrn}_`));
-      count += keys.length;
-    });
-    return count;
-  }
-
   /* ============================================================
-     STATS
+     COMPUTE STATS
      ============================================================ */
   function computeStats() {
     let totalAssessments = 0;
@@ -88,15 +80,24 @@
 
   const stats = computeStats();
 
+  /* ============================================================
+     KEY STATS
+     ============================================================ */
   const keyStatsEl = document.getElementById('key-stats');
   if (keyStatsEl) {
-    const maleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Male').length;
-    const femaleCount = users.filter((u) => APP.getSexValue(u.sex) === 'Female').length;
-    const lockedCount = countAllLocks();
     keyStatsEl.innerHTML = [
-      UI.renderStatCard({ value: stats.totalStudents, label: 'Total Students', icon: '👥', color: 'blue' }),
-      UI.renderStatCard({ value: maleCount, label: 'Male Students', icon: '♂️', color: 'blue' }),
-      UI.renderStatCard({ value: femaleCount, label: 'Female Students', icon: '♀️', color: 'purple' }),
+      UI.renderStatCard({
+        value: stats.totalStudents,
+        label: 'Total Students',
+        icon: '👥',
+        color: 'blue'
+      }),
+      UI.renderStatCard({
+        value: stats.totalAssessments,
+        label: 'ST Submissions',
+        icon: '📝',
+        color: 'purple'
+      }),
       UI.renderStatCard({
         value: stats.passRate + '%',
         label: 'Pass Rate',
@@ -104,10 +105,10 @@
         color: stats.passRate >= 75 ? 'green' : 'amber'
       }),
       UI.renderStatCard({
-        value: lockedCount,
-        label: 'Locked Assessments',
-        icon: '🔒',
-        color: lockedCount > 0 ? 'amber' : 'green'
+        value: stats.avgST + '%',
+        label: 'Avg ST Score',
+        icon: '📊',
+        color: stats.avgST >= 80 ? 'green' : 'amber'
       }),
       UI.renderStatCard({
         value: stats.urgent,
@@ -121,7 +122,14 @@
   /* ============================================================
      QUICK ACTIONS
      ============================================================ */
-  const lockedCount = countAllLocks();
+  const lockedCount = (() => {
+    let count = 0;
+    users.forEach((u) => {
+      const keys = Object.keys(localStorage).filter((k) => k.startsWith(`gba_v1_lock_${u.lrn}_`));
+      count += keys.length;
+    });
+    return count;
+  })();
 
   const actions = [
     { icon: '🎮', title: 'Activity Tracker', desc: 'Track lesson activity completion, badges, and points', href: 'teacher/activity-tracker.html', color: '#1b7a3d', badge: null },
@@ -178,6 +186,7 @@
     });
   }
 
+  // 1. ST Average Distribution
   (function renderDistSTAvg() {
     const el = document.getElementById('dist-st-avg');
     if (!el) return;
@@ -192,7 +201,12 @@
     ];
 
     if (!data.length) {
-      el.innerHTML = '<div class="alert alert-info" style="margin:0;">No ST submissions yet.</div>';
+      el.innerHTML = `
+        <div style="text-align:center;padding:24px 12px;">
+          <div style="font-size:2.5rem;opacity:0.4;">📝</div>
+          <p style="color:#90a4ae;font-size:0.9rem;margin:8px 0 0;">No ST submissions yet</p>
+        </div>
+      `;
       return;
     }
 
@@ -202,6 +216,7 @@
     }).join('');
   })();
 
+  // 2. Submission Status
   (function renderDistSubmissions() {
     const el = document.getElementById('dist-submissions');
     if (!el) return;
@@ -218,13 +233,19 @@
     ].join('');
   })();
 
+  // 3. Activity Engagement
   (function renderDistActivity() {
     const el = document.getElementById('dist-activity');
     if (!el) return;
 
     const activity = ActivityTracker.getAllActivity();
     if (!activity.length) {
-      el.innerHTML = '<div class="alert alert-info" style="margin:0;">No activity data yet.</div>';
+      el.innerHTML = `
+        <div style="text-align:center;padding:24px 12px;">
+          <div style="font-size:2.5rem;opacity:0.4;">🎮</div>
+          <p style="color:#90a4ae;font-size:0.9rem;margin:8px 0 0;">No activity data yet</p>
+        </div>
+      `;
       return;
     }
 
@@ -283,25 +304,27 @@
   if (urgentEl) {
     if (!urgent.length) {
       urgentEl.innerHTML = `
-        <div class="alert alert-success">
-          🎉 <strong>No urgent cases.</strong> All students are performing above the 65% threshold.
+        <div style="background:#fff;border-radius:14px;padding:32px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.04);">
+          <div style="font-size:3rem;">🎉</div>
+          <h3 style="margin:12px 0 6px;color:#2e7d32;">All Clear!</h3>
+          <p style="color:#5f6368;font-size:0.9rem;margin:0;">No urgent cases. All students are performing above the 65% threshold.</p>
         </div>
       `;
     } else {
       urgentEl.innerHTML = urgent.slice(0, 5).map((u) => {
         const avatar = UI.renderAvatar(u.user.firstName, u.user.lastName, u.user.lrn);
         return `
-          <div class="intervention-card urgent" style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="background:#fff;border-radius:12px;padding:16px 20px;box-shadow:0 2px 8px rgba(0,0,0,0.05);border-left:4px solid #c62828;margin-bottom:12px;display:flex;gap:14px;align-items:flex-start;">
             ${avatar}
             <div style="flex:1;">
-              <div class="student-name">
+              <div style="font-weight:700;font-size:0.95rem;color:#1a1a1a;margin-bottom:4px;">
                 ${APP.formatFullName(u.user.lastName, u.user.firstName, u.user.middleName)}
                 ${APP.getSexBadge(u.user.sex)}
               </div>
-              <div class="student-meta">
+              <div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">
                 LRN: ${APP.formatLRN(u.user.lrn)} · ${u.user.section} · ${u.subject.toUpperCase()} · ${u.stId.toUpperCase()}
               </div>
-              <div class="suggested-action">
+              <div style="font-size:0.85rem;padding:10px 12px;background:#fef2f2;border-radius:8px;color:#991b1b;">
                 <strong>Score: ${u.percent}%</strong> — Immediate remediation and parent-teacher conference recommended.
               </div>
             </div>
@@ -327,7 +350,13 @@
 
     const data = collectStudentStats().filter((d) => d.stCount > 0);
     if (!data.length) {
-      el.innerHTML = '<div class="alert alert-info">No assessment data yet.</div>';
+      el.innerHTML = `
+        <div style="background:#fff;border-radius:14px;padding:32px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.04);">
+          <div style="font-size:3rem;">🏆</div>
+          <h3 style="margin:12px 0 6px;color:#1a1a1a;">No Assessment Data Yet</h3>
+          <p style="color:#5f6368;font-size:0.9rem;margin:0;">Top performers will appear here once students submit assessments.</p>
+        </div>
+      `;
       return;
     }
 
@@ -339,36 +368,38 @@
       .slice(0, 5);
 
     el.innerHTML = `
-      <div class="gradebook-wrapper" style="overflow-x:auto;">
-        <table class="modern-table">
-          <thead>
-            <tr>
-              <th style="width:40px;text-align:center;">#</th>
-              <th>Student</th>
-              <th style="text-align:center;">Sex</th>
-              <th style="text-align:center;">ST Submissions</th>
-              <th style="text-align:center;">Average</th>
-              <th style="text-align:center;">Proficiency</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${top.map((d, i) => {
-              const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
-              return `
-                <tr>
-                  <td style="text-align:center;font-size:1.1rem;">${medal}</td>
-                  <td>${UI.renderStudentCell(d.user)}</td>
-                  <td style="text-align:center;">${APP.getSexBadge(d.user.sex)}</td>
-                  <td style="text-align:center;">${d.stCount}</td>
-                  <td style="text-align:center;font-weight:800;color:${UI.getPctHex(d.stAvg)};font-size:0.95rem;">
-                    ${d.stAvg.toFixed(1)}%
-                  </td>
-                  <td style="text-align:center;">${UI.renderPLBadge(d.stAvg)}</td>
-                </tr>
-              `;
-            }).join('')}
-          </tbody>
-        </table>
+      <div style="background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden;">
+        <div style="overflow-x:auto;">
+          <table class="modern-table">
+            <thead>
+              <tr>
+                <th style="width:50px;text-align:center;">#</th>
+                <th>Student</th>
+                <th style="text-align:center;">Sex</th>
+                <th style="text-align:center;">ST Submissions</th>
+                <th style="text-align:center;">Average</th>
+                <th style="text-align:center;">Proficiency</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${top.map((d, i) => {
+                const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
+                return `
+                  <tr>
+                    <td style="text-align:center;font-size:1.1rem;">${medal}</td>
+                    <td>${UI.renderStudentCell(d.user)}</td>
+                    <td style="text-align:center;">${APP.getSexBadge(d.user.sex)}</td>
+                    <td style="text-align:center;font-weight:600;">${d.stCount}</td>
+                    <td style="text-align:center;font-weight:800;color:${UI.getPctHex(d.stAvg)};font-size:0.95rem;">
+                      ${d.stAvg.toFixed(1)}%
+                    </td>
+                    <td style="text-align:center;">${UI.renderPLBadge(d.stAvg)}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
       </div>
     `;
   })();
@@ -400,35 +431,35 @@
   if (subsEl) {
     if (!subs.length) {
       subsEl.innerHTML = `
-        <div class="alert alert-info">
-          📭 No submissions yet. Students will appear here once they complete quizzes or STs.
+        <div style="background:#fff;border-radius:14px;padding:32px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.04);">
+          <div style="font-size:3rem;">📭</div>
+          <h3 style="margin:12px 0 6px;color:#1a1a1a;">No Submissions Yet</h3>
+          <p style="color:#5f6368;font-size:0.9rem;margin:0;">Student submissions will appear here once they complete quizzes or STs.</p>
         </div>
       `;
     } else {
       subsEl.innerHTML = subs.slice(0, 10).map((s) => {
         const data = s.data;
-        const cls = data.passed ? 'on-track' : 'remediation';
+        const passed = data.passed;
+        const cls = passed ? '#2e7d32' : '#c62828';
         const avatar = UI.renderAvatar(s.user.firstName, s.user.lastName, s.user.lrn);
         return `
-          <div class="intervention-card ${cls}" style="display:flex;gap:14px;align-items:flex-start;">
+          <div style="background:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.05);border-left:4px solid ${cls};margin-bottom:10px;display:flex;gap:14px;align-items:center;">
             ${avatar}
             <div style="flex:1;">
-              <div class="student-name">
+              <div style="font-weight:700;font-size:0.9rem;color:#1a1a1a;">
                 ${APP.formatFullName(s.user.lastName, s.user.firstName, s.user.middleName)}
                 ${APP.getSexBadge(s.user.sex)}
               </div>
-              <div class="student-meta">
+              <div style="font-size:0.75rem;color:#78909c;margin-top:2px;">
                 ${s.subject.toUpperCase()} · ${s.id.toUpperCase()} · ${UI.fmtDateRelative(data.timestamp)}
               </div>
-              <div class="suggested-action">
-                Score: <strong>${data.score}/${data.total}</strong> (${data.percent}%)
-                ${data.tabViolations ? ` · ⚠️ ${data.tabViolations} tab switch(es)` : ''}
-              </div>
             </div>
-            ${UI.renderProgressRing(data.percent, {
-              size: 52, stroke: 5,
-              color: data.passed ? '#2e7d32' : '#c62828'
-            })}
+            <div style="text-align:center;min-width:80px;">
+              <div style="font-weight:800;color:${cls};font-size:1.1rem;">${data.percent}%</div>
+              <div style="font-size:0.7rem;color:#90a4ae;">${data.score}/${data.total}</div>
+            </div>
+            ${data.tabViolations ? `<span style="font-size:1.2rem;" title="${data.tabViolations} tab switch(es)">⚠️</span>` : ''}
           </div>
         `;
       }).join('');
