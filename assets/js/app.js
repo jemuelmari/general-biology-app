@@ -1,12 +1,12 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 2.1.0
+   Version: 2.1.3
    ============================================================ */
 
 const APP = (() => {
   'use strict';
 
-  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.1.0';
+  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.1.3';
   const APP_NAME = (typeof CONFIG !== 'undefined' && CONFIG.APP_NAME) || 'General Biology Online Modular Application';
 
   /* ---------- State ---------- */
@@ -162,9 +162,6 @@ const APP = (() => {
   }
 
   /* ---------- Sex Helpers ---------- */
-  /**
-   * Get the sex value (M/F). Handles "Male", "Female", "M", "F", "", null.
-   */
   function getSexValue(sex) {
     if (!sex) return '';
     const s = String(sex).trim().toLowerCase();
@@ -173,9 +170,6 @@ const APP = (() => {
     return '';
   }
 
-  /**
-   * Get a short letter code: "M" or "F".
-   */
   function getSexCode(sex) {
     const v = getSexValue(sex);
     if (v === 'Male') return 'M';
@@ -183,9 +177,6 @@ const APP = (() => {
     return '—';
   }
 
-  /**
-   * Get an icon for sex.
-   */
   function getSexIcon(sex) {
     const v = getSexValue(sex);
     if (v === 'Male') return '♂️';
@@ -193,9 +184,6 @@ const APP = (() => {
     return '';
   }
 
-  /**
-   * Render a small sex badge.
-   */
   function getSexBadge(sex) {
     const v = getSexValue(sex);
     if (!v) return '<span style="color:#bdbdbd;">—</span>';
@@ -206,19 +194,11 @@ const APP = (() => {
   }
 
   /* ---------- Sorting Helpers ---------- */
-
-  /**
-   * Sort an array of student objects alphabetically.
-   * @param {Array} list - objects with { lastName, firstName, ... } or { user: {...} }
-   * @param {string} order - 'last' (default) | 'first'
-   * @param {string} dir - 'asc' (default) | 'desc'
-   */
   function sortStudents(list, order = 'last', dir = 'asc') {
     const arr = [...list];
     const dirMult = dir === 'desc' ? -1 : 1;
 
     return arr.sort((a, b) => {
-      // Support both { user: {...} } and { ...user } shapes
       const ua = a.user || a;
       const ub = b.user || b;
 
@@ -248,6 +228,52 @@ const APP = (() => {
 
   function validateName(name) {
     return typeof name === 'string' && name.trim().length >= 2;
+  }
+
+  /* ---------- Version Rendering ---------- */
+  /**
+   * Replaces every version display on the page with the current version.
+   * Targets:
+   *   1. Elements with class .version
+   *   2. Elements with data-version attribute
+   *   3. Any text nodes matching /v\d+\.\d+\.\d+/ inside .app-footer or footer
+   */
+  function renderVersions() {
+    const v = `v${VERSION}`;
+
+    // 1. Class .version
+    document.querySelectorAll('.version').forEach((e) => {
+      e.textContent = v;
+    });
+
+    // 2. Attribute data-version
+    document.querySelectorAll('[data-version]').forEach((e) => {
+      e.textContent = v;
+    });
+
+    // 3. Footer text replacement
+    document.querySelectorAll('.app-footer, footer').forEach((footer) => {
+      footer.childNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const updated = node.textContent.replace(/v\d+\.\d+\.\d+/g, v);
+          if (updated !== node.textContent) {
+            node.textContent = updated;
+          }
+        }
+        // Also check <p> tags inside
+        node.querySelectorAll?.('p').forEach((p) => {
+          const updated = p.textContent.replace(/v\d+\.\d+\.\d+/g, v);
+          if (updated !== p.textContent) {
+            p.textContent = updated;
+          }
+        });
+      });
+    });
+
+    // 4. Also update the page title suffix if it exists
+    if (document.title.includes('v')) {
+      document.title = document.title.replace(/v\d+\.\d+\.\d+/g, v);
+    }
   }
 
   /* ---------- Developer Footer ---------- */
@@ -293,9 +319,7 @@ const APP = (() => {
   /* ---------- Init ---------- */
   function init() {
     console.log(`[${APP_NAME}] v${VERSION}`);
-    const vEls = $$('.version');
-    vEls.forEach((e) => (e.textContent = `v${VERSION}`));
-
+    renderVersions();
     injectManifest();
     renderDeveloperFooter();
     Router.init();
@@ -323,6 +347,7 @@ const APP = (() => {
     sortStudents,
     validateLRN,
     validateName,
+    renderVersions,
     renderDeveloperFooter,
     init
   };
