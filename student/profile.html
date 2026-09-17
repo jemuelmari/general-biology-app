@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — General Biology</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/student.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>👤 My Profile</h1>
+        <span class="version">v2.0.1</span>
+      </div>
+      <a href="dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
+    </div>
+  </header>
+
+  <main class="container" style="max-width:640px;padding-top:24px;padding-bottom:64px;">
+
+    <!-- Profile header card -->
+    <div class="card" id="profile-header">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div id="profile-avatar" style="
+          width:72px;height:72px;border-radius:50%;
+          display:flex;align-items:center;justify-content:center;
+          font-size:1.6rem;font-weight:800;color:#fff;
+          background:linear-gradient(135deg,#1b7a3d,#4caf50);
+          box-shadow:0 4px 12px rgba(27,122,61,0.25);
+          flex-shrink:0;
+        ">?</div>
+        <div style="flex:1;min-width:200px;">
+          <div id="profile-name" style="font-size:1.2rem;font-weight:700;color:var(--color-primary-dark);"></div>
+          <div id="profile-meta" class="text-muted text-small" style="margin-top:4px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit form -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">✏️ Edit Your Details</span>
+      </div>
+
+      <p class="text-muted text-small" style="margin-bottom:16px;">
+        You can update your name, grade level, and section. Your <strong>LRN cannot be changed</strong> since it is your unique identifier.
+      </p>
+
+      <form id="profile-form">
+
+        <div class="form-group">
+          <label class="form-label" for="pf-lrn">LRN (locked)</label>
+          <input type="text" id="pf-lrn" class="form-control" disabled
+                 style="background:#f5f5f5;cursor:not-allowed;color:#666;" />
+          <div class="form-hint">🔒 Cannot be changed</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pf-lastname">Last Name *</label>
+          <input type="text" id="pf-lastname" class="form-control" required
+                 autocomplete="off" placeholder="DELA CRUZ"
+                 style="text-transform:uppercase;" />
+          <div class="form-hint">Saved in ALL CAPS</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pf-firstname">First Name *</label>
+          <input type="text" id="pf-firstname" class="form-control" required
+                 autocomplete="off" placeholder="Juan" />
+          <div class="form-hint">Saved in Title Case</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pf-middlename">Middle Name</label>
+          <input type="text" id="pf-middlename" class="form-control"
+                 autocomplete="off" placeholder="Santos" />
+          <div class="form-hint">Optional · Title Case</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pf-grade">Grade Level *</label>
+          <select id="pf-grade" class="form-control" required>
+            <option value="">— Select —</option>
+            <option value="11">Grade 11</option>
+            <option value="12">Grade 12</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pf-section">Section *</label>
+          <select id="pf-section" class="form-control" required>
+            <option value="">— Select —</option>
+            <option value="GAS">GAS</option>
+            <option value="STEM">STEM</option>
+            <option value="ABM">ABM</option>
+            <option value="HUMSS">HUMSS</option>
+          </select>
+        </div>
+
+        <!-- Live preview -->
+        <div style="background:#f5f7fa;padding:14px 16px;border-radius:10px;margin:16px 0;">
+          <div style="font-size:0.75rem;color:#5f6368;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;margin-bottom:6px;">
+            Preview
+          </div>
+          <div id="pf-preview" style="font-weight:700;color:var(--color-primary-dark);font-size:1rem;">
+            —
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="submit" class="btn btn-primary" style="flex:1;min-width:160px;">
+            💾 Save Changes
+          </button>
+          <button type="button" id="btn-reset" class="btn btn-outline" style="flex:1;min-width:160px;">
+            ↺ Reset
+          </button>
+        </div>
+
+        <div id="profile-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
+        <div id="profile-success" class="alert alert-success hidden" style="margin-top:16px;"></div>
+      </form>
+    </div>
+
+    <!-- Danger zone -->
+    <div class="card" style="border-left:4px solid #c62828;">
+      <div class="card-header">
+        <span class="card-title" style="color:#c62828;">⚠️ Account Actions</span>
+      </div>
+      <p class="text-muted text-small" style="margin-bottom:12px;">
+        These actions cannot be undone.
+      </p>
+      <button type="button" id="btn-logout-clean" class="btn btn-outline" style="color:#c62828;border-color:#c62828;">
+        🚪 Log Out (with data prompt)
+      </button>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>General Biology Online Modular Application · v2.0.1</p>
+  </footer>
+
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/backup.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
