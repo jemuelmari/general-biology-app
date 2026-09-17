@@ -1,6 +1,6 @@
 /* ============================================================
    teacher.css — Teacher / Instructor Application styles
-   Version: 2.0.0
+   Version: 2.1.2
    Modern dashboard design system
    ============================================================ */
 
@@ -14,29 +14,47 @@
 
 .teacher-nav {
   display: flex;
-  gap: 4px;
+  gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .teacher-nav a,
 .teacher-nav button {
-  padding: 8px 14px;
-  border-radius: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
   color: #fff;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
 }
 
 .teacher-nav a:hover,
 .teacher-nav button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.teacher-nav button {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.5);
+}
+
+.teacher-nav button:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0d47a1;
+  border-color: #fff;
 }
 
 /* ============================================================
@@ -246,7 +264,7 @@
 .stat-card .stat-trend.flat { background: #f5f5f5; color: #616161; }
 
 /* ============================================================
-   SIDEBAR NAVIGATION (for section-level navigation)
+   SIDEBAR NAVIGATION
    ============================================================ */
 .teacher-layout {
   display: grid;
@@ -314,7 +332,7 @@
 }
 
 /* ============================================================
-   ACTION CARDS (Quick Actions grid)
+   ACTION CARDS
    ============================================================ */
 .action-grid {
   display: grid;
@@ -473,12 +491,16 @@
 }
 
 /* ============================================================
-   TABLES (modern)
+   MODERN TABLE (with borders)
    ============================================================ */
 .modern-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 0.88rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .modern-table thead th {
@@ -490,15 +512,14 @@
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.4px;
-  border-bottom: 2px solid #e0e0e0;
-  position: sticky;
-  top: 0;
-  z-index: 5;
+  border: 1px solid #cfd8dc;
+  border-bottom: 2px solid #b0bec5;
+  white-space: nowrap;
 }
 
 .modern-table tbody td {
   padding: 12px 14px;
-  border-bottom: 1px solid #eceff1;
+  border: 1px solid #e0e0e0;
   color: #37474f;
   vertical-align: middle;
 }
@@ -512,11 +533,66 @@
 }
 
 .modern-table tbody tr:last-child td {
-  border-bottom: none;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 /* ============================================================
-   STUDENT ROW (with avatar + name + meta)
+   GENERIC TABLE (for tracker pages using class="table")
+   ============================================================ */
+table.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.88rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+table.table thead th {
+  background: #f5f7fa;
+  color: #37474f;
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border: 1px solid #cfd8dc;
+  border-bottom: 2px solid #b0bec5;
+  white-space: nowrap;
+}
+
+table.table tbody td {
+  padding: 12px 14px;
+  border: 1px solid #e0e0e0;
+  color: #37474f;
+  vertical-align: middle;
+  font-size: 0.88rem;
+}
+
+table.table tbody tr {
+  transition: background 0.15s ease;
+}
+
+table.table tbody tr:hover {
+  background: #fafbfc;
+}
+
+table.table tbody tr:last-child td {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Specific handling for student names in first column */
+table.table tbody td:first-child,
+.modern-table tbody td:first-child {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* ============================================================
+   STUDENT CELL
    ============================================================ */
 .student-cell {
   display: flex;
@@ -684,15 +760,33 @@
 }
 
 /* ============================================================
-   ITEM ANALYSIS (preserved)
+   ITEM ANALYSIS
    ============================================================ */
 .item-analysis-table {
   font-size: 0.85rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
 }
 
 .item-analysis-table th,
 .item-analysis-table td {
   padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.item-analysis-table thead th {
+  background: #f5f7fa;
+  color: #37474f;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  border: 1px solid #cfd8dc;
+  border-bottom: 2px solid #b0bec5;
+  text-align: left;
 }
 
 .difficulty-bar {
@@ -701,6 +795,7 @@
   border-radius: 999px;
   overflow: hidden;
   min-width: 60px;
+  border: 1px solid #cfd8dc;
 }
 
 .difficulty-fill {
@@ -721,11 +816,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  border-bottom: 1px solid #eceff1;
   gap: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background: #fff;
 }
 
-.competency-row:last-child { border-bottom: none; }
+.competency-row:last-child { margin-bottom: 0; }
 
 .competency-code {
   font-family: 'Consolas', monospace;
@@ -812,7 +910,7 @@
 .drop-zone .drop-text { margin-top: 12px; color: #546e7a; font-size: 0.9rem; }
 
 /* ============================================================
-   TEACHER NOTES (yellow block — preserved)
+   TEACHER NOTES
    ============================================================ */
 .teacher-notes {
   background: #fff8e1;
@@ -862,7 +960,7 @@
 .alert-info    { background: #e1f5fe; border-color: #0277bd; color: #01579b; }
 
 /* ============================================================
-   DATA VISUALIZATION (bar chart, simple sparkline)
+   DATA VISUALIZATION
    ============================================================ */
 .bar-chart {
   display: flex;
@@ -924,6 +1022,7 @@
   border-radius: 6px;
   overflow: hidden;
   position: relative;
+  border: 1px solid #e0e0e0;
 }
 
 .distribution-fill {
@@ -1002,6 +1101,13 @@
 }
 
 /* ============================================================
+   SYNC CENTER PREVIEW CARDS
+   ============================================================ */
+.import-preview {
+  border: 1px solid #e0e0e0;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
@@ -1012,6 +1118,9 @@
   .modern-table { font-size: 0.8rem; }
   .modern-table thead th,
   .modern-table tbody td { padding: 8px 10px; }
+  table.table { font-size: 0.8rem; }
+  table.table thead th,
+  table.table tbody td { padding: 8px 10px; }
 }
 
 @media (max-width: 480px) {
