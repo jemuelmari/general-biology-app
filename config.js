@@ -1,11 +1,11 @@
 /* ============================================================
    config.js — App configuration (teacher password, dev info)
-   Version: 2.3.1
+   Version: 2.3.4
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.1',
+  VERSION: '2.3.4',
 
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
@@ -24,7 +24,6 @@ const CONFIG = {
   },
 
   TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
-
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
   TEACHER_MAX_ATTEMPTS: 3,
   TEACHER_LOCKOUT_TIME: 5 * 60 * 1000
