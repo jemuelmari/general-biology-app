@@ -13,11 +13,11 @@
     <div class="container flex-between">
       <div>
         <h1>🎮 Activity Tracker</h1>
-        <span class="version">v1.5.0</span>
+        <span class="version">v2.1.2</span>
       </div>
-      <nav style="display:flex;gap:8px;">
-        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
-        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      <nav class="teacher-nav">
+        <a href="../instructor.html">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()">🚪 Log Out</button>
       </nav>
     </div>
   </header>
@@ -61,7 +61,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Activity Tracker · v1.5.0</p>
+    <p>Activity Tracker · v2.1.2</p>
   </footer>
 
   <script src="../config.js"></script>
@@ -84,7 +84,6 @@
         const filter = filterSel.value;
         const all = ActivityTracker.getAllActivity();
 
-        // Filter
         let filtered = all;
         if (filter === 'behind') {
           filtered = all.filter((s) => s.summary[subject].completionPct < 50);
@@ -94,7 +93,6 @@
           filtered = all.filter((s) => s.summary[subject].completionPct >= 90);
         }
 
-        // Stats
         const totalStudents = all.length;
         const avgCompletion = totalStudents
           ? Math.round(all.reduce((a, s) => a + s.summary[subject].completionPct, 0) / totalStudents)
@@ -104,29 +102,28 @@
         const behind = all.filter((s) => s.summary[subject].completionPct < 50).length;
 
         document.getElementById('at-stats').innerHTML = `
-          <div class="stat-card">
+          <div class="stat-card blue">
             <div class="stat-value">${totalStudents}</div>
             <div class="stat-label">Students</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-card green">
             <div class="stat-value">${avgCompletion}%</div>
             <div class="stat-label">Avg Completion</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-card purple">
             <div class="stat-value">${totalActivitiesDone}</div>
             <div class="stat-label">Activities Done</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-card amber">
             <div class="stat-value">${totalBadgesEarned}</div>
             <div class="stat-label">Badges Earned</div>
           </div>
-          <div class="stat-card" style="border-left-color:${behind > 0 ? 'var(--color-danger)' : 'var(--color-success)'};">
+          <div class="stat-card ${behind > 0 ? 'red' : 'green'}">
             <div class="stat-value">${behind}</div>
             <div class="stat-label">Behind &lt; 50%</div>
           </div>
         `;
 
-        // Table
         const tableEl = document.getElementById('at-table');
         if (!filtered.length) {
           tableEl.innerHTML = `<div class="alert alert-info">No students match this filter.</div>`;
@@ -134,40 +131,40 @@
         }
 
         tableEl.innerHTML = `
-          <table class="gradebook-table">
+          <table class="modern-table">
             <thead>
               <tr>
                 <th>Student</th>
-                <th>Section</th>
-                <th>Days Completed</th>
-                <th>Activities Done</th>
-                <th>Completion</th>
-                <th>Badges</th>
-                <th>Points</th>
+                <th style="text-align:center;">Section</th>
+                <th style="text-align:center;">Days Completed</th>
+                <th style="text-align:center;">Activities Done</th>
+                <th style="min-width:180px;">Completion</th>
+                <th style="text-align:center;">Badges</th>
+                <th style="text-align:center;">Points</th>
               </tr>
             </thead>
             <tbody>
               ${filtered.map((s) => {
                 const sm = s.summary[subject];
-                const pctColor = sm.completionPct >= 90 ? 'var(--color-success)'
-                              : sm.completionPct >= 50 ? 'var(--color-warning)'
-                              : 'var(--color-danger)';
+                const pctColor = sm.completionPct >= 90 ? '#2e7d32'
+                              : sm.completionPct >= 50 ? '#ed6c02'
+                              : '#c62828';
                 return `
                   <tr>
-                    <td class="student-name">${s.user.lastName}, ${s.user.firstName}</td>
-                    <td>${s.user.section}</td>
-                    <td>${sm.completedDays}/${sm.totalDays}</td>
-                    <td>${sm.activitiesDone}/${sm.totalActivities}</td>
+                    <td>${s.user.lastName}, ${s.user.firstName}</td>
+                    <td style="text-align:center;">${s.user.section}</td>
+                    <td style="text-align:center;">${sm.completedDays}/${sm.totalDays}</td>
+                    <td style="text-align:center;">${sm.activitiesDone}/${sm.totalActivities}</td>
                     <td>
                       <div style="display:flex;align-items:center;gap:8px;">
-                        <div style="flex:1;height:8px;background:var(--color-bg);border-radius:4px;overflow:hidden;">
+                        <div style="flex:1;height:8px;background:#eceff1;border-radius:4px;overflow:hidden;border:1px solid #cfd8dc;">
                           <div style="width:${sm.completionPct}%;height:100%;background:${pctColor};"></div>
                         </div>
                         <strong style="color:${pctColor};min-width:44px;text-align:right;">${sm.completionPct}%</strong>
                       </div>
                     </td>
-                    <td>🏆 ${sm.badgesEarned}</td>
-                    <td>⭐ ${sm.points}</td>
+                    <td style="text-align:center;">🏆 ${sm.badgesEarned}</td>
+                    <td style="text-align:center;">⭐ ${sm.points}</td>
                   </tr>
                 `;
               }).join('')}
@@ -175,7 +172,6 @@
           </table>
         `;
 
-        // Student dropdown for detail
         studentDetailSel.innerHTML = all.map((s) =>
           `<option value="${s.user.lrn}">${s.user.lastName}, ${s.user.firstName} — ${APP.formatLRN(s.user.lrn)}</option>`
         ).join('');
@@ -194,11 +190,11 @@
           const days = [1, 2, 3, 4].map((d) => dayDetails[`${subject}-w${w}-d${d}`]);
           const done = days.filter(Boolean).length;
           const pct = (done / 4) * 100;
-          const color = pct === 100 ? 'var(--color-success)'
-                      : pct >= 50 ? 'var(--color-warning)'
-                      : 'var(--color-danger)';
+          const color = pct === 100 ? '#2e7d32'
+                      : pct >= 50 ? '#ed6c02'
+                      : '#c62828';
           html += `
-            <div style="padding:10px;border-radius:8px;background:var(--color-bg);border-left:4px solid ${color};">
+            <div style="padding:10px;border-radius:8px;background:#fff;border:1px solid #e0e0e0;border-left:4px solid ${color};">
               <div style="font-weight:600;font-size:0.85rem;">Week ${w}</div>
               <div style="display:flex;gap:4px;margin-top:6px;">
                 ${days.map((done, i) => `
@@ -206,12 +202,12 @@
                     width:24px;height:24px;border-radius:50%;
                     display:inline-flex;align-items:center;justify-content:center;
                     font-size:0.7rem;font-weight:700;
-                    background:${done ? color : 'var(--color-border)'};
-                    color:${done ? '#fff' : '#666'};
+                    background:${done ? color : '#eceff1'};
+                    color:${done ? '#fff' : '#90a4ae'};
                   ">${i + 1}</span>
                 `).join('')}
               </div>
-              <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:4px;">${done}/4 days</div>
+              <div style="font-size:0.75rem;color:#78909c;margin-top:4px;">${done}/4 days</div>
             </div>
           `;
         }
