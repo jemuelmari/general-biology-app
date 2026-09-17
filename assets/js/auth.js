@@ -1,6 +1,6 @@
 /* ============================================================
    auth.js — Login, register, multi-user session handling
-   Version: 1.1.1
+   Version: 1.6.0
    ============================================================ */
 
 (() => {
@@ -14,13 +14,11 @@
 
     try {
       const { lrn, at } = JSON.parse(pending);
-      // Ignore if older than 60 seconds
       if (Date.now() - at > 60000) return;
 
       const user = Store.getUser(lrn);
       if (!user) return;
 
-      // Show prompt after a short delay so the page settles
       setTimeout(() => {
         Backup.promptOnLogout(user).then((choice) => {
           if (choice === 'keep' || choice === 'delete') {
@@ -52,6 +50,7 @@
 
   /* ---------- LRN input formatting ---------- */
   function attachLRNFormatter(input) {
+    if (!input) return;
     input.addEventListener('input', () => {
       let v = input.value.replace(/\D/g, '').slice(0, 12);
       v = v.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
@@ -62,74 +61,97 @@
   attachLRNFormatter(APP.$('#login-lrn'));
   attachLRNFormatter(APP.$('#reg-lrn'));
 
+  /* ---------- Name auto-formatting (live, on blur) ---------- */
+  function attachNameFormatter(input, mode) {
+    if (!input) return;
+    input.addEventListener('blur', () => {
+      const v = input.value.trim();
+      if (!v) return;
+      if (mode === 'last') {
+        input.value = APP.toLastNameFormat(v);
+      } else {
+        input.value = APP.toTitleCase(v);
+      }
+    });
+  }
+
+  attachNameFormatter(APP.$('#reg-lastname'), 'last');
+  attachNameFormatter(APP.$('#reg-firstname'), 'title');
+  attachNameFormatter(APP.$('#reg-middlename'), 'title');
+
   /* ---------- Login ---------- */
   const loginForm = APP.$('#login-form');
   const loginError = APP.$('#login-error');
 
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    loginError.classList.add('hidden');
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      loginError.classList.add('hidden');
 
-    const lrn = APP.$('#login-lrn').value.replace(/\D/g, '');
+      const lrn = APP.$('#login-lrn').value.replace(/\D/g, '');
 
-    if (!APP.validateLRN(lrn)) {
-      return showError(loginError, 'LRN must be exactly 12 digits.');
-    }
+      if (!APP.validateLRN(lrn)) {
+        return showError(loginError, 'LRN must be exactly 12 digits.');
+      }
 
-    const user = Store.getUser(lrn);
-    if (!user) {
-      return showError(loginError, 'No saved profile found for this LRN. Please register as a new student.');
-    }
+      const user = Store.getUser(lrn);
+      if (!user) {
+        return showError(loginError, 'No saved profile found for this LRN. Please register as a new student.');
+      }
 
-    Store.setSession(lrn);
-    APP.toast(`Welcome back, ${user.firstName}!`, 'success');
-    setTimeout(() => window.location.replace('dashboard.html'), 300);
-  });
+      Store.setSession(lrn);
+      APP.toast(`Welcome back, ${user.firstName}!`, 'success');
+      setTimeout(() => window.location.replace('dashboard.html'), 300);
+    });
+  }
 
   /* ---------- Register ---------- */
   const registerForm = APP.$('#register-form');
   const registerError = APP.$('#register-error');
 
-  registerForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    registerError.classList.add('hidden');
+  if (registerForm) {
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      registerError.classList.add('hidden');
 
-    const lastName = APP.$('#reg-lastname').value.trim();
-    const firstName = APP.$('#reg-firstname').value.trim();
-    const middleName = APP.$('#reg-middlename').value.trim();
-    const lrn = APP.$('#reg-lrn').value.replace(/\D/g, '');
-    const gradeLevel = APP.$('#reg-grade').value;
-    const section = APP.$('#reg-section').value;
+      const lastName = APP.toLastNameFormat(APP.$('#reg-lastname').value.trim());
+      const firstName = APP.toTitleCase(APP.$('#reg-firstname').value.trim());
+      const middleName = APP.toTitleCase(APP.$('#reg-middlename').value.trim());
+      const lrn = APP.$('#reg-lrn').value.replace(/\D/g, '');
+      const gradeLevel = APP.$('#reg-grade').value;
+      const section = APP.$('#reg-section').value;
 
-    if (!APP.validateName(lastName)) return showError(registerError, 'Please enter a valid last name.');
-    if (!APP.validateName(firstName)) return showError(registerError, 'Please enter a valid first name.');
-    if (!APP.validateLRN(lrn)) return showError(registerError, 'LRN must be exactly 12 digits.');
-    if (!gradeLevel) return showError(registerError, 'Please select a grade level.');
-    if (!section) return showError(registerError, 'Please select a section.');
+      if (!APP.validateName(lastName)) return showError(registerError, 'Please enter a valid last name.');
+      if (!APP.validateName(firstName)) return showError(registerError, 'Please enter a valid first name.');
+      if (!APP.validateLRN(lrn)) return showError(registerError, 'LRN must be exactly 12 digits.');
+      if (!gradeLevel) return showError(registerError, 'Please select a grade level.');
+      if (!section) return showError(registerError, 'Please select a section.');
 
-    if (Store.getUser(lrn)) {
-      return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
-    }
+      if (Store.getUser(lrn)) {
+        return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
+      }
 
-    const user = {
-      lrn,
-      lastName,
-      firstName,
-      middleName,
-      gradeLevel,
-      section,
-      createdAt: new Date().toISOString()
-    };
+      const user = {
+        lrn,
+        lastName,
+        firstName,
+        middleName,
+        gradeLevel,
+        section,
+        createdAt: new Date().toISOString()
+      };
 
-    Store.saveUser(user);
-    Store.setSession(lrn);
-    APP.toast(`Profile created! Welcome, ${firstName}.`, 'success');
-    setTimeout(() => window.location.replace('dashboard.html'), 300);
-  });
+      Store.saveUser(user);
+      Store.setSession(lrn);
+      APP.toast(`Profile created! Welcome, ${firstName}.`, 'success');
+      setTimeout(() => window.location.replace('dashboard.html'), 300);
+    });
+  }
 
   /* ---------- Saved Users ---------- */
   function renderSavedUsers() {
     const list = APP.$('#saved-users-list');
+    if (!list) return;
     const users = Store.getAllUsers();
 
     if (!users.length) {
@@ -141,7 +163,7 @@
     users.forEach((u) => {
       const card = APP.el('div', { class: 'intervention-card on-track' });
       card.innerHTML = `
-        <div class="student-name">${u.lastName}, ${u.firstName} ${u.middleName || ''}</div>
+        <div class="student-name">${APP.formatFullName(u.lastName, u.firstName, u.middleName)}</div>
         <div class="student-meta">LRN: ${APP.formatLRN(u.lrn)} · Grade ${u.gradeLevel} — ${u.section}</div>
         <div style="display:flex;gap:8px;margin-top:8px;">
           <button class="btn btn-primary" data-login="${u.lrn}" style="flex:1;font-size:0.85rem;padding:6px 12px;">Log In</button>
@@ -173,6 +195,7 @@
 
   /* ---------- Helpers ---------- */
   function showError(el, msg) {
+    if (!el) return;
     el.textContent = msg;
     el.classList.remove('hidden');
     APP.toast(msg, 'danger', 3000);
@@ -180,7 +203,8 @@
 
   /* ---------- Init ---------- */
   document.addEventListener('DOMContentLoaded', () => {
-    APP.$('#login-lrn').focus();
+    const loginInput = APP.$('#login-lrn');
+    if (loginInput) loginInput.focus();
     checkPendingLogout();
   });
 })();
