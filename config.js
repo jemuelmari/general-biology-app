@@ -1,12 +1,11 @@
 /* ============================================================
    config.js — App configuration (teacher password, dev info)
-   Version: 2.3.4
+   Version: 2.3.5
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.4',
-
+  VERSION: '2.3.5',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -16,13 +15,8 @@ const CONFIG = {
     region: 'Region III',
     department: 'Department of Education'
   },
-
   BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyi2fj-Jnmlk7Pp4qhtfuE_lz0zSewtLfRPiAZnPO5A-uA5ICvicE_DPUry_lax69ubuQ/exec',
-
-  get backendEnabled() {
-    return this.BACKEND_URL && this.BACKEND_URL.length > 20;
-  },
-
+  get backendEnabled() { return this.BACKEND_URL && this.BACKEND_URL.length > 20; },
   TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
   TEACHER_MAX_ATTEMPTS: 3,
