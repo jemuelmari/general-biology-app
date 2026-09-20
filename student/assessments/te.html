@@ -12,19 +12,27 @@
 
   <header class="app-header">
     <div class="container flex-between">
-      <div><h1>🎓 Term Exam</h1><span class="version">v1.0.0</span></div>
+      <div>
+        <h1>🎓 Term Exam</h1>
+        <span class="version">v2.3.7</span>
+      </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
   </header>
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:820px;">
+
     <div id="quiz-header"></div>
     <div id="quiz-body"></div>
     <div id="quiz-nav" style="margin-top:24px;"></div>
+
   </main>
 
-  <footer class="app-footer"><p>Term Exam · v1.0.0</p></footer>
+  <footer class="app-footer">
+    <p>Term Exam · v2.3.7</p>
+  </footer>
 
+  <script src="../../config.js"></script>
   <script src="../../assets/js/app.js"></script>
   <script src="../../assets/js/store.js"></script>
   <script src="../../assets/js/security.js"></script>
@@ -35,11 +43,18 @@
       const params = new URLSearchParams(window.location.search);
       const subject = params.get('subject') || 'biol1';
       const file = subject === 'biol2' ? '../../data/biol2-te.json' : '../../data/biol1-te.json';
+
       const res = await fetch(file);
       const data = await res.json();
+
       QuizEngine.init({
-        assessmentId: data.assessmentId, subject: data.subject, type: data.type,
-        title: data.title, items: data.items, timeLimit: data.timeLimit, passingScore: data.passingScore
+        assessmentId: data.assessmentId,
+        subject: data.subject,
+        type: data.type,
+        title: data.title,
+        items: data.items,
+        timeLimit: data.timeLimit,
+        passingScore: data.passingScore
       });
     });
   </script>
