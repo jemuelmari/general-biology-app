@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📚 Remediation Module</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v2.3.7</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -31,14 +31,15 @@
   </main>
 
   <footer class="app-footer">
-    <p>Remediation · v1.0.0</p>
+    <p>Remediation · v2.3.7</p>
   </footer>
 
+  <script src="../../config.js"></script>
   <script src="../../assets/js/app.js"></script>
   <script src="../../assets/js/store.js"></script>
   <script src="../../assets/js/transmutation.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       const user = Store.getCurrentUser();
       if (!user) { window.location.href = '../login.html'; return; }
 
@@ -60,9 +61,19 @@
       document.getElementById('rem-intro').textContent =
         `You scored ${stData.percent}% on ${stId.toUpperCase()}. Focus on the following competencies to improve.`;
 
-      const compTitles = {
-        // Add mapping as needed
-      };
+      // Load competency title map from JSON files
+      let compTitles = {};
+      try {
+        const res = await fetch(`../../data/${subject}-competencies.json`);
+        const data = await res.json();
+        data.contentAreas.forEach((area) => {
+          (area.competencies || []).forEach((c) => {
+            compTitles[c.code] = c.desc;
+          });
+        });
+      } catch (e) {
+        console.warn('[Remediation] Could not load competency titles:', e);
+      }
 
       const content = document.getElementById('rem-content');
       if (missedComps.length === 0) {
@@ -73,19 +84,18 @@
       content.innerHTML = `
         <div class="card">
           <h3>📋 Competencies to Review</h3>
-          <ul style="margin-top:12px;">
+          <ul style="margin-top:12px;list-style:none;padding:0;">
             ${missedComps.map((c) => `
-              <li style="padding:8px 0;">
-                <span class="badge badge-warning">${c}</span>
-                <span style="margin-left:8px;">${compTitles[c] || 'Review lesson content for this competency.'}</span>
+              <li style="padding:12px;border-bottom:1px solid #f0f0f0;">
+                <span class="badge badge-warning" style="font-size:0.7rem;">${c}</span>
+                <div style="margin-top:8px;font-size:0.9rem;color:#37474f;">
+                  ${compTitles[c] || 'Review lesson content for this competency.'}
+                </div>
               </li>
             `).join('')}
           </ul>
         </div>
-      `;
 
-      // Suggest a retake
-      content.innerHTML += `
         <div class="card">
           <h3>✅ Next Steps</h3>
           <ol style="margin-left:20px;margin-top:12px;">
@@ -101,11 +111,11 @@
       `;
 
       document.getElementById('btn-complete-rem').addEventListener('click', () => {
-        const user2 = Store.getUser(user.lrn) || {};
-        user2.remediationCompleted = true;
-        user2.remediationCompletedAt = new Date().toISOString();
-        user2.remediationUnlocked = false;
-        Store.saveUser(user2);
+        const updated = Store.getUser(user.lrn) || { ...user };
+        updated.remediationCompleted = true;
+        updated.remediationCompletedAt = new Date().toISOString();
+        updated.remediationUnlocked = false;
+        Store.saveUser(updated);
         APP.toast('Remediation marked complete!', 'success');
         setTimeout(() => (window.location.href = '../dashboard.html'), 800);
       });
