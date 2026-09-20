@@ -8,15 +8,17 @@
   <link rel="stylesheet" href="../../../assets/css/student.css" />
 </head>
 <body>
+
   <header class="app-header">
     <div class="container flex-between">
       <div>
         <h1>🌱 Week 10 · Lesson</h1>
-        <span class="version">v2.3.6</span>
+        <span class="version">v2.3.7</span>
       </div>
       <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
     </div>
   </header>
+
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
     <div class="daily-score-bar" id="daily-score-bar"></div>
     <div id="lesson-content"></div>
@@ -25,21 +27,28 @@
     <div class="activity-card"><div id="formative"></div></div>
     <div class="card" id="lesson-footer"></div>
   </main>
-  <footer class="app-footer"><p>General Biology 2 · Week 10 · v2.3.6</p></footer>
+
+  <footer class="app-footer"><p>General Biology 2 · Week 10 · v2.3.7</p></footer>
+
   <script src="../../../assets/js/bundle.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
       const dayNum = parseInt(params.get('day') || '1');
+
       const res = await fetch('week10.json');
       const week = await res.json();
       const day = week.days.find((d) => d.n === dayNum);
+
       if (!day) {
-        document.getElementById('lesson-content').innerHTML = '<div class="alert alert-danger">Lesson not found.</div>';
+        document.getElementById('lesson-content').innerHTML =
+          '<div class="alert alert-danger">Lesson not found.</div>';
         return;
       }
+
       document.title = `Day ${day.n} — ${day.title}`;
       document.body.dataset.next = dayNum < 4 ? `day.html?day=${dayNum + 1}` : 'index.html';
+
       document.getElementById('lesson-content').innerHTML = `
         <div class="card lesson-content">
           <h2>📖 ${day.title}</h2>
@@ -47,6 +56,7 @@
           ${day.content}
         </div>
       `;
+
       document.getElementById('lesson-footer').innerHTML = `
         <h3>📌 Key Takeaways</h3>
         <ul>${day.takeaways.map((t) => `<li>${t}</li>`).join('')}</ul>
@@ -56,6 +66,7 @@
           <li>DepEd K to 12 Curriculum Guide — Biology 2 (August 2016).</li>
         </ul>
       `;
+
       window.Lesson.init({ subject: 'biol2', week: 10, day: day.n, title: day.title, maxPoints: 300 });
       window.Lesson.renderMatchGame('activity-1', day.activity1);
       window.Lesson.renderScenarioGame('activity-2', day.activity2);
