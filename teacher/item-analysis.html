@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📊 Item Analysis</h1>
-        <span class="version">v1.0.1</span>
+        <span class="version">v2.3.7</span>
       </div>
       <nav style="display:flex;gap:8px;">
         <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
@@ -32,10 +32,7 @@
           <option value="biol1">General Biology 1</option>
           <option value="biol2">General Biology 2</option>
         </select>
-        <select id="filter-assessment" class="form-control" style="max-width:280px;">
-          <option value="biol1-quiz1">Quiz 1</option>
-          <option value="biol1-st1">Summative Test 1</option>
-        </select>
+        <select id="filter-assessment" class="form-control" style="max-width:320px;"></select>
       </div>
     </div>
 
@@ -44,7 +41,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Item Analysis · v1.0.1</p>
+    <p>Item Analysis · v2.3.7</p>
   </footer>
 
   <script src="../config.js"></script>
@@ -57,35 +54,66 @@
       const subjectSel = document.getElementById('filter-subject');
       const assessSel = document.getElementById('filter-assessment');
 
+      const ASSESSMENTS = {
+        biol1: [
+          { id: 'biol1-quiz1', label: 'Quiz 1',         type: 'quizzes' },
+          { id: 'biol1-quiz2', label: 'Quiz 2',         type: 'quizzes' },
+          { id: 'biol1-quiz3', label: 'Quiz 3',         type: 'quizzes' },
+          { id: 'biol1-st1',   label: 'Summative Test 1', type: 'st' },
+          { id: 'biol1-st2',   label: 'Summative Test 2', type: 'st' },
+          { id: 'biol1-te',    label: 'Term Exam',      type: 'te' }
+        ],
+        biol2: [
+          { id: 'biol2-quiz1', label: 'Quiz 1',         type: 'quizzes' },
+          { id: 'biol2-quiz2', label: 'Quiz 2',         type: 'quizzes' },
+          { id: 'biol2-quiz3', label: 'Quiz 3',         type: 'quizzes' },
+          { id: 'biol2-st1',   label: 'Summative Test 1', type: 'st' },
+          { id: 'biol2-st2',   label: 'Summative Test 2', type: 'st' },
+          { id: 'biol2-te',    label: 'Term Exam',      type: 'te' }
+        ]
+      };
+
+      function populateAssessmentOptions() {
+        const subject = subjectSel.value;
+        const list = ASSESSMENTS[subject] || [];
+        assessSel.innerHTML = list.map((a) => `<option value="${a.id}">${a.label}</option>`).join('');
+      }
+
       subjectSel.addEventListener('change', () => {
-        assessSel.innerHTML = subjectSel.value === 'biol1'
-          ? '<option value="biol1-quiz1">Quiz 1</option><option value="biol1-st1">Summative Test 1</option>'
-          : '<option value="biol2-quiz1">Quiz 1</option><option value="biol2-st1">Summative Test 1</option>';
+        populateAssessmentOptions();
         render();
       });
+
       assessSel.addEventListener('change', render);
 
       async function render() {
         const subject = subjectSel.value;
         const assessmentId = assessSel.value;
 
-        const fileMap = {
-          'biol1-quiz1': '../data/biol1-quiz1.json',
-          'biol1-st1': '../data/biol1-st1.json',
-          'biol2-quiz1': '../data/biol2-quiz1.json',
-          'biol2-st1': '../data/biol2-st1.json'
-        };
-        const res = await fetch(fileMap[assessmentId]);
-        const bank = await res.json();
+        if (!assessmentId) return;
+
+        // Fetch bank
+        let bank;
+        try {
+          const res = await fetch(`../data/${assessmentId}.json`);
+          bank = await res.json();
+        } catch (e) {
+          document.getElementById('item-analysis-content').innerHTML =
+            `<div class="alert alert-danger">Could not load assessment bank: ${assessmentId}</div>`;
+          return;
+        }
+
+        // Find assessment config
+        const meta = (ASSESSMENTS[subject] || []).find((a) => a.id === assessmentId);
+        const bucket = meta ? meta.type : 'quizzes';
 
         const users = Store.getAllUsers();
         const allBreakdowns = [];
+
         users.forEach((u) => {
           const scores = Store.getScores(u.lrn);
-          const key = assessmentId.includes('st') ? 'st' : 'quizzes';
-          const data = scores[subject]?.[key]?.[assessmentId]
-                    || scores[subject]?.['st']?.[assessmentId]
-                    || scores[subject]?.['quizzes']?.[assessmentId];
+          const subjScores = scores[subject] || {};
+          const data = subjScores[bucket]?.[assessmentId];
           if (data?.breakdown) {
             allBreakdowns.push({ user: u, breakdown: data.breakdown, score: data.score, total: data.total });
           }
@@ -218,6 +246,7 @@
         `;
       }
 
+      populateAssessmentOptions();
       render();
     });
   </script>
