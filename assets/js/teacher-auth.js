@@ -1,6 +1,8 @@
 /* ============================================================
    teacher-auth.js — Password gate for teacher/gradebook pages
    Version: 1.0.1
+   ------------------------------------------------------------
+   Includes auto-guard on teacher pages. Works from root or /teacher/.
    ============================================================ */
 
 const TeacherAuth = (() => {
