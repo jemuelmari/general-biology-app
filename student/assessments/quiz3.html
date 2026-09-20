@@ -16,7 +16,7 @@
         <h1>📝 Quiz 3</h1>
         <span class="version">v2.3.7</span>
       </div>
-      <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
+      <a href="index.html" id="back-link" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Assessments</a>
     </div>
   </header>
 
@@ -42,6 +42,10 @@
     document.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
       const subject = params.get('subject') || 'biol1';
+
+      const backLink = document.getElementById('back-link');
+      if (backLink) backLink.href = `index.html?subject=${subject}`;
+
       const file = subject === 'biol2' ? '../../data/biol2-quiz3.json' : '../../data/biol1-quiz3.json';
 
       const res = await fetch(file);
