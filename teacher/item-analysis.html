@@ -6,6 +6,177 @@
   <title>Item Analysis — Teacher</title>
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    /* ---------- Bordered tables ---------- */
+    .ia-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      background: #fff;
+      border: 1px solid #cfd8dc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .ia-table thead th {
+      background: #f5f7fa;
+      color: #37474f;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 12px 14px;
+      text-align: left;
+      border: 1px solid #cfd8dc;
+      border-bottom: 2px solid #b0bec5;
+      white-space: nowrap;
+    }
+
+    .ia-table tbody td {
+      padding: 10px 14px;
+      border: 1px solid #e0e0e0;
+      color: #37474f;
+      vertical-align: middle;
+    }
+
+    .ia-table tbody tr:nth-child(even) {
+      background: #fafbfc;
+    }
+
+    .ia-table tbody tr:hover {
+      background: #f0f4f8;
+    }
+
+    .ia-table td.num {
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ia-table td.rank {
+      width: 50px;
+      text-align: center;
+      font-weight: 700;
+      color: #78909c;
+    }
+
+    .ia-table td.code {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.78rem;
+      color: #546e7a;
+      white-space: nowrap;
+    }
+
+    .ia-table td.percent {
+      text-align: right;
+      font-weight: 700;
+      min-width: 70px;
+    }
+
+    .ia-table td.percent.high { color: #2e7d32; }
+    .ia-table td.percent.mid  { color: #ed6c02; }
+    .ia-table td.percent.low  { color: #c62828; }
+
+    .ia-table td.diff-cell {
+      min-width: 200px;
+    }
+
+    .diff-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .diff-bar {
+      flex: 1;
+      height: 8px;
+      background: #eceff1;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #cfd8dc;
+    }
+
+    .diff-bar > div {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .diff-easy   { background: linear-gradient(90deg, #2e7d32, #4caf50); }
+    .diff-medium { background: linear-gradient(90deg, #ed6c02, #ffb74d); }
+    .diff-hard   { background: linear-gradient(90deg, #c62828, #ef5350); }
+
+    /* ---------- Stat cards ---------- */
+    .ia-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .ia-stat {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-left: 4px solid #0277bd;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .ia-stat .v {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+
+    .ia-stat .l {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #5f6368;
+      letter-spacing: 0.5px;
+      margin-top: 6px;
+    }
+
+    /* ---------- Section cards ---------- */
+    .ia-section {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      margin-bottom: 20px;
+    }
+
+    .ia-section h3 {
+      color: #0d47a1;
+      font-size: 1rem;
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ia-empty {
+      padding: 40px 24px;
+      text-align: center;
+      color: #90a4ae;
+      background: #fafbfc;
+      border: 1px dashed #cfd8dc;
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -56,20 +227,20 @@
 
       const ASSESSMENTS = {
         biol1: [
-          { id: 'biol1-quiz1', label: 'Quiz 1',         type: 'quizzes' },
-          { id: 'biol1-quiz2', label: 'Quiz 2',         type: 'quizzes' },
-          { id: 'biol1-quiz3', label: 'Quiz 3',         type: 'quizzes' },
+          { id: 'biol1-quiz1', label: 'Quiz 1', type: 'quizzes' },
+          { id: 'biol1-quiz2', label: 'Quiz 2', type: 'quizzes' },
+          { id: 'biol1-quiz3', label: 'Quiz 3', type: 'quizzes' },
           { id: 'biol1-st1',   label: 'Summative Test 1', type: 'st' },
           { id: 'biol1-st2',   label: 'Summative Test 2', type: 'st' },
-          { id: 'biol1-te',    label: 'Term Exam',      type: 'te' }
+          { id: 'biol1-te',    label: 'Term Exam', type: 'te' }
         ],
         biol2: [
-          { id: 'biol2-quiz1', label: 'Quiz 1',         type: 'quizzes' },
-          { id: 'biol2-quiz2', label: 'Quiz 2',         type: 'quizzes' },
-          { id: 'biol2-quiz3', label: 'Quiz 3',         type: 'quizzes' },
+          { id: 'biol2-quiz1', label: 'Quiz 1', type: 'quizzes' },
+          { id: 'biol2-quiz2', label: 'Quiz 2', type: 'quizzes' },
+          { id: 'biol2-quiz3', label: 'Quiz 3', type: 'quizzes' },
           { id: 'biol2-st1',   label: 'Summative Test 1', type: 'st' },
           { id: 'biol2-st2',   label: 'Summative Test 2', type: 'st' },
-          { id: 'biol2-te',    label: 'Term Exam',      type: 'te' }
+          { id: 'biol2-te',    label: 'Term Exam', type: 'te' }
         ]
       };
 
@@ -86,24 +257,28 @@
 
       assessSel.addEventListener('change', render);
 
+      function pctClass(p) {
+        if (p >= 75) return 'high';
+        if (p >= 50) return 'mid';
+        return 'low';
+      }
+
       async function render() {
         const subject = subjectSel.value;
         const assessmentId = assessSel.value;
 
         if (!assessmentId) return;
 
-        // Fetch bank
         let bank;
         try {
           const res = await fetch(`../data/${assessmentId}.json`);
           bank = await res.json();
         } catch (e) {
           document.getElementById('item-analysis-content').innerHTML =
-            `<div class="alert alert-danger">Could not load assessment bank: ${assessmentId}</div>`;
+            `<div class="ia-empty">Could not load assessment bank: ${assessmentId}</div>`;
           return;
         }
 
-        // Find assessment config
         const meta = (ASSESSMENTS[subject] || []).find((a) => a.id === assessmentId);
         const bucket = meta ? meta.type : 'quizzes';
 
@@ -122,10 +297,11 @@
         const container = document.getElementById('item-analysis-content');
 
         if (!allBreakdowns.length) {
-          container.innerHTML = `<div class="alert alert-info">No submissions for ${assessmentId} yet.</div>`;
+          container.innerHTML = `<div class="ia-empty">No submissions for <strong>${assessmentId}</strong> yet.</div>`;
           return;
         }
 
+        // Per-item stats
         const itemStats = bank.items.map((q) => {
           let correct = 0;
           allBreakdowns.forEach((b) => {
@@ -146,6 +322,7 @@
           };
         });
 
+        // Per-competency stats
         const compMap = {};
         itemStats.forEach((s) => {
           if (!compMap[s.competency]) compMap[s.competency] = { correct: 0, total: 0, items: 0 };
@@ -160,82 +337,143 @@
           items: v.items
         })).sort((a, b) => b.mps - a.mps);
 
-        const mostLearned = compStats.slice(0, 3);
-        const leastLearned = [...compStats].reverse().slice(0, 3);
-
         const overallAvg = Math.round(allBreakdowns.reduce((a, b) => a + (b.score / b.total) * 100, 0) / allBreakdowns.length);
 
+        // ---------- HTML ----------
         container.innerHTML = `
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-value">${allBreakdowns.length}</div>
-              <div class="stat-label">Submissions</div>
+          <div class="ia-stats">
+            <div class="ia-stat">
+              <div class="v">${allBreakdowns.length}</div>
+              <div class="l">Submissions</div>
             </div>
-            <div class="stat-card">
-              <div class="stat-value">${overallAvg}%</div>
-              <div class="stat-label">Class Average</div>
+            <div class="ia-stat" style="border-left-color:#2e7d32;">
+              <div class="v">${overallAvg}%</div>
+              <div class="l">Class Average</div>
             </div>
-            <div class="stat-card">
-              <div class="stat-value">${compStats.length}</div>
-              <div class="stat-label">Competencies Tested</div>
+            <div class="ia-stat" style="border-left-color:#6a1b9a;">
+              <div class="v">${compStats.length}</div>
+              <div class="l">Competencies Tested</div>
             </div>
-          </div>
-
-          <div class="report-grid">
-            <div class="report-card">
-              <h4>🏆 Most Learned Competencies</h4>
-              <ul class="mll-list">
-                ${mostLearned.map((c) => `
-                  <li>
-                    <div>
-                      <span class="mll-code">${c.code}</span>
-                      <span class="mll-desc">${c.items} item(s) tested</span>
-                    </div>
-                    <span class="mll-mps" style="color:var(--color-success);">${c.mps}%</span>
-                  </li>
-                `).join('')}
-              </ul>
-            </div>
-
-            <div class="report-card">
-              <h4>🚨 Least Learned Competencies</h4>
-              <ul class="mll-list">
-                ${leastLearned.map((c) => `
-                  <li>
-                    <div>
-                      <span class="mll-code">${c.code}</span>
-                      <span class="mll-desc">${c.items} item(s) tested</span>
-                    </div>
-                    <span class="mll-mps" style="color:var(--color-danger);">${c.mps}%</span>
-                  </li>
-                `).join('')}
-              </ul>
+            <div class="ia-stat" style="border-left-color:#ed6c02;">
+              <div class="v">${itemStats.length}</div>
+              <div class="l">Items Analyzed</div>
             </div>
           </div>
 
-          <div class="card" style="margin-top:24px;">
-            <h3 style="color:var(--color-primary-dark);">📋 Per-Item Difficulty</h3>
-            <table class="table item-analysis-table">
+          <div class="ia-section">
+            <h3>📋 Competency Mastery (MPS)</h3>
+            <table class="ia-table">
               <thead>
                 <tr>
-                  <th>Item</th>
-                  <th>Competency</th>
-                  <th>Correct</th>
-                  <th>Difficulty</th>
+                  <th style="width:50px;">Rank</th>
+                  <th>Competency Code</th>
+                  <th style="width:100px;text-align:center;">Items Tested</th>
+                  <th style="width:100px;text-align:right;">MPS</th>
+                  <th style="width:180px;">Mastery Level</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${compStats.map((c, i) => {
+                  const cls = pctClass(c.mps);
+                  const label = c.mps >= 75 ? 'High' : c.mps >= 50 ? 'Average' : 'Low';
+                  return `
+                    <tr>
+                      <td class="rank">${i + 1}</td>
+                      <td class="code">${c.code}</td>
+                      <td class="num">${c.items}</td>
+                      <td class="percent ${cls}">${c.mps}%</td>
+                      <td>
+                        <div class="diff-wrap">
+                          <div class="diff-bar">
+                            <div class="diff-${cls === 'high' ? 'easy' : cls === 'mid' ? 'medium' : 'hard'}" style="width:${c.mps}%;"></div>
+                          </div>
+                          <span style="font-size:0.8rem;font-weight:700;min-width:60px;color:${cls === 'high' ? '#2e7d32' : cls === 'mid' ? '#ed6c02' : '#c62828'};">${label}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="two-col">
+            <div class="ia-section">
+              <h3>🏆 Most Learned Competencies</h3>
+              <table class="ia-table">
+                <thead>
+                  <tr>
+                    <th style="width:40px;">#</th>
+                    <th>Competency</th>
+                    <th style="width:70px;text-align:center;">Items</th>
+                    <th style="width:70px;text-align:right;">MPS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${compStats.slice(0, 5).map((c, i) => `
+                    <tr>
+                      <td class="rank">${i + 1}</td>
+                      <td class="code">${c.code}</td>
+                      <td class="num">${c.items}</td>
+                      <td class="percent ${pctClass(c.mps)}">${c.mps}%</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="ia-section">
+              <h3>🚨 Least Learned Competencies</h3>
+              <table class="ia-table">
+                <thead>
+                  <tr>
+                    <th style="width:40px;">#</th>
+                    <th>Competency</th>
+                    <th style="width:70px;text-align:center;">Items</th>
+                    <th style="width:70px;text-align:right;">MPS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${[...compStats].reverse().slice(0, 5).map((c, i) => `
+                    <tr>
+                      <td class="rank">${i + 1}</td>
+                      <td class="code">${c.code}</td>
+                      <td class="num">${c.items}</td>
+                      <td class="percent ${pctClass(c.mps)}">${c.mps}%</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="ia-section">
+            <h3>📝 Per-Item Difficulty</h3>
+            <table class="ia-table">
+              <thead>
+                <tr>
+                  <th style="width:60px;">Item</th>
+                  <th>Question</th>
+                  <th style="width:180px;">Competency</th>
+                  <th style="width:90px;text-align:center;">Correct</th>
+                  <th style="width:240px;">Difficulty</th>
                 </tr>
               </thead>
               <tbody>
                 ${itemStats.map((s, i) => `
                   <tr>
-                    <td>Q${i + 1}</td>
-                    <td><span class="competency-code">${s.competency}</span></td>
-                    <td>${s.correct}/${s.total}</td>
-                    <td>
-                      <div style="display:flex;align-items:center;gap:8px;">
-                        <div class="difficulty-bar" style="flex:1;">
-                          <div class="difficulty-fill difficulty-${s.diffKey}" style="width:${s.difficulty}%;"></div>
+                    <td class="rank">Q${i + 1}</td>
+                    <td style="font-size:0.85rem;color:#37474f;max-width:520px;overflow:hidden;text-overflow:ellipsis;">
+                      ${s.text.length > 110 ? s.text.slice(0, 110) + '…' : s.text}
+                    </td>
+                    <td class="code">${s.competency}</td>
+                    <td class="num">${s.correct} / ${s.total}</td>
+                    <td class="diff-cell">
+                      <div class="diff-wrap">
+                        <div class="diff-bar">
+                          <div class="diff-${s.diffKey}" style="width:${s.difficulty}%;"></div>
                         </div>
-                        <span style="min-width:42px;text-align:right;">${s.difficulty}%</span>
+                        <span style="font-size:0.85rem;font-weight:700;min-width:44px;text-align:right;color:${s.diffKey === 'easy' ? '#2e7d32' : s.diffKey === 'medium' ? '#ed6c02' : '#c62828'};">${s.difficulty}%</span>
                       </div>
                     </td>
                   </tr>
