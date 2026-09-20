@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Week 3 — Lesson</title>
-  <link rel="stylesheet" href="../../../assets/css/main.css" />
-  <link rel="stylesheet" href="../../../assets/css/student.css" />
+  <title>Week 2 — Lesson</title>
+  <link rel="stylesheet" href="../../../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../../../assets/css/student.css" />
 </head>
 <body>
 
   <header class="app-header">
     <div class="container flex-between">
       <div>
-        <h1>🌱 Week 3 · Lesson</h1>
+        <h1>🌱 Week 2 · Lesson</h1>
         <span class="version">v2.3.7</span>
       </div>
       <a href="index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Back</a>
@@ -28,15 +28,15 @@
     <div class="card" id="lesson-footer"></div>
   </main>
 
-  <footer class="app-footer"><p>General Biology 2 · Week 3 · v2.3.7</p></footer>
+  <footer class="app-footer"><p>General Biology 2 · Week 2 · v2.3.7</p></footer>
 
-  <script src="../../../assets/js/bundle.js"></script>
+  <script src="../../../../assets/js/bundle.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
       const dayNum = parseInt(params.get('day') || '1');
 
-      const res = await fetch('week3.json');
+      const res = await fetch('week2.json');
       const week = await res.json();
       const day = week.days.find((d) => d.n === dayNum);
 
@@ -67,7 +67,7 @@
         </ul>
       `;
 
-      window.Lesson.init({ subject: 'biol2', week: 3, day: day.n, title: day.title, maxPoints: 300 });
+      window.Lesson.init({ subject: 'biol2', week: 2, day: day.n, title: day.title, maxPoints: 300 });
       window.Lesson.renderMatchGame('activity-1', day.activity1);
       window.Lesson.renderScenarioGame('activity-2', day.activity2);
       window.Lesson.renderEscapeRoom('formative', day.formative);
