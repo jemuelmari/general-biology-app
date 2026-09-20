@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🧬 Student Dashboard</h1>
-        <span class="version">v2.3.6</span>
+        <span class="version">v2.3.7</span>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <a href="profile.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">👤 My Profile</a>
@@ -44,6 +44,20 @@
     <div class="dash-section-title">📚 Subjects</div>
     <div class="dashboard-grid" id="subjects-grid"></div>
 
+    <div class="dash-section-title">📝 Assessments</div>
+    <div class="dashboard-grid">
+      <a href="assessments/index.html?subject=biol1" class="subject-card" style="text-decoration:none;border-top-color:#0277bd;">
+        <div style="font-size:2rem;">🔬</div>
+        <h3>General Biology 1 Assessments</h3>
+        <p class="text-muted text-small">Quizzes · Summative Tests · Term Exam · Performance Tasks</p>
+      </a>
+      <a href="assessments/index.html?subject=biol2" class="subject-card" style="text-decoration:none;border-top-color:#2e7d32;">
+        <div style="font-size:2rem;">🌱</div>
+        <h3>General Biology 2 Assessments</h3>
+        <p class="text-muted text-small">Quizzes · Summative Tests · Term Exam · Performance Tasks</p>
+      </a>
+    </div>
+
     <div class="dash-section-title">🏆 Badges Earned</div>
     <div class="card">
       <div class="flex-between" style="margin-bottom:12px;">
@@ -70,7 +84,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Biology Online Modular Application · <span class="version">v2.3.6</span></p>
+    <p>General Biology Online Modular Application · <span class="version">v2.3.7</span></p>
   </footer>
 
   <script src="../config.js"></script>
