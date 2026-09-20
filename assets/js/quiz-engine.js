@@ -1,6 +1,8 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine with anti-cheat
-   Version: 1.0.0
+   Version: 1.0.1
+   ------------------------------------------------------------
+   FIX: remediation link points to /student/remediation/index.html
    ============================================================ */
 
 const QuizEngine = (() => {
@@ -60,11 +62,9 @@ const QuizEngine = (() => {
 
   /* ---------- Anti-cheat Setup ---------- */
   function setupAntiCheat() {
-    // Copy/paste disable
     Security.disableCopyPaste(document);
     Security.disableDevShortcuts();
 
-    // Tab switch monitoring
     Security.startTabMonitor((count, final) => {
       state.tabViolations = count;
       if (final) {
@@ -258,7 +258,6 @@ const QuizEngine = (() => {
     if (state.submitted) return;
     state.submitted = true;
 
-    // Score
     let correct = 0;
     const breakdown = [];
 
@@ -281,7 +280,6 @@ const QuizEngine = (() => {
     const percent = Math.round((correct / total) * 100);
     const passed = percent >= state.passingScore;
 
-    // Save
     Store.saveScore(state.lrn, state.subject, state.type, state.assessmentId, {
       score: correct,
       total,
@@ -293,21 +291,19 @@ const QuizEngine = (() => {
       durationSec: Math.floor((Date.now() - state.startTime) / 1000)
     });
 
-    // Lock
     if (!state.allowRetake) {
       Store.lockAssessment(state.lrn, state.assessmentId, {
         score: correct, total, percent
       });
     }
 
-    // Remediation trigger
+    // Remediation trigger on failed ST
     if (state.type === 'st' && percent < 80) {
-      Store.saveUser({
-        lrn: state.lrn,
-        remediationUnlocked: true,
-        remediationTrigger: state.assessmentId,
-        remediationCompetencies: breakdown.filter((b) => !b.isCorrect).map((b) => b.competency)
-      });
+      const u = Store.getUser(state.lrn) || {};
+      u.remediationUnlocked = true;
+      u.remediationTrigger = state.assessmentId;
+      u.remediationCompetencies = breakdown.filter((b) => !b.isCorrect).map((b) => b.competency);
+      Store.saveUser(u);
     }
 
     renderResult({ correct, total, percent, passed, autoSubmitted });
@@ -355,12 +351,12 @@ const QuizEngine = (() => {
           <div class="alert alert-warning" style="text-align:left;">
             <strong>📚 Remediation Unlocked</strong>
             <p style="margin-top:8px;">Your score is below 80%. A remediation module has been unlocked for the competencies you missed.</p>
-            <a href="../../remediation/index.html?subject=${state.subject}&st=${state.assessmentId}" class="btn btn-accent mt-md">Go to Remediation →</a>
+            <a href="../remediation/index.html?subject=${state.subject}&st=${state.assessmentId}" class="btn btn-accent mt-md">Go to Remediation →</a>
           </div>
         ` : ''}
 
         <div style="margin-top:24px;">
-          <a href="../../dashboard.html" class="btn btn-primary">← Back to Dashboard</a>
+          <a href="../dashboard.html" class="btn btn-primary">← Back to Dashboard</a>
         </div>
       </div>
     `;
@@ -374,7 +370,7 @@ const QuizEngine = (() => {
         <div style="font-size:3rem;">🔒</div>
         <h2>Assessment Already Locked</h2>
         <p class="text-muted">You have already submitted this assessment. Only your teacher can unlock it.</p>
-        <a href="../../dashboard.html" class="btn btn-primary mt-lg">← Back to Dashboard</a>
+        <a href="../dashboard.html" class="btn btn-primary mt-lg">← Back to Dashboard</a>
       </div>
     `;
   }
