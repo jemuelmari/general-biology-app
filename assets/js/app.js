@@ -1,12 +1,17 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 2.1.3
+   Version: 2.3.8
+   ------------------------------------------------------------
+   v2.3.8:
+   - Fixed manifest.json path resolution for all nested folders
+     (student, student/assessments, student/remediation,
+      student/biol1/weekN, student/biol2/weekN, teacher, classrecord)
    ============================================================ */
 
 const APP = (() => {
   'use strict';
 
-  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.1.3';
+  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.3.7';
   const APP_NAME = (typeof CONFIG !== 'undefined' && CONFIG.APP_NAME) || 'General Biology Online Modular Application';
 
   /* ---------- State ---------- */
@@ -231,13 +236,6 @@ const APP = (() => {
   }
 
   /* ---------- Version Rendering ---------- */
-  /**
-   * Replaces every version display on the page with the current version.
-   * Targets:
-   *   1. Elements with class .version
-   *   2. Elements with data-version attribute
-   *   3. Any text nodes matching /v\d+\.\d+\.\d+/ inside .app-footer or footer
-   */
   function renderVersions() {
     const v = `v${VERSION}`;
 
@@ -260,7 +258,6 @@ const APP = (() => {
             node.textContent = updated;
           }
         }
-        // Also check <p> tags inside
         node.querySelectorAll?.('p').forEach((p) => {
           const updated = p.textContent.replace(/v\d+\.\d+\.\d+/g, v);
           if (updated !== p.textContent) {
@@ -270,7 +267,7 @@ const APP = (() => {
       });
     });
 
-    // 4. Also update the page title suffix if it exists
+    // 4. Update page title suffix if present
     if (document.title.includes('v')) {
       document.title = document.title.replace(/v\d+\.\d+\.\d+/g, v);
     }
@@ -298,16 +295,49 @@ const APP = (() => {
     });
   }
 
-  /* ---------- Inject Manifest Meta ---------- */
+  /* ---------- Manifest Path Resolution ---------- */
+  /**
+   * Compute the correct relative prefix to reach the repo root
+   * from the current page, based on the actual folder depth.
+   *
+   * Examples:
+   *   /index.html                          → ''
+   *   /instructor.html                     → ''
+   *   /classrecord.html                    → ''
+   *   /teacher-login.html                  → ''
+   *   /teacher/sync-center.html            → '../'
+   *   /classrecord/grading-sheet.html      → '../'
+   *   /student/dashboard.html              → '../'
+   *   /student/assessments/quiz1.html      → '../../'
+   *   /student/remediation/index.html      → '../../'
+   *   /student/biol1/index.html            → '../../'
+   *   /student/biol1/week1/index.html      → '../../../'
+   *   /student/biol1/week1/day.html        → '../../../'
+   *   /student/biol2/week10/day.html       → '../../../'
+   */
+  function getRootPrefix() {
+    const path = window.location.pathname;
+
+    // Count the depth by stripping the leading '/' and counting segments
+    // minus 1 (the filename itself).
+    const clean = path.replace(/^\/+/, '');
+    const segments = clean.split('/').filter(Boolean);
+
+    // Remove the filename — everything else is folder depth
+    const folderDepth = Math.max(0, segments.length - 1);
+
+    // If the file is at the root (depth 0), prefix is ''
+    if (folderDepth === 0) return '';
+
+    return '../'.repeat(folderDepth);
+  }
+
   function injectManifest() {
     if (document.querySelector('link[rel="manifest"]')) return;
+
     const link = document.createElement('link');
     link.rel = 'manifest';
-    const path = window.location.pathname;
-    let prefix = '';
-    if (path.includes('/student/')) prefix = path.includes('/week') ? '../../' : '../';
-    else if (path.includes('/teacher/') || path.includes('/classrecord/')) prefix = '../';
-    link.href = prefix + 'manifest.json';
+    link.href = getRootPrefix() + 'manifest.json';
     document.head.appendChild(link);
 
     const meta = document.createElement('meta');
@@ -349,6 +379,8 @@ const APP = (() => {
     validateName,
     renderVersions,
     renderDeveloperFooter,
+    getRootPrefix,
+    injectManifest,
     init
   };
 })();
