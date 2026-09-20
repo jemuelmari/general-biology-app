@@ -61,11 +61,9 @@
       const user = Store.getCurrentUser();
       if (!user) { window.location.href = '../login.html'; return; }
 
-      // Read subject from query, default biol1
       const params = new URLSearchParams(window.location.search);
       let currentSubject = params.get('subject') === 'biol2' ? 'biol2' : 'biol1';
 
-      // Set active tab
       document.querySelectorAll('.assess-subject-tab').forEach((tab) => {
         tab.classList.toggle('active', tab.dataset.subject === currentSubject);
         tab.addEventListener('click', () => {
@@ -73,7 +71,6 @@
           document.querySelectorAll('.assess-subject-tab').forEach((t) =>
             t.classList.toggle('active', t.dataset.subject === currentSubject)
           );
-          // Update URL without reload
           const newUrl = new URL(window.location);
           newUrl.searchParams.set('subject', currentSubject);
           window.history.replaceState({}, '', newUrl);
@@ -81,7 +78,6 @@
         });
       });
 
-      // Assessment definitions
       const ASSESSMENTS = [
         { id: 'quiz1', file: 'quiz1.html', type: 'quiz', title: 'Quiz 1', desc: 'First quarterly quiz', unlockWeek: 1, unlockDay: 1 },
         { id: 'quiz2', file: 'quiz2.html', type: 'quiz', title: 'Quiz 2', desc: 'Second quarterly quiz', unlockWeek: 4, unlockDay: 4 },
@@ -104,39 +100,43 @@
 
       function getScore(subject, type, assessmentId) {
         const scores = Store.getScores(user.lrn)[subject] || {};
-        const bucket = type === 'quiz' ? 'quizzes' : type === 'pt' ? 'pt' : type;
         const fullId = `${subject}-${assessmentId}`;
 
-        // PT uses just the task id
         if (type === 'pt') {
-          return scores.pt?.[`${subject}-pt1`] || scores.pt?.['biol1-pt1'] || null;
+          return scores.pt?.[fullId] || null;
         }
 
+        const bucket = type === 'quiz' ? 'quizzes' : type === 'st' ? 'st' : 'te';
         return scores[bucket]?.[fullId] || null;
       }
 
       function getLockStatus(assess) {
         const subject = currentSubject;
-        const fullId = `${subject}-${assess.id}`;
-
-        // PT uses different id
-        const scoreId = assess.type === 'pt' ? `${subject}-pt1` : fullId;
+        const scoreId = `${subject}-${assess.id}`;
         const score = getScore(subject, assess.type, assess.id);
 
-        // Lock check (except for PT — PT doesn't lock)
-        if (assess.type !== 'pt' && Store.isAssessmentLocked(user.lrn, scoreId)) {
+        // For PT: submitted state
+        if (assess.type === 'pt') {
+          if (score) return { status: 'submitted', score };
+          if (!isUnlocked(assess)) return { status: 'locked', score: null, unlockWeek: assess.unlockWeek, unlockDay: assess.unlockDay };
+          return { status: 'available', score: null };
+        }
+
+        // For others: check lock
+        if (Store.isAssessmentLocked(user.lrn, scoreId)) {
           return { status: 'completed', score };
         }
 
-        if (score && assess.type === 'pt') {
-          return { status: 'submitted', score };
+        // If score exists but not locked (edge case), still show as completed
+        if (score && score.score !== undefined) {
+          return { status: 'completed', score };
         }
 
         if (!isUnlocked(assess)) {
-          return { status: 'locked', score: null, unlockWeek: assess.unlockWeek };
+          return { status: 'locked', score: null, unlockWeek: assess.unlockWeek, unlockDay: assess.unlockDay };
         }
 
-        return { status: 'available', score };
+        return { status: 'available', score: null };
       }
 
       function renderProgressSummary() {
@@ -165,34 +165,55 @@
 
         const grid = document.getElementById('assessments-grid');
         grid.innerHTML = ASSESSMENTS.map((a) => {
-          const { status, score } = getLockStatus(a);
+          const info = getLockStatus(a);
+          const status = info.status;
+          const score = info.score;
           const link = `${a.file}?subject=${currentSubject}`;
 
           let badge = '';
           let clickable = false;
           let opacity = '1';
+          let borderColor = '#dadce0';
+          let extraNote = '';
 
-          switch (status) {
-            case 'available':
-              badge = '<span class="badge badge-warning">▶ Start</span>';
-              clickable = true;
-              break;
-            case 'completed':
+          if (status === 'available') {
+            badge = '<span class="badge badge-warning">▶ Start</span>';
+            clickable = true;
+            borderColor = 'var(--color-primary)';
+          } else if (status === 'completed') {
+            if (score && typeof score.score === 'number') {
               badge = `<span class="badge badge-success">✅ ${score.score}/${score.total} (${score.percent}%)</span>`;
-              break;
-            case 'submitted':
-              badge = '<span class="badge badge-info">📋 Submitted</span>';
-              break;
-            case 'locked':
-              badge = '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>';
-              opacity = '0.5';
-              break;
+              extraNote = `
+                <p class="text-small text-muted" style="margin-top:8px;">
+                  Taken ${score.timestamp ? APP.formatDate(score.timestamp) : 'recently'}
+                </p>
+                <p class="text-small" style="margin-top:8px;color:#78909c;font-style:italic;">
+                  🔒 Ask your teacher to unlock for a retake
+                </p>
+              `;
+            } else {
+              badge = '<span class="badge badge-success">✅ Completed</span>';
+            }
+            borderColor = 'var(--color-success)';
+          } else if (status === 'submitted') {
+            badge = '<span class="badge badge-info">📋 Submitted</span>';
+            if (score) {
+              extraNote = `
+                <p class="text-small text-muted" style="margin-top:8px;">
+                  Chose Option ${score.option}${score.timestamp ? ' on ' + APP.formatDate(score.timestamp) : ''}
+                </p>
+              `;
+            }
+            borderColor = 'var(--color-info)';
+          } else if (status === 'locked') {
+            badge = '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>';
+            opacity = '0.5';
+            extraNote = `
+              <p class="text-small text-muted" style="margin-top:8px;">
+                Complete Week ${info.unlockWeek} Day ${info.unlockDay} to unlock
+              </p>
+            `;
           }
-
-          const borderColor = status === 'available' ? 'var(--color-primary)'
-                            : status === 'completed' ? 'var(--color-success)'
-                            : status === 'submitted' ? 'var(--color-info)'
-                            : '#dadce0';
 
           const typeIcon = a.type === 'quiz' ? '📝'
                          : a.type === 'st' ? '📋'
@@ -208,31 +229,11 @@
               </div>
               <h3 style="margin-top:8px;">${a.title}</h3>
               <p class="text-muted text-small">${a.desc}</p>
-              ${status === 'locked' ? `
-                <p class="text-small text-muted" style="margin-top:8px;">
-                  Complete Week ${a.unlockWeek} Day ${a.unlockDay} to unlock
-                </p>
-              ` : ''}
-              ${status === 'completed' && score.timestamp ? `
-                <p class="text-small text-muted" style="margin-top:8px;">
-                  Taken ${APP.formatDate(score.timestamp)}
-                </p>
-              ` : ''}
-              ${status === 'submitted' && score.timestamp ? `
-                <p class="text-small text-muted" style="margin-top:8px;">
-                  Chose Option ${score.option} on ${APP.formatDate(score.timestamp)}
-                </p>
-              ` : ''}
-              ${status === 'completed' ? `
-                <p class="text-small" style="margin-top:8px;color:#78909c;font-style:italic;">
-                  🔒 Ask your teacher to unlock for a retake
-                </p>
-              ` : ''}
+              ${extraNote}
             </div>
           `;
         }).join('');
 
-        // Attach clicks
         grid.querySelectorAll('[data-href]').forEach((card) => {
           card.addEventListener('click', () => {
             const href = card.dataset.href;
