@@ -1,8 +1,10 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine with anti-cheat
-   Version: 1.0.1
+   Version: 1.0.2
    ------------------------------------------------------------
-   FIX: remediation link points to /student/remediation/index.html
+   v1.0.2:
+   - Normalize 'quiz' → 'quizzes' to match tracker schema
+   - Fix remediation link path
    ============================================================ */
 
 const QuizEngine = (() => {
@@ -280,7 +282,10 @@ const QuizEngine = (() => {
     const percent = Math.round((correct / total) * 100);
     const passed = percent >= state.passingScore;
 
-    Store.saveScore(state.lrn, state.subject, state.type, state.assessmentId, {
+    // ⚠️ KEY FIX: Normalize 'quiz' → 'quizzes' to match tracker schema
+    const typeKey = state.type === 'quiz' ? 'quizzes' : state.type;
+
+    Store.saveScore(state.lrn, state.subject, typeKey, state.assessmentId, {
       score: correct,
       total,
       percent,
@@ -356,7 +361,7 @@ const QuizEngine = (() => {
         ` : ''}
 
         <div style="margin-top:24px;">
-          <a href="../dashboard.html" class="btn btn-primary">← Back to Dashboard</a>
+          <a href="index.html?subject=${state.subject}" class="btn btn-primary">← Back to Assessments</a>
         </div>
       </div>
     `;
@@ -370,7 +375,7 @@ const QuizEngine = (() => {
         <div style="font-size:3rem;">🔒</div>
         <h2>Assessment Already Locked</h2>
         <p class="text-muted">You have already submitted this assessment. Only your teacher can unlock it.</p>
-        <a href="../dashboard.html" class="btn btn-primary mt-lg">← Back to Dashboard</a>
+        <a href="index.html" class="btn btn-primary mt-lg">← Back to Assessments</a>
       </div>
     `;
   }
