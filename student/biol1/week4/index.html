@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔬 Gen Bio 1 · Week 4</h1>
-        <span class="version">v2.3.6</span>
+        <span class="version">v2.3.7</span>
       </div>
       <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Weeks</a>
     </div>
@@ -32,7 +32,7 @@
 
   </main>
 
-  <footer class="app-footer"><p>General Biology 1 · Week 4 · v2.3.6</p></footer>
+  <footer class="app-footer"><p>General Biology 1 · Week 4 · v2.3.7</p></footer>
 
   <script src="../../../config.js"></script>
   <script src="../../../assets/js/app.js"></script>
@@ -64,22 +64,4 @@
               <span class="badge badge-info">Day ${d.n}</span>
               ${completed ? '<span class="badge badge-success">✅ Done</span>' : locked ? '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>' : '<span class="badge badge-warning">▶ Start</span>'}
             </div>
-            <h3 style="margin-top:8px;font-size:1rem;">${d.title}</h3>
-            <p class="text-small text-muted">${d.comp}</p>
-          </div>
-        `;
-      }).join('');
-
-      document.querySelectorAll('[data-day]').forEach((card) => {
-        card.addEventListener('click', () => {
-          if (card.style.opacity === '0.5') {
-            APP.toast('Complete the previous day first.', 'warning');
-            return;
-          }
-          window.location.href = `day.html?day=${card.dataset.day}`;
-        });
-      });
-    });
-  </script>
-</body>
-</html>
+            <h3 style="margin-top:8px
