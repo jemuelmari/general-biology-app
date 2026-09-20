@@ -13,9 +13,9 @@
     <div class="container flex-between">
       <div>
         <h1>🎨 Performance Task 1</h1>
-        <span class="version">v1.0.0</span>
+        <span class="version">v2.3.7</span>
       </div>
-      <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
+      <a href="index.html" id="back-link" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Assessments</a>
     </div>
   </header>
 
@@ -27,9 +27,10 @@
   </main>
 
   <footer class="app-footer">
-    <p>Performance Task 1 · v1.0.0</p>
+    <p>Performance Task 1 · v2.3.7</p>
   </footer>
 
+  <script src="../../config.js"></script>
   <script src="../../assets/js/app.js"></script>
   <script src="../../assets/js/store.js"></script>
   <script>
@@ -40,12 +41,14 @@
       const params = new URLSearchParams(window.location.search);
       const subject = params.get('subject') || 'biol1';
 
+      const backLink = document.getElementById('back-link');
+      if (backLink) backLink.href = `index.html?subject=${subject}`;
+
       const res = await fetch('../../data/performance-tasks.json');
       const data = await res.json();
       const subjectData = data[subject];
-      const task = subjectData.tasks[0]; // PT1
+      const task = subjectData.tasks[0];
 
-      // Check if already submitted
       const scores = Store.getScores(user.lrn);
       const existing = scores[subject]?.pt?.[task.id];
 
