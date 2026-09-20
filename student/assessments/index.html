@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assessments — General Biology</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/student.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container flex-between">
+      <div>
+        <h1>📝 Assessments</h1>
+        <span class="version">v2.3.7</span>
+      </div>
+      <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+
+    <div class="card" style="margin-bottom:24px;">
+      <h2 style="color:var(--color-primary-dark);margin-bottom:8px;">📝 Your Assessments</h2>
+      <p class="text-muted">Take quizzes, summative tests, and the term exam once you've completed the required lessons.</p>
+      <div id="progress-summary" style="margin-top:12px;"></div>
+    </div>
+
+    <!-- Subject Toggle -->
+    <div class="login-tabs" style="margin-bottom:20px;">
+      <button class="assess-subject-tab active" data-subject="biol1">🔬 General Biology 1</button>
+      <button class="assess-subject-tab" data-subject="biol2">🌱 General Biology 2</button>
+    </div>
+
+    <!-- Assessment Grid -->
+    <div class="dashboard-grid" id="assessments-grid"></div>
+
+    <!-- Legend -->
+    <div class="card" style="margin-top:32px;background:#f8f9fa;">
+      <h4 style="margin:0 0 12px;font-size:0.9rem;color:#5f6368;">📖 How to read this page</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:0.85rem;color:#37474f;">
+        <div>🟢 <strong>Available</strong> — you can take it now</div>
+        <div>🔒 <strong>Locked</strong> — complete the required week first</div>
+        <div>✅ <strong>Completed</strong> — score saved (locked to prevent retake unless teacher unlocks)</div>
+        <div>📋 <strong>Submitted</strong> — Performance Task selection saved (waiting for teacher grade)</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Assessments · <span class="version">v2.3.7</span></p>
+  </footer>
+
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = Store.getCurrentUser();
+      if (!user) { window.location.href = '../login.html'; return; }
+
+      // Read subject from query, default biol1
+      const params = new URLSearchParams(window.location.search);
+      let currentSubject = params.get('subject') === 'biol2' ? 'biol2' : 'biol1';
+
+      // Set active tab
+      document.querySelectorAll('.assess-subject-tab').forEach((tab) => {
+        tab.classList.toggle('active', tab.dataset.subject === currentSubject);
+        tab.addEventListener('click', () => {
+          currentSubject = tab.dataset.subject;
+          document.querySelectorAll('.assess-subject-tab').forEach((t) =>
+            t.classList.toggle('active', t.dataset.subject === currentSubject)
+          );
+          // Update URL without reload
+          const newUrl = new URL(window.location);
+          newUrl.searchParams.set('subject', currentSubject);
+          window.history.replaceState({}, '', newUrl);
+          render();
+        });
+      });
+
+      // Assessment definitions
+      const ASSESSMENTS = [
+        { id: 'quiz1', file: 'quiz1.html', type: 'quiz', title: 'Quiz 1', desc: 'First quarterly quiz', unlockWeek: 1, unlockDay: 1 },
+        { id: 'quiz2', file: 'quiz2.html', type: 'quiz', title: 'Quiz 2', desc: 'Second quarterly quiz', unlockWeek: 4, unlockDay: 4 },
+        { id: 'quiz3', file: 'quiz3.html', type: 'quiz', title: 'Quiz 3', desc: 'Third quarterly quiz', unlockWeek: 6, unlockDay: 4 },
+        { id: 'st1',   file: 'st1.html',   type: 'st',   title: 'Summative Test 1', desc: 'Weeks 1–4', unlockWeek: 4, unlockDay: 4 },
+        { id: 'st2',   file: 'st2.html',   type: 'st',   title: 'Summative Test 2', desc: 'Weeks 5–8', unlockWeek: 8, unlockDay: 4 },
+        { id: 'te',    file: 'te.html',    type: 'te',   title: 'Term Exam', desc: 'Weeks 9–10 · 60 items', unlockWeek: 10, unlockDay: 4 },
+        { id: 'pt1',   file: 'pt1.html',   type: 'pt',   title: 'Performance Task 1', desc: 'Choose from 4 options', unlockWeek: 4, unlockDay: 4 }
+      ];
+
+      function isWeekComplete(subject, week, day) {
+        const progress = Store.getProgress(user.lrn);
+        const done = progress[subject]?.completed || [];
+        return done.includes(`${subject}-w${week}-d${day}`);
+      }
+
+      function isUnlocked(assess) {
+        return isWeekComplete(currentSubject, assess.unlockWeek, assess.unlockDay);
+      }
+
+      function getScore(subject, type, assessmentId) {
+        const scores = Store.getScores(user.lrn)[subject] || {};
+        const bucket = type === 'quiz' ? 'quizzes' : type === 'pt' ? 'pt' : type;
+        const fullId = `${subject}-${assessmentId}`;
+
+        // PT uses just the task id
+        if (type === 'pt') {
+          return scores.pt?.[`${subject}-pt1`] || scores.pt?.['biol1-pt1'] || null;
+        }
+
+        return scores[bucket]?.[fullId] || null;
+      }
+
+      function getLockStatus(assess) {
+        const subject = currentSubject;
+        const fullId = `${subject}-${assess.id}`;
+
+        // PT uses different id
+        const scoreId = assess.type === 'pt' ? `${subject}-pt1` : fullId;
+        const score = getScore(subject, assess.type, assess.id);
+
+        // Lock check (except for PT — PT doesn't lock)
+        if (assess.type !== 'pt' && Store.isAssessmentLocked(user.lrn, scoreId)) {
+          return { status: 'completed', score };
+        }
+
+        if (score && assess.type === 'pt') {
+          return { status: 'submitted', score };
+        }
+
+        if (!isUnlocked(assess)) {
+          return { status: 'locked', score: null, unlockWeek: assess.unlockWeek };
+        }
+
+        return { status: 'available', score };
+      }
+
+      function renderProgressSummary() {
+        const progress = Store.getProgress(user.lrn);
+        const done = progress[currentSubject]?.completed || [];
+        const totalDays = 40;
+        const completedDays = done.length;
+        const pct = Math.round((completedDays / totalDays) * 100);
+
+        document.getElementById('progress-summary').innerHTML = `
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:200px;">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width:${pct}%;"></div>
+              </div>
+            </div>
+            <div style="font-weight:600;color:var(--color-primary-dark);white-space:nowrap;">
+              ${completedDays}/${totalDays} days complete (${pct}%)
+            </div>
+          </div>
+        `;
+      }
+
+      function render() {
+        renderProgressSummary();
+
+        const grid = document.getElementById('assessments-grid');
+        grid.innerHTML = ASSESSMENTS.map((a) => {
+          const { status, score } = getLockStatus(a);
+          const link = `${a.file}?subject=${currentSubject}`;
+
+          let badge = '';
+          let clickable = false;
+          let opacity = '1';
+
+          switch (status) {
+            case 'available':
+              badge = '<span class="badge badge-warning">▶ Start</span>';
+              clickable = true;
+              break;
+            case 'completed':
+              badge = `<span class="badge badge-success">✅ ${score.score}/${score.total} (${score.percent}%)</span>`;
+              break;
+            case 'submitted':
+              badge = '<span class="badge badge-info">📋 Submitted</span>';
+              break;
+            case 'locked':
+              badge = '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>';
+              opacity = '0.5';
+              break;
+          }
+
+          const borderColor = status === 'available' ? 'var(--color-primary)'
+                            : status === 'completed' ? 'var(--color-success)'
+                            : status === 'submitted' ? 'var(--color-info)'
+                            : '#dadce0';
+
+          const typeIcon = a.type === 'quiz' ? '📝'
+                         : a.type === 'st' ? '📋'
+                         : a.type === 'te' ? '🎓'
+                         : '🎨';
+
+          return `
+            <div class="subject-card" data-href="${clickable ? link : ''}"
+                 style="border-top-color:${borderColor};${opacity !== '1' ? `opacity:${opacity};` : ''}${clickable ? 'cursor:pointer;' : 'cursor:default;'}">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:1.5rem;">${typeIcon}</span>
+                ${badge}
+              </div>
+              <h3 style="margin-top:8px;">${a.title}</h3>
+              <p class="text-muted text-small">${a.desc}</p>
+              ${status === 'locked' ? `
+                <p class="text-small text-muted" style="margin-top:8px;">
+                  Complete Week ${a.unlockWeek} Day ${a.unlockDay} to unlock
+                </p>
+              ` : ''}
+              ${status === 'completed' && score.timestamp ? `
+                <p class="text-small text-muted" style="margin-top:8px;">
+                  Taken ${APP.formatDate(score.timestamp)}
+                </p>
+              ` : ''}
+              ${status === 'submitted' && score.timestamp ? `
+                <p class="text-small text-muted" style="margin-top:8px;">
+                  Chose Option ${score.option} on ${APP.formatDate(score.timestamp)}
+                </p>
+              ` : ''}
+              ${status === 'completed' ? `
+                <p class="text-small" style="margin-top:8px;color:#78909c;font-style:italic;">
+                  🔒 Ask your teacher to unlock for a retake
+                </p>
+              ` : ''}
+            </div>
+          `;
+        }).join('');
+
+        // Attach clicks
+        grid.querySelectorAll('[data-href]').forEach((card) => {
+          card.addEventListener('click', () => {
+            const href = card.dataset.href;
+            if (href) window.location.href = href;
+          });
+        });
+      }
+
+      render();
+    });
+  </script>
+</body>
+</html>
