@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📥 Sync Center</h1>
-        <span class="version">v1.2.0</span>
+        <span class="version">v2.3.7</span>
       </div>
       <nav style="display:flex;gap:8px;">
         <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
@@ -24,7 +24,6 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:900px;">
 
-    <!-- Backend status card -->
     <div class="card" id="backend-status-card">
       <div id="backend-status-content">
         <p class="text-muted text-small">Checking backend status...</p>
@@ -41,7 +40,6 @@
         <button class="sync-tab" data-tab="bulk">📦 Bulk Import</button>
       </div>
 
-      <!-- By Code -->
       <div id="panel-code" class="sync-panel">
         <label class="form-label">Enter Sync Code from Student</label>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -55,7 +53,6 @@
         </p>
       </div>
 
-      <!-- By JSON -->
       <div id="panel-json" class="sync-panel hidden">
         <div class="drop-zone" id="drop-zone">
           <div class="drop-icon">📄</div>
@@ -69,7 +66,6 @@
         </p>
       </div>
 
-      <!-- Bulk -->
       <div id="panel-bulk" class="sync-panel hidden">
         <div class="drop-zone" id="drop-zone-bulk">
           <div class="drop-icon">📦</div>
@@ -81,7 +77,6 @@
 
     </div>
 
-    <!-- Import Preview -->
     <div id="import-preview-container" class="hidden">
       <h3 style="margin:24px 0 12px;color:var(--color-primary-dark);">📋 Preview & Confirm</h3>
       <div id="import-preview"></div>
@@ -91,7 +86,6 @@
       </div>
     </div>
 
-    <!-- Sync Log -->
     <div class="card" style="margin-top:24px;">
       <h3 style="color:var(--color-primary-dark);">📜 Sync Log</h3>
       <div id="sync-log"><p class="text-muted text-small">No syncs yet in this session.</p></div>
@@ -100,7 +94,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Sync Center · v1.2.0</p>
+    <p>Sync Center · <span class="version">v2.3.7</span></p>
   </footer>
 
   <script src="../config.js"></script>
@@ -113,7 +107,6 @@
     let pendingImports = [];
     const syncLog = [];
 
-    /* ---------- Backend status check ---------- */
     (async function checkBackend() {
       const el = document.getElementById('backend-status-content');
       const backendOn = Sync.backendEnabled();
@@ -153,7 +146,6 @@
       }
     })();
 
-    /* ---------- Tabs ---------- */
     APP.$$('.sync-tab').forEach((tab) => {
       tab.addEventListener('click', () => {
         APP.$$('.sync-tab').forEach((t) => t.classList.remove('active'));
@@ -165,7 +157,6 @@
       });
     });
 
-    /* ---------- By Code ---------- */
     document.getElementById('btn-import-code').addEventListener('click', async () => {
       const code = document.getElementById('sync-code-input').value.trim().toUpperCase();
       if (!code) return APP.toast('Enter a sync code first.', 'warning');
@@ -190,15 +181,11 @@
       }
     });
 
-    /* ---------- JSON File ---------- */
     const dropZone = document.getElementById('drop-zone');
     const filePicker = document.getElementById('file-picker');
 
     dropZone.addEventListener('click', () => filePicker.click());
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('dragover');
-    });
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
     dropZone.addEventListener('drop', async (e) => {
       e.preventDefault();
@@ -222,7 +209,6 @@
       }
     }
 
-    /* ---------- Bulk ---------- */
     const dropZoneBulk = document.getElementById('drop-zone-bulk');
     const filePickerBulk = document.getElementById('file-picker-bulk');
 
@@ -253,7 +239,6 @@
       renderPreview();
     }
 
-    /* ---------- Render Preview ---------- */
     function renderPreview() {
       const container = document.getElementById('import-preview-container');
       const preview = document.getElementById('import-preview');
@@ -300,7 +285,7 @@
       }).join('');
     }
 
-    /* ---------- Confirm Import ---------- */
+    /* ---------- Confirm Import (FIXED MERGE LOGIC) ---------- */
     document.getElementById('btn-confirm-import').addEventListener('click', () => {
       let imported = 0, rejected = 0;
 
@@ -316,32 +301,78 @@
           const merged = existing ? { ...existing, ...p.student } : p.student;
           Store.saveUser(merged);
 
+          /* ---------- Merge PROGRESS ---------- */
           const currentProg = Store.getProgress(p.student.lrn);
+
           ['biol1', 'biol2'].forEach((subj) => {
-            if (p.progress?.[subj]) {
-              currentProg[subj] = currentProg[subj] || { weeks: {}, completed: [] };
-              Object.assign(currentProg[subj].weeks || {}, p.progress[subj].weeks || {});
-              const mergedCompleted = new Set([
-                ...(currentProg[subj].completed || []),
-                ...(p.progress[subj].completed || [])
-              ]);
-              currentProg[subj].completed = Array.from(mergedCompleted);
-            }
+            if (!p.progress?.[subj]) return;
+
+            if (!currentProg[subj]) currentProg[subj] = { weeks: {}, completed: [] };
+            if (!currentProg[subj].weeks) currentProg[subj].weeks = {};
+            if (!Array.isArray(currentProg[subj].completed)) currentProg[subj].completed = [];
+
+            const incomingWeeks = p.progress[subj].weeks || {};
+            Object.keys(incomingWeeks).forEach((w) => {
+              if (!currentProg[subj].weeks[w]) currentProg[subj].weeks[w] = {};
+              Object.assign(currentProg[subj].weeks[w], incomingWeeks[w]);
+            });
+
+            const incomingCompleted = p.progress[subj].completed || [];
+            const mergedCompleted = new Set([
+              ...currentProg[subj].completed,
+              ...incomingCompleted
+            ]);
+            currentProg[subj].completed = Array.from(mergedCompleted);
           });
+
           Store.saveProgress(p.student.lrn, currentProg);
 
+          /* ---------- Merge SCORES ---------- */
           const currentScores = Store.getScores(p.student.lrn);
+
           ['biol1', 'biol2'].forEach((subj) => {
-            if (p.scores?.[subj]) {
-              currentScores[subj] = currentScores[subj] || {};
-              ['quizzes', 'st', 'pt', 'activities', 'te'].forEach((type) => {
-                if (p.scores[subj][type]) {
-                  currentScores[subj][type] = { ...(currentScores[subj][type] || {}), ...p.scores[subj][type] };
-                }
-              });
+            if (!p.scores?.[subj]) return;
+            if (!currentScores[subj]) currentScores[subj] = {};
+
+            ['quizzes', 'st', 'pt', 'activities'].forEach((type) => {
+              if (p.scores[subj][type]) {
+                currentScores[subj][type] = {
+                  ...(currentScores[subj][type] || {}),
+                  ...p.scores[subj][type]
+                };
+              }
+            });
+
+            if (p.scores[subj].te) {
+              currentScores[subj].te = {
+                ...(currentScores[subj].te || {}),
+                ...p.scores[subj].te
+              };
             }
           });
-          localStorage.setItem(`gba_v1_scores_${p.student.lrn}`, JSON.stringify(currentScores));
+
+          try {
+            localStorage.setItem(`gba_v1_scores_${p.student.lrn}`, JSON.stringify(currentScores));
+          } catch (e) {
+            throw new Error('Failed to save scores: ' + e.message);
+          }
+
+          /* ---------- Merge BADGES ---------- */
+          if (p.badges) {
+            const currentBadges = Store.getBadges(p.student.lrn);
+            ['biol1', 'biol2'].forEach((subj) => {
+              if (p.badges[subj]) {
+                const mergedSet = new Set([
+                  ...(currentBadges[subj] || []),
+                  ...p.badges[subj]
+                ]);
+                currentBadges[subj] = Array.from(mergedSet);
+              }
+            });
+            try {
+              localStorage.setItem(`gba_v1_badges_${p.student.lrn}`, JSON.stringify(currentBadges));
+            } catch (e) { /* silent */ }
+          }
 
           imported++;
           syncLog.push({ time: new Date().toISOString(), status: 'success', student: p.student.lrn });
@@ -362,7 +393,6 @@
       document.getElementById('import-preview-container').classList.add('hidden');
     });
 
-    /* ---------- Sync Log ---------- */
     function renderLog() {
       const el = document.getElementById('sync-log');
       if (!syncLog.length) {
