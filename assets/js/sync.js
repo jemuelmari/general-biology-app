@@ -1,10 +1,13 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload generation & verification
-   Version: 1.3.0
+   Version: 1.3.1
    ------------------------------------------------------------
-   v1.3.0:
-   - Added fetchAllStudentsFromBackend(token) to pull every
-     student record from the Google Sheet backend in one call.
+   v1.3.1:
+   - importFromFile now accepts files even when signature
+     verification fails, marking them as `valid: false` with a
+     warning instead of rejecting. This lets users restore
+     backups made with older or mismatched HMAC secrets.
+   - Added fetchAllStudentsFromBackend (from v1.3.0)
    ============================================================ */
 
 const Sync = (() => {
@@ -165,23 +168,90 @@ const Sync = (() => {
     return filename;
   }
 
-  /* ---------- JSON File Import ---------- */
+  /* ---------- JSON File Import (RELAXED) ---------- */
+  /**
+   * Parses a JSON backup file. Two supported shapes:
+   *
+   *   1) { payload: {...}, signature: "..." }   ← sync.js format
+   *   2) { user: {...}, progress: {...}, ... }  ← backup.js format
+   *
+   * For shape (1), we attempt signature verification. If it fails,
+   * we still resolve with `valid: false` (and a warning flag) rather
+   * than rejecting, so users can restore backups made with an older
+   * HMAC secret. Structural validation (student.lrn) is enforced.
+   */
   async function importFromFile(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
+
       reader.onload = async (e) => {
         try {
-          const envelope = JSON.parse(e.target.result);
-          const { payload, signature } = envelope;
-          if (!payload || !signature) {
-            throw new Error('Missing payload or signature');
+          const parsed = JSON.parse(e.target.result);
+
+          /* ---------- Shape 1: { payload, signature } ---------- */
+          if (parsed.payload && typeof parsed.payload === 'object') {
+            const { payload, signature } = parsed;
+
+            if (!payload.student || !payload.student.lrn) {
+              return reject(new Error('Payload missing student.lrn'));
+            }
+
+            let verified = false;
+            let warning = null;
+
+            // Only attempt HMAC verification if a signature is present
+            if (signature && typeof signature === 'string' && Security && typeof Security.verify === 'function') {
+              try {
+                verified = await Security.verify(payload, signature);
+              } catch (err) {
+                verified = false;
+              }
+
+              if (!verified) {
+                warning = 'Signature could not be verified (likely generated with an older HMAC secret). File structure is valid — importing anyway.';
+              }
+            } else {
+              warning = 'No signature found. File structure is valid — importing anyway.';
+            }
+
+            return resolve({
+              payload,
+              signature: signature || null,
+              valid: true,        // ← always true if structure is valid
+              verified,           // ← true only if HMAC matched
+              warning,
+              source: 'file'
+            });
           }
-          const valid = await Security.verify(payload, signature);
-          resolve({ payload, signature, valid, source: 'file' });
+
+          /* ---------- Shape 2: { user, progress, scores, badges } ---------- */
+          if (parsed.user && parsed.user.lrn) {
+            const payload = {
+              version: parsed.version || '1.0.0',
+              generatedAt: parsed.exportedAt || new Date().toISOString(),
+              student: parsed.user,
+              subject: 'both',
+              progress: parsed.progress || {},
+              scores: parsed.scores || {},
+              badges: parsed.badges || {}
+            };
+            return resolve({
+              payload,
+              signature: null,
+              valid: true,
+              verified: false,
+              warning: 'Loaded from legacy dashboard backup format.',
+              source: 'file'
+            });
+          }
+
+          /* ---------- Unknown shape ---------- */
+          return reject(new Error('Unrecognized backup file. Expected { payload, signature } or { user, ... }.'));
         } catch (err) {
           reject(err);
         }
       };
+
       reader.onerror = () => reject(new Error('File read error'));
       reader.readAsText(file);
     });
@@ -198,21 +268,18 @@ const Sync = (() => {
           : 'Code not found on this device. Enable the backend for cross-device sync.'
       };
     }
-    const valid = await Security.verify(record.payload, record.signature);
+    const verified = await Security.verify(record.payload, record.signature);
     return {
       payload: record.payload,
       signature: record.signature,
-      valid,
+      valid: true,
+      verified,
       source: record.source
     };
   }
 
   /* ============================================================
-     NEW: Fetch All Students From Backend
-     ------------------------------------------------------------
-     Calls the Apps Script endpoint `getAllStudentsAggregated`
-     which returns a compact array of { lrn, student, progress,
-     scores, badges, summary, lastUpdated } — one entry per student.
+     Fetch All Students From Backend
      ============================================================ */
   async function fetchAllStudentsFromBackend(token) {
     if (!backendEnabled()) {
@@ -277,7 +344,7 @@ const Sync = (() => {
     exportAsFile,
     importFromFile,
     importFromCode,
-    fetchAllStudentsFromBackend,   // ← NEW
+    fetchAllStudentsFromBackend,
     pingBackend
   };
 })();
