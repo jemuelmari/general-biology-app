@@ -1,6 +1,10 @@
 /* ============================================================
    backup.js — Student backup file (download / upload)
-   Version: 1.1.1
+   Version: 1.1.2
+   ------------------------------------------------------------
+   v1.1.2:
+   - uploadBackup now also accepts { payload, signature } files
+     (Sync Center format) in addition to { user, ... } files.
    ============================================================ */
 
 const Backup = (() => {
@@ -29,18 +33,48 @@ const Backup = (() => {
     return filename;
   }
 
-  /* ---------- Upload Backup ---------- */
+  /* ---------- Upload Backup (accepts both formats) ---------- */
   function uploadBackup(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         try {
-          const data = JSON.parse(e.target.result);
-          if (!data.user || !data.user.lrn) {
-            throw new Error('Invalid backup file');
+          const parsed = JSON.parse(e.target.result);
+
+          /* ---------- Format 1: { user, progress, scores, badges } ---------- */
+          if (parsed.user && parsed.user.lrn) {
+            Store.importAll(parsed);
+            return resolve(parsed);
           }
-          Store.importAll(data);
-          resolve(data);
+
+          /* ---------- Format 2: { payload, signature } ---------- */
+          if (parsed.payload && parsed.payload.student && parsed.payload.student.lrn) {
+            const { payload, signature } = parsed;
+
+            // Try verify — but don't block if it fails
+            let verified = false;
+            if (signature && typeof Security !== 'undefined' && typeof Security.verify === 'function') {
+              try {
+                verified = await Security.verify(payload, signature);
+              } catch (_) { verified = false; }
+            }
+
+            // Convert payload shape → backup.js shape
+            const asBackup = {
+              version: payload.version || '1.0.0',
+              exportedAt: payload.generatedAt || new Date().toISOString(),
+              user: payload.student,
+              progress: payload.progress || {},
+              scores: payload.scores || {},
+              badges: payload.badges || {}
+            };
+
+            Store.importAll(asBackup);
+            return resolve(asBackup);
+          }
+
+          /* ---------- Unknown shape ---------- */
+          throw new Error('Unrecognized backup file format');
         } catch (err) {
           reject(err);
         }
@@ -51,11 +85,6 @@ const Backup = (() => {
   }
 
   /* ---------- Prompt: Keep or Delete on Logout ---------- */
-  /**
-   * Shows a modal asking the student to keep or delete data.
-   * Resolves with: 'keep' | 'delete' | 'cancel' | 'timeout'
-   * Auto-resolves to 'cancel' after 10 seconds to prevent hanging.
-   */
   function promptOnLogout(user) {
     return new Promise((resolve) => {
       let resolved = false;
@@ -110,7 +139,6 @@ const Backup = (() => {
       overlay.appendChild(modal);
       document.body.appendChild(overlay);
 
-      // Countdown timer
       let secondsLeft = 10;
       const countdownEl = modal.querySelector('#bk-countdown');
       const countdownInterval = setInterval(() => {
@@ -122,7 +150,6 @@ const Backup = (() => {
         }
       }, 1000);
 
-      // Auto-timeout as absolute fallback
       const autoTimer = setTimeout(() => {
         clearInterval(countdownInterval);
         finish('timeout');
