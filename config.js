@@ -17,9 +17,8 @@ const CONFIG = {
     department: 'Department of Education'
   },
 
-  // ⚠️ MUST be the URL of the Apps Script project you can actually edit.
-  // Verified: this URL returns JSON in Incognito (public access, personal Gmail).
-  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyi2fj-Jnmlk7Pp4qhtfuE_lz0zSewtLfRPiAZnPO5A-uA5ICvicE_DPUry_lax69ubuQ/exec',
+  // ⚠️ NEW deployment URL — verified working, version 1.4.1
+  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyZjTOXmZzth0a_jXO1GoC8-5qSkm1gKu9rCvlMzJW0HW8gTb4XYvrZ7rPMBkxdr62jZQ/exec',
 
   get backendEnabled() {
     return this.BACKEND_URL && this.BACKEND_URL.length > 20;
