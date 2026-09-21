@@ -4,10 +4,16 @@
  * File: Code.gs
  * Version: 1.4.0
  * ------------------------------------------------------------
- * v1.4.0:
+ * CHANGES in v1.4.0:
  * - NEW: getAllStudentsAggregated — returns one merged record
- *   per student with progress, scores, and badges, ready for
- *   direct import from the Sync Center.
+ *   per student (progress + scores + badges) for the Sync Center
+ *   "From Backend" tab.
+ *
+ * SETUP:
+ * 1. Deploy this file as a Web App (Execute as: Me, Access: Anyone)
+ * 2. Copy the Web App URL into config.js as CONFIG.BACKEND_URL
+ * 3. TEACHER_TOKEN_HASH must match CONFIG.TEACHER_PASSWORD_HASH
+ * 4. HMAC_SECRET must match SECRET in assets/js/security.js
  * ============================================================
  */
 
@@ -15,7 +21,10 @@ const SHEET_NAME_RECORDS = 'Records';
 const SHEET_NAME_CODES   = 'SyncCodes';
 const SHEET_NAME_LOG     = 'SyncLog';
 
+// SHA-256 of "teacher2026" — must match config.js TEACHER_PASSWORD_HASH
 const TEACHER_TOKEN_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
+
+// Shared HMAC secret — must match SECRET in assets/js/security.js
 const HMAC_SECRET = 'GB-APP-2026-DEPED-SECRET-KEY-v1';
 
 const RECORD_HEADERS = [
@@ -31,7 +40,9 @@ const CODE_HEADERS = [
 
 const LOG_HEADERS = ['Timestamp', 'Action', 'LRN', 'Details'];
 
-/* ---------- Entry Points ---------- */
+/* ============================================================
+   ENTRY POINTS
+   ============================================================ */
 
 function doPost(e) {
   try {
@@ -39,16 +50,16 @@ function doPost(e) {
     const action = body.action;
 
     switch (action) {
-      case 'saveProgress':            return jsonResponse(handleSaveProgress(body));
-      case 'saveScore':               return jsonResponse(handleSaveScore(body));
-      case 'registerSyncCode':        return jsonResponse(handleRegisterSyncCode(body));
-      case 'resolveSyncCode':         return jsonResponse(handleResolveSyncCode(body, false));
-      case 'consumeSyncCode':         return jsonResponse(handleResolveSyncCode(body, true));
-      case 'getStudent':              return jsonResponse(handleGetStudent(body));
-      case 'getAllStudents':          return jsonResponse(handleGetAllStudents(body));
+      case 'saveProgress':             return jsonResponse(handleSaveProgress(body));
+      case 'saveScore':                return jsonResponse(handleSaveScore(body));
+      case 'registerSyncCode':         return jsonResponse(handleRegisterSyncCode(body));
+      case 'resolveSyncCode':          return jsonResponse(handleResolveSyncCode(body, false));
+      case 'consumeSyncCode':          return jsonResponse(handleResolveSyncCode(body, true));
+      case 'getStudent':               return jsonResponse(handleGetStudent(body));
+      case 'getAllStudents':           return jsonResponse(handleGetAllStudents(body));
       case 'getAllStudentsAggregated': return jsonResponse(handleGetAllStudentsAggregated(body));
-      case 'ping':                    return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
-      default:                        return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
+      case 'ping':                     return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
+      default:                         return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
     }
   } catch (err) {
     logEvent('ERROR', '', 'doPost error: ' + err.message);
@@ -75,7 +86,9 @@ function doGet(e) {
   }
 }
 
-/* ---------- Handlers ---------- */
+/* ============================================================
+   HANDLERS
+   ============================================================ */
 
 function handleSaveProgress(body) {
   const { lrn, student, progress, subject, signature } = body;
@@ -233,21 +246,23 @@ function handleGetAllStudents(body) {
   return { ok: true, count: rows.length, records: rows };
 }
 
-/* ---------- NEW: Aggregated fetch ---------- */
+/* ============================================================
+   NEW: AGGREGATED FETCH — used by Sync Center "From Backend"
+   ============================================================ */
 function handleGetAllStudentsAggregated(body) {
   requireTeacherToken(body.token);
 
   const sheet = getOrCreateSheet(SHEET_NAME_RECORDS, RECORD_HEADERS);
   const data = sheet.getDataRange().getValues();
 
-  const byLrn = {};  // { lrn: { student, progress, scores, badges, lastUpdated } }
+  const byLrn = {};
 
   for (let i = 1; i < data.length; i++) {
-    const row = data[i];
-    const r = rowToObject(row);
-    const lrn = String(r.LRN);
+    const r = rowToObject(data[i]);
+    const lrn = String(r.LRN || '');
     if (!lrn) continue;
 
+    // Initialize student entry
     if (!byLrn[lrn]) {
       byLrn[lrn] = {
         lrn,
@@ -270,17 +285,22 @@ function handleGetAllStudentsAggregated(body) {
     }
 
     const entry = byLrn[lrn];
-    const subj = (r.Subject || '').toLowerCase();
-    const type = (r.Type || '').toUpperCase();
+    const subj = String(r.Subject || '').toLowerCase();
+    const type = String(r.Type || '').toUpperCase();
 
-    // PROGRESS rows: merge progress blob
+    // PROGRESS rows
     if (type === 'PROGRESS' && r.PayloadJSON) {
       try {
         const pl = JSON.parse(r.PayloadJSON);
         const prog = pl.progress || {};
         ['biol1', 'biol2'].forEach((s) => {
           if (prog[s]) {
-            if (prog[s].weeks) Object.assign(entry.progress[s].weeks, prog[s].weeks);
+            if (prog[s].weeks) {
+              Object.keys(prog[s].weeks).forEach((wk) => {
+                if (!entry.progress[s].weeks[wk]) entry.progress[s].weeks[wk] = {};
+                Object.assign(entry.progress[s].weeks[wk], prog[s].weeks[wk]);
+              });
+            }
             if (prog[s].completed) {
               const set = new Set([...entry.progress[s].completed, ...prog[s].completed]);
               entry.progress[s].completed = Array.from(set);
@@ -290,46 +310,30 @@ function handleGetAllStudentsAggregated(body) {
       } catch (e) { /* skip bad payload */ }
     }
 
-    // SCORE rows: categorize by assessmentId prefix
+    // SCORE rows (quizzes, st, te, pt)
     if (subj === 'biol1' || subj === 'biol2') {
       const aid = r.AssessmentId || '';
-      const keyType = aid.includes('-quiz') ? 'quizzes'
-                    : aid.includes('-st') ? 'st'
-                    : aid.includes('-te') ? 'te'
-                    : aid.includes('-pt') ? 'pt'
-                    : null;
+      let keyType = null;
+      if (aid.indexOf('-quiz') !== -1) keyType = 'quizzes';
+      else if (aid.indexOf('-st') !== -1) keyType = 'st';
+      else if (aid.indexOf('-te') !== -1) keyType = 'te';
+      else if (aid.indexOf('-pt') !== -1) keyType = 'pt';
 
       if (keyType) {
-        const bucket = entry.scores[subj][keyType];
+        let breakdown = [];
+        try { breakdown = JSON.parse(r.PayloadJSON || '{}').breakdown || []; }
+        catch (e) { breakdown = []; }
 
-        if (keyType === 'te') {
-          // TE stored as a single object under `.te` (not keyed by id)
-          bucket[aid] = {
-            score: Number(r.Score) || 0,
-            total: Number(r.Total) || 0,
-            percent: Number(r.Percent) || 0,
-            passed: String(r.Passed).toUpperCase() === 'TRUE',
-            breakdown: (() => {
-              try { return JSON.parse(r.PayloadJSON || '{}').breakdown || []; }
-              catch (e) { return []; }
-            })(),
-            timestamp: r.Timestamp || r.LastUpdated
-          };
-        } else {
-          bucket[aid] = {
-            score: Number(r.Score) || 0,
-            total: Number(r.Total) || 0,
-            percent: Number(r.Percent) || 0,
-            passed: String(r.Passed).toUpperCase() === 'TRUE',
-            autoSubmitted: String(r.AutoSubmitted).toUpperCase() === 'TRUE',
-            tabViolations: Number(r.TabViolations) || 0,
-            breakdown: (() => {
-              try { return JSON.parse(r.PayloadJSON || '{}').breakdown || []; }
-              catch (e) { return []; }
-            })(),
-            timestamp: r.Timestamp || r.LastUpdated
-          };
-        }
+        entry.scores[subj][keyType][aid] = {
+          score: Number(r.Score) || 0,
+          total: Number(r.Total) || 0,
+          percent: Number(r.Percent) || 0,
+          passed: String(r.Passed).toUpperCase() === 'TRUE',
+          autoSubmitted: String(r.AutoSubmitted).toUpperCase() === 'TRUE',
+          tabViolations: Number(r.TabViolations) || 0,
+          breakdown,
+          timestamp: r.Timestamp || r.LastUpdated
+        };
       }
     }
 
@@ -338,8 +342,9 @@ function handleGetAllStudentsAggregated(body) {
     }
   }
 
-  // Build compact summary per student for preview
-  const students = Object.values(byLrn).map((s) => {
+  // Build compact summary per student
+  const students = Object.keys(byLrn).map((lrn) => {
+    const s = byLrn[lrn];
     const summary = {};
     ['biol1', 'biol2'].forEach((subj) => {
       summary[subj] = {
@@ -350,20 +355,35 @@ function handleGetAllStudentsAggregated(body) {
         daysCompleted: (s.progress[subj].completed || []).length
       };
     });
-    return { ...s, summary };
+    return {
+      lrn: s.lrn,
+      lastName: s.lastName,
+      firstName: s.firstName,
+      middleName: s.middleName,
+      gradeLevel: s.gradeLevel,
+      section: s.section,
+      progress: s.progress,
+      scores: s.scores,
+      badges: s.badges,
+      summary,
+      lastUpdated: s.lastUpdated
+    };
   });
 
+  // Sort by last name
   students.sort((a, b) => {
-    const aLast = (a.lastName || '').toUpperCase();
-    const bLast = (b.lastName || '').toUpperCase();
+    const aLast = String(a.lastName || '').toUpperCase();
+    const bLast = String(b.lastName || '').toUpperCase();
     if (aLast !== bLast) return aLast.localeCompare(bLast);
-    return (a.firstName || '').toUpperCase().localeCompare((b.firstName || '').toUpperCase());
+    return String(a.firstName || '').toUpperCase().localeCompare(String(b.firstName || '').toUpperCase());
   });
 
   return { ok: true, count: students.length, students };
 }
 
-/* ---------- Utilities ---------- */
+/* ============================================================
+   UTILITIES
+   ============================================================ */
 
 function verifySignature(payload, expectedHex) {
   try {
@@ -428,4 +448,26 @@ function jsonResponse(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+/* ============================================================
+   TEST HELPERS (optional — run manually from the editor)
+   ============================================================ */
+
+function testAggregated() {
+  const result = handleGetAllStudentsAggregated({ token: 'teacher2026' });
+  Logger.log(JSON.stringify({ ok: result.ok, count: result.count }, null, 2));
+  if (result.students && result.students.length) {
+    Logger.log('First student: ' + result.students[0].lastName + ', ' + result.students[0].firstName);
+    Logger.log('Summary: ' + JSON.stringify(result.students[0].summary));
+  }
+}
+
+function testSignature() {
+  const payload = { lrn: '123456789012', subject: 'biol1' };
+  const sig = Utilities.computeHmacSha256Signature(JSON.stringify(payload), HMAC_SECRET)
+    .map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0'))
+    .join('');
+  Logger.log('Signature: ' + sig);
+  Logger.log('Verify: ' + verifySignature(payload, sig));
 }
