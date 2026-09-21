@@ -1,6 +1,9 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload generation & verification
-   Version: 1.3.1
+   Version: 1.4.0
+   ------------------------------------------------------------
+   NEW: pushScoreToBackend() and pushProgressToBackend() for
+   automatic sync of student data to the Google Sheet.
    ============================================================ */
 
 const Sync = (() => {
@@ -177,6 +180,119 @@ const Sync = (() => {
     }
   }
 
+  /* ============================================================
+     NEW: Auto-push methods
+     ------------------------------------------------------------
+     These are fire-and-forget. If the backend is unavailable,
+     they fail silently — the local storage remains authoritative.
+     ============================================================ */
+
+  /**
+   * Push a single score to the backend.
+   * Called by quiz-engine.js after every submission.
+   */
+  async function pushScoreToBackend(lrn, subject, type, assessmentId, scoreData) {
+    if (!backendEnabled()) {
+      console.log('[Sync] Backend disabled — score stored locally only');
+      return { ok: false, error: 'Backend disabled' };
+    }
+
+    const user = Store.getUser(lrn);
+    if (!user) return { ok: false, error: 'User not found' };
+
+    // Build the payload in the same shape the backend expects
+    const payload = {
+      lrn,
+      student: {
+        lrn: user.lrn,
+        lastName: user.lastName,
+        firstName: user.firstName,
+        middleName: user.middleName || '',
+        gradeLevel: user.gradeLevel,
+        section: user.section
+      },
+      subject,
+      type,
+      assessmentId,
+      score: scoreData.score,
+      total: scoreData.total,
+      percent: scoreData.percent,
+      passed: scoreData.passed,
+      autoSubmitted: scoreData.autoSubmitted || false,
+      tabViolations: scoreData.tabViolations || 0,
+      breakdown: scoreData.breakdown || [],
+      timestamp: new Date().toISOString()
+    };
+
+    // Sign the payload for integrity (matches Code.gs verification)
+    const signature = await Security.sign(payload);
+
+    try {
+      const res = await backendPost({
+        action: 'saveScore',
+        ...payload,
+        signature
+      });
+
+      if (res.ok) {
+        console.log('[Sync] ✅ Score pushed to backend:', assessmentId);
+      } else {
+        console.warn('[Sync] Score push rejected:', res.error);
+      }
+
+      return res;
+    } catch (err) {
+      console.warn('[Sync] Score push failed (will sync later):', err.message);
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /**
+   * Push progress to the backend.
+   * Called after a day is completed.
+   */
+  async function pushProgressToBackend(lrn, subject) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+
+    const user = Store.getUser(lrn);
+    if (!user) return { ok: false, error: 'User not found' };
+
+    const progress = Store.getProgress(lrn);
+
+    const payload = {
+      lrn,
+      student: {
+        lrn: user.lrn,
+        lastName: user.lastName,
+        firstName: user.firstName,
+        middleName: user.middleName || '',
+        gradeLevel: user.gradeLevel,
+        section: user.section
+      },
+      progress: subject ? { [subject]: progress[subject] } : progress,
+      subject: subject || 'both'
+    };
+
+    const signature = await Security.sign(payload);
+
+    try {
+      const res = await backendPost({
+        action: 'saveProgress',
+        ...payload,
+        signature
+      });
+
+      if (res.ok) {
+        console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
+      }
+
+      return res;
+    } catch (err) {
+      console.warn('[Sync] Progress push failed:', err.message);
+      return { ok: false, error: err.message };
+    }
+  }
+
   async function pingBackend() {
     if (!backendEnabled()) return { ok: false, error: 'No backend URL configured' };
     try { return await backendGet({ action: 'ping' }); }
@@ -198,8 +314,16 @@ const Sync = (() => {
   }
 
   return {
-    backendEnabled, buildPayload, generateSyncCode, lookupSyncCode,
-    exportAsFile, importFromFile, importFromCode,
-    fetchAllStudentsFromBackend, pingBackend
+    backendEnabled,
+    buildPayload,
+    generateSyncCode,
+    lookupSyncCode,
+    exportAsFile,
+    importFromFile,
+    importFromCode,
+    fetchAllStudentsFromBackend,
+    pushScoreToBackend,        // ← NEW
+    pushProgressToBackend,     // ← NEW
+    pingBackend
   };
 })();
