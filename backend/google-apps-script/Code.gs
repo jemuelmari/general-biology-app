@@ -2,21 +2,12 @@
  * ============================================================
  * Google Apps Script Backend — General Biology App
  * File: Code.gs
- * Version: 1.3.0
+ * Version: 1.4.0
  * ------------------------------------------------------------
- * CHANGES in v1.3.0:
- * - HMAC-SHA256 verification on all write endpoints
- * - Teacher token auth for getStudent / getAllStudents
- * - doGet no longer mutates state (resolveSyncCode side-effect
- *   moved to POST-only consumeSyncCode action)
- *
- * SETUP:
- * 1. Deploy this file as a Web App (Execute as: Me, Access: Anyone)
- * 2. Copy the Web App URL into config.js as CONFIG.BACKEND_URL
- * 3. Set TEACHER_TOKEN_HASH to the SHA-256 of your teacher token
- *    (this can be the same as TEACHER_PASSWORD_HASH)
- * 4. Paste the same value into properties → "TEACHER_TOKEN_HASH"
- *    OR replace the placeholder below
+ * v1.4.0:
+ * - NEW: getAllStudentsAggregated — returns one merged record
+ *   per student with progress, scores, and badges, ready for
+ *   direct import from the Sync Center.
  * ============================================================
  */
 
@@ -24,12 +15,7 @@ const SHEET_NAME_RECORDS = 'Records';
 const SHEET_NAME_CODES   = 'SyncCodes';
 const SHEET_NAME_LOG     = 'SyncLog';
 
-// ⚠️ CHANGE THIS — must match CONFIG.TEACHER_PASSWORD_HASH in config.js
-// Default here matches "teacher2026" so it works out of the box.
 const TEACHER_TOKEN_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
-
-// ⚠️ CHANGE THIS — shared secret for HMAC payload signing.
-// MUST match SECRET in assets/js/security.js
 const HMAC_SECRET = 'GB-APP-2026-DEPED-SECRET-KEY-v1';
 
 const RECORD_HEADERS = [
@@ -53,24 +39,16 @@ function doPost(e) {
     const action = body.action;
 
     switch (action) {
-      case 'saveProgress':
-        return jsonResponse(handleSaveProgress(body));
-      case 'saveScore':
-        return jsonResponse(handleSaveScore(body));
-      case 'registerSyncCode':
-        return jsonResponse(handleRegisterSyncCode(body));
-      case 'resolveSyncCode':
-        return jsonResponse(handleResolveSyncCode(body, false)); // read-only
-      case 'consumeSyncCode':
-        return jsonResponse(handleResolveSyncCode(body, true));  // marks used
-      case 'getStudent':
-        return jsonResponse(handleGetStudent(body));
-      case 'getAllStudents':
-        return jsonResponse(handleGetAllStudents(body));
-      case 'ping':
-        return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
-      default:
-        return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
+      case 'saveProgress':            return jsonResponse(handleSaveProgress(body));
+      case 'saveScore':               return jsonResponse(handleSaveScore(body));
+      case 'registerSyncCode':        return jsonResponse(handleRegisterSyncCode(body));
+      case 'resolveSyncCode':         return jsonResponse(handleResolveSyncCode(body, false));
+      case 'consumeSyncCode':         return jsonResponse(handleResolveSyncCode(body, true));
+      case 'getStudent':              return jsonResponse(handleGetStudent(body));
+      case 'getAllStudents':          return jsonResponse(handleGetAllStudents(body));
+      case 'getAllStudentsAggregated': return jsonResponse(handleGetAllStudentsAggregated(body));
+      case 'ping':                    return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
+      default:                        return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
     }
   } catch (err) {
     logEvent('ERROR', '', 'doPost error: ' + err.message);
@@ -85,17 +63,13 @@ function doGet(e) {
     case 'ping':
       return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
     case 'resolveSyncCode':
-      // Read-only — does NOT mark the code as used.
       return jsonResponse(handleResolveSyncCode({ code: e.parameter.code }, false));
     case 'getStudent':
-      return jsonResponse(handleGetStudent({
-        lrn: e.parameter.lrn,
-        token: e.parameter.token
-      }));
+      return jsonResponse(handleGetStudent({ lrn: e.parameter.lrn, token: e.parameter.token }));
     case 'getAllStudents':
-      return jsonResponse(handleGetAllStudents({
-        token: e.parameter.token
-      }));
+      return jsonResponse(handleGetAllStudents({ token: e.parameter.token }));
+    case 'getAllStudentsAggregated':
+      return jsonResponse(handleGetAllStudentsAggregated({ token: e.parameter.token }));
     default:
       return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
   }
@@ -107,7 +81,6 @@ function handleSaveProgress(body) {
   const { lrn, student, progress, subject, signature } = body;
   if (!lrn) throw new Error('Missing LRN');
 
-  // HMAC verification (if signature provided)
   if (signature) {
     const payload = { lrn, student, progress, subject };
     if (!verifySignature(payload, signature)) {
@@ -142,7 +115,6 @@ function handleSaveScore(body) {
 
   if (!lrn || !assessmentId) throw new Error('Missing LRN or AssessmentId');
 
-  // HMAC verification
   if (signature) {
     const payload = {
       lrn, student, subject, type, assessmentId,
@@ -155,7 +127,6 @@ function handleSaveScore(body) {
     }
   }
 
-  // Sanity check
   if (typeof total === 'number' && typeof score === 'number' && score > total) {
     logEvent('REJECT saveScore', lrn, 'score > total');
     return { ok: false, error: 'score cannot exceed total' };
@@ -186,9 +157,8 @@ function handleRegisterSyncCode(body) {
 
   const sheet = getOrCreateSheet(SHEET_NAME_CODES, CODE_HEADERS);
   const now = new Date();
-  const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
+  const expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
-  // Remove any previous entries with the same code
   const data = sheet.getDataRange().getValues();
   for (let i = data.length - 1; i >= 1; i--) {
     if (data[i][0] === code) sheet.deleteRow(i + 1);
@@ -263,13 +233,138 @@ function handleGetAllStudents(body) {
   return { ok: true, count: rows.length, records: rows };
 }
 
+/* ---------- NEW: Aggregated fetch ---------- */
+function handleGetAllStudentsAggregated(body) {
+  requireTeacherToken(body.token);
+
+  const sheet = getOrCreateSheet(SHEET_NAME_RECORDS, RECORD_HEADERS);
+  const data = sheet.getDataRange().getValues();
+
+  const byLrn = {};  // { lrn: { student, progress, scores, badges, lastUpdated } }
+
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    const r = rowToObject(row);
+    const lrn = String(r.LRN);
+    if (!lrn) continue;
+
+    if (!byLrn[lrn]) {
+      byLrn[lrn] = {
+        lrn,
+        lastName: r.LastName || '',
+        firstName: r.FirstName || '',
+        middleName: r.MiddleName || '',
+        gradeLevel: r.GradeLevel || '',
+        section: r.Section || '',
+        progress: {
+          biol1: { weeks: {}, completed: [] },
+          biol2: { weeks: {}, completed: [] }
+        },
+        scores: {
+          biol1: { quizzes: {}, st: {}, pt: {}, te: {} },
+          biol2: { quizzes: {}, st: {}, pt: {}, te: {} }
+        },
+        badges: { biol1: [], biol2: [] },
+        lastUpdated: r.LastUpdated || r.Timestamp || ''
+      };
+    }
+
+    const entry = byLrn[lrn];
+    const subj = (r.Subject || '').toLowerCase();
+    const type = (r.Type || '').toUpperCase();
+
+    // PROGRESS rows: merge progress blob
+    if (type === 'PROGRESS' && r.PayloadJSON) {
+      try {
+        const pl = JSON.parse(r.PayloadJSON);
+        const prog = pl.progress || {};
+        ['biol1', 'biol2'].forEach((s) => {
+          if (prog[s]) {
+            if (prog[s].weeks) Object.assign(entry.progress[s].weeks, prog[s].weeks);
+            if (prog[s].completed) {
+              const set = new Set([...entry.progress[s].completed, ...prog[s].completed]);
+              entry.progress[s].completed = Array.from(set);
+            }
+          }
+        });
+      } catch (e) { /* skip bad payload */ }
+    }
+
+    // SCORE rows: categorize by assessmentId prefix
+    if (subj === 'biol1' || subj === 'biol2') {
+      const aid = r.AssessmentId || '';
+      const keyType = aid.includes('-quiz') ? 'quizzes'
+                    : aid.includes('-st') ? 'st'
+                    : aid.includes('-te') ? 'te'
+                    : aid.includes('-pt') ? 'pt'
+                    : null;
+
+      if (keyType) {
+        const bucket = entry.scores[subj][keyType];
+
+        if (keyType === 'te') {
+          // TE stored as a single object under `.te` (not keyed by id)
+          bucket[aid] = {
+            score: Number(r.Score) || 0,
+            total: Number(r.Total) || 0,
+            percent: Number(r.Percent) || 0,
+            passed: String(r.Passed).toUpperCase() === 'TRUE',
+            breakdown: (() => {
+              try { return JSON.parse(r.PayloadJSON || '{}').breakdown || []; }
+              catch (e) { return []; }
+            })(),
+            timestamp: r.Timestamp || r.LastUpdated
+          };
+        } else {
+          bucket[aid] = {
+            score: Number(r.Score) || 0,
+            total: Number(r.Total) || 0,
+            percent: Number(r.Percent) || 0,
+            passed: String(r.Passed).toUpperCase() === 'TRUE',
+            autoSubmitted: String(r.AutoSubmitted).toUpperCase() === 'TRUE',
+            tabViolations: Number(r.TabViolations) || 0,
+            breakdown: (() => {
+              try { return JSON.parse(r.PayloadJSON || '{}').breakdown || []; }
+              catch (e) { return []; }
+            })(),
+            timestamp: r.Timestamp || r.LastUpdated
+          };
+        }
+      }
+    }
+
+    if (r.LastUpdated && r.LastUpdated > entry.lastUpdated) {
+      entry.lastUpdated = r.LastUpdated;
+    }
+  }
+
+  // Build compact summary per student for preview
+  const students = Object.values(byLrn).map((s) => {
+    const summary = {};
+    ['biol1', 'biol2'].forEach((subj) => {
+      summary[subj] = {
+        quizzes: Object.keys(s.scores[subj].quizzes || {}).length,
+        sts: Object.keys(s.scores[subj].st || {}).length,
+        te: Object.keys(s.scores[subj].te || {}).length,
+        pts: Object.keys(s.scores[subj].pt || {}).length,
+        daysCompleted: (s.progress[subj].completed || []).length
+      };
+    });
+    return { ...s, summary };
+  });
+
+  students.sort((a, b) => {
+    const aLast = (a.lastName || '').toUpperCase();
+    const bLast = (b.lastName || '').toUpperCase();
+    if (aLast !== bLast) return aLast.localeCompare(bLast);
+    return (a.firstName || '').toUpperCase().localeCompare((b.firstName || '').toUpperCase());
+  });
+
+  return { ok: true, count: students.length, students };
+}
+
 /* ---------- Utilities ---------- */
 
-/**
- * Verify HMAC-SHA256 signature using the shared secret.
- * The payload is JSON.stringify'd in the SAME key order as the
- * client (security.js uses JSON.stringify(payload) directly).
- */
 function verifySignature(payload, expectedHex) {
   try {
     const key = Utilities.computeHmacSha256Signature(
@@ -286,10 +381,6 @@ function verifySignature(payload, expectedHex) {
   }
 }
 
-/**
- * Require a valid teacher token on read endpoints.
- * Token hash is compared against TEACHER_TOKEN_HASH.
- */
 function requireTeacherToken(token) {
   if (!token) throw new Error('Teacher token required');
   const hash = Utilities.computeDigest(
@@ -337,25 +428,4 @@ function jsonResponse(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
-}
-
-/* ---------- Test ---------- */
-function testBackend() {
-  const result = handleSaveProgress({
-    lrn: '123456789012',
-    student: { lastName: 'DELA CRUZ', firstName: 'Juan', gradeLevel: '12', section: 'GAS' },
-    subject: 'biol1',
-    progress: { completed: ['biol1-w1-d1'], weeks: {} }
-  });
-  Logger.log(JSON.stringify(result, null, 2));
-}
-
-function testSignatureVerification() {
-  const payload = { lrn: '123456789012', subject: 'biol1', score: 45 };
-  const json = JSON.stringify(payload);
-  const sig = Utilities.computeHmacSha256Signature(json, HMAC_SECRET)
-    .map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0'))
-    .join('');
-  Logger.log('Computed signature: ' + sig);
-  Logger.log('Verify: ' + verifySignature(payload, sig));
 }
