@@ -2,18 +2,7 @@
  * ============================================================
  * Google Apps Script Backend — General Biology App
  * File: Code.gs
- * Version: 1.4.0
- * ------------------------------------------------------------
- * CHANGES in v1.4.0:
- * - NEW: getAllStudentsAggregated — returns one merged record
- *   per student (progress + scores + badges) for the Sync Center
- *   "From Backend" tab.
- *
- * SETUP:
- * 1. Deploy this file as a Web App (Execute as: Me, Access: Anyone)
- * 2. Copy the Web App URL into config.js as CONFIG.BACKEND_URL
- * 3. TEACHER_TOKEN_HASH must match CONFIG.TEACHER_PASSWORD_HASH
- * 4. HMAC_SECRET must match SECRET in assets/js/security.js
+ * Version: 1.4.1
  * ============================================================
  */
 
@@ -21,10 +10,7 @@ const SHEET_NAME_RECORDS = 'Records';
 const SHEET_NAME_CODES   = 'SyncCodes';
 const SHEET_NAME_LOG     = 'SyncLog';
 
-// SHA-256 of "teacher2026" — must match config.js TEACHER_PASSWORD_HASH
 const TEACHER_TOKEN_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
-
-// Shared HMAC secret — must match SECRET in assets/js/security.js
 const HMAC_SECRET = 'GB-APP-2026-DEPED-SECRET-KEY-v1';
 
 const RECORD_HEADERS = [
@@ -58,7 +44,7 @@ function doPost(e) {
       case 'getStudent':               return jsonResponse(handleGetStudent(body));
       case 'getAllStudents':           return jsonResponse(handleGetAllStudents(body));
       case 'getAllStudentsAggregated': return jsonResponse(handleGetAllStudentsAggregated(body));
-      case 'ping':                     return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
+      case 'ping':                     return jsonResponse({ ok: true, message: 'Backend is live', version: '1.4.1', timestamp: new Date().toISOString() });
       default:                         return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
     }
   } catch (err) {
@@ -72,7 +58,7 @@ function doGet(e) {
 
   switch (action) {
     case 'ping':
-      return jsonResponse({ ok: true, message: 'Backend is live', timestamp: new Date().toISOString() });
+      return jsonResponse({ ok: true, message: 'Backend is live', version: '1.4.1', timestamp: new Date().toISOString() });
     case 'resolveSyncCode':
       return jsonResponse(handleResolveSyncCode({ code: e.parameter.code }, false));
     case 'getStudent':
@@ -246,9 +232,6 @@ function handleGetAllStudents(body) {
   return { ok: true, count: rows.length, records: rows };
 }
 
-/* ============================================================
-   NEW: AGGREGATED FETCH — used by Sync Center "From Backend"
-   ============================================================ */
 function handleGetAllStudentsAggregated(body) {
   requireTeacherToken(body.token);
 
@@ -262,7 +245,6 @@ function handleGetAllStudentsAggregated(body) {
     const lrn = String(r.LRN || '');
     if (!lrn) continue;
 
-    // Initialize student entry
     if (!byLrn[lrn]) {
       byLrn[lrn] = {
         lrn,
@@ -288,7 +270,6 @@ function handleGetAllStudentsAggregated(body) {
     const subj = String(r.Subject || '').toLowerCase();
     const type = String(r.Type || '').toUpperCase();
 
-    // PROGRESS rows
     if (type === 'PROGRESS' && r.PayloadJSON) {
       try {
         const pl = JSON.parse(r.PayloadJSON);
@@ -310,7 +291,6 @@ function handleGetAllStudentsAggregated(body) {
       } catch (e) { /* skip bad payload */ }
     }
 
-    // SCORE rows (quizzes, st, te, pt)
     if (subj === 'biol1' || subj === 'biol2') {
       const aid = r.AssessmentId || '';
       let keyType = null;
@@ -342,7 +322,6 @@ function handleGetAllStudentsAggregated(body) {
     }
   }
 
-  // Build compact summary per student
   const students = Object.keys(byLrn).map((lrn) => {
     const s = byLrn[lrn];
     const summary = {};
@@ -370,7 +349,6 @@ function handleGetAllStudentsAggregated(body) {
     };
   });
 
-  // Sort by last name
   students.sort((a, b) => {
     const aLast = String(a.lastName || '').toUpperCase();
     const bLast = String(b.lastName || '').toUpperCase();
@@ -387,33 +365,19 @@ function handleGetAllStudentsAggregated(body) {
 
 function verifySignature(payload, expectedHex) {
   try {
-    const key = Utilities.computeHmacSha256Signature(
-      JSON.stringify(payload),
-      HMAC_SECRET
-    );
-    const computedHex = key
-      .map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0'))
-      .join('');
+    const key = Utilities.computeHmacSha256Signature(JSON.stringify(payload), HMAC_SECRET);
+    const computedHex = key.map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0')).join('');
     return computedHex === expectedHex;
   } catch (e) {
-    logEvent('ERROR', '', 'verifySignature: ' + e.message);
     return false;
   }
 }
 
 function requireTeacherToken(token) {
   if (!token) throw new Error('Teacher token required');
-  const hash = Utilities.computeDigest(
-    Utilities.DigestAlgorithm.SHA_256,
-    token,
-    Utilities.Charset.UTF_8
-  );
-  const hex = hash
-    .map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0'))
-    .join('');
-  if (hex !== TEACHER_TOKEN_HASH) {
-    throw new Error('Invalid teacher token');
-  }
+  const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, token, Utilities.Charset.UTF_8);
+  const hex = hash.map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0')).join('');
+  if (hex !== TEACHER_TOKEN_HASH) throw new Error('Invalid teacher token');
 }
 
 function rowToObject(row) {
@@ -425,13 +389,10 @@ function rowToObject(row) {
 function getOrCreateSheet(name, headers) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(name);
-
   if (!sheet) {
     sheet = ss.insertSheet(name);
     sheet.appendRow(headers);
-    sheet.getRange(1, 1, 1, headers.length)
-      .setFontWeight('bold')
-      .setBackground('#e6f4ea');
+    sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold').setBackground('#e6f4ea');
     sheet.setFrozenRows(1);
   }
   return sheet;
@@ -445,29 +406,5 @@ function logEvent(action, lrn, details) {
 }
 
 function jsonResponse(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-/* ============================================================
-   TEST HELPERS (optional — run manually from the editor)
-   ============================================================ */
-
-function testAggregated() {
-  const result = handleGetAllStudentsAggregated({ token: 'teacher2026' });
-  Logger.log(JSON.stringify({ ok: result.ok, count: result.count }, null, 2));
-  if (result.students && result.students.length) {
-    Logger.log('First student: ' + result.students[0].lastName + ', ' + result.students[0].firstName);
-    Logger.log('Summary: ' + JSON.stringify(result.students[0].summary));
-  }
-}
-
-function testSignature() {
-  const payload = { lrn: '123456789012', subject: 'biol1' };
-  const sig = Utilities.computeHmacSha256Signature(JSON.stringify(payload), HMAC_SECRET)
-    .map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0'))
-    .join('');
-  Logger.log('Signature: ' + sig);
-  Logger.log('Verify: ' + verifySignature(payload, sig));
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
