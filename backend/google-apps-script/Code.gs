@@ -408,3 +408,16 @@ function logEvent(action, lrn, details) {
 function jsonResponse(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
+
+/* ============================================================
+   TEST HELPERS
+   ============================================================ */
+
+function testAggregated() {
+  const result = handleGetAllStudentsAggregated({ token: 'teacher2026' });
+  Logger.log(JSON.stringify({ ok: result.ok, count: result.count }, null, 2));
+  if (result.students && result.students.length) {
+    Logger.log('First student: ' + result.students[0].lastName + ', ' + result.students[0].firstName);
+    Logger.log('Summary: ' + JSON.stringify(result.students[0].summary));
+  }
+}
