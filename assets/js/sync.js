@@ -1,10 +1,10 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload generation & verification
-   Version: 1.2.0
-
-   Two modes:
-   - BACKEND MODE: Sync codes work across devices (via Google Apps Script)
-   - LOCAL MODE: Sync codes only work on the same device
+   Version: 1.3.0
+   ------------------------------------------------------------
+   v1.3.0:
+   - Added fetchAllStudentsFromBackend(token) to pull every
+     student record from the Google Sheet backend in one call.
    ============================================================ */
 
 const Sync = (() => {
@@ -20,7 +20,6 @@ const Sync = (() => {
   async function backendPost(body) {
     const res = await fetch(CONFIG.BACKEND_URL, {
       method: 'POST',
-      // text/plain avoids CORS preflight in Apps Script
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(body)
     });
@@ -74,7 +73,6 @@ const Sync = (() => {
 
     let mode = 'local';
 
-    // If backend enabled, register the code there for cross-device use
     if (backendEnabled()) {
       try {
         const res = await backendPost({
@@ -91,7 +89,6 @@ const Sync = (() => {
       }
     }
 
-    // Always save locally as fallback
     _saveLocalCode(code, { payload, signature });
 
     return {
@@ -103,9 +100,8 @@ const Sync = (() => {
     };
   }
 
-  /* ---------- Sync Code Lookup (used by teacher) ---------- */
+  /* ---------- Sync Code Lookup ---------- */
   async function lookupSyncCode(code) {
-    // Try backend first if enabled
     if (backendEnabled()) {
       try {
         const res = await backendPost({
@@ -125,7 +121,6 @@ const Sync = (() => {
       }
     }
 
-    // Fall back to local
     const local = _getLocalCode(code);
     if (local) {
       return { ...local, source: 'local' };
@@ -138,7 +133,6 @@ const Sync = (() => {
   function _saveLocalCode(code, data) {
     const codes = JSON.parse(localStorage.getItem(`${NS}sync_codes`) || '{}');
     codes[code] = { ...data, savedAt: new Date().toISOString() };
-    // Keep only last 10
     const entries = Object.entries(codes).sort(
       (a, b) => new Date(b[1].savedAt) - new Date(a[1].savedAt)
     );
@@ -171,7 +165,7 @@ const Sync = (() => {
     return filename;
   }
 
-  /* ---------- JSON File Import (Teacher) ---------- */
+  /* ---------- JSON File Import ---------- */
   async function importFromFile(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -183,7 +177,7 @@ const Sync = (() => {
             throw new Error('Missing payload or signature');
           }
           const valid = await Security.verify(payload, signature);
-          resolve({ payload, signature, valid });
+          resolve({ payload, signature, valid, source: 'file' });
         } catch (err) {
           reject(err);
         }
@@ -193,7 +187,7 @@ const Sync = (() => {
     });
   }
 
-  /* ---------- Import Sync Code (Teacher) ---------- */
+  /* ---------- Import Sync Code ---------- */
   async function importFromCode(code) {
     const record = await lookupSyncCode(code);
     if (!record) {
@@ -211,6 +205,41 @@ const Sync = (() => {
       valid,
       source: record.source
     };
+  }
+
+  /* ============================================================
+     NEW: Fetch All Students From Backend
+     ------------------------------------------------------------
+     Calls the Apps Script endpoint `getAllStudentsAggregated`
+     which returns a compact array of { lrn, student, progress,
+     scores, badges, summary, lastUpdated } — one entry per student.
+     ============================================================ */
+  async function fetchAllStudentsFromBackend(token) {
+    if (!backendEnabled()) {
+      return { ok: false, error: 'Backend not configured' };
+    }
+    if (!token) {
+      return { ok: false, error: 'Teacher token required' };
+    }
+
+    try {
+      const res = await backendPost({
+        action: 'getAllStudentsAggregated',
+        token
+      });
+
+      if (!res.ok) {
+        return { ok: false, error: res.error || 'Backend returned error' };
+      }
+
+      return {
+        ok: true,
+        count: res.count || (res.students || []).length,
+        students: res.students || []
+      };
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
   }
 
   /* ---------- Health Check ---------- */
@@ -248,6 +277,7 @@ const Sync = (() => {
     exportAsFile,
     importFromFile,
     importFromCode,
+    fetchAllStudentsFromBackend,   // ← NEW
     pingBackend
   };
 })();
