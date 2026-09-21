@@ -1,6 +1,8 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine with anti-cheat
-   Version: 1.0.2
+   Version: 1.0.3
+   ------------------------------------------------------------
+   NEW: Auto-push scores to backend after submission.
    ============================================================ */
 
 const QuizEngine = (() => {
@@ -172,11 +174,24 @@ const QuizEngine = (() => {
     // Normalize 'quiz' → 'quizzes'
     const typeKey = state.type === 'quiz' ? 'quizzes' : state.type;
 
-    Store.saveScore(state.lrn, state.subject, typeKey, state.assessmentId, {
+    const scoreData = {
       score: correct, total, percent, passed, autoSubmitted,
       tabViolations: state.tabViolations, breakdown,
       durationSec: Math.floor((Date.now() - state.startTime) / 1000)
-    });
+    };
+
+    Store.saveScore(state.lrn, state.subject, typeKey, state.assessmentId, scoreData);
+
+    // 🆕 Auto-push to backend (fire and forget)
+    if (window.Sync && typeof Sync.pushScoreToBackend === 'function') {
+      Sync.pushScoreToBackend(state.lrn, state.subject, typeKey, state.assessmentId, scoreData)
+        .then((res) => {
+          if (res && res.ok) {
+            // Silent success — no toast, just console
+          }
+        })
+        .catch((err) => console.warn('[AutoPush] Score push failed:', err));
+    }
 
     if (!state.allowRetake) {
       Store.lockAssessment(state.lrn, state.assessmentId, { score: correct, total, percent });
