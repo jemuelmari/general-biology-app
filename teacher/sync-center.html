@@ -6,6 +6,76 @@
   <title>Sync Center — Teacher</title>
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .pull-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      background: #fff;
+      border: 1px solid #cfd8dc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .pull-table thead th {
+      background: #f5f7fa;
+      color: #37474f;
+      font-weight: 700;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 10px 12px;
+      text-align: left;
+      border: 1px solid #cfd8dc;
+      border-bottom: 2px solid #b0bec5;
+      white-space: nowrap;
+    }
+
+    .pull-table tbody td {
+      padding: 8px 12px;
+      border: 1px solid #e0e0e0;
+      color: #37474f;
+      vertical-align: middle;
+      font-size: 0.83rem;
+    }
+
+    .pull-table tbody tr:nth-child(even) { background: #fafbfc; }
+    .pull-table tbody tr:hover { background: #f0f4f8; }
+    .pull-table tbody tr.selected { background: #e8f5e9; }
+
+    .pull-table td.num {
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .pull-table td.check {
+      width: 40px;
+      text-align: center;
+    }
+
+    .pull-table td.student {
+      font-weight: 600;
+      color: #1a1a1a;
+      min-width: 200px;
+    }
+
+    .pull-table td.lrn {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.78rem;
+      color: #546e7a;
+      white-space: nowrap;
+    }
+
+    .bulk-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e0e0e0;
+    }
+  </style>
 </head>
 <body>
 
@@ -13,7 +83,7 @@
     <div class="container flex-between">
       <div>
         <h1>📥 Sync Center</h1>
-        <span class="version">v2.3.7</span>
+        <span class="version">v2.3.8</span>
       </div>
       <nav style="display:flex;gap:8px;">
         <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
@@ -38,6 +108,7 @@
         <button class="sync-tab active" data-tab="code">🔑 By Sync Code</button>
         <button class="sync-tab" data-tab="json">📄 JSON File</button>
         <button class="sync-tab" data-tab="bulk">📦 Bulk Import</button>
+        <button class="sync-tab" data-tab="backend">☁️ From Backend</button>
       </div>
 
       <div id="panel-code" class="sync-panel">
@@ -75,6 +146,62 @@
         </div>
       </div>
 
+      <!-- NEW: Backend Pull Panel -->
+      <div id="panel-backend" class="sync-panel hidden">
+        <label class="form-label">Teacher Token</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+          <input type="password" id="backend-token-input" class="form-control"
+                 placeholder="Enter teacher password" style="flex:1;min-width:240px;" />
+          <button id="btn-fetch-backend" class="btn btn-primary">☁️ Fetch All Students</button>
+        </div>
+        <p class="form-hint" style="margin-bottom:16px;">
+          Pulls every student record stored in the Google Sheet backend. Requires the token set in
+          <code>config.js → TEACHER_PASSWORD_HASH</code> (the plain password).
+        </p>
+
+        <div id="backend-fetch-status"></div>
+
+        <div id="backend-pull-results" class="hidden">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:12px;">
+            <h3 style="margin:0;color:var(--color-primary-dark);font-size:1rem;">
+              📋 <span id="pull-count">0</span> Students Found
+            </h3>
+            <div style="display:flex;gap:8px;">
+              <button id="btn-select-all" class="btn btn-outline" style="font-size:0.8rem;">Select All</button>
+              <button id="btn-select-none" class="btn btn-outline" style="font-size:0.8rem;">Clear Selection</button>
+            </div>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="pull-table">
+              <thead>
+                <tr>
+                  <th class="check">
+                    <input type="checkbox" id="check-all" />
+                  </th>
+                  <th>Student</th>
+                  <th>LRN</th>
+                  <th>Section</th>
+                  <th style="text-align:center;">B1 Quizzes</th>
+                  <th style="text-align:center;">B1 STs</th>
+                  <th style="text-align:center;">B1 TE</th>
+                  <th style="text-align:center;">B2 Quizzes</th>
+                  <th style="text-align:center;">B2 STs</th>
+                  <th style="text-align:center;">B2 TE</th>
+                  <th style="text-align:center;">Last Sync</th>
+                </tr>
+              </thead>
+              <tbody id="pull-tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="bulk-actions">
+            <button id="btn-import-selected" class="btn btn-primary">✅ Import Selected (<span id="selected-count">0</span>)</button>
+            <button id="btn-clear-results" class="btn btn-outline">✖ Clear Results</button>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div id="import-preview-container" class="hidden">
@@ -94,7 +221,7 @@
   </main>
 
   <footer class="app-footer">
-    <p>Sync Center · <span class="version">v2.3.7</span></p>
+    <p>Sync Center · <span class="version">v2.3.8</span></p>
   </footer>
 
   <script src="../config.js"></script>
@@ -107,6 +234,7 @@
     let pendingImports = [];
     const syncLog = [];
 
+    /* ---------- Backend status check ---------- */
     (async function checkBackend() {
       const el = document.getElementById('backend-status-content');
       const backendOn = Sync.backendEnabled();
@@ -120,9 +248,6 @@
               To enable cross-device sync, deploy the Google Apps Script backend and set
               <code>CONFIG.BACKEND_URL</code> in <code>config.js</code>.
             </p>
-            <p style="margin-top:6px;">
-              <strong>Recommendation:</strong> Use <em>JSON File</em> import — it works from any device.
-            </p>
           </div>
         `;
         return;
@@ -133,7 +258,7 @@
         el.innerHTML = `
           <div class="alert alert-success" style="margin:0;">
             <strong>✅ Backend is online</strong>
-            <p style="margin-top:6px;">Sync Codes work across devices via Google Sheets.</p>
+            <p style="margin-top:6px;">All sync methods available — including direct pull from Google Sheet.</p>
           </div>
         `;
       } else {
@@ -146,17 +271,21 @@
       }
     })();
 
+    /* ---------- Tabs ---------- */
     APP.$$('.sync-tab').forEach((tab) => {
       tab.addEventListener('click', () => {
         APP.$$('.sync-tab').forEach((t) => t.classList.remove('active'));
         tab.classList.add('active');
-        ['code', 'json', 'bulk'].forEach((k) => {
+        ['code', 'json', 'bulk', 'backend'].forEach((k) => {
           document.getElementById(`panel-${k}`).classList.add('hidden');
         });
         document.getElementById(`panel-${tab.dataset.tab}`).classList.remove('hidden');
       });
     });
 
+    /* ============================================================
+       TAB 1: By Sync Code
+       ============================================================ */
     document.getElementById('btn-import-code').addEventListener('click', async () => {
       const code = document.getElementById('sync-code-input').value.trim().toUpperCase();
       if (!code) return APP.toast('Enter a sync code first.', 'warning');
@@ -181,6 +310,9 @@
       }
     });
 
+    /* ============================================================
+       TAB 2: JSON File
+       ============================================================ */
     const dropZone = document.getElementById('drop-zone');
     const filePicker = document.getElementById('file-picker');
 
@@ -209,6 +341,9 @@
       }
     }
 
+    /* ============================================================
+       TAB 3: Bulk Import
+       ============================================================ */
     const dropZoneBulk = document.getElementById('drop-zone-bulk');
     const filePickerBulk = document.getElementById('file-picker-bulk');
 
@@ -239,6 +374,184 @@
       renderPreview();
     }
 
+    /* ============================================================
+       TAB 4: From Backend (NEW)
+       ============================================================ */
+    let backendStudents = [];        // Aggregated student records
+    let selectedLRNs = new Set();    // Selected for import
+
+    document.getElementById('btn-fetch-backend').addEventListener('click', async () => {
+      const token = document.getElementById('backend-token-input').value.trim();
+      if (!token) return APP.toast('Enter the teacher token first.', 'warning');
+      if (!Sync.backendEnabled()) return APP.toast('Backend not configured.', 'danger');
+
+      const btn = document.getElementById('btn-fetch-backend');
+      btn.disabled = true;
+      btn.textContent = '⏳ Fetching...';
+
+      const statusEl = document.getElementById('backend-fetch-status');
+      statusEl.innerHTML = '<div class="alert alert-info">Fetching records from Google Sheet...</div>';
+
+      try {
+        const result = await Sync.fetchAllStudentsFromBackend(token);
+
+        if (!result.ok) {
+          statusEl.innerHTML = `<div class="alert alert-danger">❌ ${result.error || 'Fetch failed'}</div>`;
+          return;
+        }
+
+        backendStudents = result.students || [];
+
+        if (!backendStudents.length) {
+          statusEl.innerHTML = '<div class="alert alert-warning">No students found in the backend yet.</div>';
+          return;
+        }
+
+        statusEl.innerHTML = `<div class="alert alert-success">✅ Loaded ${backendStudents.length} student(s) from backend.</div>`;
+        renderPullResults();
+
+      } catch (err) {
+        statusEl.innerHTML = `<div class="alert alert-danger">❌ ${err.message}</div>`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '☁️ Fetch All Students';
+      }
+    });
+
+    function renderPullResults() {
+      const container = document.getElementById('backend-pull-results');
+      container.classList.remove('hidden');
+
+      document.getElementById('pull-count').textContent = backendStudents.length;
+
+      const tbody = document.getElementById('pull-tbody');
+      tbody.innerHTML = backendStudents.map((s) => {
+        const b1 = s.summary?.biol1 || {};
+        const b2 = s.summary?.biol2 || {};
+        const lastSync = s.lastUpdated ? APP.formatDate(s.lastUpdated) : '—';
+
+        return `
+          <tr data-lrn="${s.lrn}">
+            <td class="check">
+              <input type="checkbox" class="row-check" data-lrn="${s.lrn}" />
+            </td>
+            <td class="student">${s.lastName || '—'}, ${s.firstName || ''} ${s.middleName || ''}</td>
+            <td class="lrn">${APP.formatLRN(s.lrn)}</td>
+            <td>${s.section || '—'}</td>
+            <td class="num">${b1.quizzes || 0}</td>
+            <td class="num">${b1.sts || 0}</td>
+            <td class="num">${b1.te || 0}</td>
+            <td class="num">${b2.quizzes || 0}</td>
+            <td class="num">${b2.sts || 0}</td>
+            <td class="num">${b2.te || 0}</td>
+            <td style="text-align:center;color:#78909c;font-size:0.78rem;">${lastSync}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Wire up selection
+      selectedLRNs.clear();
+      updateSelectedCount();
+
+      tbody.querySelectorAll('.row-check').forEach((cb) => {
+        cb.addEventListener('change', () => {
+          const lrn = cb.dataset.lrn;
+          const row = cb.closest('tr');
+          if (cb.checked) {
+            selectedLRNs.add(lrn);
+            row.classList.add('selected');
+          } else {
+            selectedLRNs.delete(lrn);
+            row.classList.remove('selected');
+          }
+          updateSelectedCount();
+        });
+      });
+
+      document.getElementById('check-all').checked = false;
+    }
+
+    function updateSelectedCount() {
+      document.getElementById('selected-count').textContent = selectedLRNs.size;
+      const btn = document.getElementById('btn-import-selected');
+      btn.disabled = selectedLRNs.size === 0;
+    }
+
+    document.getElementById('check-all').addEventListener('change', (e) => {
+      const checked = e.target.checked;
+      document.querySelectorAll('.row-check').forEach((cb) => {
+        cb.checked = checked;
+        const lrn = cb.dataset.lrn;
+        const row = cb.closest('tr');
+        if (checked) {
+          selectedLRNs.add(lrn);
+          row.classList.add('selected');
+        } else {
+          selectedLRNs.delete(lrn);
+          row.classList.remove('selected');
+        }
+      });
+      updateSelectedCount();
+    });
+
+    document.getElementById('btn-select-all').addEventListener('click', () => {
+      document.getElementById('check-all').checked = true;
+      document.getElementById('check-all').dispatchEvent(new Event('change'));
+    });
+
+    document.getElementById('btn-select-none').addEventListener('click', () => {
+      document.getElementById('check-all').checked = false;
+      document.getElementById('check-all').dispatchEvent(new Event('change'));
+    });
+
+    document.getElementById('btn-clear-results').addEventListener('click', () => {
+      backendStudents = [];
+      selectedLRNs.clear();
+      document.getElementById('backend-pull-results').classList.add('hidden');
+      document.getElementById('backend-fetch-status').innerHTML = '';
+    });
+
+    document.getElementById('btn-import-selected').addEventListener('click', async () => {
+      if (!selectedLRNs.size) return;
+
+      const toImport = backendStudents.filter((s) => selectedLRNs.has(s.lrn));
+
+      // Convert backend students → payload format expected by the existing merge logic
+      const imports = toImport.map((s) => {
+        const payload = {
+          version: '1.3.0',
+          generatedAt: s.lastUpdated || new Date().toISOString(),
+          student: {
+            lrn: s.lrn,
+            lastName: s.lastName,
+            firstName: s.firstName,
+            middleName: s.middleName || '',
+            gradeLevel: s.gradeLevel || '',
+            section: s.section || ''
+          },
+          subject: 'both',
+          progress: s.progress || { biol1: { weeks: {}, completed: [] }, biol2: { weeks: {}, completed: [] } },
+          scores: s.scores || {
+            biol1: { quizzes: {}, st: {}, pt: {}, te: null },
+            biol2: { quizzes: {}, st: {}, pt: {}, te: null }
+          },
+          badges: s.badges || { biol1: [], biol2: [] }
+        };
+        return {
+          payload,
+          valid: true, // backend-verified records are trusted
+          method: 'backend',
+          source: 'backend'
+        };
+      });
+
+      pendingImports = imports;
+      renderPreview();
+    });
+
+    /* ============================================================
+       Preview + Confirm (shared across all import methods)
+       ============================================================ */
     function renderPreview() {
       const container = document.getElementById('import-preview-container');
       const preview = document.getElementById('import-preview');
@@ -262,7 +575,7 @@
 
         const s = p.student;
         const sourceBadge = imp.source === 'backend'
-          ? '<span class="badge badge-success" style="font-size:0.7rem;">🌐 From Backend</span>'
+          ? '<span class="badge badge-success" style="font-size:0.7rem;">☁️ From Backend</span>'
           : imp.source === 'local'
             ? '<span class="badge badge-warning" style="font-size:0.7rem;">💻 Local Device</span>'
             : '';
@@ -272,10 +585,10 @@
             <div class="preview-header">
               <div>
                 <strong>${s.lastName}, ${s.firstName} ${s.middleName || ''}</strong>
-                <div class="text-small text-muted">LRN: ${APP.formatLRN(s.lrn)} · Grade ${s.gradeLevel} — ${s.section}</div>
+                <div class="text-small text-muted">LRN: ${APP.formatLRN(s.lrn)} · Grade ${s.gradeLevel || '—'} — ${s.section || '—'}</div>
                 ${sourceBadge}
               </div>
-              <span class="${cls}">${valid ? '✓ Signature Verified' : '✗ Signature Invalid'}</span>
+              <span class="${cls}">${valid ? '✓ Verified' : '✗ Signature Invalid'}</span>
             </div>
             <div class="text-small text-muted">
               Generated: ${APP.formatDate(p.generatedAt)} · Method: ${imp.method}
@@ -285,7 +598,6 @@
       }).join('');
     }
 
-    /* ---------- Confirm Import (FIXED MERGE LOGIC) ---------- */
     document.getElementById('btn-confirm-import').addEventListener('click', () => {
       let imported = 0, rejected = 0;
 
@@ -334,7 +646,7 @@
             if (!p.scores?.[subj]) return;
             if (!currentScores[subj]) currentScores[subj] = {};
 
-            ['quizzes', 'st', 'pt', 'activities'].forEach((type) => {
+            ['quizzes', 'st', 'pt', 'activities', 'quiz'].forEach((type) => {
               if (p.scores[subj][type]) {
                 currentScores[subj][type] = {
                   ...(currentScores[subj][type] || {}),
