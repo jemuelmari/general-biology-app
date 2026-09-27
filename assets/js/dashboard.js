@@ -1,6 +1,13 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 1.4.0
+   Version: 1.5.0
+   ------------------------------------------------------------
+   v1.5.0:
+   - Sync status pill in header
+   - Sync status banner below hero
+   - Force Sync Now button
+   - Queue details viewer
+   - Periodic status refresh (every 10s)
    ============================================================ */
 
 (() => {
@@ -125,6 +132,198 @@
     `;
   }).join('');
 
+  /* ============================================================
+     NEW: Sync Status System
+     ============================================================ */
+  const statusPill = APP.$('#sync-status-pill');
+  const statusBanner = APP.$('#sync-status-banner');
+  const queueDetails = APP.$('#queue-details');
+  const forceSyncBtn = APP.$('#btn-force-sync');
+
+  /**
+   * Compute current sync state based on:
+   *   - Backend enabled?
+   *   - Queue items?
+   *   - Last successful push timestamp?
+   *   - Online/offline status?
+   */
+  function getSyncState() {
+    const backendOn = Sync.backendEnabled && Sync.backendEnabled();
+    const online = navigator.onLine;
+    const queue = (Sync.getQueueStatus && Sync.getQueueStatus()) || { count: 0, items: [] };
+    const lastPush = localStorage.getItem('gba_last_push_at');
+
+    if (!backendOn) {
+      return { key: 'disabled', label: 'Sync disabled', color: '#90a4ae', queue };
+    }
+    if (!online) {
+      return { key: 'offline', label: 'Offline', color: '#ed6c02', queue };
+    }
+    if (queue.count > 0) {
+      return { key: 'pending', label: `${queue.count} pending`, color: '#ed6c02', queue, lastPush };
+    }
+    if (lastPush) {
+      const ago = Math.round((Date.now() - new Date(lastPush).getTime()) / 1000);
+      const agoStr = ago < 60 ? `${ago}s ago`
+                    : ago < 3600 ? `${Math.floor(ago / 60)}m ago`
+                    : ago < 86400 ? `${Math.floor(ago / 3600)}h ago`
+                    : `${Math.floor(ago / 86400)}d ago`;
+      return { key: 'synced', label: `Synced ${agoStr}`, color: '#2e7d32', queue, lastPush };
+    }
+    return { key: 'unknown', label: 'Not yet synced', color: '#78909c', queue };
+  }
+
+  /**
+   * Render the pill, banner, and queue details based on current state.
+   */
+  function renderSyncStatus() {
+    const state = getSyncState();
+
+    // --- Pill (header) ---
+    if (statePill) {
+      statusPill.style.display = 'inline-flex';
+      statusPill.style.background = state.color + '22';
+      statusPill.style.color = state.color;
+      statusPill.style.border = '1px solid ' + state.color;
+      statusPill.textContent =
+        state.key === 'synced' ? '🟢 ' + state.label
+        : state.key === 'pending' ? '🟡 ' + state.label
+        : state.key === 'offline' ? '📴 ' + state.label
+        : state.key === 'disabled' ? '⚪ ' + state.label
+        : '🔵 ' + state.label;
+    }
+
+    // --- Banner (below hero) ---
+    if (stateBanner) {
+      if (state.key === 'synced' || state.key === 'disabled') {
+        statusBanner.style.display = 'none';
+      } else {
+        statusBanner.style.display = 'block';
+        const bannerConfig = {
+          pending: {
+            bg: '#fff3e0', border: '#ed6c02', icon: '⏳',
+            title: `${state.queue.count} item(s) waiting to sync`,
+            body: 'Your scores are saved locally. The app will push them to your teacher automatically when the connection is stable.',
+            btn: '🔄 Retry Now'
+          },
+          offline: {
+            bg: '#fff3e0', border: '#ed6c02', icon: '📴',
+            title: 'You are offline',
+            body: 'Your progress is saved on this device. It will sync automatically when you go back online.',
+            btn: null
+          },
+          unknown: {
+            bg: '#e1f5fe', border: '#0277bd', icon: 'ℹ️',
+            title: 'Not yet synced',
+            body: 'Complete a lesson or take a quiz — your progress will sync to your teacher automatically.',
+            btn: null
+          }
+        }[state.key];
+
+        if (bannerConfig) {
+          statusBanner.innerHTML = `
+            <div style="background:${bannerConfig.bg};border-left:4px solid ${bannerConfig.border};border-radius:10px;padding:14px 18px;">
+              <div style="display:flex;gap:12px;align-items:flex-start;">
+                <span style="font-size:1.5rem;">${bannerConfig.icon}</span>
+                <div style="flex:1;">
+                  <div style="font-weight:700;color:#1a1a1a;margin-bottom:4px;">${bannerConfig.title}</div>
+                  <div style="font-size:0.85rem;color:#37474f;">${bannerConfig.body}</div>
+                  ${bannerConfig.btn ? `<button id="banner-retry-btn" class="btn btn-primary" style="margin-top:10px;font-size:0.8rem;padding:6px 14px;">${bannerConfig.btn}</button>` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+          const rb = document.getElementById('banner-retry-btn');
+          if (rb) rb.addEventListener('click', doForceSync);
+        }
+      }
+    }
+
+    // --- Queue details (in Sync & Backup section) ---
+    if (queueDetails) {
+      if (state.queue.count === 0) {
+        queueDetails.innerHTML = '';
+      } else {
+        queueDetails.innerHTML = `
+          <div style="background:#f8f9fa;border-radius:10px;padding:14px 18px;font-size:0.85rem;">
+            <div style="font-weight:700;color:#5f6368;margin-bottom:8px;">
+              ⏳ Pending sync queue (${state.queue.count})
+            </div>
+            <ul style="margin:0;padding-left:18px;color:#37474f;">
+              ${state.queue.items.slice(0, 5).map((item) => `
+                <li style="margin-bottom:4px;">
+                  <span style="font-family:Consolas,monospace;font-size:0.75rem;color:#78909c;">
+                    ${item.action}
+                  </span>
+                  ${item.assessmentId ? ' · ' + item.assessmentId : ''}
+                  ${item.subject ? ' · ' + item.subject.toUpperCase() : ''}
+                  <span style="color:#90a4ae;font-size:0.72rem;">
+                    · attempts: ${item.attempts || 0}
+                  </span>
+                </li>
+              `).join('')}
+              ${state.queue.count > 5 ? `<li style="color:#90a4ae;">…and ${state.queue.count - 5} more</li>` : ''}
+            </ul>
+          </div>
+        `;
+      }
+    }
+  }
+
+  /**
+   * Force a manual flush of the queue.
+   */
+  async function doForceSync() {
+    if (!Sync.backendEnabled || !Sync.backendEnabled()) {
+      return APP.toast('Backend not configured.', 'warning');
+    }
+    if (!navigator.onLine) {
+      return APP.toast('Still offline — try again later.', 'warning');
+    }
+
+    forceSyncBtn.disabled = true;
+    forceSyncBtn.textContent = '⏳ Syncing...';
+
+    try {
+      const result = await Sync.flushQueue();
+      if (result.flushed > 0) {
+        APP.toast(`✅ Synced ${result.flushed} item(s)`, 'success');
+      } else if (result.remaining > 0) {
+        APP.toast(`${result.remaining} item(s) still pending`, 'warning');
+      } else {
+        APP.toast('Nothing to sync — you are up to date.', 'info');
+      }
+      renderSyncStatus();
+    } catch (err) {
+      APP.toast('Sync failed: ' + err.message, 'danger');
+    } finally {
+      forceSyncBtn.disabled = false;
+      forceSyncBtn.textContent = '🔄 Force Sync Now';
+    }
+  }
+
+  /* Wire up Force Sync button */
+  if (forceSyncBtn) {
+    forceSyncBtn.addEventListener('click', doForceSync);
+  }
+
+  /* Refresh status every 10 seconds */
+  setInterval(renderSyncStatus, 10000);
+
+  /* Listen for online/offline events */
+  window.addEventListener('online', () => { renderSyncStatus(); setTimeout(doForceSync, 500); });
+  window.addEventListener('offline', renderSyncStatus);
+
+  /* Listen for queue changes */
+  window.addEventListener('sync-queue-changed', renderSyncStatus);
+
+  /* Initial render */
+  renderSyncStatus();
+
+  /* ============================================================
+     Existing: Sync Code / JSON / Import
+     ============================================================ */
+
   /* ---------- Sync UI ---------- */
   const syncBtnCode = APP.$('#btn-sync-code');
 
@@ -133,27 +332,6 @@
     syncBtnCode.textContent = backendOn
       ? '🔑 Generate Sync Code (works anywhere)'
       : '🔑 Generate Sync Code (this device only)';
-
-    if (!backendOn) {
-      const warn = document.createElement('div');
-      warn.className = 'alert alert-warning';
-      warn.style.cssText = 'margin-top:12px;font-size:0.85rem;';
-      warn.innerHTML = `
-        <strong>⚠️ Sync Code is limited</strong>
-        <p style="margin-top:6px;">Sync Codes currently only work if the teacher uses the <strong>same device</strong>.
-        To send progress from a different device, use <strong>Download Backup (JSON)</strong> instead.</p>
-      `;
-      syncBtnCode.parentElement.appendChild(warn);
-    } else {
-      const info = document.createElement('div');
-      info.className = 'alert alert-success';
-      info.style.cssText = 'margin-top:12px;font-size:0.85rem;';
-      info.innerHTML = `
-        <strong>✅ Cross-device sync enabled</strong>
-        <p style="margin-top:6px;">Sync Codes work on any device connected to the internet.</p>
-      `;
-      syncBtnCode.parentElement.appendChild(info);
-    }
   }
 
   /* ---------- Sync: Generate Code ---------- */
@@ -173,9 +351,6 @@
               ${result.code}
             </div>
             <p class="text-small" style="margin-bottom:8px;">Mode: ${modeLabel}</p>
-            <p class="text-small">${result.mode === 'backend'
-              ? 'Send this code to your teacher — they can import it from any device.'
-              : 'Your teacher must use the SAME device to import this code.'}</p>
           </div>
         `;
         APP.toast('Sync code generated!', 'success');
