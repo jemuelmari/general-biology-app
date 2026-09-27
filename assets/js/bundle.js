@@ -1,16 +1,16 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.3.7
+   Version: 2.3.9
    ------------------------------------------------------------
-   Changelog:
-   - 2.3.7: version sync with CONFIG, cleanLabel on match items
-   - 2.3.6: strip "✓" from scenario choice labels
+   v2.3.9:
+   - Push progress to backend when a day is completed
+     (after Escape Room passes with ≥ 75%)
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.7',
+  VERSION: '2.3.9',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -20,7 +20,7 @@ const CONFIG = {
     region: 'Region III',
     department: 'Department of Education'
   },
-  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyi2fj-Jnmlk7Pp4qhtfuE_lz0zSewtLfRPiAZnPO5A-uA5ICvicE_DPUry_lax69ubuQ/exec',
+  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyZjTOXmZzth0a_jXO1GoC8-5qSkm1gKu9rCvlMzJW0HW8gTb4XYvrZ7rPMBkxdr62jZQ/exec',
   get backendEnabled() { return this.BACKEND_URL && this.BACKEND_URL.length > 20; },
   TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
@@ -168,8 +168,7 @@ const ActivityGate = (() => {
   let session = null, inited = false;
 
   function init(cfg) {
-    if (inited) { console.log('[ActivityGate] Already initialized'); return; }
-    console.log('[ActivityGate] init() with:', cfg);
+    if (inited) return;
     session = {
       key: `${STORAGE_KEY}${cfg.subject}_w${cfg.week}_d${cfg.day}`,
       subject: cfg.subject, week: cfg.week, day: cfg.day,
@@ -181,10 +180,9 @@ const ActivityGate = (() => {
     };
     const saved = sessionStorage.getItem(session.key);
     if (saved) { try { Object.assign(session.states, JSON.parse(saved).states); } catch {} }
-    console.log('[ActivityGate] Session:', session.key, session.states);
     inited = true;
-    setTimeout(() => { console.log('[ActivityGate] applyUI()'); applyUI(); }, 10);
-    setTimeout(() => { console.log('[ActivityGate] Fire ready'); document.dispatchEvent(new CustomEvent('activity-gate:ready')); }, 30);
+    setTimeout(applyUI, 10);
+    setTimeout(() => document.dispatchEvent(new CustomEvent('activity-gate:ready')), 30);
   }
 
   function save() {
@@ -209,11 +207,33 @@ const ActivityGate = (() => {
       st.status = 'passed';
       if (k === 'activity1') { session.states.activity2.status = 'ready'; APP.toast('✅ Activity 1 passed!', 'success', 4000); }
       else if (k === 'activity2') { session.states.formative.status = 'ready'; APP.toast('✅ Activity 2 passed!', 'success', 4000); }
-      else { APP.toast('🎉 Formative complete!', 'success', 4000); }
+      else {
+        APP.toast('🎉 Formative complete!', 'success', 4000);
+        // ✅ NEW: Push progress to backend after formative passes
+        pushProgressAfterDayComplete();
+      }
     } else {
       st.status = 'failed';
     }
     save(); applyUI();
+  }
+
+  /**
+   * Fire-and-forget progress push to backend after day completion.
+   */
+  function pushProgressAfterDayComplete() {
+    if (!session) return;
+    const lrn = Store.getSession()?.lrn;
+    if (!lrn) return;
+    if (window.Sync && typeof Sync.pushProgressToBackend === 'function') {
+      Sync.pushProgressToBackend(lrn, session.subject)
+        .then((res) => {
+          if (res && res.ok) {
+            console.log('[AutoPush] Progress synced for', session.subject, `w${session.week}d${session.day}`);
+          }
+        })
+        .catch((err) => console.warn('[AutoPush] Progress sync failed:', err));
+    }
   }
 
   function reset(id) {
@@ -313,19 +333,13 @@ const Lesson = (() => {
   let ready = false;
   let to = null;
 
-  /* Strip "✓" and similar marker characters */
   function cleanLabel(label) {
     if (typeof label !== 'string') return label;
-    return label
-      .replace(/[✓✔✅☑]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
+    return label.replace(/[✓✔✅☑]/g, '').replace(/\s+/g, ' ').trim();
   }
 
   function init(cfg) {
-    console.log('[Lesson] init() with:', cfg);
     const user = Store.getCurrentUser();
-    console.log('[Lesson] user:', user ? user.lrn : 'NULL');
     if (!user) { window.location.href = '../../../student/login.html'; return; }
     ctx = { lrn: user.lrn, subject: cfg.subject, week: cfg.week, day: cfg.day, points: 0, badges: [], startTime: Date.now() };
     renderBar(cfg.title);
@@ -334,15 +348,10 @@ const Lesson = (() => {
     to = setTimeout(() => { if (!ready) showTimeout(); }, 15000);
     document.addEventListener('activity:start', (e) => startAct(e.detail.activity));
     document.addEventListener('activity-gate:ready', () => {
-      console.log('[Lesson] Got activity-gate:ready');
       setTimeout(() => { hideLoad(); ready = true; clearTimeout(to); }, 100);
     });
-    console.log('[Lesson] window.ActivityGate type:', typeof window.ActivityGate);
     if (window.ActivityGate && !window.ActivityGate.isInitialized()) {
-      console.log('[Lesson] Calling ActivityGate.init()');
       window.ActivityGate.init(cfg);
-    } else {
-      console.log('[Lesson] Skipped ActivityGate.init()');
     }
   }
 
@@ -376,7 +385,7 @@ const Lesson = (() => {
   function startAct(sk) {
     const cid = sk === 'activity1' ? 'activity-1' : sk === 'activity2' ? 'activity-2' : 'formative';
     const p = pending[cid];
-    if (!p) { console.warn('[Lesson] No pending for', cid); return; }
+    if (!p) return;
     if (p.type === 'match') renderMatch(cid, p.cfg);
     else if (p.type === 'scenario') renderScenario(cid, p.cfg);
     else renderEscape(cid, p.cfg);
@@ -425,14 +434,8 @@ const Lesson = (() => {
     if (document.getElementById('lesson-loading-overlay')) return;
     const o = document.createElement('div');
     o.id = 'lesson-loading-overlay';
-    o.style.cssText = 'position:fixed;inset:0;z-index:9998;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;';
-    o.innerHTML = `
-      <div style="text-align:center;max-width:320px;padding:24px;">
-        <div style="font-size:2.5rem;">⏳</div>
-        <div style="font-size:1.1rem;font-weight:600;color:#1b7a3d;margin-top:12px;">Loading activities...</div>
-        <div style="font-size:0.85rem;color:#5f6368;margin-top:8px;">This may take a moment on slow connection.</div>
-      </div>
-    `;
+    o.style.cssText = 'position:fixed;inset:0;z-index:9998;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;';
+    o.innerHTML = `<div style="text-align:center;max-width:320px;padding:24px;"><div style="font-size:2.5rem;">⏳</div><div style="font-size:1.1rem;font-weight:600;color:#1b7a3d;margin-top:12px;">Loading activities...</div></div>`;
     document.body.appendChild(o);
   }
 
@@ -444,13 +447,7 @@ const Lesson = (() => {
   function showTimeout() {
     const o = document.getElementById('lesson-loading-overlay');
     if (!o) return;
-    o.innerHTML = `
-      <div style="text-align:center;max-width:380px;padding:24px;">
-        <div style="font-size:2.5rem;">📡</div>
-        <div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection</div>
-        <button onclick="location.reload()" style="margin-top:16px;padding:10px 20px;background:#1b7a3d;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;">🔄 Retry</button>
-      </div>
-    `;
+    o.innerHTML = `<div style="text-align:center;max-width:380px;padding:24px;"><div style="font-size:2.5rem;">📡</div><div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection</div><button onclick="location.reload()" style="margin-top:16px;padding:10px 20px;background:#1b7a3d;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;">🔄 Retry</button></div>`;
   }
 
   function renderMatch(cid, cfg) {
@@ -515,8 +512,7 @@ const Lesson = (() => {
       b.innerHTML = `<div class="scenario-card"><p class="scenario-text">${sc.text}</p><div class="choice-row" id="cr"></div></div><div class="text-center mt-md"><span class="badge badge-info">${i + 1} / ${scenarios.length}</span></div>`;
       const row = b.querySelector('#cr');
       sc.choices.forEach((ch) => {
-        const cleanText = cleanLabel(ch.label);
-        const btn = APP.el('button', { class: 'choice-btn', text: cleanText });
+        const btn = APP.el('button', { class: 'choice-btn', text: cleanLabel(ch.label) });
         btn.onclick = () => onCh(btn, ch);
         row.appendChild(btn);
       });
@@ -569,8 +565,7 @@ const Lesson = (() => {
         </div>`;
       const o = c.querySelector('#esc-o');
       q.choices.forEach((ch, j) => {
-        const cleanText = cleanLabel(ch.label);
-        const b = APP.el('button', { class: 'escape-option', text: `${String.fromCharCode(65 + j)}. ${cleanText}` });
+        const b = APP.el('button', { class: 'escape-option', text: `${String.fromCharCode(65 + j)}. ${cleanLabel(ch.label)}` });
         b.onclick = () => ans(b, ch);
         o.appendChild(b);
       });
@@ -592,7 +587,10 @@ const Lesson = (() => {
     function end(reason) {
       if (done) return; done = true; clearInterval(interval);
       const pct = Math.round((keys.length / questions.length) * 100);
-      if (pct >= 75) { if (cl === lives) awardBadge(badgeId, badgeName, badgeIcon); Store.markDayComplete(ctx.lrn, ctx.subject, ctx.week, ctx.day); }
+      if (pct >= 75) {
+        if (cl === lives) awardBadge(badgeId, badgeName, badgeIcon);
+        Store.markDayComplete(ctx.lrn, ctx.subject, ctx.week, ctx.day);
+      }
       if (window.ActivityGate) window.ActivityGate.completeWithScore(cid, pct);
       APP.toast(pct >= 75 ? `🎉 Passed ${pct}%` : `📖 Score ${pct}% — need 75%`, pct >= 75 ? 'success' : 'warning', 4000);
     }
