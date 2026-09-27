@@ -1,13 +1,10 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 1.5.0
+   Version: 1.5.1
    ------------------------------------------------------------
-   v1.5.0:
-   - Sync status pill in header
-   - Sync status banner below hero
-   - Force Sync Now button
-   - Queue details viewer
-   - Periodic status refresh (every 10s)
+   v1.5.1:
+   - Fixed statePill scope bug (was declared after usage)
+   - All DOM refs resolved at top of sync-status block
    ============================================================ */
 
 (() => {
@@ -133,24 +130,19 @@
   }).join('');
 
   /* ============================================================
-     NEW: Sync Status System
+     Sync Status System
      ============================================================ */
-  const statusPill = APP.$('#sync-status-pill');
-  const statusBanner = APP.$('#sync-status-banner');
-  const queueDetails = APP.$('#queue-details');
-  const forceSyncBtn = APP.$('#btn-force-sync');
 
-  /**
-   * Compute current sync state based on:
-   *   - Backend enabled?
-   *   - Queue items?
-   *   - Last successful push timestamp?
-   *   - Online/offline status?
-   */
+  // Resolve ALL DOM refs first, before any usage
+  const statusPill = document.getElementById('sync-status-pill');
+  const statusBanner = document.getElementById('sync-status-banner');
+  const queueDetails = document.getElementById('queue-details');
+  const forceSyncBtn = document.getElementById('btn-force-sync');
+
   function getSyncState() {
-    const backendOn = Sync.backendEnabled && Sync.backendEnabled();
+    const backendOn = typeof Sync !== 'undefined' && Sync.backendEnabled && Sync.backendEnabled();
     const online = navigator.onLine;
-    const queue = (Sync.getQueueStatus && Sync.getQueueStatus()) || { count: 0, items: [] };
+    const queue = (typeof Sync !== 'undefined' && Sync.getQueueStatus && Sync.getQueueStatus()) || { count: 0, items: [] };
     const lastPush = localStorage.getItem('gba_last_push_at');
 
     if (!backendOn) {
@@ -160,27 +152,24 @@
       return { key: 'offline', label: 'Offline', color: '#ed6c02', queue };
     }
     if (queue.count > 0) {
-      return { key: 'pending', label: `${queue.count} pending`, color: '#ed6c02', queue, lastPush };
+      return { key: 'pending', label: queue.count + ' pending', color: '#ed6c02', queue, lastPush };
     }
     if (lastPush) {
       const ago = Math.round((Date.now() - new Date(lastPush).getTime()) / 1000);
-      const agoStr = ago < 60 ? `${ago}s ago`
-                    : ago < 3600 ? `${Math.floor(ago / 60)}m ago`
-                    : ago < 86400 ? `${Math.floor(ago / 3600)}h ago`
-                    : `${Math.floor(ago / 86400)}d ago`;
-      return { key: 'synced', label: `Synced ${agoStr}`, color: '#2e7d32', queue, lastPush };
+      const agoStr = ago < 60 ? ago + 's ago'
+                    : ago < 3600 ? Math.floor(ago / 60) + 'm ago'
+                    : ago < 86400 ? Math.floor(ago / 3600) + 'h ago'
+                    : Math.floor(ago / 86400) + 'd ago';
+      return { key: 'synced', label: 'Synced ' + agoStr, color: '#2e7d32', queue, lastPush };
     }
     return { key: 'unknown', label: 'Not yet synced', color: '#78909c', queue };
   }
 
-  /**
-   * Render the pill, banner, and queue details based on current state.
-   */
   function renderSyncStatus() {
     const state = getSyncState();
 
     // --- Pill (header) ---
-    if (statePill) {
+    if (statusPill) {
       statusPill.style.display = 'inline-flex';
       statusPill.style.background = state.color + '22';
       statusPill.style.color = state.color;
@@ -193,8 +182,8 @@
         : '🔵 ' + state.label;
     }
 
-    // --- Banner (below hero) ---
-    if (stateBanner) {
+    // --- Banner ---
+    if (statusBanner) {
       if (state.key === 'synced' || state.key === 'disabled') {
         statusBanner.style.display = 'none';
       } else {
@@ -202,7 +191,7 @@
         const bannerConfig = {
           pending: {
             bg: '#fff3e0', border: '#ed6c02', icon: '⏳',
-            title: `${state.queue.count} item(s) waiting to sync`,
+            title: state.queue.count + ' item(s) waiting to sync',
             body: 'Your scores are saved locally. The app will push them to your teacher automatically when the connection is stable.',
             btn: '🔄 Retry Now'
           },
@@ -228,7 +217,7 @@
                 <div style="flex:1;">
                   <div style="font-weight:700;color:#1a1a1a;margin-bottom:4px;">${bannerConfig.title}</div>
                   <div style="font-size:0.85rem;color:#37474f;">${bannerConfig.body}</div>
-                  ${bannerConfig.btn ? `<button id="banner-retry-btn" class="btn btn-primary" style="margin-top:10px;font-size:0.8rem;padding:6px 14px;">${bannerConfig.btn}</button>` : ''}
+                  ${bannerConfig.btn ? '<button id="banner-retry-btn" class="btn btn-primary" style="margin-top:10px;font-size:0.8rem;padding:6px 14px;">' + bannerConfig.btn + '</button>' : ''}
                 </div>
               </div>
             </div>
@@ -239,7 +228,7 @@
       }
     }
 
-    // --- Queue details (in Sync & Backup section) ---
+    // --- Queue details ---
     if (queueDetails) {
       if (state.queue.count === 0) {
         queueDetails.innerHTML = '';
@@ -257,12 +246,9 @@
                   </span>
                   ${item.assessmentId ? ' · ' + item.assessmentId : ''}
                   ${item.subject ? ' · ' + item.subject.toUpperCase() : ''}
-                  <span style="color:#90a4ae;font-size:0.72rem;">
-                    · attempts: ${item.attempts || 0}
-                  </span>
                 </li>
               `).join('')}
-              ${state.queue.count > 5 ? `<li style="color:#90a4ae;">…and ${state.queue.count - 5} more</li>` : ''}
+              ${state.queue.count > 5 ? '<li style="color:#90a4ae;">…and ' + (state.queue.count - 5) + ' more</li>' : ''}
             </ul>
           </div>
         `;
@@ -270,26 +256,26 @@
     }
   }
 
-  /**
-   * Force a manual flush of the queue.
-   */
   async function doForceSync() {
-    if (!Sync.backendEnabled || !Sync.backendEnabled()) {
+    if (typeof Sync === 'undefined' || !Sync.backendEnabled || !Sync.backendEnabled()) {
       return APP.toast('Backend not configured.', 'warning');
     }
     if (!navigator.onLine) {
       return APP.toast('Still offline — try again later.', 'warning');
     }
 
-    forceSyncBtn.disabled = true;
-    forceSyncBtn.textContent = '⏳ Syncing...';
+    if (forceSyncBtn) {
+      forceSyncBtn.disabled = true;
+      forceSyncBtn.textContent = '⏳ Syncing...';
+    }
 
     try {
       const result = await Sync.flushQueue();
       if (result.flushed > 0) {
-        APP.toast(`✅ Synced ${result.flushed} item(s)`, 'success');
+        localStorage.setItem('gba_last_push_at', new Date().toISOString());
+        APP.toast('✅ Synced ' + result.flushed + ' item(s)', 'success');
       } else if (result.remaining > 0) {
-        APP.toast(`${result.remaining} item(s) still pending`, 'warning');
+        APP.toast(result.remaining + ' item(s) still pending', 'warning');
       } else {
         APP.toast('Nothing to sync — you are up to date.', 'info');
       }
@@ -297,45 +283,35 @@
     } catch (err) {
       APP.toast('Sync failed: ' + err.message, 'danger');
     } finally {
-      forceSyncBtn.disabled = false;
-      forceSyncBtn.textContent = '🔄 Force Sync Now';
+      if (forceSyncBtn) {
+        forceSyncBtn.disabled = false;
+        forceSyncBtn.textContent = '🔄 Force Sync Now';
+      }
     }
   }
 
-  /* Wire up Force Sync button */
   if (forceSyncBtn) {
     forceSyncBtn.addEventListener('click', doForceSync);
   }
 
-  /* Refresh status every 10 seconds */
   setInterval(renderSyncStatus, 10000);
-
-  /* Listen for online/offline events */
   window.addEventListener('online', () => { renderSyncStatus(); setTimeout(doForceSync, 500); });
   window.addEventListener('offline', renderSyncStatus);
-
-  /* Listen for queue changes */
   window.addEventListener('sync-queue-changed', renderSyncStatus);
 
-  /* Initial render */
   renderSyncStatus();
 
   /* ============================================================
-     Existing: Sync Code / JSON / Import
+     Sync Code / JSON / Import
      ============================================================ */
-
-  /* ---------- Sync UI ---------- */
   const syncBtnCode = APP.$('#btn-sync-code');
 
   if (syncBtnCode) {
-    const backendOn = Sync.backendEnabled();
+    const backendOn = typeof Sync !== 'undefined' && Sync.backendEnabled && Sync.backendEnabled();
     syncBtnCode.textContent = backendOn
       ? '🔑 Generate Sync Code (works anywhere)'
       : '🔑 Generate Sync Code (this device only)';
-  }
 
-  /* ---------- Sync: Generate Code ---------- */
-  if (syncBtnCode) {
     syncBtnCode.addEventListener('click', async () => {
       syncBtnCode.disabled = true;
       syncBtnCode.textContent = '⏳ Generating...';
@@ -344,15 +320,11 @@
         const modeLabel = result.mode === 'backend'
           ? '<span style="color:var(--color-success);">✅ Works across devices</span>'
           : '<span style="color:var(--color-warning);">⚠️ Only works on THIS device</span>';
-        APP.$('#sync-output').innerHTML = `
-          <div class="alert alert-success">
-            <strong>✅ Sync Code Generated!</strong>
-            <div style="font-family:monospace;font-size:1.4rem;margin:12px 0;text-align:center;padding:12px;background:#fff;border-radius:6px;letter-spacing:1px;">
-              ${result.code}
-            </div>
-            <p class="text-small" style="margin-bottom:8px;">Mode: ${modeLabel}</p>
-          </div>
-        `;
+        APP.$('#sync-output').innerHTML =
+          '<div class="alert alert-success"><strong>✅ Sync Code Generated!</strong>' +
+          '<div style="font-family:monospace;font-size:1.4rem;margin:12px 0;text-align:center;padding:12px;background:#fff;border-radius:6px;letter-spacing:1px;">' +
+          result.code + '</div>' +
+          '<p class="text-small">Mode: ' + modeLabel + '</p></div>';
         APP.toast('Sync code generated!', 'success');
       } catch (e) {
         APP.toast('Failed: ' + e.message, 'danger');
@@ -365,17 +337,15 @@
     });
   }
 
-  /* ---------- Sync: Export JSON ---------- */
   APP.$('#btn-export-json').addEventListener('click', async () => {
     try {
       const fn = await Sync.exportAsFile(user.lrn, null);
-      APP.toast(`Saved: ${fn}`, 'success');
+      APP.toast('Saved: ' + fn, 'success');
     } catch (e) {
       APP.toast('Export failed: ' + e.message, 'danger');
     }
   });
 
-  /* ---------- Sync: Import JSON ---------- */
   APP.$('#btn-import-json').addEventListener('click', () => {
     APP.$('#import-file').click();
   });
@@ -385,7 +355,7 @@
     if (!file) return;
     try {
       const data = await Backup.uploadBackup(file);
-      APP.toast(`Backup restored for ${data.user.firstName}!`, 'success');
+      APP.toast('Backup restored for ' + data.user.firstName + '!', 'success');
       setTimeout(() => location.reload(), 900);
     } catch (err) {
       APP.toast('Import failed: ' + err.message, 'danger');
@@ -396,29 +366,13 @@
   /* ---------- Log Out ---------- */
   APP.$('#btn-logout').addEventListener('click', () => {
     const overlay = document.createElement('div');
-    overlay.style.cssText = `
-      position:fixed;inset:0;background:rgba(255,255,255,0.95);
-      display:flex;align-items:center;justify-content:center;
-      z-index:99999;font-family:'Segoe UI',sans-serif;
-    `;
-    overlay.innerHTML = `
-      <div style="text-align:center;">
-        <div style="font-size:2rem;">👋</div>
-        <div style="font-weight:600;color:#1b7a3d;margin-top:8px;">Logging out...</div>
-      </div>
-    `;
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:99999;font-family:Segoe UI,sans-serif;';
+    overlay.innerHTML = '<div style="text-align:center;"><div style="font-size:2rem;">👋</div><div style="font-weight:600;color:#1b7a3d;margin-top:8px;">Logging out...</div></div>';
     document.body.appendChild(overlay);
 
-    sessionStorage.setItem('gba_logout_pending', JSON.stringify({
-      lrn: user.lrn,
-      at: Date.now()
-    }));
-
+    sessionStorage.setItem('gba_logout_pending', JSON.stringify({ lrn: user.lrn, at: Date.now() }));
     Store.clearSession();
-
-    setTimeout(() => {
-      window.location.replace('login.html');
-    }, 150);
+    setTimeout(() => { window.location.replace('login.html'); }, 150);
   });
 
 })();
