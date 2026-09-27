@@ -13,9 +13,11 @@
     <div class="container flex-between">
       <div>
         <h1>🧬 Student Dashboard</h1>
-        <span class="version">v2.3.7</span>
+        <span class="version">v2.4.0</span>
       </div>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <!-- NEW: Sync status pill -->
+        <span id="sync-status-pill" class="badge" style="font-size:0.75rem;display:none;"></span>
         <a href="profile.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">👤 My Profile</a>
         <span id="user-pill" class="badge badge-success" style="font-size:0.8rem;"></span>
         <button id="btn-logout" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
@@ -37,6 +39,9 @@
         <div id="standing-badge"></div>
       </div>
     </div>
+
+    <!-- NEW: Sync status banner -->
+    <div id="sync-status-banner" style="display:none;margin-bottom:24px;"></div>
 
     <div class="dash-section-title">📊 Your Progress</div>
     <div class="quick-stats-grid" id="quick-stats"></div>
@@ -76,15 +81,17 @@
         <button id="btn-sync-code" class="btn btn-primary">🔑 Generate Sync Code</button>
         <button id="btn-export-json" class="btn btn-accent">💾 Download Backup (JSON)</button>
         <button id="btn-import-json" class="btn btn-outline">📥 Restore from Backup</button>
+        <button id="btn-force-sync" class="btn btn-outline">🔄 Force Sync Now</button>
         <input type="file" id="import-file" accept="application/json" class="hidden" />
       </div>
       <div id="sync-output" class="mt-lg"></div>
+      <div id="queue-details" class="mt-lg"></div>
     </div>
 
   </main>
 
   <footer class="app-footer">
-    <p>General Biology Online Modular Application · <span class="version">v2.3.7</span></p>
+    <p>General Biology Online Modular Application · <span class="version">v2.4.0</span></p>
   </footer>
 
   <script src="../config.js"></script>
