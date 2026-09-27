@@ -1,16 +1,16 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.3.9
+   Version: 2.4.0
    ------------------------------------------------------------
-   v2.3.9:
+   v2.4.0:
+   - Sync embedded directly in bundle (no external sync.js needed)
    - Push progress to backend when a day is completed
-     (after Escape Room passes with ≥ 75%)
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.9',
+  VERSION: '2.4.0',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -160,6 +160,68 @@ const Store = (() => {
     getBadges, awardBadge, addDailyPoints, isAssessmentLocked, lockAssessment, unlockAssessment };
 })();
 
+/* ---------- SECTION 3.5: SYNC (embedded minimal version) ---------- */
+const Sync = (() => {
+  'use strict';
+  const NS = 'gba_v1_';
+
+  function backendEnabled() {
+    return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
+  }
+
+  async function backendPost(body) {
+    const res = await fetch(CONFIG.BACKEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(body)
+    });
+    return res.json();
+  }
+
+  async function pushProgressToBackend(lrn, subject) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+
+    const user = Store.getUser(lrn);
+    if (!user) return { ok: false, error: 'User not found' };
+
+    const progress = Store.getProgress(lrn);
+
+    const payload = {
+      lrn,
+      student: {
+        lrn: user.lrn,
+        lastName: user.lastName,
+        firstName: user.firstName,
+        middleName: user.middleName || '',
+        gradeLevel: user.gradeLevel,
+        section: user.section
+      },
+      progress: subject ? { [subject]: progress[subject] } : progress,
+      subject: subject || 'both'
+    };
+
+    try {
+      const res = await backendPost({
+        action: 'saveProgress',
+        ...payload
+      });
+
+      if (res.ok) {
+        console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
+      } else {
+        console.warn('[Sync] Progress push rejected:', res.error);
+      }
+
+      return res;
+    } catch (err) {
+      console.warn('[Sync] Progress push failed:', err.message);
+      return { ok: false, error: err.message };
+    }
+  }
+
+  return { backendEnabled, pushProgressToBackend };
+})();
+
 /* ---------- SECTION 4: ACTIVITY GATE ---------- */
 const ActivityGate = (() => {
   'use strict';
@@ -209,7 +271,6 @@ const ActivityGate = (() => {
       else if (k === 'activity2') { session.states.formative.status = 'ready'; APP.toast('✅ Activity 2 passed!', 'success', 4000); }
       else {
         APP.toast('🎉 Formative complete!', 'success', 4000);
-        // ✅ NEW: Push progress to backend after formative passes
         pushProgressAfterDayComplete();
       }
     } else {
@@ -218,9 +279,6 @@ const ActivityGate = (() => {
     save(); applyUI();
   }
 
-  /**
-   * Fire-and-forget progress push to backend after day completion.
-   */
   function pushProgressAfterDayComplete() {
     if (!session) return;
     const lrn = Store.getSession()?.lrn;
@@ -281,7 +339,7 @@ const ActivityGate = (() => {
     e.innerHTML = `
       <div style="font-size:2.5rem;">▶️</div>
       <div style="font-weight:700;margin-top:12px;color:#1b5e20;font-size:1.1rem;">${titles[sk]}</div>
-      <div style="font-size:0.85rem;margin-top:8px;color:#2e7d32;">⏱️ ${mins} min · 🎯 75% to pass · ♻️ Unlimited retakes</div>
+      <div style="font-size:0.85rem;margin-top:8px;color:#2e7d32;">⏱️ ${mins} min · 🎯 75% to pass</div>
       <button class="btn btn-primary" style="margin-top:16px;padding:12px 28px;" data-start="${sk}">▶️ Start Activity</button>
     `;
     setTimeout(() => { e.querySelector(`[data-start="${sk}"]`)?.addEventListener('click', () => start(sk)); }, 0);
@@ -292,7 +350,7 @@ const ActivityGate = (() => {
     const e = document.createElement('div');
     e.className = 'gate-overlay';
     e.style.cssText = 'padding:24px;text-align:center;background:linear-gradient(135deg,#e8f5e9,#a5d6a7);border:2px solid #2e7d32;border-radius:8px;';
-    e.innerHTML = `<div style="font-size:2rem;">✅</div><div style="font-weight:700;margin-top:8px;color:#1b5e20;">Passed!</div><div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">Score: ${st.score}% · Attempts: ${st.attempts}</div>`;
+    e.innerHTML = `<div style="font-size:2rem;">✅</div><div style="font-weight:700;margin-top:8px;color:#1b5e20;">Passed!</div><div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">Score: ${st.score}%</div>`;
     return e;
   }
 
@@ -302,8 +360,8 @@ const ActivityGate = (() => {
     e.style.cssText = 'padding:32px 24px;text-align:center;background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:2px solid #ed6c02;border-radius:8px;';
     e.innerHTML = `
       <div style="font-size:2.5rem;">🔁</div>
-      <div style="font-weight:700;margin-top:8px;color:#e65100;font-size:1.1rem;">Try Again!</div>
-      <div style="font-size:0.95rem;margin-top:8px;color:#ef6c00;">Score: ${st.score}% — need 75% to pass</div>
+      <div style="font-weight:700;margin-top:8px;color:#e65100;">Try Again!</div>
+      <div style="font-size:0.95rem;margin-top:8px;color:#ef6c00;">Score: ${st.score}% — need 75%</div>
       <button class="btn btn-primary" style="margin-top:16px;padding:12px 28px;" data-start="${sk}">🔁 Retake</button>
     `;
     setTimeout(() => { e.querySelector(`[data-start="${sk}"]`)?.addEventListener('click', () => start(sk)); }, 0);
@@ -603,6 +661,7 @@ const Lesson = (() => {
 window.CONFIG = CONFIG;
 window.APP = APP;
 window.Store = Store;
+window.Sync = Sync;
 window.ActivityGate = ActivityGate;
 window.Lesson = Lesson;
 
