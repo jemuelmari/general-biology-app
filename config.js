@@ -5,7 +5,7 @@
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.3.8',
+  VERSION: '2.4.0',
 
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
