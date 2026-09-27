@@ -1,17 +1,22 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload generation & verification
-   Version: 1.5.0
+   Version: 1.6.0
    ------------------------------------------------------------
-   v1.5.0:
-   - pushProgressToBackend enhanced: better logging, retry via
-     SyncQueue when available.
-   - Fire-and-forget semantics preserved.
+   v1.6.0:
+   - Full queue system for failed pushes with auto-retry
+   - Periodic flush every 5 minutes
+   - Queue status API for UI display
+   - Retries up to 5 times per item before dropping
    ============================================================ */
 
 const Sync = (() => {
   'use strict';
 
   const NS = 'gba_v1_';
+  const QUEUE_KEY = `${NS}push_queue`;
+  const MAX_QUEUE_SIZE = 100;
+  const MAX_RETRIES = 5;
+  const AUTO_FLUSH_INTERVAL = 5 * 60 * 1000; // 5 min
 
   function backendEnabled() {
     return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
@@ -186,10 +191,6 @@ const Sync = (() => {
      Auto-push methods
      ============================================================ */
 
-  /**
-   * Push a single score to the backend.
-   * Called by quiz-engine.js after every submission.
-   */
   async function pushScoreToBackend(lrn, subject, type, assessmentId, scoreData) {
     if (!backendEnabled()) {
       console.log('[Sync] Backend disabled — score stored locally only');
@@ -246,10 +247,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Push progress to the backend.
-   * Called by lesson engines when a student completes a day.
-   */
   async function pushProgressToBackend(lrn, subject) {
     if (!backendEnabled()) {
       console.log('[Sync] Backend disabled — progress stored locally only');
@@ -300,39 +297,70 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     Failed-push queue (prep for Task C)
-     Stores failed pushes in localStorage and retries on
-     Sync.flushQueue() or when the browser comes back online.
+     Queue system for failed pushes
      ============================================================ */
-  const QUEUE_KEY = `${NS}push_queue`;
 
+  /**
+   * Add a failed push to the queue for later retry.
+   */
   function _queueFailedPush(action, body) {
     try {
       const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+      // Dedupe: if an identical action + body is already queued, skip
+      const fingerprint = _queueFingerprint(action, body);
+      const exists = queue.some((item) => item.fingerprint === fingerprint);
+
+      if (exists) {
+        console.log('[Sync] Duplicate push already queued, skipping');
+        return;
+      }
+
       queue.push({
         action,
         body,
+        fingerprint,
         queuedAt: new Date().toISOString(),
         attempts: 0
       });
-      // Cap the queue to 100 entries
-      while (queue.length > 100) queue.shift();
+
+      // Cap the queue size
+      while (queue.length > MAX_QUEUE_SIZE) queue.shift();
+
       localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
-      console.log(`[Sync] Queued failed ${action} for retry. Queue size: ${queue.length}`);
+      console.log(`[Sync] Queued failed ${action}. Queue size: ${queue.length}`);
+      _notifyQueueChange();
     } catch (e) {
       console.warn('[Sync] Could not queue failed push:', e);
     }
   }
 
+  /**
+   * Create a stable fingerprint for deduplication.
+   * Two pushes with the same action + assessmentId + lrn are considered duplicates.
+   */
+  function _queueFingerprint(action, body) {
+    const lrn = body.lrn || '';
+    const aid = body.assessmentId || 'progress';
+    const subj = body.subject || 'both';
+    return `${action}|${lrn}|${subj}|${aid}`;
+  }
+
+  /**
+   * Flush all queued pushes. Called on page load, on network reconnect, and on interval.
+   */
   async function flushQueue() {
-    if (!backendEnabled()) return { ok: false, flushed: 0 };
+    if (!backendEnabled()) return { ok: false, flushed: 0, remaining: 0 };
+
     let queue;
     try {
       queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
-    } catch (e) { return { ok: false, flushed: 0 }; }
+    } catch (e) {
+      return { ok: false, flushed: 0, remaining: 0 };
+    }
 
-    if (!queue.length) return { ok: true, flushed: 0 };
+    if (!queue.length) return { ok: true, flushed: 0, remaining: 0 };
 
+    console.log(`[Sync] Attempting to flush ${queue.length} queued push(es)...`);
     const remaining = [];
     let flushed = 0;
 
@@ -343,11 +371,13 @@ const Sync = (() => {
           flushed++;
         } else {
           item.attempts = (item.attempts || 0) + 1;
-          if (item.attempts < 5) remaining.push(item);
+          if (item.attempts < MAX_RETRIES) remaining.push(item);
+          else console.warn(`[Sync] Dropping push after ${MAX_RETRIES} attempts:`, item.action);
         }
       } catch (e) {
         item.attempts = (item.attempts || 0) + 1;
-        if (item.attempts < 5) remaining.push(item);
+        if (item.attempts < MAX_RETRIES) remaining.push(item);
+        else console.warn(`[Sync] Dropping push after ${MAX_RETRIES} attempts:`, item.action);
       }
     }
 
@@ -355,14 +385,88 @@ const Sync = (() => {
       localStorage.setItem(QUEUE_KEY, JSON.stringify(remaining));
     } catch (e) { /* silent */ }
 
-    if (flushed > 0) console.log(`[Sync] ✅ Flushed ${flushed} queued push(es). Remaining: ${remaining.length}`);
+    if (flushed > 0 || remaining.length !== queue.length) {
+      console.log(`[Sync] ✅ Flushed ${flushed}. Remaining: ${remaining.length}`);
+      _notifyQueueChange();
+    }
     return { ok: true, flushed, remaining: remaining.length };
   }
 
-  /* ---------- Auto-flush on load and when back online ---------- */
+  /**
+   * Get the current queue status — for UI display.
+   */
+  function getQueueStatus() {
+    try {
+      const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+      return {
+        count: queue.length,
+        items: queue.map((q) => ({
+          action: q.action,
+          lrn: q.body.lrn,
+          assessmentId: q.body.assessmentId,
+          subject: q.body.subject,
+          queuedAt: q.queuedAt,
+          attempts: q.attempts
+        }))
+      };
+    } catch (e) {
+      return { count: 0, items: [] };
+    }
+  }
+
+  /**
+   * Clear the entire queue (manual reset).
+   */
+  function clearQueue() {
+    try {
+      localStorage.setItem(QUEUE_KEY, '[]');
+      _notifyQueueChange();
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  }
+
+  /**
+   * Dispatch a custom event so UI can react to queue changes.
+   */
+  function _notifyQueueChange() {
+    try {
+      const status = getQueueStatus();
+      window.dispatchEvent(new CustomEvent('sync-queue-changed', { detail: status }));
+    } catch (e) { /* silent */ }
+  }
+
+  /* ============================================================
+     Auto-flush hooks
+     ============================================================ */
   if (typeof window !== 'undefined') {
-    window.addEventListener('load', () => { setTimeout(flushQueue, 3000); });
-    window.addEventListener('online', () => { setTimeout(flushQueue, 1000); });
+    // On page load (delay 3s so page is responsive first)
+    window.addEventListener('load', () => {
+      setTimeout(() => { flushQueue(); }, 3000);
+    });
+
+    // When network comes back
+    window.addEventListener('online', () => {
+      console.log('[Sync] Network online — flushing queue');
+      setTimeout(() => { flushQueue(); }, 1000);
+    });
+
+    // When tab becomes visible (user returns)
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        setTimeout(() => { flushQueue(); }, 500);
+      }
+    });
+
+    // Periodic retry every 5 minutes
+    setInterval(() => {
+      const status = getQueueStatus();
+      if (status.count > 0) {
+        console.log('[Sync] Periodic retry: ' + status.count + ' item(s) in queue');
+        flushQueue();
+      }
+    }, AUTO_FLUSH_INTERVAL);
   }
 
   async function pingBackend() {
@@ -397,6 +501,8 @@ const Sync = (() => {
     pushScoreToBackend,
     pushProgressToBackend,
     flushQueue,
+    getQueueStatus,
+    clearQueue,
     pingBackend
   };
 })();
