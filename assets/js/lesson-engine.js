@@ -18,6 +18,7 @@ const Lesson = (() => {
 
   const PASS_THRESHOLD = 0.75;
 
+  /* ---------- Init ---------- */
   function init(config) {
     const user = Store.getCurrentUser();
     if (!user) {
@@ -50,6 +51,7 @@ const Lesson = (() => {
 
     document.addEventListener('activity-gate:ready', () => {
       gateReady = true;
+      console.log('[Lesson] Gate is ready');
       setTimeout(() => {
         hideLoadingOverlay();
         readyFlag = true;
@@ -62,6 +64,7 @@ const Lesson = (() => {
 
   function tryInitGate(config) {
     if (window.ActivityGate && !window.ActivityGate.isInitialized()) {
+      console.log('[Lesson] ActivityGate found, initializing');
       window.ActivityGate.init(config);
       return;
     }
@@ -77,35 +80,84 @@ const Lesson = (() => {
 
     let attempts = 0;
     const maxAttempts = 100;
+
     const interval = setInterval(() => {
       attempts++;
       if (window.ActivityGate && !window.ActivityGate.isInitialized()) {
         clearInterval(interval);
+        console.log('[Lesson] ActivityGate loaded after ' + (attempts * 200) + 'ms');
         window.ActivityGate.init(config);
       } else if (attempts >= maxAttempts) {
         clearInterval(interval);
+        console.error('[Lesson] ActivityGate failed to load within 20 seconds');
         fallbackRenderAll();
       }
     }, 200);
   }
 
   function fallbackRenderAll() {
+    console.warn('[Lesson] Using fallback — rendering activities without gate');
     hideLoadingOverlay();
     readyFlag = true;
     clearTimeout(timeoutHandle);
+
+    const p1 = pendingActivities['activity-1'];
+    const p2 = pendingActivities['activity-2'];
+    const p3 = pendingActivities['formative'];
+
+    if (p1) {
+      if (p1.type === 'match') renderMatchGameNow('activity-1', p1.config);
+      else if (p1.type === 'scenario') renderScenarioGameNow('activity-1', p1.config);
+      else if (p1.type === 'escape') renderEscapeRoomNow('activity-1', p1.config);
+    }
+    if (p2) {
+      if (p2.type === 'match') renderMatchGameNow('activity-2', p2.config);
+      else if (p2.type === 'scenario') renderScenarioGameNow('activity-2', p2.config);
+      else if (p2.type === 'escape') renderEscapeRoomNow('activity-2', p2.config);
+    }
+    if (p3) {
+      if (p3.type === 'match') renderMatchGameNow('formative', p3.config);
+      else if (p3.type === 'scenario') renderScenarioGameNow('formative', p3.config);
+      else if (p3.type === 'escape') renderEscapeRoomNow('formative', p3.config);
+    }
+
     APP.toast('⚠️ Loaded in fallback mode — reload to enable activity locking', 'warning', 5000);
   }
 
+  /* ============================================================
+     LOADING OVERLAY
+     ============================================================ */
   function showLoadingOverlay() {
     if (document.getElementById('lesson-loading-overlay')) return;
     const overlay = document.createElement('div');
     overlay.id = 'lesson-loading-overlay';
-    overlay.style.cssText = `position:fixed;inset:0;z-index:9998;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;transition:opacity 0.3s ease;`;
+    overlay.style.cssText = `
+      position:fixed;inset:0;z-index:9998;
+      background:rgba(255,255,255,0.92);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Segoe UI',system-ui,sans-serif;
+      transition:opacity 0.3s ease;
+    `;
     overlay.innerHTML = `
       <div style="text-align:center;max-width:320px;padding:24px;">
-        <div style="font-size:2.5rem;">⏳</div>
-        <div style="font-size:1.1rem;font-weight:600;color:#1b7a3d;margin-top:12px;">Loading activities...</div>
+        <div style="font-size:2.5rem;animation:spin 1.5s linear infinite;display:inline-block;">⏳</div>
+        <div style="font-size:1.1rem;font-weight:600;color:#1b7a3d;margin-top:12px;">
+          Loading activities...
+        </div>
+        <div style="font-size:0.85rem;color:#5f6368;margin-top:8px;">
+          This may take a moment on a slow connection.
+        </div>
+        <div style="width:100%;height:6px;background:#e0e0e0;border-radius:3px;margin-top:16px;overflow:hidden;">
+          <div style="height:100%;width:40%;background:linear-gradient(90deg,#1b7a3d,#4caf50);border-radius:3px;animation:progress 1.5s ease-in-out infinite;"></div>
+        </div>
       </div>
+      <style>
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes progress {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(300%); }
+        }
+      </style>
     `;
     document.body.appendChild(overlay);
   }
@@ -120,10 +172,31 @@ const Lesson = (() => {
   function showTimeoutError() {
     const overlay = document.getElementById('lesson-loading-overlay');
     if (!overlay) return;
-    overlay.innerHTML = `<div style="text-align:center;max-width:380px;padding:24px;"><div style="font-size:2.5rem;">📡</div><div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection detected</div><button id="lesson-retry-btn" style="padding:10px 20px;background:#1b7a3d;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:16px;">🔄 Retry</button></div>`;
+    overlay.innerHTML = `
+      <div style="text-align:center;max-width:380px;padding:24px;">
+        <div style="font-size:2.5rem;">📡</div>
+        <div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">
+          Slow connection detected
+        </div>
+        <div style="font-size:0.85rem;color:#5f6368;margin-top:8px;">
+          The lesson is still loading. You can wait or tap retry.
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+          <button id="lesson-retry-btn" style="padding:10px 20px;background:#1b7a3d;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;">🔄 Retry</button>
+          <button id="lesson-wait-btn" style="padding:10px 20px;background:transparent;color:#1b7a3d;border:2px solid #1b7a3d;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;">⏳ Keep Waiting</button>
+        </div>
+      </div>
+    `;
     document.getElementById('lesson-retry-btn').addEventListener('click', () => location.reload());
+    document.getElementById('lesson-wait-btn').addEventListener('click', () => {
+      showLoadingOverlay();
+      timeoutHandle = setTimeout(() => {
+        if (!readyFlag) showTimeoutError();
+      }, 20000);
+    });
   }
 
+  /* ---------- Difficulty-Based Timer ---------- */
   function calculateTimeLimit(type, count) {
     const MIN_SECONDS = 300;
     if (type === 'match') return Math.max(MIN_SECONDS, count * 20);
@@ -132,31 +205,46 @@ const Lesson = (() => {
     return MIN_SECONDS;
   }
 
+  /* ---------- Register activities ---------- */
   function registerMatchGame(containerId, config) {
     const timeLimit = calculateTimeLimit('match', config.pairs.length);
-    pendingActivities[containerId] = { type: 'match', config: { ...config, timeLimit } };
+    pendingActivities[containerId] = { type: 'match', config: Object.assign({}, config, { timeLimit }) };
+    const container = document.getElementById(containerId);
+    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
   function registerScenarioGame(containerId, config) {
     const timeLimit = calculateTimeLimit('scenario', config.scenarios.length);
-    pendingActivities[containerId] = { type: 'scenario', config: { ...config, timeLimit } };
+    pendingActivities[containerId] = { type: 'scenario', config: Object.assign({}, config, { timeLimit }) };
+    const container = document.getElementById(containerId);
+    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
   function registerEscapeRoom(containerId, config) {
     const timeLimit = calculateTimeLimit('escape', config.questions.length);
-    pendingActivities[containerId] = { type: 'escape', config: { ...config, timeLimit } };
+    pendingActivities[containerId] = { type: 'escape', config: Object.assign({}, config, { timeLimit }) };
+    const container = document.getElementById(containerId);
+    if (container) container.dataset.estimatedMinutes = Math.round(timeLimit / 60);
   }
 
+  /* ---------- Start activity ---------- */
   function startActivity(stateKey) {
     const containerId = stateKey === 'activity1' ? 'activity-1'
                       : stateKey === 'activity2' ? 'activity-2'
                       : 'formative';
     const pending = pendingActivities[containerId];
-    if (!pending) return;
+    if (!pending) {
+      console.warn('[Lesson] No pending activity for', containerId);
+      return;
+    }
     currentAttempts[containerId] = (currentAttempts[containerId] || 0) + 1;
-    // ... (rendering functions same as before)
+
+    if (pending.type === 'match') renderMatchGameNow(containerId, pending.config);
+    else if (pending.type === 'scenario') renderScenarioGameNow(containerId, pending.config);
+    else if (pending.type === 'escape') renderEscapeRoomNow(containerId, pending.config);
   }
 
+  /* ---------- Score Bar ---------- */
   function renderScoreBar(title) {
     const bar = document.getElementById('daily-score-bar');
     if (!bar) return;
@@ -185,38 +273,379 @@ const Lesson = (() => {
   function addPoints(n) {
     ctx.points += n;
     const el = document.getElementById('sb-points');
-    if (el) el.textContent = ctx.points;
+    if (el) {
+      el.textContent = ctx.points;
+      el.style.transform = 'scale(1.3)';
+      setTimeout(() => (el.style.transform = 'scale(1)'), 200);
+    }
     Store.addDailyPoints(ctx.lrn, ctx.subject, ctx.week, ctx.day, n);
   }
 
   function awardBadge(badgeId, badgeName, icon) {
-    if (ctx.badges.includes(badgeId)) return;
+    if (ctx.badges.indexOf(badgeId) !== -1) return;
     const newBadge = Store.awardBadge(ctx.lrn, ctx.subject, badgeId);
     if (!newBadge) return;
     ctx.badges.push(badgeId);
     const el = document.getElementById('sb-badges');
     if (el) el.textContent = ctx.badges.length;
-    APP.toast(`🏆 Badge earned: ${icon} ${badgeName}`, 'success', 4000);
+    APP.toast('🏆 Badge earned: ' + icon + ' ' + badgeName, 'success', 4000);
   }
 
-  /**
-   * Called when formative completes — pushes progress to backend.
-   */
+  /* ---------- Progress Push after Formative ---------- */
   function pushProgressAfterDayComplete() {
     if (!ctx) return;
     if (window.Sync && typeof Sync.pushProgressToBackend === 'function') {
       Sync.pushProgressToBackend(ctx.lrn, ctx.subject)
         .then((res) => {
           if (res && res.ok) {
-            console.log('[AutoPush] ✅ Progress synced for', ctx.subject, `w${ctx.week}d${ctx.day}`);
+            console.log('[AutoPush] ✅ Progress synced for', ctx.subject, 'w' + ctx.week + 'd' + ctx.day);
           }
         })
         .catch((err) => console.warn('[AutoPush] Progress sync failed:', err));
     }
   }
 
-  // ... (all renderers: renderMatchGameNow, renderScenarioGameNow, renderEscapeRoomNow)
+  /* ============================================================
+     MATCH GAME
+     ============================================================ */
+  function renderMatchGameNow(containerId, config) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const pairs = config.pairs;
+    const timeLimit = config.timeLimit;
+    const pointsCorrect = config.pointsCorrect || 10;
+    const pointsWrong = config.pointsWrong || -3;
+    const bonusFast = config.bonusFast || 15;
+    const badgeId = config.badgeId;
+    const badgeName = config.badgeName;
+    const badgeIcon = config.badgeIcon;
 
+    let leftItems = [].concat(pairs).sort(() => Math.random() - 0.5);
+    let rightItems = [].concat(pairs).sort(() => Math.random() - 0.5);
+    let selectedLeft = null;
+    let matches = 0, wrongCount = 0, timeLeft = timeLimit, timerInterval = null, finished = false;
+
+    container.innerHTML = `
+      <div class="activity-header">
+        <span class="activity-title">🔗 Match the pairs</span>
+        <span class="activity-timer" id="match-timer">${APP.formatTime(timeLeft)}</span>
+      </div>
+      <div class="match-grid">
+        <div class="match-column"><h4>Left</h4><div id="match-left"></div></div>
+        <div class="match-column"><h4>Right</h4><div id="match-right"></div></div>
+      </div>
+      <div class="text-center mt-md">
+        <span id="match-score" class="badge badge-info">Matches: 0 / ${pairs.length}</span>
+      </div>
+    `;
+
+    const leftEl = container.querySelector('#match-left');
+    const rightEl = container.querySelector('#match-right');
+
+    leftItems.forEach((item) => {
+      const el = APP.el('div', { class: 'match-item', 'data-key': item.key, text: item.left });
+      el.addEventListener('click', () => onLeftClick(el));
+      leftEl.appendChild(el);
+    });
+
+    rightItems.forEach((item) => {
+      const el = APP.el('div', { class: 'match-item', 'data-key': item.key, text: item.right });
+      el.addEventListener('click', () => onRightClick(el));
+      rightEl.appendChild(el);
+    });
+
+    function onLeftClick(el) {
+      if (finished || el.classList.contains('correct')) return;
+      leftEl.querySelectorAll('.match-item').forEach((n) => n.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedLeft = el;
+    }
+
+    function onRightClick(el) {
+      if (finished || !selectedLeft || el.classList.contains('correct')) return;
+      const lk = selectedLeft.dataset.key, rk = el.dataset.key;
+      if (lk === rk) {
+        selectedLeft.classList.remove('selected');
+        selectedLeft.classList.add('correct');
+        el.classList.add('correct');
+        addPoints(pointsCorrect);
+        matches++;
+        updateScore();
+        if (matches === pairs.length) endGame('complete');
+      } else {
+        el.classList.add('wrong');
+        selectedLeft.classList.add('wrong');
+        addPoints(pointsWrong);
+        wrongCount++;
+        const l = selectedLeft;
+        setTimeout(() => { l.classList.remove('wrong', 'selected'); el.classList.remove('wrong'); }, 500);
+      }
+      selectedLeft = null;
+    }
+
+    function updateScore() {
+      const el2 = container.querySelector('#match-score');
+      if (el2) el2.textContent = 'Matches: ' + matches + ' / ' + pairs.length;
+    }
+
+    function endGame(reason) {
+      if (finished) return;
+      finished = true;
+      clearInterval(timerInterval);
+      const scorePercent = Math.round((matches / pairs.length) * 100);
+      if (scorePercent >= 75) {
+        if (wrongCount === 0) { awardBadge(badgeId + '-flawless', 'Flawless', '🎯'); addPoints(bonusFast); }
+        if ((timeLimit - timeLeft) < timeLimit * 0.5) awardBadge(badgeId + '-fast', 'Speed Scholar', '⚡');
+        awardBadge(badgeId, badgeName, badgeIcon);
+      }
+      if (window.ActivityGate) window.ActivityGate.completeWithScore(containerId, scorePercent);
+      if (reason === 'timeout') APP.toast("⏰ Time's up! You scored " + scorePercent + '%', 'warning', 4000);
+      else if (scorePercent >= 75) APP.toast('🎉 Passed! ' + scorePercent + '%', 'success', 4000);
+      else APP.toast('📖 Score: ' + scorePercent + '% — need 75% to pass.', 'warning', 4000);
+    }
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      const el = container.querySelector('#match-timer');
+      if (el) el.textContent = APP.formatTime(Math.max(0, timeLeft));
+      if (timeLeft <= 0) endGame('timeout');
+    }, 1000);
+  }
+
+  /* ============================================================
+     SCENARIO GAME
+     ============================================================ */
+  function renderScenarioGameNow(containerId, config) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const scenarios = config.scenarios;
+    const timeLimit = config.timeLimit;
+    const pointsCorrect = config.pointsCorrect || 8;
+    const bonusFast = config.bonusFast || 3;
+    const badgeId = config.badgeId;
+    const badgeName = config.badgeName;
+    const badgeIcon = config.badgeIcon;
+
+    let index = 0, correct = 0, fastAnswers = 0, cardStart = Date.now(), finished = false;
+    let totalTimeLeft = timeLimit, overallTimer = null;
+
+    container.innerHTML = `
+      <div class="activity-header">
+        <span class="activity-title">🎯 Scenario Challenge</span>
+        <span class="activity-timer" id="scenario-overall-timer">${APP.formatTime(totalTimeLeft)}</span>
+      </div>
+      <div id="scenario-body"></div>
+    `;
+
+    renderCard();
+
+    overallTimer = setInterval(() => {
+      totalTimeLeft--;
+      const el = container.querySelector('#scenario-overall-timer');
+      if (el) el.textContent = APP.formatTime(Math.max(0, totalTimeLeft));
+      if (totalTimeLeft <= 0) endGame('timeout');
+    }, 1000);
+
+    function renderCard() {
+      if (finished) return;
+      if (index >= scenarios.length) return endGame('complete');
+      const sc = scenarios[index];
+      cardStart = Date.now();
+      const body = container.querySelector('#scenario-body');
+      body.innerHTML = `
+        <div class="scenario-card">
+          <p class="scenario-text">${sc.text}</p>
+          <div class="choice-row" id="choice-row"></div>
+        </div>
+        <div class="text-center mt-md">
+          <span class="badge badge-info">Question ${index + 1} / ${scenarios.length}</span>
+        </div>
+      `;
+      const row = body.querySelector('#choice-row');
+      sc.choices.forEach((choice) => {
+        const btn = APP.el('button', { class: 'choice-btn', text: choice.label });
+        btn.addEventListener('click', () => onChoice(btn, choice, sc));
+        row.appendChild(btn);
+      });
+    }
+
+    function onChoice(btn, choice, sc) {
+      if (finished) return;
+      const elapsed = (Date.now() - cardStart) / 1000;
+      container.querySelectorAll('.choice-btn').forEach((b) => b.disabled = true);
+
+      if (choice.correct) {
+        btn.classList.add('correct');
+        addPoints(pointsCorrect);
+        correct++;
+        if (elapsed < 8) { addPoints(bonusFast); fastAnswers++; }
+      } else {
+        btn.classList.add('wrong');
+        const correctIdx = sc.choices.findIndex((c) => c.correct);
+        container.querySelectorAll('.choice-btn')[correctIdx].classList.add('correct');
+      }
+
+      setTimeout(() => { index++; renderCard(); }, 1200);
+    }
+
+    function endGame(reason) {
+      if (finished) return;
+      finished = true;
+      clearInterval(overallTimer);
+      const scorePercent = Math.round((correct / scenarios.length) * 100);
+      if (scorePercent >= 75) {
+        if (fastAnswers >= scenarios.length / 2) awardBadge(badgeId + '-quick', 'Quick Thinker', '⚡');
+        awardBadge(badgeId, badgeName, badgeIcon);
+      }
+      if (window.ActivityGate) window.ActivityGate.completeWithScore(containerId, scorePercent);
+      APP.toast(scorePercent >= 75 ? '🎉 Passed! ' + scorePercent + '%' : '📖 Score: ' + scorePercent + '% — need 75%', scorePercent >= 75 ? 'success' : 'warning', 4000);
+    }
+  }
+
+  /* ============================================================
+     ESCAPE ROOM
+     ============================================================ */
+  function renderEscapeRoomNow(containerId, config) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const questions = config.questions;
+    const badgeId = config.badgeId;
+    const badgeName = config.badgeName;
+    const badgeIcon = config.badgeIcon;
+    const lives = config.lives || 3;
+    const timeLimit = config.timeLimit;
+
+    let currentLives = lives;
+    let keysEarned = 0;
+    let currentIndex = 0;
+    let locked = false;
+    let finished = false;
+    let timeLeft = timeLimit;
+    let timerInterval = null;
+
+    intro();
+
+    function intro() {
+      container.innerHTML = `
+        <div class="escape-container">
+          <div class="escape-header">
+            <div>
+              <div class="score-bar-label">Formative Check</div>
+              <div style="font-size:1.2rem;font-weight:600;">🔐 Escape the Cell</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="escape-lives" id="esc-lives">${'❤️'.repeat(currentLives)}</div>
+              <div class="activity-timer" id="esc-timer" style="font-size:0.9rem;margin-top:4px;">${APP.formatTime(timeLeft)}</div>
+            </div>
+          </div>
+          <div class="escape-result">
+            <div class="result-emoji">🗝️</div>
+            <div class="result-title">Unlock ${questions.length} keys</div>
+            <p class="result-message">Answer all questions to escape. You have ${lives} lives. Need 75% to pass.</p>
+            <button id="esc-start" class="btn btn-accent" style="margin-top:16px;">Begin →</button>
+          </div>
+        </div>
+      `;
+      container.querySelector('#esc-start').onclick = () => {
+        startTimer();
+        showQuestion();
+      };
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        if (finished) { clearInterval(timerInterval); return; }
+        timeLeft--;
+        const el = container.querySelector('#esc-timer');
+        if (el) el.textContent = APP.formatTime(Math.max(0, timeLeft));
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          endGame('timeout');
+        }
+      }, 1000);
+    }
+
+    function showQuestion() {
+      if (finished) return;
+      if (currentIndex >= questions.length) return endGame('complete');
+      const q = questions[currentIndex];
+      container.innerHTML = `
+        <div class="escape-container">
+          <div class="escape-header">
+            <div>
+              <div class="score-bar-label">Question ${currentIndex + 1} / ${questions.length}</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="escape-lives">${'❤️'.repeat(currentLives)}${'🖤'.repeat(lives - currentLives)}</div>
+              <div class="activity-timer" id="esc-timer" style="font-size:0.9rem;">${APP.formatTime(Math.max(0, timeLeft))}</div>
+            </div>
+          </div>
+          <div class="escape-keys" style="justify-content:center;margin-bottom:12px;">
+            ${questions.map((_, j) => '<span class="key-icon ' + (j < keysEarned ? 'earned' : '') + '">🗝️</span>').join('')}
+          </div>
+          <div class="escape-question">
+            <h4>${q.text}</h4>
+            <div class="escape-options" id="esc-options"></div>
+          </div>
+        </div>
+      `;
+      const opts = container.querySelector('#esc-options');
+      q.choices.forEach((ch, j) => {
+        const b = APP.el('button', { class: 'escape-option', text: String.fromCharCode(65 + j) + '. ' + ch.label });
+        b.onclick = () => answer(b, ch);
+        opts.appendChild(b);
+      });
+    }
+
+    function answer(btn, ch) {
+      if (locked || finished) return;
+      locked = true;
+      container.querySelectorAll('.escape-option').forEach((b) => b.disabled = true);
+
+      if (ch.correct) {
+        btn.classList.add('correct');
+        keysEarned++;
+        setTimeout(() => {
+          currentIndex++;
+          locked = false;
+          showQuestion();
+        }, 900);
+      } else {
+        btn.classList.add('wrong');
+        currentLives--;
+        const correctIdx = questions[currentIndex].choices.findIndex((c) => c.correct);
+        container.querySelectorAll('.escape-option')[correctIdx].classList.add('correct');
+
+        if (currentLives <= 0) {
+          setTimeout(() => endGame('outoflives'), 1200);
+        } else {
+          setTimeout(() => {
+            currentIndex++;
+            locked = false;
+            showQuestion();
+          }, 1400);
+        }
+      }
+    }
+
+    function endGame(reason) {
+      if (finished) return;
+      finished = true;
+      clearInterval(timerInterval);
+      const scorePercent = Math.round((keysEarned / questions.length) * 100);
+
+      if (scorePercent >= 75) {
+        if (currentLives === lives) awardBadge(badgeId, badgeName, badgeIcon);
+        Store.markDayComplete(ctx.lrn, ctx.subject, ctx.week, ctx.day);
+        pushProgressAfterDayComplete();
+      }
+
+      if (window.ActivityGate) window.ActivityGate.completeWithScore(containerId, scorePercent);
+      APP.toast(scorePercent >= 75 ? '🎉 Passed! ' + scorePercent + '%' : '📖 Score: ' + scorePercent + '% — need 75%', scorePercent >= 75 ? 'success' : 'warning', 4000);
+    }
+  }
+
+  /* ---------- Public API ---------- */
   return {
     init,
     pushProgressAfterDayComplete,
