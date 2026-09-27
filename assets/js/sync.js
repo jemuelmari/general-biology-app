@@ -1,9 +1,11 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload generation & verification
-   Version: 1.4.0
+   Version: 1.5.0
    ------------------------------------------------------------
-   NEW: pushScoreToBackend() and pushProgressToBackend() for
-   automatic sync of student data to the Google Sheet.
+   v1.5.0:
+   - pushProgressToBackend enhanced: better logging, retry via
+     SyncQueue when available.
+   - Fire-and-forget semantics preserved.
    ============================================================ */
 
 const Sync = (() => {
@@ -181,10 +183,7 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     NEW: Auto-push methods
-     ------------------------------------------------------------
-     These are fire-and-forget. If the backend is unavailable,
-     they fail silently — the local storage remains authoritative.
+     Auto-push methods
      ============================================================ */
 
   /**
@@ -200,7 +199,6 @@ const Sync = (() => {
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
 
-    // Build the payload in the same shape the backend expects
     const payload = {
       lrn,
       student: {
@@ -224,7 +222,6 @@ const Sync = (() => {
       timestamp: new Date().toISOString()
     };
 
-    // Sign the payload for integrity (matches Code.gs verification)
     const signature = await Security.sign(payload);
 
     try {
@@ -238,21 +235,26 @@ const Sync = (() => {
         console.log('[Sync] ✅ Score pushed to backend:', assessmentId);
       } else {
         console.warn('[Sync] Score push rejected:', res.error);
+        _queueFailedPush('saveScore', { ...payload, signature });
       }
 
       return res;
     } catch (err) {
-      console.warn('[Sync] Score push failed (will sync later):', err.message);
+      console.warn('[Sync] Score push failed (queued for retry):', err.message);
+      _queueFailedPush('saveScore', { ...payload, signature });
       return { ok: false, error: err.message };
     }
   }
 
   /**
    * Push progress to the backend.
-   * Called after a day is completed.
+   * Called by lesson engines when a student completes a day.
    */
   async function pushProgressToBackend(lrn, subject) {
-    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    if (!backendEnabled()) {
+      console.log('[Sync] Backend disabled — progress stored locally only');
+      return { ok: false, error: 'Backend disabled' };
+    }
 
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
@@ -284,13 +286,83 @@ const Sync = (() => {
 
       if (res.ok) {
         console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
+      } else {
+        console.warn('[Sync] Progress push rejected:', res.error);
+        _queueFailedPush('saveProgress', { ...payload, signature });
       }
 
       return res;
     } catch (err) {
-      console.warn('[Sync] Progress push failed:', err.message);
+      console.warn('[Sync] Progress push failed (queued for retry):', err.message);
+      _queueFailedPush('saveProgress', { ...payload, signature });
       return { ok: false, error: err.message };
     }
+  }
+
+  /* ============================================================
+     Failed-push queue (prep for Task C)
+     Stores failed pushes in localStorage and retries on
+     Sync.flushQueue() or when the browser comes back online.
+     ============================================================ */
+  const QUEUE_KEY = `${NS}push_queue`;
+
+  function _queueFailedPush(action, body) {
+    try {
+      const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+      queue.push({
+        action,
+        body,
+        queuedAt: new Date().toISOString(),
+        attempts: 0
+      });
+      // Cap the queue to 100 entries
+      while (queue.length > 100) queue.shift();
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+      console.log(`[Sync] Queued failed ${action} for retry. Queue size: ${queue.length}`);
+    } catch (e) {
+      console.warn('[Sync] Could not queue failed push:', e);
+    }
+  }
+
+  async function flushQueue() {
+    if (!backendEnabled()) return { ok: false, flushed: 0 };
+    let queue;
+    try {
+      queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+    } catch (e) { return { ok: false, flushed: 0 }; }
+
+    if (!queue.length) return { ok: true, flushed: 0 };
+
+    const remaining = [];
+    let flushed = 0;
+
+    for (const item of queue) {
+      try {
+        const res = await backendPost({ action: item.action, ...item.body });
+        if (res.ok) {
+          flushed++;
+        } else {
+          item.attempts = (item.attempts || 0) + 1;
+          if (item.attempts < 5) remaining.push(item);
+        }
+      } catch (e) {
+        item.attempts = (item.attempts || 0) + 1;
+        if (item.attempts < 5) remaining.push(item);
+      }
+    }
+
+    try {
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(remaining));
+    } catch (e) { /* silent */ }
+
+    if (flushed > 0) console.log(`[Sync] ✅ Flushed ${flushed} queued push(es). Remaining: ${remaining.length}`);
+    return { ok: true, flushed, remaining: remaining.length };
+  }
+
+  /* ---------- Auto-flush on load and when back online ---------- */
+  if (typeof window !== 'undefined') {
+    window.addEventListener('load', () => { setTimeout(flushQueue, 3000); });
+    window.addEventListener('online', () => { setTimeout(flushQueue, 1000); });
   }
 
   async function pingBackend() {
@@ -322,8 +394,9 @@ const Sync = (() => {
     importFromFile,
     importFromCode,
     fetchAllStudentsFromBackend,
-    pushScoreToBackend,        // ← NEW
-    pushProgressToBackend,     // ← NEW
+    pushScoreToBackend,
+    pushProgressToBackend,
+    flushQueue,
     pingBackend
   };
 })();
