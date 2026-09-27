@@ -1,10 +1,6 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
    Version: 2.4.0
-   ------------------------------------------------------------
-   v2.4.0:
-   - Sync embedded directly in bundle (no external sync.js needed)
-   - Push progress to backend when a day is completed
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
@@ -160,7 +156,7 @@ const Store = (() => {
     getBadges, awardBadge, addDailyPoints, isAssessmentLocked, lockAssessment, unlockAssessment };
 })();
 
-/* ---------- SECTION 3.5: SYNC (embedded minimal version) ---------- */
+/* ---------- SECTION 3.5: SYNC (embedded) ---------- */
 const Sync = (() => {
   'use strict';
   const NS = 'gba_v1_';
@@ -241,7 +237,7 @@ const ActivityGate = (() => {
       }
     };
     const saved = sessionStorage.getItem(session.key);
-    if (saved) { try { Object.assign(session.states, JSON.parse(saved).states); } catch {} }
+    if (saved) { try { Object.assign(session.states, JSON.parse(saved).states); } catch (e) {} }
     inited = true;
     setTimeout(applyUI, 10);
     setTimeout(() => document.dispatchEvent(new CustomEvent('activity-gate:ready')), 30);
@@ -249,7 +245,7 @@ const ActivityGate = (() => {
 
   function save() {
     if (!session) return;
-    try { sessionStorage.setItem(session.key, JSON.stringify({ states: session.states })); } catch {}
+    try { sessionStorage.setItem(session.key, JSON.stringify({ states: session.states })); } catch (e) {}
   }
 
   function markRunning(id) {
@@ -265,11 +261,16 @@ const ActivityGate = (() => {
     const st = session.states[k];
     st.attempts = (st.attempts || 0) + 1;
     st.score = Math.round(pct);
+
     if (pct >= PASS * 100) {
       st.status = 'passed';
-      if (k === 'activity1') { session.states.activity2.status = 'ready'; APP.toast('✅ Activity 1 passed!', 'success', 4000); }
-      else if (k === 'activity2') { session.states.formative.status = 'ready'; APP.toast('✅ Activity 2 passed!', 'success', 4000); }
-      else {
+      if (k === 'activity1') {
+        session.states.activity2.status = 'ready';
+        APP.toast('✅ Activity 1 passed!', 'success', 4000);
+      } else if (k === 'activity2') {
+        session.states.formative.status = 'ready';
+        APP.toast('✅ Activity 2 passed!', 'success', 4000);
+      } else {
         APP.toast('🎉 Formative complete!', 'success', 4000);
         pushProgressAfterDayComplete();
       }
@@ -281,7 +282,8 @@ const ActivityGate = (() => {
 
   function pushProgressAfterDayComplete() {
     if (!session) return;
-    const lrn = Store.getSession()?.lrn;
+    const sess = Store.getSession();
+    const lrn = sess ? sess.lrn : null;
     if (!lrn) return;
     if (window.Sync && typeof Sync.pushProgressToBackend === 'function') {
       Sync.pushProgressToBackend(lrn, session.subject)
@@ -324,7 +326,7 @@ const ActivityGate = (() => {
     const e = document.createElement('div');
     e.className = 'gate-overlay';
     e.style.cssText = 'padding:32px 24px;text-align:center;background:#f8f9fa;border:2px dashed #dadce0;border-radius:8px;';
-    e.innerHTML = `<div style="font-size:2rem;">🔒</div><div style="font-weight:600;margin-top:8px;color:#1b7a3d;">Locked</div><div style="font-size:0.85rem;margin-top:4px;color:#5f6368;">Complete the previous activity with at least 75% to unlock.</div>`;
+    e.innerHTML = '<div style="font-size:2rem;">🔒</div><div style="font-weight:600;margin-top:8px;color:#1b7a3d;">Locked</div><div style="font-size:0.85rem;margin-top:4px;color:#5f6368;">Complete the previous activity with at least 75% to unlock.</div>';
     return e;
   }
 
@@ -335,14 +337,17 @@ const ActivityGate = (() => {
     const titles = { activity1: 'Activity 1 — Match the Pairs', activity2: 'Activity 2 — Scenario Challenge', formative: 'Formative — Escape the Cell' };
     const cid = sk === 'activity1' ? 'activity-1' : sk === 'activity2' ? 'activity-2' : 'formative';
     const c = document.getElementById(cid);
-    const mins = c?.dataset.estimatedMinutes || 5;
+    const mins = c && c.dataset.estimatedMinutes ? c.dataset.estimatedMinutes : 5;
     e.innerHTML = `
       <div style="font-size:2.5rem;">▶️</div>
       <div style="font-weight:700;margin-top:12px;color:#1b5e20;font-size:1.1rem;">${titles[sk]}</div>
       <div style="font-size:0.85rem;margin-top:8px;color:#2e7d32;">⏱️ ${mins} min · 🎯 75% to pass</div>
       <button class="btn btn-primary" style="margin-top:16px;padding:12px 28px;" data-start="${sk}">▶️ Start Activity</button>
     `;
-    setTimeout(() => { e.querySelector(`[data-start="${sk}"]`)?.addEventListener('click', () => start(sk)); }, 0);
+    setTimeout(() => {
+      const btn = e.querySelector('[data-start="' + sk + '"]');
+      if (btn) btn.addEventListener('click', () => start(sk));
+    }, 0);
     return e;
   }
 
@@ -350,7 +355,7 @@ const ActivityGate = (() => {
     const e = document.createElement('div');
     e.className = 'gate-overlay';
     e.style.cssText = 'padding:24px;text-align:center;background:linear-gradient(135deg,#e8f5e9,#a5d6a7);border:2px solid #2e7d32;border-radius:8px;';
-    e.innerHTML = `<div style="font-size:2rem;">✅</div><div style="font-weight:700;margin-top:8px;color:#1b5e20;">Passed!</div><div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">Score: ${st.score}%</div>`;
+    e.innerHTML = '<div style="font-size:2rem;">✅</div><div style="font-weight:700;margin-top:8px;color:#1b5e20;">Passed!</div><div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">Score: ' + st.score + '%</div>';
     return e;
   }
 
@@ -364,7 +369,10 @@ const ActivityGate = (() => {
       <div style="font-size:0.95rem;margin-top:8px;color:#ef6c00;">Score: ${st.score}% — need 75%</div>
       <button class="btn btn-primary" style="margin-top:16px;padding:12px 28px;" data-start="${sk}">🔁 Retake</button>
     `;
-    setTimeout(() => { e.querySelector(`[data-start="${sk}"]`)?.addEventListener('click', () => start(sk)); }, 0);
+    setTimeout(() => {
+      const btn = e.querySelector('[data-start="' + sk + '"]');
+      if (btn) btn.addEventListener('click', () => start(sk));
+    }, 0);
     return e;
   }
 
@@ -423,19 +431,19 @@ const Lesson = (() => {
 
   function regMatch(id, cfg) {
     const t = calcTime('match', cfg.pairs.length);
-    pending[id] = { type: 'match', cfg: { ...cfg, timeLimit: t } };
+    pending[id] = { type: 'match', cfg: Object.assign({}, cfg, { timeLimit: t }) };
     const c = document.getElementById(id);
     if (c) c.dataset.estimatedMinutes = Math.round(t / 60);
   }
   function regScenario(id, cfg) {
     const t = calcTime('scenario', cfg.scenarios.length);
-    pending[id] = { type: 'scenario', cfg: { ...cfg, timeLimit: t } };
+    pending[id] = { type: 'scenario', cfg: Object.assign({}, cfg, { timeLimit: t }) };
     const c = document.getElementById(id);
     if (c) c.dataset.estimatedMinutes = Math.round(t / 60);
   }
   function regEscape(id, cfg) {
     const t = calcTime('escape', cfg.questions.length);
-    pending[id] = { type: 'escape', cfg: { ...cfg, timeLimit: t } };
+    pending[id] = { type: 'escape', cfg: Object.assign({}, cfg, { timeLimit: t }) };
     const c = document.getElementById(id);
     if (c) c.dataset.estimatedMinutes = Math.round(t / 60);
   }
@@ -479,12 +487,12 @@ const Lesson = (() => {
   }
 
   function awardBadge(id, name, icon) {
-    if (ctx.badges.includes(id)) return;
+    if (ctx.badges.indexOf(id) !== -1) return;
     if (Store.awardBadge(ctx.lrn, ctx.subject, id)) {
       ctx.badges.push(id);
       const el = document.getElementById('sb-badges');
       if (el) el.textContent = ctx.badges.length;
-      APP.toast(`🏆 ${icon} ${name}`, 'success', 4000);
+      APP.toast('🏆 ' + icon + ' ' + name, 'success', 4000);
     }
   }
 
@@ -493,7 +501,7 @@ const Lesson = (() => {
     const o = document.createElement('div');
     o.id = 'lesson-loading-overlay';
     o.style.cssText = 'position:fixed;inset:0;z-index:9998;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;';
-    o.innerHTML = `<div style="text-align:center;max-width:320px;padding:24px;"><div style="font-size:2.5rem;">⏳</div><div style="font-size:1.1rem;font-weight:600;color:#1b7a3d;margin-top:12px;">Loading activities...</div></div>`;
+    o.innerHTML = '<div style="text-align:center;max-width:320px;padding:24px;"><div style="font-size:2.5rem;">⏳</div><div style="font-size:1.1rem;font-weight:600;color:#1b7a3d;margin-top:12px;">Loading activities...</div></div>';
     document.body.appendChild(o);
   }
 
@@ -505,48 +513,87 @@ const Lesson = (() => {
   function showTimeout() {
     const o = document.getElementById('lesson-loading-overlay');
     if (!o) return;
-    o.innerHTML = `<div style="text-align:center;max-width:380px;padding:24px;"><div style="font-size:2.5rem;">📡</div><div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection</div><button onclick="location.reload()" style="margin-top:16px;padding:10px 20px;background:#1b7a3d;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;">🔄 Retry</button></div>`;
+    o.innerHTML = '<div style="text-align:center;max-width:380px;padding:24px;"><div style="font-size:2.5rem;">📡</div><div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection</div><button onclick="location.reload()" style="margin-top:16px;padding:10px 20px;background:#1b7a3d;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;">🔄 Retry</button></div>';
   }
 
   function renderMatch(cid, cfg) {
     const c = document.getElementById(cid);
     if (!c) return;
-    const { pairs, timeLimit, pointsCorrect = 10, pointsWrong = -3, badgeId, badgeName, badgeIcon } = cfg;
-    let L = [...pairs].sort(() => Math.random() - 0.5);
-    let R = [...pairs].sort(() => Math.random() - 0.5);
+    const pairs = cfg.pairs;
+    const timeLimit = cfg.timeLimit;
+    const pointsCorrect = cfg.pointsCorrect || 10;
+    const pointsWrong = cfg.pointsWrong || -3;
+    const badgeId = cfg.badgeId;
+    const badgeName = cfg.badgeName;
+    const badgeIcon = cfg.badgeIcon;
+    let L = [].concat(pairs).sort(() => Math.random() - 0.5);
+    let R = [].concat(pairs).sort(() => Math.random() - 0.5);
     let sel = null, matches = 0, wrong = 0, tLeft = timeLimit, interval = null, done = false;
+
     c.innerHTML = `
       <div class="activity-header"><span class="activity-title">🔗 Match the pairs</span><span class="activity-timer" id="match-timer">${APP.formatTime(tLeft)}</span></div>
       <div class="match-grid"><div class="match-column"><h4>Left</h4><div id="match-left"></div></div><div class="match-column"><h4>Right</h4><div id="match-right"></div></div></div>
       <div class="text-center mt-md"><span id="match-score" class="badge badge-info">Matches: 0 / ${pairs.length}</span></div>
     `;
-    const le = c.querySelector('#match-left'), re = c.querySelector('#match-right');
-    L.forEach((it) => { const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.left) }); e.onclick = () => onL(e); le.appendChild(e); });
-    R.forEach((it) => { const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.right) }); e.onclick = () => onR(e); re.appendChild(e); });
+    const le = c.querySelector('#match-left');
+    const re = c.querySelector('#match-right');
+    L.forEach((it) => {
+      const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.left) });
+      e.onclick = () => onL(e);
+      le.appendChild(e);
+    });
+    R.forEach((it) => {
+      const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.right) });
+      e.onclick = () => onR(e);
+      re.appendChild(e);
+    });
 
-    function onL(e) { if (done || e.classList.contains('correct')) return; le.querySelectorAll('.match-item').forEach((n) => n.classList.remove('selected')); e.classList.add('selected'); sel = e; }
+    function onL(e) {
+      if (done || e.classList.contains('correct')) return;
+      le.querySelectorAll('.match-item').forEach((n) => n.classList.remove('selected'));
+      e.classList.add('selected');
+      sel = e;
+    }
     function onR(e) {
       if (done || !sel || e.classList.contains('correct')) return;
       if (sel.dataset.key === e.dataset.key) {
-        sel.classList.remove('selected'); sel.classList.add('correct'); e.classList.add('correct');
-        addPts(pointsCorrect); matches++; upScore();
+        sel.classList.remove('selected');
+        sel.classList.add('correct');
+        e.classList.add('correct');
+        addPts(pointsCorrect);
+        matches++;
+        upScore();
         if (matches === pairs.length) end('complete');
       } else {
-        e.classList.add('wrong'); sel.classList.add('wrong'); addPts(pointsWrong); wrong++;
-        const s = sel; setTimeout(() => { s.classList.remove('wrong', 'selected'); e.classList.remove('wrong'); }, 500);
+        e.classList.add('wrong');
+        sel.classList.add('wrong');
+        addPts(pointsWrong);
+        wrong++;
+        const s = sel;
+        setTimeout(() => { s.classList.remove('wrong', 'selected'); e.classList.remove('wrong'); }, 500);
       }
       sel = null;
     }
-    function upScore() { const el = c.querySelector('#match-score'); if (el) el.textContent = `Matches: ${matches} / ${pairs.length}`; }
+    function upScore() {
+      const el = c.querySelector('#match-score');
+      if (el) el.textContent = 'Matches: ' + matches + ' / ' + pairs.length;
+    }
     function end(reason) {
-      if (done) return; done = true; clearInterval(interval);
+      if (done) return;
+      done = true;
+      clearInterval(interval);
       const pct = Math.round((matches / pairs.length) * 100);
-      if (pct >= 75) { if (wrong === 0) awardBadge(badgeId + '-flawless', 'Flawless', '🎯'); awardBadge(badgeId, badgeName, badgeIcon); }
+      if (pct >= 75) {
+        if (wrong === 0) awardBadge(badgeId + '-flawless', 'Flawless', '🎯');
+        awardBadge(badgeId, badgeName, badgeIcon);
+      }
       if (window.ActivityGate) window.ActivityGate.completeWithScore(cid, pct);
-      APP.toast(pct >= 75 ? `🎉 Passed ${pct}%` : `📖 Score ${pct}% — need 75%`, pct >= 75 ? 'success' : 'warning', 4000);
+      APP.toast(pct >= 75 ? '🎉 Passed ' + pct + '%' : '📖 Score ' + pct + '% — need 75%', pct >= 75 ? 'success' : 'warning', 4000);
     }
     interval = setInterval(() => {
-      tLeft--; const el = c.querySelector('#match-timer'); if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
+      tLeft--;
+      const el = c.querySelector('#match-timer');
+      if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
       if (tLeft <= 0) end('timeout');
     }, 1000);
   }
@@ -554,20 +601,30 @@ const Lesson = (() => {
   function renderScenario(cid, cfg) {
     const c = document.getElementById(cid);
     if (!c) return;
-    const { scenarios, timeLimit, pointsCorrect = 8, badgeId, badgeName, badgeIcon } = cfg;
+    const scenarios = cfg.scenarios;
+    const timeLimit = cfg.timeLimit;
+    const pointsCorrect = cfg.pointsCorrect || 8;
+    const badgeId = cfg.badgeId;
+    const badgeName = cfg.badgeName;
+    const badgeIcon = cfg.badgeIcon;
     let i = 0, correct = 0, done = false, tLeft = timeLimit, interval = null;
-    c.innerHTML = `<div class="activity-header"><span class="activity-title">🎯 Scenario</span><span class="activity-timer" id="scen-t">${APP.formatTime(tLeft)}</span></div><div id="scen-body"></div>`;
+
+    c.innerHTML = '<div class="activity-header"><span class="activity-title">🎯 Scenario</span><span class="activity-timer" id="scen-t">' + APP.formatTime(tLeft) + '</span></div><div id="scen-body"></div>';
     renderCard();
+
     interval = setInterval(() => {
-      tLeft--; const el = c.querySelector('#scen-t'); if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
+      tLeft--;
+      const el = c.querySelector('#scen-t');
+      if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
       if (tLeft <= 0) end('timeout');
     }, 1000);
+
     function renderCard() {
       if (done) return;
       if (i >= scenarios.length) return end('complete');
       const sc = scenarios[i];
       const b = c.querySelector('#scen-body');
-      b.innerHTML = `<div class="scenario-card"><p class="scenario-text">${sc.text}</p><div class="choice-row" id="cr"></div></div><div class="text-center mt-md"><span class="badge badge-info">${i + 1} / ${scenarios.length}</span></div>`;
+      b.innerHTML = '<div class="scenario-card"><p class="scenario-text">' + sc.text + '</p><div class="choice-row" id="cr"></div></div><div class="text-center mt-md"><span class="badge badge-info">' + (i + 1) + ' / ' + scenarios.length + '</span></div>';
       const row = b.querySelector('#cr');
       sc.choices.forEach((ch) => {
         const btn = APP.el('button', { class: 'choice-btn', text: cleanLabel(ch.label) });
@@ -583,31 +640,37 @@ const Lesson = (() => {
       setTimeout(() => { i++; renderCard(); }, 1200);
     }
     function end(reason) {
-      if (done) return; done = true; clearInterval(interval);
+      if (done) return;
+      done = true;
+      clearInterval(interval);
       const pct = Math.round((correct / scenarios.length) * 100);
       if (pct >= 75) awardBadge(badgeId, badgeName, badgeIcon);
       if (window.ActivityGate) window.ActivityGate.completeWithScore(cid, pct);
-      APP.toast(pct >= 75 ? `🎉 Passed ${pct}%` : `📖 Score ${pct}% — need 75%`, pct >= 75 ? 'success' : 'warning', 4000);
+      APP.toast(pct >= 75 ? '🎉 Passed ' + pct + '%' : '📖 Score ' + pct + '% — need 75%', pct >= 75 ? 'success' : 'warning', 4000);
     }
   }
 
   function renderEscape(cid, cfg) {
     const c = document.getElementById(cid);
     if (!c) return;
-    const { questions, badgeId, badgeName, badgeIcon, lives = 3, timeLimit } = cfg;
+    const questions = cfg.questions;
+    const badgeId = cfg.badgeId;
+    const badgeName = cfg.badgeName;
+    const badgeIcon = cfg.badgeIcon;
+    const lives = cfg.lives || 3;
+    const timeLimit = cfg.timeLimit;
     let cl = lives, keys = [], i = 0, locked = false, done = false, tLeft = timeLimit, interval = null;
+
     intro();
     interval = setInterval(() => {
-      tLeft--; const el = document.getElementById('esc-t'); if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
+      tLeft--;
+      const el = document.getElementById('esc-t');
+      if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
       if (tLeft <= 0) end('timeout');
     }, 1000);
 
     function intro() {
-      c.innerHTML = `
-        <div class="escape-container">
-          <div class="escape-header"><div><div class="score-bar-label">Formative</div><div style="font-size:1.2rem;font-weight:600;">🔐 Escape</div></div><div style="text-align:right;"><div class="escape-lives" id="esc-l">${'❤️'.repeat(cl)}</div><div class="activity-timer" id="esc-t" style="font-size:0.9rem;margin-top:4px;">${APP.formatTime(tLeft)}</div></div></div>
-          <div class="escape-result"><div class="result-emoji">🗝️</div><div class="result-title">Unlock ${questions.length} keys</div><p class="result-message">Need 75% to pass.</p><button id="esc-go" class="btn btn-accent" style="margin-top:16px;">Begin →</button></div>
-        </div>`;
+      c.innerHTML = '<div class="escape-container"><div class="escape-header"><div><div class="score-bar-label">Formative</div><div style="font-size:1.2rem;font-weight:600;">🔐 Escape</div></div><div style="text-align:right;"><div class="escape-lives" id="esc-l">' + '❤️'.repeat(cl) + '</div><div class="activity-timer" id="esc-t" style="font-size:0.9rem;margin-top:4px;">' + APP.formatTime(tLeft) + '</div></div></div><div class="escape-result"><div class="result-emoji">🗝️</div><div class="result-title">Unlock ' + questions.length + ' keys</div><p class="result-message">Need 75% to pass.</p><button id="esc-go" class="btn btn-accent" style="margin-top:16px;">Begin →</button></div></div>';
       c.querySelector('#esc-go').onclick = showQ;
     }
 
@@ -615,26 +678,26 @@ const Lesson = (() => {
       if (done) return;
       if (i >= questions.length) return end('complete');
       const q = questions[i];
-      c.innerHTML = `
-        <div class="escape-container">
-          <div class="escape-header"><div><div class="score-bar-label">Q${i + 1} / ${questions.length}</div></div><div style="text-align:right;"><div class="escape-lives">${'❤️'.repeat(cl)}${'🖤'.repeat(lives - cl)}</div><div class="activity-timer" id="esc-t" style="font-size:0.9rem;">${APP.formatTime(Math.max(0, tLeft))}</div></div></div>
-          <div class="escape-keys" style="justify-content:center;margin-bottom:12px;">${questions.map((_, j) => `<span class="key-icon ${keys.includes(j) ? 'earned' : ''}">🗝️</span>`).join('')}</div>
-          <div class="escape-question"><h4>${q.text}</h4><div class="escape-options" id="esc-o"></div></div>
-        </div>`;
+      c.innerHTML = '<div class="escape-container"><div class="escape-header"><div><div class="score-bar-label">Q' + (i + 1) + ' / ' + questions.length + '</div></div><div style="text-align:right;"><div class="escape-lives">' + '❤️'.repeat(cl) + '🖤'.repeat(lives - cl) + '</div><div class="activity-timer" id="esc-t" style="font-size:0.9rem;">' + APP.formatTime(Math.max(0, tLeft)) + '</div></div></div><div class="escape-keys" style="justify-content:center;margin-bottom:12px;">' + questions.map((_, j) => '<span class="key-icon ' + (keys.indexOf(j) !== -1 ? 'earned' : '') + '">🗝️</span>').join('') + '</div><div class="escape-question"><h4>' + q.text + '</h4><div class="escape-options" id="esc-o"></div></div></div>';
       const o = c.querySelector('#esc-o');
       q.choices.forEach((ch, j) => {
-        const b = APP.el('button', { class: 'escape-option', text: `${String.fromCharCode(65 + j)}. ${cleanLabel(ch.label)}` });
+        const b = APP.el('button', { class: 'escape-option', text: String.fromCharCode(65 + j) + '. ' + cleanLabel(ch.label) });
         b.onclick = () => ans(b, ch);
         o.appendChild(b);
       });
     }
 
     function ans(btn, ch) {
-      if (locked || done) return; locked = true;
+      if (locked || done) return;
+      locked = true;
       c.querySelectorAll('.escape-option').forEach((b) => b.disabled = true);
-      if (ch.correct) { btn.classList.add('correct'); keys.push(i); setTimeout(() => { i++; locked = false; showQ(); }, 900); }
-      else {
-        btn.classList.add('wrong'); cl--;
+      if (ch.correct) {
+        btn.classList.add('correct');
+        keys.push(i);
+        setTimeout(() => { i++; locked = false; showQ(); }, 900);
+      } else {
+        btn.classList.add('wrong');
+        cl--;
         const ci = questions[i].choices.findIndex((x) => x.correct);
         c.querySelectorAll('.escape-option')[ci].classList.add('correct');
         if (cl <= 0) setTimeout(() => end('outoflives'), 1200);
@@ -643,14 +706,16 @@ const Lesson = (() => {
     }
 
     function end(reason) {
-      if (done) return; done = true; clearInterval(interval);
+      if (done) return;
+      done = true;
+      clearInterval(interval);
       const pct = Math.round((keys.length / questions.length) * 100);
       if (pct >= 75) {
         if (cl === lives) awardBadge(badgeId, badgeName, badgeIcon);
         Store.markDayComplete(ctx.lrn, ctx.subject, ctx.week, ctx.day);
       }
       if (window.ActivityGate) window.ActivityGate.completeWithScore(cid, pct);
-      APP.toast(pct >= 75 ? `🎉 Passed ${pct}%` : `📖 Score ${pct}% — need 75%`, pct >= 75 ? 'success' : 'warning', 4000);
+      APP.toast(pct >= 75 ? '🎉 Passed ' + pct + '%' : '📖 Score ' + pct + '% — need 75%', pct >= 75 ? 'success' : 'warning', 4000);
     }
   }
 
