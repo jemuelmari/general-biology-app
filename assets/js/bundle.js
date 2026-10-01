@@ -1,12 +1,17 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.4.0
+   Version: 2.4.1
+   ------------------------------------------------------------
+   v2.4.1:
+   - FIX: Passed activities now show a "Practice Again" button
+     so students can re-enter completed activities.
+   - ActivityGate.reset() exposed for retake flow.
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.4.0',
+  VERSION: '2.4.1',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -296,10 +301,28 @@ const ActivityGate = (() => {
     }
   }
 
+  /**
+   * Reset a specific activity to "ready" so it can be retaken.
+   */
+  function resetActivity(id) {
+    if (!session) return;
+    const k = normalize(id);
+    session.states[k].status = 'ready';
+    save();
+    applyUI();
+    APP.toast('🔁 ' + titlesMap(k) + ' reset — you can try again', 'info', 3000);
+  }
+
   function reset(id) {
     if (!session) return;
     session.states[normalize(id)].status = 'ready';
     save(); applyUI();
+  }
+
+  function titlesMap(k) {
+    if (k === 'activity1') return 'Activity 1';
+    if (k === 'activity2') return 'Activity 2';
+    return 'Formative';
   }
 
   function applyUI() {
@@ -351,11 +374,34 @@ const ActivityGate = (() => {
     return e;
   }
 
+  /**
+   * FIXED: mkPassed now shows a "Practice Again" button.
+   */
   function mkPassed(sk, st) {
     const e = document.createElement('div');
     e.className = 'gate-overlay';
-    e.style.cssText = 'padding:24px;text-align:center;background:linear-gradient(135deg,#e8f5e9,#a5d6a7);border:2px solid #2e7d32;border-radius:8px;';
-    e.innerHTML = '<div style="font-size:2rem;">✅</div><div style="font-weight:700;margin-top:8px;color:#1b5e20;">Passed!</div><div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">Score: ' + st.score + '%</div>';
+    e.style.cssText = 'padding:28px 24px;text-align:center;background:linear-gradient(135deg,#e8f5e9,#a5d6a7);border:2px solid #2e7d32;border-radius:8px;';
+    e.innerHTML = `
+      <div style="font-size:2rem;">✅</div>
+      <div style="font-weight:700;margin-top:8px;color:#1b5e20;">Passed!</div>
+      <div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">
+        Score: ${st.score}% · Attempts: ${st.attempts || 1}
+      </div>
+      <button class="btn btn-outline" style="margin-top:16px;padding:10px 22px;border-color:#2e7d32;color:#1b5e20;background:#fff;" data-retake="${sk}">
+        🔁 Practice Again
+      </button>
+    `;
+    setTimeout(() => {
+      const btn = e.querySelector('[data-retake="' + sk + '"]');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const titles = { activity1: 'Activity 1', activity2: 'Activity 2', formative: 'Formative' };
+          if (confirm('Practice "' + titles[sk] + '" again?\n\nYour passing score is preserved — this is just for extra practice.')) {
+            resetActivity(sk);
+          }
+        });
+      }
+    }, 0);
     return e;
   }
 
@@ -388,7 +434,18 @@ const ActivityGate = (() => {
     return 'formative';
   }
 
-  return { init, markRunning, completeWithScore, reset, applyUI, PASS, isInitialized: () => inited, complete: (id) => completeWithScore(id, 100), applyLocks: applyUI };
+  return {
+    init,
+    markRunning,
+    completeWithScore,
+    reset,
+    resetActivity,
+    applyUI,
+    PASS,
+    isInitialized: () => inited,
+    complete: (id) => completeWithScore(id, 100),
+    applyLocks: applyUI
+  };
 })();
 
 /* ---------- SECTION 5: LESSON ENGINE ---------- */
