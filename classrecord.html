@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📋 Class Record</h1>
-        <span class="version">v2.1.0</span>
+        <span class="version">v2.4.1</span>
       </div>
       <nav class="teacher-nav">
         <a href="index.html">🎓 Student View</a>
@@ -32,7 +32,10 @@
           <div class="subtitle">SY 2026–2027 · Adjusted Transmutation (Raw 70 → 75)</div>
         </div>
         <div class="teacher-hero-actions">
-          <button id="btn-export-csv" style="background:rgba(255,255,255,0.95);color:#4a148c;padding:12px 20px;border-radius:10px;border:none;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+          <button id="btn-sync-backend" style="background:rgba(255,255,255,0.95);color:#0d47a1;padding:12px 20px;border-radius:10px;border:none;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+            ☁️ Sync from Backend
+          </button>
+          <button id="btn-export-csv" style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.6);padding:12px 20px;border-radius:10px;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
             📥 Export CSV
           </button>
           <button id="btn-print" style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.6);padding:12px 20px;border-radius:10px;font-weight:600;font-size:0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
@@ -41,6 +44,8 @@
         </div>
       </div>
     </div>
+
+    <div id="sync-status-bar" class="hidden" style="margin-bottom:20px;"></div>
 
     <div class="cr-tabs" id="cr-tabs">
       <button class="cr-tab active" data-tab="grades">📊 Grades</button>
@@ -171,15 +176,17 @@
   </main>
 
   <footer class="app-footer">
-    <p>Class Record · v2.1.0 · Aligned with DO 015, s. 2026</p>
+    <p>Class Record · v2.4.1 · Aligned with DO 015, s. 2026</p>
   </footer>
 
   <script src="config.js"></script>
   <script src="assets/js/app.js"></script>
   <script src="assets/js/store.js"></script>
+  <script src="assets/js/security.js"></script>
   <script src="assets/js/transmutation.js"></script>
   <script src="assets/js/activity-tracker.js"></script>
   <script src="assets/js/ui-helpers.js"></script>
+  <script src="assets/js/sync.js"></script>
   <script src="assets/js/classrecord.js"></script>
   <script src="assets/js/teacher-auth.js"></script>
 </body>
