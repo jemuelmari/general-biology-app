@@ -1,6 +1,10 @@
 /* ============================================================
    classrecord.js — Gradebook, reports, transmutation
-   Version: 2.1.0
+   Version: 2.2.0
+   ------------------------------------------------------------
+   v2.2.0:
+   - "Sync from Backend" button — one-click import from the
+     Google Sheet into local storage.
    ============================================================ */
 
 (() => {
@@ -10,7 +14,7 @@
   let currentSection = '';
   let currentSex = '';
   let currentSearch = '';
-  let currentSort = 'last'; // 'last' | 'first'
+  let currentSort = 'last';
 
   const WEIGHTS = { ww: 0.25, pt: 0.50, ex: 0.25 };
   const EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
@@ -91,12 +95,8 @@
 
   function applyFilters(students) {
     let result = students;
-    if (currentSection) {
-      result = result.filter((s) => s.user.section === currentSection);
-    }
-    if (currentSex) {
-      result = result.filter((s) => APP.getSexValue(s.user.sex) === currentSex);
-    }
+    if (currentSection) result = result.filter((s) => s.user.section === currentSection);
+    if (currentSex) result = result.filter((s) => APP.getSexValue(s.user.sex) === currentSex);
     if (currentSearch) {
       const q = currentSearch.toLowerCase();
       result = result.filter((s) =>
@@ -105,7 +105,6 @@
           .includes(q)
       );
     }
-    // Alphabetical sort
     return APP.sortStudents(result, currentSort, 'asc');
   }
 
@@ -166,12 +165,197 @@
   })();
 
   /* ============================================================
+     NEW: Sync from Backend
+     ============================================================ */
+  const syncBtn = document.getElementById('btn-sync-backend');
+  const syncBar = document.getElementById('sync-status-bar');
+
+  if (syncBtn) {
+    syncBtn.addEventListener('click', doBackendSync);
+  }
+
+  async function doBackendSync() {
+    if (typeof Sync === 'undefined' || !Sync.fetchAllStudentsFromBackend) {
+      showSyncStatus('danger', '❌ Sync module not loaded. Check that sync.js is present.');
+      return;
+    }
+    if (!Sync.backendEnabled()) {
+      showSyncStatus('warning', '⚠️ Backend not configured. Set CONFIG.BACKEND_URL in config.js.');
+      return;
+    }
+
+    const token = prompt('Enter teacher token (password):');
+    if (!token) return;
+
+    syncBtn.disabled = true;
+    syncBtn.textContent = '⏳ Fetching...';
+    showSyncStatus('info', '☁️ Fetching students from Google Sheet...');
+
+    try {
+      const res = await Sync.fetchAllStudentsFromBackend(token);
+
+      if (!res.ok) {
+        showSyncStatus('danger', '❌ Backend error: ' + (res.error || 'Unknown'));
+        return;
+      }
+
+      if (res.count === 0) {
+        showSyncStatus('warning', '⚠️ Backend has 0 students. No data to import.');
+        return;
+      }
+
+      showSyncStatus('info', `📥 Importing ${res.count} student(s)...`);
+      const result = await importStudentsFromBackend(res.students);
+
+      showSyncStatus('success',
+        `✅ Imported ${result.imported} student(s). ` +
+        `Scores merged: ${result.scoresImported}. ` +
+        `Progress days merged: ${result.progressMerged}.`
+      );
+
+      // Refresh the current view
+      renderGrades();
+      if (!panels.reports.classList.contains('hidden')) renderReports();
+      if (!panels.activities.classList.contains('hidden')) renderActivityTab();
+
+      // Trigger a UI refresher
+      setTimeout(() => {
+        showSyncStatus('success', `✅ Done. Refreshed at ${new Date().toLocaleTimeString()}`);
+      }, 1500);
+
+    } catch (err) {
+      showSyncStatus('danger', '❌ Import failed: ' + err.message);
+    } finally {
+      syncBtn.disabled = false;
+      syncBtn.textContent = '☁️ Sync from Backend';
+    }
+  }
+
+  /**
+   * Merge backend students into local storage.
+   * Reuses the same logic as Sync Center — IDs are merged, not overwritten.
+   */
+  async function importStudentsFromBackend(students) {
+    let imported = 0, scoresImported = 0, progressMerged = 0;
+
+    for (const s of students) {
+      if (!s.lrn) continue;
+
+      // --- Merge user record ---
+      const existing = Store.getUser(s.lrn);
+      const merged = existing ? { ...existing, ...{
+        lastName: s.lastName || existing.lastName,
+        firstName: s.firstName || existing.firstName,
+        middleName: s.middleName || existing.middleName,
+        gradeLevel: s.gradeLevel || existing.gradeLevel,
+        section: s.section || existing.section
+      }} : {
+        lrn: s.lrn,
+        lastName: s.lastName || '',
+        firstName: s.firstName || '',
+        middleName: s.middleName || '',
+        gradeLevel: s.gradeLevel || '',
+        section: s.section || ''
+      };
+      Store.saveUser(merged);
+      imported++;
+
+      // --- Merge progress ---
+      if (s.progress) {
+        const currentProg = Store.getProgress(s.lrn);
+        ['biol1', 'biol2'].forEach((subj) => {
+          if (!s.progress[subj]) return;
+          if (!currentProg[subj]) currentProg[subj] = { weeks: {}, completed: [] };
+          if (!currentProg[subj].weeks) currentProg[subj].weeks = {};
+          if (!Array.isArray(currentProg[subj].completed)) currentProg[subj].completed = [];
+
+          const incomingWeeks = s.progress[subj].weeks || {};
+          Object.keys(incomingWeeks).forEach((w) => {
+            if (!currentProg[subj].weeks[w]) currentProg[subj].weeks[w] = {};
+            Object.assign(currentProg[subj].weeks[w], incomingWeeks[w]);
+          });
+
+          const incoming = s.progress[subj].completed || [];
+          const before = currentProg[subj].completed.length;
+          currentProg[subj].completed = Array.from(new Set([...currentProg[subj].completed, ...incoming]));
+          progressMerged += currentProg[subj].completed.length - before;
+        });
+        Store.saveProgress(s.lrn, currentProg);
+      }
+
+      // --- Merge scores ---
+      if (s.scores) {
+        const currentScores = Store.getScores(s.lrn);
+        ['biol1', 'biol2'].forEach((subj) => {
+          if (!s.scores[subj]) return;
+          if (!currentScores[subj]) currentScores[subj] = {};
+
+          ['quizzes', 'st', 'pt'].forEach((type) => {
+            if (s.scores[subj][type]) {
+              const before = Object.keys(currentScores[subj][type] || {}).length;
+              currentScores[subj][type] = {
+                ...(currentScores[subj][type] || {}),
+                ...s.scores[subj][type]
+              };
+              scoresImported += Object.keys(currentScores[subj][type]).length - before;
+            }
+          });
+
+          // Term Exam is a single object keyed by assessmentId
+          if (s.scores[subj].te) {
+            const before = Object.keys(currentScores[subj].te || {}).length;
+            currentScores[subj].te = {
+              ...(currentScores[subj].te || {}),
+              ...s.scores[subj].te
+            };
+            scoresImported += Object.keys(currentScores[subj].te).length - before;
+          }
+        });
+        try {
+          localStorage.setItem(`gba_v1_scores_${s.lrn}`, JSON.stringify(currentScores));
+        } catch (e) { /* quota exceeded — skip */ }
+      }
+
+      // --- Merge badges ---
+      if (s.badges) {
+        const currentBadges = Store.getBadges(s.lrn);
+        ['biol1', 'biol2'].forEach((subj) => {
+          if (s.badges[subj]) {
+            currentBadges[subj] = Array.from(new Set([
+              ...(currentBadges[subj] || []),
+              ...s.badges[subj]
+            ]));
+          }
+        });
+        try {
+          localStorage.setItem(`gba_v1_badges_${s.lrn}`, JSON.stringify(currentBadges));
+        } catch (e) { /* silent */ }
+      }
+    }
+
+    return { imported, scoresImported, progressMerged };
+  }
+
+  function showSyncStatus(type, message) {
+    if (!syncBar) return;
+    syncBar.classList.remove('hidden');
+    const colors = {
+      success: { bg: '#e8f5e9', border: '#2e7d32', text: '#1b5e20' },
+      warning: { bg: '#fff3e0', border: '#ed6c02', text: '#e65100' },
+      danger:  { bg: '#ffebee', border: '#c62828', text: '#b71c1c' },
+      info:    { bg: '#e1f5fe', border: '#0277bd', text: '#01579b' }
+    };
+    const c = colors[type] || colors.info;
+    syncBar.style.cssText = `padding:14px 18px;background:${c.bg};border-left:4px solid ${c.border};color:${c.text};border-radius:10px;font-size:0.9rem;font-weight:500;`;
+    syncBar.textContent = message;
+  }
+
+  /* ============================================================
      TAB 1: GRADES
      ============================================================ */
   function renderGrades() {
     const allStudents = getStudentsData();
     const students = applyFilters(allStudents);
-
     renderGradesStats(students);
     renderGradebookTable(students);
   }
@@ -179,12 +363,8 @@
   function renderGradesStats(students) {
     const withGrades = students.filter((s) => s.final > 0);
     const passing = withGrades.filter((s) => s.passing).length;
-    const avg = withGrades.length
-      ? withGrades.reduce((a, s) => a + s.final, 0) / withGrades.length
-      : 0;
-    const highest = withGrades.length
-      ? Math.max(...withGrades.map((s) => s.final))
-      : 0;
+    const avg = withGrades.length ? withGrades.reduce((a, s) => a + s.final, 0) / withGrades.length : 0;
+    const highest = withGrades.length ? Math.max(...withGrades.map((s) => s.final)) : 0;
     const maleCount = students.filter((s) => APP.getSexValue(s.user.sex) === 'Male').length;
     const femaleCount = students.filter((s) => APP.getSexValue(s.user.sex) === 'Female').length;
 
@@ -257,24 +437,15 @@
     `;
 
     if (!students.length) {
-      body.innerHTML = `
-        <tr><td colspan="12" style="text-align:center;padding:40px;color:#90a4ae;">
-          No students match the current filters.
-        </td></tr>
-      `;
+      body.innerHTML = `<tr><td colspan="12" style="text-align:center;padding:40px;color:#90a4ae;">No students match the current filters.</td></tr>`;
       return;
     }
 
     body.innerHTML = students.map((s) => {
-      const scoreCell = (v) => v === '—'
-        ? '<td class="empty-cell">—</td>'
-        : `<td class="grade-cell">${v}</td>`;
+      const scoreCell = (v) => v === '—' ? '<td class="empty-cell">—</td>' : `<td class="grade-cell">${v}</td>`;
 
       const scores = Store.getScores(s.user.lrn)[currentSubject] || {};
-      const quizIds = ['quiz1', 'quiz2', 'quiz3'].map((id) => {
-        const key = `${currentSubject}-${id}`;
-        return scores.quizzes?.[key];
-      });
+      const quizIds = ['quiz1', 'quiz2', 'quiz3'].map((id) => scores.quizzes?.[`${currentSubject}-${id}`]);
 
       const colQuiz = (q) => {
         if (!q || !q.total) return '<td class="empty-cell">—</td>';
@@ -314,58 +485,29 @@
     all = APP.sortStudents(all, 'last', 'asc');
 
     let filtered = all;
-    if (filter === 'behind') {
-      filtered = all.filter((s) => s.summary[subject].completionPct < 50);
-    } else if (filter === 'ontrack') {
-      filtered = all.filter((s) => {
-        const pct = s.summary[subject].completionPct;
-        return pct >= 50 && pct < 90;
-      });
-    } else if (filter === 'complete') {
-      filtered = all.filter((s) => s.summary[subject].completionPct >= 90);
-    }
+    if (filter === 'behind') filtered = all.filter((s) => s.summary[subject].completionPct < 50);
+    else if (filter === 'ontrack') filtered = all.filter((s) => {
+      const pct = s.summary[subject].completionPct;
+      return pct >= 50 && pct < 90;
+    });
+    else if (filter === 'complete') filtered = all.filter((s) => s.summary[subject].completionPct >= 90);
 
     const avgCompletion = all.length
-      ? Math.round(all.reduce((a, s) => a + s.summary[subject].completionPct, 0) / all.length)
-      : 0;
+      ? Math.round(all.reduce((a, s) => a + s.summary[subject].completionPct, 0) / all.length) : 0;
     const totalActivities = all.reduce((a, s) => a + s.summary[subject].activitiesDone, 0);
     const totalBadges = all.reduce((a, s) => a + s.summary[subject].badgesEarned, 0);
     const behind = all.filter((s) => s.summary[subject].completionPct < 50).length;
 
     document.getElementById('at-stats').innerHTML = `
-      <div class="cr-stat-card blue">
-        <div class="cs-icon">👥</div>
-        <div class="cs-value">${all.length}</div>
-        <div class="cs-label">Students</div>
-      </div>
-      <div class="cr-stat-card green">
-        <div class="cs-icon">📊</div>
-        <div class="cs-value">${avgCompletion}%</div>
-        <div class="cs-label">Avg Completion</div>
-      </div>
-      <div class="cr-stat-card amber">
-        <div class="cs-icon">🎮</div>
-        <div class="cs-value">${totalActivities}</div>
-        <div class="cs-label">Activities Done</div>
-      </div>
-      <div class="cr-stat-card amber">
-        <div class="cs-icon">🏆</div>
-        <div class="cs-value">${totalBadges}</div>
-        <div class="cs-label">Badges Earned</div>
-      </div>
-      <div class="cr-stat-card ${behind > 0 ? 'red' : 'green'}">
-        <div class="cs-icon">⚠️</div>
-        <div class="cs-value">${behind}</div>
-        <div class="cs-label">Behind &lt; 50%</div>
-      </div>
+      <div class="cr-stat-card blue"><div class="cs-icon">👥</div><div class="cs-value">${all.length}</div><div class="cs-label">Students</div></div>
+      <div class="cr-stat-card green"><div class="cs-icon">📊</div><div class="cs-value">${avgCompletion}%</div><div class="cs-label">Avg Completion</div></div>
+      <div class="cr-stat-card amber"><div class="cs-icon">🎮</div><div class="cs-value">${totalActivities}</div><div class="cs-label">Activities Done</div></div>
+      <div class="cr-stat-card amber"><div class="cs-icon">🏆</div><div class="cs-value">${totalBadges}</div><div class="cs-label">Badges Earned</div></div>
+      <div class="cr-stat-card ${behind > 0 ? 'red' : 'green'}"><div class="cs-icon">⚠️</div><div class="cs-value">${behind}</div><div class="cs-label">Behind &lt; 50%</div></div>
     `;
 
     if (!filtered.length) {
-      document.getElementById('at-table').innerHTML = `
-        <div style="padding:40px;text-align:center;color:#90a4ae;">
-          No students match this filter.
-        </div>
-      `;
+      document.getElementById('at-table').innerHTML = `<div style="padding:40px;text-align:center;color:#90a4ae;">No students match this filter.</div>`;
       return;
     }
 
@@ -397,15 +539,11 @@
                 <td style="text-align:center;">${sm.activitiesDone}</td>
                 <td>
                   ${UI.renderProgressBar(sm.completionPct)}
-                  <div style="text-align:right;font-size:0.75rem;color:${color};font-weight:700;margin-top:4px;">
-                    ${sm.completionPct}%
-                  </div>
+                  <div style="text-align:right;font-size:0.75rem;color:${color};font-weight:700;margin-top:4px;">${sm.completionPct}%</div>
                 </td>
                 <td style="text-align:center;">🏆 ${sm.badgesEarned}</td>
                 <td style="text-align:center;">⭐ ${sm.points}</td>
-                <td style="text-align:center;">
-                  ${UI.renderProgressRing(sm.completionPct, { size: 44, stroke: 5, color })}
-                </td>
+                <td style="text-align:center;">${UI.renderProgressRing(sm.completionPct, { size: 44, stroke: 5, color })}</td>
               </tr>
             `;
           }).join('')}
@@ -444,19 +582,12 @@
       plMap[lvl.level] = (plMap[lvl.level] || 0) + 1;
     });
 
-    const avg = (key) => withGrades.length
-      ? (withGrades.reduce((a, s) => a + s[key], 0) / withGrades.length).toFixed(1)
-      : '—';
+    const avg = (key) => withGrades.length ? (withGrades.reduce((a, s) => a + s[key], 0) / withGrades.length).toFixed(1) : '—';
 
-    // Sex breakdown
     const maleGrades = withGrades.filter((s) => APP.getSexValue(s.user.sex) === 'Male');
     const femaleGrades = withGrades.filter((s) => APP.getSexValue(s.user.sex) === 'Female');
-    const maleAvg = maleGrades.length
-      ? (maleGrades.reduce((a, s) => a + s.final, 0) / maleGrades.length).toFixed(1)
-      : '—';
-    const femaleAvg = femaleGrades.length
-      ? (femaleGrades.reduce((a, s) => a + s.final, 0) / femaleGrades.length).toFixed(1)
-      : '—';
+    const maleAvg = maleGrades.length ? (maleGrades.reduce((a, s) => a + s.final, 0) / maleGrades.length).toFixed(1) : '—';
+    const femaleAvg = femaleGrades.length ? (femaleGrades.reduce((a, s) => a + s.final, 0) / femaleGrades.length).toFixed(1) : '—';
 
     const reportsGrid = document.getElementById('reports-grid');
     reportsGrid.innerHTML = `
@@ -464,80 +595,45 @@
         <h4>📊 Grade Distribution</h4>
         ${dist.map((b) => UI.renderDistributionRow(b.label, b.count, withGrades.length, b.color)).join('')}
       </div>
-
       <div class="report-card">
         <h4>🎓 Proficiency Level</h4>
         ${Object.entries(plMap).length
-          ? Object.entries(plMap).map(([lvl, n]) =>
-              UI.renderDistributionRow(lvl, n, withGrades.length, 'linear-gradient(90deg, #6a1b9a, #ab47bc)')
-            ).join('')
+          ? Object.entries(plMap).map(([lvl, n]) => UI.renderDistributionRow(lvl, n, withGrades.length, 'linear-gradient(90deg, #6a1b9a, #ab47bc)')).join('')
           : '<div style="color:#90a4ae;font-size:0.85rem;">No data yet.</div>'}
       </div>
-
       <div class="report-card">
         <h4>♂️♀️ Sex Comparison</h4>
         <div class="distribution-row">
           <span class="distribution-label">Male (${maleGrades.length})</span>
-          <div class="distribution-bar">
-            <div class="distribution-fill" style="width:${maleAvg}%;background:linear-gradient(90deg, #0d47a1, #42a5f5);">${maleAvg}</div>
-          </div>
+          <div class="distribution-bar"><div class="distribution-fill" style="width:${maleAvg}%;background:linear-gradient(90deg, #0d47a1, #42a5f5);">${maleAvg}</div></div>
         </div>
         <div class="distribution-row">
           <span class="distribution-label">Female (${femaleGrades.length})</span>
-          <div class="distribution-bar">
-            <div class="distribution-fill" style="width:${femaleAvg}%;background:linear-gradient(90deg, #ad1457, #ec407a);">${femaleAvg}</div>
-          </div>
+          <div class="distribution-bar"><div class="distribution-fill" style="width:${femaleAvg}%;background:linear-gradient(90deg, #ad1457, #ec407a);">${femaleAvg}</div></div>
         </div>
       </div>
-
       <div class="report-card">
         <h4>📈 Component Averages</h4>
-        <div class="distribution-row">
-          <span class="distribution-label">WW (25%)</span>
-          <div class="distribution-bar">
-            <div class="distribution-fill" style="width:${avg('ww')}%;">${avg('ww')}</div>
-          </div>
-        </div>
-        <div class="distribution-row">
-          <span class="distribution-label">PT (50%)</span>
-          <div class="distribution-bar">
-            <div class="distribution-fill" style="width:${avg('pt')}%;background:linear-gradient(90deg, #0277bd, #42a5f5);">${avg('pt')}</div>
-          </div>
-        </div>
-        <div class="distribution-row">
-          <span class="distribution-label">EX (25%)</span>
-          <div class="distribution-bar">
-            <div class="distribution-fill" style="width:${avg('ex')}%;background:linear-gradient(90deg, #ed6c02, #ffb74d);">${avg('ex')}</div>
-          </div>
-        </div>
+        <div class="distribution-row"><span class="distribution-label">WW (25%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('ww')}%;">${avg('ww')}</div></div></div>
+        <div class="distribution-row"><span class="distribution-label">PT (50%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('pt')}%;background:linear-gradient(90deg, #0277bd, #42a5f5);">${avg('pt')}</div></div></div>
+        <div class="distribution-row"><span class="distribution-label">EX (25%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('ex')}%;background:linear-gradient(90deg, #ed6c02, #ffb74d);">${avg('ex')}</div></div></div>
         <div class="distribution-row" style="margin-top:12px;border-top:2px solid #f3e5f5;padding-top:12px;">
           <span class="distribution-label" style="font-weight:800;">Final</span>
-          <div class="distribution-bar">
-            <div class="distribution-fill" style="width:${avg('final')}%;background:linear-gradient(90deg, #1b5e20, #4caf50);font-weight:800;">${avg('final')}</div>
-          </div>
+          <div class="distribution-bar"><div class="distribution-fill" style="width:${avg('final')}%;background:linear-gradient(90deg, #1b5e20, #4caf50);font-weight:800;">${avg('final')}</div></div>
         </div>
       </div>
     `;
 
-    // Per-student table
     const head = document.getElementById('report-head');
     const body = document.getElementById('report-body');
 
     head.innerHTML = `
       <tr>
-        <th>Student</th>
-        <th style="text-align:center;">Sex</th>
-        <th style="text-align:center;">Section</th>
-        <th style="text-align:center;">WW</th>
-        <th style="text-align:center;">PT</th>
-        <th style="text-align:center;">ST1</th>
-        <th style="text-align:center;">ST2</th>
-        <th style="text-align:center;">TE</th>
-        <th style="text-align:center;">EX</th>
-        <th style="text-align:center;">Raw</th>
-        <th style="text-align:center;">Final</th>
-        <th style="text-align:center;">PL</th>
-        <th style="text-align:center;">Status</th>
+        <th>Student</th><th style="text-align:center;">Sex</th><th style="text-align:center;">Section</th>
+        <th style="text-align:center;">WW</th><th style="text-align:center;">PT</th>
+        <th style="text-align:center;">ST1</th><th style="text-align:center;">ST2</th><th style="text-align:center;">TE</th><th style="text-align:center;">EX</th>
+        <th style="text-align:center;">Raw</th><th style="text-align:center;">Final</th>
+        <th style="text-align:center;">PL</th><th style="text-align:center;">Status</th>
       </tr>
     `;
 
@@ -555,13 +651,9 @@
         <td style="text-align:center;color:#90a4ae;font-size:0.8rem;">${s.rawFinal}</td>
         <td style="text-align:center;font-weight:800;color:${s.passing ? '#2e7d32' : '#c62828'};font-size:0.95rem;">${s.final}</td>
         <td style="text-align:center;">${UI.renderPLBadge(s.final)}</td>
-        <td style="text-align:center;">
-          ${s.passing ? '<span class="status-badge pass">✓</span>' : '<span class="status-badge fail">✗</span>'}
-        </td>
+        <td style="text-align:center;">${s.passing ? '<span class="status-badge pass">✓</span>' : '<span class="status-badge fail">✗</span>'}</td>
       </tr>
-    `).join('') || `
-      <tr><td colspan="13" style="text-align:center;padding:40px;color:#90a4ae;">No data yet.</td></tr>
-    `;
+    `).join('') || `<tr><td colspan="13" style="text-align:center;padding:40px;color:#90a4ae;">No data yet.</td></tr>`;
   }
 
   /* ============================================================
@@ -582,10 +674,7 @@
 
     tbody.innerHTML = rows.map((chunk) => `
       <tr>
-        ${chunk.map((e) => e
-          ? `<td class="raw">${e.raw}</td><td class="final">${e.fin}</td>`
-          : '<td></td><td></td>'
-        ).join('')}
+        ${chunk.map((e) => e ? `<td class="raw">${e.raw}</td><td class="final">${e.fin}</td>` : '<td></td><td></td>').join('')}
       </tr>
     `).join('');
   }
@@ -595,20 +684,11 @@
      ============================================================ */
   document.getElementById('btn-export-csv').addEventListener('click', () => {
     const students = applyFilters(getStudentsData());
-    const headers = [
-      'LRN', 'Last Name', 'First Name', 'Middle Name', 'Sex', 'Grade', 'Section',
-      'WW', 'PT', 'ST1', 'ST2', 'TE', 'EX', 'Raw Final', 'Transmuted', 'Status'
-    ];
+    const headers = ['LRN', 'Last Name', 'First Name', 'Middle Name', 'Sex', 'Grade', 'Section', 'WW', 'PT', 'ST1', 'ST2', 'TE', 'EX', 'Raw Final', 'Transmuted', 'Status'];
     const rows = students.map((s) => [
-      s.user.lrn,
-      s.user.lastName,
-      s.user.firstName,
-      s.user.middleName || '',
-      APP.getSexValue(s.user.sex) || '',
-      s.user.gradeLevel,
-      s.user.section,
-      s.ww, s.pt, s.st1, s.st2, s.te, s.ex,
-      s.rawFinal, s.final,
+      s.user.lrn, s.user.lastName, s.user.firstName, s.user.middleName || '',
+      APP.getSexValue(s.user.sex) || '', s.user.gradeLevel, s.user.section,
+      s.ww, s.pt, s.st1, s.st2, s.te, s.ex, s.rawFinal, s.final,
       s.passing ? 'Passing' : 'Failing'
     ]);
     const filename = `ClassRecord_${currentSubject}_${new Date().toISOString().slice(0, 10)}.csv`;
