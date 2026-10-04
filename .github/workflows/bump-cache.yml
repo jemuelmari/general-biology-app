@@ -1,0 +1,205 @@
+name: Bump cache-bust versions
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      # Trigger when any core JS file changes
+      - 'assets/js/app.js'
+      - 'assets/js/store.js'
+      - 'assets/js/security.js'
+      - 'assets/js/transmutation.js'
+      - 'assets/js/sync.js'
+      - 'assets/js/bundle.js'
+      - 'assets/js/lesson-engine.js'
+      - 'assets/js/quiz-engine.js'
+      - 'assets/js/dashboard.js'
+      - 'assets/js/teacher.js'
+      - 'assets/js/teacher-auth.js'
+      - 'assets/js/classrecord.js'
+      - 'assets/js/activity-tracker.js'
+      - 'assets/js/ui-helpers.js'
+      - 'assets/js/auth.js'
+      - 'assets/js/backup.js'
+      - 'config.js'
+      - '.github/workflows/bump-cache.yml'
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compute new version string
+        id: ver
+        run: |
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          echo "VERSION=2.4.2-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          echo "New version: 2.4.2-${SHORT_SHA}"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bump + fix script injection
+        env:
+          NEW_VERSION: ${{ steps.ver.outputs.VERSION }}
+        run: |
+          python3 << 'PYEOF'
+          import os
+          import re
+
+          NEW_VERSION = os.environ['NEW_VERSION']
+          print(f'New version: {NEW_VERSION}')
+          print()
+
+          # ============================================================
+          # Step 1 — Bump existing ?v= strings everywhere
+          # ============================================================
+          bumped = 0
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
+              for fname in files:
+                  if not fname.endswith('.html'):
+                      continue
+                  path = os.path.join(root, fname)
+                  with open(path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+                  new_content = re.sub(r'\?v=[a-zA-Z0-9._-]+', f'?v={NEW_VERSION}', content)
+                  if new_content != content:
+                      with open(path, 'w', encoding='utf-8') as f:
+                          f.write(new_content)
+                      bumped += 1
+          print(f'📊 Bumped existing ?v=: {bumped} HTML files')
+          print()
+
+          # ============================================================
+          # Step 2 — Ensure sync.js + security.js are loaded on quiz pages
+          #          under /student/assessments/
+          # ============================================================
+          fixed = 0
+          skipped = 0
+          for root, dirs, files in os.walk('./student'):
+              dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
+              for fname in files:
+                  if not fname.endswith('.html'):
+                      continue
+                  path = os.path.join(root, fname)
+                  normalized = path.replace('\\', '/')
+                  if '/assessments/' not in normalized:
+                      continue
+
+                  with open(path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+
+                  if 'quiz-engine.js' not in content:
+                      continue
+
+                  # Compute correct relative path
+                  if normalized.startswith('./'):
+                      normalized_dir = normalized[2:]
+                  else:
+                      normalized_dir = normalized
+                  dir_parts = normalized_dir.split('/')[:-1]
+                  levels_up = len(dir_parts)
+                  rel = '../' * levels_up
+
+                  # Remove ANY existing sync.js / security.js lines
+                  content = re.sub(r'[ \t]*<script src="[^"]*sync\.js[^"]*"></script>\s*\n', '', content)
+                  content = re.sub(r'[ \t]*<script src="[^"]*security\.js[^"]*"></script>\s*\n', '', content)
+
+                  # Insert correct lines before quiz-engine.js
+                  lines = content.split('\n')
+                  new_lines = []
+                  inserted = False
+                  for line in lines:
+                      if 'quiz-engine.js' in line and not inserted:
+                          indent = line[:len(line) - len(line.lstrip())]
+                          new_lines.append(f'{indent}<script src="{rel}assets/js/security.js?v={NEW_VERSION}"></script>')
+                          new_lines.append(f'{indent}<script src="{rel}assets/js/sync.js?v={NEW_VERSION}"></script>')
+                          inserted = True
+                      new_lines.append(line)
+
+                  new_content = '\n'.join(new_lines)
+                  if new_content != content:
+                      with open(path, 'w', encoding='utf-8') as f:
+                          f.write(new_content)
+                      fixed += 1
+                      print(f'  🔧 Fixed ({rel}): {path}')
+                  else:
+                      skipped += 1
+          print()
+          print(f'📊 Fixed: {fixed} quiz pages')
+          print(f'📊 Skipped: {skipped} quiz pages')
+          print()
+
+          # ============================================================
+          # Step 3 — Add ?v= to scripts missing it
+          # ============================================================
+          added = 0
+          scripts = [
+              'config.js',
+              'assets/js/app.js',
+              'assets/js/store.js',
+              'assets/js/security.js',
+              'assets/js/transmutation.js',
+              'assets/js/sync.js',
+              'assets/js/backup.js',
+              'assets/js/dashboard.js',
+              'assets/js/quiz-engine.js',
+              'assets/js/bundle.js',
+              'assets/js/lesson-engine.js',
+              'assets/js/activity-tracker.js',
+              'assets/js/ui-helpers.js',
+              'assets/js/teacher.js',
+              'assets/js/teacher-auth.js',
+              'assets/js/classrecord.js',
+              'assets/js/auth.js',
+              'assets/js/profile.js'
+          ]
+
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
+              for fname in files:
+                  if not fname.endswith('.html'):
+                      continue
+                  path = os.path.join(root, fname)
+                  with open(path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+                  orig = content
+
+                  for s in scripts:
+                      escaped_name = s.replace('.', r'\.').replace('/', r'\/')
+                      # Match src="...<s>" with no ?v= (right before closing quote)
+                      pattern = r'(src="[^"]*' + escaped_name + r')(")'
+                      replacement = r'\1?v=' + NEW_VERSION + r'\2'
+                      content = re.sub(pattern, replacement, content)
+
+                  if content != orig:
+                      with open(path, 'w', encoding='utf-8') as f:
+                          f.write(content)
+                      added += 1
+          print(f'📊 Files with newly-added ?v=: {added}')
+          print()
+          print('✅ Done')
+          PYEOF
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: cache-bust for v${{ steps.ver.outputs.VERSION }}"
+            git push
+          fi
