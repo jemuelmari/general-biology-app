@@ -1,12 +1,12 @@
 /* ============================================================
-   sync.js — Sync Code + JSON payload generation & verification
-   Version: 1.6.0
+   sync.js — Sync Code + JSON payload + Unlock system
+   Version: 1.7.0
    ------------------------------------------------------------
-   v1.6.0:
-   - Full queue system for failed pushes with auto-retry
-   - Periodic flush every 5 minutes
-   - Queue status API for UI display
-   - Retries up to 5 times per item before dropping
+   NEW in v1.7.0:
+   - pushUnlock(lrn, assessmentId, token, reason)
+   - pullUnlocks(lrn)
+   - markUnlockApplied(unlockId)
+   - applyPendingUnlocks(lrn) — high-level helper for student pages
    ============================================================ */
 
 const Sync = (() => {
@@ -16,7 +16,7 @@ const Sync = (() => {
   const QUEUE_KEY = `${NS}push_queue`;
   const MAX_QUEUE_SIZE = 100;
   const MAX_RETRIES = 5;
-  const AUTO_FLUSH_INTERVAL = 5 * 60 * 1000; // 5 min
+  const AUTO_FLUSH_INTERVAL = 5 * 60 * 1000;
 
   function backendEnabled() {
     return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
@@ -192,32 +192,19 @@ const Sync = (() => {
      ============================================================ */
 
   async function pushScoreToBackend(lrn, subject, type, assessmentId, scoreData) {
-    if (!backendEnabled()) {
-      console.log('[Sync] Backend disabled — score stored locally only');
-      return { ok: false, error: 'Backend disabled' };
-    }
-
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
 
     const payload = {
       lrn,
       student: {
-        lrn: user.lrn,
-        lastName: user.lastName,
-        firstName: user.firstName,
-        middleName: user.middleName || '',
-        gradeLevel: user.gradeLevel,
-        section: user.section
+        lrn: user.lrn, lastName: user.lastName, firstName: user.firstName,
+        middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section
       },
-      subject,
-      type,
-      assessmentId,
-      score: scoreData.score,
-      total: scoreData.total,
-      percent: scoreData.percent,
-      passed: scoreData.passed,
-      autoSubmitted: scoreData.autoSubmitted || false,
+      subject, type, assessmentId,
+      score: scoreData.score, total: scoreData.total, percent: scoreData.percent,
+      passed: scoreData.passed, autoSubmitted: scoreData.autoSubmitted || false,
       tabViolations: scoreData.tabViolations || 0,
       breakdown: scoreData.breakdown || [],
       timestamp: new Date().toISOString()
@@ -226,19 +213,9 @@ const Sync = (() => {
     const signature = await Security.sign(payload);
 
     try {
-      const res = await backendPost({
-        action: 'saveScore',
-        ...payload,
-        signature
-      });
-
-      if (res.ok) {
-        console.log('[Sync] ✅ Score pushed to backend:', assessmentId);
-      } else {
-        console.warn('[Sync] Score push rejected:', res.error);
-        _queueFailedPush('saveScore', { ...payload, signature });
-      }
-
+      const res = await backendPost({ action: 'saveScore', ...payload, signature });
+      if (res.ok) console.log('[Sync] ✅ Score pushed to backend:', assessmentId);
+      else { console.warn('[Sync] Score push rejected:', res.error); _queueFailedPush('saveScore', { ...payload, signature }); }
       return res;
     } catch (err) {
       console.warn('[Sync] Score push failed (queued for retry):', err.message);
@@ -248,11 +225,7 @@ const Sync = (() => {
   }
 
   async function pushProgressToBackend(lrn, subject) {
-    if (!backendEnabled()) {
-      console.log('[Sync] Backend disabled — progress stored locally only');
-      return { ok: false, error: 'Backend disabled' };
-    }
-
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
 
@@ -261,12 +234,8 @@ const Sync = (() => {
     const payload = {
       lrn,
       student: {
-        lrn: user.lrn,
-        lastName: user.lastName,
-        firstName: user.firstName,
-        middleName: user.middleName || '',
-        gradeLevel: user.gradeLevel,
-        section: user.section
+        lrn: user.lrn, lastName: user.lastName, firstName: user.firstName,
+        middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section
       },
       progress: subject ? { [subject]: progress[subject] } : progress,
       subject: subject || 'both'
@@ -275,19 +244,9 @@ const Sync = (() => {
     const signature = await Security.sign(payload);
 
     try {
-      const res = await backendPost({
-        action: 'saveProgress',
-        ...payload,
-        signature
-      });
-
-      if (res.ok) {
-        console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
-      } else {
-        console.warn('[Sync] Progress push rejected:', res.error);
-        _queueFailedPush('saveProgress', { ...payload, signature });
-      }
-
+      const res = await backendPost({ action: 'saveProgress', ...payload, signature });
+      if (res.ok) console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
+      else { console.warn('[Sync] Progress push rejected:', res.error); _queueFailedPush('saveProgress', { ...payload, signature }); }
       return res;
     } catch (err) {
       console.warn('[Sync] Progress push failed (queued for retry):', err.message);
@@ -297,35 +256,145 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     Queue system for failed pushes
+     UNLOCK SYSTEM (NEW)
      ============================================================ */
 
   /**
-   * Add a failed push to the queue for later retry.
+   * Teacher: push an unlock for a student's assessment.
+   * @param {string} lrn - student LRN
+   * @param {string} assessmentId - e.g., 'biol1-quiz1'
+   * @param {string} token - teacher password (plain text)
+   * @param {string} reason - optional reason
    */
+  async function pushUnlock(lrn, assessmentId, token, reason) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    if (!lrn || !assessmentId) return { ok: false, error: 'Missing lrn or assessmentId' };
+    if (!token) return { ok: false, error: 'Teacher token required' };
+
+    try {
+      const res = await backendPost({
+        action: 'pushUnlock',
+        token,
+        lrn,
+        assessmentId,
+        reason: reason || 'retake-approved',
+        pushedBy: 'teacher'
+      });
+      if (res.ok) {
+        console.log('[Sync] 🔓 Unlock pushed:', lrn, assessmentId);
+      } else {
+        console.warn('[Sync] Unlock push failed:', res.error);
+      }
+      return res;
+    } catch (err) {
+      console.warn('[Sync] Unlock push threw:', err.message);
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /**
+   * Student: fetch all pending unlocks for this LRN.
+   * Does not require a token.
+   */
+  async function pullUnlocks(lrn) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    if (!lrn) return { ok: false, error: 'Missing lrn' };
+
+    try {
+      const res = await backendPost({ action: 'pullUnlocks', lrn });
+      return res;
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /**
+   * Student: acknowledge that an unlock has been applied.
+   */
+  async function markUnlockApplied(unlockId) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    if (!unlockId) return { ok: false, error: 'Missing unlockId' };
+
+    try {
+      const res = await backendPost({ action: 'markUnlockApplied', unlockId });
+      return res;
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /**
+   * Student: high-level helper.
+   * Fetches pending unlocks, removes the local lock, marks as applied.
+   * Returns an array of { assessmentId, wasLocal } for toast/notifications.
+   */
+  async function applyPendingUnlocks(lrn) {
+    if (!backendEnabled()) return [];
+    if (!lrn) return [];
+
+    try {
+      const res = await pullUnlocks(lrn);
+      if (!res.ok || !res.records || !res.records.length) return [];
+
+      const applied = [];
+
+      for (const unlock of res.records) {
+        const aid = unlock.assessmentId;
+        if (!aid) continue;
+
+        // Determine if we had a local lock for this assessment
+        const hadLocalLock = Store.isAssessmentLocked(lrn, aid);
+
+        // Remove the local lock
+        Store.unlockAssessment(lrn, aid);
+
+        // Mark as applied on the backend
+        await markUnlockApplied(unlock.unlockId);
+
+        applied.push({
+          unlockId: unlock.unlockId,
+          assessmentId: aid,
+          reason: unlock.reason || 'retake-approved',
+          pushedAt: unlock.pushedAt,
+          hadLocalLock
+        });
+      }
+
+      if (applied.length) {
+        console.log('[Sync] 🔓 Applied', applied.length, 'pending unlock(s):', applied.map((a) => a.assessmentId).join(', '));
+      }
+      return applied;
+    } catch (err) {
+      console.warn('[Sync] applyPendingUnlocks failed:', err.message);
+      return [];
+    }
+  }
+
+  /**
+   * Teacher: fetch all unlocks (pending + applied).
+   */
+  async function getAllUnlocks(token) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    if (!token) return { ok: false, error: 'Teacher token required' };
+    try {
+      const res = await backendPost({ action: 'getAllUnlocks', token });
+      return res;
+    } catch (err) {
+      return { ok: false, error: err.message };
+    }
+  }
+
+  /* ============================================================
+     Failed-push queue
+     ============================================================ */
   function _queueFailedPush(action, body) {
     try {
       const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
-      // Dedupe: if an identical action + body is already queued, skip
       const fingerprint = _queueFingerprint(action, body);
-      const exists = queue.some((item) => item.fingerprint === fingerprint);
+      if (queue.some((item) => item.fingerprint === fingerprint)) return;
 
-      if (exists) {
-        console.log('[Sync] Duplicate push already queued, skipping');
-        return;
-      }
-
-      queue.push({
-        action,
-        body,
-        fingerprint,
-        queuedAt: new Date().toISOString(),
-        attempts: 0
-      });
-
-      // Cap the queue size
+      queue.push({ action, body, fingerprint, queuedAt: new Date().toISOString(), attempts: 0 });
       while (queue.length > MAX_QUEUE_SIZE) queue.shift();
-
       localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
       console.log(`[Sync] Queued failed ${action}. Queue size: ${queue.length}`);
       _notifyQueueChange();
@@ -334,56 +403,36 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Create a stable fingerprint for deduplication.
-   * Two pushes with the same action + assessmentId + lrn are considered duplicates.
-   */
   function _queueFingerprint(action, body) {
-    const lrn = body.lrn || '';
-    const aid = body.assessmentId || 'progress';
-    const subj = body.subject || 'both';
-    return `${action}|${lrn}|${subj}|${aid}`;
+    return `${action}|${body.lrn || ''}|${body.subject || 'both'}|${body.assessmentId || 'progress'}`;
   }
 
-  /**
-   * Flush all queued pushes. Called on page load, on network reconnect, and on interval.
-   */
   async function flushQueue() {
     if (!backendEnabled()) return { ok: false, flushed: 0, remaining: 0 };
-
     let queue;
-    try {
-      queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
-    } catch (e) {
-      return { ok: false, flushed: 0, remaining: 0 };
-    }
+    try { queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'); }
+    catch (e) { return { ok: false, flushed: 0, remaining: 0 }; }
 
     if (!queue.length) return { ok: true, flushed: 0, remaining: 0 };
 
-    console.log(`[Sync] Attempting to flush ${queue.length} queued push(es)...`);
     const remaining = [];
     let flushed = 0;
 
     for (const item of queue) {
       try {
         const res = await backendPost({ action: item.action, ...item.body });
-        if (res.ok) {
-          flushed++;
-        } else {
+        if (res.ok) flushed++;
+        else {
           item.attempts = (item.attempts || 0) + 1;
           if (item.attempts < MAX_RETRIES) remaining.push(item);
-          else console.warn(`[Sync] Dropping push after ${MAX_RETRIES} attempts:`, item.action);
         }
       } catch (e) {
         item.attempts = (item.attempts || 0) + 1;
         if (item.attempts < MAX_RETRIES) remaining.push(item);
-        else console.warn(`[Sync] Dropping push after ${MAX_RETRIES} attempts:`, item.action);
       }
     }
 
-    try {
-      localStorage.setItem(QUEUE_KEY, JSON.stringify(remaining));
-    } catch (e) { /* silent */ }
+    try { localStorage.setItem(QUEUE_KEY, JSON.stringify(remaining)); } catch (e) {}
 
     if (flushed > 0 || remaining.length !== queue.length) {
       console.log(`[Sync] ✅ Flushed ${flushed}. Remaining: ${remaining.length}`);
@@ -392,21 +441,15 @@ const Sync = (() => {
     return { ok: true, flushed, remaining: remaining.length };
   }
 
-  /**
-   * Get the current queue status — for UI display.
-   */
   function getQueueStatus() {
     try {
       const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
       return {
         count: queue.length,
         items: queue.map((q) => ({
-          action: q.action,
-          lrn: q.body.lrn,
-          assessmentId: q.body.assessmentId,
-          subject: q.body.subject,
-          queuedAt: q.queuedAt,
-          attempts: q.attempts
+          action: q.action, lrn: q.body.lrn,
+          assessmentId: q.body.assessmentId, subject: q.body.subject,
+          queuedAt: q.queuedAt, attempts: q.attempts
         }))
       };
     } catch (e) {
@@ -414,9 +457,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Clear the entire queue (manual reset).
-   */
   function clearQueue() {
     try {
       localStorage.setItem(QUEUE_KEY, '[]');
@@ -427,46 +467,17 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Dispatch a custom event so UI can react to queue changes.
-   */
   function _notifyQueueChange() {
     try {
-      const status = getQueueStatus();
-      window.dispatchEvent(new CustomEvent('sync-queue-changed', { detail: status }));
+      window.dispatchEvent(new CustomEvent('sync-queue-changed', { detail: getQueueStatus() }));
     } catch (e) { /* silent */ }
   }
 
-  /* ============================================================
-     Auto-flush hooks
-     ============================================================ */
   if (typeof window !== 'undefined') {
-    // On page load (delay 3s so page is responsive first)
-    window.addEventListener('load', () => {
-      setTimeout(() => { flushQueue(); }, 3000);
-    });
-
-    // When network comes back
-    window.addEventListener('online', () => {
-      console.log('[Sync] Network online — flushing queue');
-      setTimeout(() => { flushQueue(); }, 1000);
-    });
-
-    // When tab becomes visible (user returns)
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) {
-        setTimeout(() => { flushQueue(); }, 500);
-      }
-    });
-
-    // Periodic retry every 5 minutes
-    setInterval(() => {
-      const status = getQueueStatus();
-      if (status.count > 0) {
-        console.log('[Sync] Periodic retry: ' + status.count + ' item(s) in queue');
-        flushQueue();
-      }
-    }, AUTO_FLUSH_INTERVAL);
+    window.addEventListener('load', () => setTimeout(flushQueue, 3000));
+    window.addEventListener('online', () => setTimeout(flushQueue, 1000));
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(flushQueue, 500); });
+    setInterval(() => { if (getQueueStatus().count > 0) flushQueue(); }, AUTO_FLUSH_INTERVAL);
   }
 
   async function pingBackend() {
@@ -500,6 +511,11 @@ const Sync = (() => {
     fetchAllStudentsFromBackend,
     pushScoreToBackend,
     pushProgressToBackend,
+    pushUnlock,
+    pullUnlocks,
+    markUnlockApplied,
+    applyPendingUnlocks,
+    getAllUnlocks,
     flushQueue,
     getQueueStatus,
     clearQueue,
