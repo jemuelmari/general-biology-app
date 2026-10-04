@@ -2,19 +2,26 @@
  * ============================================================
  * Google Apps Script Backend — General Biology App
  * File: Code.gs
- * Version: 1.4.2
+ * Version: 1.5.0
  * ------------------------------------------------------------
- * v1.4.2: Signature verification relaxed for saveScore —
- *         accepts pushes without strict HMAC matching.
+ * NEW in v1.5.0:
+ * - Unlock system: pushUnlock, pullUnlocks, markUnlockApplied
+ * - New 'Unlocks' sheet for pending/acknowledged unlocks
+ * - Teacher can push unlocks; students auto-apply on page load
+ *
+ * REDEPLOY: Deploy → Manage deployments → ✏️ → New version → Deploy
  * ============================================================
  */
 
 const SHEET_NAME_RECORDS = 'Records';
 const SHEET_NAME_CODES   = 'SyncCodes';
 const SHEET_NAME_LOG     = 'SyncLog';
+const SHEET_NAME_UNLOCKS = 'Unlocks';
 
 const TEACHER_TOKEN_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
 const HMAC_SECRET = 'GB-APP-2026-DEPED-SECRET-KEY-v1';
+
+const UNLOCK_EXPIRY_DAYS = 60;
 
 const RECORD_HEADERS = [
   'LRN', 'LastName', 'FirstName', 'MiddleName', 'GradeLevel', 'Section',
@@ -28,6 +35,10 @@ const CODE_HEADERS = [
 ];
 
 const LOG_HEADERS = ['Timestamp', 'Action', 'LRN', 'Details'];
+
+const UNLOCK_HEADERS = [
+  'UnlockId', 'LRN', 'AssessmentId', 'Reason', 'PushedAt', 'Status', 'AppliedAt', 'PushedBy'
+];
 
 /* ============================================================
    ENTRY POINTS
@@ -47,7 +58,11 @@ function doPost(e) {
       case 'getStudent':               return jsonResponse(handleGetStudent(body));
       case 'getAllStudents':           return jsonResponse(handleGetAllStudents(body));
       case 'getAllStudentsAggregated': return jsonResponse(handleGetAllStudentsAggregated(body));
-      case 'ping':                     return jsonResponse({ ok: true, message: 'Backend is live', version: '1.4.2', timestamp: new Date().toISOString() });
+      case 'pushUnlock':               return jsonResponse(handlePushUnlock(body));
+      case 'pullUnlocks':              return jsonResponse(handlePullUnlocks(body));
+      case 'markUnlockApplied':        return jsonResponse(handleMarkUnlockApplied(body));
+      case 'getAllUnlocks':            return jsonResponse(handleGetAllUnlocks(body));
+      case 'ping':                     return jsonResponse({ ok: true, message: 'Backend is live', version: '1.5.0', timestamp: new Date().toISOString() });
       default:                         return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
     }
   } catch (err) {
@@ -61,7 +76,7 @@ function doGet(e) {
 
   switch (action) {
     case 'ping':
-      return jsonResponse({ ok: true, message: 'Backend is live', version: '1.4.2', timestamp: new Date().toISOString() });
+      return jsonResponse({ ok: true, message: 'Backend is live', version: '1.5.0', timestamp: new Date().toISOString() });
     case 'resolveSyncCode':
       return jsonResponse(handleResolveSyncCode({ code: e.parameter.code }, false));
     case 'getStudent':
@@ -70,20 +85,23 @@ function doGet(e) {
       return jsonResponse(handleGetAllStudents({ token: e.parameter.token }));
     case 'getAllStudentsAggregated':
       return jsonResponse(handleGetAllStudentsAggregated({ token: e.parameter.token }));
+    case 'pullUnlocks':
+      return jsonResponse(handlePullUnlocks({ lrn: e.parameter.lrn }));
+    case 'getAllUnlocks':
+      return jsonResponse(handleGetAllUnlocks({ token: e.parameter.token }));
     default:
       return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
   }
 }
 
 /* ============================================================
-   HANDLERS
+   SCORE + PROGRESS HANDLERS
    ============================================================ */
 
 function handleSaveProgress(body) {
   const { lrn, student, progress, subject } = body;
   if (!lrn) throw new Error('Missing LRN');
 
-  // Signature verification relaxed — accept any saveProgress
   const sheet = getOrCreateSheet(SHEET_NAME_RECORDS, RECORD_HEADERS);
   const payloadStr = JSON.stringify({ progress, subject });
   const now = new Date().toISOString();
@@ -110,8 +128,6 @@ function handleSaveScore(body) {
 
   if (!lrn || !assessmentId) throw new Error('Missing LRN or AssessmentId');
 
-  // Signature verification relaxed — accept any score push
-  // (log signature presence for audit trail)
   logEvent('saveScore-accepted', lrn, assessmentId + ' = ' + score + '/' + total);
 
   if (typeof total === 'number' && typeof score === 'number' && score > total) {
@@ -136,6 +152,10 @@ function handleSaveScore(body) {
 
   return { ok: true, message: 'Score saved', lrn, assessmentId };
 }
+
+/* ============================================================
+   SYNC CODE HANDLERS
+   ============================================================ */
 
 function handleRegisterSyncCode(body) {
   const { code, lrn, payload, signature } = body;
@@ -194,6 +214,10 @@ function handleResolveSyncCode(body, markUsed) {
 
   return { ok: false, error: 'Code not found' };
 }
+
+/* ============================================================
+   READ HANDLERS
+   ============================================================ */
 
 function handleGetStudent(body) {
   requireTeacherToken(body.token);
@@ -347,18 +371,139 @@ function handleGetAllStudentsAggregated(body) {
 }
 
 /* ============================================================
-   UTILITIES
+   UNLOCK HANDLERS (NEW)
    ============================================================ */
 
-function verifySignature(payload, expectedHex) {
-  try {
-    const key = Utilities.computeHmacSha256Signature(JSON.stringify(payload), HMAC_SECRET);
-    const computedHex = key.map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0')).join('');
-    return computedHex === expectedHex;
-  } catch (e) {
-    return false;
+/**
+ * Teacher: push an unlock for a student's assessment.
+ * Writes to Unlocks sheet with status='pending'.
+ */
+function handlePushUnlock(body) {
+  requireTeacherToken(body.token);
+
+  const lrn = String(body.lrn || '');
+  const assessmentId = String(body.assessmentId || '');
+  const reason = body.reason || 'retake-approved';
+
+  if (!lrn || !assessmentId) {
+    return { ok: false, error: 'Missing lrn or assessmentId' };
   }
+
+  const sheet = getOrCreateSheet(SHEET_NAME_UNLOCKS, UNLOCK_HEADERS);
+  const data = sheet.getDataRange().getValues();
+  const now = new Date().toISOString();
+
+  // Check for existing pending unlock for same lrn + assessment
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    if (String(row[1]) === lrn &&
+        String(row[2]) === assessmentId &&
+        row[5] !== 'applied') {
+      return {
+        ok: true,
+        unlockId: row[0],
+        duplicate: true,
+        message: 'Unlock already pending for this student + assessment'
+      };
+    }
+  }
+
+  const unlockId = lrn + '-' + assessmentId + '-' + Date.now();
+
+  sheet.appendRow([
+    unlockId, lrn, assessmentId, reason, now, 'pending', '', body.pushedBy || 'teacher'
+  ]);
+
+  logEvent('pushUnlock', lrn, assessmentId);
+  return { ok: true, unlockId, pushedAt: now, message: 'Unlock pushed' };
 }
+
+/**
+ * Student: fetch all pending unlocks.
+ * No token needed — student device calls this with their own LRN.
+ */
+function handlePullUnlocks(body) {
+  const lrn = String(body.lrn || '');
+  if (!lrn) return { ok: false, error: 'Missing lrn' };
+
+  const sheet = getOrCreateSheet(SHEET_NAME_UNLOCKS, UNLOCK_HEADERS);
+  const data = sheet.getDataRange().getValues();
+  const records = [];
+  const cutoffMs = Date.now() - (UNLOCK_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    if (String(row[1]) !== lrn) continue;
+    if (row[5] === 'applied') continue;
+
+    const pushedMs = row[4] ? new Date(row[4]).getTime() : 0;
+    if (pushedMs && pushedMs < cutoffMs) continue;
+
+    records.push({
+      unlockId: row[0],
+      lrn: String(row[1]),
+      assessmentId: row[2],
+      reason: row[3],
+      pushedAt: row[4],
+      status: row[5],
+      pushedBy: row[7]
+    });
+  }
+
+  return { ok: true, count: records.length, records };
+}
+
+/**
+ * Student: acknowledge that the unlock has been applied locally.
+ */
+function handleMarkUnlockApplied(body) {
+  const unlockId = body.unlockId;
+  if (!unlockId) return { ok: false, error: 'Missing unlockId' };
+
+  const sheet = getOrCreateSheet(SHEET_NAME_UNLOCKS, UNLOCK_HEADERS);
+  const data = sheet.getDataRange().getValues();
+
+  for (let i = 1; i < data.length; i++) {
+    if (String(data[i][0]) === String(unlockId)) {
+      sheet.getRange(i + 1, 6).setValue('applied');
+      sheet.getRange(i + 1, 7).setValue(new Date().toISOString());
+      return { ok: true, unlockId, status: 'applied' };
+    }
+  }
+
+  return { ok: false, error: 'Unlock not found' };
+}
+
+/**
+ * Teacher: view all unlocks (pending + applied).
+ */
+function handleGetAllUnlocks(body) {
+  requireTeacherToken(body.token);
+
+  const sheet = getOrCreateSheet(SHEET_NAME_UNLOCKS, UNLOCK_HEADERS);
+  const data = sheet.getDataRange().getValues();
+  const records = [];
+
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    records.push({
+      unlockId: row[0],
+      lrn: String(row[1]),
+      assessmentId: row[2],
+      reason: row[3],
+      pushedAt: row[4],
+      status: row[5],
+      appliedAt: row[6],
+      pushedBy: row[7]
+    });
+  }
+
+  return { ok: true, count: records.length, records };
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
 
 function requireTeacherToken(token) {
   if (!token) throw new Error('Teacher token required');
@@ -403,4 +548,19 @@ function jsonResponse(obj) {
 function testAggregated() {
   const result = handleGetAllStudentsAggregated({ token: 'teacher2026' });
   Logger.log(JSON.stringify({ ok: result.ok, count: result.count }, null, 2));
+}
+
+function testPushUnlock() {
+  const result = handlePushUnlock({
+    token: 'teacher2026',
+    lrn: '123456789012',
+    assessmentId: 'biol1-quiz1',
+    reason: 'Test unlock'
+  });
+  Logger.log(JSON.stringify(result, null, 2));
+}
+
+function testPullUnlocks() {
+  const result = handlePullUnlocks({ lrn: '123456789012' });
+  Logger.log(JSON.stringify(result, null, 2));
 }
