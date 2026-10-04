@@ -1,17 +1,20 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.4.1
+   Version: 2.4.2
    ------------------------------------------------------------
+   v2.4.2:
+   - Apply pending backend unlocks on Lesson.init() before
+     initializing ActivityGate (teacher unlock propagation)
    v2.4.1:
-   - FIX: Passed activities now show a "Practice Again" button
-     so students can re-enter completed activities.
-   - ActivityGate.reset() exposed for retake flow.
+   - Passed activities show "Practice Again" button
+   v2.4.0:
+   - Progress auto-push on day complete
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.4.1',
+  VERSION: '2.4.2',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -21,7 +24,7 @@ const CONFIG = {
     region: 'Region III',
     department: 'Department of Education'
   },
-  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyZjTOXmZzth0a_jXO1GoC8-5qSkm1gKu9rCvlMzJW0HW8gTb4XYvrZ7rPMBkxdr62jZQ/exec',
+  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyi2fj-Jnmlk7Pp4qhtfuE_lz0zSewtLfRPiAZnPO5A-uA5ICvicE_DPUry_lax69ubuQ/exec',
   get backendEnabled() { return this.BACKEND_URL && this.BACKEND_URL.length > 20; },
   TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
   TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
@@ -161,7 +164,7 @@ const Store = (() => {
     getBadges, awardBadge, addDailyPoints, isAssessmentLocked, lockAssessment, unlockAssessment };
 })();
 
-/* ---------- SECTION 3.5: SYNC (embedded) ---------- */
+/* ---------- SECTION 3.5: SYNC (embedded minimal) ---------- */
 const Sync = (() => {
   'use strict';
   const NS = 'gba_v1_';
@@ -181,38 +184,22 @@ const Sync = (() => {
 
   async function pushProgressToBackend(lrn, subject) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
-
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
-
     const progress = Store.getProgress(lrn);
-
     const payload = {
       lrn,
       student: {
-        lrn: user.lrn,
-        lastName: user.lastName,
-        firstName: user.firstName,
-        middleName: user.middleName || '',
-        gradeLevel: user.gradeLevel,
-        section: user.section
+        lrn: user.lrn, lastName: user.lastName, firstName: user.firstName,
+        middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section
       },
       progress: subject ? { [subject]: progress[subject] } : progress,
       subject: subject || 'both'
     };
-
     try {
-      const res = await backendPost({
-        action: 'saveProgress',
-        ...payload
-      });
-
-      if (res.ok) {
-        console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
-      } else {
-        console.warn('[Sync] Progress push rejected:', res.error);
-      }
-
+      const res = await backendPost({ action: 'saveProgress', ...payload });
+      if (res.ok) console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
+      else console.warn('[Sync] Progress push rejected:', res.error);
       return res;
     } catch (err) {
       console.warn('[Sync] Progress push failed:', err.message);
@@ -220,7 +207,50 @@ const Sync = (() => {
     }
   }
 
-  return { backendEnabled, pushProgressToBackend };
+  /**
+   * NEW: Apply pending unlocks from backend before gate init.
+   * Fetches unlocks, removes local lock, marks as applied.
+   */
+  async function applyPendingUnlocks(lrn) {
+    if (!backendEnabled()) return [];
+    if (!lrn) return [];
+
+    try {
+      const res = await backendPost({ action: 'pullUnlocks', lrn });
+      if (!res.ok || !res.records || !res.records.length) return [];
+
+      const applied = [];
+      for (const unlock of res.records) {
+        const aid = unlock.assessmentId;
+        if (!aid) continue;
+
+        const hadLocalLock = Store.isAssessmentLocked(lrn, aid);
+        Store.unlockAssessment(lrn, aid);
+
+        try {
+          await backendPost({ action: 'markUnlockApplied', unlockId: unlock.unlockId });
+        } catch (e) { /* silent */ }
+
+        applied.push({
+          unlockId: unlock.unlockId,
+          assessmentId: aid,
+          reason: unlock.reason || 'retake-approved',
+          pushedAt: unlock.pushedAt,
+          hadLocalLock
+        });
+      }
+
+      if (applied.length) {
+        console.log('[Sync] 🔓 Applied', applied.length, 'pending unlock(s):', applied.map((a) => a.assessmentId).join(', '));
+      }
+      return applied;
+    } catch (err) {
+      console.warn('[Sync] applyPendingUnlocks failed:', err.message);
+      return [];
+    }
+  }
+
+  return { backendEnabled, pushProgressToBackend, applyPendingUnlocks };
 })();
 
 /* ---------- SECTION 4: ACTIVITY GATE ---------- */
@@ -301,15 +331,11 @@ const ActivityGate = (() => {
     }
   }
 
-  /**
-   * Reset a specific activity to "ready" so it can be retaken.
-   */
   function resetActivity(id) {
     if (!session) return;
     const k = normalize(id);
     session.states[k].status = 'ready';
-    save();
-    applyUI();
+    save(); applyUI();
     APP.toast('🔁 ' + titlesMap(k) + ' reset — you can try again', 'info', 3000);
   }
 
@@ -374,9 +400,6 @@ const ActivityGate = (() => {
     return e;
   }
 
-  /**
-   * FIXED: mkPassed now shows a "Practice Again" button.
-   */
   function mkPassed(sk, st) {
     const e = document.createElement('div');
     e.className = 'gate-overlay';
@@ -435,14 +458,8 @@ const ActivityGate = (() => {
   }
 
   return {
-    init,
-    markRunning,
-    completeWithScore,
-    reset,
-    resetActivity,
-    applyUI,
-    PASS,
-    isInitialized: () => inited,
+    init, markRunning, completeWithScore, reset, resetActivity,
+    applyUI, PASS, isInitialized: () => inited,
     complete: (id) => completeWithScore(id, 100),
     applyLocks: applyUI
   };
@@ -464,6 +481,16 @@ const Lesson = (() => {
   function init(cfg) {
     const user = Store.getCurrentUser();
     if (!user) { window.location.href = '../../../student/login.html'; return; }
+
+    // NEW: Apply pending unlocks BEFORE initializing the gate
+    if (window.Sync && typeof Sync.applyPendingUnlocks === 'function') {
+      Sync.applyPendingUnlocks(user.lrn).then((applied) => {
+        if (applied && applied.length) {
+          APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s). You can retake now.', 'success', 5000);
+        }
+      }).catch(() => { /* silent */ });
+    }
+
     ctx = { lrn: user.lrn, subject: cfg.subject, week: cfg.week, day: cfg.day, points: 0, badges: [], startTime: Date.now() };
     renderBar(cfg.title);
     liveTimer();
