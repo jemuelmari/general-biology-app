@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔒 Locked Assessments</h1>
-        <span class="version">v2.4.2</span>
+        <span class="version">v2.4.3</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">← Teacher Home</a>
@@ -32,6 +32,7 @@
           <div class="teacher-hero-meta" id="hero-meta"></div>
         </div>
         <div class="teacher-hero-actions">
+          <a href="#" onclick="autoRepairLocks(); return false;">🔧 Auto-Repair Locks</a>
           <a href="#" onclick="unlockAll(); return false;">🔓 Unlock All (Local)</a>
         </div>
       </div>
@@ -60,28 +61,32 @@
       </div>
     </div>
 
+    <!-- Diagnostic Panel -->
+    <div id="diag-panel" class="hidden" style="margin-bottom:24px;"></div>
+
     <div class="stats-grid" id="la-stats"></div>
     <div id="la-list"></div>
 
   </main>
 
   <footer class="app-footer">
-    <p>Locked Assessments · <span class="version">v2.4.2</span></p>
+    <p>Locked Assessments · <span class="version">v2.4.3</span></p>
   </footer>
 
-  <script src="../config.js?v=2.4.2-e3efa30"></script>
-  <script src="../assets/js/app.js?v=2.4.2-e3efa30"></script>
-  <script src="../assets/js/store.js?v=2.4.2-e3efa30"></script>
-  <script src="../assets/js/security.js?v=2.4.2-e3efa30"></script>
-  <script src="../assets/js/ui-helpers.js?v=2.4.2-e3efa30"></script>
-  <script src="../assets/js/sync.js?v=2.4.2-e3efa30"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.4.2-e3efa30"></script>
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const subjectSel = document.getElementById('la-subject');
       const searchInput = document.getElementById('la-search');
       const btnClear = document.getElementById('btn-clear');
       const tokenInput = document.getElementById('teacher-token');
+      const diagPanel = document.getElementById('diag-panel');
 
       subjectSel.addEventListener('change', render);
       searchInput.addEventListener('input', render);
@@ -90,6 +95,9 @@
         searchInput.value = '';
         render();
       });
+
+      // Run diagnostic on load to detect mismatches
+      runMismatchDiagnostic();
 
       render();
 
@@ -110,6 +118,78 @@
           });
         });
         return locks;
+      }
+
+      /**
+       * Scan all users' scores and find any that don't have a lock.
+       * Shows a diagnostic panel if mismatches are found.
+       */
+      function runMismatchDiagnostic() {
+        const users = Store.getAllUsers();
+        const mismatches = [];
+
+        users.forEach((u) => {
+          const scores = Store.getScores(u.lrn);
+          ['biol1', 'biol2'].forEach((subj) => {
+            ['quizzes', 'st', 'te'].forEach((type) => {
+              const bucket = scores[subj]?.[type] || {};
+              Object.keys(bucket).forEach((aid) => {
+                const fullId = aid.startsWith(subj + '-') ? aid : subj + '-' + aid;
+                const lockKey = `gba_v1_lock_${u.lrn}_${fullId}`;
+                if (!localStorage.getItem(lockKey)) {
+                  mismatches.push({
+                    user: u,
+                    subject: subj,
+                    type,
+                    assessmentId: fullId,
+                    score: bucket[aid].score,
+                    total: bucket[aid].total,
+                    percent: bucket[aid].percent,
+                    timestamp: bucket[aid].timestamp
+                  });
+                }
+              });
+            });
+          });
+        });
+
+        if (!mismatches.length) {
+          diagPanel.classList.add('hidden');
+          return;
+        }
+
+        diagPanel.classList.remove('hidden');
+        diagPanel.innerHTML = `
+          <div style="background:#fff3e0;border-left:4px solid #ed6c02;border-radius:10px;padding:16px 18px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+              <div>
+                <div style="font-weight:700;color:#e65100;font-size:1rem;margin-bottom:4px;">
+                  ⚠️ ${mismatches.length} score(s) without lock detected
+                </div>
+                <div style="font-size:0.85rem;color:#5f6368;">
+                  These scores are saved but have no corresponding lock. This usually happens when a student's device has an older version of the app. Click "Auto-Repair" to fix.
+                </div>
+              </div>
+              <button onclick="autoRepairLocks()" class="btn btn-primary" style="font-size:0.9rem;padding:10px 18px;font-weight:600;">
+                🔧 Auto-Repair Locks
+              </button>
+            </div>
+            <details style="margin-top:12px;">
+              <summary style="cursor:pointer;font-size:0.85rem;color:#5f6368;font-weight:600;">
+                Show ${mismatches.length} mismatch(es)
+              </summary>
+              <ul style="margin-top:8px;padding-left:20px;font-size:0.83rem;color:#37474f;">
+                ${mismatches.slice(0, 20).map((m) => `
+                  <li style="margin-bottom:4px;">
+                    ${m.user.lastName}, ${m.user.firstName} · ${m.assessmentId} · 
+                    <strong>${m.score}/${m.total}</strong> (${m.percent}%)
+                  </li>
+                `).join('')}
+                ${mismatches.length > 20 ? `<li style="color:#90a4ae;">…and ${mismatches.length - 20} more</li>` : ''}
+              </ul>
+            </details>
+          </div>
+        `;
       }
 
       function render() {
@@ -269,6 +349,7 @@
         render();
       };
 
+      /* ---------- Unlock all (local) ---------- */
       window.unlockAll = function () {
         const locks = collectLocks();
         if (!locks.length) { APP.toast('No locked assessments to unlock.', 'info'); return; }
@@ -278,12 +359,64 @@
         render();
       };
 
+      /* ---------- Auto-repair missing locks ---------- */
+      window.autoRepairLocks = function () {
+        const users = Store.getAllUsers();
+        let fixed = 0;
+        const details = [];
+
+        users.forEach((u) => {
+          const scores = Store.getScores(u.lrn);
+          ['biol1', 'biol2'].forEach((subj) => {
+            ['quizzes', 'st', 'te'].forEach((type) => {
+              const bucket = scores[subj]?.[type] || {};
+              Object.keys(bucket).forEach((aid) => {
+                const fullId = aid.startsWith(subj + '-') ? aid : subj + '-' + aid;
+                const lockKey = `gba_v1_lock_${u.lrn}_${fullId}`;
+                if (!localStorage.getItem(lockKey)) {
+                  const data = bucket[aid];
+                  localStorage.setItem(lockKey, JSON.stringify({
+                    locked: true,
+                    score: data.score,
+                    total: data.total,
+                    percent: data.percent,
+                    lockedAt: data.timestamp || new Date().toISOString(),
+                    repairedAt: new Date().toISOString(),
+                    repairedFrom: 'auto-repair'
+                  }));
+                  fixed++;
+                  details.push(`${u.lastName}, ${u.firstName} · ${fullId} · ${data.score}/${data.total}`);
+                }
+              });
+            });
+          });
+        });
+
+        if (fixed === 0) {
+          APP.toast('✅ No missing locks found. Everything is in sync.', 'success', 4000);
+        } else {
+          APP.toast(`🔧 Repaired ${fixed} missing lock(s). Reloading...`, 'success', 5000);
+          console.log('Repaired locks:');
+          details.forEach((d) => console.log('  ' + d));
+          setTimeout(() => location.reload(), 1500);
+        }
+      };
+
+      /* ---------- View details ---------- */
       window.viewDetails = function (lrn, assessmentId) {
         const key = `gba_v1_lock_${lrn}_${assessmentId}`;
         const data = JSON.parse(localStorage.getItem(key) || '{}');
         const user = Store.getUser(lrn);
         const name = user ? APP.formatFullName(user.lastName, user.firstName, user.middleName) : lrn;
-        alert(`Assessment Details\n\nStudent: ${name}\nAssessment: ${formatAssessmentId(assessmentId)}\nScore: ${data.score}/${data.total} (${data.percent}%)\nLocked at: ${data.lockedAt ? APP.formatDate(data.lockedAt) : 'Unknown'}`);
+        alert(
+          `Assessment Details\n\n` +
+          `Student: ${name}\n` +
+          `LRN: ${APP.formatLRN(lrn)}\n` +
+          `Assessment: ${formatAssessmentId(assessmentId)}\n` +
+          `Score: ${data.score}/${data.total} (${data.percent}%)\n` +
+          `Locked at: ${data.lockedAt ? APP.formatDate(data.lockedAt) : 'Unknown'}` +
+          (data.repairedFrom ? `\n\n⚠️ This lock was auto-repaired from a missing lock.` : '')
+        );
       };
     });
   </script>
