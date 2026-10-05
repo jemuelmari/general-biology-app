@@ -1,11 +1,11 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.4.2
+   Version: 2.4.3
    ------------------------------------------------------------
+   v2.4.3:
+   - Lesson.init now auto-applies pending unlocks
+   - Sync.applyPendingUnlocks exposed in embedded Sync
    v2.4.2:
-   - Apply pending backend unlocks on Lesson.init() before
-     initializing ActivityGate (teacher unlock propagation)
-   v2.4.1:
    - Passed activities show "Practice Again" button
    v2.4.0:
    - Progress auto-push on day complete
@@ -14,7 +14,7 @@
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.4.2',
+  VERSION: '2.4.3',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -208,8 +208,8 @@ const Sync = (() => {
   }
 
   /**
-   * NEW: Apply pending unlocks from backend before gate init.
-   * Fetches unlocks, removes local lock, marks as applied.
+   * Fetch pending unlocks from backend, remove local locks, mark as applied.
+   * Returns array of { unlockId, assessmentId, ... } for the caller to toast about.
    */
   async function applyPendingUnlocks(lrn) {
     if (!backendEnabled()) return [];
@@ -482,7 +482,7 @@ const Lesson = (() => {
     const user = Store.getCurrentUser();
     if (!user) { window.location.href = '../../../student/login.html'; return; }
 
-    // NEW: Apply pending unlocks BEFORE initializing the gate
+    // Auto-apply pending unlocks BEFORE initializing the gate
     if (window.Sync && typeof Sync.applyPendingUnlocks === 'function') {
       Sync.applyPendingUnlocks(user.lrn).then((applied) => {
         if (applied && applied.length) {
