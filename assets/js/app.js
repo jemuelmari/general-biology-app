@@ -1,12 +1,12 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 2.4.2
+   Version: 2.4.3
    ============================================================ */
 
 const APP = (() => {
   'use strict';
 
-  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.4.2';
+  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.4.3';
   const APP_NAME = (typeof CONFIG !== 'undefined' && CONFIG.APP_NAME) || 'General Biology Online Modular Application';
 
   const state = {
@@ -79,7 +79,7 @@ const APP = (() => {
     const d = new Date(date);
     return d.toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' });
   }
-  
+
   function formatTime(seconds) {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
@@ -89,32 +89,59 @@ const APP = (() => {
   function formatLRN(lrn) {
     return String(lrn).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
   }
-  
+
   function toTitleCase(str) {
     if (!str) return '';
     return str.toString().trim().toLowerCase().split(/\s+/).map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   }
-  
+
   function toLastNameFormat(str) { return str ? str.toString().trim().toUpperCase() : ''; }
-  
+
   function formatFullName(lastName, firstName, middleName) {
     const last = toLastNameFormat(lastName);
     const first = toTitleCase(firstName);
     const middle = middleName ? ' ' + toTitleCase(middleName) : '';
     return `${last}, ${first}${middle}`.trim();
   }
-  
+
+  function formatFullNameFML(lastName, firstName, middleName) {
+    const last = toLastNameFormat(lastName);
+    const first = toTitleCase(firstName);
+    const middle = middleName ? ' ' + toTitleCase(middleName) : '';
+    return `${first}${middle} ${last}`.trim();
+  }
+
+  function getSexValue(sex) {
+    if (!sex) return '';
+    const s = String(sex).trim().toLowerCase();
+    if (s === 'male' || s === 'm') return 'Male';
+    if (s === 'female' || s === 'f') return 'Female';
+    return '';
+  }
+
+  function getSexCode(sex) {
+    const v = getSexValue(sex);
+    if (v === 'Male') return 'M';
+    if (v === 'Female') return 'F';
+    return '—';
+  }
+
+  function getSexIcon(sex) {
+    const v = getSexValue(sex);
+    if (v === 'Male') return '♂️';
+    if (v === 'Female') return '♀️';
+    return '';
+  }
+
   function getSexBadge(sex) {
-    const v = String(sex || '').trim().toLowerCase();
-    if (v === 'male' || v === 'm') {
+    const v = getSexValue(sex);
+    if (!v) return '<span style="color:#bdbdbd;">—</span>';
+    if (v === 'Male') {
       return '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:#e3f2fd;color:#0d47a1;font-size:0.72rem;font-weight:700;letter-spacing:0.3px;">♂ M</span>';
     }
-    if (v === 'female' || v === 'f') {
-      return '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:#fce4ec;color:#ad1457;font-size:0.72rem;font-weight:700;letter-spacing:0.3px;">♀ F</span>';
-    }
-    return '<span style="color:#bdbdbd;">—</span>';
+    return '<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;background:#fce4ec;color:#ad1457;font-size:0.72rem;font-weight:700;letter-spacing:0.3px;">♀ F</span>';
   }
-  
+
   function sortStudents(list, order = 'last', dir = 'asc') {
     const arr = [...list];
     const dirMult = dir === 'desc' ? -1 : 1;
@@ -138,6 +165,9 @@ const APP = (() => {
     });
   }
 
+  function validateLRN(lrn) { return /^\d{12}$/.test(String(lrn).replace(/\D/g, '')); }
+  function validateName(name) { return typeof name === 'string' && name.trim().length >= 2; }
+
   function renderVersions() {
     const v = `v${VERSION}`;
     document.querySelectorAll('.version').forEach((e) => { e.textContent = v; });
@@ -148,10 +178,36 @@ const APP = (() => {
           const updated = node.textContent.replace(/v\d+\.\d+\.\d+/g, v);
           if (updated !== node.textContent) node.textContent = updated;
         }
+        node.querySelectorAll?.('p').forEach((p) => {
+          const updated = p.textContent.replace(/v\d+\.\d+\.\d+/g, v);
+          if (updated !== p.textContent) p.textContent = updated;
+        });
       });
     });
+    if (document.title.includes('v')) {
+      document.title = document.title.replace(/v\d+\.\d+\.\d+/g, v);
+    }
   }
-  
+
+  function renderDeveloperFooter() {
+    if (typeof CONFIG === 'undefined' || !CONFIG.DEVELOPER) return;
+    const dev = CONFIG.DEVELOPER;
+    document.querySelectorAll('.app-footer, footer').forEach((footer) => {
+      if (footer.querySelector('.dev-credit')) return;
+      const credit = document.createElement('div');
+      credit.className = 'dev-credit';
+      credit.style.cssText = 'margin-top:12px;padding-top:12px;border-top:1px solid var(--color-border);font-size:0.75rem;line-height:1.6;';
+      credit.innerHTML = `
+        <div style="font-weight:600;color:var(--color-primary-dark);">${dev.name}</div>
+        <div>${dev.position}</div>
+        <div>${dev.school} · ${dev.district}</div>
+        <div>${dev.division} · ${dev.region}</div>
+        <div>${dev.department}</div>
+      `;
+      footer.appendChild(credit);
+    });
+  }
+
   function getRootPrefix() {
     const path = window.location.pathname;
     const clean = path.replace(/^\/+/, '');
@@ -160,19 +216,24 @@ const APP = (() => {
     if (folderDepth === 0) return '';
     return '../'.repeat(folderDepth);
   }
-  
+
   function injectManifest() {
     if (document.querySelector('link[rel="manifest"]')) return;
     const link = document.createElement('link');
     link.rel = 'manifest';
     link.href = getRootPrefix() + 'manifest.json';
     document.head.appendChild(link);
+    const meta = document.createElement('meta');
+    meta.name = 'theme-color';
+    meta.content = '#1b7a3d';
+    document.head.appendChild(meta);
   }
 
   function init() {
     console.log(`[${APP_NAME}] v${VERSION}`);
     renderVersions();
     injectManifest();
+    renderDeveloperFooter();
     Router.init();
   }
 
@@ -180,9 +241,12 @@ const APP = (() => {
     VERSION, APP_NAME, state, Router,
     $, $$, el, toast,
     formatDate, formatTime, formatLRN,
-    toTitleCase, toLastNameFormat, formatFullName,
-    getSexBadge, sortStudents,
-    renderVersions, getRootPrefix, injectManifest, init
+    toTitleCase, toLastNameFormat,
+    formatFullName, formatFullNameFML,
+    getSexValue, getSexCode, getSexIcon, getSexBadge,
+    sortStudents, validateLRN, validateName,
+    renderVersions, renderDeveloperFooter,
+    getRootPrefix, injectManifest, init
   };
 })();
 
