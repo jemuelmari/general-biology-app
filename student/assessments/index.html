@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📝 Assessments</h1>
-        <span class="version">v2.4.1</span>
+        <span class="version">v2.4.2</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -38,6 +38,7 @@
       <h4 style="margin:0 0 12px;font-size:0.9rem;color:#5f6368;">📖 How to read this page</h4>
       <div style="display:flex;flex-direction:column;gap:8px;font-size:0.85rem;color:#37474f;">
         <div>🟢 <strong>Available</strong> — you can take it now</div>
+        <div>🔄 <strong>Retake available</strong> — your teacher unlocked this for a retake</div>
         <div>🔒 <strong>Locked</strong> — complete the required week first</div>
         <div>✅ <strong>Completed</strong> — score saved (locked to prevent retake unless teacher unlocks)</div>
         <div>📋 <strong>Submitted</strong> — Performance Task selection saved</div>
@@ -46,23 +47,23 @@
 
   </main>
 
-  <footer class="app-footer"><p>Assessments · <span class="version">v2.4.1</span></p></footer>
+  <footer class="app-footer"><p>Assessments · <span class="version">v2.4.2</span></p></footer>
 
-  <script src="../../config.js?v=2.4.2-1a3fc22"></script>
-  <script src="../../assets/js/app.js?v=2.4.2-1a3fc22"></script>
-  <script src="../../assets/js/store.js?v=2.4.2-1a3fc22"></script>
-  <script src="../../assets/js/security.js?v=2.4.2-1a3fc22"></script>
-  <script src="../../assets/js/sync.js?v=2.4.2-1a3fc22"></script>
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
+  <script src="../../assets/js/security.js"></script>
+  <script src="../../assets/js/sync.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const user = Store.getCurrentUser();
       if (!user) { window.location.href = '../login.html'; return; }
 
       // ============================================================
-      // NEW: Apply pending unlocks BEFORE rendering the grid
+      // Apply pending unlocks BEFORE rendering
       // ============================================================
       try {
-        if (window.Sync && typeof Sync.applyPendingUnlocks === 'function') {
+        if (typeof Sync !== 'undefined' && typeof Sync.applyPendingUnlocks === 'function') {
           const applied = await Sync.applyPendingUnlocks(user.lrn);
           if (applied && applied.length > 0) {
             APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s). You can retake now.', 'success', 5000);
@@ -71,7 +72,6 @@
       } catch (e) {
         console.warn('[Assessments] applyPendingUnlocks failed:', e);
       }
-      // ============================================================
 
       const params = new URLSearchParams(window.location.search);
       let currentSubject = params.get('subject') === 'biol2' ? 'biol2' : 'biol1';
@@ -114,19 +114,52 @@
         return scores[bucket]?.[fullId] || null;
       }
 
+      function getRetakeUnlock(assessmentId) {
+        const fullId = `${currentSubject}-${assessmentId}`;
+        if (typeof Sync !== 'undefined' && typeof Sync.getRetakeUnlock === 'function') {
+          return Sync.getRetakeUnlock(user.lrn, fullId);
+        }
+        // Fallback: read directly from localStorage
+        try {
+          const raw = localStorage.getItem(`gba_v1_unlocked_${user.lrn}_${fullId}`);
+          return raw ? JSON.parse(raw) : null;
+        } catch (e) { return null; }
+      }
+
       function getLockStatus(a) {
         const scoreId = `${currentSubject}-${a.id}`;
         const score = getScore(currentSubject, a.type, a.id);
+        const retakeUnlock = getRetakeUnlock(a.id);
 
+        // ── Priority 1: Retake unlock ─────────────────────
+        // If teacher unlocked this, show as available even if a score exists
+        if (retakeUnlock) {
+          return { status: 'retake-available', score, unlockData: retakeUnlock };
+        }
+
+        // ── Priority 2: PT submitted ──────────────────────
         if (a.type === 'pt') {
           if (score) return { status: 'submitted', score };
           if (!isUnlocked(a)) return { status: 'locked', score: null, unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
           return { status: 'available', score: null };
         }
 
-        if (Store.isAssessmentLocked(user.lrn, scoreId)) return { status: 'completed', score };
-        if (score && score.score !== undefined) return { status: 'completed', score };
-        if (!isUnlocked(a)) return { status: 'locked', score: null, unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
+        // ── Priority 3: Locked locally ────────────────────
+        if (Store.isAssessmentLocked(user.lrn, scoreId)) {
+          return { status: 'completed', score };
+        }
+
+        // ── Priority 4: Score exists but no lock ──────────
+        if (score && score.score !== undefined) {
+          return { status: 'completed', score };
+        }
+
+        // ── Priority 5: Week gate ─────────────────────────
+        if (!isUnlocked(a)) {
+          return { status: 'locked', score: null, unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
+        }
+
+        // ── Priority 6: Available ─────────────────────────
         return { status: 'available', score: null };
       }
 
@@ -154,12 +187,33 @@
           const link = `${a.file}?subject=${currentSubject}`;
           let badge = '', clickable = false, opacity = '1', borderColor = '#dadce0', extraNote = '';
 
-          if (status === 'available') { badge = '<span class="badge badge-warning">▶ Start</span>'; clickable = true; borderColor = 'var(--color-primary)'; }
+          if (status === 'retake-available') {
+            badge = '<span class="badge" style="background:#e1f5fe;color:#01579b;font-weight:700;">🔄 Retake Available</span>';
+            clickable = true;
+            borderColor = '#0288d1';
+            if (score && typeof score.score === 'number') {
+              extraNote = `
+                <p class="text-small text-muted" style="margin-top:8px;">
+                  Previous score: ${score.score}/${score.total} (${score.percent}%)
+                </p>
+                <p class="text-small" style="margin-top:8px;color:#0277bd;font-weight:600;">
+                  🔓 Your teacher has approved a retake. Click to start a new attempt.
+                </p>
+              `;
+            }
+          }
+          else if (status === 'available') {
+            badge = '<span class="badge badge-warning">▶ Start</span>';
+            clickable = true;
+            borderColor = 'var(--color-primary)';
+          }
           else if (status === 'completed') {
             if (score && typeof score.score === 'number') {
               badge = `<span class="badge badge-success">✅ ${score.score}/${score.total} (${score.percent}%)</span>`;
               extraNote = `<p class="text-small text-muted" style="margin-top:8px;">Taken ${score.timestamp ? APP.formatDate(score.timestamp) : 'recently'}</p><p class="text-small" style="margin-top:8px;color:#78909c;font-style:italic;">🔒 Ask your teacher to unlock for a retake</p>`;
-            } else { badge = '<span class="badge badge-success">✅ Completed</span>'; }
+            } else {
+              badge = '<span class="badge badge-success">✅ Completed</span>';
+            }
             borderColor = 'var(--color-success)';
           }
           else if (status === 'submitted') {
@@ -185,16 +239,19 @@
         }).join('');
 
         grid.querySelectorAll('[data-href]').forEach((card) => {
-          card.addEventListener('click', () => { const href = card.dataset.href; if (href) window.location.href = href; });
+          card.addEventListener('click', () => {
+            const href = card.dataset.href;
+            if (href) window.location.href = href;
+          });
         });
       }
 
       render();
 
-      // Re-render every 30 seconds to pick up new unlocks
+      // Re-check for new unlocks every 30 seconds
       setInterval(async () => {
         try {
-          if (window.Sync && typeof Sync.applyPendingUnlocks === 'function') {
+          if (typeof Sync !== 'undefined' && typeof Sync.applyPendingUnlocks === 'function') {
             const applied = await Sync.applyPendingUnlocks(user.lrn);
             if (applied && applied.length > 0) {
               APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s).', 'success', 4000);
