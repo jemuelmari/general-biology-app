@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📝 Assessments</h1>
-        <span class="version">v2.4.2</span>
+        <span class="version">v2.4.3</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -47,31 +47,17 @@
 
   </main>
 
-  <footer class="app-footer"><p>Assessments · <span class="version">v2.4.2</span></p></footer>
+  <footer class="app-footer"><p>Assessments · <span class="version">v2.4.3</span></p></footer>
 
-  <script src="../../config.js?v=2.4.2-4ba6141"></script>
-  <script src="../../assets/js/app.js?v=2.4.2-4ba6141"></script>
-  <script src="../../assets/js/store.js?v=2.4.2-4ba6141"></script>
-  <script src="../../assets/js/security.js?v=2.4.2-4ba6141"></script>
-  <script src="../../assets/js/sync.js?v=2.4.2-4ba6141"></script>
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
+  <script src="../../assets/js/security.js"></script>
+  <script src="../../assets/js/sync.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
+    document.addEventListener('DOMContentLoaded', () => {
       const user = Store.getCurrentUser();
       if (!user) { window.location.href = '../login.html'; return; }
-
-      // ============================================================
-      // Apply pending unlocks BEFORE rendering
-      // ============================================================
-      try {
-        if (typeof Sync !== 'undefined' && typeof Sync.applyPendingUnlocks === 'function') {
-          const applied = await Sync.applyPendingUnlocks(user.lrn);
-          if (applied && applied.length > 0) {
-            APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s). You can retake now.', 'success', 5000);
-          }
-        }
-      } catch (e) {
-        console.warn('[Assessments] applyPendingUnlocks failed:', e);
-      }
 
       const params = new URLSearchParams(window.location.search);
       let currentSubject = params.get('subject') === 'biol2' ? 'biol2' : 'biol1';
@@ -131,35 +117,34 @@
         const score = getScore(currentSubject, a.type, a.id);
         const retakeUnlock = getRetakeUnlock(a.id);
 
-        // ── Priority 1: Retake unlock ─────────────────────
-        // If teacher unlocked this, show as available even if a score exists
+        // Priority 1: Retake unlock — show as available even with score
         if (retakeUnlock) {
           return { status: 'retake-available', score, unlockData: retakeUnlock };
         }
 
-        // ── Priority 2: PT submitted ──────────────────────
+        // Priority 2: PT submitted
         if (a.type === 'pt') {
           if (score) return { status: 'submitted', score };
           if (!isUnlocked(a)) return { status: 'locked', score: null, unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
           return { status: 'available', score: null };
         }
 
-        // ── Priority 3: Locked locally ────────────────────
+        // Priority 3: Locked locally
         if (Store.isAssessmentLocked(user.lrn, scoreId)) {
           return { status: 'completed', score };
         }
 
-        // ── Priority 4: Score exists but no lock ──────────
+        // Priority 4: Score exists but no lock
         if (score && score.score !== undefined) {
           return { status: 'completed', score };
         }
 
-        // ── Priority 5: Week gate ─────────────────────────
+        // Priority 5: Week gate
         if (!isUnlocked(a)) {
           return { status: 'locked', score: null, unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
         }
 
-        // ── Priority 6: Available ─────────────────────────
+        // Priority 6: Available
         return { status: 'available', score: null };
       }
 
@@ -246,17 +231,31 @@
         });
       }
 
+      // ── Immediate render — page is interactive right away ──
       render();
 
-      // Re-check for new unlocks every 30 seconds
+      // ── Background: apply pending unlocks (non-blocking) ──
+      (async function backgroundUnlockApply() {
+        try {
+          if (typeof Sync === 'undefined' || typeof Sync.applyPendingUnlocks !== 'function') return;
+          const applied = await Sync.applyPendingUnlocks(user.lrn);
+          if (applied && applied.length > 0) {
+            APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s). You can retake now.', 'success', 5000);
+            render();  // Re-render with new unlock state
+          }
+        } catch (e) {
+          console.warn('[Assessments] background unlock apply failed:', e);
+        }
+      })();
+
+      // ── Re-check every 30s for new unlocks ──
       setInterval(async () => {
         try {
-          if (typeof Sync !== 'undefined' && typeof Sync.applyPendingUnlocks === 'function') {
-            const applied = await Sync.applyPendingUnlocks(user.lrn);
-            if (applied && applied.length > 0) {
-              APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s).', 'success', 4000);
-              render();
-            }
+          if (typeof Sync === 'undefined' || typeof Sync.applyPendingUnlocks !== 'function') return;
+          const applied = await Sync.applyPendingUnlocks(user.lrn);
+          if (applied && applied.length > 0) {
+            APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s).', 'success', 4000);
+            render();
           }
         } catch (e) { /* silent */ }
       }, 30000);
