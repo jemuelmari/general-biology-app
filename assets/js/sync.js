@@ -1,12 +1,11 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + Unlock system
-   Version: 1.7.0
+   Version: 1.7.1
    ------------------------------------------------------------
-   NEW in v1.7.0:
-   - pushUnlock(lrn, assessmentId, token, reason)
-   - pullUnlocks(lrn)
-   - markUnlockApplied(unlockId)
-   - applyPendingUnlocks(lrn) — high-level helper for student pages
+   v1.7.1:
+   - applyPendingUnlocks now sets `gba_v1_unlocked_<lrn>_<aid>` flag
+   - Added getRetakeUnlock(lrn, assessmentId) helper
+   - Added clearRetakeUnlock(lrn, assessmentId) helper
    ============================================================ */
 
 const Sync = (() => {
@@ -256,15 +255,11 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     UNLOCK SYSTEM (NEW)
+     UNLOCK SYSTEM
      ============================================================ */
 
   /**
    * Teacher: push an unlock for a student's assessment.
-   * @param {string} lrn - student LRN
-   * @param {string} assessmentId - e.g., 'biol1-quiz1'
-   * @param {string} token - teacher password (plain text)
-   * @param {string} reason - optional reason
    */
   async function pushUnlock(lrn, assessmentId, token, reason) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
@@ -294,7 +289,6 @@ const Sync = (() => {
 
   /**
    * Student: fetch all pending unlocks for this LRN.
-   * Does not require a token.
    */
   async function pullUnlocks(lrn) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
@@ -325,8 +319,12 @@ const Sync = (() => {
 
   /**
    * Student: high-level helper.
-   * Fetches pending unlocks, removes the local lock, marks as applied.
-   * Returns an array of { assessmentId, wasLocal } for toast/notifications.
+   * Fetches pending unlocks, removes local lock, sets retake flag,
+   * marks as applied on the backend.
+   *
+   * The retake flag (`gba_v1_unlocked_<lrn>_<assessmentId>`) lets the
+   * assessment hub distinguish "teacher unlocked for retake" from
+   * "completed, no retake allowed".
    */
   async function applyPendingUnlocks(lrn) {
     if (!backendEnabled()) return [];
@@ -342,14 +340,26 @@ const Sync = (() => {
         const aid = unlock.assessmentId;
         if (!aid) continue;
 
-        // Determine if we had a local lock for this assessment
         const hadLocalLock = Store.isAssessmentLocked(lrn, aid);
-
-        // Remove the local lock
         Store.unlockAssessment(lrn, aid);
 
+        // Set retake flag so the hub shows "Retake Available"
+        try {
+          localStorage.setItem(
+            `${NS}unlocked_${lrn}_${aid}`,
+            JSON.stringify({
+              unlockedAt: new Date().toISOString(),
+              unlockId: unlock.unlockId,
+              reason: unlock.reason || 'retake-approved',
+              pushedAt: unlock.pushedAt
+            })
+          );
+        } catch (e) { /* silent */ }
+
         // Mark as applied on the backend
-        await markUnlockApplied(unlock.unlockId);
+        try {
+          await markUnlockApplied(unlock.unlockId);
+        } catch (e) { /* silent */ }
 
         applied.push({
           unlockId: unlock.unlockId,
@@ -368,6 +378,28 @@ const Sync = (() => {
       console.warn('[Sync] applyPendingUnlocks failed:', err.message);
       return [];
     }
+  }
+
+  /**
+   * Check if an assessment has been "retake-unlocked" by the teacher.
+   * Returns the unlock data object or null.
+   */
+  function getRetakeUnlock(lrn, assessmentId) {
+    try {
+      const raw = localStorage.getItem(`${NS}unlocked_${lrn}_${assessmentId}`);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * Clear a retake-unlock flag (e.g., after the student retakes the quiz).
+   */
+  function clearRetakeUnlock(lrn, assessmentId) {
+    try {
+      localStorage.removeItem(`${NS}unlocked_${lrn}_${assessmentId}`);
+    } catch (e) { /* silent */ }
   }
 
   /**
@@ -500,6 +532,9 @@ const Sync = (() => {
     return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
   }
 
+  /* ============================================================
+     Public API
+     ============================================================ */
   return {
     backendEnabled,
     buildPayload,
@@ -515,6 +550,8 @@ const Sync = (() => {
     pullUnlocks,
     markUnlockApplied,
     applyPendingUnlocks,
+    getRetakeUnlock,
+    clearRetakeUnlock,
     getAllUnlocks,
     flushQueue,
     getQueueStatus,
