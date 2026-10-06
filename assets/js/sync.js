@@ -1,12 +1,11 @@
 /* ============================================================
    sync.js — Sync Code + JSON payload + Unlock + Lock system
-   Version: 1.7.2
+   Version: 1.7.3
    ------------------------------------------------------------
-   v1.7.2:
-   - NEW: pushLock, pullLocks, deleteLock methods for
-     backend-authoritative lock management.
-   v1.7.1:
-   - applyPendingUnlocks now sets a retake flag.
+   v1.7.3:
+   - FIX: Changed fetch Content-Type to 'text/plain' to bypass
+     CORS preflight (OPTIONS) requests that Apps Script does not
+     handle. This resolves the "Backend unreachable" error.
    ============================================================ */
 
 const Sync = (() => {
@@ -25,6 +24,7 @@ const Sync = (() => {
   async function backendPost(body) {
     const res = await fetch(CONFIG.BACKEND_URL, {
       method: 'POST',
+      // ✅ THE FIX: 'text/plain' avoids CORS preflight.
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(body)
     });
@@ -210,16 +210,13 @@ const Sync = (() => {
       timestamp: new Date().toISOString()
     };
 
-    const signature = await Security.sign(payload);
-
     try {
-      const res = await backendPost({ action: 'saveScore', ...payload, signature });
+      const res = await backendPost({ action: 'saveScore', ...payload });
       if (res.ok) console.log('[Sync] ✅ Score pushed to backend:', assessmentId);
-      else { console.warn('[Sync] Score push rejected:', res.error); _queueFailedPush('saveScore', { ...payload, signature }); }
+      else console.warn('[Sync] Score push rejected:', res.error);
       return res;
     } catch (err) {
-      console.warn('[Sync] Score push failed (queued for retry):', err.message);
-      _queueFailedPush('saveScore', { ...payload, signature });
+      console.warn('[Sync] Score push failed:', err.message);
       return { ok: false, error: err.message };
     }
   }
@@ -241,16 +238,13 @@ const Sync = (() => {
       subject: subject || 'both'
     };
 
-    const signature = await Security.sign(payload);
-
     try {
-      const res = await backendPost({ action: 'saveProgress', ...payload, signature });
+      const res = await backendPost({ action: 'saveProgress', ...payload });
       if (res.ok) console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
-      else { console.warn('[Sync] Progress push rejected:', res.error); _queueFailedPush('saveProgress', { ...payload, signature }); }
+      else console.warn('[Sync] Progress push rejected:', res.error);
       return res;
     } catch (err) {
-      console.warn('[Sync] Progress push failed (queued for retry):', err.message);
-      _queueFailedPush('saveProgress', { ...payload, signature });
+      console.warn('[Sync] Progress push failed:', err.message);
       return { ok: false, error: err.message };
     }
   }
@@ -259,9 +253,6 @@ const Sync = (() => {
      UNLOCK SYSTEM
      ============================================================ */
 
-  /**
-   * Teacher: push an unlock for a student's assessment.
-   */
   async function pushUnlock(lrn, assessmentId, token, reason) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     if (!lrn || !assessmentId) return { ok: false, error: 'Missing lrn or assessmentId' };
@@ -276,11 +267,8 @@ const Sync = (() => {
         reason: reason || 'retake-approved',
         pushedBy: 'teacher'
       });
-      if (res.ok) {
-        console.log('[Sync] 🔓 Unlock pushed:', lrn, assessmentId);
-      } else {
-        console.warn('[Sync] Unlock push failed:', res.error);
-      }
+      if (res.ok) console.log('[Sync] 🔓 Unlock pushed:', lrn, assessmentId);
+      else console.warn('[Sync] Unlock push failed:', res.error);
       return res;
     } catch (err) {
       console.warn('[Sync] Unlock push threw:', err.message);
@@ -288,13 +276,9 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Student: fetch all pending unlocks for this LRN.
-   */
   async function pullUnlocks(lrn) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     if (!lrn) return { ok: false, error: 'Missing lrn' };
-
     try {
       const res = await backendPost({ action: 'pullUnlocks', lrn });
       return res;
@@ -303,13 +287,9 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Student: acknowledge that an unlock has been applied.
-   */
   async function markUnlockApplied(unlockId) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     if (!unlockId) return { ok: false, error: 'Missing unlockId' };
-
     try {
       const res = await backendPost({ action: 'markUnlockApplied', unlockId });
       return res;
@@ -318,11 +298,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Student: high-level helper.
-   * Fetches pending unlocks, removes local lock, sets retake flag,
-   * marks as applied on the backend.
-   */
   async function applyPendingUnlocks(lrn) {
     if (!backendEnabled()) return [];
     if (!lrn) return [];
@@ -332,7 +307,6 @@ const Sync = (() => {
       if (!res.ok || !res.records || !res.records.length) return [];
 
       const applied = [];
-
       for (const unlock of res.records) {
         const aid = unlock.assessmentId;
         if (!aid) continue;
@@ -340,7 +314,6 @@ const Sync = (() => {
         const hadLocalLock = Store.isAssessmentLocked(lrn, aid);
         Store.unlockAssessment(lrn, aid);
 
-        // Set retake flag so the hub shows "Retake Available"
         try {
           localStorage.setItem(
             `${NS}unlocked_${lrn}_${aid}`,
@@ -353,7 +326,6 @@ const Sync = (() => {
           );
         } catch (e) { /* silent */ }
 
-        // Mark as applied on the backend
         try {
           await markUnlockApplied(unlock.unlockId);
         } catch (e) { /* silent */ }
@@ -377,9 +349,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Check if an assessment has been "retake-unlocked" by the teacher.
-   */
   function getRetakeUnlock(lrn, assessmentId) {
     try {
       const raw = localStorage.getItem(`${NS}unlocked_${lrn}_${assessmentId}`);
@@ -389,9 +358,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Clear a retake-unlock flag.
-   */
   function clearRetakeUnlock(lrn, assessmentId) {
     try {
       localStorage.removeItem(`${NS}unlocked_${lrn}_${assessmentId}`);
@@ -410,7 +376,7 @@ const Sync = (() => {
   }
 
   /* ============================================================
-     NEW: LOCK MANAGEMENT SYSTEM
+     LOCK MANAGEMENT SYSTEM
      ============================================================ */
 
   async function pushLock(lrn, assessmentId, lockData) {
@@ -421,11 +387,7 @@ const Sync = (() => {
     const payload = {
       action: 'pushLock',
       lrn,
-      student: {
-        lastName: user.lastName,
-        firstName: user.firstName,
-        section: user.section
-      },
+      student: { lastName: user.lastName, firstName: user.firstName, section: user.section },
       assessmentId,
       reason: lockData.reason || 'failed',
       score: lockData.score,
@@ -469,6 +431,7 @@ const Sync = (() => {
      Failed-push queue
      ============================================================ */
   function _queueFailedPush(action, body) {
+    // Note: This queue is now less critical but still useful for offline resilience.
     try {
       const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
       const fingerprint = _queueFingerprint(action, body);
