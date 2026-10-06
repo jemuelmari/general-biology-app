@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔒 Locked Assessments</h1>
-        <span class="version">v2.5.0</span>
+        <span class="version">v2.5.1</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">← Teacher Home</a>
@@ -32,7 +32,7 @@
           <div class="teacher-hero-meta" id="hero-meta"></div>
         </div>
         <div class="teacher-hero-actions">
-          <a href="#" onclick="fetchAndRenderLocks(); return false;">☁️ Refresh Locks</a>
+          <a href="#" onclick="window.fetchAndRenderLocks(); return false;">☁️ Refresh Locks</a>
         </div>
       </div>
     </div>
@@ -60,16 +60,16 @@
   </main>
 
   <footer class="app-footer">
-    <p>Locked Assessments · <span class="version">v2.5.0</span></p>
+    <p>Locked Assessments · <span class="version">v2.5.1</span></p>
   </footer>
 
-  <script src="../config.js?v=2.4.2-df9dcc5"></script>
-  <script src="../assets/js/app.js?v=2.4.2-df9dcc5"></script>
-  <script src="../assets/js/store.js?v=2.4.2-df9dcc5"></script>
-  <script src="../assets/js/security.js?v=2.4.2-df9dcc5"></script>
-  <script src="../assets/js/ui-helpers.js?v=2.4.2-df9dcc5"></script>
-  <script src="../assets/js/sync.js?v=2.4.2-df9dcc5"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.4.2-df9dcc5"></script>
+  <script src="../config.js?v=2.4.2-37ed4a5"></script>
+  <script src="../assets/js/app.js?v=2.4.2-37ed4a5"></script>
+  <script src="../assets/js/store.js?v=2.4.2-37ed4a5"></script>
+  <script src="../assets/js/security.js?v=2.4.2-37ed4a5"></script>
+  <script src="../assets/js/ui-helpers.js?v=2.4.2-37ed4a5"></script>
+  <script src="../assets/js/sync.js?v=2.4.2-37ed4a5"></script>
+  <script src="../assets/js/teacher-auth.js?v=2.4.2-37ed4a5"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const tokenInput = document.getElementById('teacher-token');
@@ -77,12 +77,11 @@
       const fetchBtn = document.getElementById('btn-fetch');
       const statusBar = document.getElementById('status-bar');
       
-      let allLocks = []; // Holds locks fetched from backend
+      let allLocks = [];
 
       searchInput.addEventListener('input', renderFilteredList);
       fetchBtn.addEventListener('click', fetchAndRenderLocks);
 
-      // Don't auto-fetch on load. Wait for user to enter token and click.
       renderList(); 
 
       async function fetchAndRenderLocks() {
@@ -94,7 +93,7 @@
         showStatus('info', 'Fetching locks from backend...');
 
         try {
-          const res = await Sync.pullLocks(); // No filter, get all locks
+          const res = await Sync.pullLocks();
           if (!res.ok) {
             showStatus('danger', '❌ Backend error: ' + (res.error || 'Unknown'));
             allLocks = [];
@@ -112,6 +111,9 @@
           renderFilteredList();
         }
       }
+
+      // ✅ FIX: expose to window for the inline hero button
+      window.fetchAndRenderLocks = fetchAndRenderLocks;
 
       function renderFilteredList() {
         const query = searchInput.value.toLowerCase().trim();
@@ -169,14 +171,27 @@
                 </div>
               </div>
               <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button class="btn btn-primary" style="font-size:0.82rem;padding:9px 16px;font-weight:600;" onclick="pushUnlock('${l.lrn}', '${l.assessmentId}')">☁️ Push Unlock</button>
+                <button class="btn btn-primary" style="font-size:0.82rem;padding:9px 16px;font-weight:600;" onclick="window.pushUnlock('${l.lrn}', '${l.assessmentId}')">☁️ Push Unlock</button>
               </div>
             </div>`;
         }).join('');
       }
       
       function formatAssessmentId(id) {
-        const map = { 'biol1-quiz1': 'Bio 1 · Quiz 1', /* ... etc ... */ };
+        const map = {
+          'biol1-quiz1': 'Bio 1 · Quiz 1',
+          'biol1-quiz2': 'Bio 1 · Quiz 2',
+          'biol1-quiz3': 'Bio 1 · Quiz 3',
+          'biol1-st1': 'Bio 1 · ST 1',
+          'biol1-st2': 'Bio 1 · ST 2',
+          'biol1-te': 'Bio 1 · TE',
+          'biol2-quiz1': 'Bio 2 · Quiz 1',
+          'biol2-quiz2': 'Bio 2 · Quiz 2',
+          'biol2-quiz3': 'Bio 2 · Quiz 3',
+          'biol2-st1': 'Bio 2 · ST 1',
+          'biol2-st2': 'Bio 2 · ST 2',
+          'biol2-te': 'Bio 2 · TE'
+        };
         return map[id] || id;
       }
 
@@ -190,9 +205,7 @@
           const res = await Sync.pushUnlock(lrn, assessmentId, token, 'teacher-approved');
           if (res.ok) {
             APP.toast(`☁️ Unlock pushed for ${lrn}`, 'success');
-            // Also delete the corresponding lock from the backend
             await Sync.deleteLock(`${lrn}-${assessmentId}`);
-            // Refresh the list to show it's gone
             fetchAndRenderLocks();
           } else {
             APP.toast('❌ Push failed: ' + (res.error || 'Unknown'), 'danger');
