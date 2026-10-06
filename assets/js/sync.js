@@ -25,7 +25,7 @@ const Sync = (() => {
     const res = await fetch(CONFIG.BACKEND_URL, {
       method: 'POST',
       // ✅ THE FIX: 'text/plain' avoids CORS preflight.
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(body)
     });
     return res.json();
