@@ -1,11 +1,11 @@
 /* ============================================================
    config.js — App configuration
-   Version: 2.3.8
+   Version: 2.4.2
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.4.0',
+  VERSION: '2.4.2',
 
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
@@ -17,7 +17,7 @@ const CONFIG = {
     department: 'Department of Education'
   },
 
-  // ⚠️ NEW deployment URL — verified working, version 1.4.1
+  // ⚠️ CORRECTED BACKEND_URL — This is the active "Version: 1.6.0" deployment from your screenshot.
   BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyZjTOXmZzth0a_jXO1GoC8-5qSkm1gKu9rCvlMzJW0HW8gTb4XYvrZ7rPMBkxdr62jZQ/exec',
 
   get backendEnabled() {
