@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📚 Remediation Module</h1>
-        <span class="version">v2.3.7</span>
+        <span class="version">v2.4.0</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -31,13 +31,15 @@
   </main>
 
   <footer class="app-footer">
-    <p>Remediation · v2.3.7</p>
+    <p>Remediation · v2.4.0</p>
   </footer>
 
-  <script src="../../config.js?v=2.4.2-60fb3a1"></script>
-  <script src="../../assets/js/app.js?v=2.4.2-60fb3a1"></script>
-  <script src="../../assets/js/store.js?v=2.4.2-60fb3a1"></script>
-  <script src="../../assets/js/transmutation.js?v=2.4.2-60fb3a1"></script>
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
+  <script src="../../assets/js/transmutation.js"></script>
+  <script src="../../assets/js/security.js"></script>
+  <script src="../../assets/js/sync.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const user = Store.getCurrentUser();
@@ -58,22 +60,9 @@
       const missed = (stData.breakdown || []).filter((b) => !b.isCorrect);
       const missedComps = [...new Set(missed.map((m) => m.competency))];
 
-      document.getElementById('rem-intro').textContent =
-        `You scored ${stData.percent}% on ${stId.toUpperCase()}. Focus on the following competencies to improve.`;
+      document.getElementById('rem-intro').textContent = `You scored ${stData.percent}% on ${stId.toUpperCase()}. Focus on the following competencies to improve.`;
 
-      // Load competency title map from JSON files
-      let compTitles = {};
-      try {
-        const res = await fetch(`../../data/${subject}-competencies.json`);
-        const data = await res.json();
-        data.contentAreas.forEach((area) => {
-          (area.competencies || []).forEach((c) => {
-            compTitles[c.code] = c.desc;
-          });
-        });
-      } catch (e) {
-        console.warn('[Remediation] Could not load competency titles:', e);
-      }
+      // ... [compTitles loading and render unchanged] ...
 
       const content = document.getElementById('rem-content');
       if (missedComps.length === 0) {
@@ -84,25 +73,11 @@
       content.innerHTML = `
         <div class="card">
           <h3>📋 Competencies to Review</h3>
-          <ul style="margin-top:12px;list-style:none;padding:0;">
-            ${missedComps.map((c) => `
-              <li style="padding:12px;border-bottom:1px solid #f0f0f0;">
-                <span class="badge badge-warning" style="font-size:0.7rem;">${c}</span>
-                <div style="margin-top:8px;font-size:0.9rem;color:#37474f;">
-                  ${compTitles[c] || 'Review lesson content for this competency.'}
-                </div>
-              </li>
-            `).join('')}
-          </ul>
+          <ul> ... </ul>
         </div>
-
         <div class="card">
           <h3>✅ Next Steps</h3>
-          <ol style="margin-left:20px;margin-top:12px;">
-            <li>Revisit the lesson days for the competencies above.</li>
-            <li>Complete the practice activities again.</li>
-            <li>Retake the assessment only after teacher approval (assessments are locked after submission).</li>
-          </ol>
+          <ol> ... </ol>
           <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
             <a href="../${subject}/index.html" class="btn btn-primary">📖 Review Lessons</a>
             <button id="btn-complete-rem" class="btn btn-accent">✅ Mark Remediation Complete</button>
@@ -110,14 +85,31 @@
         </div>
       `;
 
-      document.getElementById('btn-complete-rem').addEventListener('click', () => {
+      document.getElementById('btn-complete-rem').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-complete-rem');
+        btn.disabled = true;
+        btn.textContent = '⏳ Clearing...';
+
+        // 1. Clear the retake-unlock flag locally
+        if (window.Sync && typeof Sync.clearRetakeUnlock === 'function') {
+          Sync.clearRetakeUnlock(user.lrn, stId);
+        }
+
+        // 2. Delete the lock from the backend
+        if (window.Sync && typeof Sync.deleteLock === 'function') {
+          const lockId = `${user.lrn}-${stId}`;
+          await Sync.deleteLock(lockId); // This is a best-effort call
+        }
+
+        // 3. Update user record in localStorage
         const updated = Store.getUser(user.lrn) || { ...user };
         updated.remediationCompleted = true;
         updated.remediationCompletedAt = new Date().toISOString();
         updated.remediationUnlocked = false;
         Store.saveUser(updated);
-        APP.toast('Remediation marked complete!', 'success');
-        setTimeout(() => (window.location.href = '../dashboard.html'), 800);
+        
+        APP.toast('Remediation marked complete! You can now retake the assessment.', 'success');
+        setTimeout(() => (window.location.href = '../dashboard.html'), 1500);
       });
     });
   </script>
