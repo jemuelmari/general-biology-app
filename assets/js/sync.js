@@ -431,7 +431,6 @@ const Sync = (() => {
      Failed-push queue
      ============================================================ */
   function _queueFailedPush(action, body) {
-    // Note: This queue is now less critical but still useful for offline resilience.
     try {
       const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
       const fingerprint = _queueFingerprint(action, body);
