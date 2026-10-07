@@ -1,14 +1,11 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine with anti-cheat
-   Version: 1.0.5
+   Version: 1.1.0
    ------------------------------------------------------------
-   v1.0.5:
-   - On submit, push the lock to the backend when the attempt
-     is locked (i.e., failed and can't be retaken).
-   v1.0.4:
-   - Apply pending backend unlocks before checking local lock.
-   v1.0.3:
-   - Auto-push scores to backend after submission.
+   v1.1.0:
+   - Clears the retake flag after submit (for repeated retakes).
+   - Removed pushLock (no longer needed).
+   - Removed applyPendingUnlocks (replaced by code redemption).
    ============================================================ */
 
 const QuizEngine = (() => {
@@ -24,16 +21,6 @@ const QuizEngine = (() => {
       return;
     }
 
-    // Apply backend unlocks before the lock check
-    if (window.Sync && typeof Sync.applyPendingUnlocks === 'function') {
-      try {
-        const applied = await Sync.applyPendingUnlocks(user.lrn);
-        if (applied && applied.length) {
-          APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s). You can retake now.', 'success', 5000);
-        }
-      } catch (e) { /* silent */ }
-    }
-
     const {
       assessmentId,
       subject,
@@ -45,7 +32,7 @@ const QuizEngine = (() => {
       passingScore = 80
     } = config;
 
-    // Check if still locked
+    // Check if still locked (unless allowRetake)
     if (!allowRetake && Store.isAssessmentLocked(user.lrn, assessmentId)) {
       renderLocked();
       return;
@@ -76,7 +63,7 @@ const QuizEngine = (() => {
     renderNavigation();
   }
 
-  /* ---------- Anti-cheat Setup ---------- */
+  /* ---------- Anti-cheat ---------- */
   function setupAntiCheat() {
     Security.disableCopyPaste(document);
     Security.disableDevShortcuts();
@@ -92,7 +79,6 @@ const QuizEngine = (() => {
     }, state.tabThreshold);
   }
 
-  /* ---------- Render Header ---------- */
   function renderHeader() {
     const header = document.getElementById('quiz-header');
     if (!header) return;
@@ -121,7 +107,6 @@ const QuizEngine = (() => {
     `;
   }
 
-  /* ---------- Render Question ---------- */
   function renderQuestion() {
     const container = document.getElementById('quiz-body');
     if (!container) return;
@@ -172,7 +157,6 @@ const QuizEngine = (() => {
     updateNavButtons();
   }
 
-  /* ---------- Navigation ---------- */
   function renderNavigation() {
     const nav = document.getElementById('quiz-nav');
     if (!nav) return;
@@ -199,7 +183,6 @@ const QuizEngine = (() => {
     document.getElementById('btn-submit').addEventListener('click', () => {
       const answered = Object.keys(state.answers).length;
       const total = state.items.length;
-
       if (answered < total) {
         if (!confirm(`You have answered ${answered}/${total} items. Submit anyway?`)) return;
       }
@@ -248,7 +231,6 @@ const QuizEngine = (() => {
     if (el) el.textContent = `${Object.keys(state.answers).length}/${state.items.length}`;
   }
 
-  /* ---------- Timer ---------- */
   function startTimer() {
     const el = document.getElementById('quiz-timer');
     if (!el) return;
@@ -312,25 +294,27 @@ const QuizEngine = (() => {
     // 1. Save score locally
     Store.saveScore(state.lrn, state.subject, typeKey, state.assessmentId, scoreData);
 
-    // 2. Auto-push score to backend
+    // 2. Push score to backend
     if (window.Sync && typeof Sync.pushScoreToBackend === 'function') {
       Sync.pushScoreToBackend(state.lrn, state.subject, typeKey, state.assessmentId, scoreData)
         .catch((err) => console.warn('[AutoPush] Score push failed:', err));
     }
 
-    // 3. Lock the assessment locally, and push the lock to backend
+    // 3. Lock assessment locally (no more push to backend)
     if (!state.allowRetake) {
-      const lockData = { score: correct, total, percent };
-      Store.lockAssessment(state.lrn, state.assessmentId, lockData);
-
-      if (window.Sync && typeof Sync.pushLock === 'function') {
-        const fullLockData = { ...lockData, reason: 'failed-attempt', lockedAt: new Date().toISOString() };
-        Sync.pushLock(state.lrn, state.assessmentId, fullLockData)
-          .catch((err) => console.warn('[AutoPush] Lock push failed:', err));
-      }
+      Store.lockAssessment(state.lrn, state.assessmentId, {
+        score: correct, total, percent
+      });
     }
 
-    // 4. Trigger remediation on failed Summative Tests
+    // 4. CLEAR the retake flag — this is the key change in v1.1.0
+    //    So the student MUST request a new code for the next retake.
+    if (window.Sync && typeof Sync.clearRetakeUnlock === 'function') {
+      Sync.clearRetakeUnlock(state.lrn, state.assessmentId);
+      console.log('[QuizEngine] 🔄 Retake flag cleared for', state.assessmentId);
+    }
+
+    // 5. Trigger remediation on failed Summative Tests
     if (state.type === 'st' && percent < 80) {
       const u = Store.getUser(state.lrn) || {};
       u.remediationUnlocked = true;
@@ -388,6 +372,15 @@ const QuizEngine = (() => {
           </div>
         ` : ''}
 
+        ${!passed ? `
+          <div class="alert alert-info" style="text-align:left;margin-top:16px;">
+            <strong>💡 Want to retake?</strong>
+            <p style="margin-top:8px;font-size:0.85rem;">
+              Go back to Assessments and click <strong>"🔑 Request Retake Code"</strong>. Your teacher will send you a code.
+            </p>
+          </div>
+        ` : ''}
+
         <div style="margin-top:24px;">
           <a href="index.html?subject=${state.subject}" class="btn btn-primary">← Back to Assessments</a>
         </div>
@@ -395,7 +388,6 @@ const QuizEngine = (() => {
     `;
   }
 
-  /* ---------- Render Locked ---------- */
   function renderLocked() {
     const container = document.getElementById('quiz-body');
     container.innerHTML = `
@@ -408,6 +400,5 @@ const QuizEngine = (() => {
     `;
   }
 
-  /* ---------- Public API ---------- */
   return { init };
 })();
