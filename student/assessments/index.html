@@ -6,6 +6,79 @@
   <title>Assessments — General Biology</title>
   <link rel="stylesheet" href="../../assets/css/main.css" />
   <link rel="stylesheet" href="../../assets/css/student.css" />
+  <style>
+    .retake-request-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #fff8e1;
+      border-left: 3px solid #ed6c02;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+    .retake-request-box.requested {
+      background: #e3f2fd;
+      border-left-color: #0277bd;
+    }
+    .retake-request-box.approved {
+      background: #e8f5e9;
+      border-left-color: #2e7d32;
+    }
+    .retake-code-input {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .retake-code-input input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 2px solid #cfd8dc;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .retake-code-input input:focus {
+      outline: none;
+      border-color: #0277bd;
+    }
+    .retake-code-input button {
+      padding: 8px 16px;
+      background: #0277bd;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .retake-code-input button:disabled {
+      background: #b0bec5;
+      cursor: not-allowed;
+    }
+    .btn-request-retake {
+      width: 100%;
+      padding: 10px 14px;
+      background: #ed6c02;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-request-retake:hover {
+      background: #e65100;
+    }
+    .btn-request-retake:disabled {
+      background: #b0bec5;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
 
@@ -13,7 +86,7 @@
     <div class="container flex-between">
       <div>
         <h1>📝 Assessments</h1>
-        <span class="version">v2.4.3</span>
+        <span class="version">v3.0.0</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -38,22 +111,23 @@
       <h4 style="margin:0 0 12px;font-size:0.9rem;color:#5f6368;">📖 How to read this page</h4>
       <div style="display:flex;flex-direction:column;gap:8px;font-size:0.85rem;color:#37474f;">
         <div>🟢 <strong>Available</strong> — you can take it now</div>
-        <div>🔄 <strong>Retake available</strong> — your teacher unlocked this for a retake</div>
+        <div>🔄 <strong>Retake available</strong> — code redeemed, ready to retake</div>
+        <div>📝 <strong>Request retake</strong> — click to request a retake code</div>
+        <div>⏳ <strong>Waiting for code</strong> — your teacher will send you a code</div>
         <div>🔒 <strong>Locked</strong> — complete the required week first</div>
-        <div>✅ <strong>Completed</strong> — score saved (locked to prevent retake unless teacher unlocks)</div>
-        <div>📋 <strong>Submitted</strong> — Performance Task selection saved</div>
+        <div>✅ <strong>Completed</strong> — score saved</div>
       </div>
     </div>
 
   </main>
 
-  <footer class="app-footer"><p>Assessments · <span class="version">v2.4.3</span></p></footer>
+  <footer class="app-footer"><p>Assessments · <span class="version">v3.0.0</span></p></footer>
 
-  <script src="../../config.js?v=2.4.2-28609ba"></script>
-  <script src="../../assets/js/app.js?v=2.4.2-28609ba"></script>
-  <script src="../../assets/js/store.js?v=2.4.2-28609ba"></script>
-  <script src="../../assets/js/security.js?v=2.4.2-28609ba"></script>
-  <script src="../../assets/js/sync.js?v=2.4.2-28609ba"></script>
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
+  <script src="../../assets/js/security.js"></script>
+  <script src="../../assets/js/sync.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const user = Store.getCurrentUser();
@@ -61,12 +135,15 @@
 
       const params = new URLSearchParams(window.location.search);
       let currentSubject = params.get('subject') === 'biol2' ? 'biol2' : 'biol1';
+      let allRequests = [];
 
       document.querySelectorAll('.assess-subject-tab').forEach((tab) => {
         tab.classList.toggle('active', tab.dataset.subject === currentSubject);
         tab.addEventListener('click', () => {
           currentSubject = tab.dataset.subject;
-          document.querySelectorAll('.assess-subject-tab').forEach((t) => t.classList.toggle('active', t.dataset.subject === currentSubject));
+          document.querySelectorAll('.assess-subject-tab').forEach((t) =>
+            t.classList.toggle('active', t.dataset.subject === currentSubject)
+          );
           const newUrl = new URL(window.location);
           newUrl.searchParams.set('subject', currentSubject);
           window.history.replaceState({}, '', newUrl);
@@ -105,59 +182,68 @@
         if (typeof Sync !== 'undefined' && typeof Sync.getRetakeUnlock === 'function') {
           return Sync.getRetakeUnlock(user.lrn, fullId);
         }
-        // Fallback: read directly from localStorage
         try {
           const raw = localStorage.getItem(`gba_v1_unlocked_${user.lrn}_${fullId}`);
           return raw ? JSON.parse(raw) : null;
         } catch (e) { return null; }
       }
 
-      function getLockStatus(a) {
+      function getRequest(assessmentId) {
+        const fullId = `${currentSubject}-${assessmentId}`;
+        return allRequests.find((r) => r.assessmentId === fullId) || null;
+      }
+
+      function getStatus(a) {
         const scoreId = `${currentSubject}-${a.id}`;
+        const fullId = `${currentSubject}-${a.id}`;
         const score = getScore(currentSubject, a.type, a.id);
         const retakeUnlock = getRetakeUnlock(a.id);
+        const request = getRequest(a.id);
 
-        // Priority 1: Retake unlock — show as available even with score
+        // Priority 1: Retake available (unlock applied)
         if (retakeUnlock) {
-          return { status: 'retake-available', score, unlockData: retakeUnlock };
+          return { status: 'retake-available', score, request, unlockData: retakeUnlock };
         }
 
         // Priority 2: PT submitted
         if (a.type === 'pt') {
           if (score) return { status: 'submitted', score };
-          if (!isUnlocked(a)) return { status: 'locked', score: null, unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
-          return { status: 'available', score: null };
+          if (!isUnlocked(a)) return { status: 'locked', unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
+          return { status: 'available', score };
         }
 
-        // Priority 3: Locked locally
-        if (Store.isAssessmentLocked(user.lrn, scoreId)) {
-          return { status: 'completed', score };
+        // Priority 3: Have a lock (score exists) → retake flow
+        if (Store.isAssessmentLocked(user.lrn, scoreId) || (score && score.score !== undefined)) {
+          // If there's an approved request with code, show code input
+          if (request && request.status === 'approved' && request.unlockCode) {
+            return { status: 'awaiting-code', score, request };
+          }
+          // If there's a pending request, show waiting
+          if (request && request.status === 'pending') {
+            return { status: 'waiting', score, request };
+          }
+          // No request yet — show request button
+          return { status: 'completed-requestable', score };
         }
 
-        // Priority 4: Score exists but no lock
-        if (score && score.score !== undefined) {
-          return { status: 'completed', score };
-        }
-
-        // Priority 5: Week gate
+        // Priority 4: Week gate
         if (!isUnlocked(a)) {
-          return { status: 'locked', score: null, unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
+          return { status: 'locked', unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
         }
 
-        // Priority 6: Available
-        return { status: 'available', score: null };
+        // Priority 5: Available
+        return { status: 'available', score };
       }
 
       function renderProgressSummary() {
         const progress = Store.getProgress(user.lrn);
         const done = progress[currentSubject]?.completed || [];
         const totalDays = 40;
-        const completedDays = done.length;
-        const pct = Math.round((completedDays / totalDays) * 100);
+        const pct = Math.round((done.length / totalDays) * 100);
         document.getElementById('progress-summary').innerHTML = `
           <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
             <div style="flex:1;min-width:200px;"><div class="progress-bar"><div class="progress-fill" style="width:${pct}%;"></div></div></div>
-            <div style="font-weight:600;color:var(--color-primary-dark);white-space:nowrap;">${completedDays}/${totalDays} days complete (${pct}%)</div>
+            <div style="font-weight:600;color:var(--color-primary-dark);white-space:nowrap;">${done.length}/${totalDays} days complete (${pct}%)</div>
           </div>
         `;
       }
@@ -165,99 +251,180 @@
       function render() {
         renderProgressSummary();
         const grid = document.getElementById('assessments-grid');
+
         grid.innerHTML = ASSESSMENTS.map((a) => {
-          const info = getLockStatus(a);
+          const info = getStatus(a);
           const status = info.status;
           const score = info.score;
           const link = `${a.file}?subject=${currentSubject}`;
-          let badge = '', clickable = false, opacity = '1', borderColor = '#dadce0', extraNote = '';
+          let badge = '', opacity = '1', borderColor = '#dadce0', extra = '';
 
           if (status === 'retake-available') {
             badge = '<span class="badge" style="background:#e1f5fe;color:#01579b;font-weight:700;">🔄 Retake Available</span>';
-            clickable = true;
             borderColor = '#0288d1';
-            if (score && typeof score.score === 'number') {
-              extraNote = `
-                <p class="text-small text-muted" style="margin-top:8px;">
-                  Previous score: ${score.score}/${score.total} (${score.percent}%)
+            extra = `
+              ${score ? `<p class="text-small text-muted" style="margin-top:8px;">Previous: ${score.score}/${score.total} (${score.percent}%)</p>` : ''}
+              <a href="${link}" class="btn btn-primary" style="margin-top:10px;display:block;text-align:center;text-decoration:none;">▶ Start Retake</a>
+            `;
+          }
+          else if (status === 'awaiting-code') {
+            badge = '<span class="badge" style="background:#e8f5e9;color:#1b5e20;font-weight:700;">🔑 Code Ready</span>';
+            borderColor = '#2e7d32';
+            extra = `
+              <div class="retake-request-box approved">
+                <strong>🎉 Your teacher approved your retake!</strong>
+                <p style="margin:6px 0 0;color:#37474f;">Enter the code they sent you:</p>
+                <div class="retake-code-input">
+                  <input type="text" data-code-input="${a.id}" placeholder="RTK-XXXX-XXXX" maxlength="13" />
+                  <button data-redeem="${a.id}">Redeem</button>
+                </div>
+              </div>
+            `;
+          }
+          else if (status === 'waiting') {
+            badge = '<span class="badge" style="background:#fff3e0;color:#e65100;font-weight:700;">⏳ Waiting</span>';
+            borderColor = '#ed6c02';
+            extra = `
+              <div class="retake-request-box requested">
+                <strong>⏳ Request submitted</strong>
+                <p style="margin:6px 0 0;color:#37474f;font-size:0.83rem;">
+                  Waiting for your teacher's code. They will send it via chat once approved.
                 </p>
-                <p class="text-small" style="margin-top:8px;color:#0277bd;font-weight:600;">
-                  🔓 Your teacher has approved a retake. Click to start a new attempt.
+              </div>
+            `;
+          }
+          else if (status === 'completed-requestable') {
+            badge = score && typeof score.score === 'number'
+              ? `<span class="badge badge-success">✅ ${score.score}/${score.total} (${score.percent}%)</span>`
+              : '<span class="badge badge-success">✅ Completed</span>';
+            borderColor = 'var(--color-success)';
+            extra = `
+              <div class="retake-request-box">
+                <strong>🔒 Locked</strong>
+                <p style="margin:6px 0 8px;color:#37474f;font-size:0.83rem;">
+                  Need a retake? Send a request to your teacher.
                 </p>
-              `;
-            }
+                <button class="btn-request-retake" data-request="${a.id}">
+                  🔑 Request Retake Code
+                </button>
+              </div>
+            `;
           }
           else if (status === 'available') {
             badge = '<span class="badge badge-warning">▶ Start</span>';
-            clickable = true;
             borderColor = 'var(--color-primary)';
-          }
-          else if (status === 'completed') {
-            if (score && typeof score.score === 'number') {
-              badge = `<span class="badge badge-success">✅ ${score.score}/${score.total} (${score.percent}%)</span>`;
-              extraNote = `<p class="text-small text-muted" style="margin-top:8px;">Taken ${score.timestamp ? APP.formatDate(score.timestamp) : 'recently'}</p><p class="text-small" style="margin-top:8px;color:#78909c;font-style:italic;">🔒 Ask your teacher to unlock for a retake</p>`;
-            } else {
-              badge = '<span class="badge badge-success">✅ Completed</span>';
-            }
-            borderColor = 'var(--color-success)';
+            extra = `<a href="${link}" class="btn btn-primary" style="margin-top:10px;display:block;text-align:center;text-decoration:none;">▶ Start</a>`;
           }
           else if (status === 'submitted') {
             badge = '<span class="badge badge-info">📋 Submitted</span>';
-            if (score) extraNote = `<p class="text-small text-muted" style="margin-top:8px;">Chose Option ${score.option}${score.timestamp ? ' on ' + APP.formatDate(score.timestamp) : ''}</p>`;
             borderColor = 'var(--color-info)';
           }
           else if (status === 'locked') {
             badge = '<span class="badge" style="background:#eee;color:#999;">🔒 Locked</span>';
             opacity = '0.5';
-            extraNote = `<p class="text-small text-muted" style="margin-top:8px;">Complete Week ${info.unlockWeek} Day ${info.unlockDay} to unlock</p>`;
+            extra = `<p class="text-small text-muted" style="margin-top:8px;">Complete Week ${info.unlockWeek} Day ${info.unlockDay} to unlock</p>`;
           }
 
           const typeIcon = a.type === 'quiz' ? '📝' : a.type === 'st' ? '📋' : a.type === 'te' ? '🎓' : '🎨';
           return `
-            <div class="subject-card" data-href="${clickable ? link : ''}" style="border-top-color:${borderColor};${opacity !== '1' ? `opacity:${opacity};` : ''}${clickable ? 'cursor:pointer;' : 'cursor:default;'}">
-              <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:1.5rem;">${typeIcon}</span>${badge}</div>
+            <div class="subject-card" style="border-top-color:${borderColor};${opacity !== '1' ? `opacity:${opacity};` : ''}">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:1.5rem;">${typeIcon}</span>${badge}
+              </div>
               <h3 style="margin-top:8px;">${a.title}</h3>
               <p class="text-muted text-small">${a.desc}</p>
-              ${extraNote}
+              ${extra}
             </div>
           `;
         }).join('');
 
-        grid.querySelectorAll('[data-href]').forEach((card) => {
-          card.addEventListener('click', () => {
-            const href = card.dataset.href;
-            if (href) window.location.href = href;
+        // Attach request handlers
+        grid.querySelectorAll('[data-request]').forEach((btn) => {
+          btn.addEventListener('click', () => requestRetake(btn.dataset.request));
+        });
+
+        // Attach redeem handlers
+        grid.querySelectorAll('[data-redeem]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.redeem;
+            const input = grid.querySelector(`[data-code-input="${id}"]`);
+            redeemCode(id, input.value.trim());
           });
         });
       }
 
-      // ── Immediate render — page is interactive right away ──
+      async function requestRetake(assessmentId) {
+        if (!confirm('Send a retake request to your teacher?')) return;
+
+        const fullId = `${currentSubject}-${assessmentId}`;
+        const score = getScore(currentSubject, getAssessmentType(assessmentId), assessmentId);
+
+        try {
+          const res = await Sync.requestRetake(
+            user.lrn, fullId,
+            'failed-attempt',
+            score?.score || 0,
+            score?.total || 0
+          );
+          if (res.ok) {
+            APP.toast('✅ Request sent to your teacher!', 'success', 4000);
+            await loadRequests();
+            render();
+          } else {
+            APP.toast('❌ Failed: ' + (res.error || 'Unknown'), 'danger', 5000);
+          }
+        } catch (err) {
+          APP.toast('❌ ' + err.message, 'danger');
+        }
+      }
+
+      async function redeemCode(assessmentId, code) {
+        if (!code || code.length < 8) {
+          APP.toast('Please enter a valid code', 'warning');
+          return;
+        }
+
+        try {
+          const res = await Sync.redeemUnlockCode(user.lrn, code);
+          if (res.ok) {
+            APP.toast('🎉 Unlock applied! You can retake now.', 'success', 5000);
+            await loadRequests();
+            render();
+          } else {
+            APP.toast('❌ ' + (res.error || 'Invalid code'), 'danger', 5000);
+          }
+        } catch (err) {
+          APP.toast('❌ ' + err.message, 'danger');
+        }
+      }
+
+      function getAssessmentType(assessmentId) {
+        const a = ASSESSMENTS.find((x) => x.id === assessmentId);
+        return a ? a.type : 'quiz';
+      }
+
+      async function loadRequests() {
+        try {
+          const res = await Sync.getStudentRequests(user.lrn);
+          allRequests = (res.ok && res.records) ? res.records : [];
+        } catch (e) {
+          allRequests = [];
+        }
+      }
+
+      // Initial render
       render();
 
-      // ── Background: apply pending unlocks (non-blocking) ──
-      (async function backgroundUnlockApply() {
-        try {
-          if (typeof Sync === 'undefined' || typeof Sync.applyPendingUnlocks !== 'function') return;
-          const applied = await Sync.applyPendingUnlocks(user.lrn);
-          if (applied && applied.length > 0) {
-            APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s). You can retake now.', 'success', 5000);
-            render();  // Re-render with new unlock state
-          }
-        } catch (e) {
-          console.warn('[Assessments] background unlock apply failed:', e);
-        }
+      // Load requests in background
+      (async function init() {
+        await loadRequests();
+        render();
       })();
 
-      // ── Re-check every 30s for new unlocks ──
+      // Re-check every 30s for new approvals
       setInterval(async () => {
-        try {
-          if (typeof Sync === 'undefined' || typeof Sync.applyPendingUnlocks !== 'function') return;
-          const applied = await Sync.applyPendingUnlocks(user.lrn);
-          if (applied && applied.length > 0) {
-            APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s).', 'success', 4000);
-            render();
-          }
-        } catch (e) { /* silent */ }
+        await loadRequests();
+        render();
       }, 30000);
     });
   </script>
