@@ -16,7 +16,7 @@
       margin-bottom: 12px;
     }
     .request-card.approved { border-left-color: #2e7d32; }
-    .request-card.applied { border-left-color: #0277bd; opacity: 0.75; }
+    .request-card.applied { border-left-color: #0277bd; opacity: 0.85; }
     .request-card.cancelled { border-left-color: #bdbdbd; opacity: 0.6; }
 
     .code-display {
@@ -68,6 +68,20 @@
       color: #fff;
       border-color: #0277bd;
     }
+
+    .retake-counter-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      background: #0277bd;
+      color: #fff;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+    .retake-counter-badge.final {
+      background: #c62828;
+    }
   </style>
 </head>
 <body>
@@ -76,7 +90,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔑 Retake Requests</h1>
-        <span class="version">v3.0.0</span>
+        <span class="version">v3.1.0</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">← Teacher Home</a>
@@ -129,16 +143,16 @@
   </main>
 
   <footer class="app-footer">
-    <p>Retake Requests · <span class="version">v3.0.0</span></p>
+    <p>Retake Requests · <span class="version">v3.1.0</span></p>
   </footer>
 
-  <script src="../config.js?v=2.4.2-0e7f94c"></script>
-  <script src="../assets/js/app.js?v=2.4.2-0e7f94c"></script>
-  <script src="../assets/js/store.js?v=2.4.2-0e7f94c"></script>
-  <script src="../assets/js/security.js?v=2.4.2-0e7f94c"></script>
-  <script src="../assets/js/ui-helpers.js?v=2.4.2-0e7f94c"></script>
-  <script src="../assets/js/sync.js?v=2.4.2-0e7f94c"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.4.2-0e7f94c"></script>
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const tokenInput = document.getElementById('teacher-token');
@@ -194,7 +208,6 @@
         }
       }
 
-      // Expose to inline hero button
       window.fetchAndRenderRequests = fetchAndRenderRequests;
 
       function renderFilteredList() {
@@ -241,7 +254,6 @@
 
         list.innerHTML = requests.map((r) => renderRequestCard(r)).join('');
 
-        // Attach handlers
         list.querySelectorAll('[data-approve]').forEach((btn) => {
           btn.addEventListener('click', () => approveRequest(btn.dataset.approve));
         });
@@ -257,6 +269,12 @@
         const percent = r.total > 0 ? Math.round((r.score / r.total) * 100) : 0;
         const subjectEmoji = r.assessmentId.startsWith('biol1') ? '🔬' : '🌱';
         const assessmentLabel = formatAssessmentId(r.assessmentId);
+        const retakeNum = r.retakeNumber || 0;
+        const isFinal = r.isFinalAttempt;
+
+        const retakeBadge = retakeNum > 0
+          ? `<span class="retake-counter-badge ${isFinal ? 'final' : ''}">${isFinal ? '🔴 FINAL' : ''} Retake ${retakeNum} of 2</span>`
+          : '';
 
         let actions = '';
         let badge = '';
@@ -303,6 +321,7 @@
                     ${r.studentName || r.lrn}
                   </span>
                   ${badge}
+                  ${retakeBadge}
                 </div>
                 <div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">
                   LRN: ${APP.formatLRN(r.lrn)} · ${r.section || '—'}
