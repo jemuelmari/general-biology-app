@@ -23,6 +23,10 @@
       background: #e8f5e9;
       border-left-color: #2e7d32;
     }
+    .retake-request-box.maxed {
+      background: #ffebee;
+      border-left-color: #c62828;
+    }
     .retake-code-input {
       display: flex;
       gap: 8px;
@@ -71,12 +75,23 @@
       justify-content: center;
       gap: 6px;
     }
-    .btn-request-retake:hover {
-      background: #e65100;
-    }
+    .btn-request-retake:hover { background: #e65100; }
     .btn-request-retake:disabled {
       background: #b0bec5;
       cursor: not-allowed;
+    }
+    .retake-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      background: #0277bd;
+      color: #fff;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+    .retake-pill.final {
+      background: #c62828;
     }
   </style>
 </head>
@@ -86,7 +101,7 @@
     <div class="container flex-between">
       <div>
         <h1>📝 Assessments</h1>
-        <span class="version">v3.0.0</span>
+        <span class="version">v3.1.0</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -112,23 +127,26 @@
       <div style="display:flex;flex-direction:column;gap:8px;font-size:0.85rem;color:#37474f;">
         <div>🟢 <strong>Available</strong> — you can take it now</div>
         <div>🔄 <strong>Retake available</strong> — code redeemed, ready to retake</div>
-        <div>📝 <strong>Request retake</strong> — click to request a retake code</div>
+        <div>🔑 <strong>Request retake</strong> — click to request a retake code</div>
         <div>⏳ <strong>Waiting for code</strong> — your teacher will send you a code</div>
         <div>🔒 <strong>Locked</strong> — complete the required week first</div>
         <div>✅ <strong>Completed</strong> — score saved</div>
+        <div>🚫 <strong>Max retakes reached</strong> — no more retake requests allowed</div>
       </div>
     </div>
 
   </main>
 
-  <footer class="app-footer"><p>Assessments · <span class="version">v3.0.0</span></p></footer>
+  <footer class="app-footer"><p>Assessments · <span class="version">v3.1.0</span></p></footer>
 
-  <script src="../../config.js?v=2.4.2-0e7f94c"></script>
-  <script src="../../assets/js/app.js?v=2.4.2-0e7f94c"></script>
-  <script src="../../assets/js/store.js?v=2.4.2-0e7f94c"></script>
-  <script src="../../assets/js/security.js?v=2.4.2-0e7f94c"></script>
-  <script src="../../assets/js/sync.js?v=2.4.2-0e7f94c"></script>
+  <script src="../../config.js"></script>
+  <script src="../../assets/js/app.js"></script>
+  <script src="../../assets/js/store.js"></script>
+  <script src="../../assets/js/security.js"></script>
+  <script src="../../assets/js/sync.js"></script>
   <script>
+    const MAX_RETAKES = 2;
+
     document.addEventListener('DOMContentLoaded', () => {
       const user = Store.getCurrentUser();
       if (!user) { window.location.href = '../login.html'; return; }
@@ -188,21 +206,38 @@
         } catch (e) { return null; }
       }
 
-      function getRequest(assessmentId) {
+      function getPendingRequestFor(assessmentId) {
         const fullId = `${currentSubject}-${assessmentId}`;
-        return allRequests.find((r) => r.assessmentId === fullId) || null;
+        return allRequests.find((r) =>
+          r.assessmentId === fullId &&
+          (r.status === 'pending' || r.status === 'approved')
+        ) || null;
+      }
+
+      function countRetakesUsed(assessmentId) {
+        const fullId = `${currentSubject}-${assessmentId}`;
+        return allRequests.filter((r) =>
+          r.assessmentId === fullId &&
+          (r.status === 'applied' || r.status === 'approved')
+        ).length;
       }
 
       function getStatus(a) {
         const scoreId = `${currentSubject}-${a.id}`;
-        const fullId = `${currentSubject}-${a.id}`;
         const score = getScore(currentSubject, a.type, a.id);
         const retakeUnlock = getRetakeUnlock(a.id);
-        const request = getRequest(a.id);
+        const request = getPendingRequestFor(a.id);
+        const retakesUsed = countRetakesUsed(a.id);
+        const hasLocalLock = Store.isAssessmentLocked(user.lrn, scoreId);
 
-        // Priority 1: Retake available (unlock applied)
+        // Priority 1: Retake available (redeemed code, waiting to be taken)
         if (retakeUnlock) {
-          return { status: 'retake-available', score, request, unlockData: retakeUnlock };
+          return {
+            status: 'retake-available',
+            score, request, retakeUnlock,
+            retakeNumber: retakeUnlock.retakeNumber || (retakesUsed + 1),
+            isFinalAttempt: retakeUnlock.isFinalAttempt || false
+          };
         }
 
         // Priority 2: PT submitted
@@ -212,24 +247,26 @@
           return { status: 'available', score };
         }
 
-        // Priority 3: Have a lock (score exists) → retake flow
-        if (Store.isAssessmentLocked(user.lrn, scoreId) || (score && score.score !== undefined)) {
-          // If there's an approved request with code, show code input
+        // Priority 3: Locked (has score) — retake flow
+        if (hasLocalLock || (score && score.score !== undefined)) {
+          // Max retakes reached?
+          if (retakesUsed >= MAX_RETAKES) {
+            return { status: 'maxed', score, retakesUsed };
+          }
+          // Approved code waiting to be entered
           if (request && request.status === 'approved' && request.unlockCode) {
-            return { status: 'awaiting-code', score, request };
+            return { status: 'awaiting-code', score, request, retakesUsed };
           }
-          // If there's a pending request, show waiting
+          // Pending request
           if (request && request.status === 'pending') {
-            return { status: 'waiting', score, request };
+            return { status: 'waiting', score, request, retakesUsed };
           }
-          // No request yet — show request button
-          return { status: 'completed-requestable', score };
+          // No request — show request button
+          return { status: 'completed-requestable', score, retakesUsed };
         }
 
         // Priority 4: Week gate
-        if (!isUnlocked(a)) {
-          return { status: 'locked', unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
-        }
+        if (!isUnlocked(a)) return { status: 'locked', unlockWeek: a.unlockWeek, unlockDay: a.unlockDay };
 
         // Priority 5: Available
         return { status: 'available', score };
@@ -259,12 +296,20 @@
           const link = `${a.file}?subject=${currentSubject}`;
           let badge = '', opacity = '1', borderColor = '#dadce0', extra = '';
 
+          const retakePill = (num) => {
+            if (!num) return '';
+            const isFinal = num >= MAX_RETAKES;
+            return `<span class="retake-pill ${isFinal ? 'final' : ''}">Retake ${num} of ${MAX_RETAKES}</span>`;
+          };
+
           if (status === 'retake-available') {
             badge = '<span class="badge" style="background:#e1f5fe;color:#01579b;font-weight:700;">🔄 Retake Available</span>';
             borderColor = '#0288d1';
             extra = `
               ${score ? `<p class="text-small text-muted" style="margin-top:8px;">Previous: ${score.score}/${score.total} (${score.percent}%)</p>` : ''}
-              <a href="${link}" class="btn btn-primary" style="margin-top:10px;display:block;text-align:center;text-decoration:none;">▶ Start Retake</a>
+              <a href="${link}" class="btn btn-primary" style="margin-top:10px;display:block;text-align:center;text-decoration:none;">
+                ▶ Start Retake ${retakePill(info.retakeNumber)}
+              </a>
             `;
           }
           else if (status === 'awaiting-code') {
@@ -273,6 +318,7 @@
             extra = `
               <div class="retake-request-box approved">
                 <strong>🎉 Your teacher approved your retake!</strong>
+                ${retakePill(info.retakesUsed + 1)}
                 <p style="margin:6px 0 0;color:#37474f;">Enter the code they sent you:</p>
                 <div class="retake-code-input">
                   <input type="text" data-code-input="${a.id}" placeholder="RTK-XXXX-XXXX" maxlength="13" />
@@ -287,8 +333,22 @@
             extra = `
               <div class="retake-request-box requested">
                 <strong>⏳ Request submitted</strong>
+                ${retakePill(info.retakesUsed + 1)}
                 <p style="margin:6px 0 0;color:#37474f;font-size:0.83rem;">
                   Waiting for your teacher's code. They will send it via chat once approved.
+                </p>
+              </div>
+            `;
+          }
+          else if (status === 'maxed') {
+            badge = '<span class="badge" style="background:#ffebee;color:#b71c1c;font-weight:700;">🚫 Max Retakes</span>';
+            borderColor = '#c62828';
+            extra = `
+              <div class="retake-request-box maxed">
+                <strong>🚫 Maximum retakes reached</strong>
+                <p style="margin:6px 0 0;color:#37474f;font-size:0.83rem;">
+                  You have used all ${MAX_RETAKES} retakes for this assessment.
+                  Please see your teacher if you have questions.
                 </p>
               </div>
             `;
@@ -298,9 +358,10 @@
               ? `<span class="badge badge-success">✅ ${score.score}/${score.total} (${score.percent}%)</span>`
               : '<span class="badge badge-success">✅ Completed</span>';
             borderColor = 'var(--color-success)';
+            const used = info.retakesUsed || 0;
             extra = `
               <div class="retake-request-box">
-                <strong>🔒 Locked</strong>
+                <strong>🔒 Locked</strong> ${used > 0 ? `<span style="font-size:0.75rem;color:#78909c;">(${used}/${MAX_RETAKES} retakes used)</span>` : ''}
                 <p style="margin:6px 0 8px;color:#37474f;font-size:0.83rem;">
                   Need a retake? Send a request to your teacher.
                 </p>
@@ -338,12 +399,10 @@
           `;
         }).join('');
 
-        // Attach request handlers
         grid.querySelectorAll('[data-request]').forEach((btn) => {
           btn.addEventListener('click', () => requestRetake(btn.dataset.request));
         });
 
-        // Attach redeem handlers
         grid.querySelectorAll('[data-redeem]').forEach((btn) => {
           btn.addEventListener('click', () => {
             const id = btn.dataset.redeem;
@@ -356,8 +415,9 @@
       async function requestRetake(assessmentId) {
         if (!confirm('Send a retake request to your teacher?')) return;
 
+        const a = ASSESSMENTS.find((x) => x.id === assessmentId);
         const fullId = `${currentSubject}-${assessmentId}`;
-        const score = getScore(currentSubject, getAssessmentType(assessmentId), assessmentId);
+        const score = a ? getScore(currentSubject, a.type, assessmentId) : null;
 
         try {
           const res = await Sync.requestRetake(
@@ -368,6 +428,10 @@
           );
           if (res.ok) {
             APP.toast('✅ Request sent to your teacher!', 'success', 4000);
+            await loadRequests();
+            render();
+          } else if (res.error === 'MAX_RETAKES_REACHED') {
+            APP.toast('🚫 ' + (res.message || 'Maximum retakes reached'), 'warning', 5000);
             await loadRequests();
             render();
           } else {
@@ -398,11 +462,6 @@
         }
       }
 
-      function getAssessmentType(assessmentId) {
-        const a = ASSESSMENTS.find((x) => x.id === assessmentId);
-        return a ? a.type : 'quiz';
-      }
-
       async function loadRequests() {
         try {
           const res = await Sync.getStudentRequests(user.lrn);
@@ -412,16 +471,13 @@
         }
       }
 
-      // Initial render
       render();
 
-      // Load requests in background
       (async function init() {
         await loadRequests();
         render();
       })();
 
-      // Re-check every 30s for new approvals
       setInterval(async () => {
         await loadRequests();
         render();
