@@ -1,11 +1,12 @@
 /* ============================================================
-   sync.js — Sync Code + Unlock Request System
-   Version: 2.0.0
+   sync.js — Sync Code + Retake Request System
+   Version: 2.1.0
    ------------------------------------------------------------
-   NEW in v2.0.0:
-   - Retake request/approve/redeem system.
-   - Replaced old pushUnlock/pullUnlocks with code-based flow.
-   - Removed lock push (no longer needed in new architecture).
+   v2.1.0:
+   - Added retake counter awareness.
+   - Cleaned up: removed pushLock/pullLocks/deleteLock
+     (no longer needed in new architecture).
+   - Removed applyPendingUnlocks (replaced by code redemption).
    ============================================================ */
 
 const Sync = (() => {
@@ -37,9 +38,7 @@ const Sync = (() => {
     return res.json();
   }
 
-  /* ============================================================
-     Core sync code generation & import
-     ============================================================ */
+  /* ---------- Sync Code ---------- */
 
   async function buildPayload(lrn, subject) {
     const user = Store.getUser(lrn);
@@ -179,9 +178,7 @@ const Sync = (() => {
     }
   }
 
-  /* ============================================================
-     Auto-push: score & progress only (no more lock push)
-     ============================================================ */
+  /* ---------- Auto-push scores/progress ---------- */
 
   async function pushScoreToBackend(lrn, subject, type, assessmentId, scoreData) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
@@ -242,13 +239,8 @@ const Sync = (() => {
     }
   }
 
-  /* ============================================================
-     NEW: RETAKE REQUEST SYSTEM
-     ============================================================ */
+  /* ---------- Retake Request System ---------- */
 
-  /**
-   * Student: request a retake for a specific assessment.
-   */
   async function requestRetake(lrn, assessmentId, reason, score, total) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     const user = Store.getUser(lrn);
@@ -275,9 +267,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Student: get their own requests.
-   */
   async function getStudentRequests(lrn) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     try {
@@ -288,9 +277,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Student: redeem a retake code from the teacher.
-   */
   async function redeemUnlockCode(lrn, code) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     if (!lrn || !code) return { ok: false, error: 'Missing lrn or code' };
@@ -299,7 +285,6 @@ const Sync = (() => {
       const res = await backendPost({ action: 'redeemUnlockCode', lrn, code });
 
       if (res.ok && res.assessmentId) {
-        // Apply locally
         Store.unlockAssessment(lrn, res.assessmentId);
         try {
           localStorage.setItem(
@@ -308,7 +293,9 @@ const Sync = (() => {
               unlockedAt: res.appliedAt,
               requestId: res.requestId,
               source: 'code-redeem',
-              code: code
+              code: code,
+              retakeNumber: res.retakeNumber || 0,
+              isFinalAttempt: res.isFinalAttempt || false
             })
           );
         } catch (e) { /* silent */ }
@@ -321,9 +308,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Teacher: fetch all requests (with optional filter).
-   */
   async function getUnlockRequests(token, filter) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     if (!token) return { ok: false, error: 'Teacher token required' };
@@ -338,9 +322,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Teacher: approve a request, generating a code.
-   */
   async function approveRetake(token, requestId) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     if (!token || !requestId) return { ok: false, error: 'Missing token or requestId' };
@@ -352,9 +333,6 @@ const Sync = (() => {
     }
   }
 
-  /**
-   * Teacher: cancel a request.
-   */
   async function cancelRequest(token, requestId) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     try {
@@ -365,9 +343,7 @@ const Sync = (() => {
     }
   }
 
-  /* ============================================================
-     Local retake flag helpers (for UI to check)
-     ============================================================ */
+  /* ---------- Local retake flag helpers ---------- */
 
   function getRetakeUnlock(lrn, assessmentId) {
     try {
@@ -381,9 +357,7 @@ const Sync = (() => {
     catch (e) { /* silent */ }
   }
 
-  /* ============================================================
-     Failed-push queue
-     ============================================================ */
+  /* ---------- Failed-push queue ---------- */
 
   function _queueFailedPush(action, body) {
     try {
@@ -463,9 +437,7 @@ const Sync = (() => {
     return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
   }
 
-  /* ============================================================
-     Public API
-     ============================================================ */
+  /* ---------- Public API ---------- */
   return {
     backendEnabled,
     buildPayload,
