@@ -3,17 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locked Assessments — Teacher</title>
+  <title>Retake Requests — Teacher</title>
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .request-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-left: 4px solid #ed6c02;
+      margin-bottom: 12px;
+    }
+    .request-card.approved { border-left-color: #2e7d32; }
+    .request-card.applied { border-left-color: #0277bd; opacity: 0.75; }
+    .request-card.cancelled { border-left-color: #bdbdbd; opacity: 0.6; }
+
+    .code-display {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: #f5f7fa;
+      border: 2px dashed #0277bd;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-family: Consolas, monospace;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #01579b;
+    }
+    .code-display button {
+      background: #0277bd;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: normal;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid #cfd8dc;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #546e7a;
+    }
+    .filter-tab.active {
+      background: #0277bd;
+      color: #fff;
+      border-color: #0277bd;
+    }
+  </style>
 </head>
 <body>
 
   <header class="app-header teacher-header">
     <div class="container flex-between">
       <div>
-        <h1>🔒 Locked Assessments</h1>
-        <span class="version">v2.5.1</span>
+        <h1>🔑 Retake Requests</h1>
+        <span class="version">v3.0.0</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">← Teacher Home</a>
@@ -24,15 +87,15 @@
 
   <main class="container" style="padding-top:24px;padding-bottom:64px;">
 
-    <div class="teacher-hero" style="background:linear-gradient(135deg, #7f0000 0%, #b71c1c 50%, #e53935 100%);">
+    <div class="teacher-hero" style="background:linear-gradient(135deg, #0277bd 0%, #01579b 100%);">
       <div class="teacher-hero-content">
         <div class="teacher-hero-text">
-          <h1>🔒 Manage Locked Assessments (Backend)</h1>
-          <p>This page pulls all locks from the backend. Unlocks are pushed back to the student's device.</p>
+          <h1>🔑 Manage Retake Requests</h1>
+          <p>Approve student requests, generate codes, and send them via chat.</p>
           <div class="teacher-hero-meta" id="hero-meta"></div>
         </div>
         <div class="teacher-hero-actions">
-          <a href="#" onclick="window.fetchAndRenderLocks(); return false;">☁️ Refresh Locks</a>
+          <a href="#" onclick="window.fetchAndRenderRequests(); return false;">☁️ Refresh</a>
         </div>
       </div>
     </div>
@@ -47,9 +110,15 @@
           <input type="text" id="la-search" class="form-control" placeholder="Type a name or LRN..." />
         </div>
         <div>
-          <button id="btn-fetch" class="btn btn-primary" style="font-size:0.85rem;">📥 Fetch Locks</button>
+          <button id="btn-fetch" class="btn btn-primary" style="font-size:0.85rem;">📥 Load Requests</button>
         </div>
       </div>
+    </div>
+
+    <div class="filter-tabs" id="filter-tabs">
+      <button class="filter-tab active" data-filter="all">📋 All Subjects</button>
+      <button class="filter-tab" data-filter="biol1">🔬 General Biology 1</button>
+      <button class="filter-tab" data-filter="biol2">🌱 General Biology 2</button>
     </div>
 
     <div id="status-bar" class="hidden" style="margin-bottom:20px;"></div>
@@ -60,160 +129,253 @@
   </main>
 
   <footer class="app-footer">
-    <p>Locked Assessments · <span class="version">v2.5.1</span></p>
+    <p>Retake Requests · <span class="version">v3.0.0</span></p>
   </footer>
 
-  <script src="../config.js?v=2.4.2-28609ba"></script>
-  <script src="../assets/js/app.js?v=2.4.2-28609ba"></script>
-  <script src="../assets/js/store.js?v=2.4.2-28609ba"></script>
-  <script src="../assets/js/security.js?v=2.4.2-28609ba"></script>
-  <script src="../assets/js/ui-helpers.js?v=2.4.2-28609ba"></script>
-  <script src="../assets/js/sync.js?v=2.4.2-28609ba"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.4.2-28609ba"></script>
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/security.js"></script>
+  <script src="../assets/js/ui-helpers.js"></script>
+  <script src="../assets/js/sync.js"></script>
+  <script src="../assets/js/teacher-auth.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const tokenInput = document.getElementById('teacher-token');
       const searchInput = document.getElementById('la-search');
       const fetchBtn = document.getElementById('btn-fetch');
       const statusBar = document.getElementById('status-bar');
+      const filterTabs = document.querySelectorAll('.filter-tab');
       
-      let allLocks = [];
+      let allRequests = [];
+      let currentFilter = 'all';
 
       searchInput.addEventListener('input', renderFilteredList);
-      fetchBtn.addEventListener('click', fetchAndRenderLocks);
+      fetchBtn.addEventListener('click', fetchAndRenderRequests);
 
-      renderList(); 
+      filterTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentFilter = tab.dataset.filter;
+          if (allRequests.length > 0) fetchAndRenderRequests();
+        });
+      });
 
-      async function fetchAndRenderLocks() {
+      renderStats();
+      renderList([]);
+
+      async function fetchAndRenderRequests() {
         const token = tokenInput.value.trim();
         if (!token) return showStatus('warning', 'Please enter the teacher token.');
         
         fetchBtn.disabled = true;
-        fetchBtn.textContent = '⏳ Fetching...';
-        showStatus('info', 'Fetching locks from backend...');
+        fetchBtn.textContent = '⏳ Loading...';
+        showStatus('info', 'Loading requests from backend...');
 
         try {
-          const res = await Sync.pullLocks();
+          const res = await Sync.getUnlockRequests(token, currentFilter);
           if (!res.ok) {
             showStatus('danger', '❌ Backend error: ' + (res.error || 'Unknown'));
-            allLocks = [];
+            allRequests = [];
           } else {
-            allLocks = res.records || [];
-            showStatus('success', `✅ Loaded ${allLocks.length} locks from backend.`);
+            allRequests = res.records || [];
+            const pending = allRequests.filter((r) => r.status === 'pending').length;
+            showStatus('success', `✅ Loaded ${allRequests.length} requests (${pending} pending).`);
           }
         } catch (err) {
-          showStatus('danger', '❌ Fetch failed: ' + err.message);
-          allLocks = [];
+          showStatus('danger', '❌ ' + err.message);
+          allRequests = [];
         } finally {
           fetchBtn.disabled = false;
-          fetchBtn.textContent = '📥 Fetch Locks';
+          fetchBtn.textContent = '📥 Load Requests';
           renderStats();
           renderFilteredList();
         }
       }
 
-      // ✅ FIX: expose to window for the inline hero button
-      window.fetchAndRenderLocks = fetchAndRenderLocks;
+      // Expose to inline hero button
+      window.fetchAndRenderRequests = fetchAndRenderRequests;
 
       function renderFilteredList() {
         const query = searchInput.value.toLowerCase().trim();
-        let filtered = allLocks;
+        let filtered = allRequests;
         if (query) {
-          filtered = allLocks.filter((l) =>
-            (l.studentName || '').toLowerCase().includes(query) ||
-            (l.lrn || '').includes(query)
+          filtered = allRequests.filter((r) =>
+            (r.studentName || '').toLowerCase().includes(query) ||
+            (r.lrn || '').includes(query)
           );
         }
         renderList(filtered);
       }
 
       function renderStats() {
-        const passing = allLocks.filter((l) => (l.total > 0 ? (l.score / l.total) * 100 : 0) >= 80).length;
-        const below80 = allLocks.length - passing;
+        const pending = allRequests.filter((r) => r.status === 'pending').length;
+        const approved = allRequests.filter((r) => r.status === 'approved').length;
+        const applied = allRequests.filter((r) => r.status === 'applied').length;
+
         document.getElementById('hero-meta').innerHTML = `
-          <div class="teacher-hero-stat">🔒 <strong>${allLocks.length}</strong> Total Locked</div>
-          <div class="teacher-hero-stat">✅ <strong>${passing}</strong> Passing</div>
-          <div class="teacher-hero-stat">⚠️ <strong>${below80}</strong> Below 80%</div>
+          <div class="teacher-hero-stat">⏳ <strong>${pending}</strong> Pending</div>
+          <div class="teacher-hero-stat">🔑 <strong>${approved}</strong> Approved</div>
+          <div class="teacher-hero-stat">✅ <strong>${applied}</strong> Applied</div>
         `;
+
         document.getElementById('la-stats').innerHTML = `
-          <div class="stat-card red"><div class="stat-icon">🔒</div><div class="stat-value">${allLocks.length}</div><div class="stat-label">Total Locked</div></div>
-          <div class="stat-card green"><div class="stat-icon">✅</div><div class="stat-value">${passing}</div><div class="stat-label">Passing (≥ 80%)</div></div>
-          <div class="stat-card amber"><div class="stat-icon">⚠️</div><div class="stat-value">${below80}</div><div class="stat-label">Below 80%</div></div>
+          <div class="stat-card amber"><div class="stat-icon">⏳</div><div class="stat-value">${pending}</div><div class="stat-label">Pending Requests</div></div>
+          <div class="stat-card green"><div class="stat-icon">🔑</div><div class="stat-value">${approved}</div><div class="stat-label">Code Generated</div></div>
+          <div class="stat-card blue"><div class="stat-icon">✅</div><div class="stat-value">${applied}</div><div class="stat-label">Redeemed</div></div>
         `;
       }
 
-      function renderList(locks = []) {
+      function renderList(requests = []) {
         const list = document.getElementById('la-list');
-        if (!locks.length) {
-          list.innerHTML = `<div style="background:#fff;border-radius:14px;padding:48px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.04);"><div style="font-size:3.5rem;">🎉</div><h3 style="margin:12px 0 6px;color:#2e7d32;">All Clear!</h3><p style="color:#5f6368;font-size:0.95rem;margin:0;">No locked assessments found in the backend.</p></div>`;
+        if (!requests.length) {
+          list.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:48px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.04);">
+              <div style="font-size:3.5rem;">🎉</div>
+              <h3 style="margin:12px 0 6px;color:#2e7d32;">All Clear!</h3>
+              <p style="color:#5f6368;font-size:0.95rem;margin:0;">No retake requests found.</p>
+            </div>`;
           return;
         }
 
-        list.innerHTML = locks.map((l) => {
-          const percent = l.total > 0 ? Math.round((l.score / l.total) * 100) : 0;
-          const color = percent >= 80 ? '#0277bd' : percent >= 65 ? '#ed6c02' : '#c62828';
-          const status = percent >= 80 ? '<span class="badge-pill success" style="font-size:0.68rem;">✓ PASSING</span>' : '<span class="badge-pill warning" style="font-size:0.68rem;">⚠ BELOW 80%</span>';
-          const assessmentLabel = formatAssessmentId(l.assessmentId);
-          const subjectEmoji = l.assessmentId.startsWith('biol1') ? '🔬' : '🌱';
+        list.innerHTML = requests.map((r) => renderRequestCard(r)).join('');
 
-          return `
-            <div style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 8px rgba(0,0,0,0.05);border-left:4px solid ${color};margin-bottom:12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+        // Attach handlers
+        list.querySelectorAll('[data-approve]').forEach((btn) => {
+          btn.addEventListener('click', () => approveRequest(btn.dataset.approve));
+        });
+        list.querySelectorAll('[data-cancel]').forEach((btn) => {
+          btn.addEventListener('click', () => cancelRequest(btn.dataset.cancel));
+        });
+        list.querySelectorAll('[data-copy]').forEach((btn) => {
+          btn.addEventListener('click', () => copyCode(btn.dataset.copy));
+        });
+      }
+
+      function renderRequestCard(r) {
+        const percent = r.total > 0 ? Math.round((r.score / r.total) * 100) : 0;
+        const subjectEmoji = r.assessmentId.startsWith('biol1') ? '🔬' : '🌱';
+        const assessmentLabel = formatAssessmentId(r.assessmentId);
+
+        let actions = '';
+        let badge = '';
+
+        if (r.status === 'pending') {
+          badge = '<span class="badge-pill warning" style="font-size:0.7rem;">⏳ PENDING</span>';
+          actions = `
+            <button class="btn btn-primary" style="font-size:0.85rem;padding:9px 16px;font-weight:600;" data-approve="${r.requestId}">
+              🔑 Generate Code
+            </button>
+            <button class="btn btn-outline" style="font-size:0.82rem;padding:9px 14px;" data-cancel="${r.requestId}">
+              ❌ Cancel
+            </button>
+          `;
+        } else if (r.status === 'approved') {
+          badge = '<span class="badge-pill success" style="font-size:0.7rem;">🔑 CODE READY</span>';
+          actions = `
+            <div class="code-display">
+              ${r.unlockCode}
+              <button data-copy="${r.unlockCode}">📋 Copy</button>
+            </div>
+            <p style="font-size:0.78rem;color:#78909c;margin-top:8px;">
+              Send this code to ${r.studentName || r.lrn} via chat. Expires ${APP.formatDate(r.codeExpiresAt)}.
+            </p>
+          `;
+        } else if (r.status === 'applied') {
+          badge = '<span class="badge-pill" style="font-size:0.7rem;background:#0277bd;color:#fff;">✅ REDEEMED</span>';
+          actions = `
+            <p style="font-size:0.82rem;color:#5f6368;">
+              ✅ Student already used the code on ${APP.formatDate(r.appliedAt)}.
+            </p>
+          `;
+        } else if (r.status === 'cancelled') {
+          badge = '<span class="badge-pill" style="font-size:0.7rem;background:#bdbdbd;color:#fff;">❌ CANCELLED</span>';
+          actions = `<p style="font-size:0.82rem;color:#90a4ae;">This request was cancelled.</p>`;
+        }
+
+        return `
+          <div class="request-card ${r.status}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;">
               <div style="flex:1;min-width:220px;">
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
-                  <span style="font-weight:700;font-size:0.95rem;color:#1a1a1a;">${l.studentName}</span>
-                  ${status}
+                  <span style="font-weight:700;font-size:0.95rem;color:#1a1a1a;">
+                    ${r.studentName || r.lrn}
+                  </span>
+                  ${badge}
                 </div>
-                <div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">LRN: ${APP.formatLRN(l.lrn)} · ${l.section || '—'}</div>
+                <div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">
+                  LRN: ${APP.formatLRN(r.lrn)} · ${r.section || '—'}
+                </div>
                 <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.88rem;">
-                  <span style="font-weight:600;color:#37474f;">${subjectEmoji} ${assessmentLabel}</span>
-                  <span style="color:${color};font-weight:800;font-size:1rem;">${l.score}/${l.total}</span>
-                  <span style="color:${color};font-weight:700;">(${percent}%)</span>
+                  <span style="font-weight:600;color:#37474f;">
+                    ${subjectEmoji} ${assessmentLabel}
+                  </span>
+                  <span style="color:#c62828;font-weight:700;">${r.score}/${r.total} (${percent}%)</span>
+                  <span style="color:#b0bec5;font-size:0.75rem;">· ${UI.fmtDateRelative(r.requestedAt)}</span>
                 </div>
               </div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button class="btn btn-primary" style="font-size:0.82rem;padding:9px 16px;font-weight:600;" onclick="window.pushUnlock('${l.lrn}', '${l.assessmentId}')">☁️ Push Unlock</button>
-              </div>
-            </div>`;
-        }).join('');
+            </div>
+            <div style="margin-top:12px;">
+              ${actions}
+            </div>
+          </div>
+        `;
       }
-      
+
       function formatAssessmentId(id) {
         const map = {
-          'biol1-quiz1': 'Bio 1 · Quiz 1',
-          'biol1-quiz2': 'Bio 1 · Quiz 2',
-          'biol1-quiz3': 'Bio 1 · Quiz 3',
-          'biol1-st1': 'Bio 1 · ST 1',
-          'biol1-st2': 'Bio 1 · ST 2',
-          'biol1-te': 'Bio 1 · TE',
-          'biol2-quiz1': 'Bio 2 · Quiz 1',
-          'biol2-quiz2': 'Bio 2 · Quiz 2',
-          'biol2-quiz3': 'Bio 2 · Quiz 3',
-          'biol2-st1': 'Bio 2 · ST 1',
-          'biol2-st2': 'Bio 2 · ST 2',
-          'biol2-te': 'Bio 2 · TE'
+          'biol1-quiz1': 'Bio 1 · Quiz 1', 'biol1-quiz2': 'Bio 1 · Quiz 2', 'biol1-quiz3': 'Bio 1 · Quiz 3',
+          'biol1-st1': 'Bio 1 · ST 1', 'biol1-st2': 'Bio 1 · ST 2', 'biol1-te': 'Bio 1 · TE',
+          'biol2-quiz1': 'Bio 2 · Quiz 1', 'biol2-quiz2': 'Bio 2 · Quiz 2', 'biol2-quiz3': 'Bio 2 · Quiz 3',
+          'biol2-st1': 'Bio 2 · ST 1', 'biol2-st2': 'Bio 2 · ST 2', 'biol2-te': 'Bio 2 · TE'
         };
         return map[id] || id;
       }
 
-      window.pushUnlock = async function (lrn, assessmentId) {
+      async function approveRequest(requestId) {
         const token = tokenInput.value.trim();
-        if (!token) { APP.toast('Enter teacher token.', 'warning'); return; }
-        if (!Sync.backendEnabled()) { APP.toast('Backend not configured.', 'danger'); return; }
-        if (!confirm(`Push unlock for ${assessmentId} to ${lrn}?`)) return;
+        if (!token) return APP.toast('Enter teacher token first.', 'warning');
+        if (!confirm('Generate a retake code for this student?')) return;
 
         try {
-          const res = await Sync.pushUnlock(lrn, assessmentId, token, 'teacher-approved');
+          const res = await Sync.approveRetake(token, requestId);
           if (res.ok) {
-            APP.toast(`☁️ Unlock pushed for ${lrn}`, 'success');
-            await Sync.deleteLock(`${lrn}-${assessmentId}`);
-            fetchAndRenderLocks();
+            APP.toast('🔑 Code generated: ' + res.unlockCode, 'success', 6000);
+            await fetchAndRenderRequests();
           } else {
-            APP.toast('❌ Push failed: ' + (res.error || 'Unknown'), 'danger');
+            APP.toast('❌ ' + (res.error || 'Failed'), 'danger');
           }
         } catch (err) {
           APP.toast('❌ ' + err.message, 'danger');
         }
-      };
+      }
+
+      async function cancelRequest(requestId) {
+        const token = tokenInput.value.trim();
+        if (!token) return APP.toast('Enter teacher token first.', 'warning');
+        if (!confirm('Cancel this request?')) return;
+
+        try {
+          const res = await Sync.cancelRequest(token, requestId);
+          if (res.ok) {
+            APP.toast('✅ Request cancelled', 'success');
+            await fetchAndRenderRequests();
+          } else {
+            APP.toast('❌ ' + (res.error || 'Failed'), 'danger');
+          }
+        } catch (err) {
+          APP.toast('❌ ' + err.message, 'danger');
+        }
+      }
+
+      function copyCode(code) {
+        navigator.clipboard.writeText(code).then(() => {
+          APP.toast('📋 Code copied: ' + code, 'success');
+        }).catch(() => {
+          prompt('Copy this code:', code);
+        });
+      }
 
       function showStatus(type, message) {
         statusBar.classList.remove('hidden');
