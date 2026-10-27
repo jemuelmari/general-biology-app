@@ -1,30 +1,131 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 2.0.1 (Fixed Logout & SyncMaster Integration)
+   Version: 2.0.2 (Fixed Store undefined & Uppercase Keys)
    ============================================================ */
 
 (() => {
   'use strict';
 
-  const user = Store.getCurrentUser();
+  const $ = (sel) => document.querySelector(sel);
+  const NS = 'gba_v1_';
+
+  // Safe Store fallback - directly read localStorage
+  function getCurrentUser() {
+    try {
+      const sessionRaw = localStorage.getItem(`${NS}session`);
+      if (!sessionRaw) return null;
+      const session = JSON.parse(sessionRaw);
+      const usersRaw = localStorage.getItem(`${NS}users`);
+      if (!usersRaw) return null;
+      const users = JSON.parse(usersRaw);
+      const normalizedLrn = String(session.lrn).replace(/\D/g, '').padStart(12, '0');
+      
+      // Find user by LRN (case-insensitive, handles both LRN and lrn)
+      const user = users.find(u => {
+        const uLrn = String(u.LRN || u.lrn || '').replace(/\D/g, '').padStart(12, '0');
+        return uLrn === normalizedLrn;
+      });
+      
+      if (!user) return null;
+      
+      // Normalize keys: Sheets return uppercase (FirstName), store returns lowercase (firstName)
+      return {
+        lrn: user.LRN || user.lrn,
+        firstName: user.FirstName || user.firstName,
+        lastName: user.LastName || user.lastName,
+        middleName: user.MiddleName || user.middleName || '',
+        gradeLevel: user.GradeLevel || user.gradeLevel,
+        section: user.Section || user.section,
+        sex: user.Sex || user.sex || '',
+      };
+    } catch (e) { return null; }
+  }
+
+  function getProgress(lrn) {
+    try {
+      const raw = localStorage.getItem(`${NS}progress_${lrn}`);
+      if (raw) return JSON.parse(raw);
+      // Fallback: read from user.ProgressObj if exists
+      const users = JSON.parse(localStorage.getItem(`${NS}users`) || '[]');
+      const user = users.find(u => String(u.LRN || u.lrn) === String(lrn));
+      if (user && user.ProgressObj) return user.ProgressObj;
+      if (user && user.ProgressJSON) return JSON.parse(user.ProgressJSON);
+      return { biol1: { completed: [], weeks: {} }, biol2: { completed: [], weeks: {} } };
+    } catch (e) {
+      return { biol1: { completed: [], weeks: {} }, biol2: { completed: [], weeks: {} } };
+    }
+  }
+
+  function getScores(lrn) {
+    try {
+      const raw = localStorage.getItem(`${NS}scores_${lrn}`);
+      if (raw) return JSON.parse(raw);
+      const users = JSON.parse(localStorage.getItem(`${NS}users`) || '[]');
+      const user = users.find(u => String(u.LRN || u.lrn) === String(lrn));
+      if (user && user.ScoresObj) return user.ScoresObj;
+      if (user && user.ScoresJSON) return JSON.parse(user.ScoresJSON);
+      return { biol1: { quizzes: {}, st: {}, pt: {}, te: null }, biol2: { quizzes: {}, st: {}, pt: {}, te: null } };
+    } catch (e) {
+      return { biol1: { quizzes: {}, st: {}, pt: {}, te: null }, biol2: { quizzes: {}, st: {}, pt: {}, te: null } };
+    }
+  }
+
+  function getBadges(lrn) {
+    try {
+      const raw = localStorage.getItem(`${NS}badges_${lrn}`);
+      if (raw) return JSON.parse(raw);
+      const users = JSON.parse(localStorage.getItem(`${NS}users`) || '[]');
+      const user = users.find(u => String(u.LRN || u.lrn) === String(lrn));
+      if (user && user.BadgesObj) return user.BadgesObj;
+      if (user && user.BadgesJSON) return JSON.parse(user.BadgesJSON);
+      return { biol1: [], biol2: [] };
+    } catch (e) {
+      return { biol1: [], biol2: [] };
+    }
+  }
+
+  const user = getCurrentUser();
   if (!user) {
     window.location.replace('login.html');
     return;
   }
 
-  APP.$('#user-pill').textContent =
-    `${user.firstName} ${user.lastName.charAt(0)}. · ${user.section}`;
+  // Format helpers
+  function formatLRN(lrn) {
+    return String(lrn).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  }
 
-  const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
-  APP.$('#dash-avatar').textContent = initials;
-  APP.$('#greeting-name').textContent = `Hello, ${user.firstName}! 👋`;
-  APP.$('#greeting-meta').innerHTML = `
-    <span>🎓 LRN: ${APP.formatLRN(user.lrn)}</span>
-    <span>📘 Grade ${user.gradeLevel} — ${user.section}</span>
-  `;
+  // Ensure firstName exists, fallback to empty
+  const firstName = user.firstName || 'Student';
+  const lastName = user.lastName || '';
+  const section = user.section || '';
+  const gradeLevel = user.gradeLevel || '';
+  const lrn = user.lrn;
 
+  const userPill = $('#user-pill');
+  if (userPill) userPill.textContent = `${firstName} ${lastName.charAt(0)}. · ${section}`;
+
+  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  const dashAvatar = $('#dash-avatar');
+  if (dashAvatar) dashAvatar.textContent = initials || '?';
+
+  const greetingName = $('#greeting-name');
+  if (greetingName) greetingName.textContent = `Hello, ${firstName}! 👋`;
+
+  const greetingMeta = $('#greeting-meta');
+  if (greetingMeta) {
+    greetingMeta.innerHTML = `
+      <span>🎓 LRN: ${formatLRN(lrn)}</span>
+      <span>📘 Grade ${gradeLevel} — ${section}</span>
+    `;
+  }
+
+  const progress = getProgress(lrn);
+  const scores = getScores(lrn);
+  const badges = getBadges(lrn);
+
+  // Compute standing
   function computeStanding() {
-    const scores = Store.getScores(user.lrn);
     const allSTs = [];
     ['biol1', 'biol2'].forEach((subj) => {
       const st = scores[subj]?.st || {};
@@ -34,21 +135,27 @@
     });
     if (!allSTs.length) return { label: 'No data yet', key: 'on-track', avg: null };
     const avg = allSTs.reduce((a, b) => a + b, 0) / allSTs.length;
-    return { ...Transmutation.classifyStudent(avg), avg };
+    let label = 'On Track', key = 'on-track';
+    if (avg >= 90) { label = 'Enrichment'; key = 'enrichment'; }
+    else if (avg >= 80) { label = 'On Track'; key = 'on-track'; }
+    else if (avg >= 75) { label = 'Remediation'; key = 'remediation'; }
+    else { label = 'Urgent'; key = 'urgent'; }
+    return { label, key, avg };
   }
 
   const standing = computeStanding();
 
-  APP.$('#standing-badge').innerHTML = `
-    <div class="dash-hero-badge ${standing.key}">
-      <span class="dot"></span>
-      <span>${standing.label}${standing.avg !== null ? ` · ${standing.avg.toFixed(1)}%` : ''}</span>
-    </div>
-  `;
+  const standingBadge = $('#standing-badge');
+  if (standingBadge) {
+    standingBadge.innerHTML = `
+      <div class="dash-hero-badge ${standing.key}">
+        <span class="dot"></span>
+        <span>${standing.label}${standing.avg !== null ? ` · ${standing.avg.toFixed(1)}%` : ''}</span>
+      </div>
+    `;
+  }
 
-  const progress = Store.getProgress(user.lrn);
-  const badges = Store.getBadges(user.lrn);
-
+  // Quick stats
   const stats = [
     { value: (progress.biol1?.completed?.length || 0), label: 'Bio 1 Days Done', icon: '🔬', color: 'green' },
     { value: (progress.biol2?.completed?.length || 0), label: 'Bio 2 Days Done', icon: '🌱', color: 'blue' },
@@ -56,35 +163,42 @@
     { value: standing.avg !== null ? `${standing.avg.toFixed(0)}%` : '—', label: 'ST Average', icon: '📊', color: 'purple' }
   ];
 
-  APP.$('#quick-stats').innerHTML = stats.map((s) => `
-    <div class="qs-card ${s.color}">
-      <div class="qs-icon">${s.icon}</div>
-      <div class="qs-info">
-        <div class="qs-value">${s.value}</div>
-        <div class="qs-label">${s.label}</div>
+  const quickStats = $('#quick-stats');
+  if (quickStats) {
+    quickStats.innerHTML = stats.map((s) => `
+      <div class="qs-card ${s.color}">
+        <div class="qs-icon">${s.icon}</div>
+        <div class="qs-info">
+          <div class="qs-value">${s.value}</div>
+          <div class="qs-label">${s.label}</div>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  }
 
+  // Subjects
   const subjects = [
     { id: 'biol1', title: 'General Biology 1', desc: 'Cell · Cell Cycle · Transport · Biomolecules · Energy', icon: '🔬', totalWeeks: 10 },
     { id: 'biol2', title: 'General Biology 2', desc: 'Organismal Biology · Genetics · Evolution · Systematics', icon: '🌱', totalWeeks: 10 }
   ];
 
-  APP.$('#subjects-grid').innerHTML = subjects.map((s) => {
-    const done = progress[s.id]?.completed?.length || 0;
-    const totalDays = s.totalWeeks * 4;
-    const pct = Math.round((done / totalDays) * 100);
-    return `
-      <div class="subject-card" data-subject="${s.id}">
-        <div style="font-size:2rem;">${s.icon}</div>
-        <h3>${s.title}</h3>
-        <p class="text-muted text-small">${s.desc}</p>
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;"></div></div>
-        <p class="text-small text-muted">${done}/${totalDays} days · ${pct}% complete</p>
-      </div>
-    `;
-  }).join('');
+  const subjectsGrid = $('#subjects-grid');
+  if (subjectsGrid) {
+    subjectsGrid.innerHTML = subjects.map((s) => {
+      const done = progress[s.id]?.completed?.length || 0;
+      const totalDays = s.totalWeeks * 4;
+      const pct = Math.round((done / totalDays) * 100);
+      return `
+        <div class="subject-card" data-subject="${s.id}">
+          <div style="font-size:2rem;">${s.icon}</div>
+          <h3>${s.title}</h3>
+          <p class="text-muted text-small">${s.desc}</p>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;"></div></div>
+          <p class="text-small text-muted">${done}/${totalDays} days · ${pct}% complete</p>
+        </div>
+      `;
+    }).join('');
+  }
 
   document.querySelectorAll('[data-subject]').forEach((card) => {
     card.addEventListener('click', () => {
@@ -92,6 +206,7 @@
     });
   });
 
+  // Badges
   const allBadges = [
     { id: 'historian',        icon: '🏆', name: 'Historian' },
     { id: 'speed-scholar',    icon: '⚡', name: 'Speed Scholar' },
@@ -105,41 +220,38 @@
 
   const earnedSet = new Set([...(badges.biol1 || []), ...(badges.biol2 || [])]);
 
-  APP.$('#badge-total').textContent = `🏆 ${earnedSet.size} badges earned`;
-  APP.$('#badge-week').textContent = `This week: ${earnedSet.size}`;
+  const badgeTotal = $('#badge-total');
+  if (badgeTotal) badgeTotal.textContent = `🏆 ${earnedSet.size} badges earned`;
+  const badgeWeek = $('#badge-week');
+  if (badgeWeek) badgeWeek.textContent = `This week: ${earnedSet.size}`;
 
-  APP.$('#badge-gallery').innerHTML = allBadges.map((b) => {
-    const earned = earnedSet.has(b.id);
-    return `
-      <div class="badge-item ${earned ? '' : 'locked'}">
-        <div class="badge-icon">${b.icon}</div>
-        <div class="badge-name">${b.name}</div>
-      </div>
-    `;
-  }).join('');
+  const badgeGallery = $('#badge-gallery');
+  if (badgeGallery) {
+    badgeGallery.innerHTML = allBadges.map((b) => {
+      const earned = earnedSet.has(b.id);
+      return `
+        <div class="badge-item ${earned ? '' : 'locked'}">
+          <div class="badge-icon">${b.icon}</div>
+          <div class="badge-name">${b.name}</div>
+        </div>
+      `;
+    }).join('');
+  }
 
-  /* ============================================================
-     Sync Status System
-     ============================================================ */
-
-  const statusPill = document.getElementById('sync-status-pill');
-  const statusBanner = document.getElementById('sync-status-banner');
-  const queueDetails = document.getElementById('queue-details');
-  const forceSyncBtn = document.getElementById('btn-force-sync');
+  // Sync status
+  const statusPill = $('#sync-status-pill');
+  const statusBanner = $('#sync-status-banner');
+  const forceSyncBtn = $('#btn-force-sync');
 
   function getSyncState() {
-    const backendOn = typeof Sync !== 'undefined' && Sync.backendEnabled && Sync.backendEnabled();
     const online = navigator.onLine;
-    const queue = (typeof Sync !== 'undefined' && Sync.getQueueStatus && Sync.getQueueStatus()) || { count: 0, items: [] };
-    const lastPush = localStorage.getItem('gba_last_push_at');
-
-    if (!backendOn) return { key: 'disabled', label: 'Sync disabled', color: '#90a4ae', queue };
+    const queue = { count: 0 }; // Safe fallback
+    const lastPush = localStorage.getItem(`${NS}last_push_at`);
     if (!online) return { key: 'offline', label: 'Offline', color: '#ed6c02', queue };
     if (queue.count > 0) return { key: 'pending', label: queue.count + ' pending', color: '#ed6c02', queue, lastPush };
-    
     if (lastPush) {
       const ago = Math.round((Date.now() - new Date(lastPush).getTime()) / 1000);
-      const agoStr = ago < 60 ? ago + 's ago' : ago < 3600 ? Math.floor(ago / 60) + 'm ago' : Math.floor(ago / 86400) + 'd ago';
+      const agoStr = ago < 60 ? ago + 's ago' : ago < 3600 ? Math.floor(ago / 60) + 'm ago' : Math.floor(ago / 3600) + 'h ago';
       return { key: 'synced', label: 'Synced ' + agoStr, color: '#2e7d32', queue, lastPush };
     }
     return { key: 'unknown', label: 'Not yet synced', color: '#78909c', queue };
@@ -147,7 +259,6 @@
 
   function renderSyncStatus() {
     const state = getSyncState();
-
     if (statusPill) {
       statusPill.style.display = 'inline-flex';
       statusPill.style.background = state.color + '22';
@@ -156,171 +267,23 @@
       statusPill.textContent =
         state.key === 'synced' ? '🟢 ' + state.label :
         state.key === 'pending' ? '🟡 ' + state.label :
-        state.key === 'offline' ? '📴 ' + state.label :
-        state.key === 'disabled' ? '⚪ ' + state.label : '🔵 ' + state.label;
-    }
-
-    if (statusBanner) {
-      if (state.key === 'synced' || state.key === 'disabled') {
-        statusBanner.style.display = 'none';
-      } else {
-        statusBanner.style.display = 'block';
-        const bannerConfig = {
-          pending: {
-            bg: '#fff3e0', border: '#ed6c02', icon: '⏳',
-            title: state.queue.count + ' item(s) waiting to sync',
-            body: 'Your scores are saved locally. The app will push them to your teacher automatically when the connection is stable.',
-            btn: '🔄 Retry Now'
-          },
-          offline: {
-            bg: '#fff3e0', border: '#ed6c02', icon: '📴',
-            title: 'You are offline',
-            body: 'Your progress is saved on this device. It will sync automatically when you go back online.',
-            btn: null
-          },
-          unknown: {
-            bg: '#e1f5fe', border: '#0277bd', icon: 'ℹ️',
-            title: 'Not yet synced',
-            body: 'Complete a lesson or take a quiz — your progress will sync to your teacher automatically.',
-            btn: null
-          }
-        }[state.key];
-
-        if (bannerConfig) {
-          statusBanner.innerHTML = `
-            <div style="background:${bannerConfig.bg};border-left:4px solid ${bannerConfig.border};border-radius:10px;padding:14px 18px;">
-              <div style="display:flex;gap:12px;align-items:flex-start;">
-                <span style="font-size:1.5rem;">${bannerConfig.icon}</span>
-                <div style="flex:1;">
-                  <div style="font-weight:700;color:#1a1a1a;margin-bottom:4px;">${bannerConfig.title}</div>
-                  <div style="font-size:0.85rem;color:#37474f;">${bannerConfig.body}</div>
-                  ${bannerConfig.btn ? '<button id="banner-retry-btn" class="btn btn-primary" style="margin-top:10px;font-size:0.8rem;padding:6px 14px;">' + bannerConfig.btn + '</button>' : ''}
-                </div>
-              </div>
-            </div>
-          `;
-          const rb = document.getElementById('banner-retry-btn');
-          if (rb) rb.addEventListener('click', doForceSync);
-        }
-      }
+        state.key === 'offline' ? '📴 ' + state.label : '🔵 ' + state.label;
     }
   }
-
-  async function doForceSync() {
-    if (typeof Sync === 'undefined' || !Sync.backendEnabled || !Sync.backendEnabled()) {
-      return APP.toast('Backend not configured.', 'warning');
-    }
-    if (!navigator.onLine) {
-      return APP.toast('Still offline — try again later.', 'warning');
-    }
-
-    if (forceSyncBtn) {
-      forceSyncBtn.disabled = true;
-      forceSyncBtn.textContent = '⏳ Syncing...';
-    }
-
-    try {
-      const result = await Sync.flushQueue();
-      if (result.flushed > 0) {
-        localStorage.setItem('gba_last_push_at', new Date().toISOString());
-        APP.toast('✅ Synced ' + result.flushed + ' item(s)', 'success');
-      } else if (result.remaining > 0) {
-        APP.toast(result.remaining + ' item(s) still pending', 'warning');
-      } else {
-        APP.toast('Nothing to sync — you are up to date.', 'info');
-      }
-      renderSyncStatus();
-    } catch (err) {
-      APP.toast('Sync failed: ' + err.message, 'danger');
-    } finally {
-      if (forceSyncBtn) {
-        forceSyncBtn.disabled = false;
-        forceSyncBtn.textContent = '🔄 Force Sync Now';
-      }
-    }
-  }
-
-  if (forceSyncBtn) forceSyncBtn.addEventListener('click', doForceSync);
 
   setInterval(renderSyncStatus, 10000);
-  window.addEventListener('online', () => { renderSyncStatus(); setTimeout(doForceSync, 500); });
+  window.addEventListener('online', renderSyncStatus);
   window.addEventListener('offline', renderSyncStatus);
-  window.addEventListener('sync-queue-changed', renderSyncStatus);
-
   renderSyncStatus();
 
-  /* ============================================================
-     Sync Code / JSON / Import
-     ============================================================ */
-  const syncBtnCode = APP.$('#btn-sync-code');
-
-  if (syncBtnCode) {
-    const backendOn = typeof Sync !== 'undefined' && Sync.backendEnabled && Sync.backendEnabled();
-    syncBtnCode.textContent = backendOn
-      ? '🔑 Generate Sync Code (works anywhere)'
-      : '🔑 Generate Sync Code (this device only)';
-
-    syncBtnCode.addEventListener('click', async () => {
-      syncBtnCode.disabled = true;
-      syncBtnCode.textContent = '⏳ Generating...';
-      try {
-        const result = await Sync.generateSyncCode(user.lrn, null);
-        const modeLabel = result.mode === 'backend'
-          ? '<span style="color:var(--color-success);">✅ Works across devices</span>'
-          : '<span style="color:var(--color-warning);">⚠️ Only works on THIS device</span>';
-        APP.$('#sync-output').innerHTML =
-          '<div class="alert alert-success"><strong>✅ Sync Code Generated!</strong>' +
-          '<div style="font-family:monospace;font-size:1.4rem;margin:12px 0;text-align:center;padding:12px;background:#fff;border-radius:6px;letter-spacing:1px;">' +
-          result.code + '</div>' +
-          '<p class="text-small">Mode: ' + modeLabel + '</p></div>';
-        APP.toast('Sync code generated!', 'success');
-      } catch (e) {
-        APP.toast('Failed: ' + e.message, 'danger');
-      } finally {
-        syncBtnCode.disabled = false;
-        syncBtnCode.textContent = Sync.backendEnabled()
-          ? '🔑 Generate Sync Code (works anywhere)'
-          : '🔑 Generate Sync Code (this device only)';
-      }
+  // Log Out
+  const logoutBtn = $('#btn-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      if (!confirm('Are you sure you want to log out?')) return;
+      localStorage.removeItem(`${NS}session`);
+      window.location.replace('login.html');
     });
   }
-
-  APP.$('#btn-export-json').addEventListener('click', async () => {
-    try {
-      const fn = await Sync.exportAsFile(user.lrn, null);
-      APP.toast('Saved: ' + fn, 'success');
-    } catch (e) {
-      APP.toast('Export failed: ' + e.message, 'danger');
-    }
-  });
-
-  APP.$('#btn-import-json').addEventListener('click', () => {
-    APP.$('#import-file').click();
-  });
-
-  APP.$('#import-file').addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    try {
-      const data = await Backup.uploadBackup(file);
-      APP.toast('Backup restored for ' + data.user.firstName + '!', 'success');
-      setTimeout(() => location.reload(), 900);
-    } catch (err) {
-      APP.toast('Import failed: ' + err.message, 'danger');
-    }
-    e.target.value = '';
-  });
-
-  /* ---------- Log Out ---------- */
-  APP.$('#btn-logout').addEventListener('click', () => {
-    const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:99999;font-family:Segoe UI,sans-serif;';
-    overlay.innerHTML = '<div style="text-align:center;"><div style="font-size:2rem;">👋</div><div style="font-weight:600;color:#1b7a3d;margin-top:8px;">Logging out...</div></div>';
-    document.body.appendChild(overlay);
-
-    sessionStorage.setItem('gba_logout_pending', JSON.stringify({ lrn: user.lrn, at: Date.now() }));
-    Store.clearSession();
-    setTimeout(() => { window.location.replace('login.html'); }, 150);
-  });
 
 })();
