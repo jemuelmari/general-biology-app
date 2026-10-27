@@ -1,12 +1,11 @@
 /* ============================================================
    auth.js — Login, register, multi-user session handling
-   Version: 2.3.7
+   Version: 3.0.0 (Masterlist Pull Integration)
    ============================================================ */
 
 (() => {
   'use strict';
 
-  /* ---------- Handle pending logout prompt ---------- */
   function checkPendingLogout() {
     const pending = sessionStorage.getItem('gba_logout_pending');
     if (!pending) return;
@@ -29,9 +28,6 @@
     } catch (e) { /* ignore */ }
   }
 
-  /* ============================================================
-     Tab switching (uses .login-tab and #tab-*)
-     ============================================================ */
   const tabs = APP.$$('.login-tab');
   const panels = {
     login: APP.$('#tab-login'),
@@ -50,7 +46,6 @@
     });
   });
 
-  /* ---------- LRN input formatting ---------- */
   function attachLRNFormatter(input) {
     if (!input) return;
     input.addEventListener('input', () => {
@@ -63,7 +58,6 @@
   attachLRNFormatter(APP.$('#login-lrn'));
   attachLRNFormatter(APP.$('#reg-lrn'));
 
-  /* ---------- Name auto-formatting (live, on blur) ---------- */
   function attachNameFormatter(input, mode) {
     if (!input) return;
     input.addEventListener('blur', () => {
@@ -81,12 +75,11 @@
   attachNameFormatter(APP.$('#reg-firstname'), 'title');
   attachNameFormatter(APP.$('#reg-middlename'), 'title');
 
-  /* ---------- Login ---------- */
   const loginForm = APP.$('#login-form');
   const loginError = APP.$('#login-error');
 
   if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       loginError.classList.add('hidden');
 
@@ -96,18 +89,38 @@
         return showError(loginError, 'LRN must be exactly 12 digits.');
       }
 
-      const user = Store.getUser(lrn);
+      let user = Store.getUser(lrn);
+      
+      // If not found locally, pull from backend
+      if (!user && window.SyncMaster && window.SyncMaster.backendEnabled()) {
+        const btn = loginForm.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = '⏳ Syncing...'; }
+
+        const res = await window.SyncMaster.pullFromBackend(lrn);
+        
+        if (btn) { btn.disabled = false; btn.textContent = 'Log In →'; }
+        
+        if (res.ok) {
+          user = Store.getUser(lrn);
+          APP.toast(res.migrated ? 'Profile migrated from backend!' : 'Profile synced from cloud!', 'success');
+        }
+      }
+
       if (!user) {
-        return showError(loginError, 'No saved profile found for this LRN. Please register as a new student.');
+        return showError(loginError, 'No saved profile found. Please register as a new student.');
       }
 
       Store.setSession(lrn);
+      
+      if (window.SyncMaster) {
+        window.SyncMaster.pullFromBackend(lrn).catch(() => {});
+      }
+
       APP.toast(`Welcome back, ${user.firstName}!`, 'success');
       setTimeout(() => window.location.replace('dashboard.html'), 300);
     });
   }
 
-  /* ---------- Register ---------- */
   const registerForm = APP.$('#register-form');
   const registerError = APP.$('#register-error');
 
@@ -148,12 +161,16 @@
 
       Store.saveUser(user);
       Store.setSession(lrn);
+      
+      if (window.SyncMaster) {
+        window.SyncMaster.pushMasterUpdate(lrn, 'both', 'register').catch(() => {});
+      }
+
       APP.toast(`Profile created! Welcome, ${firstName}.`, 'success');
       setTimeout(() => window.location.replace('dashboard.html'), 300);
     });
   }
 
-  /* ---------- Saved Users ---------- */
   function renderSavedUsers() {
     const list = APP.$('#saved-users-list');
     if (!list) return;
@@ -216,7 +233,6 @@
     });
   }
 
-  /* ---------- Helpers ---------- */
   function showError(el, msg) {
     if (!el) return;
     el.textContent = msg;
@@ -224,7 +240,6 @@
     APP.toast(msg, 'danger', 3000);
   }
 
-  /* ---------- Init ---------- */
   document.addEventListener('DOMContentLoaded', () => {
     const loginInput = APP.$('#login-lrn');
     if (loginInput) loginInput.focus();
