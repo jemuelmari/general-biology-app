@@ -1,6 +1,6 @@
 /* ============================================================
-   auth.js — Login, register, multi-user session handling
-   Version: 3.0.1 (Fixed reference update after backend pull)
+   auth.js — Secure Login & Registration
+   Version: 4.0.0
    ============================================================ */
 
 (() => {
@@ -10,30 +10,17 @@
     const pending = sessionStorage.getItem('gba_logout_pending');
     if (!pending) return;
     sessionStorage.removeItem('gba_logout_pending');
-
     try {
       const { lrn, at } = JSON.parse(pending);
       if (Date.now() - at > 60000) return;
-
       const user = Store.getUser(lrn);
       if (!user) return;
-
-      setTimeout(() => {
-        Backup.promptOnLogout(user).then((choice) => {
-          if (choice === 'keep' || choice === 'delete') {
-            APP.toast('Done!', 'success');
-          }
-        });
-      }, 300);
-    } catch (e) { /* ignore */ }
+      setTimeout(() => { Backup.promptOnLogout(user).then((choice) => { if (choice === 'keep' || choice === 'delete') APP.toast('Done!', 'success'); }); }, 300);
+    } catch (e) {}
   }
 
   const tabs = APP.$$('.login-tab');
-  const panels = {
-    login: APP.$('#tab-login'),
-    register: APP.$('#tab-register'),
-    saved: APP.$('#tab-saved')
-  };
+  const panels = { login: APP.$('#tab-login'), register: APP.$('#tab-register'), saved: APP.$('#tab-saved') };
 
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
@@ -63,11 +50,8 @@
     input.addEventListener('blur', () => {
       const v = input.value.trim();
       if (!v) return;
-      if (mode === 'last') {
-        input.value = APP.toLastNameFormat(v);
-      } else {
-        input.value = APP.toTitleCase(v);
-      }
+      if (mode === 'last') input.value = APP.toLastNameFormat(v);
+      else input.value = APP.toTitleCase(v);
     });
   }
 
@@ -83,40 +67,36 @@
       e.preventDefault();
       loginError.classList.add('hidden');
 
-      const lrn = APP.$('#login-lrn').value.replace(/\D/g, '');
+      const rawLrn = APP.$('#login-lrn').value;
+      const lrn = Store.normalizeLRN(rawLrn);
 
-      if (!APP.validateLRN(lrn)) {
-        return showError(loginError, 'LRN must be exactly 12 digits.');
-      }
+      if (!APP.validateLRN(lrn)) return showError(loginError, 'ERR_BAD_LRN: LRN must be exactly 12 digits.');
 
       let user = Store.getUser(lrn);
       
-      // If not found locally, pull from backend
-      if (!user && window.SyncMaster && window.SyncMaster.backendEnabled()) {
+      if (!user) {
+        if (!navigator.onLine) return showError(loginError, 'ERR_OFFLINE: You are offline and this profile is not saved on this device.');
         const btn = loginForm.querySelector('button[type="submit"]');
         if (btn) { btn.disabled = true; btn.textContent = '⏳ Syncing...'; }
 
-        const res = await window.SyncMaster.pullFromBackend(lrn);
-        
-        if (btn) { btn.disabled = false; btn.textContent = 'Log In →'; }
-        
-        if (res.ok) {
-          // BAGONG LINYA: Kailangan i-refresh ang reference ni Store pagkatapos ng pull
-          user = Store.getUser(lrn); 
-          APP.toast(res.migrated ? 'Profile migrated from backend!' : 'Profile synced from cloud!', 'success');
+        try {
+          const res = await window.SyncMaster.pullFromBackend(lrn);
+          if (btn) { btn.disabled = false; btn.textContent = 'Log In →'; }
+          if (res.ok && res.user) {
+            user = res.user;
+            APP.toast(res.migrated ? 'Profile migrated from backend!' : 'Profile synced from cloud!', 'success');
+          } else {
+            return showError(loginError, `ERR_SYNC: ${res.error || 'Could not pull profile'}`);
+          }
+        } catch (err) {
+          if (btn) { btn.disabled = false; btn.textContent = 'Log In →'; }
+          return showError(loginError, `ERR_NETWORK: ${err.message}`);
         }
       }
 
-      if (!user) {
-        return showError(loginError, 'No saved profile found. Please register as a new student.');
-      }
+      if (!user) return showError(loginError, 'ERR_NOT_FOUND: No saved profile found.');
 
       Store.setSession(lrn);
-      
-      if (window.SyncMaster) {
-        window.SyncMaster.pullFromBackend(lrn).catch(() => {});
-      }
-
       APP.toast(`Welcome back, ${user.firstName}!`, 'success');
       setTimeout(() => window.location.replace('dashboard.html'), 300);
     });
@@ -133,7 +113,7 @@
       const lastName = APP.toLastNameFormat(APP.$('#reg-lastname').value.trim());
       const firstName = APP.toTitleCase(APP.$('#reg-firstname').value.trim());
       const middleName = APP.toTitleCase(APP.$('#reg-middlename').value.trim());
-      const lrn = APP.$('#reg-lrn').value.replace(/\D/g, '');
+      const lrn = Store.normalizeLRN(APP.$('#reg-lrn').value);
       const gradeLevel = APP.$('#reg-grade').value;
       const section = APP.$('#reg-section').value;
       const sex = APP.getSexValue(APP.$('#reg-sex')?.value);
@@ -144,28 +124,13 @@
       if (!gradeLevel) return showError(registerError, 'Please select a grade level.');
       if (!section) return showError(registerError, 'Please select a section.');
       if (!sex) return showError(registerError, 'Please select your sex.');
+      if (Store.getUser(lrn)) return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
 
-      if (Store.getUser(lrn)) {
-        return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
-      }
-
-      const user = {
-        lrn,
-        lastName,
-        firstName,
-        middleName,
-        gradeLevel,
-        section,
-        sex,
-        createdAt: new Date().toISOString()
-      };
-
+      const user = { lrn, lastName, firstName, middleName, gradeLevel, section, sex, createdAt: new Date().toISOString() };
       Store.saveUser(user);
       Store.setSession(lrn);
       
-      if (window.SyncMaster) {
-        window.SyncMaster.pushMasterUpdate(lrn, 'both', 'register').catch(() => {});
-      }
+      if (window.SyncMaster) window.SyncMaster.pushMasterUpdate(lrn, 'both', 'register').catch(() => {});
 
       APP.toast(`Profile created! Welcome, ${firstName}.`, 'success');
       setTimeout(() => window.location.replace('dashboard.html'), 300);
@@ -176,35 +141,21 @@
     const list = APP.$('#saved-users-list');
     if (!list) return;
     let users = Store.getAllUsers();
-
     if (!users.length) {
-      list.innerHTML = `
-        <div style="text-align:center;padding:32px 16px;">
-          <div style="font-size:2.5rem;opacity:0.4;">👤</div>
-          <p style="color:#90a4ae;font-size:0.9rem;margin:8px 0 0;">No saved users on this device yet.</p>
-        </div>
-      `;
+      list.innerHTML = `<div style="text-align:center;padding:32px 16px;"><div style="font-size:2.5rem;opacity:0.4;">👤</div><p style="color:#90a4ae;font-size:0.9rem;margin:8px 0 0;">No saved users on this device yet.</p></div>`;
       return;
     }
-
     users = APP.sortStudents(users, 'last', 'asc');
-
     list.innerHTML = '';
     users.forEach((u) => {
       const card = document.createElement('div');
       card.className = 'saved-user-card';
       const initials = `${(u.firstName || '?').charAt(0)}${(u.lastName || '?').charAt(0)}`.toUpperCase();
       card.innerHTML = `
-        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1b7a3d,#4caf50);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0;">
-          ${initials}
-        </div>
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1b7a3d,#4caf50);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0;">${initials}</div>
         <div style="flex:1;min-width:0;">
-          <div style="font-weight:700;font-size:0.9rem;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
-            ${APP.formatFullName(u.lastName, u.firstName, u.middleName)}
-          </div>
-          <div style="font-size:0.75rem;color:#78909c;margin-top:2px;">
-            LRN: ${APP.formatLRN(u.lrn)} · ${u.section}
-          </div>
+          <div style="font-weight:700;font-size:0.9rem;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${APP.formatFullName(u.lastName, u.firstName, u.middleName)}</div>
+          <div style="font-size:0.75rem;color:#78909c;margin-top:2px;">LRN: ${APP.formatLRN(u.lrn)} · ${u.section}</div>
         </div>
         <div style="display:flex;gap:6px;">
           <button class="btn btn-primary" data-login="${u.lrn}" style="font-size:0.8rem;padding:6px 12px;">Log In</button>
