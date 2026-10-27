@@ -654,3 +654,20 @@
   .qs-value { font-size: 1.35rem; }
   .qs-label { font-size: 0.65rem; }
 }
+/* ============================================================
+   v1.5.0 — Global Sync Banner
+   ============================================================ */
+#global-sync-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #fff;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(-100%);
+}
+#global-sync-banner strong { font-weight: 700; }
