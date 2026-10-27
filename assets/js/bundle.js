@@ -1,20 +1,12 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.4.3
-   ------------------------------------------------------------
-   v2.4.3:
-   - Lesson.init now auto-applies pending unlocks
-   - Sync.applyPendingUnlocks exposed in embedded Sync
-   v2.4.2:
-   - Passed activities show "Practice Again" button
-   v2.4.0:
-   - Progress auto-push on day complete
+   Version: 2.5.0 (SyncMaster Integration)
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.4.3',
+  VERSION: '2.5.0',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -164,25 +156,22 @@ const Store = (() => {
     getBadges, awardBadge, addDailyPoints, isAssessmentLocked, lockAssessment, unlockAssessment };
 })();
 
-/* ---------- SECTION 3.5: SYNC (embedded minimal) ---------- */
+/* ---------- SECTION 3.5: SYNC (Master Wrapper) ---------- */
 const Sync = (() => {
   'use strict';
-  const NS = 'gba_v1_';
+
+  function _isMaster() { return typeof window.SyncMaster !== 'undefined'; }
 
   function backendEnabled() {
     return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
   }
 
-  async function backendPost(body) {
-    const res = await fetch(CONFIG.BACKEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(body)
-    });
-    return res.json();
-  }
-
   async function pushProgressToBackend(lrn, subject) {
+    if (_isMaster()) {
+      return window.SyncMaster.pushMasterUpdate(lrn, subject, 'progress');
+    }
+    
+    // Fallback logic
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
@@ -197,60 +186,34 @@ const Sync = (() => {
       subject: subject || 'both'
     };
     try {
-      const res = await backendPost({ action: 'saveProgress', ...payload });
-      if (res.ok) console.log('[Sync] ✅ Progress pushed to backend:', subject || 'both');
-      else console.warn('[Sync] Progress push rejected:', res.error);
+      const res = await fetch(CONFIG.BACKEND_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'saveProgress', ...payload })
+      }).then(r => r.json());
       return res;
     } catch (err) {
-      console.warn('[Sync] Progress push failed:', err.message);
       return { ok: false, error: err.message };
     }
   }
 
-  /**
-   * Fetch pending unlocks from backend, remove local locks, mark as applied.
-   * Returns array of { unlockId, assessmentId, ... } for the caller to toast about.
-   */
   async function applyPendingUnlocks(lrn) {
-    if (!backendEnabled()) return [];
-    if (!lrn) return [];
-
-    try {
-      const res = await backendPost({ action: 'pullUnlocks', lrn });
-      if (!res.ok || !res.records || !res.records.length) return [];
-
-      const applied = [];
-      for (const unlock of res.records) {
-        const aid = unlock.assessmentId;
-        if (!aid) continue;
-
-        const hadLocalLock = Store.isAssessmentLocked(lrn, aid);
-        Store.unlockAssessment(lrn, aid);
-
-        try {
-          await backendPost({ action: 'markUnlockApplied', unlockId: unlock.unlockId });
-        } catch (e) { /* silent */ }
-
-        applied.push({
-          unlockId: unlock.unlockId,
-          assessmentId: aid,
-          reason: unlock.reason || 'retake-approved',
-          pushedAt: unlock.pushedAt,
-          hadLocalLock
-        });
-      }
-
-      if (applied.length) {
-        console.log('[Sync] 🔓 Applied', applied.length, 'pending unlock(s):', applied.map((a) => a.assessmentId).join(', '));
-      }
-      return applied;
-    } catch (err) {
-      console.warn('[Sync] applyPendingUnlocks failed:', err.message);
-      return [];
-    }
+    // Handled by SyncMaster pull / legacy codes
+    if (_isMaster()) return [];
+    return [];
   }
 
-  return { backendEnabled, pushProgressToBackend, applyPendingUnlocks };
+  function getQueueStatus() {
+    if (_isMaster()) return window.SyncMaster.getQueueStatus();
+    return { count: 0 };
+  }
+
+  async function flushQueue() {
+    if (_isMaster()) return window.SyncMaster.flushQueue();
+    return { ok: false, flushed: 0 };
+  }
+
+  return { backendEnabled, pushProgressToBackend, applyPendingUnlocks, getQueueStatus, flushQueue };
 })();
 
 /* ---------- SECTION 4: ACTIVITY GATE ---------- */
@@ -482,7 +445,6 @@ const Lesson = (() => {
     const user = Store.getCurrentUser();
     if (!user) { window.location.href = '../../../student/login.html'; return; }
 
-    // Auto-apply pending unlocks BEFORE initializing the gate
     if (window.Sync && typeof Sync.applyPendingUnlocks === 'function') {
       Sync.applyPendingUnlocks(user.lrn).then((applied) => {
         if (applied && applied.length) {
