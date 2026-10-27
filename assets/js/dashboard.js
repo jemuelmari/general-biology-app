@@ -12,7 +12,6 @@
     return;
   }
 
-  // Safe access to APP.$() in case it doesn't exist
   const $ = (sel) => document.querySelector(sel);
 
   const userPill = $('[id="user-pill"]');
@@ -33,7 +32,6 @@
     `;
   }
 
-  // Safe Transmutation fallback
   function computeStanding() {
     const scores = Store.getScores(user.lrn);
     const allSTs = [];
@@ -46,7 +44,6 @@
     if (!allSTs.length) return { label: 'No data yet', key: 'on-track', avg: null };
     const avg = allSTs.reduce((a, b) => a + b, 0) / allSTs.length;
     
-    // Fallback kung wala ang Transmutation
     if (typeof Transmutation !== 'undefined' && Transmutation.classifyStudent) {
       return { ...Transmutation.classifyStudent(avg), avg };
     }
