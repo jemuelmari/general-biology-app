@@ -1,10 +1,12 @@
 /* ============================================================
    auth.js — Secure Login & Registration
-   Version: 4.0.0
+   Version: 4.0.1 (Fixed Saved Users Display)
    ============================================================ */
 
 (() => {
   'use strict';
+
+  const NS = 'gba_v1_';
 
   function checkPendingLogout() {
     const pending = sessionStorage.getItem('gba_logout_pending');
@@ -97,7 +99,7 @@
       if (!user) return showError(loginError, 'ERR_NOT_FOUND: No saved profile found.');
 
       Store.setSession(lrn);
-      APP.toast(`Welcome back, ${user.firstName}!`, 'success');
+      APP.toast(`Welcome back, ${user.FirstName || user.firstName}!`, 'success');
       setTimeout(() => window.location.replace('dashboard.html'), 300);
     });
   }
@@ -126,7 +128,17 @@
       if (!sex) return showError(registerError, 'Please select your sex.');
       if (Store.getUser(lrn)) return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
 
-      const user = { lrn, lastName, firstName, middleName, gradeLevel, section, sex, createdAt: new Date().toISOString() };
+      const user = {
+        LRN: lrn,
+        LastName: lastName,
+        FirstName: firstName,
+        MiddleName: middleName,
+        GradeLevel: gradeLevel,
+        Section: section,
+        Sex: sex,
+        createdAt: new Date().toISOString()
+      };
+      
       Store.saveUser(user);
       Store.setSession(lrn);
       
@@ -140,49 +152,70 @@
   function renderSavedUsers() {
     const list = APP.$('#saved-users-list');
     if (!list) return;
-    let users = Store.getAllUsers();
-    if (!users.length) {
-      list.innerHTML = `<div style="text-align:center;padding:32px 16px;"><div style="font-size:2.5rem;opacity:0.4;">👤</div><p style="color:#90a4ae;font-size:0.9rem;margin:8px 0 0;">No saved users on this device yet.</p></div>`;
-      return;
+    
+    try {
+      const raw = localStorage.getItem(`${NS}users`) || '[]';
+      const users = JSON.parse(raw);
+
+      if (!users.length) {
+        list.innerHTML = `<div style="text-align:center;padding:32px 16px;"><div style="font-size:2.5rem;opacity:0.4;">👤</div><p style="color:#90a4ae;font-size:0.9rem;margin:8px 0 0;">No saved users on this device yet.</p></div>`;
+        return;
+      }
+
+      const normalizedUsers = users.map(u => ({
+        lrn: u.LRN || u.lrn || '',
+        lastName: u.LastName || u.lastName || '',
+        firstName: u.FirstName || u.firstName || '',
+        middleName: u.MiddleName || u.middleName || '',
+        section: u.Section || u.section || ''
+      }));
+
+      normalizedUsers.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));
+
+      list.innerHTML = '';
+      normalizedUsers.forEach((u) => {
+        const card = document.createElement('div');
+        card.className = 'saved-user-card';
+        const initials = `${(u.firstName || '?').charAt(0)}${(u.lastName || '?').charAt(0)}`.toUpperCase();
+        const fullName = u.lastName && u.firstName 
+          ? `${u.lastName}, ${u.firstName}${u.middleName ? ' ' + u.middleName : ''}`
+          : u.firstName || u.lastName || 'Unknown';
+
+        card.innerHTML = `
+          <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1b7a3d,#4caf50);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0;">${initials}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:0.9rem;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${fullName}</div>
+            <div style="font-size:0.75rem;color:#78909c;margin-top:2px;">LRN: ${u.lrn} · ${u.section || '—'}</div>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-primary" data-login="${u.lrn}" style="font-size:0.8rem;padding:6px 12px;">Log In</button>
+            <button class="btn btn-outline" data-delete="${u.lrn}" style="font-size:0.8rem;padding:6px 10px;color:#c62828;border-color:#c62828;">🗑️</button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+
+      list.querySelectorAll('[data-login]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const lrn = btn.dataset.login;
+          Store.setSession(lrn);
+          APP.toast('Logged in!', 'success');
+          setTimeout(() => window.location.replace('dashboard.html'), 200);
+        });
+      });
+
+      list.querySelectorAll('[data-delete]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const lrn = btn.dataset.delete;
+          if (!confirm('Delete this profile and all its progress on this device?')) return;
+          Store.deleteUser(lrn);
+          APP.toast('Profile deleted.', 'info');
+          renderSavedUsers();
+        });
+      });
+    } catch (e) {
+      list.innerHTML = `<div style="color:#c62828;padding:16px;">Error loading users: ${e.message}</div>`;
     }
-    users = APP.sortStudents(users, 'last', 'asc');
-    list.innerHTML = '';
-    users.forEach((u) => {
-      const card = document.createElement('div');
-      card.className = 'saved-user-card';
-      const initials = `${(u.firstName || '?').charAt(0)}${(u.lastName || '?').charAt(0)}`.toUpperCase();
-      card.innerHTML = `
-        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1b7a3d,#4caf50);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0;">${initials}</div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-weight:700;font-size:0.9rem;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${APP.formatFullName(u.lastName, u.firstName, u.middleName)}</div>
-          <div style="font-size:0.75rem;color:#78909c;margin-top:2px;">LRN: ${APP.formatLRN(u.lrn)} · ${u.section}</div>
-        </div>
-        <div style="display:flex;gap:6px;">
-          <button class="btn btn-primary" data-login="${u.lrn}" style="font-size:0.8rem;padding:6px 12px;">Log In</button>
-          <button class="btn btn-outline" data-delete="${u.lrn}" style="font-size:0.8rem;padding:6px 10px;color:#c62828;border-color:#c62828;">🗑️</button>
-        </div>
-      `;
-      list.appendChild(card);
-    });
-
-    list.querySelectorAll('[data-login]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const lrn = btn.dataset.login;
-        Store.setSession(lrn);
-        APP.toast('Logged in!', 'success');
-        setTimeout(() => window.location.replace('dashboard.html'), 200);
-      });
-    });
-
-    list.querySelectorAll('[data-delete]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const lrn = btn.dataset.delete;
-        if (!confirm('Delete this profile and all its progress on this device?')) return;
-        Store.deleteUser(lrn);
-        APP.toast('Profile deleted.', 'info');
-        renderSavedUsers();
-      });
-    });
   }
 
   function showError(el, msg) {
