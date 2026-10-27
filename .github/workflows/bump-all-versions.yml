@@ -1,0 +1,91 @@
+name: Bump All Versions from config.js
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'config.js'   # triggers only when config.js is changed
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read version from config.js
+        id: ver
+        run: |
+          # Extract VERSION: 'X.Y.Z' from config.js
+          NEW_VERSION=$(grep -oE "VERSION:\s*'[^']+'" config.js | head -1 | sed "s/VERSION:\s*'//;s/'//")
+          if [ -z "$NEW_VERSION" ]; then
+            echo "❌ Could not read VERSION from config.js"
+            exit 1
+          fi
+          echo "VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version detected: $NEW_VERSION"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bump versions in all HTML files
+        env:
+          NEW_VERSION: ${{ steps.ver.outputs.VERSION }}
+        run: |
+          python3 << 'PYEOF'
+          import os
+          import re
+
+          NEW_VERSION = os.environ['NEW_VERSION']
+          print(f'Applying version: {NEW_VERSION}')
+
+          bumped = 0
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules')]
+              for fname in files:
+                  if not fname.endswith('.html'):
+                      continue
+                  path = os.path.join(root, fname)
+                  with open(path, 'r', encoding='utf-8') as f:
+                      content = f.read()
+                  orig = content
+
+                  # Replace all ?v=... query strings on script/link tags
+                  content = re.sub(r'\?v=[a-zA-Z0-9._-]+', f'?v={NEW_VERSION}', content)
+
+                  # Replace <span class="version">vX.Y.Z</span> and similar
+                  content = re.sub(r'(<span class="version">)v[\d.]+(</span>)', rf'\g<1>v{NEW_VERSION}\g<2>', content)
+
+                  # Replace any "· vX.Y.Z" in footers
+                  content = re.sub(r'· v[\d.]+', f'· v{NEW_VERSION}', content)
+
+                  # Replace bare "vX.Y.Z" only inside titles where safe (avoid breaking other things)
+                  content = re.sub(r'(>v)[\d.]+(<)', rf'\g<1>{NEW_VERSION}\g<2>', content)
+
+                  if content != orig:
+                      with open(path, 'w', encoding='utf-8') as f:
+                          f.write(content)
+                      bumped += 1
+
+          print(f'✅ Updated {bumped} HTML files with v{NEW_VERSION}')
+          PYEOF
+
+      - name: Commit & push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: bump all versions to v${{ steps.ver.outputs.VERSION }}"
+            git push
+          fi
