@@ -23,7 +23,6 @@ const SyncMaster = (() => {
     return res.json();
   }
 
-  /* ---------- Pull from Masterlist (Login / New Device) ---------- */
   async function pullFromBackend(lrn) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     
@@ -33,7 +32,7 @@ const SyncMaster = (() => {
 
       const student = res.student;
       
-      // Save to local storage
+      // Save profile
       Store.saveUser({
         lrn: student.LRN,
         lastName: student.LastName,
@@ -44,9 +43,8 @@ const SyncMaster = (() => {
         sex: student.Sex
       });
 
+      // Save progress, scores, badges from backend objects
       Store.saveProgress(lrn, student.ProgressObj || {});
-      
-      // Manually set scores & badges to bypass custom saveScore methods
       localStorage.setItem(`${NS}scores_${lrn}`, JSON.stringify(student.ScoresObj || {}));
       localStorage.setItem(`${NS}badges_${lrn}`, JSON.stringify(student.BadgesObj || {}));
 
@@ -58,14 +56,12 @@ const SyncMaster = (() => {
     }
   }
 
-  /* ---------- Auto-Push (Scores, Progress, Badges) ---------- */
   async function pushMasterUpdate(lrn, subject, type, payloadData) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
     
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
 
-    // Build current state to send to backend for merging
     const progress = Store.getProgress(lrn);
     const scores = Store.getScores(lrn);
     const badges = Store.getBadges(lrn);
@@ -91,7 +87,7 @@ const SyncMaster = (() => {
       const res = await backendPost(body);
       if (res.ok) {
         localStorage.setItem(`${NS}last_push_at`, new Date().toISOString());
-        window.dispatchEvent(new Event('sync-queue-changed')); // Trigger UI update
+        window.dispatchEvent(new Event('sync-queue-changed'));
       } else {
         _queueFailedPush(body);
       }
@@ -102,18 +98,16 @@ const SyncMaster = (() => {
     }
   }
 
-  /* ---------- Offline Queue Handling ---------- */
   function _queueFailedPush(body) {
     try {
       const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
-      // Simple deduplication by lrn
       const existingIdx = queue.findIndex(q => q.lrn === body.lrn);
       if (existingIdx >= 0) {
         queue[existingIdx] = { body, queuedAt: new Date().toISOString(), attempts: 0 };
       } else {
         queue.push({ body, queuedAt: new Date().toISOString(), attempts: 0 });
       }
-      localStorage.setItem(QUEUE_KEY, JSON.stringify(queue.slice(-50))); // Max 50
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(queue.slice(-50)));
       window.dispatchEvent(new Event('sync-queue-changed'));
     } catch (e) { /* silent */ }
   }
@@ -165,14 +159,13 @@ const SyncMaster = (() => {
     return devId;
   }
 
-  // Auto-flush on load, online event, and visibility change
   if (typeof window !== 'undefined') {
     window.addEventListener('load', () => setTimeout(flushQueue, 3000));
     window.addEventListener('online', () => setTimeout(flushQueue, 1000));
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) setTimeout(flushQueue, 500);
     });
-    setInterval(() => { if (getQueueStatus().count > 0) flushQueue(); }, 60000); // Every minute
+    setInterval(() => { if (getQueueStatus().count > 0) flushQueue(); }, 60000);
   }
 
   return {
