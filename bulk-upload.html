@@ -28,11 +28,10 @@
     <div id="status-box"></div>
   </div>
 
-  <!-- Kinukuha nito ang setup ng app mo -->
-  <script src="config.js"></script>
-  <script src="assets/js/sync-master.js"></script>
-
   <script>
+    // Ito ang URL ng backend mo (galing sa config.js mo)
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyi2fj-Jnmlk7Pp4qhtfuE_lz0zSewtLfRPiAZnPO5A-uA5ICvicE_DPUry_lax69ubuQ/exec';
+
     async function startUpload() {
       const btn = document.getElementById('upload-btn');
       const box = document.getElementById('status-box');
@@ -42,7 +41,7 @@
       box.style.display = 'block';
       box.innerHTML = 'Sinisimulan...<br>';
 
-      // Kunin lahat ng bata na naka-save sa laptop
+      // Kunin lahat ng bata na naka-save sa laptop (galing sa localStorage ng app)
       const NS = 'gba_v1_';
       const users = JSON.parse(localStorage.getItem(`${NS}users`) || '[]');
       
@@ -66,15 +65,34 @@
 
         try {
           // Ipadala sa Google Sheets (Backend)
-          const res = await window.SyncMaster.pushMasterUpdate(user.lrn, 'both', 'bulk-sync', {
-            student: user, progress: progress, scores: scores, badges: badges
+          const res = await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify({
+              action: 'upsertStudentMaster',
+              lrn: user.lrn,
+              student: {
+                lastName: user.lastName,
+                firstName: user.firstName,
+                middleName: user.middleName || '',
+                gradeLevel: user.gradeLevel,
+                section: user.section,
+                sex: user.sex || ''
+              },
+              progress: progress,
+              scores: scores,
+              badges: badges,
+              deviceId: 'BULK-UPLOAD-BROWSER'
+            })
           });
           
-          if (res.ok) {
+          const data = await res.json();
+          
+          if (data.ok) {
             box.innerHTML += `<span class="success">✅ Success!</span><br><br>`;
             successCount++;
           } else {
-            box.innerHTML += `<span class="error">❌ Failed: ${res.error}</span><br><br>`;
+            box.innerHTML += `<span class="error">❌ Failed: ${data.error}</span><br><br>`;
           }
         } catch (err) {
           box.innerHTML += `<span class="error">❌ Error: ${err.message}</span><br><br>`;
@@ -82,7 +100,7 @@
         
         box.scrollTop = box.scrollHeight;
 
-        // Maghintay ng 1 segundo para hindi mag-error ang Google (Rate limit)
+        // Maghintay ng 1 segundo para hindi mag-error ang Google
         await new Promise(r => setTimeout(r, 1000));
       }
 
