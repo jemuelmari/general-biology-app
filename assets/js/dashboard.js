@@ -1,6 +1,6 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 2.0.2 (Fixed Store undefined & Uppercase Keys)
+   Version: 2.0.3 (White Bold Sync Status)
    ============================================================ */
 
 (() => {
@@ -9,7 +9,6 @@
   const $ = (sel) => document.querySelector(sel);
   const NS = 'gba_v1_';
 
-  // Safe Store fallback - directly read localStorage
   function getCurrentUser() {
     try {
       const sessionRaw = localStorage.getItem(`${NS}session`);
@@ -20,7 +19,6 @@
       const users = JSON.parse(usersRaw);
       const normalizedLrn = String(session.lrn).replace(/\D/g, '').padStart(12, '0');
       
-      // Find user by LRN (case-insensitive, handles both LRN and lrn)
       const user = users.find(u => {
         const uLrn = String(u.LRN || u.lrn || '').replace(/\D/g, '').padStart(12, '0');
         return uLrn === normalizedLrn;
@@ -28,7 +26,6 @@
       
       if (!user) return null;
       
-      // Normalize keys: Sheets return uppercase (FirstName), store returns lowercase (firstName)
       return {
         lrn: user.LRN || user.lrn,
         firstName: user.FirstName || user.firstName,
@@ -45,7 +42,6 @@
     try {
       const raw = localStorage.getItem(`${NS}progress_${lrn}`);
       if (raw) return JSON.parse(raw);
-      // Fallback: read from user.ProgressObj if exists
       const users = JSON.parse(localStorage.getItem(`${NS}users`) || '[]');
       const user = users.find(u => String(u.LRN || u.lrn) === String(lrn));
       if (user && user.ProgressObj) return user.ProgressObj;
@@ -90,12 +86,10 @@
     return;
   }
 
-  // Format helpers
   function formatLRN(lrn) {
     return String(lrn).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
   }
 
-  // Ensure firstName exists, fallback to empty
   const firstName = user.firstName || 'Student';
   const lastName = user.lastName || '';
   const section = user.section || '';
@@ -124,7 +118,6 @@
   const scores = getScores(lrn);
   const badges = getBadges(lrn);
 
-  // Compute standing
   function computeStanding() {
     const allSTs = [];
     ['biol1', 'biol2'].forEach((subj) => {
@@ -155,7 +148,6 @@
     `;
   }
 
-  // Quick stats
   const stats = [
     { value: (progress.biol1?.completed?.length || 0), label: 'Bio 1 Days Done', icon: '🔬', color: 'green' },
     { value: (progress.biol2?.completed?.length || 0), label: 'Bio 2 Days Done', icon: '🌱', color: 'blue' },
@@ -176,7 +168,6 @@
     `).join('');
   }
 
-  // Subjects
   const subjects = [
     { id: 'biol1', title: 'General Biology 1', desc: 'Cell · Cell Cycle · Transport · Biomolecules · Energy', icon: '🔬', totalWeeks: 10 },
     { id: 'biol2', title: 'General Biology 2', desc: 'Organismal Biology · Genetics · Evolution · Systematics', icon: '🌱', totalWeeks: 10 }
@@ -206,7 +197,6 @@
     });
   });
 
-  // Badges
   const allBadges = [
     { id: 'historian',        icon: '🏆', name: 'Historian' },
     { id: 'speed-scholar',    icon: '⚡', name: 'Speed Scholar' },
@@ -238,20 +228,23 @@
     }).join('');
   }
 
-  // Sync status
+  /* ============================================================
+     Sync Status System — White Bold Text
+     ============================================================ */
+
   const statusPill = $('#sync-status-pill');
   const statusBanner = $('#sync-status-banner');
   const forceSyncBtn = $('#btn-force-sync');
 
   function getSyncState() {
     const online = navigator.onLine;
-    const queue = { count: 0 }; // Safe fallback
+    const queue = { count: 0 };
     const lastPush = localStorage.getItem(`${NS}last_push_at`);
     if (!online) return { key: 'offline', label: 'Offline', color: '#ed6c02', queue };
     if (queue.count > 0) return { key: 'pending', label: queue.count + ' pending', color: '#ed6c02', queue, lastPush };
     if (lastPush) {
       const ago = Math.round((Date.now() - new Date(lastPush).getTime()) / 1000);
-      const agoStr = ago < 60 ? ago + 's ago' : ago < 3600 ? Math.floor(ago / 60) + 'm ago' : Math.floor(ago / 3600) + 'h ago';
+      const agoStr = ago < 60 ? ago + 's ago' : ago < 3600 ? Math.floor(ago / 60) + 'm ago' : Math.floor(ago / 86400) + 'd ago';
       return { key: 'synced', label: 'Synced ' + agoStr, color: '#2e7d32', queue, lastPush };
     }
     return { key: 'unknown', label: 'Not yet synced', color: '#78909c', queue };
@@ -261,8 +254,10 @@
     const state = getSyncState();
     if (statusPill) {
       statusPill.style.display = 'inline-flex';
-      statusPill.style.background = state.color + '22';
-      statusPill.style.color = state.color;
+      // ITO ANG BINAGO: Solid background, white bold text
+      statusPill.style.background = state.color;
+      statusPill.style.color = '#ffffff';
+      statusPill.style.fontWeight = 'bold';
       statusPill.style.border = '1px solid ' + state.color;
       statusPill.textContent =
         state.key === 'synced' ? '🟢 ' + state.label :
@@ -274,9 +269,9 @@
   setInterval(renderSyncStatus, 10000);
   window.addEventListener('online', renderSyncStatus);
   window.addEventListener('offline', renderSyncStatus);
+  window.addEventListener('sync-queue-changed', renderSyncStatus);
   renderSyncStatus();
 
-  // Log Out
   const logoutBtn = $('#btn-logout');
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
