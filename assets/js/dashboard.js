@@ -1,6 +1,6 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 2.0.0 (SyncMaster Integration)
+   Version: 2.0.1 (Fixed Logout & SyncMaster Integration)
    ============================================================ */
 
 (() => {
@@ -311,6 +311,7 @@
     e.target.value = '';
   });
 
+  /* ---------- Log Out ---------- */
   APP.$('#btn-logout').addEventListener('click', () => {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:99999;font-family:Segoe UI,sans-serif;';
