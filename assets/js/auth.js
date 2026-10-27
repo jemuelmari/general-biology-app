@@ -1,6 +1,6 @@
 /* ============================================================
    auth.js — Login, register, multi-user session handling
-   Version: 3.0.0 (Masterlist Pull Integration)
+   Version: 3.0.1 (Fixed reference update after backend pull)
    ============================================================ */
 
 (() => {
@@ -101,7 +101,8 @@
         if (btn) { btn.disabled = false; btn.textContent = 'Log In →'; }
         
         if (res.ok) {
-          user = Store.getUser(lrn);
+          // BAGONG LINYA: Kailangan i-refresh ang reference ni Store pagkatapos ng pull
+          user = Store.getUser(lrn); 
           APP.toast(res.migrated ? 'Profile migrated from backend!' : 'Profile synced from cloud!', 'success');
         }
       }
