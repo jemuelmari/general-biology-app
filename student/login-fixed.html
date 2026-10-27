@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login — Fixed</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/student.css" />
+  <style>
+    .login-hero { background: linear-gradient(135deg, #1b7a3d 0%, #2e9e50 60%, #4caf50 100%); color: #fff; padding: 40px 24px; border-radius: 18px; margin-bottom: 24px; text-align: center; }
+    .login-tabs { display: flex; gap: 4px; background: #f5f7fa; padding: 6px; border-radius: 12px; margin-bottom: 24px; }
+    .login-tab { flex: 1; padding: 12px 16px; background: transparent; border: none; border-radius: 8px; font-weight: 600; color: #5f6368; cursor: pointer; }
+    .login-tab.active { background: #fff; color: #1b7a3d; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .login-form-group { margin-bottom: 18px; }
+    .login-form-group label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; }
+    .login-form-group input, .login-form-group select { width: 100%; padding: 12px 14px; border: 1.5px solid #cfd8dc; border-radius: 10px; }
+    .login-btn { width: 100%; padding: 14px 20px; background: #1b7a3d; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="container flex-between">
+      <div><h1>🧬 Student Login</h1></div>
+      <a href="../index.html" class="btn btn-outline" style="color:#fff;border-color:#fff;">← Back</a>
+    </div>
+  </header>
+  <main class="container" style="max-width:540px;padding-top:32px;">
+    <div class="login-hero">
+      <h2>Welcome Back!</h2>
+      <p>Log in with your LRN to continue learning</p>
+    </div>
+    <div class="login-tabs">
+      <button class="login-tab active" data-tab="login">🔑 Log In</button>
+      <button class="login-tab" data-tab="register">📝 New Student</button>
+    </div>
+    <div id="tab-login" class="card">
+      <form id="login-form">
+        <div class="login-form-group">
+          <label>LRN (12 digits) *</label>
+          <input type="text" id="login-lrn" maxlength="14" placeholder="1234-5678-9012" required />
+        </div>
+        <button type="submit" class="login-btn">Log In →</button>
+        <div id="login-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
+      </form>
+    </div>
+    <div id="tab-register" class="card hidden">
+      <form id="register-form">
+         <div class="login-form-group">
+          <label>Last Name *</label>
+          <input type="text" id="reg-lastname" required />
+        </div>
+        <div class="login-form-group">
+          <label>First Name *</label>
+          <input type="text" id="reg-firstname" required />
+        </div>
+        <div class="login-form-group">
+          <label>LRN (12 digits) *</label>
+          <input type="text" id="reg-lrn" maxlength="14" required />
+        </div>
+        <div class="login-form-group">
+          <label>Grade Level *</label>
+          <select id="reg-grade" required>
+            <option value="12" selected>Grade 12</option>
+          </select>
+        </div>
+        <div class="login-form-group">
+          <label>Section *</label>
+          <select id="reg-section" required>
+            <option value="GAS" selected>GAS</option>
+          </select>
+        </div>
+        <div class="login-form-group">
+          <label>Sex *</label>
+          <select id="reg-sex" required>
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+          </select>
+        </div>
+        <button type="submit" class="login-btn">Create Profile →</button>
+        <div id="register-error" class="alert alert-danger hidden" style="margin-top:16px;"></div>
+      </form>
+    </div>
+  </main>
+  
+  <!-- ITO ANG MAHALAGA: Walang version string para hindi ma-cache -->
+  <script src="../config.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/store.js"></script>
+  <script src="../assets/js/sync-master.js"></script>
+  <script src="../assets/js/auth.js"></script>
+</body>
+</html>
