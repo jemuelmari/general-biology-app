@@ -1,27 +1,19 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 1.5.1
-   ------------------------------------------------------------
-   v1.5.1:
-   - Fixed statePill scope bug (was declared after usage)
-   - All DOM refs resolved at top of sync-status block
+   Version: 2.0.0 (Masterlist & Auto-Sync UI)
    ============================================================ */
 
 (() => {
   'use strict';
 
-  /* ---------- Auth guard ---------- */
   const user = Store.getCurrentUser();
   if (!user) {
     window.location.replace('login.html');
     return;
   }
 
-  /* ---------- User pill ---------- */
-  APP.$('#user-pill').textContent =
-    `${user.firstName} ${user.lastName.charAt(0)}. · ${user.section}`;
+  APP.$('#user-pill').textContent = `${user.firstName} ${user.lastName.charAt(0)}. · ${user.section}`;
 
-  /* ---------- Hero greeting ---------- */
   const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
   APP.$('#dash-avatar').textContent = initials;
   APP.$('#greeting-name').textContent = `Hello, ${user.firstName}! 👋`;
@@ -30,7 +22,6 @@
     <span>📘 Grade ${user.gradeLevel} — ${user.section}</span>
   `;
 
-  /* ---------- Compute standing ---------- */
   function computeStanding() {
     const scores = Store.getScores(user.lrn);
     const allSTs = [];
@@ -54,7 +45,6 @@
     </div>
   `;
 
-  /* ---------- Quick stats ---------- */
   const progress = Store.getProgress(user.lrn);
   const badges = Store.getBadges(user.lrn);
 
@@ -75,7 +65,6 @@
     </div>
   `).join('');
 
-  /* ---------- Subjects ---------- */
   const subjects = [
     { id: 'biol1', title: 'General Biology 1', desc: 'Cell · Cell Cycle · Transport · Biomolecules · Energy', icon: '🔬', totalWeeks: 10 },
     { id: 'biol2', title: 'General Biology 2', desc: 'Organismal Biology · Genetics · Evolution · Systematics', icon: '🌱', totalWeeks: 10 }
@@ -102,7 +91,6 @@
     });
   });
 
-  /* ---------- Badges ---------- */
   const allBadges = [
     { id: 'historian',        icon: '🏆', name: 'Historian' },
     { id: 'speed-scholar',    icon: '⚡', name: 'Speed Scholar' },
@@ -132,34 +120,23 @@
   /* ============================================================
      Sync Status System
      ============================================================ */
-
-  // Resolve ALL DOM refs first, before any usage
   const statusPill = document.getElementById('sync-status-pill');
   const statusBanner = document.getElementById('sync-status-banner');
-  const queueDetails = document.getElementById('queue-details');
   const forceSyncBtn = document.getElementById('btn-force-sync');
 
   function getSyncState() {
-    const backendOn = typeof Sync !== 'undefined' && Sync.backendEnabled && Sync.backendEnabled();
+    const backendOn = typeof SyncMaster !== 'undefined' && SyncMaster.backendEnabled();
     const online = navigator.onLine;
-    const queue = (typeof Sync !== 'undefined' && Sync.getQueueStatus && Sync.getQueueStatus()) || { count: 0, items: [] };
-    const lastPush = localStorage.getItem('gba_last_push_at');
+    const queue = (typeof SyncMaster !== 'undefined' && SyncMaster.getQueueStatus) ? SyncMaster.getQueueStatus() : { count: 0 };
+    const lastPush = localStorage.getItem('gba_v1_last_push_at');
 
-    if (!backendOn) {
-      return { key: 'disabled', label: 'Sync disabled', color: '#90a4ae', queue };
-    }
-    if (!online) {
-      return { key: 'offline', label: 'Offline', color: '#ed6c02', queue };
-    }
-    if (queue.count > 0) {
-      return { key: 'pending', label: queue.count + ' pending', color: '#ed6c02', queue, lastPush };
-    }
+    if (!backendOn) return { key: 'disabled', label: 'Sync disabled', color: '#90a4ae', queue };
+    if (!online) return { key: 'offline', label: 'Offline', color: '#ed6c02', queue };
+    if (queue.count > 0) return { key: 'pending', label: queue.count + ' pending', color: '#ed6c02', queue, lastPush };
+    
     if (lastPush) {
       const ago = Math.round((Date.now() - new Date(lastPush).getTime()) / 1000);
-      const agoStr = ago < 60 ? ago + 's ago'
-                    : ago < 3600 ? Math.floor(ago / 60) + 'm ago'
-                    : ago < 86400 ? Math.floor(ago / 3600) + 'h ago'
-                    : Math.floor(ago / 86400) + 'd ago';
+      const agoStr = ago < 60 ? ago + 's ago' : ago < 3600 ? Math.floor(ago / 60) + 'm ago' : Math.floor(ago / 3600) + 'h ago';
       return { key: 'synced', label: 'Synced ' + agoStr, color: '#2e7d32', queue, lastPush };
     }
     return { key: 'unknown', label: 'Not yet synced', color: '#78909c', queue };
@@ -168,111 +145,44 @@
   function renderSyncStatus() {
     const state = getSyncState();
 
-    // --- Pill (header) ---
     if (statusPill) {
       statusPill.style.display = 'inline-flex';
       statusPill.style.background = state.color + '22';
       statusPill.style.color = state.color;
       statusPill.style.border = '1px solid ' + state.color;
-      statusPill.textContent =
-        state.key === 'synced' ? '🟢 ' + state.label
-        : state.key === 'pending' ? '🟡 ' + state.label
-        : state.key === 'offline' ? '📴 ' + state.label
-        : state.key === 'disabled' ? '⚪ ' + state.label
-        : '🔵 ' + state.label;
+      statusPill.innerHTML = 
+        state.key === 'synced' ? '🟢 ' + state.label :
+        state.key === 'pending' ? '🟡 ' + state.label :
+        state.key === 'offline' ? '📴 ' + state.label :
+        state.key === 'disabled' ? '⚪ ' + state.label : '🔵 ' + state.label;
     }
 
-    // --- Banner ---
-    if (statusBanner) {
+    const gBanner = document.getElementById('global-sync-banner');
+    if (gBanner) {
       if (state.key === 'synced' || state.key === 'disabled') {
-        statusBanner.style.display = 'none';
+        gBanner.style.transform = 'translateY(-100%)';
       } else {
-        statusBanner.style.display = 'block';
-        const bannerConfig = {
-          pending: {
-            bg: '#fff3e0', border: '#ed6c02', icon: '⏳',
-            title: state.queue.count + ' item(s) waiting to sync',
-            body: 'Your scores are saved locally. The app will push them to your teacher automatically when the connection is stable.',
-            btn: '🔄 Retry Now'
-          },
-          offline: {
-            bg: '#fff3e0', border: '#ed6c02', icon: '📴',
-            title: 'You are offline',
-            body: 'Your progress is saved on this device. It will sync automatically when you go back online.',
-            btn: null
-          },
-          unknown: {
-            bg: '#e1f5fe', border: '#0277bd', icon: 'ℹ️',
-            title: 'Not yet synced',
-            body: 'Complete a lesson or take a quiz — your progress will sync to your teacher automatically.',
-            btn: null
-          }
-        }[state.key];
-
-        if (bannerConfig) {
-          statusBanner.innerHTML = `
-            <div style="background:${bannerConfig.bg};border-left:4px solid ${bannerConfig.border};border-radius:10px;padding:14px 18px;">
-              <div style="display:flex;gap:12px;align-items:flex-start;">
-                <span style="font-size:1.5rem;">${bannerConfig.icon}</span>
-                <div style="flex:1;">
-                  <div style="font-weight:700;color:#1a1a1a;margin-bottom:4px;">${bannerConfig.title}</div>
-                  <div style="font-size:0.85rem;color:#37474f;">${bannerConfig.body}</div>
-                  ${bannerConfig.btn ? '<button id="banner-retry-btn" class="btn btn-primary" style="margin-top:10px;font-size:0.8rem;padding:6px 14px;">' + bannerConfig.btn + '</button>' : ''}
-                </div>
-              </div>
-            </div>
-          `;
-          const rb = document.getElementById('banner-retry-btn');
-          if (rb) rb.addEventListener('click', doForceSync);
-        }
-      }
-    }
-
-    // --- Queue details ---
-    if (queueDetails) {
-      if (state.queue.count === 0) {
-        queueDetails.innerHTML = '';
-      } else {
-        queueDetails.innerHTML = `
-          <div style="background:#f8f9fa;border-radius:10px;padding:14px 18px;font-size:0.85rem;">
-            <div style="font-weight:700;color:#5f6368;margin-bottom:8px;">
-              ⏳ Pending sync queue (${state.queue.count})
-            </div>
-            <ul style="margin:0;padding-left:18px;color:#37474f;">
-              ${state.queue.items.slice(0, 5).map((item) => `
-                <li style="margin-bottom:4px;">
-                  <span style="font-family:Consolas,monospace;font-size:0.75rem;color:#78909c;">
-                    ${item.action}
-                  </span>
-                  ${item.assessmentId ? ' · ' + item.assessmentId : ''}
-                  ${item.subject ? ' · ' + item.subject.toUpperCase() : ''}
-                </li>
-              `).join('')}
-              ${state.queue.count > 5 ? '<li style="color:#90a4ae;">…and ' + (state.queue.count - 5) + ' more</li>' : ''}
-            </ul>
-          </div>
-        `;
+        gBanner.style.transform = 'translateY(0)';
+        gBanner.style.background = state.key === 'offline' ? '#ed6c02' : state.key === 'pending' ? '#ffb300' : '#0277bd';
+        gBanner.innerHTML = state.key === 'offline' 
+          ? '📴 <strong>Offline.</strong> Progress is saved locally. It will sync automatically once connected.'
+          : state.key === 'pending' ? '⏳ <strong>Syncing...</strong> ' + state.queue.count + ' item(s) waiting to push to server.'
+          : 'ℹ️ <strong>Not yet synced.</strong> Take a quiz to push data to your teacher.';
       }
     }
   }
 
   async function doForceSync() {
-    if (typeof Sync === 'undefined' || !Sync.backendEnabled || !Sync.backendEnabled()) {
+    if (typeof SyncMaster === 'undefined' || !SyncMaster.backendEnabled()) {
       return APP.toast('Backend not configured.', 'warning');
     }
-    if (!navigator.onLine) {
-      return APP.toast('Still offline — try again later.', 'warning');
-    }
+    if (!navigator.onLine) return APP.toast('Still offline — try again later.', 'warning');
 
-    if (forceSyncBtn) {
-      forceSyncBtn.disabled = true;
-      forceSyncBtn.textContent = '⏳ Syncing...';
-    }
+    if (forceSyncBtn) { forceSyncBtn.disabled = true; forceSyncBtn.textContent = '⏳ Syncing...'; }
 
     try {
-      const result = await Sync.flushQueue();
+      const result = await SyncMaster.flushQueue();
       if (result.flushed > 0) {
-        localStorage.setItem('gba_last_push_at', new Date().toISOString());
         APP.toast('✅ Synced ' + result.flushed + ' item(s)', 'success');
       } else if (result.remaining > 0) {
         APP.toast(result.remaining + ' item(s) still pending', 'warning');
@@ -283,22 +193,17 @@
     } catch (err) {
       APP.toast('Sync failed: ' + err.message, 'danger');
     } finally {
-      if (forceSyncBtn) {
-        forceSyncBtn.disabled = false;
-        forceSyncBtn.textContent = '🔄 Force Sync Now';
-      }
+      if (forceSyncBtn) { forceSyncBtn.disabled = false; forceSyncBtn.textContent = '🔄 Force Sync Now'; }
     }
   }
 
-  if (forceSyncBtn) {
-    forceSyncBtn.addEventListener('click', doForceSync);
-  }
+  if (forceSyncBtn) forceSyncBtn.addEventListener('click', doForceSync);
 
   setInterval(renderSyncStatus, 10000);
   window.addEventListener('online', () => { renderSyncStatus(); setTimeout(doForceSync, 500); });
   window.addEventListener('offline', renderSyncStatus);
   window.addEventListener('sync-queue-changed', renderSyncStatus);
-
+  
   renderSyncStatus();
 
   /* ============================================================
