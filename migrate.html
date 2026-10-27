@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Migrate Students to Masterlist</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #e8f5e9; padding: 40px 20px; text-align: center; }
+    .card { background: white; max-width: 500px; margin: 0 auto; padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    h1 { color: #1b7a3d; margin-bottom: 10px; }
+    p { color: #555; margin-bottom: 25px; line-height: 1.5; }
+    button { background: #1b7a3d; color: white; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; transition: background 0.3s; }
+    button:hover { background: #145c2e; }
+    button:disabled { background: #a5d6a7; cursor: not-allowed; }
+    #status-box { margin-top: 20px; text-align: left; font-size: 14px; background: #f5f5f5; padding: 15px; border-radius: 8px; max-height: 300px; overflow-y: auto; display: none; }
+    .success { color: green; font-weight: bold; }
+    .error { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>📦 I-migrate ang Lahat sa Masterlist</h1>
+    <p>Ito po ay kukuha ng lahat ng bata mula sa lumang <b>Records</b> sheet at ilalagay sila sa bagong <b>StudentsMasterlist</b> nang sabay-sabay.</p>
+    
+    <button id="migrate-btn" onclick="startMigration()">Simulan ang Migration</button>
+    
+    <div id="status-box"></div>
+  </div>
+
+  <script>
+    async function startMigration() {
+      const btn = document.getElementById('migrate-btn');
+      const box = document.getElementById('status-box');
+      
+      btn.disabled = true;
+      btn.textContent = '⏳ Nagmi-migrate... Maghintay lang po...';
+      box.style.display = 'block';
+      box.innerHTML = 'Kinukuha ang data mula sa Google Sheets...<br>';
+
+      try {
+        // Tatawagin nito ang backend para i-migrate lahat ng students
+        const response = await fetch('https://script.google.com/macros/s/AKfycbyi2fj-Jnmlk7Pp4qhtfuE_lz0zSewtLfRPiAZnPO5A-uA5ICvicE_DPUry_lax69ubuQ/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            action: 'migrateAllToMasterlist',
+            token: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e'
+          })
+        });
+        
+        const data = await response.json();
+
+        if (data.ok) {
+          box.innerHTML = `<span class="success">🎉 TAPOS NA PO!</span><br><br>`;
+          box.innerHTML += `Matagumpay na nailipat ang <b>${data.migrated} students</b> sa StudentsMasterlist.<br><br>`;
+          box.innerHTML += `<i>Pumunta na po kayo sa inyong Google Sheets at i-refresh para makita ang bagong "StudentsMasterlist" tab.</i>`;
+        } else {
+          box.innerHTML = `<span class="error">❌ May Error: ${data.error}</span>`;
+        }
+      } catch (err) {
+        box.innerHTML = `<span class="error">❌ Error sa Internet: ${err.message}</span>`;
+      }
+
+      btn.textContent = 'Tapos na!';
+    }
+  </script>
+</body>
+</html>
