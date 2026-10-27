@@ -1,11 +1,11 @@
 /* ============================================================
    config.js — App configuration
-   Version: 2.5.0
+   Version: 2.5.1
    ============================================================ */
 
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.5.0',
+  VERSION: '2.5.1',
 
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
