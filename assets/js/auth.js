@@ -129,22 +129,22 @@
       if (Store.getUser(lrn)) return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
 
       const user = {
-        LRN: lrn,
-        LastName: lastName,
-        FirstName: firstName,
-        MiddleName: middleName,
-        GradeLevel: gradeLevel,
-        Section: section,
-        Sex: sex,
-        createdAt: new Date().toISOString()
-      };
+  lrn: lrn,
+  lastName: lastName,
+  firstName: firstName,
+  middleName: middleName,
+  gradeLevel: gradeLevel,
+  section: section,
+  sex: sex,
+  createdAt: new Date().toISOString()
+};
       
       Store.saveUser(user);
       Store.setSession(lrn);
       
       if (window.SyncMaster) window.SyncMaster.pushMasterUpdate(lrn, 'both', 'register').catch(() => {});
 
-      APP.toast(`Profile created! Welcome, ${firstName}.`, 'success');
+      APP.toast(`Welcome back, ${user.firstName || user.FirstName}!`, 'success');
       setTimeout(() => window.location.replace('dashboard.html'), 300);
     });
   }
