@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📝 Assessment Tracker</h1>
-        <span class="version">v2.5.5</span>
+        <span class="version">v2.6.0</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">← Teacher Home</a>
@@ -30,12 +30,16 @@
         Tracks <strong>Quizzes</strong>, <strong>Summative Tests</strong>, and <strong>Term Exam</strong>
         performance separately from the activity engagement.
       </p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:center;">
         <select id="at-subject" class="form-control" style="max-width:200px;">
           <option value="biol1">General Biology 1</option>
           <option value="biol2">General Biology 2</option>
         </select>
+        <button id="at-refresh" class="btn btn-secondary" style="max-width:220px;">
+          🔄 Sync from Backend
+        </button>
       </div>
+      <p id="at-sync-status" class="text-muted" style="margin-top:12px;font-size:12px;"></p>
     </div>
 
     <div class="stats-grid" id="at-stats"></div>
@@ -45,10 +49,20 @@
       <div id="at-table"></div>
     </div>
 
+    <!-- NEW: Orphan section (hidden by default) -->
+    <div class="card" id="at-orphans-card" style="display:none;border-left:4px solid #ff9800;margin-top:24px;">
+      <h3 style="color:#e65100;margin-bottom:12px;">⚠️ Unlinked Students (Not in Master Sheet)</h3>
+      <p class="text-muted" style="margin-bottom:12px;">
+        These LRNs have local data but are <strong>not found in StudentsMaster</strong>. 
+        This usually means the student typed a wrong LRN, or the backend sync hasn't completed yet.
+      </p>
+      <div id="at-orphans-table"></div>
+    </div>
+
   </main>
 
   <footer class="app-footer">
-    <p>Assessment Tracker · v2.5.5</p>
+    <p>Assessment Tracker · v2.6.0</p>
   </footer>
 
   <script src="../config.js?v=2.4.2-b87cf8e"></script>
@@ -59,15 +73,124 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const subjectSel = document.getElementById('at-subject');
-      subjectSel.addEventListener('change', render);
-      render();
+      const refreshBtn = document.getElementById('at-refresh');
+      const syncStatus = document.getElementById('at-sync-status');
+      const orphansCard = document.getElementById('at-orphans-card');
 
+      // Backend master list (LRN -> student)
+      let masterStudents = {};
+      let backendLoaded = false;
+
+      subjectSel.addEventListener('change', render);
+      refreshBtn.addEventListener('click', syncFromBackend);
+
+      // ============================================
+      // BACKEND SYNC
+      // ============================================
+      async function syncFromBackend() {
+        syncStatus.textContent = '⏳ Syncing with backend...';
+        syncStatus.style.color = '#0277bd';
+        refreshBtn.disabled = true;
+
+        try {
+          const token = localStorage.getItem('gsa_teacher_token');
+          if (!token) {
+            syncStatus.textContent = '⚠️ No teacher token — showing local data only';
+            syncStatus.style.color = '#f57c00';
+            refreshBtn.disabled = false;
+            render();
+            return;
+          }
+
+          const response = await fetch(CONFIG.BACKEND_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'pullTeacherDashboard',
+              token: token
+            })
+          });
+
+          const data = await response.json();
+          if (!data.ok) {
+            syncStatus.textContent = `⚠️ Backend error: ${data.error}`;
+            syncStatus.style.color = '#c62828';
+            refreshBtn.disabled = false;
+            render();
+            return;
+          }
+
+          // Build master lookup
+          masterStudents = {};
+          (data.students || []).forEach(function(s) {
+            if (s.lrn) masterStudents[String(s.lrn)] = s;
+          });
+
+          backendLoaded = true;
+          syncStatus.textContent = `✅ Synced ${data.count} students from backend`;
+          syncStatus.style.color = '#2e7d32';
+
+          // Merge names into localStorage (para hindi na magmukhang orphan sa susunod)
+          try {
+            const localUsers = JSON.parse(localStorage.getItem('gsa_v1_users') || '{}');
+            Object.keys(masterStudents).forEach(function(lrn) {
+              var s = masterStudents[lrn];
+              if (s.lastName || s.firstName) {
+                localUsers[lrn] = localUsers[lrn] || {};
+                localUsers[lrn].lrn = lrn;
+                localUsers[lrn].lastName = s.lastName || localUsers[lrn].lastName || '';
+                localUsers[lrn].firstName = s.firstName || localUsers[lrn].firstName || '';
+                localUsers[lrn].middleName = s.middleName || localUsers[lrn].middleName || '';
+                localUsers[lrn].section = s.section || localUsers[lrn].section || '';
+              }
+            });
+            localStorage.setItem('gsa_v1_users', JSON.stringify(localUsers));
+          } catch (e) {
+            console.warn('Could not merge to localStorage:', e);
+          }
+
+          render();
+        } catch (err) {
+          syncStatus.textContent = `❌ Sync failed: ${err.message}`;
+          syncStatus.style.color = '#c62828';
+          render();
+        } finally {
+          refreshBtn.disabled = false;
+        }
+      }
+
+      // ============================================
+      // MAIN RENDER
+      // ============================================
       function render() {
         const subject = subjectSel.value;
         let users = Store.getAllUsers();
-        // Alphabetical sort
-        users = APP.sortStudents(users, 'last', 'asc');
 
+        // Split: valid vs orphan
+        const validUsers = [];
+        const orphanUsers = [];
+
+        users.forEach(function(u) {
+          var lrn = String(u.lrn || '');
+          var hasName = !!(u.lastName && u.firstName);
+          var inMaster = backendLoaded && masterStudents[lrn];
+
+          if (hasName || inMaster) {
+            // Patch missing names from master
+            if (!hasName && inMaster) {
+              u.lastName = masterStudents[lrn].lastName || '(No Name)';
+              u.firstName = masterStudents[lrn].firstName || '';
+            }
+            validUsers.push(u);
+          } else {
+            orphanUsers.push(u);
+          }
+        });
+
+        // Alphabetical sort (SAME as original)
+        users = APP.sortStudents(validUsers, 'last', 'asc');
+
+        // Compute data (SAME as original)
         const data = users.map((u) => {
           const scores = Store.getScores(u.lrn)[subject] || {};
           const quizzes = Object.values(scores.quizzes || {}).filter((q) => q && q.total);
@@ -90,6 +213,7 @@
           };
         });
 
+        // Stats cards (SAME as original)
         const totals = {
           quizSubmissions: data.reduce((a, d) => a + d.quizzesTaken, 0),
           stSubmissions: data.reduce((a, d) => a + d.stsTaken, 0),
@@ -116,52 +240,134 @@
           </div>
         `;
 
+        // Main table (SAME structure as original, with fallback name)
         const tableEl = document.getElementById('at-table');
         if (!data.length) {
           tableEl.innerHTML = `<div class="alert alert-info">No students registered yet.</div>`;
-          return;
+        } else {
+          tableEl.innerHTML = `
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th style="text-align:center;">Section</th>
+                  <th style="text-align:center;">Quizzes</th>
+                  <th style="text-align:center;">ST1/ST2</th>
+                  <th style="text-align:center;">Term Exam</th>
+                  <th style="text-align:center;">ST Average</th>
+                  <th style="text-align:center;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map((d) => {
+                  const stColor = d.stAvg === null ? '#90a4ae'
+                                : d.stAvg >= 90 ? '#2e7d32'
+                                : d.stAvg >= 80 ? '#0277bd'
+                                : d.stAvg >= 65 ? '#ed6c02'
+                                : '#c62828';
+                  const statusBadge = d.status === 'Remediation'
+                    ? '<span class="badge-pill danger">Remediation</span>'
+                    : '<span class="badge-pill info">On Track</span>';
+                  
+                  // Safe display name
+                  const displayName = (d.user.lastName || d.user.firstName)
+                    ? `${d.user.lastName || '(No Last)'}, ${d.user.firstName || '(No First)'}`
+                    : `<span style="color:#f57c00;font-style:italic;">⚠️ Name Missing</span>`;
+                  
+                  return `
+                    <tr>
+                      <td>${displayName}</td>
+                      <td style="text-align:center;">${d.user.section || '<span style="color:#90a4ae;">—</span>'}</td>
+                      <td style="text-align:center;">${d.quizzesTaken}/3</td>
+                      <td style="text-align:center;">${d.stsTaken}/2</td>
+                      <td style="text-align:center;">${d.teTaken}/1</td>
+                      <td style="text-align:center;font-weight:800;color:${stColor};">
+                        ${d.stAvg !== null ? d.stAvg + '%' : '—'}
+                      </td>
+                      <td style="text-align:center;">${statusBadge}</td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          `;
         }
 
-        tableEl.innerHTML = `
-          <table class="modern-table">
-            <thead>
-              <tr>
-                <th>Student</th>
-                <th style="text-align:center;">Section</th>
-                <th style="text-align:center;">Quizzes</th>
-                <th style="text-align:center;">ST1/ST2</th>
-                <th style="text-align:center;">Term Exam</th>
-                <th style="text-align:center;">ST Average</th>
-                <th style="text-align:center;">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data.map((d) => {
-                const stColor = d.stAvg === null ? '#90a4ae'
-                              : d.stAvg >= 90 ? '#2e7d32'
-                              : d.stAvg >= 80 ? '#0277bd'
-                              : d.stAvg >= 65 ? '#ed6c02'
-                              : '#c62828';
-                const statusBadge = d.status === 'Remediation'
-                  ? '<span class="badge-pill danger">Remediation</span>'
-                  : '<span class="badge-pill info">On Track</span>';
-                return `
-                  <tr>
-                    <td>${d.user.lastName}, ${d.user.firstName}</td>
-                    <td style="text-align:center;">${d.user.section}</td>
-                    <td style="text-align:center;">${d.quizzesTaken}/3</td>
-                    <td style="text-align:center;">${d.stsTaken}/2</td>
-                    <td style="text-align:center;">${d.teTaken}/1</td>
-                    <td style="text-align:center;font-weight:800;color:${stColor};">
-                      ${d.stAvg !== null ? d.stAvg + '%' : '—'}
-                    </td>
-                    <td style="text-align:center;">${statusBadge}</td>
-                  </tr>
-                `;
-              }).join('')}
-            </tbody>
-          </table>
-        `;
+        // Orphan table
+        if (orphanUsers.length === 0) {
+          orphansCard.style.display = 'none';
+        } else {
+          orphansCard.style.display = 'block';
+          const orphansTableEl = document.getElementById('at-orphans-table');
+          orphansTableEl.innerHTML = `
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th>LRN</th>
+                  <th>Section</th>
+                  <th style="text-align:center;">Has Scores?</th>
+                  <th style="text-align:center;">Has Progress?</th>
+                  <th style="text-align:center;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${orphanUsers.map((u) => {
+                  const lrn = String(u.lrn || '');
+                  const hasScores = !!localStorage.getItem(`gsa_v1_scores_${lrn}`);
+                  const hasProgress = !!localStorage.getItem(`gsa_v1_progress_${lrn}`);
+                  return `
+                    <tr>
+                      <td><code style="background:#fff3e0;padding:2px 6px;border-radius:4px;">${lrn || '(blank)'}</code></td>
+                      <td style="text-align:center;">${u.section || '<span style="color:#90a4ae;">—</span>'}</td>
+                      <td style="text-align:center;">${hasScores ? '✅' : '—'}</td>
+                      <td style="text-align:center;">${hasProgress ? '✅' : '—'}</td>
+                      <td style="text-align:center;">
+                        <button class="btn btn-sm btn-secondary" onclick="window.removeOrphan('${lrn}')">
+                          🗑️ Remove
+                        </button>
+                      </td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+            <p class="text-muted" style="margin-top:12px;font-size:13px;">
+              💡 <strong>Tip:</strong> Ask the student to re-login with their correct LRN. 
+              Or if this is a typo, click Remove to clean up.
+            </p>
+          `;
+        }
+      }
+
+      // ============================================
+      // GLOBAL: Remove orphan
+      // ============================================
+      window.removeOrphan = function(lrn) {
+        if (!confirm(`Remove orphan LRN ${lrn} and all its local data?`)) return;
+        try {
+          var users = JSON.parse(localStorage.getItem('gsa_v1_users') || '{}');
+          delete users[lrn];
+          localStorage.setItem('gsa_v1_users', JSON.stringify(users));
+
+          Object.keys(localStorage).forEach(function(key) {
+            if (key.indexOf(lrn) !== -1) localStorage.removeItem(key);
+          });
+
+          if (typeof APP.toast === 'function') APP.toast(`Removed orphan ${lrn}`, 'success');
+          render();
+        } catch (e) {
+          alert('Error removing orphan: ' + e.message);
+        }
+      };
+
+      // ============================================
+      // BOOT
+      // ============================================
+      // Try backend sync first; fallback to localStorage only if no token
+      if (localStorage.getItem('gsa_teacher_token')) {
+        syncFromBackend();
+      } else {
+        render();
       }
     });
   </script>
