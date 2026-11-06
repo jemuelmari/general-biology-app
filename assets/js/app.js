@@ -1,12 +1,12 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 2.4.3
+   Version: 2.5.5
    ============================================================ */
 
 const APP = (() => {
   'use strict';
 
-  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.4.3';
+  const VERSION = (typeof CONFIG !== 'undefined' && CONFIG.VERSION) || '2.5.5';
   const APP_NAME = (typeof CONFIG !== 'undefined' && CONFIG.APP_NAME) || 'General Biology Online Modular Application';
 
   const state = {
