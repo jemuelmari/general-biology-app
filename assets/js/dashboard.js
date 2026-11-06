@@ -293,10 +293,11 @@
   /* ---- Generate Sync Code ---- */
   const syncCodeBtn = $('#btn-sync-code');
   const syncOutput = $('#sync-output');
-  const syncCodeLabel = () => backendOn() ? '🔑 Generate Sync Code (works anywhere)' : '🔑 Generate Sync Code (this device only)';
+  // Hindi binabago ang label ng button (para hindi magbago ang layout); kung ano ang nasa HTML ang ibabalik.
+  const SYNC_CODE_LABEL = syncCodeBtn ? syncCodeBtn.textContent : '🔑 Generate Sync Code';
+  const syncCodeLabel = () => SYNC_CODE_LABEL;
 
   if (syncCodeBtn) {
-    syncCodeBtn.textContent = syncCodeLabel();
     syncCodeBtn.addEventListener('click', async () => {
       if (!syncReady() || typeof Sync.generateSyncCode !== 'function') {
         return toast('Sync module not loaded. Please refresh the page (Ctrl+Shift+R).', 'danger');
