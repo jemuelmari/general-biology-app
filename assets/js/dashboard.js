@@ -1,6 +1,6 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 2.0.3 (White Bold Sync Status)
+   Version: 2.0.4 (Restored Sync/Backup/Restore/Force-Sync button handlers)
    ============================================================ */
 
 (() => {
@@ -238,7 +238,11 @@
 
   function getSyncState() {
     const online = navigator.onLine;
-    const queue = { count: 0 };
+    let queue = { count: 0 };
+    try {
+      if (typeof Sync !== 'undefined' && Sync.getQueueStatus) queue = Sync.getQueueStatus() || queue;
+      else if (typeof SyncMaster !== 'undefined' && SyncMaster.getQueueStatus) queue = SyncMaster.getQueueStatus() || queue;
+    } catch (e) { /* ignore */ }
     const lastPush = localStorage.getItem(`${NS}last_push_at`);
     if (!online) return { key: 'offline', label: 'Offline', color: '#ed6c02', queue };
     if (queue.count > 0) return { key: 'pending', label: queue.count + ' pending', color: '#ed6c02', queue, lastPush };
@@ -271,6 +275,135 @@
   window.addEventListener('offline', renderSyncStatus);
   window.addEventListener('sync-queue-changed', renderSyncStatus);
   renderSyncStatus();
+
+  /* ============================================================
+     Sync Code / Backup / Restore / Force Sync
+     IBINALIK: nawala ang mga handler na ito noong v2.0.2 rewrite
+     (commit 315839e), kaya walang nangyayari kapag pinipindot ang buttons.
+     ============================================================ */
+
+  function toast(msg, type) {
+    try { if (typeof APP !== 'undefined' && APP.toast) { APP.toast(msg, type || 'info'); return; } } catch (e) { /* fall through */ }
+    alert(msg);
+  }
+
+  const syncReady = () => typeof Sync !== 'undefined' && Sync && typeof Sync.backendEnabled === 'function';
+  const backendOn = () => { try { return syncReady() && !!Sync.backendEnabled(); } catch (e) { return false; } };
+
+  /* ---- Generate Sync Code ---- */
+  const syncCodeBtn = $('#btn-sync-code');
+  const syncOutput = $('#sync-output');
+  const syncCodeLabel = () => backendOn() ? '🔑 Generate Sync Code (works anywhere)' : '🔑 Generate Sync Code (this device only)';
+
+  if (syncCodeBtn) {
+    syncCodeBtn.textContent = syncCodeLabel();
+    syncCodeBtn.addEventListener('click', async () => {
+      if (!syncReady() || typeof Sync.generateSyncCode !== 'function') {
+        return toast('Sync module not loaded. Please refresh the page (Ctrl+Shift+R).', 'danger');
+      }
+      syncCodeBtn.disabled = true;
+      syncCodeBtn.textContent = '⏳ Generating...';
+      try {
+        const result = await Sync.generateSyncCode(lrn, null);
+        const modeLabel = result.mode === 'backend'
+          ? '<span style="color:var(--color-success);">✅ Works across devices</span>'
+          : '<span style="color:var(--color-warning);">⚠️ Only works on THIS device</span>';
+        if (syncOutput) {
+          syncOutput.innerHTML =
+            '<div class="alert alert-success"><strong>✅ Sync Code Generated!</strong>' +
+            '<div style="font-family:monospace;font-size:1.4rem;margin:12px 0;text-align:center;padding:12px;background:#fff;border-radius:6px;letter-spacing:1px;">' +
+            String(result.code).replace(/[<>&]/g, '') + '</div>' +
+            '<p class="text-small">Mode: ' + modeLabel + '</p></div>';
+        }
+        toast('Sync code generated!', 'success');
+      } catch (e) {
+        console.error('[Dashboard] Generate Sync Code failed:', e);
+        toast('Failed: ' + (e && e.message ? e.message : e), 'danger');
+      } finally {
+        syncCodeBtn.disabled = false;
+        syncCodeBtn.textContent = syncCodeLabel();
+      }
+    });
+  }
+
+  /* ---- Download Backup (JSON) ---- */
+  const exportBtn = $('#btn-export-json');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', async () => {
+      try {
+        let fn;
+        if (syncReady() && typeof Sync.exportAsFile === 'function') fn = await Sync.exportAsFile(lrn, null);
+        else if (typeof Backup !== 'undefined' && Backup.downloadBackup) fn = Backup.downloadBackup(lrn);   // fallback
+        else throw new Error('Backup module not loaded. Please refresh the page.');
+        toast('Saved: ' + fn, 'success');
+      } catch (e) {
+        console.error('[Dashboard] Download Backup failed:', e);
+        // Huling panangga: kung pumalya ang Sync.exportAsFile, subukan ang Backup.downloadBackup
+        try {
+          if (typeof Backup !== 'undefined' && Backup.downloadBackup) {
+            const fn2 = Backup.downloadBackup(lrn);
+            return toast('Saved: ' + fn2, 'success');
+          }
+        } catch (e2) { console.error('[Dashboard] Backup fallback failed:', e2); }
+        toast('Export failed: ' + (e && e.message ? e.message : e), 'danger');
+      }
+    });
+  }
+
+  /* ---- Restore from Backup ---- */
+  const importBtn = $('#btn-import-json');
+  const importFile = $('#import-file');
+  if (importBtn && importFile) {
+    importBtn.addEventListener('click', () => importFile.click());
+    importFile.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        if (typeof Backup === 'undefined' || !Backup.uploadBackup) throw new Error('Backup module not loaded. Please refresh the page.');
+        const data = await Backup.uploadBackup(file);
+        const name = (data && data.user && data.user.firstName) || 'student';
+        toast('Backup restored for ' + name + '!', 'success');
+        setTimeout(() => location.reload(), 900);
+      } catch (err) {
+        console.error('[Dashboard] Restore failed:', err);
+        toast('Import failed: ' + (err && err.message ? err.message : err), 'danger');
+      }
+      e.target.value = '';
+    });
+  }
+
+  /* ---- Force Sync Now ---- */
+  async function doForceSync() {
+    if (!backendOn()) return toast('Backend not configured.', 'warning');
+    if (!navigator.onLine) return toast('Still offline — try again later.', 'warning');
+
+    if (forceSyncBtn) { forceSyncBtn.disabled = true; forceSyncBtn.textContent = '⏳ Syncing...'; }
+    try {
+      // 1) ipadala ang naka-pila; 2) i-push ang kasalukuyang progress
+      const result = (typeof Sync.flushQueue === 'function' ? await Sync.flushQueue() : null) || {};
+      let pushed = false;
+      if (typeof Sync.pushProgressToBackend === 'function') {
+        const r = await Sync.pushProgressToBackend(lrn, null);
+        pushed = !!(r && r.ok);
+        if (r && !r.ok) console.warn('[Dashboard] pushProgress:', r);
+      }
+      if (pushed || result.flushed > 0) {
+        localStorage.setItem(`${NS}last_push_at`, new Date().toISOString());
+        toast('✅ Progress synced to teacher' + (result.flushed ? ' (' + result.flushed + ' queued item(s) sent)' : ''), 'success');
+      } else if (result.remaining > 0) {
+        toast(result.remaining + ' item(s) still pending — try again.', 'warning');
+      } else {
+        toast('Sync failed. Check your internet and try again.', 'warning');
+      }
+      renderSyncStatus();
+    } catch (err) {
+      console.error('[Dashboard] Force Sync failed:', err);
+      toast('Sync failed: ' + (err && err.message ? err.message : err), 'danger');
+    } finally {
+      if (forceSyncBtn) { forceSyncBtn.disabled = false; forceSyncBtn.textContent = '🔄 Force Sync Now'; }
+    }
+  }
+  if (forceSyncBtn) forceSyncBtn.addEventListener('click', doForceSync);
 
   const logoutBtn = $('#btn-logout');
   if (logoutBtn) {
