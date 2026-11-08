@@ -1,6 +1,6 @@
 /* ============================================================
    auth.js — Secure Login & Registration
-   Version: 4.0.1 (Fixed Saved Users Display)
+   Version: 4.1.0 (Merge cloud data on login)
    ============================================================ */
 
 (() => {
@@ -19,6 +19,21 @@
       if (!user) return;
       setTimeout(() => { Backup.promptOnLogout(user).then((choice) => { if (choice === 'keep' || choice === 'delete') APP.toast('Done!', 'success'); }); }, 300);
     } catch (e) {}
+  }
+
+  // Kapag may lokal nang profile sa device, hindi dating hinihila ang cloud data. Ngayon ay minemerge ito
+  // (hanggang 6 segundo lang ang hihintayin; hindi dapat humarang sa pag-login kapag mabagal o offline).
+  async function mergeCloudOnLogin(lrn, btn) {
+    if (!navigator.onLine || !window.SyncMaster || !SyncMaster.backendEnabled()) return;
+    const label = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ Syncing...'; }
+    try {
+      await Promise.race([
+        SyncMaster.pullFromBackend(lrn),
+        new Promise((resolve) => setTimeout(() => resolve({ ok: false, error: 'timeout' }), 6000))
+      ]);
+    } catch (e) { /* tuloy ang login */ }
+    finally { if (btn) { btn.disabled = false; btn.textContent = label; } }
   }
 
   const tabs = APP.$$('.login-tab');
@@ -75,6 +90,7 @@
       if (!APP.validateLRN(lrn)) return showError(loginError, 'ERR_BAD_LRN: LRN must be exactly 12 digits.');
 
       let user = Store.getUser(lrn);
+      const hadLocalProfile = !!user;
       
       if (!user) {
         if (!navigator.onLine) return showError(loginError, 'ERR_OFFLINE: You are offline and this profile is not saved on this device.');
@@ -97,6 +113,8 @@
       }
 
       if (!user) return showError(loginError, 'ERR_NOT_FOUND: No saved profile found.');
+
+      if (hadLocalProfile) await mergeCloudOnLogin(lrn, loginForm.querySelector('button[type="submit"]'));
 
       Store.setSession(lrn);
       APP.toast(`Welcome back, ${user.FirstName || user.firstName}!`, 'success');
@@ -196,8 +214,9 @@
       });
 
       list.querySelectorAll('[data-login]').forEach((btn) => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
           const lrn = btn.dataset.login;
+          await mergeCloudOnLogin(lrn, btn);
           Store.setSession(lrn);
           APP.toast('Logged in!', 'success');
           setTimeout(() => window.location.replace('dashboard.html'), 200);
