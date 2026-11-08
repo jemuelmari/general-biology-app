@@ -31,6 +31,21 @@ const SyncMaster = (() => {
     }
   }
 
+  // Alisin ang malalaking JSON na naiwan sa user record ng mga naunang bersyon (nasa hiwalay na keys na ang data).
+  function _stripHeavyUserFields(lrn) {
+    try {
+      const key = `${NS}users`;
+      const users = JSON.parse(localStorage.getItem(key) || '[]');
+      const HEAVY = ['ProgressJSON', 'ScoresJSON', 'BadgesJSON', 'LocksJSON', 'ProgressObj', 'ScoresObj', 'BadgesObj', 'LocksObj'];
+      let changed = false;
+      users.forEach((u) => {
+        if (Store.normalizeLRN(u.lrn || u.LRN) !== lrn) return;
+        HEAVY.forEach((k) => { if (k in u) { delete u[k]; changed = true; } });
+      });
+      if (changed) localStorage.setItem(key, JSON.stringify(users));
+    } catch (e) { /* hindi dapat humarang sa sync */ }
+  }
+
   async function pullFromBackend(lrn) {
     if (!backendEnabled()) return { ok: false, error: 'ERR_BACKEND_DISABLED', code: 'BACKEND_DISABLED' };
     const normalized = Store.normalizeLRN(lrn);
@@ -41,8 +56,17 @@ const SyncMaster = (() => {
 
       const student = res.student;
       
-      // Save via Store (which handles merging? For now, Store.saveUser handles the profile)
-      Store.saveUser({ ...student, lrn: normalized });
+      // Profile lang ang ise-save sa users list. Dati ang buong record (kasama ang ProgressJSON/ScoresJSON,
+      // hanggang 50KB bawat isa) ang isinasave dito, kaya mabilis mapuno ang localStorage.
+      // Hindi rin ino-overwrite ng blangkong value ang mayroon na.
+      const profile = { lrn: normalized };
+      [['lastName', 'LastName'], ['firstName', 'FirstName'], ['middleName', 'MiddleName'],
+       ['gradeLevel', 'GradeLevel'], ['section', 'Section'], ['sex', 'Sex']].forEach(([lo, up]) => {
+        const v = String(student[lo] || student[up] || '').trim();
+        if (v) { profile[lo] = v; profile[up] = v; }
+      });
+      Store.saveUser(profile);
+      _stripHeavyUserFields(normalized);
       
       // Merge progress and scores manually
       const localProgress = Store.getProgress(normalized);
