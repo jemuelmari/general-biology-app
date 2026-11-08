@@ -1,12 +1,12 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.5.0 (SyncMaster Integration)
+   Version: 2.5.6 (Single backend URL + queue/last-push on lesson sync)
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.5.0',
+  VERSION: '2.5.6',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -162,6 +162,23 @@ const Sync = (() => {
 
   function _isMaster() { return typeof window.SyncMaster !== 'undefined'; }
 
+  const _QUEUE_KEY = 'gba_v1_master_queue';   // parehong queue ng sync-master.js
+
+  function _markPushed() {
+    try { localStorage.setItem('gba_v1_last_push_at', new Date().toISOString()); } catch (e) {}
+  }
+
+  function _queueFailed(body) {
+    try {
+      const q = JSON.parse(localStorage.getItem(_QUEUE_KEY) || '[]');
+      const item = { body: body, queuedAt: new Date().toISOString(), attempts: 0 };
+      const i = q.findIndex(x => x && x.body && x.body.lrn === body.lrn && x.body.action === body.action);
+      if (i >= 0) q[i] = item; else q.push(item);
+      localStorage.setItem(_QUEUE_KEY, JSON.stringify(q.slice(-50)));
+    } catch (e) {}
+  }
+
+
   function backendEnabled() {
     return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
   }
@@ -185,14 +202,19 @@ const Sync = (() => {
       progress: subject ? { [subject]: progress[subject] } : progress,
       subject: subject || 'both'
     };
+    // Kapag pumalya ang push, ilagay sa queue (kumpletong progress, hindi isang subject lang) para ma-send
+    // pagbukas ng dashboard/login (doon nilo-load ang sync-master.js na nagfa-flush ng queue).
+    const queueBody = { action: 'saveProgress', ...payload, progress: progress, subject: 'both' };
     try {
       const res = await fetch(CONFIG.BACKEND_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ action: 'saveProgress', ...payload })
       }).then(r => r.json());
+      if (res && res.ok) _markPushed(); else _queueFailed(queueBody);
       return res;
     } catch (err) {
+      _queueFailed(queueBody);
       return { ok: false, error: err.message };
     }
   }
@@ -205,7 +227,8 @@ const Sync = (() => {
 
   function getQueueStatus() {
     if (_isMaster()) return window.SyncMaster.getQueueStatus();
-    return { count: 0 };
+    try { return { count: JSON.parse(localStorage.getItem(_QUEUE_KEY) || '[]').length }; }
+    catch (e) { return { count: 0 }; }
   }
 
   async function flushQueue() {
