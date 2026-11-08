@@ -1,6 +1,6 @@
 /* ============================================================
    dashboard.js — Student dashboard logic
-   Version: 2.0.4 (Restored Sync/Backup/Restore/Force-Sync button handlers)
+   Version: 2.0.5 (Sync before logout)
    ============================================================ */
 
 (() => {
@@ -406,10 +406,56 @@
   }
   if (forceSyncBtn) forceSyncBtn.addEventListener('click', doForceSync);
 
+  /* ============================================================
+     Log Out — i-sync muna ang progress bago umalis
+     (Dati: binubura lang ang session, kaya hindi na-se-send ang mga huling progress/score.)
+     ============================================================ */
+  const withTimeout = (p, ms) => Promise.race([
+    Promise.resolve(p),
+    new Promise((resolve) => setTimeout(() => resolve({ ok: false, error: 'timeout' }), ms))
+  ]);
+
+  function showBusyOverlay(msg) {
+    const o = document.createElement('div');
+    o.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,0.95);display:flex;align-items:center;justify-content:center;z-index:99999;font-family:Segoe UI,sans-serif;';
+    o.innerHTML = '<div style="text-align:center;"><div style="font-size:2rem;">☁️</div><div style="font-weight:600;color:#1b7a3d;margin-top:8px;"></div></div>';
+    o.querySelector('div > div:last-child').textContent = msg;
+    document.body.appendChild(o);
+    return () => o.remove();
+  }
+
+  async function syncBeforeLogout() {
+    if (!backendOn()) return { ok: true, skipped: true };   // walang backend = walang ise-sync
+    let pushed = { ok: false };
+    try {
+      // 1) ipadala muna ang mga naka-pila (hindi pa nasend na score/progress)
+      if (typeof Sync !== 'undefined' && Sync.flushQueue) await withTimeout(Sync.flushQueue(), 10000);
+      if (typeof SyncMaster !== 'undefined' && SyncMaster.flushQueue) await withTimeout(SyncMaster.flushQueue(), 10000);
+      // 2) i-push ang kumpletong kasalukuyang data (progress + scores + badges). Kapag pumalya, kusa itong ilalagay sa queue.
+      if (typeof SyncMaster !== 'undefined' && SyncMaster.pushMasterUpdate) pushed = await withTimeout(SyncMaster.pushMasterUpdate(lrn, 'both', 'logout'), 15000);
+      else if (Sync.pushProgressToBackend) pushed = await withTimeout(Sync.pushProgressToBackend(lrn, null), 15000);
+    } catch (e) { pushed = { ok: false, error: e && e.message }; }
+    return { ok: !!(pushed && pushed.ok) };
+  }
+
   const logoutBtn = $('#btn-logout');
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
+    logoutBtn.addEventListener('click', async () => {
+      if (logoutBtn.disabled) return;
       if (!confirm('Are you sure you want to log out?')) return;
+      logoutBtn.disabled = true;
+      const done = showBusyOverlay('Saving your progress...');
+      let r;
+      try { r = await syncBeforeLogout(); } catch (e) { r = { ok: false }; }
+      done();
+      if (!r.ok && !r.skipped) {
+        const goAnyway = confirm(
+          'Your latest progress could not be sent to your teacher yet (you may be offline).\n\n' +
+          'It is still saved on this device and will sync automatically the next time you are online.\n\n' +
+          'Log out anyway?'
+        );
+        if (!goAnyway) { logoutBtn.disabled = false; return; }
+      }
       localStorage.removeItem(`${NS}session`);
       window.location.replace('login.html');
     });
