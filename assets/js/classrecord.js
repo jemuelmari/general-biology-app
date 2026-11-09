@@ -88,7 +88,8 @@
         ex: Math.round(ex * 10) / 10,
         final: final.transmuted,
         rawFinal: final.raw,
-        passing: final.passing
+        passing: final.passing,
+        manual: { st1: !!(st1 && st1.override), st2: !!(st2 && st2.override), te: !!(te && te.override) }
       };
     });
   }
@@ -293,10 +294,10 @@
           ['quizzes', 'st', 'pt'].forEach((type) => {
             if (s.scores[subj][type]) {
               const before = Object.keys(currentScores[subj][type] || {}).length;
-              currentScores[subj][type] = {
-                ...(currentScores[subj][type] || {}),
-                ...s.scores[subj][type]
-              };
+              currentScores[subj][type] = ScoreOverride.mergeTypeMap(
+                currentScores[subj][type],
+                s.scores[subj][type]
+              );
               scoresImported += Object.keys(currentScores[subj][type]).length - before;
             }
           });
@@ -304,10 +305,10 @@
           // Term Exam is a single object keyed by assessmentId
           if (s.scores[subj].te) {
             const before = Object.keys(currentScores[subj].te || {}).length;
-            currentScores[subj].te = {
-              ...(currentScores[subj].te || {}),
-              ...s.scores[subj].te
-            };
+            currentScores[subj].te = ScoreOverride.mergeTypeMap(
+              currentScores[subj].te,
+              s.scores[subj].te
+            );
             scoresImported += Object.keys(currentScores[subj].te).length - before;
           }
         });
@@ -442,14 +443,15 @@
     }
 
     body.innerHTML = students.map((s) => {
-      const scoreCell = (v) => v === '—' ? '<td class="empty-cell">—</td>' : `<td class="grade-cell">${v}</td>`;
+      const MARK = ' <span title="Manual / offline score" style="color:#e65100;">✎</span>';
+      const scoreCell = (v, man) => v === '—' ? '<td class="empty-cell">—</td>' : `<td class="grade-cell">${v}${man ? MARK : ''}</td>`;
 
       const scores = Store.getScores(s.user.lrn)[currentSubject] || {};
       const quizIds = ['quiz1', 'quiz2', 'quiz3'].map((id) => scores.quizzes?.[`${currentSubject}-${id}`]);
 
       const colQuiz = (q) => {
         if (!q || !q.total) return '<td class="empty-cell">—</td>';
-        return `<td class="grade-cell">${q.score}/${q.total}</td>`;
+        return `<td class="grade-cell">${q.score}/${q.total}${q.override ? MARK : ''}</td>`;
       };
 
       const statusBadge = s.passing
@@ -458,15 +460,15 @@
 
       return `
         <tr>
-          <td class="student-cell">${UI.renderStudentCell(s.user)}</td>
+          <td class="student-cell">${UI.renderStudentCell(s.user)} <a href="classrecord/grading-sheet.html?lrn=${s.user.lrn}" title="Open grading sheet / override scores" style="text-decoration:none;font-size:0.8rem;">✏️</a></td>
           <td style="text-align:center;">${APP.getSexBadge(s.user.sex)}</td>
           <td class="section-cell">${s.user.section}</td>
           ${colQuiz(quizIds[0])}
           ${colQuiz(quizIds[1])}
           ${colQuiz(quizIds[2])}
-          ${scoreCell(s.st1)}
-          ${scoreCell(s.st2)}
-          ${scoreCell(s.te)}
+          ${scoreCell(s.st1, s.manual.st1)}
+          ${scoreCell(s.st2, s.manual.st2)}
+          ${scoreCell(s.te, s.manual.te)}
           <td class="grade-cell">${s.pt || '—'}</td>
           <td class="final-grade ${s.passing ? 'passing' : 'failing'}">${s.final || '—'}</td>
           <td>${statusBadge}</td>

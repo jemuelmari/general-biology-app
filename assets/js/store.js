@@ -111,6 +111,17 @@ const Store = (() => {
     return scores[subject][type][id];
   }
 
+  function deleteScore(lrn, subject, type, id) {
+    const normalized = normalizeLRN(lrn);
+    const scores = getScores(normalized);
+    if (scores[subject] && scores[subject][type] && scores[subject][type][id] !== undefined) {
+      delete scores[subject][type][id];
+      _set(`${NS}scores_${normalized}`, scores);
+      return true;
+    }
+    return false;
+  }
+
   function getBadges(lrn) {
     const normalized = normalizeLRN(lrn);
     return _get(`${NS}badges_${normalized}`, { biol1: [], biol2: [] });
@@ -196,7 +207,7 @@ const Store = (() => {
     getAllUsers, saveUser, getUser, deleteUser,
     setSession, getSession, clearSession, getCurrentUser,
     getProgress, saveProgress, markDayComplete,
-    getScores, saveScore,
+    getScores, saveScore, deleteScore,
     getBadges, awardBadge,
     getDailyPoints, addDailyPoints,
     getAttempts, incrementAttempts,

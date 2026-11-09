@@ -6,6 +6,30 @@
   <title>Grading Sheet — Individual Student</title>
   <link rel="stylesheet" href="../assets/css/main.css" />
   <link rel="stylesheet" href="../assets/css/classrecord.css" />
+  <style>
+    .gs-table { width:100%; border-collapse:collapse; font-size:0.9rem; }
+    .gs-table th { text-align:left; background:#f5f7fa; padding:8px 10px; font-size:0.72rem; text-transform:uppercase; letter-spacing:.4px; color:#546e7a; border-bottom:2px solid #cfd8dc; }
+    .gs-table td { padding:8px 10px; border-bottom:1px solid #eceff1; vertical-align:middle; }
+    .gs-table tr.gs-group td { background:#ede7f6; color:#4a148c; font-weight:700; font-size:0.8rem; }
+    .gs-badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:0.7rem; font-weight:700; }
+    .gs-manual { background:#fff3e0; color:#e65100; }
+    .gs-online { background:#e3f2fd; color:#0d47a1; }
+    .gs-none { color:#90a4ae; font-style:italic; }
+    .gs-btn { padding:5px 10px; border:1.5px solid #6a1b9a; background:#fff; color:#6a1b9a; border-radius:8px; font-weight:600; font-size:0.78rem; cursor:pointer; font-family:inherit; }
+    .gs-btn:hover { background:#f3e5f5; }
+    .gs-btn.gs-revert { border-color:#90a4ae; color:#546e7a; margin-left:4px; }
+    .gs-modal-bg { position:fixed; inset:0; background:rgba(0,0,0,.5); display:none; align-items:center; justify-content:center; z-index:1000; padding:16px; }
+    .gs-modal-bg.open { display:flex; }
+    .gs-modal { background:#fff; border-radius:14px; padding:24px; width:100%; max-width:440px; box-shadow:0 12px 40px rgba(0,0,0,.3); }
+    .gs-modal h3 { margin:0 0 4px; color:#4a148c; }
+    .gs-modal label { display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:#455a64; margin:12px 0 4px; }
+    .gs-modal input { width:100%; padding:9px 10px; border:1.5px solid #cfd8dc; border-radius:8px; font-family:inherit; font-size:0.95rem; box-sizing:border-box; }
+    .gs-row2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .gs-err { color:#c62828; font-size:0.82rem; margin-top:8px; min-height:1.2em; }
+    .gs-modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:14px; }
+    .gs-modal-actions button { padding:10px 18px; border-radius:8px; border:none; font-weight:600; cursor:pointer; font-family:inherit; }
+    .gs-save { background:#6a1b9a; color:#fff; } .gs-cancel { background:#eceff1; color:#37474f; }
+  </style>
 </head>
 <body>
 
@@ -29,125 +53,191 @@
       <select id="student-picker" class="form-control"></select>
     </div>
 
+    <div id="gs-sync-bar" class="alert alert-info" style="display:none;margin-top:16px;"></div>
     <div id="grading-sheet-body"></div>
 
   </main>
 
   <footer class="app-footer"><p>Grading Sheet · v2.5.5</p></footer>
 
+  <div class="gs-modal-bg" id="gs-modal-bg">
+    <div class="gs-modal" role="dialog" aria-modal="true">
+      <h3 id="gs-m-title">Override score</h3>
+      <div id="gs-m-sub" class="text-muted text-small"></div>
+      <div class="gs-row2">
+        <div><label for="gs-m-score">Score</label><input type="number" id="gs-m-score" min="0" step="any" /></div>
+        <div><label for="gs-m-total">Out of</label><input type="number" id="gs-m-total" min="1" step="any" /></div>
+      </div>
+      <label for="gs-m-date">Date taken (optional)</label><input type="date" id="gs-m-date" />
+      <label for="gs-m-reason">Reason / remarks</label><input type="text" id="gs-m-reason" maxlength="120" />
+      <div id="gs-m-prev" class="text-muted text-small" style="margin-top:8px;"></div>
+      <div class="gs-err" id="gs-m-err"></div>
+      <div class="gs-modal-actions">
+        <button class="gs-cancel" id="gs-m-cancel">Cancel</button>
+        <button class="gs-save" id="gs-m-save">Save &amp; sync</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../config.js?v=2.4.2-dc101a5"></script>
   <script src="../assets/js/app.js?v=2.4.2-dc101a5"></script>
   <script src="../assets/js/store.js?v=2.4.2-dc101a5"></script>
   <script src="../assets/js/transmutation.js?v=2.4.2-dc101a5"></script>
+  <script src="../assets/js/score-override.js?v=1.0.0"></script>
   <script src="../assets/js/teacher-auth.js?v=2.4.2-dc101a5"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const picker = document.getElementById('student-picker');
       const users = Store.getAllUsers();
+      const esc = (t) => String(t == null ? '' : t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      const SUBJ = { biol1: 'General Biology 1', biol2: 'General Biology 2' };
+      const GROUPS = { quizzes: '📝 Written Works (Quizzes)', st: '📋 Summative Tests', te: '🎓 Term Exam', pt: '🎨 Performance Tasks' };
+      let editing = null; // { subject, code }
 
       if (!users.length) {
         document.getElementById('grading-sheet-body').innerHTML =
-          '<div class="alert alert-info">No students on this device.</div>';
+          '<div class="alert alert-info">No students on this device. Use <b>Sync from Backend</b> in the Class Record first.</div>';
         return;
       }
 
       picker.innerHTML = users.map((u) =>
-        `<option value="${u.lrn}">${u.lastName}, ${u.firstName} — ${APP.formatLRN(u.lrn)}</option>`
+        `<option value="${esc(u.lrn)}">${esc(u.lastName)}, ${esc(u.firstName)} — ${APP.formatLRN(u.lrn)}</option>`
       ).join('');
+      const qs = new URLSearchParams(location.search).get('lrn');
+      if (qs && users.some((u) => u.lrn === Store.normalizeLRN(qs))) picker.value = Store.normalizeLRN(qs);
 
       picker.addEventListener('change', render);
+      renderSyncBar();
       render();
 
+      /* ---------- sync bar ---------- */
+      function renderSyncBar(msg, kind) {
+        const bar = document.getElementById('gs-sync-bar');
+        const n = ScoreOverride.pendingCount();
+        if (!msg && !n) { bar.style.display = 'none'; return; }
+        bar.style.display = 'block';
+        bar.className = 'alert alert-' + (kind || (n ? 'warning' : 'info'));
+        bar.innerHTML = (msg ? esc(msg) + ' ' : '') +
+          (n ? `<b>${n}</b> override(s) saved on this device but not yet sent to the backend. <button class="gs-btn" id="gs-flush">☁️ Send now</button>` : '');
+        const b = document.getElementById('gs-flush');
+        if (b) b.addEventListener('click', async () => {
+          b.disabled = true; b.textContent = '⏳ Sending…';
+          const r = await ScoreOverride.flushPending();
+          renderSyncBar(r.ok ? '✅ Synced to backend.' : '⚠️ ' + (r.error || 'Could not send.'), r.ok ? 'success' : 'warning');
+        });
+      }
+
+      /* ---------- table ---------- */
       function render() {
         const lrn = picker.value;
         const user = Store.getUser(lrn);
         if (!user) return;
-
-        const scores = Store.getScores(lrn);
-        const body = document.getElementById('grading-sheet-body');
-
-        body.innerHTML = `
+        document.getElementById('grading-sheet-body').innerHTML = `
           <div class="card">
-            <h2 style="color:var(--color-primary-dark);">${user.lastName}, ${user.firstName} ${user.middleName || ''}</h2>
-            <p class="text-muted text-small">LRN: ${APP.formatLRN(user.lrn)} · Grade ${user.gradeLevel} — ${user.section}</p>
+            <h2 style="color:var(--color-primary-dark);">${esc(user.lastName)}, ${esc(user.firstName)} ${esc(user.middleName || '')}</h2>
+            <p class="text-muted text-small">LRN: ${APP.formatLRN(user.lrn)} · Grade ${esc(user.gradeLevel)} — ${esc(user.section)}</p>
+            <p class="text-muted text-small">Took an exam on paper? Use <b>Add / Override</b> to enter the score. It updates the class record and syncs to the backend.</p>
           </div>
+          ${['biol1', 'biol2'].map((subj) => renderSubject(lrn, subj)).join('')}`;
 
-          ${['biol1', 'biol2'].map((subj) => renderSubject(subj, scores[subj] || {})).join('')}
-        `;
+        document.querySelectorAll('[data-edit]').forEach((b) => b.addEventListener('click', () => openModal(b.dataset.subj, b.dataset.edit)));
+        document.querySelectorAll('[data-revert]').forEach((b) => b.addEventListener('click', () => doRevert(b.dataset.subj, b.dataset.revert)));
       }
 
-      function renderSubject(subject, data) {
-        const quizzes = Object.entries(data.quizzes || {});
-        const sts = Object.entries(data.st || {});
-        const pts = Object.entries(data.pt || {});
-        const te = data.te ? Object.entries(data.te) : [];
+      function renderSubject(lrn, subject) {
+        let rows = '';
+        let lastType = '';
+        ScoreOverride.getCatalog().forEach((item) => {
+          if (item.type !== lastType) {
+            rows += `<tr class="gs-group"><td colspan="5">${GROUPS[item.type]}</td></tr>`;
+            lastType = item.type;
+          }
+          const e = ScoreOverride.getEntry(lrn, subject, item.code);
+          const hasScore = e && e.score != null;
+          const total = e ? (e.total != null ? e.total : e.maxScore) : null;
+          const manual = ScoreOverride.isOverridden(e);
+          let scoreCell = '<span class="gs-none">No score</span>';
+          let src = '';
+          if (hasScore) {
+            scoreCell = `<b>${esc(e.score)}/${esc(total)}</b> <span class="text-muted">(${Math.round((e.score / total) * 100)}%)</span>`;
+            src = manual
+              ? `<span class="gs-badge gs-manual" title="${esc(e.override.reason || '')}">✎ Manual</span>`
+              : '<span class="gs-badge gs-online">Online</span>';
+          } else if (e && item.type === 'pt') {
+            scoreCell = '<span class="gs-none">Submitted · not graded</span>';
+          }
+          const note = manual && (e.override.reason || e.override.takenOn)
+            ? `<div class="text-muted text-small">${esc(e.override.reason)}${e.override.takenOn ? ' · ' + esc(e.override.takenOn) : ''}</div>` : '';
+          rows += `<tr>
+            <td>${esc(item.label)}${note}</td>
+            <td>${scoreCell}</td>
+            <td>${src}</td>
+            <td>${hasScore && item.type !== 'pt' ? (e.passed ? '✅' : '❌') : ''}</td>
+            <td style="white-space:nowrap;">
+              <button class="gs-btn" data-subj="${subject}" data-edit="${item.code}">${hasScore ? '✏️ Override' : '➕ Add score'}</button>
+              ${manual ? `<button class="gs-btn gs-revert" data-subj="${subject}" data-revert="${item.code}" title="Restore the previous online result">↩ Revert</button>` : ''}
+            </td></tr>`;
+        });
+        return `<div class="card">
+          <h3 style="color:var(--color-primary-dark);">${SUBJ[subject]}</h3>
+          <table class="gs-table"><thead><tr><th>Assessment</th><th>Score</th><th>Source</th><th>Passed</th><th></th></tr></thead><tbody>${rows}</tbody></table>
+        </div>`;
+      }
 
-        return `
-          <div class="card">
-            <h3 style="color:var(--color-primary-dark);">${subject === 'biol1' ? 'General Biology 1' : 'General Biology 2'}</h3>
+      /* ---------- modal ---------- */
+      const $ = (id) => document.getElementById(id);
+      function openModal(subject, code) {
+        const lrn = picker.value, user = Store.getUser(lrn);
+        const item = ScoreOverride.findItem(code);
+        const e = ScoreOverride.getEntry(lrn, subject, code);
+        editing = { lrn, subject, code };
+        $('gs-m-title').textContent = (e && e.score != null ? 'Override: ' : 'Add score: ') + item.label;
+        $('gs-m-sub').textContent = `${user.lastName}, ${user.firstName} · ${SUBJ[subject]}`;
+        $('gs-m-score').value = e && e.score != null ? e.score : '';
+        $('gs-m-total').value = e ? (e.total != null ? e.total : (e.maxScore || item.total)) : item.total;
+        $('gs-m-date').value = (e && e.override && e.override.takenOn) || '';
+        $('gs-m-reason').value = (e && e.override && e.override.reason) || 'Took paper exam offline';
+        $('gs-m-prev').textContent = e && e.score != null && !e.override
+          ? `Current online result: ${e.score}/${e.total != null ? e.total : e.maxScore}. You can revert later.` : '';
+        $('gs-m-err').textContent = '';
+        $('gs-modal-bg').classList.add('open');
+        setTimeout(() => $('gs-m-score').focus(), 50);
+      }
+      function closeModal() { $('gs-modal-bg').classList.remove('open'); editing = null; }
+      $('gs-m-cancel').addEventListener('click', closeModal);
+      $('gs-modal-bg').addEventListener('click', (ev) => { if (ev.target.id === 'gs-modal-bg') closeModal(); });
+      document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeModal(); });
+      ['gs-m-score', 'gs-m-total', 'gs-m-reason', 'gs-m-date'].forEach((id) =>
+        $(id).addEventListener('keydown', (ev) => { if (ev.key === 'Enter') $('gs-m-save').click(); }));
 
-            <h4 style="margin-top:12px;color:var(--color-primary-dark);">📝 Written Works (Quizzes)</h4>
-            ${quizzes.length ? `
-              <table class="table">
-                <thead><tr><th>Assessment</th><th>Score</th><th>%</th><th>Passed</th></tr></thead>
-                <tbody>
-                  ${quizzes.map(([id, d]) => `
-                    <tr>
-                      <td>${id}</td>
-                      <td>${d.score}/${d.total}</td>
-                      <td>${Math.round((d.score / d.total) * 100)}%</td>
-                      <td>${d.passed ? '✅' : '❌'}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            ` : '<p class="text-muted text-small">No quizzes recorded.</p>'}
+      $('gs-m-save').addEventListener('click', async () => {
+        if (!editing) return;
+        const err = ScoreOverride.validate($('gs-m-score').value, $('gs-m-total').value);
+        if (err) { $('gs-m-err').textContent = err; return; }
+        const btn = $('gs-m-save');
+        btn.disabled = true; btn.textContent = '⏳ Saving…';
+        try {
+          const r = await ScoreOverride.saveOne({
+            lrn: editing.lrn, subject: editing.subject, code: editing.code,
+            score: $('gs-m-score').value, total: $('gs-m-total').value,
+            reason: $('gs-m-reason').value, takenOn: $('gs-m-date').value
+          });
+          closeModal();
+          render();
+          renderSyncBar(r.sync.ok ? '✅ Saved and synced to backend.' : '💾 Saved on this device. ' + (r.sync.error || ''), r.sync.ok ? 'success' : 'warning');
+        } catch (e) {
+          $('gs-m-err').textContent = e.message;
+        } finally { btn.disabled = false; btn.textContent = 'Save & sync'; }
+      });
 
-            <h4 style="margin-top:16px;color:var(--color-primary-dark);">📋 Summative Tests</h4>
-            ${sts.length ? `
-              <table class="table">
-                <thead><tr><th>Assessment</th><th>Score</th><th>%</th><th>Passed</th></tr></thead>
-                <tbody>
-                  ${sts.map(([id, d]) => `
-                    <tr>
-                      <td>${id}</td>
-                      <td>${d.score}/${d.total}</td>
-                      <td>${Math.round((d.score / d.total) * 100)}%</td>
-                      <td>${d.passed ? '✅' : '❌'}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            ` : '<p class="text-muted text-small">No STs recorded.</p>'}
-
-            <h4 style="margin-top:16px;color:var(--color-primary-dark);">🎨 Performance Tasks</h4>
-            ${pts.length ? `
-              <table class="table">
-                <thead><tr><th>Task</th><th>Option</th><th>Score</th></tr></thead>
-                <tbody>
-                  ${pts.map(([id, d]) => `
-                    <tr>
-                      <td>${id}</td>
-                      <td>${d.option || '—'}</td>
-                      <td>${d.score != null ? `${d.score}/${d.maxScore || 100}` : '<em>Not graded</em>'}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            ` : '<p class="text-muted text-small">No PTs recorded.</p>'}
-
-            ${te.length ? `
-              <h4 style="margin-top:16px;color:var(--color-primary-dark);">🎓 Term Exam</h4>
-              <table class="table">
-                <tbody>
-                  ${te.map(([id, d]) => `
-                    <tr><td>${id}</td><td>${d.score}/${d.total}</td><td>${Math.round((d.score / d.total) * 100)}%</td></tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            ` : ''}
-          </div>
-        `;
+      async function doRevert(subject, code) {
+        const item = ScoreOverride.findItem(code);
+        if (!confirm('Revert manual score for ' + item.label + ' and restore the previous online result?')) return;
+        try {
+          const r = await ScoreOverride.revert(picker.value, subject, code);
+          render();
+          renderSyncBar(r.sync.ok ? '↩ Reverted and synced.' : '↩ Reverted on this device. ' + (r.sync.error || ''), r.sync.ok ? 'success' : 'warning');
+        } catch (e) { alert(e.message); }
       }
     });
   </script>

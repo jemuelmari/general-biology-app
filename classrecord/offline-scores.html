@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline Scores — Class Record</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/classrecord.css" />
+  <style>
+    .os-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
+    .os-bar label { display:block; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:#455a64; margin-bottom:4px; }
+    .os-bar select, .os-bar input { width:100%; padding:9px 10px; border:1.5px solid #cfd8dc; border-radius:8px; font-family:inherit; font-size:0.9rem; box-sizing:border-box; }
+    .os-table { width:100%; border-collapse:collapse; font-size:0.9rem; background:#fff; }
+    .os-table th { text-align:left; background:#f5f7fa; padding:9px 10px; font-size:0.72rem; text-transform:uppercase; letter-spacing:.4px; color:#546e7a; border-bottom:2px solid #cfd8dc; position:sticky; top:0; }
+    .os-table td { padding:6px 10px; border-bottom:1px solid #eceff1; vertical-align:middle; }
+    .os-table input.os-in { width:90px; padding:7px 8px; border:1.5px solid #cfd8dc; border-radius:8px; font-size:0.95rem; font-family:inherit; }
+    .os-table input.os-in.bad { border-color:#c62828; background:#ffebee; }
+    .os-table input.os-in.changed { border-color:#6a1b9a; background:#f3e5f5; }
+    .os-badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:0.7rem; font-weight:700; }
+    .os-manual { background:#fff3e0; color:#e65100; } .os-online { background:#e3f2fd; color:#0d47a1; }
+    .os-none { color:#90a4ae; font-style:italic; }
+    .os-warn { color:#e65100; font-size:0.75rem; }
+    .os-actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:16px; }
+    .os-btn { padding:12px 22px; border:none; border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer; color:#fff; background:#6a1b9a; font-family:inherit; }
+    .os-btn:disabled { opacity:.5; cursor:not-allowed; }
+    .os-btn.sec { background:#eceff1; color:#37474f; }
+    #os-msg { font-size:0.88rem; }
+    .os-scroll { max-height:65vh; overflow:auto; border:1px solid #cfd8dc; border-radius:10px; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header" style="background:linear-gradient(135deg,#4a148c,#6a1b9a);">
+    <div class="container flex-between">
+      <div>
+        <h1>✏️ Offline Scores</h1>
+        <span class="version">v1.0.0</span>
+      </div>
+      <nav style="display:flex;gap:8px;">
+        <a href="../classrecord.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Class Record</a>
+        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;max-width:980px;">
+
+    <div class="card">
+      <h2 style="margin:0 0 4px;color:var(--color-primary-dark);">Enter paper-exam scores for a whole class</h2>
+      <p class="text-muted text-small" style="margin:0 0 16px;">
+        Pick the assessment, type each student's raw score, then <b>Save &amp; sync</b>. Blank rows are skipped.
+        Scores flow into the class record and are sent to the Google Sheet backend.
+      </p>
+      <div class="os-bar">
+        <div><label for="os-subject">Subject</label>
+          <select id="os-subject"><option value="biol1">General Biology 1</option><option value="biol2">General Biology 2</option></select></div>
+        <div><label for="os-assess">Assessment</label><select id="os-assess"></select></div>
+        <div><label for="os-section">Section</label><select id="os-section"><option value="">All sections</option></select></div>
+        <div><label for="os-total">Out of (total)</label><input type="number" id="os-total" min="1" step="any" /></div>
+        <div><label for="os-date">Date taken</label><input type="date" id="os-date" /></div>
+        <div><label for="os-reason">Reason / remarks</label><input type="text" id="os-reason" maxlength="120" value="Took paper exam offline" /></div>
+      </div>
+    </div>
+
+    <div id="os-pending" class="alert alert-warning" style="display:none;"></div>
+
+    <div class="card">
+      <div class="os-scroll"><table class="os-table">
+        <thead><tr><th style="width:36px;">#</th><th>Student</th><th>Section</th><th>Current</th><th>New score</th></tr></thead>
+        <tbody id="os-body"></tbody>
+      </table></div>
+      <div class="os-actions">
+        <button class="os-btn" id="os-save">💾 Save &amp; sync</button>
+        <span id="os-msg"></span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer"><p>Offline Scores · v1.0.0</p></footer>
+
+  <script src="../config.js?v=2.4.2-dc101a5"></script>
+  <script src="../assets/js/app.js?v=2.4.2-dc101a5"></script>
+  <script src="../assets/js/store.js?v=2.4.2-dc101a5"></script>
+  <script src="../assets/js/score-override.js?v=1.0.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=2.4.2-dc101a5"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const $ = (id) => document.getElementById(id);
+      const esc = (t) => String(t == null ? '' : t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      const users = Store.getAllUsers();
+
+      $('os-assess').innerHTML = ScoreOverride.getCatalog().map((c) => `<option value="${c.code}">${c.label}</option>`).join('');
+      [...new Set(users.map((u) => u.section).filter(Boolean))].sort()
+        .forEach((s) => { const o = document.createElement('option'); o.value = s; o.textContent = s; $('os-section').appendChild(o); });
+
+      function msg(text, kind) {
+        const el = $('os-msg');
+        el.textContent = text || '';
+        el.style.color = kind === 'err' ? '#c62828' : kind === 'ok' ? '#2e7d32' : '#455a64';
+      }
+
+      function renderPending() {
+        const n = ScoreOverride.pendingCount();
+        const el = $('os-pending');
+        if (!n) { el.style.display = 'none'; return; }
+        el.style.display = 'block';
+        el.innerHTML = `<b>${n}</b> override(s) saved on this device but not yet sent to the backend. <button class="os-btn sec" id="os-flush" style="padding:6px 12px;">☁️ Send now</button>`;
+        $('os-flush').addEventListener('click', async () => {
+          const r = await ScoreOverride.flushPending();
+          msg(r.ok ? '✅ Pending items synced.' : '⚠️ ' + (r.error || 'Could not send.'), r.ok ? 'ok' : 'err');
+          renderPending();
+        });
+      }
+
+      function sortedStudents() {
+        const sec = $('os-section').value;
+        let list = users.filter((u) => !sec || u.section === sec);
+        return APP.sortStudents ? APP.sortStudents(list, 'last', 'asc') : list;
+      }
+
+      function render() {
+        const subject = $('os-subject').value, code = $('os-assess').value;
+        const item = ScoreOverride.findItem(code);
+        if (!$('os-total').dataset.touched) $('os-total').value = item.total;
+        const list = sortedStudents();
+        if (!users.length) {
+          $('os-body').innerHTML = '<tr><td colspan="5" style="padding:30px;text-align:center;" class="text-muted">No students on this device. Use “Sync from Backend” in the Class Record first.</td></tr>';
+          return;
+        }
+        $('os-body').innerHTML = list.map((u, i) => {
+          const e = ScoreOverride.getEntry(u.lrn, subject, code);
+          const has = e && e.score != null;
+          const tot = e ? (e.total != null ? e.total : e.maxScore) : null;
+          const cur = has
+            ? `<b>${esc(e.score)}/${esc(tot)}</b> ` + (e.override ? '<span class="os-badge os-manual">✎ Manual</span>' : '<span class="os-badge os-online">Online</span>')
+            : '<span class="os-none">—</span>';
+          return `<tr data-lrn="${esc(u.lrn)}" data-has="${has ? 1 : 0}" data-manual="${e && e.override ? 1 : 0}" data-cur="${has ? esc(e.score) : ''}">
+            <td class="text-muted">${i + 1}</td>
+            <td>${esc(u.lastName)}, ${esc(u.firstName)} ${esc(u.middleName ? u.middleName[0] + '.' : '')}</td>
+            <td>${esc(u.section || '')}</td>
+            <td>${cur}</td>
+            <td><input class="os-in" type="number" min="0" step="any" inputmode="decimal" aria-label="Score for ${esc(u.lastName)}" /> <span class="os-warn"></span></td>
+          </tr>`;
+        }).join('');
+        msg('');
+        wireInputs();
+      }
+
+      function wireInputs() {
+        const inputs = [...document.querySelectorAll('.os-in')];
+        inputs.forEach((inp, i) => {
+          inp.addEventListener('input', () => check(inp));
+          inp.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter') { ev.preventDefault(); (inputs[i + 1] || $('os-save')).focus(); }
+          });
+        });
+      }
+
+      function check(inp) {
+        const tr = inp.closest('tr'), warn = tr.querySelector('.os-warn');
+        inp.classList.remove('bad', 'changed'); warn.textContent = '';
+        if (inp.value === '') return;
+        const err = ScoreOverride.validate(inp.value, $('os-total').value);
+        if (err) { inp.classList.add('bad'); warn.textContent = err; return; }
+        inp.classList.add('changed');
+        if (tr.dataset.has === '1' && tr.dataset.manual !== '1') warn.textContent = 'replaces online score (' + tr.dataset.cur + ')';
+      }
+
+      ['os-subject', 'os-assess', 'os-section'].forEach((id) => $(id).addEventListener('change', () => {
+        if (id === 'os-assess') delete $('os-total').dataset.touched;
+        render();
+      }));
+      $('os-total').addEventListener('input', () => {
+        $('os-total').dataset.touched = '1';
+        document.querySelectorAll('.os-in').forEach(check);
+      });
+
+      $('os-save').addEventListener('click', async () => {
+        const subject = $('os-subject').value, code = $('os-assess').value;
+        const rows = [...document.querySelectorAll('#os-body tr[data-lrn]')]
+          .map((tr) => ({ tr, inp: tr.querySelector('.os-in') }))
+          .filter((x) => x.inp && x.inp.value !== '');
+        if (!rows.length) { msg('Nothing to save — type at least one score.', 'err'); return; }
+        const bad = rows.filter((x) => ScoreOverride.validate(x.inp.value, $('os-total').value));
+        if (bad.length) { bad[0].inp.focus(); msg(bad.length + ' row(s) have invalid scores (red). Fix them first.', 'err'); return; }
+
+        const replacing = rows.filter((x) => x.tr.dataset.has === '1' && x.tr.dataset.manual !== '1').length;
+        if (replacing && !confirm(replacing + ' student(s) already have an ONLINE score for this assessment. Replace them with your manual score? (You can revert each one later.)')) return;
+
+        const btn = $('os-save'); btn.disabled = true; btn.textContent = '⏳ Saving…';
+        try {
+          const r = await ScoreOverride.saveMany(rows.map((x) => ({
+            lrn: x.tr.dataset.lrn, subject, code,
+            score: x.inp.value, total: $('os-total').value,
+            reason: $('os-reason').value, takenOn: $('os-date').value
+          })));
+          render(); renderPending();
+          if (r.errors.length) msg('Saved ' + r.saved + ', ' + r.errors.length + ' failed: ' + r.errors[0].error, 'err');
+          else if (r.sync.ok) msg('✅ Saved ' + r.saved + ' score(s) and synced to the backend.', 'ok');
+          else msg('💾 Saved ' + r.saved + ' score(s) on this device. ' + (r.sync.error || ''), 'err');
+        } catch (e) { msg(e.message, 'err'); }
+        finally { btn.disabled = false; btn.textContent = '💾 Save & sync'; }
+      });
+
+      renderPending();
+      render();
+    });
+  </script>
+</body>
+</html>

@@ -2,7 +2,13 @@
  * ============================================================
  * Google Apps Script Backend — General Biology App
  * File: Code.gs
- * Version: 2.1.0
+ * Version: 2.2.0
+ * ------------------------------------------------------------
+ * NEW in v2.2.0:
+ * - overrideScoresBatch (teacher token required): manual / offline
+ *   score entry. Stored in the Records sheet like any other score,
+ *   with override info in PayloadJSON. Aggregation keeps an override
+ *   over older (stale) student rows.
  * ------------------------------------------------------------
  * NEW in v2.1.0:
  * - Retake counter (RetakeNumber column).
@@ -54,6 +60,7 @@ function doPost(e) {
     switch (action) {
       case 'saveProgress':            return jsonResponse(handleSaveProgress(body));
       case 'saveScore':               return jsonResponse(handleSaveScore(body));
+      case 'overrideScoresBatch':     return jsonResponse(handleOverrideScoresBatch(body));
       case 'registerSyncCode':        return jsonResponse(handleRegisterSyncCode(body));
       case 'resolveSyncCode':         return jsonResponse(handleResolveSyncCode(body, false));
       case 'consumeSyncCode':         return jsonResponse(handleResolveSyncCode(body, true));
@@ -64,7 +71,7 @@ function doPost(e) {
       case 'approveRetake':           return jsonResponse(handleApproveRetake(body));
       case 'cancelRequest':           return jsonResponse(handleCancelRequest(body));
       case 'redeemUnlockCode':        return jsonResponse(handleRedeemUnlockCode(body));
-      case 'ping':                    return jsonResponse({ ok: true, message: 'Backend is live', version: '2.1.0', timestamp: new Date().toISOString() });
+      case 'ping':                    return jsonResponse({ ok: true, message: 'Backend is live', version: '2.2.0', timestamp: new Date().toISOString() });
       default:                        return jsonResponse({ ok: false, error: 'Unknown action: ' + action });
     }
   } catch (err) {
@@ -141,6 +148,47 @@ function handleSaveScore(body) {
   ]);
 
   return { ok: true, message: 'Score saved', lrn, assessmentId };
+}
+
+function handleOverrideScoresBatch(body) {
+  requireTeacherToken(body.token);
+  const items = Array.isArray(body.items) ? body.items : [];
+  if (!items.length) return { ok: true, saved: 0 };
+  if (items.length > 500) throw new Error('Too many items (max 500)');
+
+  const sheet = getOrCreateSheet(SHEET_NAME_RECORDS, RECORD_HEADERS);
+  const now = new Date().toISOString();
+  const rows = [];
+
+  items.forEach((it) => {
+    if (!it.lrn || !it.assessmentId) throw new Error('Missing LRN or AssessmentId');
+    const score = Number(it.score), total = Number(it.total);
+    if (isNaN(score) || isNaN(total) || score < 0 || total < 0 || score > total) {
+      throw new Error('Invalid score for ' + it.lrn + ' / ' + it.assessmentId);
+    }
+    const st = it.student || {};
+    const ov = it.override || {};
+    const payload = JSON.stringify({
+      breakdown: [],
+      override: {
+        by: 'teacher', reason: ov.reason || '', takenOn: ov.takenOn || '',
+        at: ov.at || now, reverted: !!ov.reverted, removed: !!ov.removed
+      }
+    });
+    rows.push([
+      it.lrn, st.lastName || '', st.firstName || '', st.middleName || '',
+      st.gradeLevel || '', st.section || '',
+      it.subject || '', String(it.type || 'quizzes').toUpperCase(), it.assessmentId,
+      score, total, it.percent != null ? it.percent : Math.round((score / (total || 1)) * 100),
+      it.passed ? 'TRUE' : 'FALSE', 'FALSE', 0,
+      it.timestamp || now, payload, '', now
+    ]);
+  });
+
+  // write all rows in one go (appended = newest, so they win in aggregation)
+  sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, RECORD_HEADERS.length).setValues(rows);
+  rows.forEach((r) => logEvent('overrideScore', String(r[0]), r[8] + ' = ' + r[9] + '/' + r[10]));
+  return { ok: true, saved: rows.length };
 }
 
 function handleRegisterSyncCode(body) {
@@ -250,17 +298,37 @@ function handleGetAllStudentsAggregated(body) {
 
       if (keyType) {
         let breakdown = [];
-        try { breakdown = JSON.parse(r.PayloadJSON || '{}').breakdown || []; }
-        catch (e) { breakdown = []; }
+        let ov = null;
+        try {
+          const pj = JSON.parse(r.PayloadJSON || '{}');
+          breakdown = pj.breakdown || [];
+          ov = pj.override || null;
+        } catch (e) { breakdown = []; ov = null; }
 
-        entry.scores[subj][keyType][aid] = {
-          score: Number(r.Score) || 0,
-          total: Number(r.Total) || 0,
-          percent: Number(r.Percent) || 0,
-          passed: String(r.Passed).toUpperCase() === 'TRUE',
-          breakdown,
-          timestamp: r.Timestamp || r.LastUpdated
-        };
+        const prev = entry.scores[subj][keyType][aid];
+        const rowTs = String(r.Timestamp || r.LastUpdated || '');
+        // A stale student row (older than a teacher override) must not
+        // replace the override — e.g. an offline queue flushed late.
+        if (!ov && prev && prev._overrideAt && rowTs && rowTs < prev._overrideAt) {
+          // keep previous
+        } else if (ov && ov.removed) {
+          delete entry.scores[subj][keyType][aid];
+        } else {
+          const rec = {
+            score: Number(r.Score) || 0,
+            total: Number(r.Total) || 0,
+            percent: Number(r.Percent) || 0,
+            passed: String(r.Passed).toUpperCase() === 'TRUE',
+            breakdown,
+            timestamp: r.Timestamp || r.LastUpdated
+          };
+          if (ov && !ov.reverted) {
+            rec.override = { by: ov.by || 'teacher', reason: ov.reason || '', takenOn: ov.takenOn || '', at: ov.at || '' };
+          }
+          if (ov) rec._overrideAt = ov.at || String(rec.timestamp || '');
+          else if (prev && prev._overrideAt) rec._overrideAt = prev._overrideAt;
+          entry.scores[subj][keyType][aid] = rec;
+        }
       }
     }
 
@@ -280,6 +348,11 @@ function handleGetAllStudentsAggregated(body) {
         pts: Object.keys(s.scores[subj].pt || {}).length,
         daysCompleted: (s.progress[subj].completed || []).length
       };
+    });
+    ['biol1', 'biol2'].forEach((subj) => {
+      ['quizzes', 'st', 'pt', 'te'].forEach((k) => {
+        Object.keys(s.scores[subj][k] || {}).forEach((id) => { delete s.scores[subj][k][id]._overrideAt; });
+      });
     });
     return { ...s, summary };
   });

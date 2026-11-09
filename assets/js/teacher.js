@@ -135,6 +135,8 @@
     { icon: '🎮', title: 'Activity Tracker', desc: 'Track lesson activity completion, badges, and points', href: 'teacher/activity-tracker.html', color: '#1b7a3d', badge: null },
     { icon: '📝', title: 'Assessment Tracker', desc: 'Track quiz, ST, and term exam performance', href: 'teacher/assessment-tracker.html', color: '#0277bd', badge: null },
     { icon: '🔒', title: 'Locked Assessments', desc: 'Manage locked submissions — unlock for retakes', href: 'teacher/locked-assessments.html', color: '#c62828', badge: lockedCount > 0 ? { text: lockedCount + ' locked', type: 'alert' } : null },
+    { icon: '✏️', title: 'Offline Scores', desc: 'Enter or override scores for paper exams — updates the class record and syncs to the backend', href: 'classrecord/offline-scores.html', color: '#6a1b9a', badge: { text: 'New', type: 'info' } },
+    { icon: '🖨️', title: 'Print Exam Copies', desc: 'Print actual quiz, ST and Term Exam questions (Set A / B) for students without internet — or save as editable Word', href: 'teacher/print-exam.html', color: '#2e7d32', badge: { text: 'New', type: 'info' } },
     { icon: '📥', title: 'Sync Center', desc: 'Import student progress from other devices', href: 'teacher/sync-center.html', color: '#ed6c02', badge: { text: 'Cross-device', type: 'info' } },
     { icon: '📊', title: 'Item Analysis', desc: 'Per-item difficulty and Most/Least Learned competencies', href: 'teacher/item-analysis.html', color: '#6a1b9a', badge: null },
     { icon: '🎯', title: 'Intervention', desc: 'Students needing support, auto-classified', href: 'teacher/intervention.html', color: '#c62828', badge: stats.urgent > 0 ? { text: stats.urgent + ' urgent', type: 'alert' } : null },
