@@ -70,6 +70,7 @@
   <script src="../assets/js/store.js?v=2.4.2-4d47e09"></script>
   <script src="../assets/js/transmutation.js?v=2.4.2-4d47e09"></script>
   <script src="../assets/js/teacher-auth.js?v=2.4.2-4d47e09"></script>
+  <script src="../assets/js/teacher-sync-auto.js?v=2.4.2-4d47e09"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const subjectSel = document.getElementById('at-subject');
@@ -93,62 +94,22 @@
         refreshBtn.disabled = true;
 
         try {
-          const token = localStorage.getItem('gsa_teacher_token');
-          if (!token) {
-            syncStatus.textContent = '⚠️ No teacher token — showing local data only';
-            syncStatus.style.color = '#f57c00';
-            refreshBtn.disabled = false;
+          // DATI: maling token key ('gsa_teacher_token'), hindi-umiiral na action ('pullTeacherDashboard'),
+          // at maling storage ('gsa_v1_users') kaya walang nai-sync. Ngayon: gamit ang TeacherSync
+          // (aggregated data mula sa Google Sheet -> ina-merge sa localStorage na binabasa ng Store).
+          if (!window.TeacherSync) throw new Error('teacher-sync-auto.js not loaded');
+          const res = await window.TeacherSync.syncNow({ ask: true });
+          if (!res.ok) {
+            syncStatus.textContent = res.error === 'NO_TOKEN' ? '⚠️ No teacher token — showing local data only' : `⚠️ Backend error: ${res.error}`;
+            syncStatus.style.color = res.error === 'NO_TOKEN' ? '#f57c00' : '#c62828';
             render();
             return;
           }
-
-          const response = await fetch(CONFIG.BACKEND_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({
-              action: 'pullTeacherDashboard',
-              token: token
-            })
-          });
-
-          const data = await response.json();
-          if (!data.ok) {
-            syncStatus.textContent = `⚠️ Backend error: ${data.error}`;
-            syncStatus.style.color = '#c62828';
-            refreshBtn.disabled = false;
-            render();
-            return;
-          }
-
-          // Build master lookup
           masterStudents = {};
-          (data.students || []).forEach(function(s) {
-            if (s.lrn) masterStudents[String(s.lrn)] = s;
-          });
-
+          (res.students || []).forEach(function(s) { if (s.lrn) masterStudents[String(s.lrn)] = s; });
           backendLoaded = true;
-          syncStatus.textContent = `✅ Synced ${data.count} students from backend`;
+          syncStatus.textContent = `✅ Synced ${res.count} students from backend (${new Date().toLocaleTimeString()})`;
           syncStatus.style.color = '#2e7d32';
-
-          // Merge names into localStorage (para hindi na magmukhang orphan sa susunod)
-          try {
-            const localUsers = JSON.parse(localStorage.getItem('gsa_v1_users') || '{}');
-            Object.keys(masterStudents).forEach(function(lrn) {
-              var s = masterStudents[lrn];
-              if (s.lastName || s.firstName) {
-                localUsers[lrn] = localUsers[lrn] || {};
-                localUsers[lrn].lrn = lrn;
-                localUsers[lrn].lastName = s.lastName || localUsers[lrn].lastName || '';
-                localUsers[lrn].firstName = s.firstName || localUsers[lrn].firstName || '';
-                localUsers[lrn].middleName = s.middleName || localUsers[lrn].middleName || '';
-                localUsers[lrn].section = s.section || localUsers[lrn].section || '';
-              }
-            });
-            localStorage.setItem('gsa_v1_users', JSON.stringify(localUsers));
-          } catch (e) {
-            console.warn('Could not merge to localStorage:', e);
-          }
-
           render();
         } catch (err) {
           syncStatus.textContent = `❌ Sync failed: ${err.message}`;
@@ -364,11 +325,8 @@
       // BOOT
       // ============================================
       // Try backend sync first; fallback to localStorage only if no token
-      if (localStorage.getItem('gsa_teacher_token')) {
-        syncFromBackend();
-      } else {
-        render();
-      }
+      render();
+      if (sessionStorage.getItem('gba_teacher_token')) syncFromBackend();
     });
   </script>
 </body>

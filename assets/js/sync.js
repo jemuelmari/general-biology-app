@@ -1,7 +1,15 @@
 /* ============================================================
    sync.js — Sync Code + Retake Request System
-   Version: 2.1.0
+   Version: 2.2.0  (sync-complete)
    ------------------------------------------------------------
+   v2.2.0:
+   - pushScoreToBackend gumagamit ng PAREHONG timestamp ng lokal na score (dati: bago, kaya hindi nagtutugma).
+   - Ang pumalyang push ay pinapalitan ng mas bago (dati: itinatapon ang bago kapag may lumang naka-queue)
+     at HINDI na binubura pagkatapos ng 5 try.
+   - pushProgressToBackend ay nagpapadala na ng KUMPLETONG snapshot (progress + scores + badges + points)
+     sa pamamagitan ng SyncMaster (kusang nilo-load kung wala pa).
+   - Bagong pushActivityToBackend.
+   - Sinusuri na ang response ng backend (ok:false -> naka-queue, hindi "success").
    v2.1.0:
    - Added retake counter awareness.
    - Cleaned up: removed pushLock/pullLocks/deleteLock
@@ -22,13 +30,36 @@ const Sync = (() => {
     return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
   }
 
+  // Base URL ng folder na ito (para ma-load ang sync-master.js mula sa kahit anong page)
+  const _BASE = (() => {
+    try { return document.currentScript && document.currentScript.src ? document.currentScript.src.replace(/[^/]*$/, '') : ''; }
+    catch (e) { return ''; }
+  })();
+
+  let _masterLoading = null;
+  function ensureSyncMaster() {
+    if (window.SyncMaster) return Promise.resolve(window.SyncMaster);
+    if (_masterLoading) return _masterLoading;
+    _masterLoading = new Promise((resolve) => {
+      if (!_BASE) return resolve(null);
+      const s = document.createElement('script');
+      s.src = _BASE + 'sync-master.js';
+      s.onload = () => resolve(window.SyncMaster || null);
+      s.onerror = () => resolve(null);
+      document.head.appendChild(s);
+    });
+    return _masterLoading;
+  }
+
   async function backendPost(body) {
     const res = await fetch(CONFIG.BACKEND_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(body)
     });
-    return res.json();
+    const text = await res.text();
+    if (text.trim().startsWith('<')) throw new Error('ERR_HTML_RESPONSE (check Apps Script deployment)');
+    return JSON.parse(text);
   }
 
   async function backendGet(params) {
@@ -193,26 +224,65 @@ const Sync = (() => {
         gradeLevel: user.gradeLevel, section: user.section
       },
       subject, type, assessmentId,
-      score: scoreData.score, total: scoreData.total, percent: scoreData.percent,
-      passed: scoreData.passed, autoSubmitted: scoreData.autoSubmitted || false,
+      score: scoreData.score === undefined ? null : scoreData.score,
+      total: scoreData.total === undefined ? null : scoreData.total,
+      percent: scoreData.percent === undefined ? null : scoreData.percent,
+      passed: !!scoreData.passed, autoSubmitted: scoreData.autoSubmitted || false,
       tabViolations: scoreData.tabViolations || 0,
+      durationSec: scoreData.durationSec || 0,
       breakdown: scoreData.breakdown || [],
-      timestamp: new Date().toISOString()
+      // PAREHONG timestamp ng lokal na score para magtugma sa merge ng backend at ng ibang device
+      timestamp: scoreData.timestamp || new Date().toISOString(),
+      deviceId: (window.SyncMaster && SyncMaster.getDeviceId) ? SyncMaster.getDeviceId() : undefined
     };
+    // PT / ibang uri: ipasa ang dagdag na fields (option, status, maxScore...)
+    ['status', 'maxScore', 'option', 'optionLabel'].forEach((k) => { if (scoreData[k] !== undefined) payload[k] = scoreData[k]; });
 
     try {
       const res = await backendPost({ action: 'saveScore', ...payload });
-      if (res.ok) console.log('[Sync] ✅ Score pushed:', assessmentId);
-      else _queueFailedPush('saveScore', payload);
-      return res;
+      if (res && res.ok) {
+        localStorage.setItem(`${NS}last_push_at`, new Date().toISOString());
+        console.log('[Sync] ✅ Score pushed:', assessmentId);
+        window.dispatchEvent(new Event('sync-queue-changed'));
+      } else {
+        _queueFailedPush('saveScore', payload);
+      }
+      return res || { ok: false, error: 'No response' };
     } catch (err) {
       _queueFailedPush('saveScore', payload);
       return { ok: false, error: err.message };
     }
   }
 
+  /* ---------- Lesson activity result ---------- */
+  async function pushActivityToBackend(lrn, subject, activity) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    const user = Store.getUser(lrn);
+    if (!user) return { ok: false, error: 'User not found' };
+    const payload = {
+      lrn,
+      student: { lastName: user.lastName, firstName: user.firstName, middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section },
+      subject, week: activity.week, day: activity.day, activity: activity.activity,
+      percent: activity.percent, passed: !!activity.passed, attempts: activity.attempts || 1,
+      timestamp: activity.timestamp || new Date().toISOString()
+    };
+    try {
+      const res = await backendPost({ action: 'saveActivity', ...payload });
+      if (!(res && res.ok)) _queueFailedPush('saveActivity', payload);
+      return res || { ok: false, error: 'No response' };
+    } catch (err) {
+      _queueFailedPush('saveActivity', payload);
+      return { ok: false, error: err.message };
+    }
+  }
+
   async function pushProgressToBackend(lrn, subject) {
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    // Kumpletong snapshot (progress + scores + badges + points) sa pamamagitan ng SyncMaster
+    const master = await ensureSyncMaster();
+    if (master && typeof master.pushMasterUpdate === 'function') {
+      return master.pushMasterUpdate(lrn, subject || 'both', 'progress');
+    }
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
     const progress = Store.getProgress(lrn);
@@ -362,11 +432,18 @@ const Sync = (() => {
   function _queueFailedPush(action, body) {
     try {
       const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
-      const fp = `${action}|${body.lrn || ''}|${body.subject || 'both'}|${body.assessmentId || 'progress'}`;
-      if (queue.some((item) => item.fingerprint === fp)) return;
-      queue.push({ action, body, fingerprint: fp, queuedAt: new Date().toISOString(), attempts: 0 });
+      const fp = `${action}|${body.lrn || ''}|${body.subject || 'both'}|${body.assessmentId || body.activity || 'progress'}|${body.week || ''}|${body.day || ''}`;
+      // Palitan ng MAS BAGONG data ang lumang naka-queue (dati: itinatapon ang bago)
+      const idx = queue.findIndex((item) => item.fingerprint === fp);
+      const item = { action, body, fingerprint: fp, queuedAt: new Date().toISOString(), attempts: 0 };
+      if (idx >= 0) {
+        const old = queue[idx];
+        if (action === 'saveScore' && old.body && old.body.timestamp && body.timestamp && old.body.timestamp > body.timestamp) return; // mas luma ang bago; huwag palitan
+        queue[idx] = item;
+      } else queue.push(item);
       while (queue.length > MAX_QUEUE_SIZE) queue.shift();
       localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+      window.dispatchEvent(new Event('sync-queue-changed'));
     } catch (e) { /* silent */ }
   }
 
@@ -382,24 +459,37 @@ const Sync = (() => {
     for (const item of queue) {
       try {
         const res = await backendPost({ action: item.action, ...item.body });
-        if (res.ok) flushed++;
+        if (res && res.ok) flushed++;
         else {
           item.attempts = (item.attempts || 0) + 1;
-          if (item.attempts < MAX_RETRIES) remaining.push(item);
+          item.lastError = res && res.error;
+          remaining.push(item);          // HINDI na binubura; uulitin hanggang pumasok
         }
       } catch (e) {
         item.attempts = (item.attempts || 0) + 1;
-        if (item.attempts < MAX_RETRIES) remaining.push(item);
+        item.lastError = e && e.message;
+        remaining.push(item);
       }
     }
     try { localStorage.setItem(QUEUE_KEY, JSON.stringify(remaining)); } catch (e) {}
+    if (flushed) { try { localStorage.setItem(`${NS}last_push_at`, new Date().toISOString()); } catch (e) {} }
+    // kasama rin ang queue ng SyncMaster
+    try {
+      if (window.SyncMaster && typeof SyncMaster.flushQueue === 'function') {
+        const m = await SyncMaster.flushQueue();
+        flushed += (m && m.flushed) || 0;
+      }
+    } catch (e) { /* ignore */ }
+    window.dispatchEvent(new Event('sync-queue-changed'));
     return { ok: true, flushed, remaining: remaining.length };
   }
 
   function getQueueStatus() {
     try {
       const queue = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
-      return { count: queue.length, items: queue.map((q) => ({ action: q.action, ...q.body })) };
+      let masterCount = 0;
+      try { masterCount = JSON.parse(localStorage.getItem(`${NS}master_queue`) || '[]').length; } catch (e) { /* ignore */ }
+      return { count: queue.length + masterCount, items: queue.map((q) => ({ action: q.action, ...q.body })) };
     } catch (e) { return { count: 0, items: [] }; }
   }
 
@@ -409,6 +499,14 @@ const Sync = (() => {
   }
 
   if (typeof window !== 'undefined') {
+    // Student pages: siguraduhing tumatakbo ang SyncMaster (auto push/pull)
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        const sess = JSON.parse(localStorage.getItem(`${NS}session`) || 'null');
+        const isTeacher = typeof TeacherAuth !== 'undefined';
+        if (sess && sess.lrn && !isTeacher && backendEnabled()) ensureSyncMaster();
+      } catch (e) { /* ignore */ }
+    });
     window.addEventListener('load', () => setTimeout(flushQueue, 3000));
     window.addEventListener('online', () => setTimeout(flushQueue, 1000));
     document.addEventListener('visibilitychange', () => {
@@ -449,6 +547,8 @@ const Sync = (() => {
     fetchAllStudentsFromBackend,
     pushScoreToBackend,
     pushProgressToBackend,
+    pushActivityToBackend,
+    ensureSyncMaster,
     requestRetake,
     getStudentRequests,
     redeemUnlockCode,

@@ -1,12 +1,12 @@
 /* ============================================================
    bundle.js — Combined script for slow connections
-   Version: 2.5.6 (Single backend URL + queue/last-push on lesson sync)
+   Version: 2.6.0 (sync-complete: full snapshot push, activity scores, points, auto-sync loader)
    ============================================================ */
 
 /* ---------- SECTION 1: CONFIG ---------- */
 const CONFIG = {
   APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.5.6',
+  VERSION: '2.6.0',
   DEVELOPER: {
     name: 'JEMUEL C. MARI, MAN, RN, LPT',
     position: 'Senior High School Teacher · Teacher II',
@@ -119,7 +119,29 @@ const Store = (() => {
     saveProgress(lrn, p);
   }
   function getScores(lrn) {
-    return _get(`${NS}scores_${lrn}`, { biol1: { quizzes: {}, st: {}, pt: {}, te: null }, biol2: { quizzes: {}, st: {}, pt: {}, te: null } });
+    const s = _get(`${NS}scores_${lrn}`, { biol1: { quizzes: {}, st: {}, pt: {}, te: {}, activities: {} }, biol2: { quizzes: {}, st: {}, pt: {}, te: {}, activities: {} } });
+    ['biol1', 'biol2'].forEach((subj) => {   // ayusin ang lumang flat/null na Term Exam
+      const x = s[subj]; if (!x) return;
+      if (x.te === null) x.te = {};
+      else if (x.te && typeof x.te === 'object' && ['score', 'percent', 'total', 'passed'].some((k) => x.te[k] !== undefined && typeof x.te[k] !== 'object')) x.te = { [`${subj}-te`]: x.te };
+      if (!x.activities) x.activities = {};
+    });
+    return s;
+  }
+  // Resulta ng Activity 1 / Activity 2 / Formative. Pinapanatili ang pinakamataas na percent.
+  function saveActivity(lrn, subj, id, data) {
+    const s = getScores(lrn);
+    if (!s[subj]) s[subj] = {};
+    if (!s[subj].activities) s[subj].activities = {};
+    const prev = s[subj].activities[id];
+    const next = { ...data, timestamp: new Date().toISOString() };
+    if (prev) {
+      next.attempts = Math.max(Number(prev.attempts) || 0, Number(data.attempts) || 0);
+      if ((Number(prev.percent) || 0) > (Number(next.percent) || 0)) { next.percent = prev.percent; next.score = prev.score; next.passed = prev.passed; }
+    }
+    s[subj].activities[id] = next;
+    _set(`${NS}scores_${lrn}`, s);
+    return next;
   }
   function saveScore(lrn, subj, type, id, data) {
     const s = getScores(lrn);
@@ -152,7 +174,7 @@ const Store = (() => {
   function unlockAssessment(lrn, id) { _rm(`${NS}lock_${lrn}_${id}`); }
 
   return { getAllUsers, saveUser, getUser, setSession, getSession, clearSession, getCurrentUser,
-    getProgress, saveProgress, markDayComplete, getScores, saveScore,
+    getProgress, saveProgress, markDayComplete, getScores, saveScore, saveActivity,
     getBadges, awardBadge, addDailyPoints, isAssessmentLocked, lockAssessment, unlockAssessment };
 })();
 
@@ -160,9 +182,32 @@ const Store = (() => {
 const Sync = (() => {
   'use strict';
 
-  function _isMaster() { return typeof window.SyncMaster !== 'undefined'; }
-
   const _QUEUE_KEY = 'gba_v1_master_queue';   // parehong queue ng sync-master.js
+  const _BASE = (() => {
+    try { return document.currentScript && document.currentScript.src ? document.currentScript.src.replace(/[^/]*$/, '') : ''; }
+    catch (e) { return ''; }
+  })();
+
+  function backendEnabled() {
+    return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
+  }
+
+  // Ang day.html ay bundle.js lang ang kinakarga; kaya dynamic na nilo-load ang sync-master.js dito
+  // (siya ang gumagawa ng full snapshot push + auto-sync loop + pull).
+  let _loading = null;
+  function ensureMaster() {
+    if (window.SyncMaster) return Promise.resolve(window.SyncMaster);
+    if (_loading) return _loading;
+    _loading = new Promise((resolve) => {
+      if (!_BASE) return resolve(null);
+      const s = document.createElement('script');
+      s.src = _BASE + 'sync-master.js';
+      s.onload = () => resolve(window.SyncMaster || null);
+      s.onerror = () => resolve(null);
+      document.head.appendChild(s);
+    });
+    return _loading;
+  }
 
   function _markPushed() {
     try { localStorage.setItem('gba_v1_last_push_at', new Date().toISOString()); } catch (e) {}
@@ -178,65 +223,85 @@ const Sync = (() => {
     } catch (e) {}
   }
 
-
-  function backendEnabled() {
-    return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
+  async function _post(body) {
+    const res = await fetch(CONFIG.BACKEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(body)
+    });
+    const text = await res.text();
+    if (text.trim().startsWith('<')) throw new Error('ERR_HTML_RESPONSE');
+    return JSON.parse(text);
   }
 
+  // Kumpletong snapshot: progress + scores (kasama ang activity scores) + badges + points
   async function pushProgressToBackend(lrn, subject) {
-    if (_isMaster()) {
-      return window.SyncMaster.pushMasterUpdate(lrn, subject, 'progress');
-    }
-    
-    // Fallback logic
     if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    const master = await ensureMaster();
+    if (master) return master.pushMasterUpdate(lrn, subject || 'both', 'progress');
+
+    // Fallback kung hindi ma-load ang sync-master.js
     const user = Store.getUser(lrn);
     if (!user) return { ok: false, error: 'User not found' };
-    const progress = Store.getProgress(lrn);
-    const payload = {
-      lrn,
-      student: {
-        lrn: user.lrn, lastName: user.lastName, firstName: user.firstName,
-        middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section
-      },
-      progress: subject ? { [subject]: progress[subject] } : progress,
-      subject: subject || 'both'
+    const body = {
+      action: 'upsertStudentMaster', lrn,
+      student: { lastName: user.lastName, firstName: user.firstName, middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section, sex: user.sex || '' },
+      progress: Store.getProgress(lrn), scores: Store.getScores(lrn), badges: Store.getBadges(lrn)
     };
-    // Kapag pumalya ang push, ilagay sa queue (kumpletong progress, hindi isang subject lang) para ma-send
-    // pagbukas ng dashboard/login (doon nilo-load ang sync-master.js na nagfa-flush ng queue).
-    const queueBody = { action: 'saveProgress', ...payload, progress: progress, subject: 'both' };
     try {
-      const res = await fetch(CONFIG.BACKEND_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'saveProgress', ...payload })
-      }).then(r => r.json());
-      if (res && res.ok) _markPushed(); else _queueFailed(queueBody);
+      const res = await _post(body);
+      if (res && res.ok) _markPushed(); else _queueFailed(body);
       return res;
     } catch (err) {
-      _queueFailed(queueBody);
+      _queueFailed(body);
       return { ok: false, error: err.message };
     }
   }
 
-  async function applyPendingUnlocks(lrn) {
-    // Handled by SyncMaster pull / legacy codes
-    if (_isMaster()) return [];
-    return [];
+  // Resulta ng isang activity (Activity 1/2/Formative) -> ActivityLog sheet + Masterlist
+  async function pushActivityToBackend(lrn, subject, activity) {
+    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
+    const user = Store.getUser(lrn);
+    if (!user) return { ok: false, error: 'User not found' };
+    const body = {
+      action: 'saveActivity', lrn,
+      student: { lastName: user.lastName, firstName: user.firstName, middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section },
+      subject, week: activity.week, day: activity.day, activity: activity.activity,
+      percent: activity.percent, passed: !!activity.passed, attempts: activity.attempts || 1,
+      timestamp: activity.timestamp
+    };
+    try {
+      const res = await _post(body);
+      if (res && res.ok) _markPushed();
+      return res;
+    } catch (err) {
+      return { ok: false, error: err.message };   // babawi ang auto-sync loop (snapshot) kaya hindi mawawala
+    }
   }
 
+  async function applyPendingUnlocks(lrn) { return []; }
+
   function getQueueStatus() {
-    if (_isMaster()) return window.SyncMaster.getQueueStatus();
+    if (window.SyncMaster) return window.SyncMaster.getQueueStatus();
     try { return { count: JSON.parse(localStorage.getItem(_QUEUE_KEY) || '[]').length }; }
     catch (e) { return { count: 0 }; }
   }
 
   async function flushQueue() {
-    if (_isMaster()) return window.SyncMaster.flushQueue();
+    const m = await ensureMaster();
+    if (m) return m.flushQueue();
     return { ok: false, flushed: 0 };
   }
 
-  return { backendEnabled, pushProgressToBackend, applyPendingUnlocks, getQueueStatus, flushQueue };
+  // Simulan agad ang auto-sync sa mga lesson page kapag may naka-login na estudyante
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      const sess = JSON.parse(localStorage.getItem('gba_v1_session') || 'null');
+      if (sess && sess.lrn && backendEnabled()) ensureMaster();
+    } catch (e) {}
+  });
+
+  return { backendEnabled, pushProgressToBackend, pushActivityToBackend, applyPendingUnlocks, getQueueStatus, flushQueue };
 })();
 
 /* ---------- SECTION 4: ACTIVITY GATE ---------- */
@@ -293,12 +358,35 @@ const ActivityGate = (() => {
         APP.toast('✅ Activity 2 passed!', 'success', 4000);
       } else {
         APP.toast('🎉 Formative complete!', 'success', 4000);
-        pushProgressAfterDayComplete();
       }
     } else {
       st.status = 'failed';
     }
     save(); applyUI();
+    recordAndPushActivity(k, st);
+  }
+
+  // Ise-save ang resulta ng activity (pasado man o hindi) at ipapadala sa backend kasama ang
+  // progress, badges at points. Dati: formative lang na pasado ang nagpa-push; ang scores ay hindi nase-save.
+  function recordAndPushActivity(k, st) {
+    if (!session) return;
+    const sess = Store.getSession();
+    const lrn = sess ? sess.lrn : null;
+    if (!lrn) return;
+    const passed = st.status === 'passed';
+    let saved = null;
+    try {
+      saved = Store.saveActivity(lrn, session.subject, `w${session.week}-d${session.day}-${k}`, {
+        percent: st.score, score: st.score, total: 100, passed, attempts: st.attempts || 1,
+        week: session.week, day: session.day, activity: k
+      });
+    } catch (e) { console.warn('[AutoPush] saveActivity failed', e); }
+    if (window.Sync) {
+      if (saved && typeof Sync.pushActivityToBackend === 'function') {
+        Sync.pushActivityToBackend(lrn, session.subject, saved).catch(() => {});
+      }
+      pushProgressAfterDayComplete();
+    }
   }
 
   function pushProgressAfterDayComplete() {

@@ -105,6 +105,8 @@
 
         if (ok) {
           TeacherAuth.login();
+          // Gagamitin ng auto-sync/score-override bilang backend token (sessionStorage lang; nabubura pag-close ng tab)
+          try { sessionStorage.setItem('gba_teacher_token', password); } catch (e) { /* ignore */ }
           if (window.APP && APP.toast) APP.toast('✅ Access granted', 'success');
           const returnTo = sessionStorage.getItem('gba_teacher_return') || 'instructor.html';
           sessionStorage.removeItem('gba_teacher_return');

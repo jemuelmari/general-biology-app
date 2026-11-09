@@ -381,16 +381,22 @@
     if (forceSyncBtn) { forceSyncBtn.disabled = true; forceSyncBtn.textContent = '⏳ Syncing...'; }
     try {
       // 1) ipadala ang naka-pila; 2) i-push ang kasalukuyang progress
+      // Two-way: ipadala ang naka-queue + kumpletong snapshot, tapos hilahin ang pinakabago mula sa ibang device
       const result = (typeof Sync.flushQueue === 'function' ? await Sync.flushQueue() : null) || {};
-      let pushed = false;
-      if (typeof Sync.pushProgressToBackend === 'function') {
+      let pushed = false, pulledChanged = false;
+      if (typeof SyncMaster !== 'undefined' && SyncMaster.syncNow) {
+        const r = await SyncMaster.syncNow(lrn);
+        pushed = !!r.pushed; pulledChanged = !!r.changed;
+        if (!r.ok) console.warn('[Dashboard] syncNow:', r);
+      } else if (typeof Sync.pushProgressToBackend === 'function') {
         const r = await Sync.pushProgressToBackend(lrn, null);
         pushed = !!(r && r.ok);
         if (r && !r.ok) console.warn('[Dashboard] pushProgress:', r);
       }
       if (pushed || result.flushed > 0) {
         localStorage.setItem(`${NS}last_push_at`, new Date().toISOString());
-        toast('✅ Progress synced to teacher' + (result.flushed ? ' (' + result.flushed + ' queued item(s) sent)' : ''), 'success');
+        toast('✅ Synced' + (result.flushed ? ' (' + result.flushed + ' queued item(s) sent)' : '') + (pulledChanged ? ' — new data from another device loaded' : ''), 'success');
+        if (pulledChanged) setTimeout(() => location.reload(), 900);
       } else if (result.remaining > 0) {
         toast(result.remaining + ' item(s) still pending — try again.', 'warning');
       } else {

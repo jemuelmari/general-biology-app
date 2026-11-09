@@ -30,6 +30,7 @@
     <p>Performance Task 1 · v2.5.5</p>
   </footer>
 
+  <script src="../../assets/js/sync.js?v=2.4.2-4d47e09"></script>
   <script src="../../config.js?v=2.4.2-4d47e09"></script>
   <script src="../../assets/js/app.js?v=2.4.2-4d47e09"></script>
   <script src="../../assets/js/store.js?v=2.4.2-4d47e09"></script>
@@ -119,11 +120,13 @@
         optionsEl.appendChild(label);
       });
 
-      document.getElementById('pt-submit').addEventListener('click', () => {
+      document.getElementById('pt-submit').addEventListener('click', async () => {
         if (!selected) return;
+        const btn = document.getElementById('pt-submit');
+        btn.disabled = true;
         const opt = task.options.find((o) => o.key === selected);
 
-        Store.saveScore(user.lrn, subject, 'pt', task.id, {
+        const saved = Store.saveScore(user.lrn, subject, 'pt', task.id, {
           option: selected,
           optionLabel: opt.label,
           status: 'submitted',
@@ -131,7 +134,20 @@
           maxScore: task.maxScore
         });
 
-        APP.toast('Performance Task submitted!', 'success');
+        // DATI: lokal lang na-save ang PT kaya hindi nakikita ng teacher. Ngayon ipinapadala sa backend.
+        let ok = false;
+        try {
+          if (window.Sync && Sync.pushScoreToBackend) {
+            const res = await Sync.pushScoreToBackend(user.lrn, subject, 'pt', task.id, {
+              score: null, total: task.maxScore, percent: null, passed: false,
+              status: 'submitted', maxScore: task.maxScore, option: selected, optionLabel: opt.label,
+              timestamp: saved && saved.timestamp
+            });
+            ok = !!(res && res.ok);
+          }
+        } catch (e) { ok = false; }
+
+        APP.toast(ok ? 'Performance Task submitted & sent to your teacher!' : 'Submitted. Saved on this device; will sync when online.', ok ? 'success' : 'warning');
         setTimeout(() => window.location.reload(), 900);
       });
     });

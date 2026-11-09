@@ -1,6 +1,6 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine with anti-cheat
-   Version: 1.1.0
+   Version: 1.2.0  (score timestamp matches backend + visible sync status)
    ------------------------------------------------------------
    v1.1.0:
    - Clears the retake flag after submit (for repeated retakes).
@@ -292,12 +292,15 @@ const QuizEngine = (() => {
     };
 
     // 1. Save score locally
-    Store.saveScore(state.lrn, state.subject, typeKey, state.assessmentId, scoreData);
+    const saved = Store.saveScore(state.lrn, state.subject, typeKey, state.assessmentId, scoreData);
 
-    // 2. Push score to backend
+    // 2. Push score to backend — gamit ang PAREHONG timestamp ng lokal na score.
+    //    Kapag pumalya, naka-queue ito at uulitin; ipinapakita ang status sa estudyante.
+    const lrnForPush = state.lrn, subjForPush = state.subject, idForPush = state.assessmentId;
+    let pushPromise = Promise.resolve({ ok: false, error: 'Sync module not loaded' });
     if (window.Sync && typeof Sync.pushScoreToBackend === 'function') {
-      Sync.pushScoreToBackend(state.lrn, state.subject, typeKey, state.assessmentId, scoreData)
-        .catch((err) => console.warn('[AutoPush] Score push failed:', err));
+      pushPromise = Sync.pushScoreToBackend(lrnForPush, subjForPush, typeKey, idForPush, { ...scoreData, timestamp: saved && saved.timestamp })
+        .catch((err) => ({ ok: false, error: err && err.message }));
     }
 
     // 3. Lock assessment locally (no more push to backend)
@@ -324,6 +327,13 @@ const QuizEngine = (() => {
     }
 
     renderResult({ correct, total, percent, passed, autoSubmitted });
+
+    pushPromise.then((res) => {
+      const el = document.getElementById('quiz-sync-status');
+      if (!el) return;
+      if (res && res.ok) { el.textContent = '☁️ Score sent to your teacher.'; el.style.color = '#2e7d32'; }
+      else { el.textContent = '📴 Score saved on this device — it will be sent automatically once you are online.'; el.style.color = '#ed6c02'; }
+    });
   }
 
   /* ---------- Render Result ---------- */
@@ -380,6 +390,8 @@ const QuizEngine = (() => {
             </p>
           </div>
         ` : ''}
+
+        <p id="quiz-sync-status" class="text-small" style="margin-top:16px;color:#78909c;">⏳ Sending your score to your teacher...</p>
 
         <div style="margin-top:24px;">
           <a href="index.html?subject=${state.subject}" class="btn btn-primary">← Back to Assessments</a>

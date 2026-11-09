@@ -1,9 +1,14 @@
 /* ============================================================
    teacher-auth.js — Password gate for teacher/gradebook pages
-   Version: 1.0.1
+   Version: 1.1.0  (loads teacher-sync-auto.js on teacher pages)
    ------------------------------------------------------------
    Includes auto-guard on teacher pages. Works from root or /teacher/.
    ============================================================ */
+
+const __TA_BASE = (() => {
+  try { return document.currentScript && document.currentScript.src ? document.currentScript.src.replace(/[^/]*$/, '') : ''; }
+  catch (e) { return ''; }
+})();
 
 const TeacherAuth = (() => {
   'use strict';
@@ -139,5 +144,12 @@ const TeacherAuth = (() => {
     ['click', 'keydown', 'mousemove', 'scroll'].forEach((evt) => {
       document.addEventListener(evt, TeacherAuth.touch, { passive: true });
     });
+    // Kusang kumuha ng pinakabagong data ng lahat ng estudyante mula sa Google Sheet
+    if (__TA_BASE && !window.__GBA_TSYNC_LOADED && !document.querySelector('script[data-gba-tsync]')) {
+      const s = document.createElement('script');
+      s.src = __TA_BASE + 'teacher-sync-auto.js';
+      s.setAttribute('data-gba-tsync', '1');
+      document.head.appendChild(s);
+    }
   });
 })();

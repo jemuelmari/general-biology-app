@@ -1,7 +1,13 @@
 /* ============================================================
    app.js — Router, state, and global initialization
-   Version: 2.5.5
+   Version: 2.6.0  (auto-loads student auto-sync on every student page)
    ============================================================ */
+
+// Base URL ng assets/js/ (kinukuha habang nilo-load ang script)
+const __APP_JS_BASE = (() => {
+  try { return document.currentScript && document.currentScript.src ? document.currentScript.src.replace(/[^/]*$/, '') : ''; }
+  catch (e) { return ''; }
+})();
 
 const APP = (() => {
   'use strict';
@@ -229,8 +235,26 @@ const APP = (() => {
     document.head.appendChild(meta);
   }
 
+  // Kapag may naka-login na estudyante, siguraduhing tumatakbo ang SyncMaster (kusang push/pull)
+  // kahit anong student page ang binuksan (hindi lang ang dashboard/login).
+  function ensureStudentAutoSync() {
+    try {
+      if (window.SyncMaster || !__APP_JS_BASE) return;
+      if (typeof TeacherAuth !== 'undefined') return;                       // hindi para sa teacher pages
+      if (typeof CONFIG === 'undefined' || !CONFIG.backendEnabled) return;
+      const sess = JSON.parse(localStorage.getItem('gba_v1_session') || 'null');
+      if (!sess || !sess.lrn) return;
+      if (document.querySelector('script[data-gba-sync-master]')) return;
+      const s = document.createElement('script');
+      s.src = __APP_JS_BASE + 'sync-master.js';
+      s.setAttribute('data-gba-sync-master', '1');
+      document.head.appendChild(s);
+    } catch (e) { /* hindi dapat makasira ng page */ }
+  }
+
   function init() {
     console.log(`[${APP_NAME}] v${VERSION}`);
+    ensureStudentAutoSync();
     renderVersions();
     injectManifest();
     renderDeveloperFooter();

@@ -1,6 +1,6 @@
 /* ============================================================
    store.js — localStorage persistence with Normalization
-   Version: 2.0.0
+   Version: 2.1.0  (activities + points + TE shape repair)
    ============================================================ */
 
 const Store = (() => {
@@ -68,6 +68,7 @@ const Store = (() => {
     _remove(`${NS}progress_${normalized}`);
     _remove(`${NS}scores_${normalized}`);
     _remove(`${NS}badges_${normalized}`);
+    Object.keys(getPoints(normalized)).forEach((k) => _remove(`${NS}points_${normalized}_${k}`));
   }
 
   function setSession(lrn) { const normalized = normalizeLRN(lrn); _set(SESSION_KEY, { lrn: normalized, startedAt: Date.now() }); }
@@ -96,9 +97,26 @@ const Store = (() => {
     saveProgress(normalized, p);
   }
 
+  // Term Exam ay dapat NESTED: te = { 'biol1-te': {...} }. Ang lumang flat na te ({score,total,...}) ay inaayos dito.
+  function _repairScores(scores) {
+    if (!scores || typeof scores !== 'object') return scores;
+    ['biol1', 'biol2'].forEach((subj) => {
+      const s = scores[subj];
+      if (!s) return;
+      const te = s.te;
+      if (te && typeof te === 'object' && ['score', 'percent', 'total', 'passed'].some((k) => te[k] !== undefined && typeof te[k] !== 'object')) {
+        s.te = { [`${subj}-te`]: te };
+      }
+      if (te === null) s.te = {};
+      if (!s.activities) s.activities = {};
+    });
+    return scores;
+  }
+
   function getScores(lrn) {
     const normalized = normalizeLRN(lrn);
-    return _get(`${NS}scores_${normalized}`, { biol1: { quizzes: {}, st: {}, pt: {}, te: null, activities: {} }, biol2: { quizzes: {}, st: {}, pt: {}, te: null, activities: {} } });
+    const scores = _get(`${NS}scores_${normalized}`, { biol1: { quizzes: {}, st: {}, pt: {}, te: {}, activities: {} }, biol2: { quizzes: {}, st: {}, pt: {}, te: {}, activities: {} } });
+    return _repairScores(scores);
   }
 
   function saveScore(lrn, subject, type, id, data) {
@@ -120,6 +138,52 @@ const Store = (() => {
       return true;
     }
     return false;
+  }
+
+  /* ---------- Lesson activity results (Activity 1 / Activity 2 / Formative) ---------- */
+  // Pinapanatili ang pinakamataas na percent (ang "Practice Again" ay hindi dapat magpababa ng pasadong score).
+  function saveActivity(lrn, subject, id, data) {
+    const normalized = normalizeLRN(lrn);
+    const scores = getScores(normalized);
+    if (!scores[subject]) scores[subject] = {};
+    if (!scores[subject].activities) scores[subject].activities = {};
+    const prev = scores[subject].activities[id];
+    const next = { ...data, timestamp: new Date().toISOString() };
+    if (prev) {
+      next.attempts = Math.max(Number(prev.attempts) || 0, Number(data.attempts) || 0);
+      if ((Number(prev.percent) || 0) > (Number(next.percent) || 0)) {
+        next.percent = prev.percent; next.score = prev.score; next.passed = prev.passed;
+      }
+    }
+    scores[subject].activities[id] = next;
+    _set(`${NS}scores_${normalized}`, scores);
+    return next;
+  }
+
+  /* ---------- Daily points: { 'biol1_w1_d2': 40 } ---------- */
+  function getPoints(lrn) {
+    const normalized = normalizeLRN(lrn);
+    const prefix = `${NS}points_${normalized}_`;
+    const out = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(prefix)) {
+        try { out[k.slice(prefix.length)] = Number(JSON.parse(localStorage.getItem(k))) || 0; } catch (e) { /* skip */ }
+      }
+    }
+    return out;
+  }
+
+  function mergePoints(lrn, incoming) {
+    const normalized = normalizeLRN(lrn);
+    let changed = false;
+    Object.keys(incoming || {}).forEach((k) => {
+      const key = `${NS}points_${normalized}_${k}`;
+      const cur = _get(key, 0) || 0;
+      const inc = Number(incoming[k]) || 0;
+      if (inc > cur) { _set(key, inc); changed = true; }
+    });
+    return changed;
   }
 
   function getBadges(lrn) {
@@ -186,7 +250,7 @@ const Store = (() => {
     const normalized = normalizeLRN(lrn);
     const user = getUser(normalized);
     if (!user) return null;
-    return { version: '1.0.0', exportedAt: new Date().toISOString(), user, progress: getProgress(normalized), scores: getScores(normalized), badges: getBadges(normalized) };
+    return { version: '1.1.0', exportedAt: new Date().toISOString(), user, progress: getProgress(normalized), scores: getScores(normalized), badges: getBadges(normalized), points: getPoints(normalized) };
   }
 
   function importAll(payload) {
@@ -195,6 +259,7 @@ const Store = (() => {
     if (payload.progress) saveProgress(payload.user.lrn, payload.progress);
     if (payload.scores) _set(`${NS}scores_${normalizeLRN(payload.user.lrn)}`, payload.scores);
     if (payload.badges) _set(`${NS}badges_${normalizeLRN(payload.user.lrn)}`, payload.badges);
+    if (payload.points) mergePoints(payload.user.lrn, payload.points);
     return true;
   }
 
@@ -207,7 +272,8 @@ const Store = (() => {
     getAllUsers, saveUser, getUser, deleteUser,
     setSession, getSession, clearSession, getCurrentUser,
     getProgress, saveProgress, markDayComplete,
-    getScores, saveScore, deleteScore,
+    getScores, saveScore, deleteScore, saveActivity,
+    getPoints, mergePoints,
     getBadges, awardBadge,
     getDailyPoints, addDailyPoints,
     getAttempts, incrementAttempts,

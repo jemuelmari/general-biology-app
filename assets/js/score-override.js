@@ -1,6 +1,6 @@
 /* ============================================================
    score-override.js — Manual score entry / override (teacher)
-   Version: 1.0.0
+   Version: 1.1.0  (fix: fallback regex, stable timestamp, PT fields)
    ------------------------------------------------------------
    For students who took a quiz / ST / Term Exam / PT offline
    (paper copy) or whose online score needs correction.
@@ -143,7 +143,9 @@ const ScoreOverride = (() => {
         at: entry.override ? entry.override.at : new Date().toISOString(),
         reverted: !entry.override
       },
-      timestamp: new Date().toISOString()
+      // PAREHONG timestamp ng lokal na entry (dati: bago kaya hindi nagtutugma sa merge)
+      timestamp: entry.timestamp || new Date().toISOString(),
+      status: entry.status, maxScore: entry.maxScore, option: entry.option, optionLabel: entry.optionLabel
     };
   }
 
@@ -195,6 +197,7 @@ const ScoreOverride = (() => {
   function getToken(ask) {
     let t = '';
     try { t = sessionStorage.getItem(TOKEN_KEY) || ''; } catch (e) { /* ignore */ }
+    if (!t && ask && typeof window !== 'undefined' && window.TeacherSync && TeacherSync.getToken) t = TeacherSync.getToken(false) || '';
     if (!t && ask) {
       t = prompt('Enter teacher token (password) to sync with the backend:') || '';
       if (t) { try { sessionStorage.setItem(TOKEN_KEY, t); } catch (e) { /* ignore */ } }
@@ -233,7 +236,7 @@ const ScoreOverride = (() => {
       let res = await _post({ action: 'overrideScoresBatch', token, items });
       let usedFallback = false;
 
-      if (!res.ok && /unknown action/i.test(res.error || '')) {
+      if (!res.ok && /unknown[\s_]action/i.test(res.error || '')) {
         // backend not redeployed yet → use the existing saveScore action
         usedFallback = true;
         let sent = 0;
