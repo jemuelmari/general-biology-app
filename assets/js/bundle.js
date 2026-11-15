@@ -1,315 +1,37 @@
 /* ============================================================
-   bundle.js — Combined script for slow connections
-   Version: 2.6.0 (sync-complete: full snapshot push, activity scores, points, auto-sync loader)
+   bundle.js — Lesson day engine (ActivityGate + Lesson)
+   Version: 3.0.0
+   ------------------------------------------------------------
+   v3.0.0:
+   - No more private copies of CONFIG / APP / Store / Sync. day.html now
+     loads config.js, app.js, store.js, sync.js and sync-master.js, so a
+     new BACKEND_URL or any store fix reaches the lesson pages too.
+   - Activity gate state is rebuilt from the saved activity results, so a
+     passed Activity 1/2 stays passed on reload and on other devices.
+   - Pass mark from CONFIG.ACTIVITY_PASS_PERCENT (70%).
+   - Daily points = best run of each activity ("Practice Again" cannot farm).
+   - Scenario / formative choices are shuffled every attempt; letter
+     prefixes in the data ("A) ...") are removed.
+   - After every answer the explanation is shown (timer paused); match
+     pairs show their reasons at the end.
    ============================================================ */
 
-/* ---------- SECTION 1: CONFIG ---------- */
-const CONFIG = {
-  APP_NAME: 'General Biology Online Modular Application',
-  VERSION: '2.6.0',
-  DEVELOPER: {
-    name: 'JEMUEL C. MARI, MAN, RN, LPT',
-    position: 'Senior High School Teacher · Teacher II',
-    school: 'Iba High School',
-    division: 'Schools Division of Tarlac Province',
-    district: 'San Jose West District',
-    region: 'Region III',
-    department: 'Department of Education'
-  },
-  BACKEND_URL: 'https://script.google.com/macros/s/AKfycbyZjTOXmZzth0a_jXO1GoC8-5qSkm1gKu9rCvlMzJW0HW8gTb4XYvrZ7rPMBkxdr62jZQ/exec',
-  get backendEnabled() { return this.BACKEND_URL && this.BACKEND_URL.length > 20; },
-  TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
-  TEACHER_SESSION_TIMEOUT: 30 * 60 * 1000,
-  TEACHER_MAX_ATTEMPTS: 3,
-  TEACHER_LOCKOUT_TIME: 5 * 60 * 1000
-};
-
-/* ---------- SECTION 2: APP ---------- */
-const APP = (() => {
-  'use strict';
-  const VERSION = CONFIG.VERSION;
-  const APP_NAME = CONFIG.APP_NAME;
-  const $ = (s, c = document) => c.querySelector(s);
-  const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
-
-  function el(tag, attrs = {}, children = []) {
-    const n = document.createElement(tag);
-    Object.entries(attrs).forEach(([k, v]) => {
-      if (k === 'class') n.className = v;
-      else if (k === 'text') n.textContent = v;
-      else if (k === 'html') n.innerHTML = v;
-      else if (k.startsWith('on') && typeof v === 'function') n.addEventListener(k.slice(2).toLowerCase(), v);
-      else n.setAttribute(k, v);
-    });
-    (Array.isArray(children) ? children : [children]).forEach((c) => {
-      if (typeof c === 'string') n.appendChild(document.createTextNode(c));
-      else if (c) n.appendChild(c);
-    });
-    return n;
-  }
-
-  function toast(msg, type = 'info', duration = 3000) {
-    const container = $('#toast-container') || (() => {
-      const c = el('div', { id: 'toast-container', style: 'position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;' });
-      document.body.appendChild(c);
-      return c;
-    })();
-    const colors = { success: '#2e7d32', warning: '#ed6c02', danger: '#c62828', info: '#0277bd' };
-    const t = el('div', {
-      style: `background:${colors[type] || colors.info};color:#fff;padding:12px 20px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.2);font-size:0.9rem;font-weight:500;max-width:320px;`,
-      text: msg
-    });
-    container.appendChild(t);
-    setTimeout(() => t.remove(), duration);
-  }
-
-  function formatTime(sec) {
-    const m = Math.floor(sec / 60), s = sec % 60;
-    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-  }
-  function formatLRN(lrn) { return String(lrn).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'); }
-  function toTitleCase(str) {
-    if (!str) return '';
-    return str.toString().trim().toLowerCase().split(/\s+/).map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-  }
-  function toLastNameFormat(str) { return str ? str.toString().trim().toUpperCase() : ''; }
-  function formatFullName(l, f, m) {
-    const L = toLastNameFormat(l), F = toTitleCase(f), M = m ? ' ' + toTitleCase(m) : '';
-    return `${L}, ${F}${M}`.trim();
-  }
-  function validateLRN(lrn) { return /^\d{12}$/.test(String(lrn).replace(/\D/g, '')); }
-
-  function init() {
-    console.log(`[${APP_NAME}] v${VERSION}`);
-    $$('.version').forEach((e) => (e.textContent = `v${VERSION}`));
-  }
-
-  return { VERSION, APP_NAME, $, $$, el, toast, formatTime, formatLRN, toTitleCase, toLastNameFormat, formatFullName, validateLRN, init };
-})();
-
-/* ---------- SECTION 3: STORE ---------- */
-const Store = (() => {
-  'use strict';
-  const NS = 'gba_v1_';
-  function _get(k, fb = null) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : fb; } catch { return fb; } }
-  function _set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } }
-  function _rm(k) { try { localStorage.removeItem(k); } catch {} }
-  function getAllUsers() { return _get(`${NS}users`, []); }
-  function saveUser(u) {
-    const list = getAllUsers();
-    const i = list.findIndex((x) => x.lrn === u.lrn);
-    if (i >= 0) list[i] = { ...list[i], ...u }; else list.push(u);
-    _set(`${NS}users`, list);
-    return u;
-  }
-  function getUser(lrn) { return getAllUsers().find((u) => u.lrn === lrn) || null; }
-  function setSession(lrn) { _set(`${NS}session`, { lrn, startedAt: Date.now() }); }
-  function getSession() { return _get(`${NS}session`, null); }
-  function clearSession() { _rm(`${NS}session`); }
-  function getCurrentUser() { const s = getSession(); return s ? getUser(s.lrn) : null; }
-  function getProgress(lrn) { return _get(`${NS}progress_${lrn}`, { biol1: { weeks: {}, completed: [] }, biol2: { weeks: {}, completed: [] } }); }
-  function saveProgress(lrn, p) { _set(`${NS}progress_${lrn}`, p); }
-  function markDayComplete(lrn, subj, w, d) {
-    const p = getProgress(lrn);
-    if (!p[subj]) p[subj] = { weeks: {}, completed: [] };
-    if (!p[subj].weeks[w]) p[subj].weeks[w] = {};
-    p[subj].weeks[w][d] = { completed: true, completedAt: new Date().toISOString() };
-    const key = `${subj}-w${w}-d${d}`;
-    if (!p[subj].completed.includes(key)) p[subj].completed.push(key);
-    saveProgress(lrn, p);
-  }
-  function getScores(lrn) {
-    const s = _get(`${NS}scores_${lrn}`, { biol1: { quizzes: {}, st: {}, pt: {}, te: {}, activities: {} }, biol2: { quizzes: {}, st: {}, pt: {}, te: {}, activities: {} } });
-    ['biol1', 'biol2'].forEach((subj) => {   // ayusin ang lumang flat/null na Term Exam
-      const x = s[subj]; if (!x) return;
-      if (x.te === null) x.te = {};
-      else if (x.te && typeof x.te === 'object' && ['score', 'percent', 'total', 'passed'].some((k) => x.te[k] !== undefined && typeof x.te[k] !== 'object')) x.te = { [`${subj}-te`]: x.te };
-      if (!x.activities) x.activities = {};
-    });
-    return s;
-  }
-  // Resulta ng Activity 1 / Activity 2 / Formative. Pinapanatili ang pinakamataas na percent.
-  function saveActivity(lrn, subj, id, data) {
-    const s = getScores(lrn);
-    if (!s[subj]) s[subj] = {};
-    if (!s[subj].activities) s[subj].activities = {};
-    const prev = s[subj].activities[id];
-    const next = { ...data, timestamp: new Date().toISOString() };
-    if (prev) {
-      next.attempts = Math.max(Number(prev.attempts) || 0, Number(data.attempts) || 0);
-      if ((Number(prev.percent) || 0) > (Number(next.percent) || 0)) { next.percent = prev.percent; next.score = prev.score; next.passed = prev.passed; }
-    }
-    s[subj].activities[id] = next;
-    _set(`${NS}scores_${lrn}`, s);
-    return next;
-  }
-  function saveScore(lrn, subj, type, id, data) {
-    const s = getScores(lrn);
-    if (!s[subj]) s[subj] = {};
-    if (!s[subj][type]) s[subj][type] = {};
-    s[subj][type][id] = { ...data, timestamp: new Date().toISOString() };
-    _set(`${NS}scores_${lrn}`, s);
-    return s[subj][type][id];
-  }
-  function getBadges(lrn) { return _get(`${NS}badges_${lrn}`, { biol1: [], biol2: [] }); }
-  function awardBadge(lrn, subj, id) {
-    const b = getBadges(lrn);
-    if (!b[subj]) b[subj] = [];
-    if (!b[subj].includes(id)) {
-      b[subj].push(id);
-      _set(`${NS}badges_${lrn}`, b);
-      return true;
-    }
-    return false;
-  }
-  function addDailyPoints(lrn, subj, w, d, pts) {
-    const key = `${NS}points_${lrn}_${subj}_w${w}_d${d}`;
-    const cur = _get(key, 0);
-    const next = cur + pts;
-    _set(key, next);
-    return next;
-  }
-  function isAssessmentLocked(lrn, id) { const l = _get(`${NS}lock_${lrn}_${id}`, null); return l && l.locked; }
-  function lockAssessment(lrn, id, data) { _set(`${NS}lock_${lrn}_${id}`, { locked: true, ...data, lockedAt: new Date().toISOString() }); }
-  function unlockAssessment(lrn, id) { _rm(`${NS}lock_${lrn}_${id}`); }
-
-  return { getAllUsers, saveUser, getUser, setSession, getSession, clearSession, getCurrentUser,
-    getProgress, saveProgress, markDayComplete, getScores, saveScore, saveActivity,
-    getBadges, awardBadge, addDailyPoints, isAssessmentLocked, lockAssessment, unlockAssessment };
-})();
-
-/* ---------- SECTION 3.5: SYNC (Master Wrapper) ---------- */
-const Sync = (() => {
-  'use strict';
-
-  const _QUEUE_KEY = 'gba_v1_master_queue';   // parehong queue ng sync-master.js
-  const _BASE = (() => {
-    try { return document.currentScript && document.currentScript.src ? document.currentScript.src.replace(/[^/]*$/, '') : ''; }
-    catch (e) { return ''; }
-  })();
-
-  function backendEnabled() {
-    return typeof CONFIG !== 'undefined' && CONFIG.backendEnabled;
-  }
-
-  // Ang day.html ay bundle.js lang ang kinakarga; kaya dynamic na nilo-load ang sync-master.js dito
-  // (siya ang gumagawa ng full snapshot push + auto-sync loop + pull).
-  let _loading = null;
-  function ensureMaster() {
-    if (window.SyncMaster) return Promise.resolve(window.SyncMaster);
-    if (_loading) return _loading;
-    _loading = new Promise((resolve) => {
-      if (!_BASE) return resolve(null);
-      const s = document.createElement('script');
-      s.src = _BASE + 'sync-master.js';
-      s.onload = () => resolve(window.SyncMaster || null);
-      s.onerror = () => resolve(null);
-      document.head.appendChild(s);
-    });
-    return _loading;
-  }
-
-  function _markPushed() {
-    try { localStorage.setItem('gba_v1_last_push_at', new Date().toISOString()); } catch (e) {}
-  }
-
-  function _queueFailed(body) {
-    try {
-      const q = JSON.parse(localStorage.getItem(_QUEUE_KEY) || '[]');
-      const item = { body: body, queuedAt: new Date().toISOString(), attempts: 0 };
-      const i = q.findIndex(x => x && x.body && x.body.lrn === body.lrn && x.body.action === body.action);
-      if (i >= 0) q[i] = item; else q.push(item);
-      localStorage.setItem(_QUEUE_KEY, JSON.stringify(q.slice(-50)));
-    } catch (e) {}
-  }
-
-  async function _post(body) {
-    const res = await fetch(CONFIG.BACKEND_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(body)
-    });
-    const text = await res.text();
-    if (text.trim().startsWith('<')) throw new Error('ERR_HTML_RESPONSE');
-    return JSON.parse(text);
-  }
-
-  // Kumpletong snapshot: progress + scores (kasama ang activity scores) + badges + points
-  async function pushProgressToBackend(lrn, subject) {
-    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
-    const master = await ensureMaster();
-    if (master) return master.pushMasterUpdate(lrn, subject || 'both', 'progress');
-
-    // Fallback kung hindi ma-load ang sync-master.js
-    const user = Store.getUser(lrn);
-    if (!user) return { ok: false, error: 'User not found' };
-    const body = {
-      action: 'upsertStudentMaster', lrn,
-      student: { lastName: user.lastName, firstName: user.firstName, middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section, sex: user.sex || '' },
-      progress: Store.getProgress(lrn), scores: Store.getScores(lrn), badges: Store.getBadges(lrn)
-    };
-    try {
-      const res = await _post(body);
-      if (res && res.ok) _markPushed(); else _queueFailed(body);
-      return res;
-    } catch (err) {
-      _queueFailed(body);
-      return { ok: false, error: err.message };
-    }
-  }
-
-  // Resulta ng isang activity (Activity 1/2/Formative) -> ActivityLog sheet + Masterlist
-  async function pushActivityToBackend(lrn, subject, activity) {
-    if (!backendEnabled()) return { ok: false, error: 'Backend disabled' };
-    const user = Store.getUser(lrn);
-    if (!user) return { ok: false, error: 'User not found' };
-    const body = {
-      action: 'saveActivity', lrn,
-      student: { lastName: user.lastName, firstName: user.firstName, middleName: user.middleName || '', gradeLevel: user.gradeLevel, section: user.section },
-      subject, week: activity.week, day: activity.day, activity: activity.activity,
-      percent: activity.percent, passed: !!activity.passed, attempts: activity.attempts || 1,
-      timestamp: activity.timestamp
-    };
-    try {
-      const res = await _post(body);
-      if (res && res.ok) _markPushed();
-      return res;
-    } catch (err) {
-      return { ok: false, error: err.message };   // babawi ang auto-sync loop (snapshot) kaya hindi mawawala
-    }
-  }
-
-  async function applyPendingUnlocks(lrn) { return []; }
-
-  function getQueueStatus() {
-    if (window.SyncMaster) return window.SyncMaster.getQueueStatus();
-    try { return { count: JSON.parse(localStorage.getItem(_QUEUE_KEY) || '[]').length }; }
-    catch (e) { return { count: 0 }; }
-  }
-
-  async function flushQueue() {
-    const m = await ensureMaster();
-    if (m) return m.flushQueue();
-    return { ok: false, flushed: 0 };
-  }
-
-  // Simulan agad ang auto-sync sa mga lesson page kapag may naka-login na estudyante
-  document.addEventListener('DOMContentLoaded', () => {
-    try {
-      const sess = JSON.parse(localStorage.getItem('gba_v1_session') || 'null');
-      if (sess && sess.lrn && backendEnabled()) ensureMaster();
-    } catch (e) {}
-  });
-
-  return { backendEnabled, pushProgressToBackend, pushActivityToBackend, applyPendingUnlocks, getQueueStatus, flushQueue };
-})();
-
-/* ---------- SECTION 4: ACTIVITY GATE ---------- */
+/* ---------- ACTIVITY GATE ---------- */
 const ActivityGate = (() => {
   'use strict';
   const STORAGE_KEY = 'gba_gate_v2_';
-  const PASS = 0.75;
+  const PASS = ((typeof CONFIG !== 'undefined' && CONFIG.ACTIVITY_PASS_PERCENT) || 70) / 100;
+  const ORDER = ['activity1', 'activity2', 'formative'];
   let session = null, inited = false;
+
+  function savedResult(k) {
+    try {
+      const sess = Store.getSession();
+      if (!sess || !session) return null;
+      const acts = ((Store.getScores(sess.lrn) || {})[session.subject] || {}).activities || {};
+      return acts[`w${session.week}-d${session.day}-${k}`] || null;
+    } catch (e) { return null; }
+  }
 
   function init(cfg) {
     if (inited) return;
@@ -322,8 +44,30 @@ const ActivityGate = (() => {
         formative: { status: 'locked', score: 0, attempts: 0 }
       }
     };
+    // 1) results saved on this device or pulled from the cloud
+    ORDER.forEach((k, i) => {
+      const r = savedResult(k);
+      if (r && r.passed) {
+        session.states[k] = { status: 'passed', score: Number(r.percent) || 0, attempts: Number(r.attempts) || 1 };
+        const next = ORDER[i + 1];
+        if (next && session.states[next].status === 'locked') session.states[next].status = 'ready';
+      } else if (r) {
+        session.states[k].attempts = Number(r.attempts) || 0;
+        session.states[k].score = Number(r.percent) || 0;
+      }
+    });
+    // 2) this tab's live state (e.g. a failed attempt waiting for Retake)
     const saved = sessionStorage.getItem(session.key);
-    if (saved) { try { Object.assign(session.states, JSON.parse(saved).states); } catch (e) {} }
+    if (saved) {
+      try {
+        const st = JSON.parse(saved).states || {};
+        ORDER.forEach((k) => {
+          if (!st[k] || session.states[k].status === 'passed') return;
+          if (st[k].status === 'running') st[k].status = 'ready';
+          if (st[k].status !== 'locked') session.states[k] = st[k];
+        });
+      } catch (e) { /* ignore */ }
+    }
     inited = true;
     setTimeout(applyUI, 10);
     setTimeout(() => document.dispatchEvent(new CustomEvent('activity-gate:ready')), 30);
@@ -331,12 +75,12 @@ const ActivityGate = (() => {
 
   function save() {
     if (!session) return;
-    try { sessionStorage.setItem(session.key, JSON.stringify({ states: session.states })); } catch (e) {}
+    try { sessionStorage.setItem(session.key, JSON.stringify({ states: session.states })); } catch (e) { /* ignore */ }
   }
 
   function markRunning(id) {
     const k = normalize(id);
-    if (!session || session.states[k].status === 'passed') return;
+    if (!session) return;
     session.states[k].status = 'running';
     save(); applyUI();
   }
@@ -345,91 +89,56 @@ const ActivityGate = (() => {
     if (!session) return;
     const k = normalize(id);
     const st = session.states[k];
+    const wasPassed = st.passedBefore;
     st.attempts = (st.attempts || 0) + 1;
     st.score = Math.round(pct);
-
-    if (pct >= PASS * 100) {
+    if (pct >= PASS * 100 || wasPassed) {
       st.status = 'passed';
-      if (k === 'activity1') {
-        session.states.activity2.status = 'ready';
-        APP.toast('✅ Activity 1 passed!', 'success', 4000);
-      } else if (k === 'activity2') {
-        session.states.formative.status = 'ready';
-        APP.toast('✅ Activity 2 passed!', 'success', 4000);
-      } else {
-        APP.toast('🎉 Formative complete!', 'success', 4000);
-      }
+      st.passedBefore = true;
+      if (pct < PASS * 100) st.score = Math.max(st.score, Number(st.bestScore) || 0);
+      const next = ORDER[ORDER.indexOf(k) + 1];
+      if (next && session.states[next].status === 'locked') session.states[next].status = 'ready';
+      if (pct >= PASS * 100) APP.toast(k === 'formative' ? '🎉 Formative complete!' : '✅ ' + titlesMap(k) + ' passed!', 'success', 4000);
     } else {
       st.status = 'failed';
     }
+    st.bestScore = Math.max(Number(st.bestScore) || 0, Math.round(pct));
     save(); applyUI();
-    recordAndPushActivity(k, st);
+    recordAndPushActivity(k, st, pct);
   }
 
-  // Ise-save ang resulta ng activity (pasado man o hindi) at ipapadala sa backend kasama ang
-  // progress, badges at points. Dati: formative lang na pasado ang nagpa-push; ang scores ay hindi nase-save.
-  function recordAndPushActivity(k, st) {
+  function recordAndPushActivity(k, st, pct) {
     if (!session) return;
     const sess = Store.getSession();
     const lrn = sess ? sess.lrn : null;
     if (!lrn) return;
-    const passed = st.status === 'passed';
     let saved = null;
     try {
       saved = Store.saveActivity(lrn, session.subject, `w${session.week}-d${session.day}-${k}`, {
-        percent: st.score, score: st.score, total: 100, passed, attempts: st.attempts || 1,
+        percent: Math.round(pct), score: Math.round(pct), total: 100, passed: pct >= PASS * 100, attempts: st.attempts || 1,
         week: session.week, day: session.day, activity: k
       });
-    } catch (e) { console.warn('[AutoPush] saveActivity failed', e); }
+    } catch (e) { console.warn('[ActivityGate] saveActivity failed', e); }
     if (window.Sync) {
-      if (saved && typeof Sync.pushActivityToBackend === 'function') {
-        Sync.pushActivityToBackend(lrn, session.subject, saved).catch(() => {});
-      }
-      pushProgressAfterDayComplete();
-    }
-  }
-
-  function pushProgressAfterDayComplete() {
-    if (!session) return;
-    const sess = Store.getSession();
-    const lrn = sess ? sess.lrn : null;
-    if (!lrn) return;
-    if (window.Sync && typeof Sync.pushProgressToBackend === 'function') {
-      Sync.pushProgressToBackend(lrn, session.subject)
-        .then((res) => {
-          if (res && res.ok) {
-            console.log('[AutoPush] Progress synced for', session.subject, `w${session.week}d${session.day}`);
-          }
-        })
-        .catch((err) => console.warn('[AutoPush] Progress sync failed:', err));
+      if (saved && typeof Sync.pushActivityToBackend === 'function') Sync.pushActivityToBackend(lrn, session.subject, saved).catch(() => {});
+      if (typeof Sync.pushProgressToBackend === 'function') Sync.pushProgressToBackend(lrn, session.subject).catch(() => {});
     }
   }
 
   function resetActivity(id) {
     if (!session) return;
     const k = normalize(id);
+    session.states[k].passedBefore = session.states[k].status === 'passed' || session.states[k].passedBefore;
     session.states[k].status = 'ready';
     save(); applyUI();
-    APP.toast('🔁 ' + titlesMap(k) + ' reset — you can try again', 'info', 3000);
+    APP.toast('🔁 ' + titlesMap(k) + ' reset — practice as much as you like', 'info', 3000);
   }
 
-  function reset(id) {
-    if (!session) return;
-    session.states[normalize(id)].status = 'ready';
-    save(); applyUI();
-  }
+  function reset(id) { if (!session) return; session.states[normalize(id)].status = 'ready'; save(); applyUI(); }
 
-  function titlesMap(k) {
-    if (k === 'activity1') return 'Activity 1';
-    if (k === 'activity2') return 'Activity 2';
-    return 'Formative';
-  }
+  function titlesMap(k) { return k === 'activity1' ? 'Activity 1' : k === 'activity2' ? 'Activity 2' : 'Formative'; }
 
-  function applyUI() {
-    applyStage('activity-1', 'activity1');
-    applyStage('activity-2', 'activity2');
-    applyStage('formative', 'formative');
-  }
+  function applyUI() { applyStage('activity-1', 'activity1'); applyStage('activity-2', 'activity2'); applyStage('formative', 'formative'); }
 
   function applyStage(cid, sk) {
     const c = document.getElementById(cid);
@@ -438,84 +147,65 @@ const ActivityGate = (() => {
     if (!pc) return;
     const st = session.states[sk];
     pc.querySelectorAll('.gate-overlay').forEach((e) => e.remove());
-    if (st.status === 'locked') { c.style.display = 'none'; pc.appendChild(mkLocked()); }
-    else if (st.status === 'ready') { c.style.display = 'none'; pc.appendChild(mkReady(sk, st)); }
-    else if (st.status === 'running') { c.style.display = ''; }
-    else if (st.status === 'passed') { c.style.display = 'none'; pc.appendChild(mkPassed(sk, st)); }
-    else if (st.status === 'failed') { c.style.display = 'none'; pc.appendChild(mkFailed(sk, st)); }
+    if (st.status === 'running') { c.style.display = ''; return; }
+    c.style.display = 'none';
+    if (st.status === 'locked') pc.appendChild(mkLocked());
+    else if (st.status === 'ready') pc.appendChild(mkReady(sk));
+    else if (st.status === 'passed') pc.appendChild(mkPassed(sk, st));
+    else if (st.status === 'failed') pc.appendChild(mkFailed(sk, st));
   }
 
-  function mkLocked() {
+  const pctLabel = () => Math.round(PASS * 100) + '%';
+
+  function overlay(css, html) {
     const e = document.createElement('div');
     e.className = 'gate-overlay';
-    e.style.cssText = 'padding:32px 24px;text-align:center;background:#f8f9fa;border:2px dashed #dadce0;border-radius:8px;';
-    e.innerHTML = '<div style="font-size:2rem;">🔒</div><div style="font-weight:600;margin-top:8px;color:#1b7a3d;">Locked</div><div style="font-size:0.85rem;margin-top:4px;color:#5f6368;">Complete the previous activity with at least 75% to unlock.</div>';
+    e.style.cssText = css;
+    e.innerHTML = html;
     return e;
   }
 
-  function mkReady(sk, st) {
-    const e = document.createElement('div');
-    e.className = 'gate-overlay';
-    e.style.cssText = 'padding:32px 24px;text-align:center;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:2px solid #4caf50;border-radius:8px;';
+  function mkLocked() {
+    return overlay('padding:32px 24px;text-align:center;background:#f8f9fa;border:2px dashed #dadce0;border-radius:8px;',
+      '<div style="font-size:2rem;">🔒</div><div style="font-weight:600;margin-top:8px;color:#1b7a3d;">Locked</div><div style="font-size:0.85rem;margin-top:4px;color:#5f6368;">Complete the previous activity with at least ' + pctLabel() + ' to unlock.</div>');
+  }
+
+  function mkReady(sk) {
     const titles = { activity1: 'Activity 1 — Match the Pairs', activity2: 'Activity 2 — Scenario Challenge', formative: 'Formative — Escape the Cell' };
     const cid = sk === 'activity1' ? 'activity-1' : sk === 'activity2' ? 'activity-2' : 'formative';
     const c = document.getElementById(cid);
     const mins = c && c.dataset.estimatedMinutes ? c.dataset.estimatedMinutes : 5;
-    e.innerHTML = `
+    const e = overlay('padding:32px 24px;text-align:center;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:2px solid #4caf50;border-radius:8px;', `
       <div style="font-size:2.5rem;">▶️</div>
       <div style="font-weight:700;margin-top:12px;color:#1b5e20;font-size:1.1rem;">${titles[sk]}</div>
-      <div style="font-size:0.85rem;margin-top:8px;color:#2e7d32;">⏱️ ${mins} min · 🎯 75% to pass</div>
-      <button class="btn btn-primary" style="margin-top:16px;padding:12px 28px;" data-start="${sk}">▶️ Start Activity</button>
-    `;
-    setTimeout(() => {
-      const btn = e.querySelector('[data-start="' + sk + '"]');
-      if (btn) btn.addEventListener('click', () => start(sk));
-    }, 0);
+      <div style="font-size:0.85rem;margin-top:8px;color:#2e7d32;">⏱️ ${mins} min · 🎯 ${pctLabel()} to pass · 💡 explanations after each answer</div>
+      <button class="btn btn-primary" style="margin-top:16px;padding:12px 28px;" data-start="${sk}">▶️ Start Activity</button>`);
+    setTimeout(() => { const b = e.querySelector('[data-start]'); if (b) b.addEventListener('click', () => start(sk)); }, 0);
     return e;
   }
 
   function mkPassed(sk, st) {
-    const e = document.createElement('div');
-    e.className = 'gate-overlay';
-    e.style.cssText = 'padding:28px 24px;text-align:center;background:linear-gradient(135deg,#e8f5e9,#a5d6a7);border:2px solid #2e7d32;border-radius:8px;';
-    e.innerHTML = `
+    const e = overlay('padding:28px 24px;text-align:center;background:linear-gradient(135deg,#e8f5e9,#a5d6a7);border:2px solid #2e7d32;border-radius:8px;', `
       <div style="font-size:2rem;">✅</div>
       <div style="font-weight:700;margin-top:8px;color:#1b5e20;">Passed!</div>
-      <div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">
-        Score: ${st.score}% · Attempts: ${st.attempts || 1}
-      </div>
-      <button class="btn btn-outline" style="margin-top:16px;padding:10px 22px;border-color:#2e7d32;color:#1b5e20;background:#fff;" data-retake="${sk}">
-        🔁 Practice Again
-      </button>
-    `;
+      <div style="font-size:0.9rem;margin-top:6px;color:#2e7d32;">Best score: ${Math.max(st.score || 0, st.bestScore || 0)}% · Attempts: ${st.attempts || 1}</div>
+      <button class="btn btn-outline" style="margin-top:16px;padding:10px 22px;border-color:#2e7d32;color:#1b5e20;background:#fff;" data-retake="${sk}">🔁 Practice Again</button>`);
     setTimeout(() => {
-      const btn = e.querySelector('[data-retake="' + sk + '"]');
-      if (btn) {
-        btn.addEventListener('click', () => {
-          const titles = { activity1: 'Activity 1', activity2: 'Activity 2', formative: 'Formative' };
-          if (confirm('Practice "' + titles[sk] + '" again?\n\nYour passing score is preserved — this is just for extra practice.')) {
-            resetActivity(sk);
-          }
-        });
-      }
+      const b = e.querySelector('[data-retake]');
+      if (b) b.addEventListener('click', () => {
+        if (confirm('Practice "' + titlesMap(sk) + '" again?\n\nYour passing score is kept — this is extra practice.')) resetActivity(sk);
+      });
     }, 0);
     return e;
   }
 
   function mkFailed(sk, st) {
-    const e = document.createElement('div');
-    e.className = 'gate-overlay';
-    e.style.cssText = 'padding:32px 24px;text-align:center;background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:2px solid #ed6c02;border-radius:8px;';
-    e.innerHTML = `
+    const e = overlay('padding:32px 24px;text-align:center;background:linear-gradient(135deg,#fff3e0,#ffe0b2);border:2px solid #ed6c02;border-radius:8px;', `
       <div style="font-size:2.5rem;">🔁</div>
       <div style="font-weight:700;margin-top:8px;color:#e65100;">Try Again!</div>
-      <div style="font-size:0.95rem;margin-top:8px;color:#ef6c00;">Score: ${st.score}% — need 75%</div>
-      <button class="btn btn-primary" style="margin-top:16px;padding:12px 28px;" data-start="${sk}">🔁 Retake</button>
-    `;
-    setTimeout(() => {
-      const btn = e.querySelector('[data-start="' + sk + '"]');
-      if (btn) btn.addEventListener('click', () => start(sk));
-    }, 0);
+      <div style="font-size:0.95rem;margin-top:8px;color:#ef6c00;">Score: ${st.score}% — need ${pctLabel()}. Read the discussion again, then retry.</div>
+      <button class="btn btn-primary" style="margin-top:16px;padding:12px 28px;" data-start="${sk}">🔁 Retake</button>`);
+    setTimeout(() => { const b = e.querySelector('[data-start]'); if (b) b.addEventListener('click', () => start(sk)); }, 0);
     return e;
   }
 
@@ -539,76 +229,66 @@ const ActivityGate = (() => {
   };
 })();
 
-/* ---------- SECTION 5: LESSON ENGINE ---------- */
+/* ---------- LESSON ENGINE ---------- */
 const Lesson = (() => {
   'use strict';
   let ctx = null;
-  let pending = {};
+  const pending = {};
   let ready = false;
   let to = null;
+  const PASS = ((typeof CONFIG !== 'undefined' && CONFIG.ACTIVITY_PASS_PERCENT) || 70);
 
+  const esc = (v) => String(v === null || v === undefined ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  // strip check marks and data-side letter prefixes ("A) ", "B. ")
   function cleanLabel(label) {
     if (typeof label !== 'string') return label;
-    return label.replace(/[✓✔✅☑]/g, '').replace(/\s+/g, ' ').trim();
+    return label.replace(/[✓✔✅☑]/g, '').replace(/^\s*[A-Da-d][.)]\s+/, '').replace(/\s+/g, ' ').trim();
   }
+  const shuffle = (arr) => {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  };
+  const explanationOf = (it) => it && (it.explanation || it.why || it.feedback || '');
 
   function init(cfg) {
     const user = Store.getCurrentUser();
     if (!user) { window.location.href = '../../../student/login.html'; return; }
-
-    if (window.Sync && typeof Sync.applyPendingUnlocks === 'function') {
-      Sync.applyPendingUnlocks(user.lrn).then((applied) => {
-        if (applied && applied.length) {
-          APP.toast('🔓 Teacher unlocked ' + applied.length + ' assessment(s). You can retake now.', 'success', 5000);
-        }
-      }).catch(() => { /* silent */ });
-    }
-
-    ctx = { lrn: user.lrn, subject: cfg.subject, week: cfg.week, day: cfg.day, points: 0, badges: [], startTime: Date.now() };
+    ctx = { lrn: user.lrn, subject: cfg.subject, week: cfg.week, day: cfg.day, badges: [], startTime: Date.now(), current: null, runPts: 0 };
     renderBar(cfg.title);
     liveTimer();
     showLoad();
     to = setTimeout(() => { if (!ready) showTimeout(); }, 15000);
     document.addEventListener('activity:start', (e) => startAct(e.detail.activity));
-    document.addEventListener('activity-gate:ready', () => {
-      setTimeout(() => { hideLoad(); ready = true; clearTimeout(to); }, 100);
-    });
-    if (window.ActivityGate && !window.ActivityGate.isInitialized()) {
-      window.ActivityGate.init(cfg);
-    }
+    document.addEventListener('activity-gate:ready', () => { setTimeout(() => { hideLoad(); ready = true; clearTimeout(to); }, 100); });
+    if (window.ActivityGate && !window.ActivityGate.isInitialized()) window.ActivityGate.init(cfg);
   }
 
   function calcTime(type, n) {
     const MIN = 300;
-    if (type === 'match') return Math.max(MIN, n * 20);
-    if (type === 'scenario') return Math.max(MIN, n * 25);
-    if (type === 'escape') return Math.max(MIN, n * 60);
+    if (type === 'match') return Math.max(MIN, n * 30);
+    if (type === 'scenario') return Math.max(MIN, n * 60);
+    if (type === 'escape') return Math.max(MIN, n * 75);
     return MIN;
   }
 
-  function regMatch(id, cfg) {
-    const t = calcTime('match', cfg.pairs.length);
-    pending[id] = { type: 'match', cfg: Object.assign({}, cfg, { timeLimit: t }) };
+  function register(type, listKey, id, cfg) {
+    const t = calcTime(type, (cfg[listKey] || []).length);
+    pending[id] = { type, cfg: Object.assign({}, cfg, { timeLimit: t }) };
     const c = document.getElementById(id);
     if (c) c.dataset.estimatedMinutes = Math.round(t / 60);
   }
-  function regScenario(id, cfg) {
-    const t = calcTime('scenario', cfg.scenarios.length);
-    pending[id] = { type: 'scenario', cfg: Object.assign({}, cfg, { timeLimit: t }) };
-    const c = document.getElementById(id);
-    if (c) c.dataset.estimatedMinutes = Math.round(t / 60);
-  }
-  function regEscape(id, cfg) {
-    const t = calcTime('escape', cfg.questions.length);
-    pending[id] = { type: 'escape', cfg: Object.assign({}, cfg, { timeLimit: t }) };
-    const c = document.getElementById(id);
-    if (c) c.dataset.estimatedMinutes = Math.round(t / 60);
-  }
+  const regMatch = (id, cfg) => register('match', 'pairs', id, cfg);
+  const regScenario = (id, cfg) => register('scenario', 'scenarios', id, cfg);
+  const regEscape = (id, cfg) => register('escape', 'questions', id, cfg);
 
   function startAct(sk) {
     const cid = sk === 'activity1' ? 'activity-1' : sk === 'activity2' ? 'activity-2' : 'formative';
     const p = pending[cid];
     if (!p) return;
+    ctx.current = sk; ctx.runPts = 0;
     if (p.type === 'match') renderMatch(cid, p.cfg);
     else if (p.type === 'scenario') renderScenario(cid, p.cfg);
     else renderEscape(cid, p.cfg);
@@ -617,17 +297,17 @@ const Lesson = (() => {
   function renderBar(title) {
     const bar = document.getElementById('daily-score-bar');
     if (!bar) return;
+    const pts = Store.getDailyPoints ? Store.getDailyPoints(ctx.lrn, ctx.subject, ctx.week, ctx.day) : 0;
     bar.innerHTML = `
       <div class="score-bar-left">
         <span class="score-bar-label">Week ${ctx.week} · Day ${ctx.day}</span>
-        <span class="score-bar-title">${title}</span>
+        <span class="score-bar-title">${esc(title)}</span>
       </div>
       <div class="score-bar-right">
-        <div class="score-bar-stat"><span class="value" id="sb-points">0</span><span class="label">Points</span></div>
+        <div class="score-bar-stat"><span class="value" id="sb-points">${pts || 0}</span><span class="label">Points</span></div>
         <div class="score-bar-stat"><span class="value" id="sb-badges">0</span><span class="label">Badges</span></div>
         <div class="score-bar-stat"><span class="value" id="sb-timer">00:00</span><span class="label">Time</span></div>
-      </div>
-    `;
+      </div>`;
   }
 
   function liveTimer() {
@@ -636,20 +316,24 @@ const Lesson = (() => {
     setInterval(() => { el.textContent = APP.formatTime(Math.floor((Date.now() - ctx.startTime) / 1000)); }, 1000);
   }
 
-  function addPts(n) {
-    ctx.points += n;
+  function addPts(n) { ctx.runPts += n; }
+
+  // End of a run: keep the best run of this activity; daily points = sum of best runs
+  function commitPoints() {
+    if (!ctx.current) return;
+    let total = ctx.runPts;
+    if (Store.setDailyPointsBest) total = Store.setDailyPointsBest(ctx.lrn, ctx.subject, ctx.week, ctx.day, ctx.current, ctx.runPts);
     const el = document.getElementById('sb-points');
-    if (el) el.textContent = ctx.points;
-    Store.addDailyPoints(ctx.lrn, ctx.subject, ctx.week, ctx.day, n);
+    if (el) el.textContent = total;
   }
 
   function awardBadge(id, name, icon) {
-    if (ctx.badges.indexOf(id) !== -1) return;
+    if (!id || ctx.badges.indexOf(id) !== -1) return;
     if (Store.awardBadge(ctx.lrn, ctx.subject, id)) {
       ctx.badges.push(id);
       const el = document.getElementById('sb-badges');
       if (el) el.textContent = ctx.badges.length;
-      APP.toast('🏆 ' + icon + ' ' + name, 'success', 4000);
+      APP.toast('🏆 ' + (icon || '') + ' ' + (name || ''), 'success', 4000);
     }
   }
 
@@ -661,232 +345,211 @@ const Lesson = (() => {
     o.innerHTML = '<div style="text-align:center;max-width:320px;padding:24px;"><div style="font-size:2.5rem;">⏳</div><div style="font-size:1.1rem;font-weight:600;color:#1b7a3d;margin-top:12px;">Loading activities...</div></div>';
     document.body.appendChild(o);
   }
-
   function hideLoad() {
     const o = document.getElementById('lesson-loading-overlay');
     if (o) { o.style.opacity = '0'; setTimeout(() => o.remove(), 300); }
   }
-
   function showTimeout() {
     const o = document.getElementById('lesson-loading-overlay');
     if (!o) return;
     o.innerHTML = '<div style="text-align:center;max-width:380px;padding:24px;"><div style="font-size:2.5rem;">📡</div><div style="font-size:1.1rem;font-weight:600;color:#c62828;margin-top:12px;">Slow connection</div><button onclick="location.reload()" style="margin-top:16px;padding:10px 20px;background:#1b7a3d;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;">🔄 Retry</button></div>';
   }
 
+  // A pausable countdown shared by the three activity types
+  function countdown(seconds, el, onEnd) {
+    let left = seconds, paused = false;
+    const iv = setInterval(() => {
+      if (paused) return;
+      left--;
+      const n = typeof el === 'function' ? el() : el;
+      if (n) n.textContent = APP.formatTime(Math.max(0, left));
+      if (left <= 0) { clearInterval(iv); onEnd(); }
+    }, 1000);
+    return { pause: () => { paused = true; }, resume: () => { paused = false; }, stop: () => clearInterval(iv), left: () => left };
+  }
+
+  function feedbackBox(ok, correctText, why, onNext, nextLabel) {
+    const box = document.createElement('div');
+    box.className = 'activity-feedback';
+    box.style.cssText = `margin-top:14px;padding:14px 16px;border-radius:10px;border:2px solid ${ok ? '#2e7d32' : '#c62828'};background:${ok ? '#e8f5e9' : '#ffebee'};text-align:left;`;
+    box.innerHTML = `<div style="font-weight:700;color:${ok ? '#1b5e20' : '#b71c1c'};">${ok ? '✅ Correct!' : '❌ Not quite.'}</div>
+      ${!ok && correctText ? `<div style="margin-top:6px;font-size:0.9rem;"><strong>Answer:</strong> ${esc(correctText)}</div>` : ''}
+      ${why ? `<div style="margin-top:6px;font-size:0.9rem;color:#37474f;">💡 ${esc(why)}</div>` : ''}
+      <button class="btn btn-primary" style="margin-top:10px;">${nextLabel || 'Next →'}</button>`;
+    box.querySelector('button').addEventListener('click', onNext);
+    return box;
+  }
+
+  function finish(cid, pct, badge) {
+    commitPoints();
+    if (pct >= PASS && badge && badge.id) awardBadge(badge.id, badge.name, badge.icon);
+    if (window.ActivityGate) window.ActivityGate.completeWithScore(cid, pct);
+    APP.toast(pct >= PASS ? '🎉 Passed ' + pct + '%' : '📖 Score ' + pct + '% — need ' + PASS + '%', pct >= PASS ? 'success' : 'warning', 4000);
+  }
+
+  /* ---------- Activity 1: match the pairs ---------- */
   function renderMatch(cid, cfg) {
     const c = document.getElementById(cid);
     if (!c) return;
-    const pairs = cfg.pairs;
-    const timeLimit = cfg.timeLimit;
+    const pairs = cfg.pairs || [];
     const pointsCorrect = cfg.pointsCorrect || 10;
     const pointsWrong = cfg.pointsWrong || -3;
-    const badgeId = cfg.badgeId;
-    const badgeName = cfg.badgeName;
-    const badgeIcon = cfg.badgeIcon;
-    let L = [].concat(pairs).sort(() => Math.random() - 0.5);
-    let R = [].concat(pairs).sort(() => Math.random() - 0.5);
-    let sel = null, matches = 0, wrong = 0, tLeft = timeLimit, interval = null, done = false;
+    const L = shuffle(pairs), R = shuffle(pairs);
+    let sel = null, matches = 0, wrong = 0, done = false;
 
     c.innerHTML = `
-      <div class="activity-header"><span class="activity-title">🔗 Match the pairs</span><span class="activity-timer" id="match-timer">${APP.formatTime(tLeft)}</span></div>
-      <div class="match-grid"><div class="match-column"><h4>Left</h4><div id="match-left"></div></div><div class="match-column"><h4>Right</h4><div id="match-right"></div></div></div>
-      <div class="text-center mt-md"><span id="match-score" class="badge badge-info">Matches: 0 / ${pairs.length}</span></div>
-    `;
-    const le = c.querySelector('#match-left');
-    const re = c.querySelector('#match-right');
-    L.forEach((it) => {
-      const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.left) });
-      e.onclick = () => onL(e);
-      le.appendChild(e);
-    });
-    R.forEach((it) => {
-      const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.right) });
-      e.onclick = () => onR(e);
-      re.appendChild(e);
-    });
+      <div class="activity-header"><span class="activity-title">🔗 Match the pairs</span><span class="activity-timer" id="${cid}-t">${APP.formatTime(cfg.timeLimit)}</span></div>
+      <div class="match-grid"><div class="match-column"><h4>Term</h4><div class="m-left"></div></div><div class="match-column"><h4>Meaning</h4><div class="m-right"></div></div></div>
+      <div class="text-center mt-md"><span class="badge badge-info m-score">Matches: 0 / ${pairs.length}</span></div>
+      <div class="m-review"></div>`;
+    const le = c.querySelector('.m-left'), re = c.querySelector('.m-right');
+    L.forEach((it) => { const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.left) }); e.onclick = () => onL(e); le.appendChild(e); });
+    R.forEach((it) => { const e = APP.el('div', { class: 'match-item', 'data-key': it.key, text: cleanLabel(it.right) }); e.onclick = () => onR(e); re.appendChild(e); });
+    const timer = countdown(cfg.timeLimit, () => document.getElementById(cid + '-t'), () => end());
 
     function onL(e) {
       if (done || e.classList.contains('correct')) return;
       le.querySelectorAll('.match-item').forEach((n) => n.classList.remove('selected'));
-      e.classList.add('selected');
-      sel = e;
+      e.classList.add('selected'); sel = e;
     }
     function onR(e) {
       if (done || !sel || e.classList.contains('correct')) return;
       if (sel.dataset.key === e.dataset.key) {
-        sel.classList.remove('selected');
-        sel.classList.add('correct');
-        e.classList.add('correct');
-        addPts(pointsCorrect);
-        matches++;
-        upScore();
-        if (matches === pairs.length) end('complete');
+        sel.classList.remove('selected'); sel.classList.add('correct'); e.classList.add('correct');
+        addPts(pointsCorrect); matches++;
+        c.querySelector('.m-score').textContent = 'Matches: ' + matches + ' / ' + pairs.length;
+        if (matches === pairs.length) end();
       } else {
-        e.classList.add('wrong');
-        sel.classList.add('wrong');
-        addPts(pointsWrong);
-        wrong++;
+        e.classList.add('wrong'); sel.classList.add('wrong');
+        addPts(pointsWrong); wrong++;
         const s = sel;
         setTimeout(() => { s.classList.remove('wrong', 'selected'); e.classList.remove('wrong'); }, 500);
       }
       sel = null;
     }
-    function upScore() {
-      const el = c.querySelector('#match-score');
-      if (el) el.textContent = 'Matches: ' + matches + ' / ' + pairs.length;
-    }
-    function end(reason) {
+    function end() {
       if (done) return;
-      done = true;
-      clearInterval(interval);
-      const pct = Math.round((matches / pairs.length) * 100);
-      if (pct >= 75) {
-        if (wrong === 0) awardBadge(badgeId + '-flawless', 'Flawless', '🎯');
-        awardBadge(badgeId, badgeName, badgeIcon);
-      }
-      if (window.ActivityGate) window.ActivityGate.completeWithScore(cid, pct);
-      APP.toast(pct >= 75 ? '🎉 Passed ' + pct + '%' : '📖 Score ' + pct + '% — need 75%', pct >= 75 ? 'success' : 'warning', 4000);
+      done = true; timer.stop();
+      // accuracy: each wrong try costs half a pair
+      const pct = Math.max(0, Math.round(((matches - wrong * 0.5) / pairs.length) * 100));
+      if (pct >= PASS && wrong === 0) awardBadge((cfg.badgeId || 'match') + '-flawless', 'Flawless', '🎯');
+      const rev = c.querySelector('.m-review');
+      const withWhy = pairs.filter((p) => explanationOf(p));
+      rev.innerHTML = `<div style="margin-top:14px;padding:14px 16px;border-radius:10px;background:#f1f8e9;border:1px solid #c5e1a5;text-align:left;">
+        <div style="font-weight:700;color:#33691e;">📘 Review: ${matches}/${pairs.length} matched${wrong ? ', ' + wrong + ' wrong tr' + (wrong === 1 ? 'y' : 'ies') : ''}</div>
+        <ul style="margin:8px 0 0 18px;font-size:0.88rem;line-height:1.55;">${pairs.map((p) => `<li><strong>${esc(cleanLabel(p.left))}</strong> → ${esc(cleanLabel(p.right))}${explanationOf(p) ? `<br><span style="color:#546e7a;">💡 ${esc(explanationOf(p))}</span>` : ''}</li>`).join('')}</ul>
+        ${withWhy.length ? '' : ''}</div>`;
+      finish(cid, pct, { id: cfg.badgeId, name: cfg.badgeName, icon: cfg.badgeIcon });
     }
-    interval = setInterval(() => {
-      tLeft--;
-      const el = c.querySelector('#match-timer');
-      if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
-      if (tLeft <= 0) end('timeout');
-    }, 1000);
   }
 
+  /* ---------- Activity 2: scenario cards ---------- */
   function renderScenario(cid, cfg) {
     const c = document.getElementById(cid);
     if (!c) return;
-    const scenarios = cfg.scenarios;
-    const timeLimit = cfg.timeLimit;
+    const scenarios = cfg.scenarios || [];
     const pointsCorrect = cfg.pointsCorrect || 8;
-    const badgeId = cfg.badgeId;
-    const badgeName = cfg.badgeName;
-    const badgeIcon = cfg.badgeIcon;
-    let i = 0, correct = 0, done = false, tLeft = timeLimit, interval = null;
-
-    c.innerHTML = '<div class="activity-header"><span class="activity-title">🎯 Scenario</span><span class="activity-timer" id="scen-t">' + APP.formatTime(tLeft) + '</span></div><div id="scen-body"></div>';
+    let i = 0, correct = 0, done = false;
+    c.innerHTML = `<div class="activity-header"><span class="activity-title">🎯 Scenario</span><span class="activity-timer" id="${cid}-t">${APP.formatTime(cfg.timeLimit)}</span></div><div class="scen-body"></div>`;
+    const timer = countdown(cfg.timeLimit, () => document.getElementById(cid + '-t'), () => end());
     renderCard();
-
-    interval = setInterval(() => {
-      tLeft--;
-      const el = c.querySelector('#scen-t');
-      if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
-      if (tLeft <= 0) end('timeout');
-    }, 1000);
 
     function renderCard() {
       if (done) return;
-      if (i >= scenarios.length) return end('complete');
+      if (i >= scenarios.length) return end();
       const sc = scenarios[i];
-      const b = c.querySelector('#scen-body');
-      b.innerHTML = '<div class="scenario-card"><p class="scenario-text">' + sc.text + '</p><div class="choice-row" id="cr"></div></div><div class="text-center mt-md"><span class="badge badge-info">' + (i + 1) + ' / ' + scenarios.length + '</span></div>';
-      const row = b.querySelector('#cr');
-      sc.choices.forEach((ch) => {
+      const b = c.querySelector('.scen-body');
+      b.innerHTML = `<div class="scenario-card"><p class="scenario-text">${sc.text}</p><div class="choice-row"></div></div><div class="text-center mt-md"><span class="badge badge-info">${i + 1} / ${scenarios.length}</span></div>`;
+      const row = b.querySelector('.choice-row');
+      shuffle(sc.choices || []).forEach((ch) => {
         const btn = APP.el('button', { class: 'choice-btn', text: cleanLabel(ch.label) });
-        btn.onclick = () => onCh(btn, ch);
+        btn.onclick = () => onCh(btn, ch, sc);
         row.appendChild(btn);
       });
     }
-    function onCh(btn, ch) {
+    function onCh(btn, ch, sc) {
       if (done) return;
-      c.querySelectorAll('.choice-btn').forEach((b) => b.disabled = true);
+      c.querySelectorAll('.choice-btn').forEach((x) => { x.disabled = true; });
+      const right = (sc.choices || []).find((x) => x.correct);
       if (ch.correct) { btn.classList.add('correct'); addPts(pointsCorrect); correct++; }
-      else { btn.classList.add('wrong'); }
-      setTimeout(() => { i++; renderCard(); }, 1200);
+      else {
+        btn.classList.add('wrong');
+        c.querySelectorAll('.choice-btn').forEach((x) => { if (right && x.textContent === cleanLabel(right.label)) x.classList.add('correct'); });
+      }
+      timer.pause();
+      c.querySelector('.scenario-card').appendChild(feedbackBox(!!ch.correct, right ? cleanLabel(right.label) : '', explanationOf(sc), () => { timer.resume(); i++; renderCard(); },
+        i + 1 >= scenarios.length ? 'Finish' : 'Next →'));
     }
-    function end(reason) {
+    function end() {
       if (done) return;
-      done = true;
-      clearInterval(interval);
-      const pct = Math.round((correct / scenarios.length) * 100);
-      if (pct >= 75) awardBadge(badgeId, badgeName, badgeIcon);
-      if (window.ActivityGate) window.ActivityGate.completeWithScore(cid, pct);
-      APP.toast(pct >= 75 ? '🎉 Passed ' + pct + '%' : '📖 Score ' + pct + '% — need 75%', pct >= 75 ? 'success' : 'warning', 4000);
+      done = true; timer.stop();
+      finish(cid, Math.round((correct / Math.max(1, scenarios.length)) * 100), { id: cfg.badgeId, name: cfg.badgeName, icon: cfg.badgeIcon });
     }
   }
 
+  /* ---------- Formative: escape room ---------- */
   function renderEscape(cid, cfg) {
     const c = document.getElementById(cid);
     if (!c) return;
-    const questions = cfg.questions;
-    const badgeId = cfg.badgeId;
-    const badgeName = cfg.badgeName;
-    const badgeIcon = cfg.badgeIcon;
+    const questions = cfg.questions || [];
     const lives = cfg.lives || 3;
-    const timeLimit = cfg.timeLimit;
-    let cl = lives, keys = [], i = 0, locked = false, done = false, tLeft = timeLimit, interval = null;
+    let cl = lives, keys = 0, i = 0, done = false, timer = null;
 
-    intro();
-    interval = setInterval(() => {
-      tLeft--;
-      const el = document.getElementById('esc-t');
-      if (el) el.textContent = APP.formatTime(Math.max(0, tLeft));
-      if (tLeft <= 0) end('timeout');
-    }, 1000);
-
-    function intro() {
-      c.innerHTML = '<div class="escape-container"><div class="escape-header"><div><div class="score-bar-label">Formative</div><div style="font-size:1.2rem;font-weight:600;">🔐 Escape</div></div><div style="text-align:right;"><div class="escape-lives" id="esc-l">' + '❤️'.repeat(cl) + '</div><div class="activity-timer" id="esc-t" style="font-size:0.9rem;margin-top:4px;">' + APP.formatTime(tLeft) + '</div></div></div><div class="escape-result"><div class="result-emoji">🗝️</div><div class="result-title">Unlock ' + questions.length + ' keys</div><p class="result-message">Need 75% to pass.</p><button id="esc-go" class="btn btn-accent" style="margin-top:16px;">Begin →</button></div></div>';
-      c.querySelector('#esc-go').onclick = showQ;
-    }
+    c.innerHTML = `<div class="escape-container"><div class="escape-header"><div><div class="score-bar-label">Formative</div><div style="font-size:1.2rem;font-weight:600;">🔐 Escape</div></div></div>
+      <div class="escape-result"><div class="result-emoji">🗝️</div><div class="result-title">Unlock ${questions.length} keys</div>
+      <p class="result-message">${lives} lives · ${PASS}% to pass · ⏱️ ${APP.formatTime(cfg.timeLimit)}</p>
+      <button class="btn btn-accent esc-go" style="margin-top:16px;">Begin →</button></div></div>`;
+    c.querySelector('.esc-go').onclick = () => {
+      timer = countdown(cfg.timeLimit, () => document.getElementById(cid + '-t'), () => end());
+      showQ();
+    };
 
     function showQ() {
       if (done) return;
-      if (i >= questions.length) return end('complete');
+      if (i >= questions.length || cl <= 0) return end();
       const q = questions[i];
-      c.innerHTML = '<div class="escape-container"><div class="escape-header"><div><div class="score-bar-label">Q' + (i + 1) + ' / ' + questions.length + '</div></div><div style="text-align:right;"><div class="escape-lives">' + '❤️'.repeat(cl) + '🖤'.repeat(lives - cl) + '</div><div class="activity-timer" id="esc-t" style="font-size:0.9rem;">' + APP.formatTime(Math.max(0, tLeft)) + '</div></div></div><div class="escape-keys" style="justify-content:center;margin-bottom:12px;">' + questions.map((_, j) => '<span class="key-icon ' + (keys.indexOf(j) !== -1 ? 'earned' : '') + '">🗝️</span>').join('') + '</div><div class="escape-question"><h4>' + q.text + '</h4><div class="escape-options" id="esc-o"></div></div></div>';
-      const o = c.querySelector('#esc-o');
-      q.choices.forEach((ch, j) => {
+      c.innerHTML = `<div class="escape-container"><div class="escape-header"><div><div class="score-bar-label">Q${i + 1} / ${questions.length}</div></div>
+        <div style="text-align:right;"><div class="escape-lives">${'❤️'.repeat(cl)}${'🖤'.repeat(lives - cl)}</div><div class="activity-timer" id="${cid}-t" style="font-size:0.9rem;">${APP.formatTime(Math.max(0, timer.left()))}</div></div></div>
+        <div class="escape-keys" style="justify-content:center;margin-bottom:12px;">${questions.map((_, j) => `<span class="key-icon ${j < keys ? 'earned' : ''}">🗝️</span>`).join('')}</div>
+        <div class="escape-question"><h4>${q.text}</h4><div class="escape-options"></div></div></div>`;
+      const o = c.querySelector('.escape-options');
+      shuffle(q.choices || []).forEach((ch, j) => {
         const b = APP.el('button', { class: 'escape-option', text: String.fromCharCode(65 + j) + '. ' + cleanLabel(ch.label) });
-        b.onclick = () => ans(b, ch);
+        b.onclick = () => ans(b, ch, q);
         o.appendChild(b);
       });
     }
-
-    function ans(btn, ch) {
-      if (locked || done) return;
-      locked = true;
-      c.querySelectorAll('.escape-option').forEach((b) => b.disabled = true);
-      if (ch.correct) {
-        btn.classList.add('correct');
-        keys.push(i);
-        setTimeout(() => { i++; locked = false; showQ(); }, 900);
-      } else {
-        btn.classList.add('wrong');
-        cl--;
-        const ci = questions[i].choices.findIndex((x) => x.correct);
-        c.querySelectorAll('.escape-option')[ci].classList.add('correct');
-        if (cl <= 0) setTimeout(() => end('outoflives'), 1200);
-        else setTimeout(() => { locked = false; i++; showQ(); }, 1400);
+    function ans(btn, ch, q) {
+      if (done) return;
+      c.querySelectorAll('.escape-option').forEach((b) => { b.disabled = true; });
+      const right = (q.choices || []).find((x) => x.correct);
+      if (ch.correct) { btn.classList.add('correct'); keys++; addPts(10); }
+      else {
+        btn.classList.add('wrong'); cl--;
+        c.querySelectorAll('.escape-option').forEach((b) => { if (right && b.textContent.slice(3) === cleanLabel(right.label)) b.classList.add('correct'); });
       }
+      timer.pause();
+      const last = i + 1 >= questions.length || cl <= 0;
+      c.querySelector('.escape-question').appendChild(feedbackBox(!!ch.correct, right ? cleanLabel(right.label) : '', explanationOf(q), () => { timer.resume(); i++; showQ(); },
+        last ? 'See result' : 'Next →'));
     }
-
-    function end(reason) {
+    function end() {
       if (done) return;
       done = true;
-      clearInterval(interval);
-      const pct = Math.round((keys.length / questions.length) * 100);
-      if (pct >= 75) {
-        if (cl === lives) awardBadge(badgeId, badgeName, badgeIcon);
+      if (timer) timer.stop();
+      const pct = Math.round((keys / Math.max(1, questions.length)) * 100);
+      if (pct >= PASS) {
+        if (cl === lives) awardBadge(cfg.badgeId, cfg.badgeName, cfg.badgeIcon);
         Store.markDayComplete(ctx.lrn, ctx.subject, ctx.week, ctx.day);
       }
-      if (window.ActivityGate) window.ActivityGate.completeWithScore(cid, pct);
-      APP.toast(pct >= 75 ? '🎉 Passed ' + pct + '%' : '📖 Score ' + pct + '% — need 75%', pct >= 75 ? 'success' : 'warning', 4000);
+      c.innerHTML = `<div class="escape-container"><div class="escape-result"><div class="result-emoji">${pct >= PASS ? '🎉' : '📖'}</div>
+        <div class="result-title">${keys} / ${questions.length} keys</div><p class="result-message">${pct}% ${pct >= PASS ? '— Day complete!' : '— need ' + PASS + '%'}</p></div></div>`;
+      finish(cid, pct, null);
     }
   }
 
   return { init, addPoints: addPts, awardBadge, renderMatchGame: regMatch, renderScenarioGame: regScenario, renderEscapeRoom: regEscape };
 })();
 
-/* ---------- EXPOSE TO WINDOW ---------- */
-window.CONFIG = CONFIG;
-window.APP = APP;
-window.Store = Store;
-window.Sync = Sync;
 window.ActivityGate = ActivityGate;
 window.Lesson = Lesson;
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.APP) APP.init();
-});

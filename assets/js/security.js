@@ -1,6 +1,6 @@
 /* ============================================================
    security.js — HMAC-SHA256 signing + anti-cheat hooks
-   Version: 1.0.0
+   Version: 1.1.0  (tab switch counted once; seeded shuffle for resume)
    ============================================================ */
 
 const Security = (() => {
@@ -41,29 +41,49 @@ const Security = (() => {
   }
 
   /* ---------- Anti-Cheat: Tab-Switch Detection ---------- */
-  function startTabMonitor(onViolation, threshold = 3) {
-    let count = 0;
+  // One leave of the page fires both "blur" and "visibilitychange"; count it ONCE
+  // (the old code counted 2 per switch). initialCount: violations already recorded
+  // before a page reload, so reloading does not reset the counter.
+  function startTabMonitor(onViolation, threshold = 3, initialCount = 0) {
+    let count = Number(initialCount) || 0;
     let active = true;
+    let away = false;
+    let lastAt = 0;
 
-    const handler = () => {
-      if (!active) return;
-      if (document.hidden) {
-        count++;
-        onViolation?.(count);
-        if (count >= threshold) {
-          stopTabMonitor();
-          onViolation?.(count, true); // final
-        }
+    let unloading = false;               // reloading/closing the page is not a tab switch
+    const leave = () => {
+      if (!active || away || unloading) return;
+      const now = Date.now();
+      if (now - lastAt < 1500) return;
+      away = true; lastAt = now;
+      count++;
+      onViolation?.(count, false);
+      if (count >= threshold) {
+        stopTabMonitor();
+        onViolation?.(count, true); // final
       }
     };
+    const back = () => { away = false; };
+    const onVis = () => { if (document.hidden) leave(); else back(); };
+    const onBlur = () => { setTimeout(() => { if (!document.hasFocus()) leave(); }, 250); };
 
-    document.addEventListener('visibilitychange', handler);
-    window.addEventListener('blur', handler);
+    const onUnload = () => { unloading = true; };
+    const onShow = () => { unloading = false; };
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('blur', onBlur);
+    window.addEventListener('focus', back);
+    window.addEventListener('beforeunload', onUnload);
+    window.addEventListener('pagehide', onUnload);
+    window.addEventListener('pageshow', onShow);
 
     function stopTabMonitor() {
       active = false;
-      document.removeEventListener('visibilitychange', handler);
-      window.removeEventListener('blur', handler);
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('blur', onBlur);
+      window.removeEventListener('focus', back);
+      window.removeEventListener('beforeunload', onUnload);
+      window.removeEventListener('pagehide', onUnload);
+      window.removeEventListener('pageshow', onShow);
     }
 
     return { stop: stopTabMonitor, getCount: () => count };
@@ -101,19 +121,35 @@ const Security = (() => {
   }
 
   /* ---------- Question + Option Shuffle ---------- */
-  function shuffle(arr) {
+  function shuffle(arr, rng) {
+    const r = rng || Math.random;
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(r() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
   }
 
-  function shuffleQuestions(questions) {
-    return shuffle(questions).map((q) => ({
+  function seededRng(seedStr) {
+    let h = 2166136261;
+    const str = String(seedStr);
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    let a = h >>> 0;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // seed (optional): same seed -> same order (used to resume an attempt after a reload)
+  function shuffleQuestions(questions, seed) {
+    const rng = seed ? seededRng(seed) : null;
+    return shuffle(questions, rng).map((q) => ({
       ...q,
-      options: shuffle(q.options || [])
+      options: shuffle(q.options || [], rng)
     }));
   }
 
@@ -141,7 +177,7 @@ const Security = (() => {
     startTabMonitor,
     disableCopyPaste,
     disableDevShortcuts,
-    shuffle, shuffleQuestions,
+    shuffle, shuffleQuestions, seededRng,
     createTimer
   };
 })();

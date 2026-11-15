@@ -2,8 +2,22 @@
  * ============================================================
  * Google Apps Script Backend — General Biology App
  * File: Code.gs
- * Version: 5.0.0  (Sync-complete: auto-create sheets, TE fix, overrides, atomic writes)
+ * Version: 5.1.0  (Security + integrity: no default teacher secret, name protection,
+ *                   lasting removals, score recomputed from item results)
  * ============================================================
+ *
+ * ANO ANG BINAGO SA v5.1.0
+ *  1. SEGURIDAD: wala nang default na TEACHER_SECRET ('DEPED-TEACHER-SECRET-2026' ay nakasulat sa
+ *     public repo -> kahit sino ay puwedeng maging "teacher"). Ang teacher token ay sinusuri na lang
+ *     laban sa SHA-256 hash (Script Property TEACHER_TOKEN_HASH). Palitan ang password: SET_TEACHER_PASSWORD.
+ *  2. Ang pangalan / section / grade / sex ng EXISTING na estudyante ay hindi na mapapalitan ng
+ *     student device (kahit sino ay puwedeng mag-post gamit ang LRN). Teacher lang (updateStudentInfo,
+ *     o upsertStudentMaster na may token). Lahat ng text ay nililinis (walang < > " ` &).
+ *  3. Teacher "Remove score" ay tombstone na (removed:true, may override.at) kaya HINDI na ibinabalik
+ *     ng device ng estudyante sa susunod na sync.
+ *  4. Quiz/ST/TE: ang score/percent/passed ay kinukuwenta muli mula sa item results (breakdown);
+ *     passing = 70%.
+ *  5. Bagong teacher actions: issueRetakeCode (retake code kahit walang request), updateStudentInfo.
  *
  * ANO ANG BINAGO SA v5.0.0 (kumpara sa 4.0.1)
  *  1. AUTO-CREATE ng lahat ng sheet + headers (ensureAllSheets_). Kung may kulang na sheet o header,
@@ -21,7 +35,11 @@
  * ============================================================
  */
 
-const VERSION = '5.0.0';
+const VERSION = '5.1.0';
+const PASSING_PERCENT = 70;
+// SHA-256 ng kasalukuyang teacher password (pareho ng config.js TEACHER_PASSWORD_HASH).
+// Ang Script Property TEACHER_TOKEN_HASH (gawa ng SET_TEACHER_PASSWORD) ang mas inuuna.
+const DEFAULT_TEACHER_TOKEN_HASH = '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e';
 
 const SHEET_MASTERLIST      = 'StudentsMasterlist';
 const SHEET_NAME_RECORDS    = 'Records';
@@ -84,7 +102,7 @@ const SHEET_SPECS = [
 const WRITE_ACTIONS = [
   'saveProgress', 'saveScore', 'saveActivity', 'upsertStudentMaster', 'getStudentByLRN',
   'registerSyncCode', 'consumeSyncCode', 'requestRetake', 'approveRetake', 'cancelRequest',
-  'redeemUnlockCode', 'migrateAllToMasterlist', 'overrideScoresBatch'
+  'redeemUnlockCode', 'migrateAllToMasterlist', 'overrideScoresBatch', 'updateStudentInfo', 'issueRetakeCode'
 ];
 
 // ============================================================
@@ -102,23 +120,45 @@ function normalizeLRN(lrn) {
   return digits;
 }
 
-function getTeacherSecret() {
-  const props = PropertiesService.getScriptProperties();
-  let secret = props.getProperty('TEACHER_SECRET');
-  if (!secret) {
-    secret = 'DEPED-TEACHER-SECRET-2026';
-    props.setProperty('TEACHER_SECRET', secret);
-  }
-  return secret;
+function sha256Hex_(text) {
+  const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(text), Utilities.Charset.UTF_8);
+  return hash.map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0')).join('');
+}
+
+function teacherHash_() {
+  return PropertiesService.getScriptProperties().getProperty('TEACHER_TOKEN_HASH') || DEFAULT_TEACHER_TOKEN_HASH;
+}
+
+function isTeacher_(token) {
+  if (!token) return false;
+  try { return sha256Hex_(token) === teacherHash_(); } catch (e) { return false; }
 }
 
 function requireTeacherToken(token) {
   if (!token) throw new Error('ERR_UNAUTHORIZED: Teacher token required');
-  if (token === getTeacherSecret()) return;
-  const hash = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, token, Utilities.Charset.UTF_8);
-  const hex = hash.map((b) => ((b < 0 ? b + 256 : b).toString(16)).padStart(2, '0')).join('');
-  if (hex === '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e') return;
-  throw new Error('ERR_UNAUTHORIZED: Invalid teacher token');
+  if (!isTeacher_(token)) throw new Error('ERR_UNAUTHORIZED: Invalid teacher token');
+}
+
+/**
+ * PALITAN ANG TEACHER PASSWORD (isang beses):
+ *  1. Isulat ang bagong password sa NEW_PASSWORD sa ibaba (8+ characters, hindi madaling hulaan).
+ *  2. Run > SET_TEACHER_PASSWORD. Kopyahin ang hash sa Logs papunta sa config.js -> TEACHER_PASSWORD_HASH.
+ *  3. BURAHIN ulit ang password sa NEW_PASSWORD at i-Save.
+ */
+function SET_TEACHER_PASSWORD() {
+  const NEW_PASSWORD = '';
+  if (!NEW_PASSWORD || NEW_PASSWORD.length < 8) throw new Error('Isulat muna ang bagong password (8+ characters) sa NEW_PASSWORD.');
+  const h = sha256Hex_(NEW_PASSWORD);
+  const props = PropertiesService.getScriptProperties();
+  props.setProperty('TEACHER_TOKEN_HASH', h);
+  props.deleteProperty('TEACHER_SECRET');
+  console.log('✅ Bagong teacher password ay naka-save.\nIlagay ito sa config.js -> TEACHER_PASSWORD_HASH:\n' + h + '\nPagkatapos, BURAHIN ang password sa NEW_PASSWORD at i-Save.');
+  return h;
+}
+
+// Text na ipinapakita sa mga page gamit ang innerHTML -> walang markup characters
+function cleanText_(v, max) {
+  return String(v === null || v === undefined ? '' : v).replace(/[<>"`&\\]/g, '').replace(/\s+/g, ' ').trim().slice(0, max || 60);
 }
 
 function toIso_(v) {
@@ -262,7 +302,8 @@ function handleDiagnose(body) {
       headersAdded: rep.headersAdded || [], mismatches: rep.mismatches || []
     };
   });
-  return { ok: true, version: VERSION, sheets };
+  const usingDefault = !PropertiesService.getScriptProperties().getProperty('TEACHER_TOKEN_HASH');
+  return { ok: true, version: VERSION, sheets, defaultTeacherPassword: usingDefault };
 }
 
 // ============================================================
@@ -381,6 +422,38 @@ function stripHeavyFields(obj) {
   return copy;
 }
 
+/** Quiz/ST/TE: score, total, percent at passed ay galing sa item results kapag mayroon. */
+function verifyEntry_(entry) {
+  if (!entry || typeof entry !== 'object' || entry.removed || entry.override) return entry;
+  const b = entry.breakdown;
+  if (!Array.isArray(b) || !b.length) return entry;
+  let correct = 0;
+  b.forEach((it) => {
+    if (it && it.given !== undefined && it.given !== null && it.given !== '' && String(it.given) === String(it.correct)) correct++;
+  });
+  const out = Object.assign({}, entry);
+  if (Number(out.score) !== correct || Number(out.total) !== b.length) out.serverCorrected = true;
+  out.score = correct;
+  out.total = b.length;
+  out.percent = Math.round(correct / b.length * 100);
+  out.passed = out.percent >= PASSING_PERCENT;
+  out.breakdown = b.map((it) => Object.assign({}, it, { isCorrect: !!(it && it.given !== undefined && it.given !== null && String(it.given) === String(it.correct)) }));
+  return out;
+}
+
+function verifyScores_(scores) {
+  if (!scores || typeof scores !== 'object') return scores;
+  const out = normalizeScores_(scores);
+  Object.keys(out).forEach((subj) => {
+    ['quizzes', 'st', 'te'].forEach((t) => {
+      const m = out[subj] && out[subj][t];
+      if (!m || typeof m !== 'object') return;
+      Object.keys(m).forEach((id) => { m[id] = verifyEntry_(m[id]); });
+    });
+  });
+  return out;
+}
+
 // Cell limit = 50,000 chars. Hindi magsusulat ng putol na JSON.
 function safeJson_(obj, label, lrn) {
   let s = JSON.stringify(obj);
@@ -451,7 +524,7 @@ function upsertMaster_(lrn, data) {
   const existing = row > 0 ? readMasterAt_(sheet, row) : null;
 
   const progress = mergeProgress(existing ? existing.ProgressObj : {}, data.progress);
-  let scores = mergeScores(existing ? existing.ScoresObj : {}, data.scores);
+  let scores = mergeScores(existing ? existing.ScoresObj : {}, verifyScores_(data.scores));
   if (data.removeIds && data.removeIds.length) {
     data.removeIds.forEach((r) => { if (scores[r.subject] && scores[r.subject][r.type]) delete scores[r.subject][r.type][r.id]; });
   }
@@ -459,14 +532,23 @@ function upsertMaster_(lrn, data) {
   const locks = mergeLocks(existing ? existing.LocksObj : {}, data.locks);
   const points = mergePoints(existing ? existing.PointsObj : {}, data.points);
 
+  // Existing student: only the teacher may change name / section / grade / sex.
+  // (Any device can post with any LRN, so a student device must not rename someone else.)
+  const pick = (field, col) => {
+    const inc = cleanText_(student[field] || student[col.charAt(0).toUpperCase() + col.slice(1)] || '');
+    const cur = existing ? cleanText_(existing[col.charAt(0).toUpperCase() + col.slice(1)] || '') : '';
+    if (!existing) return inc;
+    if (data.allowRename && inc) return inc;
+    return cur || inc;
+  };
   const out = [
     lrn,
-    student.lastName || (existing && existing.LastName) || '',
-    student.firstName || (existing && existing.FirstName) || '',
-    student.middleName || (existing && existing.MiddleName) || '',
-    student.gradeLevel || (existing && existing.GradeLevel) || '',
-    student.section || (existing && existing.Section) || '',
-    student.sex || (existing && existing.Sex) || '',
+    pick('lastName', 'lastName').toUpperCase(),
+    pick('firstName', 'firstName'),
+    data.allowRename && student.middleName !== undefined ? cleanText_(student.middleName) : pick('middleName', 'middleName'),
+    pick('gradeLevel', 'gradeLevel'),
+    pick('section', 'section'),
+    pick('sex', 'sex'),
     safeJson_(progress, 'Progress', lrn),
     safeJson_(scores, 'Scores', lrn),
     safeJson_(badges, 'Badges', lrn),
@@ -513,6 +595,8 @@ function route_(action, body) {
     case 'upsertStudentMaster':        return withLock_(() => handleUpsertStudentMaster(body));
     case 'getStudentByLRN':            return withLock_(() => handleGetStudentByLRN(body));
     case 'overrideScoresBatch':        return withLock_(() => handleOverrideScoresBatch(body));
+    case 'updateStudentInfo':          return withLock_(() => handleUpdateStudentInfo(body));
+    case 'issueRetakeCode':            return withLock_(() => handleIssueRetakeCode(body));
     case 'registerSyncCode':           return withLock_(() => handleRegisterSyncCode(body));
     case 'resolveSyncCode':            return handleResolveSyncCode(body, false);
     case 'consumeSyncCode':            return withLock_(() => handleResolveSyncCode(body, true));
@@ -572,7 +656,8 @@ function handleUpsertStudentMaster(body) {
   if (!lrn || lrn.length !== 12) return { ok: false, error: 'ERR_BAD_LRN', code: 'BAD_LRN' };
   const r = upsertMaster_(lrn, {
     student: body.student, progress: body.progress, scores: body.scores, badges: body.badges,
-    locks: body.locks, points: body.points, deviceId: body.deviceId, integrityHash: body.integrityHash
+    locks: body.locks, points: body.points, deviceId: body.deviceId, integrityHash: body.integrityHash,
+    allowRename: isTeacher_(body.token)
   });
   return r.created ? { ok: true, message: 'Masterlist created', created: true } : { ok: true, message: 'Masterlist updated', merged: true };
 }
@@ -600,7 +685,7 @@ function handleSaveScore(body) {
     return { ok: false, error: 'ERR_BAD_SCORE: score cannot exceed total', code: 'BAD_SCORE' };
   }
   const ts = body.timestamp || new Date().toISOString();
-  const entry = buildEntry_(body, ts);
+  const entry = (type === 'quizzes' || type === 'st' || type === 'te') ? verifyEntry_(buildEntry_(body, ts)) : buildEntry_(body, ts);
 
   const scores = {}; scores[subject] = {}; scores[subject][type] = {}; scores[subject][type][assessmentId] = entry;
   upsertMaster_(lrn, { student: body.student, scores: scores, deviceId: body.deviceId, integrityHash: body.integrityHash });
@@ -729,8 +814,14 @@ function handleOverrideScoresBatch(body) {
         const ts = it.timestamp || new Date().toISOString();
         const ov = it.override || {};
         if (it.removed) {
-          removeIds.push({ subject, type, id: assessmentId });
-          // tombstone sa Records para hindi na bumalik ang lumang attempt
+          // Tombstone: nananatili sa ScoresJSON (removed:true + override.at) kaya kapag
+          // ipinadala ulit ng device ng estudyante ang lumang attempt, ang tombstone ang mananaig.
+          if (!scores[subject]) scores[subject] = {};
+          if (!scores[subject][type]) scores[subject][type] = {};
+          scores[subject][type][assessmentId] = {
+            score: null, total: it.total || null, percent: null, passed: false, removed: true, timestamp: ts,
+            override: { by: 'teacher', reason: ov.reason || 'removed', takenOn: '', at: ts, removed: true }
+          };
           appendRecord_(recSheet, lrn, it.student, subject, type, assessmentId,
             { score: 0, total: it.total || 0, percent: 0, passed: false, timestamp: ts }, { removed: true, override: ov });
           removed++;
@@ -746,14 +837,14 @@ function handleOverrideScoresBatch(body) {
         }
         const st = it.student || {};
         ovSheet.appendRow([
-          new Date().toISOString(), lrn, ((st.lastName || '') + ', ' + (st.firstName || '')).replace(/^, |, $/g, ''),
-          st.section || '', subject, type, assessmentId,
+          new Date().toISOString(), lrn, cleanText_(((st.lastName || '') + ', ' + (st.firstName || '')).replace(/^, |, $/g, ''), 120),
+          cleanText_(st.section || ''), subject, type, assessmentId,
           it.score === undefined ? '' : it.score, it.total === undefined ? '' : it.total,
           it.percent === undefined ? '' : it.percent, ov.reason || '', ov.takenOn || '',
           ov.reverted ? 'TRUE' : 'FALSE', it.removed ? 'TRUE' : 'FALSE', ''
         ]);
       });
-      upsertMaster_(lrn, { student: student, scores: scores, removeIds: removeIds, deviceId: 'teacher' });
+      upsertMaster_(lrn, { student: student, scores: scores, removeIds: removeIds, deviceId: 'teacher', allowRename: false });
     } catch (e) {
       errors.push(lrn + ': ' + e.message);
     }
@@ -881,9 +972,10 @@ function handleGetAllStudentsAggregated(body) {
     const summary = {};
     SUBJECTS.forEach((subj) => {
       const sc = s.scores[subj] || {};
+      const live = (m) => Object.keys(m || {}).filter((k) => m[k] && !m[k].removed && !(m[k].status === 'in-progress' && m[k].score == null)).length;
       summary[subj] = {
-        quizzes: Object.keys(sc.quizzes || {}).length, sts: Object.keys(sc.st || {}).length,
-        te: Object.keys(sc.te || {}).length, pts: Object.keys(sc.pt || {}).length,
+        quizzes: live(sc.quizzes), sts: live(sc.st),
+        te: live(sc.te), pts: live(sc.pt),
         daysCompleted: ((s.progress[subj] && s.progress[subj].completed) || []).length
       };
     });
@@ -952,6 +1044,10 @@ function lazyMigrateFromRecords(lrn) {
 
 function handleMigrateAllToMasterlist(body) {
   requireTeacherToken(body.token);
+  return migrateAll_();
+}
+
+function migrateAll_() {
   const recSheet = getSheet_(SHEET_NAME_RECORDS);
   const last = recSheet.getLastRow();
   const lrns = {};
@@ -962,7 +1058,7 @@ function handleMigrateAllToMasterlist(body) {
 }
 
 function RUN_MIGRATION() {
-  const r = withLock_(() => handleMigrateAllToMasterlist({ token: getTeacherSecret() }));
+  const r = withLock_(() => migrateAll_());
   console.log('🎉 TAPOS NA! ' + JSON.stringify(r));
 }
 
@@ -1004,6 +1100,52 @@ function CLEAN_DUPLICATES() {
   });
   console.log('🧹 TAPOS! ' + JSON.stringify(result));
   return result;
+}
+
+// ============================================================
+// TEACHER: STUDENT INFO + TEACHER-ISSUED RETAKE CODE
+// ============================================================
+/** items: [{ lrn, lastName, firstName, middleName, section, gradeLevel, sex }] */
+function handleUpdateStudentInfo(body) {
+  requireTeacherToken(body.token);
+  const items = Array.isArray(body.items) ? body.items : [];
+  let updated = 0; const errors = [];
+  items.forEach((it) => {
+    const lrn = normalizeLRN(it.lrn);
+    if (!lrn || lrn.length !== 12) { errors.push((it.lrn || '?') + ': bad LRN'); return; }
+    try {
+      upsertMaster_(lrn, { student: it, allowRename: true, deviceId: 'teacher' });
+      updated++;
+    } catch (e) { errors.push(lrn + ': ' + e.message); }
+  });
+  logEvent('updateStudentInfo', '', 'updated=' + updated + ' errors=' + errors.length);
+  return { ok: updated > 0 || !errors.length, updated, errors };
+}
+
+/** Teacher gives a retake code directly (no student request needed). */
+function handleIssueRetakeCode(body) {
+  requireTeacherToken(body.token);
+  const lrn = normalizeLRN(body.lrn);
+  const assessmentId = String(body.assessmentId || '');
+  if (!lrn || lrn.length !== 12 || !/^biol[12]-(quiz[1-3]|st[12]|te)$/.test(assessmentId)) return { ok: false, error: 'ERR_BAD_REQUEST: lrn / assessmentId' };
+  const sheet = getSheet_(SHEET_NAME_REQUESTS);
+  const data = sheet.getDataRange().getValues();
+  // re-use an open request for the same assessment
+  for (let i = 1; i < data.length; i++) {
+    if (normalizeLRN(data[i][1]) === lrn && String(data[i][4]) === assessmentId && String(data[i][9]) === 'pending') {
+      return handleApproveRetake({ token: body.token, requestId: String(data[i][0]) });
+    }
+  }
+  const retakesDone = countRetakesFor(sheet, lrn, assessmentId);
+  const code = generateUniqueCode(sheet);
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + CODE_EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+  const requestId = 'TCH-' + lrn + '-' + Date.now();
+  sheet.appendRow([requestId, lrn, cleanText_(body.studentName || ''), cleanText_(body.section || ''), assessmentId,
+    'teacher-issued' + (body.reason ? ': ' + cleanText_(body.reason, 120) : ''), 0, 0, now.toISOString(),
+    'approved', code, now.toISOString(), expiresAt.toISOString(), '', retakesDone + 1, 'FALSE']);
+  logEvent('issueRetakeCode', lrn, assessmentId + ' → ' + code);
+  return { ok: true, requestId, unlockCode: code, codeExpiresAt: expiresAt.toISOString(), retakeNumber: retakesDone + 1 };
 }
 
 // ============================================================
@@ -1054,8 +1196,8 @@ function handleRequestRetake(body) {
     }
   }
   const requestId = 'REQ-' + normalizeLRN(lrn) + '-' + Date.now();
-  const studentName = (((student && student.lastName) || '') + ', ' + ((student && student.firstName) || '')).replace(/^, |, $/g, '');
-  const section = (student && student.section) || '';
+  const studentName = cleanText_((((student && student.lastName) || '') + ', ' + ((student && student.firstName) || '')).replace(/^, |, $/g, ''), 120);
+  const section = cleanText_((student && student.section) || '');
   const now = new Date().toISOString();
   sheet.appendRow([requestId, normalizeLRN(lrn), studentName, section, assessmentId, reason || 'failed-attempt', score || 0, total || 0, now, 'pending', '', '', '', '', nextRetakeNumber, isFinalAttempt ? 'TRUE' : 'FALSE']);
   logEvent('requestRetake', lrn, assessmentId + ' (retake #' + nextRetakeNumber + ')');

@@ -123,15 +123,16 @@
     ['biol1', 'biol2'].forEach((subj) => {
       const st = scores[subj]?.st || {};
       Object.values(st).forEach((s) => {
-        if (s && s.total) allSTs.push((s.score / s.total) * 100);
+        if (s && s.total && !s.removed && s.score !== null && s.score !== undefined) allSTs.push((s.score / s.total) * 100);
       });
     });
     if (!allSTs.length) return { label: 'No data yet', key: 'on-track', avg: null };
     const avg = allSTs.reduce((a, b) => a + b, 0) / allSTs.length;
     let label = 'On Track', key = 'on-track';
+    const pass = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
     if (avg >= 90) { label = 'Enrichment'; key = 'enrichment'; }
-    else if (avg >= 80) { label = 'On Track'; key = 'on-track'; }
-    else if (avg >= 75) { label = 'Remediation'; key = 'remediation'; }
+    else if (avg >= pass) { label = 'On Track'; key = 'on-track'; }
+    else if (avg >= pass - 10) { label = 'Remediation'; key = 'remediation'; }
     else { label = 'Urgent'; key = 'urgent'; }
     return { label, key, avg };
   }

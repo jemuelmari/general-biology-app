@@ -1,6 +1,6 @@
 /* ============================================================
    store.js — localStorage persistence with Normalization
-   Version: 2.1.0  (activities + points + TE shape repair)
+   Version: 2.2.0  (name sanitizing, teacher tombstones, capped daily points)
    ============================================================ */
 
 const Store = (() => {
@@ -32,13 +32,27 @@ const Store = (() => {
 
   function _remove(key) { try { localStorage.removeItem(key); } catch (e) {} }
 
+  // Names / section are shown with innerHTML on many pages: never keep markup characters.
+  function cleanText(v, max) {
+    return String(v === null || v === undefined ? '' : v).replace(/[<>"`&\\]/g, '').replace(/\s+/g, ' ').trim().slice(0, max || 60);
+  }
+  const TEXT_FIELDS = ['lastName', 'firstName', 'middleName', 'section', 'gradeLevel', 'sex',
+    'LastName', 'FirstName', 'MiddleName', 'Section', 'GradeLevel', 'Sex'];
+  function _cleanUser(u) {
+    const out = { ...u };
+    TEXT_FIELDS.forEach((k) => { if (k in out && typeof out[k] !== 'object') out[k] = cleanText(out[k]); });
+    return out;
+  }
+
   function getAllUsers() {
     let users = _get(USERS_KEY, []);
+    if (!Array.isArray(users)) users = [];
     let repaired = false;
     users = users.map(u => {
-      const fixedLrn = normalizeLRN(u.lrn);
-      if (u.lrn !== fixedLrn) { repaired = true; return { ...u, lrn: fixedLrn }; }
-      return u;
+      const fixedLrn = normalizeLRN(u.lrn || u.LRN);
+      const c = _cleanUser({ ...u, lrn: fixedLrn });
+      if (JSON.stringify(c) !== JSON.stringify(u)) repaired = true;
+      return c;
     });
     if (repaired) _set(USERS_KEY, users);
     return users;
@@ -47,7 +61,7 @@ const Store = (() => {
   function saveUser(user) {
     if (!user || !user.lrn) throw new Error('ERR_BAD_USER: User or LRN missing');
     const lrn = normalizeLRN(user.lrn);
-    const cleanUser = { ...user, lrn };
+    const cleanUser = _cleanUser({ ...user, lrn });
     const users = getAllUsers();
     const idx = users.findIndex((u) => u.lrn === lrn);
     if (idx >= 0) users[idx] = { ...users[idx], ...cleanUser };
@@ -113,15 +127,38 @@ const Store = (() => {
     return scores;
   }
 
-  function getScores(lrn) {
-    const normalized = normalizeLRN(lrn);
+  // Raw store (keeps teacher "removed" tombstones so they keep syncing)
+  function _rawScores(normalized) {
     const scores = _get(`${NS}scores_${normalized}`, { biol1: { quizzes: {}, st: {}, pt: {}, te: {}, activities: {} }, biol2: { quizzes: {}, st: {}, pt: {}, te: {}, activities: {} } });
     return _repairScores(scores);
   }
 
+  // What pages see: entries the teacher removed are hidden
+  // Hides teacher-removed entries always, and unfinished "in-progress" markers
+  // unless opts.includePending (only the student test screens need those).
+  function getScores(lrn, opts) {
+    const keepPending = !!(opts && opts.includePending);
+    const scores = _rawScores(normalizeLRN(lrn));
+    Object.keys(scores || {}).forEach((subj) => {
+      const s = scores[subj];
+      if (!s || typeof s !== 'object') return;
+      Object.keys(s).forEach((type) => {
+        const m = s[type];
+        if (!m || typeof m !== 'object') return;
+        Object.keys(m).forEach((id) => {
+          const e = m[id];
+          if (!e || typeof e !== 'object') return;
+          if (e.removed) delete m[id];
+          else if (!keepPending && e.status === 'in-progress' && (e.score === null || e.score === undefined)) delete m[id];
+        });
+      });
+    });
+    return scores;
+  }
+
   function saveScore(lrn, subject, type, id, data) {
     const normalized = normalizeLRN(lrn);
-    const scores = getScores(normalized);
+    const scores = _rawScores(normalized);
     if (!scores[subject]) scores[subject] = {};
     if (!scores[subject][type]) scores[subject][type] = {};
     scores[subject][type][id] = { ...data, timestamp: new Date().toISOString() };
@@ -131,7 +168,7 @@ const Store = (() => {
 
   function deleteScore(lrn, subject, type, id) {
     const normalized = normalizeLRN(lrn);
-    const scores = getScores(normalized);
+    const scores = _rawScores(normalized);
     if (scores[subject] && scores[subject][type] && scores[subject][type][id] !== undefined) {
       delete scores[subject][type][id];
       _set(`${NS}scores_${normalized}`, scores);
@@ -144,7 +181,7 @@ const Store = (() => {
   // Pinapanatili ang pinakamataas na percent (ang "Practice Again" ay hindi dapat magpababa ng pasadong score).
   function saveActivity(lrn, subject, id, data) {
     const normalized = normalizeLRN(lrn);
-    const scores = getScores(normalized);
+    const scores = _rawScores(normalized);
     if (!scores[subject]) scores[subject] = {};
     if (!scores[subject].activities) scores[subject].activities = {};
     const prev = scores[subject].activities[id];
@@ -217,6 +254,22 @@ const Store = (() => {
     return updated;
   }
 
+  // Daily points are the SUM of the best run of each activity (Practice Again cannot farm points)
+  function setDailyPointsBest(lrn, subject, week, day, activity, runPoints) {
+    const normalized = normalizeLRN(lrn);
+    const bestKey = `${NS}actpts_${normalized}_${subject}_w${week}_d${day}`;
+    const best = _get(bestKey, {}) || {};
+    const v = Math.max(0, Math.round(Number(runPoints) || 0));
+    if (!(activity in best) || v > best[activity]) best[activity] = v;
+    _set(bestKey, best);
+    const total = Object.values(best).reduce((a, x) => a + (Number(x) || 0), 0);
+    const key = `${NS}points_${normalized}_${subject}_w${week}_d${day}`;
+    const cur = Number(_get(key, 0)) || 0;
+    // never lower what is already stored (it may come from another device)
+    if (total > cur) _set(key, total);
+    return Math.max(total, cur);
+  }
+
   function getAttempts(lrn, assessmentId) {
     const normalized = normalizeLRN(lrn);
     return _get(`${NS}attempts_${normalized}_${assessmentId}`, 0);
@@ -275,7 +328,7 @@ const Store = (() => {
     getScores, saveScore, deleteScore, saveActivity,
     getPoints, mergePoints,
     getBadges, awardBadge,
-    getDailyPoints, addDailyPoints,
+    getDailyPoints, addDailyPoints, setDailyPointsBest, cleanText,
     getAttempts, incrementAttempts,
     lockAssessment, isAssessmentLocked, unlockAssessment,
     exportAll, importAll,

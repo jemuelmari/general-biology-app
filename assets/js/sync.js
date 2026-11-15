@@ -42,7 +42,15 @@ const Sync = (() => {
     if (_masterLoading) return _masterLoading;
     _masterLoading = new Promise((resolve) => {
       if (!_BASE) return resolve(null);
+      const existing = document.querySelector('script[data-gba-sync-master], script[src*="sync-master.js"]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve(window.SyncMaster || null));
+        existing.addEventListener('error', () => resolve(null));
+        setTimeout(() => resolve(window.SyncMaster || null), 8000);
+        return;
+      }
       const s = document.createElement('script');
+      s.setAttribute('data-gba-sync-master', '1');
       s.src = _BASE + 'sync-master.js';
       s.onload = () => resolve(window.SyncMaster || null);
       s.onerror = () => resolve(null);
@@ -563,3 +571,6 @@ const Sync = (() => {
     pingBackend
   };
 })();
+
+// Expose for scripts that check window.Sync (a top-level const is not a window property).
+if (typeof window !== "undefined") window.Sync = Sync;

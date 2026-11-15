@@ -87,7 +87,7 @@
               score: data.score,
               total: data.total,
               percent: Math.round((data.score / data.total) * 100),
-              passed: data.passed
+              passed: Math.round((data.score / data.total) * 100) >= ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70)
             });
           }
         });

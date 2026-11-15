@@ -1,166 +1,253 @@
 /* ============================================================
    quiz-engine.js — Quiz / ST / TE engine with anti-cheat
-   Version: 1.2.0  (score timestamp matches backend + visible sync status)
+   Version: 2.0.0
    ------------------------------------------------------------
-   v1.1.0:
-   - Clears the retake flag after submit (for repeated retakes).
-   - Removed pushLock (no longer needed).
-   - Removed applyPendingUnlocks (replaced by code redemption).
+   v2.0.0:
+   - Start screen; the attempt (question order, answers, deadline, tab
+     switches) is saved, so a reload RESUMES the same attempt with the
+     same timer instead of restarting it.
+   - Before starting, the cloud record is pulled (max 5 s) so a test
+     already taken on another device is locked here too.
+   - Starting a test sends an "in progress" marker to the cloud: opening
+     the test on a second device is blocked (ask the teacher for a code).
+   - Time is measured on the real clock; when the deadline passed while
+     the page was closed, the saved answers are submitted.
+   - Passing mark from CONFIG.PASSING_PERCENT (70%).
+   - Tab switch counted once per leave; the count survives a reload.
    ============================================================ */
 
 const QuizEngine = (() => {
   'use strict';
 
+  const NS = 'gba_v1_';
   let state = null;
+  let cfg = null;
+  let tabMon = null;
+
+  const PASS = () => (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
+  const esc = (v) => String(v === null || v === undefined ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const attemptKey = (lrn, id) => `${NS}attempt_${lrn}_${id}`;
+
+  function readAttempt(lrn, id) {
+    try { return JSON.parse(localStorage.getItem(attemptKey(lrn, id)) || 'null'); } catch (e) { return null; }
+  }
+  function writeAttempt() {
+    if (!state) return;
+    try {
+      localStorage.setItem(attemptKey(state.lrn, state.assessmentId), JSON.stringify({
+        seed: state.seed, startedAt: state.startTime, deadline: state.deadline,
+        answers: state.answers, currentIndex: state.currentIndex, tabViolations: state.tabViolations
+      }));
+    } catch (e) { /* storage full: the attempt still works in memory */ }
+  }
+  function clearAttempt(lrn, id) { try { localStorage.removeItem(attemptKey(lrn, id)); } catch (e) { /* ignore */ } }
+
+  function hasRetakeUnlock(lrn, id) {
+    try { return !!localStorage.getItem(`${NS}unlocked_${lrn}_${id}`); } catch (e) { return false; }
+  }
+
+  function currentEntry(lrn, subject, typeKey, id) {
+    const s = (Store.getScores(lrn, { includePending: true }) || {})[subject] || {};
+    return (s[typeKey] || {})[id] || null;
+  }
+
+  /* ---------- cloud check before starting ---------- */
+  async function pullFirst(lrn) {
+    if (!navigator.onLine || typeof CONFIG === 'undefined' || !CONFIG.backendEnabled) return;
+    try {
+      const master = (window.Sync && Sync.ensureSyncMaster) ? await Sync.ensureSyncMaster() : window.SyncMaster;
+      if (!master || !master.pullFromBackend) return;
+      await Promise.race([master.pullFromBackend(lrn), new Promise((r) => setTimeout(r, 5000))]);
+    } catch (e) { /* offline: continue with local data */ }
+  }
 
   /* ---------- Init ---------- */
   async function init(config) {
     const user = Store.getCurrentUser();
-    if (!user) {
-      window.location.href = '../../student/login.html';
-      return;
+    if (!user) { window.location.href = '../../student/login.html'; return; }
+
+    cfg = Object.assign({ allowRetake: false }, config);
+    const typeKey = cfg.type === 'quiz' ? 'quizzes' : cfg.type;
+    const body = document.getElementById('quiz-body');
+    const saved = readAttempt(user.lrn, cfg.assessmentId);
+
+    if (!saved) {
+      if (body) body.innerHTML = '<div class="card text-center"><p class="text-muted">⏳ Checking your record…</p></div>';
+      await pullFirst(user.lrn);
     }
 
-    const {
-      assessmentId,
-      subject,
-      type,
-      title,
-      items,
-      timeLimit,
-      allowRetake = false,
-      passingScore = 80
-    } = config;
-
-    // Check if still locked (unless allowRetake)
-    if (!allowRetake && Store.isAssessmentLocked(user.lrn, assessmentId)) {
-      renderLocked();
-      return;
+    const unlocked = hasRetakeUnlock(user.lrn, cfg.assessmentId);
+    if (!saved && !cfg.allowRetake && !unlocked) {
+      if (Store.isAssessmentLocked(user.lrn, cfg.assessmentId)) { renderLocked(); return; }
+      const e = currentEntry(user.lrn, cfg.subject, typeKey, cfg.assessmentId);
+      if (e && e.score !== null && e.score !== undefined) { renderLocked(); return; }
+      if (e && e.status === 'in-progress') { renderStartedElsewhere(); return; }
     }
 
+    if (saved) {
+      if (Date.now() >= saved.deadline) {
+        begin(user, saved);
+        APP.toast('⏰ Time ran out while the test was closed. Your saved answers were submitted.', 'warning', 6000);
+        submit(true);
+        return;
+      }
+      begin(user, saved);
+      APP.toast('▶️ Your test was resumed. The timer kept running.', 'info', 4000);
+      return;
+    }
+    renderStart(user, unlocked);
+  }
+
+  function renderStart(user, isRetake) {
+    const mins = Math.round(cfg.timeLimit / 60);
+    const n = (cfg.items || []).length;
+    const body = document.getElementById('quiz-body');
+    body.innerHTML = `
+      <div class="card">
+        <h2 style="color:var(--color-primary-dark);">${esc(cfg.title)}</h2>
+        <p class="text-muted">${n} items · ${mins} minutes · ${PASS()}% to pass${isRetake ? ' · <strong>Retake</strong>' : ''}</p>
+        <ul style="margin:16px 0 0 18px;line-height:1.7;">
+          <li>The timer starts when you press <strong>Start</strong> and keeps running even if you close or reload the page.</li>
+          <li>If the page reloads, your answers are kept — just open the test again on this device.</li>
+          <li>Leaving the page (switching tabs/apps) is recorded. After 3 times the test is submitted.</li>
+          <li>Once started, this test cannot be opened on another device.</li>
+        </ul>
+        <button id="btn-start" class="btn btn-primary btn-full" style="margin-top:20px;">▶️ Start</button>
+      </div>`;
+    document.getElementById('btn-start').addEventListener('click', () => {
+      const now = Date.now();
+      const fresh = { seed: user.lrn + '|' + cfg.assessmentId + '|' + now, startedAt: now, deadline: now + cfg.timeLimit * 1000, answers: {}, currentIndex: 0, tabViolations: 0 };
+      begin(user, fresh);
+      writeAttempt();
+      if (!isRetake) markStarted(user, now);
+    });
+  }
+
+  // Cloud marker so the same test cannot be started again on another device
+  function markStarted(user, now) {
+    const typeKey = cfg.type === 'quiz' ? 'quizzes' : cfg.type;
+    const existing = currentEntry(user.lrn, cfg.subject, typeKey, cfg.assessmentId);
+    if (existing) return;
+    const marker = { score: null, total: (cfg.items || []).length, percent: null, passed: false, status: 'in-progress', startedAt: new Date(now).toISOString() };
+    const saved = Store.saveScore(user.lrn, cfg.subject, typeKey, cfg.assessmentId, marker);
+    if (window.Sync && typeof Sync.pushScoreToBackend === 'function') {
+      Sync.pushScoreToBackend(user.lrn, cfg.subject, typeKey, cfg.assessmentId, { ...marker, timestamp: saved && saved.timestamp }).catch(() => {});
+    }
+  }
+
+  function begin(user, saved) {
     state = {
       lrn: user.lrn,
-      assessmentId,
-      subject,
-      type,
-      title,
-      items: Security.shuffleQuestions(items),
-      answers: {},
-      currentIndex: 0,
-      startTime: Date.now(),
-      timeLimit,
+      assessmentId: cfg.assessmentId,
+      subject: cfg.subject,
+      type: cfg.type,
+      title: cfg.title,
+      seed: saved.seed,
+      items: Security.shuffleQuestions(cfg.items, saved.seed),
+      answers: saved.answers || {},
+      currentIndex: Math.min(saved.currentIndex || 0, (cfg.items || []).length - 1),
+      startTime: saved.startedAt,
+      deadline: saved.deadline,
       submitted: false,
-      tabViolations: 0,
+      tabViolations: saved.tabViolations || 0,
       tabThreshold: 3,
-      passingScore,
-      allowRetake
+      passingScore: PASS(),
+      allowRetake: cfg.allowRetake
     };
-
     setupAntiCheat();
     renderHeader();
     renderQuestion();
     startTimer();
     renderNavigation();
+    updateProgress();
+    const w = document.getElementById('quiz-warnings');
+    if (w) w.textContent = state.tabViolations;
   }
 
   /* ---------- Anti-cheat ---------- */
   function setupAntiCheat() {
     Security.disableCopyPaste(document);
     Security.disableDevShortcuts();
-
-    Security.startTabMonitor((count, final) => {
+    tabMon = Security.startTabMonitor((count, final) => {
+      if (!state || state.submitted) return;
       state.tabViolations = count;
+      writeAttempt();
+      const w = document.getElementById('quiz-warnings');
+      if (w) w.textContent = count;
       if (final) {
-        APP.toast('Too many tab switches. Quiz submitted automatically.', 'danger', 5000);
+        APP.toast('Too many tab switches. Test submitted automatically.', 'danger', 5000);
         submit(true);
       } else {
         APP.toast(`⚠️ Tab switch detected (${count}/${state.tabThreshold}). Stay on this page.`, 'warning', 3000);
       }
-    }, state.tabThreshold);
+    }, state.tabThreshold, state.tabViolations);
   }
 
   function renderHeader() {
     const header = document.getElementById('quiz-header');
     if (!header) return;
-
     header.innerHTML = `
       <div class="daily-score-bar">
         <div class="score-bar-left">
-          <span class="score-bar-label">${state.type.toUpperCase()} · ${state.subject.toUpperCase()}</span>
-          <span class="score-bar-title">${state.title}</span>
+          <span class="score-bar-label">${esc(state.type.toUpperCase())} · ${esc(state.subject.toUpperCase())}</span>
+          <span class="score-bar-title">${esc(state.title)}</span>
         </div>
         <div class="score-bar-right">
-          <div class="score-bar-stat">
-            <span class="value" id="quiz-progress">0/${state.items.length}</span>
-            <span class="label">Answered</span>
-          </div>
-          <div class="score-bar-stat">
-            <span class="value" id="quiz-timer">--:--</span>
-            <span class="label">Time</span>
-          </div>
-          <div class="score-bar-stat">
-            <span class="value" id="quiz-warnings">0</span>
-            <span class="label">Warnings</span>
-          </div>
+          <div class="score-bar-stat"><span class="value" id="quiz-progress">0/${state.items.length}</span><span class="label">Answered</span></div>
+          <div class="score-bar-stat"><span class="value" id="quiz-timer">--:--</span><span class="label">Time</span></div>
+          <div class="score-bar-stat"><span class="value" id="quiz-warnings">0</span><span class="label">Warnings</span></div>
         </div>
-      </div>
-    `;
+      </div>`;
   }
 
   function renderQuestion() {
     const container = document.getElementById('quiz-body');
     if (!container) return;
-
     const q = state.items[state.currentIndex];
     const saved = state.answers[q.id];
-
     container.innerHTML = `
       <div class="card">
         <div class="flex-between" style="margin-bottom:16px;">
           <span class="badge badge-info">Question ${state.currentIndex + 1} of ${state.items.length}</span>
-          <span class="badge badge-warning">${q.competency || 'General'}</span>
         </div>
         <p style="font-size:1.1rem;font-weight:500;margin-bottom:20px;">${q.text}</p>
         <div id="quiz-options"></div>
-      </div>
-    `;
-
+      </div>`;
     const opts = document.getElementById('quiz-options');
     q.options.forEach((opt, i) => {
       const label = document.createElement('label');
       label.className = 'quiz-option';
-      label.style.cssText = `
-        display:flex;align-items:flex-start;gap:12px;
-        padding:14px 16px;margin-bottom:10px;
+      label.style.cssText = `display:flex;align-items:flex-start;gap:12px;padding:14px 16px;margin-bottom:10px;
         background:${saved === opt.key ? 'var(--color-primary-light)' : 'var(--color-surface)'};
         border:2px solid ${saved === opt.key ? 'var(--color-primary)' : 'var(--color-border)'};
-        border-radius:8px;cursor:pointer;transition:all 0.15s;
-      `;
-
+        border-radius:8px;cursor:pointer;transition:all 0.15s;`;
       label.innerHTML = `
-        <input type="radio" name="q${state.currentIndex}" value="${opt.key}" ${saved === opt.key ? 'checked' : ''} style="margin-top:3px;" />
-        <span style="flex:1;font-size:0.95rem;">
-          <strong style="color:var(--color-primary-dark);">${String.fromCharCode(65 + i)}.</strong>
-          ${opt.label}
-        </span>
-      `;
-
+        <input type="radio" name="q${state.currentIndex}" value="${esc(opt.key)}" ${saved === opt.key ? 'checked' : ''} style="margin-top:3px;" />
+        <span style="flex:1;font-size:0.95rem;"><strong style="color:var(--color-primary-dark);">${String.fromCharCode(65 + i)}.</strong> ${opt.label}</span>`;
       label.addEventListener('click', () => {
+        if (state.submitted) return;
         state.answers[q.id] = opt.key;
+        writeAttempt();
         renderQuestion();
+        renderDots();
         updateProgress();
       });
-
       opts.appendChild(label);
     });
-
     updateNavButtons();
+  }
+
+  function go(i) {
+    state.currentIndex = i;
+    writeAttempt();
+    renderQuestion();
+    renderDots();
   }
 
   function renderNavigation() {
     const nav = document.getElementById('quiz-nav');
     if (!nav) return;
-
     nav.innerHTML = `
       <div class="flex-between" style="gap:8px;flex-wrap:wrap;">
         <button id="btn-prev" class="btn btn-outline">← Previous</button>
@@ -169,26 +256,15 @@ const QuizEngine = (() => {
       </div>
       <div style="margin-top:16px;text-align:center;">
         <button id="btn-submit" class="btn btn-primary btn-full">📝 Submit Assessment</button>
-      </div>
-    `;
-
-    document.getElementById('btn-prev').addEventListener('click', () => {
-      if (state.currentIndex > 0) { state.currentIndex--; renderQuestion(); renderDots(); }
-    });
-
-    document.getElementById('btn-next').addEventListener('click', () => {
-      if (state.currentIndex < state.items.length - 1) { state.currentIndex++; renderQuestion(); renderDots(); }
-    });
-
+      </div>`;
+    document.getElementById('btn-prev').addEventListener('click', () => { if (state.currentIndex > 0) go(state.currentIndex - 1); });
+    document.getElementById('btn-next').addEventListener('click', () => { if (state.currentIndex < state.items.length - 1) go(state.currentIndex + 1); });
     document.getElementById('btn-submit').addEventListener('click', () => {
       const answered = Object.keys(state.answers).length;
       const total = state.items.length;
-      if (answered < total) {
-        if (!confirm(`You have answered ${answered}/${total} items. Submit anyway?`)) return;
-      }
+      if (answered < total && !confirm(`You have answered ${answered}/${total} items. Submit anyway?`)) return;
       submit(false);
     });
-
     renderDots();
   }
 
@@ -198,25 +274,11 @@ const QuizEngine = (() => {
     dots.innerHTML = state.items.map((q, i) => {
       const answered = state.answers[q.id] !== undefined;
       const current = i === state.currentIndex;
-      return `
-        <span data-dot="${i}" style="
-          width:22px;height:22px;border-radius:50%;
-          display:inline-flex;align-items:center;justify-content:center;
-          font-size:0.7rem;font-weight:600;cursor:pointer;
-          background:${current ? 'var(--color-accent)' : answered ? 'var(--color-primary)' : 'var(--color-border)'};
-          color:${answered || current ? '#fff' : '#666'};
-          transition:all 0.15s;
-        ">${i + 1}</span>
-      `;
+      return `<span data-dot="${i}" style="width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+        font-size:0.7rem;font-weight:600;cursor:pointer;background:${current ? 'var(--color-accent)' : answered ? 'var(--color-primary)' : 'var(--color-border)'};
+        color:${answered || current ? '#fff' : '#666'};">${i + 1}</span>`;
     }).join('');
-
-    dots.querySelectorAll('[data-dot]').forEach((el) => {
-      el.addEventListener('click', () => {
-        state.currentIndex = parseInt(el.dataset.dot);
-        renderQuestion();
-        renderDots();
-      });
-    });
+    dots.querySelectorAll('[data-dot]').forEach((el) => el.addEventListener('click', () => go(parseInt(el.dataset.dot, 10))));
   }
 
   function updateNavButtons() {
@@ -232,93 +294,62 @@ const QuizEngine = (() => {
   }
 
   function startTimer() {
-    const el = document.getElementById('quiz-timer');
-    if (!el) return;
-
-    const endTime = state.startTime + state.timeLimit * 1000;
-
-    const interval = setInterval(() => {
-      if (state.submitted) { clearInterval(interval); return; }
-      const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
-      el.textContent = APP.formatTime(remaining);
-
-      if (remaining < 60) el.style.color = '#c62828';
+    const tick = () => {
+      if (!state || state.submitted) return false;
+      const el = document.getElementById('quiz-timer');
+      const remaining = Math.max(0, Math.floor((state.deadline - Date.now()) / 1000));
+      if (el) { el.textContent = APP.formatTime(remaining); if (remaining < 60) el.style.color = '#c62828'; }
       if (remaining <= 0) {
-        clearInterval(interval);
         APP.toast('⏰ Time is up. Submitting...', 'warning', 3000);
         submit(true);
+        return false;
       }
-    }, 1000);
+      return true;
+    };
+    tick();
+    const interval = setInterval(() => { if (!tick()) clearInterval(interval); }, 1000);
   }
 
   /* ---------- Submit ---------- */
   function submit(autoSubmitted) {
-    if (state.submitted) return;
+    if (!state || state.submitted) return;
     state.submitted = true;
+    if (tabMon) tabMon.stop();
 
     let correct = 0;
     const breakdown = [];
-
     state.items.forEach((q) => {
       const given = state.answers[q.id];
       const correctOpt = q.options.find((o) => o.correct);
-      const isCorrect = given === correctOpt?.key;
+      const isCorrect = given !== undefined && given === correctOpt?.key;
       if (isCorrect) correct++;
-
-      breakdown.push({
-        id: q.id,
-        competency: q.competency,
-        given,
-        correct: correctOpt?.key,
-        isCorrect
-      });
+      breakdown.push({ id: q.id, competency: q.competency, given, correct: correctOpt?.key, isCorrect });
     });
 
     const total = state.items.length;
     const percent = Math.round((correct / total) * 100);
     const passed = percent >= state.passingScore;
-
     const typeKey = state.type === 'quiz' ? 'quizzes' : state.type;
 
     const scoreData = {
-      score: correct,
-      total,
-      percent,
-      passed,
-      autoSubmitted,
-      tabViolations: state.tabViolations,
-      breakdown,
-      durationSec: Math.floor((Date.now() - state.startTime) / 1000)
+      score: correct, total, percent, passed, autoSubmitted,
+      tabViolations: state.tabViolations, breakdown,
+      durationSec: Math.floor((Date.now() - state.startTime) / 1000),
+      startedAt: new Date(state.startTime).toISOString()
     };
 
-    // 1. Save score locally
     const saved = Store.saveScore(state.lrn, state.subject, typeKey, state.assessmentId, scoreData);
-
-    // 2. Push score to backend — gamit ang PAREHONG timestamp ng lokal na score.
-    //    Kapag pumalya, naka-queue ito at uulitin; ipinapakita ang status sa estudyante.
-    const lrnForPush = state.lrn, subjForPush = state.subject, idForPush = state.assessmentId;
     let pushPromise = Promise.resolve({ ok: false, error: 'Sync module not loaded' });
     if (window.Sync && typeof Sync.pushScoreToBackend === 'function') {
-      pushPromise = Sync.pushScoreToBackend(lrnForPush, subjForPush, typeKey, idForPush, { ...scoreData, timestamp: saved && saved.timestamp })
+      pushPromise = Sync.pushScoreToBackend(state.lrn, state.subject, typeKey, state.assessmentId, { ...scoreData, timestamp: saved && saved.timestamp })
         .catch((err) => ({ ok: false, error: err && err.message }));
     }
 
-    // 3. Lock assessment locally (no more push to backend)
-    if (!state.allowRetake) {
-      Store.lockAssessment(state.lrn, state.assessmentId, {
-        score: correct, total, percent
-      });
-    }
+    if (!state.allowRetake) Store.lockAssessment(state.lrn, state.assessmentId, { score: correct, total, percent });
+    if (window.Sync && typeof Sync.clearRetakeUnlock === 'function') Sync.clearRetakeUnlock(state.lrn, state.assessmentId);
+    clearAttempt(state.lrn, state.assessmentId);
 
-    // 4. CLEAR the retake flag — this is the key change in v1.1.0
-    //    So the student MUST request a new code for the next retake.
-    if (window.Sync && typeof Sync.clearRetakeUnlock === 'function') {
-      Sync.clearRetakeUnlock(state.lrn, state.assessmentId);
-      console.log('[QuizEngine] 🔄 Retake flag cleared for', state.assessmentId);
-    }
-
-    // 5. Trigger remediation on failed Summative Tests
-    if (state.type === 'st' && percent < 80) {
+    if (state.type === 'st' && !passed) {
       const u = Store.getUser(state.lrn) || {};
       u.remediationUnlocked = true;
       u.remediationTrigger = state.assessmentId;
@@ -336,68 +367,38 @@ const QuizEngine = (() => {
     });
   }
 
-  /* ---------- Render Result ---------- */
   function renderResult({ correct, total, percent, passed, autoSubmitted }) {
     const container = document.getElementById('quiz-body');
     const nav = document.getElementById('quiz-nav');
     const header = document.getElementById('quiz-header');
-
     if (header) header.innerHTML = '';
     if (nav) nav.innerHTML = '';
-
     const level = Transmutation.proficiencyLevel(percent);
-
     container.innerHTML = `
       <div class="card text-center">
         <div style="font-size:3rem;">${passed ? '🎉' : '📖'}</div>
-        <h2 style="color:${passed ? 'var(--color-success)' : 'var(--color-warning)'};">
-          ${passed ? 'Passed!' : 'Keep Practicing'}
-        </h2>
+        <h2 style="color:${passed ? 'var(--color-success)' : 'var(--color-warning)'};">${passed ? 'Passed!' : 'Keep Practicing'}</h2>
         <p class="text-muted">${autoSubmitted ? 'Assessment auto-submitted.' : 'Assessment complete.'}</p>
-
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;margin:24px 0;">
-          <div class="stat-card">
-            <div class="stat-value">${correct}/${total}</div>
-            <div class="stat-label">Score</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">${percent}%</div>
-            <div class="stat-label">Percentage</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">
-              <span class="pl-indicator pl-${level.key}">${level.level}</span>
-            </div>
-            <div class="stat-label">Proficiency</div>
-          </div>
+          <div class="stat-card"><div class="stat-value">${correct}/${total}</div><div class="stat-label">Score</div></div>
+          <div class="stat-card"><div class="stat-value">${percent}%</div><div class="stat-label">Percentage</div></div>
+          <div class="stat-card"><div class="stat-value"><span class="pl-indicator pl-${level.key}">${level.level}</span></div><div class="stat-label">Proficiency</div></div>
         </div>
-
         ${state.tabViolations > 0 ? `<div class="alert alert-warning">⚠️ ${state.tabViolations} tab switch(es) detected during the assessment.</div>` : ''}
-
         ${!passed && state.type === 'st' ? `
           <div class="alert alert-warning" style="text-align:left;">
             <strong>📚 Remediation Unlocked</strong>
-            <p style="margin-top:8px;">Your score is below 80%. A remediation module has been unlocked for the competencies you missed.</p>
-            <a href="../remediation/index.html?subject=${state.subject}&st=${state.assessmentId}" class="btn btn-accent mt-md">Go to Remediation →</a>
-          </div>
-        ` : ''}
-
+            <p style="margin-top:8px;">Your score is below ${state.passingScore}%. A remediation module has been unlocked for the competencies you missed.</p>
+            <a href="../remediation/index.html?subject=${esc(state.subject)}&st=${esc(state.assessmentId)}" class="btn btn-accent mt-md">Go to Remediation →</a>
+          </div>` : ''}
         ${!passed ? `
           <div class="alert alert-info" style="text-align:left;margin-top:16px;">
             <strong>💡 Want to retake?</strong>
-            <p style="margin-top:8px;font-size:0.85rem;">
-              Go back to Assessments and click <strong>"🔑 Request Retake Code"</strong>. Your teacher will send you a code.
-            </p>
-          </div>
-        ` : ''}
-
+            <p style="margin-top:8px;font-size:0.85rem;">Go back to Assessments and click <strong>"🔑 Request Retake Code"</strong>. Your teacher will send you a code.</p>
+          </div>` : ''}
         <p id="quiz-sync-status" class="text-small" style="margin-top:16px;color:#78909c;">⏳ Sending your score to your teacher...</p>
-
-        <div style="margin-top:24px;">
-          <a href="index.html?subject=${state.subject}" class="btn btn-primary">← Back to Assessments</a>
-        </div>
-      </div>
-    `;
+        <div style="margin-top:24px;"><a href="index.html?subject=${esc(state.subject)}" class="btn btn-primary">← Back to Assessments</a></div>
+      </div>`;
   }
 
   function renderLocked() {
@@ -405,11 +406,21 @@ const QuizEngine = (() => {
     container.innerHTML = `
       <div class="card text-center">
         <div style="font-size:3rem;">🔒</div>
-        <h2>Assessment Already Locked</h2>
-        <p class="text-muted">You have already submitted this assessment. Only your teacher can unlock it.</p>
+        <h2>Assessment Already Taken</h2>
+        <p class="text-muted">You have already submitted this assessment. To take it again, request a retake code from the Assessments page.</p>
         <a href="index.html" class="btn btn-primary mt-lg">← Back to Assessments</a>
-      </div>
-    `;
+      </div>`;
+  }
+
+  function renderStartedElsewhere() {
+    const container = document.getElementById('quiz-body');
+    container.innerHTML = `
+      <div class="card text-center">
+        <div style="font-size:3rem;">📱</div>
+        <h2>Test Already Started</h2>
+        <p class="text-muted">This test was started on another device. Continue it on that device, or ask your teacher for a retake code.</p>
+        <a href="index.html" class="btn btn-primary mt-lg">← Back to Assessments</a>
+      </div>`;
   }
 
   return { init };

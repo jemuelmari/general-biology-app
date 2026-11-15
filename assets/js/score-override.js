@@ -1,6 +1,6 @@
 /* ============================================================
    score-override.js — Manual score entry / override (teacher)
-   Version: 1.1.0  (fix: fallback regex, stable timestamp, PT fields)
+   Version: 1.2.0  (pass mark from CONFIG, lasting removals, timestamp-aware merge)
    ------------------------------------------------------------
    For students who took a quiz / ST / Term Exam / PT offline
    (paper copy) or whose online score needs correction.
@@ -26,7 +26,7 @@ const ScoreOverride = (() => {
 
   const QUEUE_KEY = 'gba_v1_override_queue';
   const TOKEN_KEY = 'gba_teacher_token';
-  const PASSING = 80;
+  const PASSING = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
 
   const CATALOG = [
     { code: 'quiz1', label: 'Quiz 1', type: 'quizzes', total: 20 },
@@ -162,10 +162,13 @@ const ScoreOverride = (() => {
       const entry = Store.saveScore(lrn, subject, item.type, id, restored);
       return { entry, push: buildPush(lrn, subject, item.type, id, entry), removed: false };
     }
-    // No online result existed before: remove the entry locally and
-    // push a zero-free tombstone is not possible — the backend keeps its
-    // row, so we push a 0 revert only for local-only cases.
-    Store.deleteScore(lrn, subject, item.type, id);
+    // No online result existed before: keep a "removed" tombstone (hidden by Store.getScores)
+    // so the removal also wins on the student's devices and on other teacher browsers.
+    const at = new Date().toISOString();
+    Store.saveScore(lrn, subject, item.type, id, {
+      score: null, total: old.total || old.maxScore || null, percent: null, passed: false, removed: true,
+      override: { by: 'teacher', reason: 'removed', takenOn: '', at: at, removed: true }
+    });
     const tomb = buildPush(lrn, subject, item.type, id, { score: 0, total: old.total || old.maxScore || 0, percent: 0, passed: false });
     tomb.removed = true;
     tomb.override.reverted = true;
@@ -305,15 +308,20 @@ const ScoreOverride = (() => {
    * local one. A local manual override is kept unless the incoming entry
    * is a newer override, or a genuinely newer online result.
    */
+  // Same rule as sync-master.js / Code.gs: overrides compare by override.at,
+  // plain attempts by timestamp (newer wins; an older backup never replaces a newer score).
   function mergeEntry(local, incoming) {
     if (!local) return incoming;
     if (!incoming) return local;
-    const lo = local.override;
-    if (!lo) return incoming;
-    const io = incoming.override;
-    if (io) return (io.at || '') >= (lo.at || '') ? incoming : local;
-    const incTs = incoming.timestamp || '';
-    return incTs > (lo.at || '') ? incoming : local;
+    if (window.SyncMaster && typeof SyncMaster.mergeEntry === 'function') return SyncMaster.mergeEntry(local, incoming);
+    const lo = local.override, io = incoming.override;
+    if (lo && !io) return (incoming.timestamp || '') > (lo.at || '') ? incoming : local;
+    if (io && !lo) return (local.timestamp || '') > (io.at || '') ? local : incoming;
+    if (lo && io) return (io.at || '') >= (lo.at || '') ? incoming : local;
+    const lt = new Date(local.timestamp || 0).getTime() || 0, it = new Date(incoming.timestamp || 0).getTime() || 0;
+    if (it > lt) return incoming;
+    if (it === lt && (Number(incoming.score) || 0) > (Number(local.score) || 0)) return incoming;
+    return local;
   }
 
   /** Merge a whole {id: entry} map (quizzes/st/pt/te). */

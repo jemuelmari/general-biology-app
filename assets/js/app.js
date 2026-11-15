@@ -275,3 +275,5 @@ const APP = (() => {
 })();
 
 document.addEventListener('DOMContentLoaded', APP.init);
+
+if (typeof window !== "undefined") window.APP = APP;

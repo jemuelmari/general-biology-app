@@ -172,7 +172,7 @@
             <td>${esc(item.label)}${note}</td>
             <td>${scoreCell}</td>
             <td>${src}</td>
-            <td>${hasScore && item.type !== 'pt' ? (e.passed ? '✅' : '❌') : ''}</td>
+            <td>${hasScore && item.type !== 'pt' ? ((e.total ? e.score / e.total * 100 : e.percent) >= ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70) ? '✅' : '❌') : ''}</td>
             <td style="white-space:nowrap;">
               <button class="gs-btn" data-subj="${subject}" data-edit="${item.code}">${hasScore ? '✏️ Override' : '➕ Add score'}</button>
               ${manual ? `<button class="gs-btn gs-revert" data-subj="${subject}" data-revert="${item.code}" title="Restore the previous online result">↩ Revert</button>` : ''}

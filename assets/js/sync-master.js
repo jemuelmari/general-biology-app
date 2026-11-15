@@ -1,6 +1,6 @@
 /* ============================================================
    sync-master.js — Master Sync Engine (student side)
-   Version: 3.0.0
+   Version: 3.1.0  (never auto-syncs on teacher pages; mergeEntry exported)
    ------------------------------------------------------------
    v3.0.0 (sync-complete):
    - Isang "snapshot" ang ipinapadala: progress + scores + badges + points
@@ -15,7 +15,8 @@
    - Teacher override ay pinoprotektahan sa merge.
    ============================================================ */
 
-const SyncMaster = (() => {
+// Loaded at most once even if several pages/scripts inject this file.
+var SyncMaster = window.SyncMaster || (() => {
   'use strict';
 
   const NS = 'gba_v1_';
@@ -481,7 +482,8 @@ const SyncMaster = (() => {
   if (typeof window !== 'undefined') {
     window.addEventListener('load', () => setTimeout(flushQueue, 3000));
     // auto-sync ay para sa estudyante lang (hindi sa teacher pages)
-    const isTeacherCtx = typeof TeacherAuth !== 'undefined';
+    const isTeacherCtx = typeof TeacherAuth !== 'undefined' ||
+      /\/(teacher|classrecord)\/|\/(instructor|classrecord|teacher-login)\.html$/.test(location.pathname);
     if (!isTeacherCtx) {
       if (document.readyState === 'complete' || document.readyState === 'interactive') setTimeout(startAutoSync, 0);
       else document.addEventListener('DOMContentLoaded', startAutoSync);
@@ -490,7 +492,7 @@ const SyncMaster = (() => {
 
   return {
     backendEnabled, pullFromBackend, pushMasterUpdate, flushQueue, getQueueStatus, getDeviceId,
-    syncNow, autoTick, buildSnapshot, mergeScores, mergeProgress, mergeBadges, normalizeScores, deriveLocks
+    syncNow, autoTick, buildSnapshot, mergeEntry, mergeScores, mergeProgress, mergeBadges, normalizeScores, deriveLocks
   };
 })();
 

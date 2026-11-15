@@ -1,6 +1,6 @@
 /* ============================================================
    teacher-sync-auto.js — Auto-sync ng data ng lahat ng estudyante papunta sa teacher pages
-   Version: 2.0.0
+   Version: 2.1.0  (names cleaned; removed-score tombstones kept)
    ------------------------------------------------------------
    Dati: hindi ito nilo-load ng kahit anong page, at ang cache na sinusulat nito ay walang bumabasa.
    Ngayon: kusang nilo-load ng teacher-auth.js sa lahat ng teacher pages.
@@ -148,11 +148,13 @@
       // user/profile
       const idx = list.findIndex((u) => String(u.lrn) === lrn);
       const prev = idx >= 0 ? list[idx] : { lrn };
+      const ct = (v) => String(v || '').replace(/[<>"`&\\]/g, '').replace(/\s+/g, ' ').trim().slice(0, 60);
+      // The Sheet is the class list: its names win (teacher corrections from Normalize Names).
       const next = Object.assign({}, prev, {
         lrn,
-        lastName: s.lastName || prev.lastName || '', firstName: s.firstName || prev.firstName || '',
-        middleName: s.middleName || prev.middleName || '', gradeLevel: s.gradeLevel || prev.gradeLevel || '',
-        section: s.section || prev.section || '', sex: s.sex || prev.sex || ''
+        lastName: ct(s.lastName || prev.lastName), firstName: ct(s.firstName || prev.firstName),
+        middleName: ct(s.middleName !== undefined && s.lastName ? s.middleName : prev.middleName), gradeLevel: ct(s.gradeLevel || prev.gradeLevel),
+        section: ct(s.section || prev.section), sex: ct(s.sex || prev.sex)
       });
       if (JSON.stringify(prev) !== JSON.stringify(next)) {
         if (idx >= 0) list[idx] = next; else list.push(next);

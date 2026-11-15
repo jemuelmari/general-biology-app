@@ -1,6 +1,6 @@
 /* ============================================================
    auth.js — Secure Login & Registration
-   Version: 4.1.0 (Merge cloud data on login)
+   Version: 4.2.0 (Register checks the cloud first; saved-user list escaped)
    ============================================================ */
 
 (() => {
@@ -126,7 +126,7 @@
   const registerError = APP.$('#register-error');
 
   if (registerForm) {
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       registerError.classList.add('hidden');
 
@@ -146,6 +146,25 @@
       if (!sex) return showError(registerError, 'Please select your sex.');
       if (Store.getUser(lrn)) return showError(registerError, 'A profile with this LRN already exists. Please log in instead.');
 
+      // The LRN may already be registered on another device: then LOG IN (the cloud profile and
+      // progress are downloaded). Registering again would create a second, empty profile.
+      if (navigator.onLine && typeof CONFIG !== 'undefined' && CONFIG.backendEnabled) {
+        const btn = registerForm.querySelector('button[type="submit"]');
+        const label = btn ? btn.textContent : '';
+        if (btn) { btn.disabled = true; btn.textContent = '⏳ Checking...'; }
+        try {
+          const r = await Promise.race([
+            fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'getStudentByLRN', lrn }) }).then((x) => x.json()),
+            new Promise((resolve) => setTimeout(() => resolve(null), 6000))
+          ]);
+          if (r && r.ok && r.student) {
+            if (btn) { btn.disabled = false; btn.textContent = label; }
+            return showError(registerError, 'This LRN is already registered. Use the Log In tab — your saved progress will be downloaded.');
+          }
+        } catch (err) { /* offline / slow: allow local registration */ }
+        if (btn) { btn.disabled = false; btn.textContent = label; }
+      }
+
       const user = {
   lrn: lrn,
   lastName: lastName,
@@ -162,7 +181,7 @@
       
       if (window.SyncMaster) window.SyncMaster.pushMasterUpdate(lrn, 'both', 'register').catch(() => {});
 
-      APP.toast(`Welcome back, ${user.firstName || user.FirstName}!`, 'success');
+      APP.toast(`Welcome, ${user.firstName || user.FirstName}!`, 'success');
       setTimeout(() => window.location.replace('dashboard.html'), 300);
     });
   }
@@ -180,12 +199,13 @@
         return;
       }
 
+      const clean = (v) => String(v || '').replace(/[<>"`&\\]/g, '');
       const normalizedUsers = users.map(u => ({
-        lrn: u.LRN || u.lrn || '',
-        lastName: u.LastName || u.lastName || '',
-        firstName: u.FirstName || u.firstName || '',
-        middleName: u.MiddleName || u.middleName || '',
-        section: u.Section || u.section || ''
+        lrn: Store.normalizeLRN(u.LRN || u.lrn || ''),
+        lastName: clean(u.LastName || u.lastName),
+        firstName: clean(u.FirstName || u.firstName),
+        middleName: clean(u.MiddleName || u.middleName),
+        section: clean(u.Section || u.section)
       }));
 
       normalizedUsers.sort((a, b) => (a.lastName || '').localeCompare(b.lastName || ''));

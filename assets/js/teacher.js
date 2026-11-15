@@ -58,9 +58,9 @@
         Object.values(st).forEach((stData) => {
           if (stData && stData.total) {
             totalAssessments++;
-            if (stData.passed) totalPassing++;
+            if (stData.percent >= ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70)) totalPassing++;
             stScores.push(stData.percent);
-            if (stData.percent < 65) totalUrgent++;
+            if (stData.percent < ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70) - 10) totalUrgent++;
           }
         });
       });
@@ -108,7 +108,7 @@
         value: stats.avgST + '%',
         label: 'Avg ST Score',
         icon: '📊',
-        color: stats.avgST >= 80 ? 'green' : 'amber'
+        color: stats.avgST >= ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70) ? 'green' : 'amber'
       }),
       UI.renderStatCard({
         value: stats.urgent,
@@ -134,12 +134,13 @@
   const actions = [
     { icon: '🎮', title: 'Activity Tracker', desc: 'Track lesson activity completion, badges, and points', href: 'teacher/activity-tracker.html', color: '#1b7a3d', badge: null },
     { icon: '📝', title: 'Assessment Tracker', desc: 'Track quiz, ST, and term exam performance', href: 'teacher/assessment-tracker.html', color: '#0277bd', badge: null },
-    { icon: '🔒', title: 'Locked Assessments', desc: 'Manage locked submissions — unlock for retakes', href: 'teacher/locked-assessments.html', color: '#c62828', badge: lockedCount > 0 ? { text: lockedCount + ' locked', type: 'alert' } : null },
+    { icon: '🔒', title: 'Retake Codes', desc: 'Approve retake requests or give a student a retake code directly', href: 'teacher/locked-assessments.html', color: '#c62828', badge: lockedCount > 0 ? { text: lockedCount + ' locked', type: 'alert' } : null },
     { icon: '✏️', title: 'Offline Scores', desc: 'Enter or override scores for paper exams — updates the class record and syncs to the backend', href: 'classrecord/offline-scores.html', color: '#6a1b9a', badge: { text: 'New', type: 'info' } },
     { icon: '🖨️', title: 'Print Exam Copies', desc: 'Print actual quiz, ST and Term Exam questions (Set A / B) for students without internet — or save as editable Word', href: 'teacher/print-exam.html', color: '#2e7d32', badge: { text: 'New', type: 'info' } },
     { icon: '📄', title: 'Exam Evidence', desc: 'Printable proof of each student\'s actual exam — questions, answers, correct answers, score — with parent/guardian signature', href: 'teacher/evidence.html', color: '#0d47a1', badge: { text: 'New', type: 'info' } },
     { icon: '📥', title: 'Sync Center', desc: 'Import student progress from other devices', href: 'teacher/sync-center.html', color: '#ed6c02', badge: { text: 'Cross-device', type: 'info' } },
     { icon: '📊', title: 'Item Analysis', desc: 'Per-item difficulty and Most/Least Learned competencies', href: 'teacher/item-analysis.html', color: '#6a1b9a', badge: null },
+    { icon: '🧮', title: 'TOS Generator', desc: 'Table of Specifications (70% LOTS : 30% HOTS) for each quiz, ST and Term Exam + 5 Most / 5 Least Learned competencies', href: 'teacher/tos-generator.html', color: '#00838f', badge: { text: 'New', type: 'info' } },
     { icon: '🎯', title: 'Intervention', desc: 'Students needing support, auto-classified', href: 'teacher/intervention.html', color: '#c62828', badge: stats.urgent > 0 ? { text: stats.urgent + ' urgent', type: 'alert' } : null },
     { icon: '🔤', title: 'Normalize Names', desc: 'Standardize record format across all students', href: 'teacher/normalize-names.html', color: '#00695c', badge: null },
     { icon: '📋', title: 'Class Record', desc: 'Complete gradebook with transmutation and reports', href: 'classrecord.html', color: '#455a64', badge: null }
@@ -289,7 +290,7 @@
       ['biol1', 'biol2'].forEach((s) => {
         const st = scores[s]?.st || {};
         Object.entries(st).forEach(([stId, stData]) => {
-          if (stData && stData.percent < 65) {
+          if (stData && stData.total && stData.percent < ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70) - 10) {
             urgent.push({ user: u, subject: s, stId, percent: stData.percent });
           }
         });
@@ -443,7 +444,7 @@
     } else {
       subsEl.innerHTML = subs.slice(0, 10).map((s) => {
         const data = s.data;
-        const passed = data.passed;
+        const passed = data.total ? Math.round(data.score / data.total * 100) >= ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70) : !!data.passed;
         const cls = passed ? '#2e7d32' : '#c62828';
         const avatar = UI.renderAvatar(s.user.firstName, s.user.lastName, s.user.lrn);
         return `

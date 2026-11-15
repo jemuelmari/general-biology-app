@@ -16,8 +16,6 @@
   let currentSearch = '';
   let currentSort = 'last';
 
-  const WEIGHTS = { ww: 0.25, pt: 0.50, ex: 0.25 };
-  const EX_INTERNAL = { st1: 0.30, st2: 0.30, te: 0.40 };
 
   /* ============================================================
      TAB SWITCHING
@@ -51,44 +49,31 @@
 
   function getStudentsData() {
     const users = Store.getAllUsers();
-    return users.map((u) => {
-      const scores = Store.getScores(u.lrn)[currentSubject] || {};
-
-      const quizzes = Object.values(scores.quizzes || {}).filter((q) => q && q.total);
-      const wwAvg = quizzes.length
-        ? quizzes.reduce((a, q) => a + pctOf(q.score, q.total), 0) / quizzes.length
-        : 0;
-
-      const pts = Object.values(scores.pt || {}).filter((p) => p && p.score != null);
-      const ptAvg = pts.length
-        ? pts.reduce((a, p) => a + pctOf(p.score, p.maxScore || 100), 0) / pts.length
-        : 0;
-
+    const all = users.map((u) => ({ u, s: Store.getScores(u.lrn)[currentSubject] || {} }));
+    // Assessments counted = those already given to this group (section filter applied)
+    const pool = currentSection ? all.filter((x) => x.u.section === currentSection) : all;
+    const given = Transmutation.givenAssessments(pool.map((x) => x.s));
+    return all.map(({ u, s: scores }) => {
+      const g = Transmutation.computeTermGrade(scores, currentSubject, given);
       const st1 = scores.st?.[`${currentSubject}-st1`];
       const st2 = scores.st?.[`${currentSubject}-st2`];
       const te = scores.te?.[`${currentSubject}-te`];
-
-      const st1Pct = st1 ? pctOf(st1.score, st1.total) : 0;
-      const st2Pct = st2 ? pctOf(st2.score, st2.total) : 0;
-      const tePct = te ? pctOf(te.score, te.total) : 0;
-
-      const ex = (st1Pct * EX_INTERNAL.st1) + (st2Pct * EX_INTERNAL.st2) + (tePct * EX_INTERNAL.te);
-      const final = Transmutation.computeFinalGrade(wwAvg, ptAvg, ex, WEIGHTS);
-
+      const has = (e) => e && !e.removed && e.score !== null && e.score !== undefined;
+      const fmt = (v) => (v === null ? '—' : v);
       return {
         user: u,
-        ww: Math.round(wwAvg * 10) / 10,
-        pt: Math.round(ptAvg * 10) / 10,
-        st1: st1 ? `${st1.score}/${st1.total}` : '—',
-        st1Pct: Math.round(st1Pct),
-        st2: st2 ? `${st2.score}/${st2.total}` : '—',
-        st2Pct: Math.round(st2Pct),
-        te: te ? `${te.score}/${te.total}` : '—',
-        tePct: Math.round(tePct),
-        ex: Math.round(ex * 10) / 10,
-        final: final.transmuted,
-        rawFinal: final.raw,
-        passing: final.passing,
+        ww: fmt(g.ww),
+        pt: fmt(g.pt),
+        st1: has(st1) ? `${st1.score}/${st1.total}` : '—',
+        st1Pct: Math.round(g.st1 || 0),
+        st2: has(st2) ? `${st2.score}/${st2.total}` : '—',
+        st2Pct: Math.round(g.st2 || 0),
+        te: has(te) ? `${te.score}/${te.total}` : '—',
+        tePct: Math.round(g.te || 0),
+        ex: fmt(g.ex),
+        final: g.final === null ? 0 : g.final,
+        rawFinal: g.raw,
+        passing: g.passing,
         manual: { st1: !!(st1 && st1.override), st2: !!(st2 && st2.override), te: !!(te && te.override) }
       };
     });
@@ -418,10 +403,10 @@
         <th rowspan="2" style="vertical-align:bottom;">Student</th>
         <th rowspan="2" style="vertical-align:bottom;">Sex</th>
         <th rowspan="2" style="vertical-align:bottom;">Section</th>
-        <th colspan="3" class="col-group">Written Works (25%)</th>
-        <th colspan="2" class="col-group">Summative Tests (30%)</th>
-        <th colspan="1" class="col-group">Term Exam (40%)</th>
-        <th colspan="1" class="col-group">PT (50%)</th>
+        <th colspan="3" class="col-group">Written Works (${Math.round(CONFIG.WEIGHTS.ww*100)}%)</th>
+        <th colspan="2" class="col-group">Summative Tests (QA)</th>
+        <th colspan="1" class="col-group">Term Exam (QA)</th>
+        <th colspan="1" class="col-group">PT (${Math.round(CONFIG.WEIGHTS.pt*100)}%)</th>
         <th colspan="2" class="col-group">Final</th>
       </tr>
       <tr>
@@ -584,7 +569,7 @@
       plMap[lvl.level] = (plMap[lvl.level] || 0) + 1;
     });
 
-    const avg = (key) => withGrades.length ? (withGrades.reduce((a, s) => a + s[key], 0) / withGrades.length).toFixed(1) : '—';
+    const avg = (key) => { const v = withGrades.map((s) => s[key]).filter((x) => typeof x === 'number'); return v.length ? (v.reduce((a, x) => a + x, 0) / v.length).toFixed(1) : '—'; };
 
     const maleGrades = withGrades.filter((s) => APP.getSexValue(s.user.sex) === 'Male');
     const femaleGrades = withGrades.filter((s) => APP.getSexValue(s.user.sex) === 'Female');
@@ -616,9 +601,9 @@
       </div>
       <div class="report-card">
         <h4>📈 Component Averages</h4>
-        <div class="distribution-row"><span class="distribution-label">WW (25%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('ww')}%;">${avg('ww')}</div></div></div>
-        <div class="distribution-row"><span class="distribution-label">PT (50%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('pt')}%;background:linear-gradient(90deg, #0277bd, #42a5f5);">${avg('pt')}</div></div></div>
-        <div class="distribution-row"><span class="distribution-label">EX (25%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('ex')}%;background:linear-gradient(90deg, #ed6c02, #ffb74d);">${avg('ex')}</div></div></div>
+        <div class="distribution-row"><span class="distribution-label">WW (${Math.round(CONFIG.WEIGHTS.ww*100)}%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('ww')}%;">${avg('ww')}</div></div></div>
+        <div class="distribution-row"><span class="distribution-label">PT (${Math.round(CONFIG.WEIGHTS.pt*100)}%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('pt')}%;background:linear-gradient(90deg, #0277bd, #42a5f5);">${avg('pt')}</div></div></div>
+        <div class="distribution-row"><span class="distribution-label">QA (${Math.round(CONFIG.WEIGHTS.ex*100)}%)</span><div class="distribution-bar"><div class="distribution-fill" style="width:${avg('ex')}%;background:linear-gradient(90deg, #ed6c02, #ffb74d);">${avg('ex')}</div></div></div>
         <div class="distribution-row" style="margin-top:12px;border-top:2px solid #f3e5f5;padding-top:12px;">
           <span class="distribution-label" style="font-weight:800;">Final</span>
           <div class="distribution-bar"><div class="distribution-fill" style="width:${avg('final')}%;background:linear-gradient(90deg, #1b5e20, #4caf50);font-weight:800;">${avg('final')}</div></div>
