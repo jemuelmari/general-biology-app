@@ -36,7 +36,7 @@
     <div class="container flex-between">
       <div>
         <h1>📥 Sync Center</h1>
-        <span class="version">v2.6.0</span>
+        <span class="version">v2.5.5</span>
       </div>
       <nav style="display:flex;gap:8px;">
         <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
@@ -168,15 +168,16 @@
 
   </main>
 
-  <footer class="app-footer"><p>Sync Center · <span class="version">v2.6.0</span></p></footer>
+  <footer class="app-footer"><p>Sync Center · <span class="version">v2.5.5</span></p></footer>
 
-  <script src="../config.js?v=2.6.0"></script>
-  <script src="../assets/js/app.js?v=2.6.0"></script>
-  <script src="../assets/js/store.js?v=2.6.0"></script>
-  <script src="../assets/js/security.js?v=2.6.0"></script>
-  <script src="../assets/js/score-override.js?v=2.6.0"></script>
-  <script src="../assets/js/sync.js?v=2.6.0"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.6.0"></script>
+  <script src="../config.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/app.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/store.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/security.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/score-override.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/sync.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/teacher-auth.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/sync-master.js?v=2.6.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       let pendingImports = [];
@@ -544,63 +545,50 @@
         }).join('');
       }
 
-      document.getElementById('btn-confirm-import').addEventListener('click', () => {
-        let imported = 0, rejected = 0;
-        pendingImports.forEach((imp) => {
-          if (!imp.valid) { rejected++; syncLog.push({ time: new Date().toISOString(), status: 'rejected', reason: imp.error }); return; }
+      document.getElementById('btn-confirm-import').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-confirm-import');
+        btn.disabled = true;
+        let imported = 0, rejected = 0, cloudOk = 0, cloudFail = 0;
+        const token = sessionStorage.getItem('gba_teacher_token') || '';
+        for (const imp of pendingImports) {
+          if (!imp.valid) { rejected++; syncLog.push({ time: new Date().toISOString(), status: 'rejected', reason: imp.error }); continue; }
           try {
             const p = imp.payload;
-            const existing = Store.getUser(p.student.lrn);
-            Store.saveUser(existing ? { ...existing, ...p.student } : p.student);
+            const lrn = Store.normalizeLRN(p.student.lrn);
+            const existing = Store.getUser(lrn);
+            Store.saveUser(existing ? { ...p.student, ...existing, lrn } : { ...p.student, lrn });
 
-            const currentProg = Store.getProgress(p.student.lrn);
-            ['biol1', 'biol2'].forEach((subj) => {
-              if (!p.progress || !p.progress[subj]) return;
-              if (!currentProg[subj]) currentProg[subj] = { weeks: {}, completed: [] };
-              if (!currentProg[subj].weeks) currentProg[subj].weeks = {};
-              if (!Array.isArray(currentProg[subj].completed)) currentProg[subj].completed = [];
-              const incomingWeeks = p.progress[subj].weeks || {};
-              Object.keys(incomingWeeks).forEach((w) => {
-                if (!currentProg[subj].weeks[w]) currentProg[subj].weeks[w] = {};
-                Object.assign(currentProg[subj].weeks[w], incomingWeeks[w]);
-              });
-              const incoming = p.progress[subj].completed || [];
-              currentProg[subj].completed = Array.from(new Set([...currentProg[subj].completed, ...incoming]));
-            });
-            Store.saveProgress(p.student.lrn, currentProg);
-
-            const currentScores = Store.getScores(p.student.lrn);
-            ['biol1', 'biol2'].forEach((subj) => {
-              if (!p.scores || !p.scores[subj]) return;
-              if (!currentScores[subj]) currentScores[subj] = {};
-              ['quizzes', 'st', 'pt', 'activities'].forEach((type) => {
-                if (p.scores[subj][type]) {
-                  currentScores[subj][type] = ScoreOverride.mergeTypeMap(currentScores[subj][type], p.scores[subj][type]);
-                }
-              });
-              if (p.scores[subj].te) {
-                currentScores[subj].te = ScoreOverride.mergeTypeMap(currentScores[subj].te, p.scores[subj].te);
-              }
-            });
-            try { localStorage.setItem('gba_v1_scores_' + p.student.lrn, JSON.stringify(currentScores)); }
-            catch (e) { throw new Error('Failed to save scores: ' + e.message); }
-
-            if (p.badges) {
-              const currentBadges = Store.getBadges(p.student.lrn);
-              ['biol1', 'biol2'].forEach((subj) => {
-                if (p.badges[subj]) {
-                  currentBadges[subj] = Array.from(new Set([...(currentBadges[subj] || []), ...p.badges[subj]]));
-                }
-              });
-              try { localStorage.setItem('gba_v1_badges_' + p.student.lrn, JSON.stringify(currentBadges)); } catch (e) {}
-            }
-
+            // Same merge rules as the student devices and the Sheet: newer attempt wins,
+            // teacher overrides by their date, progress/badges are unions.
+            const rawScores = JSON.parse(localStorage.getItem('gba_v1_scores_' + lrn) || '{}');
+            const mergedScores = SyncMaster.mergeScores(rawScores, p.scores || {});
+            const mergedProgress = SyncMaster.mergeProgress(Store.getProgress(lrn), p.progress || {});
+            const mergedBadges = SyncMaster.mergeBadges(Store.getBadges(lrn), p.badges || {});
+            localStorage.setItem('gba_v1_scores_' + lrn, JSON.stringify(mergedScores));
+            Store.saveProgress(lrn, mergedProgress);
+            localStorage.setItem('gba_v1_badges_' + lrn, JSON.stringify(mergedBadges));
             imported++;
-            syncLog.push({ time: new Date().toISOString(), status: 'success', student: p.student.lrn });
+
+            // ...and to the Google Sheet, so every device and the class record see it
+            let cloud = 'skipped (no teacher token)';
+            if (token && CONFIG.backendEnabled) {
+              try {
+                const u = Store.getUser(lrn) || {};
+                const res = await fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                  body: JSON.stringify({ action: 'upsertStudentMaster', token, lrn, deviceId: 'teacher-import',
+                    student: { lastName: u.lastName || '', firstName: u.firstName || '', middleName: u.middleName || '', gradeLevel: u.gradeLevel || '', section: u.section || '', sex: u.sex || '' },
+                    progress: p.progress || {}, scores: p.scores || {}, badges: p.badges || {} }) });
+                const d = await res.json();
+                if (d && d.ok) { cloud = 'saved to Sheet'; cloudOk++; } else { cloud = 'Sheet error: ' + ((d && d.error) || 'unknown'); cloudFail++; }
+              } catch (e) { cloud = 'offline — saved on this browser only'; cloudFail++; }
+            }
+            syncLog.push({ time: new Date().toISOString(), status: 'success', student: lrn, reason: cloud });
           } catch (err) { rejected++; syncLog.push({ time: new Date().toISOString(), status: 'error', reason: err.message }); }
-        });
-        APP.toast('✅ Imported: ' + imported + ' · ❌ Rejected: ' + rejected, imported ? 'success' : 'warning');
+        }
+        APP.toast('✅ Imported: ' + imported + (cloudOk ? ' · ☁️ Sheet: ' + cloudOk : '') + (cloudFail ? ' · ⚠️ not in Sheet: ' + cloudFail : '') + ' · ❌ Rejected: ' + rejected,
+          imported && !cloudFail ? 'success' : 'warning', 6000);
         pendingImports = [];
+        btn.disabled = false;
         document.getElementById('import-preview-container').classList.add('hidden');
         renderLog();
       });

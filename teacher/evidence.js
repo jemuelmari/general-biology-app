@@ -185,7 +185,7 @@ window.Evidence = (function () {
     if (!entry) return null;
 
     var byId = {};
-    (bank.items || []).forEach(function (q) { if (q && q.id != null) byId[String(q.id)] = q; });
+    (bank.items || []).concat(bank.archivedItems || []).forEach(function (q) { if (q && q.id != null && !byId[String(q.id)]) byId[String(q.id)] = q; });
 
     var breakdown = Array.isArray(entry.breakdown) ? entry.breakdown : [];
     var keyMismatch = 0;
@@ -211,7 +211,7 @@ window.Evidence = (function () {
     var total = entry.total != null ? entry.total : (items.length || (bank.items || []).length);
     var correct = entry.score != null ? entry.score : items.filter(function (x) { return x.isCorrect; }).length;
     var percent = entry.percent != null ? entry.percent : (total ? Math.round(correct / total * 100) : 0);
-    var passing = bank.passingScore || 80;
+    var passing = (typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70;
 
     var comp = {};
     items.forEach(function (it) {

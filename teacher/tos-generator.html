@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOS Generator — Teacher</title>
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/teacher.css" />
+  <style>
+    .tos-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; background: #fff; }
+    .tos-table th, .tos-table td { border: 1px solid #90a4ae; padding: 6px 7px; vertical-align: top; }
+    .tos-table thead th { background: #eceff1; font-size: 0.72rem; text-transform: uppercase; text-align: center; }
+    .tos-table td.n { text-align: center; font-variant-numeric: tabular-nums; }
+    .tos-table tfoot td { font-weight: 800; background: #f5f7fa; }
+    .tos-meta { display: flex; gap: 18px; flex-wrap: wrap; margin: 10px 0 0; font-size: 0.85rem; }
+    .tos-pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: 0.8rem; }
+    .mll-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+    .mll-card h4 { margin: 0 0 8px; }
+    .mll-row { padding: 8px 0; border-bottom: 1px solid #eceff1; font-size: 0.86rem; }
+    .mll-row:last-child { border-bottom: 0; }
+    .print-only { display: none; }
+    @media print {
+      .app-header, .app-footer, .no-print, #gba-tsync-banner { display: none !important; }
+      .print-only { display: block; }
+      body { background: #fff; }
+      .card { box-shadow: none; border: 0; padding: 0; }
+      .tos-table { font-size: 9.5pt; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header teacher-header">
+    <div class="container flex-between">
+      <div>
+        <h1>🧮 TOS Generator</h1>
+        <span class="version">v2.6.0</span>
+      </div>
+      <nav style="display:flex;gap:8px;">
+        <a href="../instructor.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Teacher Home</a>
+        <button onclick="TeacherAuth.logout()" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">Log Out</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px;padding-bottom:64px;">
+    <div class="card no-print">
+      <h2 style="color:var(--color-primary-dark);margin-top:0;">Table of Specifications</h2>
+      <p class="text-muted">Built from the actual published test: competencies, number of days each was taught, item counts, Bloom levels (70% LOTS : 30% HOTS) and item placement.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;align-items:end;">
+        <div><label class="form-label">Subject</label>
+          <select id="tos-subject" class="form-control"><option value="biol1">General Biology 1</option><option value="biol2">General Biology 2</option></select></div>
+        <div><label class="form-label">Test</label>
+          <select id="tos-test" class="form-control">
+            <option value="quiz1">Quiz 1</option><option value="quiz2">Quiz 2</option><option value="quiz3">Quiz 3</option>
+            <option value="st1" selected>Summative Test 1</option><option value="st2">Summative Test 2</option><option value="te">Term Exam</option>
+          </select></div>
+        <div><label class="form-label">Section (for Most/Least Learned)</label>
+          <select id="tos-section" class="form-control"><option value="">All sections</option></select></div>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Print</button>
+      </div>
+    </div>
+
+    <div class="card" id="tos-out"></div>
+    <div class="card" id="mll-out"></div>
+  </main>
+
+  <footer class="app-footer"><p>TOS Generator · <span class="version">v2.6.0</span></p></footer>
+
+  <script src="../config.js?v=2.6.0"></script>
+  <script src="../assets/js/app.js?v=2.6.0"></script>
+  <script src="../assets/js/store.js?v=2.6.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=2.6.0"></script>
+  <script>
+    (function () {
+      'use strict';
+      const BLOOMS = ['Remembering', 'Understanding', 'Applying', 'Analyzing', 'Evaluating', 'Creating'];
+      const SHORT = { Remembering: 'R', Understanding: 'U', Applying: 'Ap', Analyzing: 'An', Evaluating: 'E', Creating: 'C' };
+      const LOTS = ['Remembering', 'Understanding'];
+      const esc = (v) => String(v === null || v === undefined ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const V = '?v=' + encodeURIComponent(CONFIG.VERSION);
+      const cache = {};
+      const getJson = async (url) => (cache[url] = cache[url] || fetch(url + V).then((r) => r.json()));
+
+      // "STEM_BIO11/12-Id-f-7, -8" -> ["...-7", "...-8"]
+      function splitCodes(code) {
+        const parts = String(code || '').split(',').map((p) => p.trim()).filter(Boolean);
+        if (!parts.length) return [];
+        const base = parts[0], pre = base.slice(0, base.lastIndexOf('-'));
+        return [base].concat(parts.slice(1).map((p) => pre + '-' + p.replace(/^-/, '')));
+      }
+
+      async function context(subject) {
+        const comp = await getJson(`../data/${subject}-competencies.json`);
+        const info = {}, order = [];
+        (comp.contentAreas || []).forEach((ca) => (ca.competencies || []).forEach((c) => { info[c.code] = { desc: c.desc, area: ca.title }; order.push(c.code); }));
+        const days = {}, firstWeek = {};
+        for (let w = 1; w <= 10; w++) {
+          try {
+            const wk = await getJson(`../student/${subject}/week${w}/week${w}.json`);
+            (wk.days || []).forEach((d) => {
+              const cs = splitCodes(d.competency);
+              cs.forEach((c) => { days[c] = (days[c] || 0) + 1 / cs.length; if (!firstWeek[c]) firstWeek[c] = w; });
+            });
+          } catch (e) { /* missing week */ }
+        }
+        return { info, order, days, firstWeek };
+      }
+
+      async function renderTOS() {
+        const subject = document.getElementById('tos-subject').value;
+        const test = document.getElementById('tos-test').value;
+        const out = document.getElementById('tos-out');
+        out.innerHTML = '<p class="text-muted">Loading…</p>';
+        let bank, ctx;
+        try { [bank, ctx] = await Promise.all([getJson(`../data/${subject}-${test}.json`), context(subject)]); }
+        catch (e) { out.innerHTML = '<div class="alert alert-danger">Could not load the test: ' + esc(e.message) + '</div>'; return; }
+        const items = bank.items || [];
+        const rows = {};
+        items.forEach((q, i) => {
+          const c = q.competency || 'General';
+          const r = rows[c] = rows[c] || { code: c, items: [], blooms: {} };
+          r.items.push(i + 1);
+          const b = BLOOMS.indexOf(q.bloomLevel) >= 0 ? q.bloomLevel : 'Unspecified';
+          r.blooms[b] = (r.blooms[b] || 0) + 1;
+        });
+        const codes = Object.keys(rows).sort((a, b) => {
+          const ia = ctx.order.indexOf(a), ib = ctx.order.indexOf(b);
+          return (ia < 0 ? 999 : ia) - (ib < 0 ? 999 : ib);
+        });
+        const totalDays = codes.reduce((s, c) => s + (ctx.days[c] || 0), 0);
+        const tot = { items: 0, days: 0, blooms: {} };
+        const ranges = (nums) => {
+          const out = []; let s = nums[0], p = nums[0];
+          for (let i = 1; i <= nums.length; i++) {
+            if (nums[i] === p + 1) { p = nums[i]; continue; }
+            out.push(s === p ? String(s) : s + '–' + p); s = nums[i]; p = nums[i];
+          }
+          return out.join(', ');
+        };
+        const body = codes.map((c, idx) => {
+          const r = rows[c], d = ctx.days[c] || 0;
+          tot.items += r.items.length; tot.days += d;
+          BLOOMS.forEach((b) => { tot.blooms[b] = (tot.blooms[b] || 0) + (r.blooms[b] || 0); });
+          return `<tr><td class="n">${idx + 1}</td><td><strong>${esc(c)}</strong><br>${esc((ctx.info[c] || {}).desc || '')}</td>
+            <td class="n">${ctx.firstWeek[c] || '—'}</td><td class="n">${d ? Math.round(d * 10) / 10 : '—'}</td>
+            <td class="n">${totalDays ? Math.round(d / totalDays * 1000) / 10 + '%' : '—'}</td>
+            <td class="n"><strong>${r.items.length}</strong></td>
+            ${BLOOMS.map((b) => `<td class="n">${r.blooms[b] || ''}</td>`).join('')}
+            <td style="font-size:0.78rem;">${ranges(r.items)}</td></tr>`;
+        }).join('');
+        const lots = LOTS.reduce((s, b) => s + (tot.blooms[b] || 0), 0);
+        const tagged = BLOOMS.reduce((s, b) => s + (tot.blooms[b] || 0), 0);
+        const hots = tagged - lots;
+        const lp = tagged ? Math.round(lots / tagged * 100) : 0;
+        const ok = tagged === items.length && Math.abs(lp - 70) <= 2;
+        out.innerHTML = `
+          <div class="print-only" style="text-align:center;margin-bottom:8px;">
+            <div style="font-weight:700;">${esc(CONFIG.DEVELOPER.school)}</div>
+            <div>${esc(CONFIG.DEVELOPER.division)}</div>
+          </div>
+          <h3 style="margin:0;">TABLE OF SPECIFICATIONS — ${esc(bank.title || test.toUpperCase())}</h3>
+          <div class="tos-meta">
+            <span><strong>Subject:</strong> ${subject === 'biol1' ? 'General Biology 1' : 'General Biology 2'}</span>
+            <span><strong>Coverage:</strong> ${esc(bank.coverage || '')}</span>
+            <span><strong>Items:</strong> ${items.length}</span>
+            <span><strong>Time:</strong> ${Math.round((bank.timeLimit || 0) / 60)} min</span>
+            <span class="tos-pill" style="background:${ok ? '#e8f5e9' : '#fff3e0'};color:${ok ? '#1b5e20' : '#e65100'};">LOTS ${lots} (${lp}%) : HOTS ${hots} (${tagged ? 100 - lp : 0}%)</span>
+          </div>
+          <div style="overflow:auto;margin-top:12px;">
+          <table class="tos-table">
+            <thead>
+              <tr><th rowspan="2">#</th><th rowspan="2">Learning Competency</th><th rowspan="2">Week</th><th rowspan="2">No. of Days</th><th rowspan="2">% of Time</th><th rowspan="2">No. of Items</th>
+                <th colspan="2">LOTS (70%)</th><th colspan="4">HOTS (30%)</th><th rowspan="2">Item Placement</th></tr>
+              <tr>${BLOOMS.map((b) => `<th title="${b}">${SHORT[b]}</th>`).join('')}</tr>
+            </thead>
+            <tbody>${body}</tbody>
+            <tfoot><tr><td colspan="3">TOTAL</td><td class="n">${Math.round(tot.days * 10) / 10}</td><td class="n">100%</td><td class="n">${tot.items}</td>
+              ${BLOOMS.map((b) => `<td class="n">${tot.blooms[b] || 0}</td>`).join('')}<td></td></tr></tfoot>
+          </table></div>
+          <p class="text-small text-muted" style="margin-top:8px;">R = Remembering · U = Understanding · Ap = Applying · An = Analyzing · E = Evaluating · C = Creating. Item numbers follow the Master copy in Print Exam (Set A/B are shuffled).</p>
+          ${tagged < items.length ? `<div class="alert alert-warning">⚠️ ${items.length - tagged} item(s) have no Bloom level in the question bank.</div>` : ''}
+          <div class="print-only" style="margin-top:36px;display:flex;justify-content:space-between;">
+            <div>Prepared by:<br><br><strong>${esc(CONFIG.DEVELOPER.name)}</strong><br>${esc(CONFIG.DEVELOPER.position)}</div>
+            <div>Checked by:<br><br>______________________<br>Subject Group Head</div>
+            <div>Approved by:<br><br>______________________<br>School Head</div>
+          </div>`;
+      }
+
+      // ---------- Most / Least Learned (ST1 + ST2, by competency) ----------
+      async function renderMLL() {
+        const subject = document.getElementById('tos-subject').value;
+        const section = document.getElementById('tos-section').value;
+        const out = document.getElementById('mll-out');
+        const ctx = await context(subject);
+        const per = {};
+        let takers = 0;
+        Store.getAllUsers().forEach((u) => {
+          if (section && u.section !== section) return;
+          const st = ((Store.getScores(u.lrn) || {})[subject] || {}).st || {};
+          let any = false;
+          [subject + '-st1', subject + '-st2'].forEach((id) => {
+            const e = st[id];
+            if (!e || !Array.isArray(e.breakdown)) return;
+            any = true;
+            e.breakdown.forEach((b) => {
+              const c = b.competency || 'General';
+              per[c] = per[c] || { c: 0, n: 0 };
+              per[c].n++;
+              if (b.isCorrect || (b.given !== undefined && b.given === b.correct)) per[c].c++;
+            });
+          });
+          if (any) takers++;
+        });
+        const list = Object.keys(per).map((code) => ({ code, mps: per[code].n ? per[code].c / per[code].n * 100 : 0, n: per[code].n }))
+          .sort((a, b) => b.mps - a.mps);
+        if (!list.length) {
+          out.innerHTML = '<h3 style="margin-top:0;">🏅 Most &amp; Least Learned Competencies</h3><p class="text-muted">No Summative Test results with item data yet' + (section ? ' for this section' : '') + '.</p>';
+          return;
+        }
+        const most = list.slice(0, Math.min(5, Math.ceil(list.length / 2)));
+        const least = list.slice().reverse().filter((x) => most.indexOf(x) === -1).slice(0, 5);
+        const row = (x) => `<div class="mll-row"><strong>${esc(x.code)}</strong> — ${esc((ctx.info[x.code] || {}).desc || '')}
+          <div class="text-small" style="margin-top:2px;">MPS <strong>${Math.round(x.mps * 10) / 10}%</strong> · ${x.n} responses${ctx.firstWeek[x.code] ? ' · taught in Week ' + ctx.firstWeek[x.code] : ''}</div></div>`;
+        out.innerHTML = `
+          <h3 style="margin-top:0;">🏅 Most &amp; Least Learned Competencies — ST1 + ST2</h3>
+          <p class="text-small text-muted">${takers} student(s)${section ? ' in ' + esc(section) : ''}. Use the least-learned list as an additional basis when preparing the Term Exam and remediation.</p>
+          <div class="mll-grid">
+            <div class="mll-card"><h4 style="color:#1b5e20;">✅ 5 Most Learned</h4>${most.map(row).join('')}</div>
+            <div class="mll-card"><h4 style="color:#b71c1c;">⚠️ 5 Least Learned</h4>${least.map(row).join('') || '<p class="text-muted">—</p>'}</div>
+          </div>`;
+      }
+
+      function fillSections() {
+        const sel = document.getElementById('tos-section');
+        const secs = Array.from(new Set(Store.getAllUsers().map((u) => u.section).filter(Boolean))).sort();
+        sel.innerHTML = '<option value="">All sections</option>' + secs.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
+      }
+
+      function all() { renderTOS(); renderMLL(); }
+      document.addEventListener('DOMContentLoaded', () => {
+        fillSections();
+        ['tos-subject', 'tos-test'].forEach((id) => document.getElementById(id).addEventListener('change', all));
+        document.getElementById('tos-section').addEventListener('change', renderMLL);
+        window.addEventListener('teacher-students-updated', () => { fillSections(); renderMLL(); });
+        all();
+      });
+    })();
+  </script>
+</body>
+</html>

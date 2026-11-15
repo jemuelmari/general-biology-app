@@ -65,12 +65,12 @@
     <p>Assessment Tracker · v2.6.0</p>
   </footer>
 
-  <script src="../config.js?v=2.6.0"></script>
-  <script src="../assets/js/app.js?v=2.6.0"></script>
-  <script src="../assets/js/store.js?v=2.6.0"></script>
-  <script src="../assets/js/transmutation.js?v=2.6.0"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.6.0"></script>
-  <script src="../assets/js/teacher-sync-auto.js?v=2.6.0"></script>
+  <script src="../config.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/app.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/store.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/transmutation.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/teacher-auth.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/teacher-sync-auto.js?v=2.4.2-4a6e810"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const subjectSel = document.getElementById('at-subject');
@@ -139,8 +139,8 @@
           if (hasName || inMaster) {
             // Patch missing names from master
             if (!hasName && inMaster) {
-              u.lastName = masterStudents[lrn].lastName || '(No Name)';
-              u.firstName = masterStudents[lrn].firstName || '';
+              u.lastName = Store.cleanText(masterStudents[lrn].lastName) || '(No Name)';
+              u.firstName = Store.cleanText(masterStudents[lrn].firstName) || '';
             }
             validUsers.push(u);
           } else {
@@ -170,7 +170,7 @@
             quizAvg: avg(quizzes),
             stAvg: avg(sts),
             teAvg: avg(te),
-            status: (avg(sts) !== null && avg(sts) < 80) ? 'Remediation' : 'On Track'
+            status: (avg(sts) !== null && avg(sts) < ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70)) ? 'Remediation' : 'On Track'
           };
         });
 
@@ -223,7 +223,7 @@
                 ${data.map((d) => {
                   const stColor = d.stAvg === null ? '#90a4ae'
                                 : d.stAvg >= 90 ? '#2e7d32'
-                                : d.stAvg >= 80 ? '#0277bd'
+                                : d.stAvg >= ((typeof CONFIG !== 'undefined' && CONFIG.PASSING_PERCENT) || 70) ? '#0277bd'
                                 : d.stAvg >= 65 ? '#ed6c02'
                                 : '#c62828';
                   const statusBadge = d.status === 'Remediation'

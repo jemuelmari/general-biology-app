@@ -90,7 +90,7 @@
     <div class="container flex-between">
       <div>
         <h1>🔑 Retake Requests</h1>
-        <span class="version">v2.6.0</span>
+        <span class="version">v2.5.5</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">← Teacher Home</a>
@@ -129,6 +129,21 @@
       </div>
     </div>
 
+    <div class="card" style="padding:20px;margin-bottom:24px;">
+      <h3 style="margin:0 0 6px;">🎟️ Give a retake code (no request needed)</h3>
+      <p class="text-small text-muted" style="margin:0 0 12px;">For a student who was absent, had a device problem, or must retake after remediation. The code works only for this student and this test (7 days).</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end;">
+        <div style="flex:2;min-width:220px;"><label class="form-label" style="font-size:0.75rem;font-weight:700;color:#5f6368;">Student</label><select id="ic-student" class="form-control"></select></div>
+        <div><label class="form-label" style="font-size:0.75rem;font-weight:700;color:#5f6368;">Subject</label>
+          <select id="ic-subject" class="form-control"><option value="biol1">Gen Bio 1</option><option value="biol2">Gen Bio 2</option></select></div>
+        <div><label class="form-label" style="font-size:0.75rem;font-weight:700;color:#5f6368;">Test</label>
+          <select id="ic-test" class="form-control"><option value="quiz1">Quiz 1</option><option value="quiz2">Quiz 2</option><option value="quiz3">Quiz 3</option><option value="st1">Summative Test 1</option><option value="st2">Summative Test 2</option><option value="te">Term Exam</option></select></div>
+        <div style="flex:1;min-width:160px;"><label class="form-label" style="font-size:0.75rem;font-weight:700;color:#5f6368;">Reason (optional)</label><input id="ic-reason" class="form-control" maxlength="100" placeholder="e.g. absent, device problem" /></div>
+        <button id="ic-btn" class="btn btn-primary" style="font-size:0.85rem;">🎟️ Generate code</button>
+      </div>
+      <div id="ic-result" style="margin-top:12px;"></div>
+    </div>
+
     <div class="filter-tabs" id="filter-tabs">
       <button class="filter-tab active" data-filter="all">📋 All Subjects</button>
       <button class="filter-tab" data-filter="biol1">🔬 General Biology 1</button>
@@ -143,16 +158,16 @@
   </main>
 
   <footer class="app-footer">
-    <p>Retake Requests · <span class="version">v2.6.0</span></p>
+    <p>Retake Requests · <span class="version">v2.5.5</span></p>
   </footer>
 
-  <script src="../config.js?v=2.6.0"></script>
-  <script src="../assets/js/app.js?v=2.6.0"></script>
-  <script src="../assets/js/store.js?v=2.6.0"></script>
-  <script src="../assets/js/security.js?v=2.6.0"></script>
-  <script src="../assets/js/ui-helpers.js?v=2.6.0"></script>
-  <script src="../assets/js/sync.js?v=2.6.0"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.6.0"></script>
+  <script src="../config.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/app.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/store.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/security.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/ui-helpers.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/sync.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/teacher-auth.js?v=2.4.2-4a6e810"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const tokenInput = document.getElementById('teacher-token');
@@ -163,6 +178,39 @@
       
       let allRequests = [];
       let currentFilter = 'all';
+      const esc = (v) => String(v === null || v === undefined ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      try { const t = sessionStorage.getItem('gba_teacher_token'); if (t) tokenInput.value = t; } catch (e) { /* ignore */ }
+
+      // ---- teacher-issued retake code ----
+      const icStudent = document.getElementById('ic-student');
+      const users = Store.getAllUsers().slice().sort((a, b) => String(a.lastName || '').localeCompare(String(b.lastName || '')));
+      icStudent.innerHTML = '<option value="">— choose a student —</option>' + users.map((u) =>
+        `<option value="${esc(u.lrn)}">${esc((u.lastName || '') + ', ' + (u.firstName || ''))} · ${esc(u.section || '')} · ${esc(u.lrn)}</option>`).join('');
+      document.getElementById('ic-btn').addEventListener('click', async () => {
+        const token = tokenInput.value.trim();
+        const lrn = icStudent.value;
+        const out = document.getElementById('ic-result');
+        if (!token) return showStatus('warning', 'Please enter the teacher token.');
+        if (!lrn) { out.innerHTML = '<div class="alert alert-warning">Choose a student.</div>'; return; }
+        const u = users.find((x) => x.lrn === lrn) || {};
+        const assessmentId = document.getElementById('ic-subject').value + '-' + document.getElementById('ic-test').value;
+        const btn = document.getElementById('ic-btn');
+        btn.disabled = true;
+        try {
+          const res = await fetch(CONFIG.BACKEND_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'issueRetakeCode', token, lrn, assessmentId, studentName: (u.lastName || '') + ', ' + (u.firstName || ''),
+              section: u.section || '', reason: document.getElementById('ic-reason').value }) }).then((r) => r.json());
+          if (!res.ok) throw new Error(res.error || 'Backend error');
+          out.innerHTML = `<div class="alert alert-success">✅ Code for <strong>${esc(u.lastName || '')}, ${esc(u.firstName || '')}</strong> — ${esc(assessmentId)}:
+            <span style="font-family:monospace;font-size:1.2rem;font-weight:800;margin-left:6px;">${esc(res.unlockCode)}</span>
+            <button class="btn btn-outline" id="ic-copy" style="margin-left:8px;font-size:0.8rem;">📋 Copy</button>
+            <div class="text-small" style="margin-top:4px;">Send it to the student. They enter it on their Assessments page. Valid until ${esc(new Date(res.codeExpiresAt).toLocaleDateString())}.</div></div>`;
+          document.getElementById('ic-copy').onclick = () => { navigator.clipboard && navigator.clipboard.writeText(res.unlockCode); APP.toast('Copied!', 'success'); };
+          fetchAndRenderRequests();
+        } catch (e) {
+          out.innerHTML = `<div class="alert alert-danger">❌ ${esc(e.message)}${/UNKNOWN_ACTION/.test(e.message) ? ' — paste the new Code.gs and deploy a New version.' : ''}</div>`;
+        } finally { btn.disabled = false; }
+      });
 
       searchInput.addEventListener('input', renderFilteredList);
       fetchBtn.addEventListener('click', fetchAndRenderRequests);
@@ -178,6 +226,7 @@
 
       renderStats();
       renderList([]);
+      if (tokenInput.value) setTimeout(fetchAndRenderRequests, 300);
 
       async function fetchAndRenderRequests() {
         const token = tokenInput.value.trim();
@@ -297,7 +346,7 @@
               <button data-copy="${r.unlockCode}">📋 Copy</button>
             </div>
             <p style="font-size:0.78rem;color:#78909c;margin-top:8px;">
-              Send this code to ${r.studentName || r.lrn} via chat. Expires ${APP.formatDate(r.codeExpiresAt)}.
+              Send this code to ${esc(r.studentName || r.lrn)} via chat. Expires ${APP.formatDate(r.codeExpiresAt)}.
             </p>
           `;
         } else if (r.status === 'applied') {
@@ -318,13 +367,13 @@
               <div style="flex:1;min-width:220px;">
                 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
                   <span style="font-weight:700;font-size:0.95rem;color:#1a1a1a;">
-                    ${r.studentName || r.lrn}
+                    ${esc(r.studentName || r.lrn)}
                   </span>
                   ${badge}
                   ${retakeBadge}
                 </div>
                 <div style="font-size:0.78rem;color:#78909c;margin-bottom:8px;">
-                  LRN: ${APP.formatLRN(r.lrn)} · ${r.section || '—'}
+                  LRN: ${APP.formatLRN(r.lrn)} · ${esc(r.section || '—')}
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.88rem;">
                   <span style="font-weight:600;color:#37474f;">
