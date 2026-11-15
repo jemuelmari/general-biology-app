@@ -158,3 +158,51 @@ Sundin nang sunod-sunod.
 - Ang mga estudyanteng nakakuha na ng Quiz/ST/TE ay **hindi** kailangang kumuha ulit. Naka-save pa rin ang score nila.
 - Kapag gusto mong ipakuha ulit ang bagong Term Exam, gamitin ang **Give a retake code**.
 - Ang lumang `TEACHER_SECRET` sa Script Properties ay awtomatikong binubura ng `SET_TEACHER_PASSWORD`.
+
+---
+
+## 6. Dagdag (v2.6.0 update): Fill DepEd ECR
+
+### Bagong page: Teacher Home → 📗 Fill DepEd ECR (`teacher/deped-ecr.html`)
+
+1. Piliin ang official na **SHS ECR (.xlsx)**: isang file kada subject at section. Sa browser lang ito binubuksan at **hindi ina-upload**.
+2. Kusang binabasa ng app ang subject, section, teacher at term na naka-set sa INPUT DATA.
+3. Ang mga pangalan ng learners:
+   - Kung **blangko** ang ECR, ilalagay ng app ang LRN at pangalan ("APELYIDO, Pangalan Gitna"), hiwalay ang Male at Female at naka-alphabetical.
+   - Kung **may pangalan na**, itinutugma ito ayon sa LRN, o sa pangalan kung walang LRN. Ang mga kulang ay idinadagdag sa bakanteng slot (puwedeng i-off).
+4. Saan napupunta ang scores (sa Term sheet na pinili):
+
+   | Sa app | Sa ECR |
+   |---|---|
+   | Quiz 1–3 | WW 1–3 (puwedeng simulan sa ibang WW column) |
+   | PT 1–3 | PT 1–3 |
+   | ST 1 / ST 2 / TE | ST 1 / ST 2 / TE |
+   | HPS | Ilalagay lang kung naibigay na ang test |
+
+   Ang test na naibigay na pero hindi kinuha ng estudyante ay lalagyan ng **0** (puwedeng i-off).
+5. May preview bago mag-download, kasama ang **"Grade (app)"** na dapat lumabas sa ECR.
+6. I-download. Pareho itong DepEd file. Tatlong bahagi lang ang nagbabago:
+   - ang mga cell na nilagyan ng score/pangalan
+   - ang term setting, kung pinalitan mo
+   - ang utos na mag-recalculate pagbukas
+
+   Buo pa rin ang formulas, protection, validation at format. Sa Excel, pindutin ang *Enable Editing*. Sa WPS o LibreOffice, pindutin ang **Ctrl+Shift+F9**.
+
+### Grade computation = ECR na mismo
+
+- Ang **transmutation table** ng app ay pinalitan ng table sa HELPER sheet ng official ECR:
+  - 70.00 → 75
+  - ang pinakamababa ay **60**, hindi raw + 5
+- Ang **term grade** ay kinukuwenta na gaya ng ECR:
+  - WW at PT: kabuuang score ÷ kabuuang HPS
+  - Exams: ST1 30 + ST2 30 + TE 40
+  - 2-decimal rounding sa bawat hakbang
+
+  Na-check ko ito sa 8 sample na estudyante: magkapareho ang initial at term grade ng app at ng ECR.
+- Habang hindi pa naibibigay ang lahat ng exams o components, "projection" muna ang grade sa app (may * sa preview).
+
+### Files na dagdag sa upload
+
+- `teacher/deped-ecr.html`, `teacher/deped-ecr.js` (bago)
+- `assets/js/vendor/jszip.min.js` (bago)
+- `assets/js/teacher.js`, `assets/js/transmutation.js`, `data/transmutation-table.json`, `classrecord.html`
