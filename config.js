@@ -26,7 +26,7 @@ const CONFIG = {
 
   // SHA-256 hash of the teacher password. NEVER write the password itself here (this file is public).
   // To change it: in Apps Script run SET_TEACHER_PASSWORD (see CHANGES-BIO-2026-11-15.md) and paste the hash it logs.
-  TEACHER_PASSWORD_HASH: '01d58c1ac3df6d023d869e50bf78e2f9185332c281f665fd53f6dbd7592df45e',
+  TEACHER_PASSWORD_HASH: '7b07e6c762a2b49296eb0060b2c3095ea9a45a3c16820878de4bca2a01f350b6',
 
   // Grading (DepEd DO 8 s.2015, SHS specialized subject) — one source for every page
   PASSING_PERCENT: 70,          // raw % needed to pass a quiz / ST / TE (raw 70 -> transmuted 75)
