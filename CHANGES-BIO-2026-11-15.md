@@ -206,3 +206,77 @@ Sundin nang sunod-sunod.
 - `teacher/deped-ecr.html`, `teacher/deped-ecr.js` (bago)
 - `assets/js/vendor/jszip.min.js` (bago)
 - `assets/js/teacher.js`, `assets/js/transmutation.js`, `data/transmutation-table.json`, `classrecord.html`
+
+---
+
+## 7. Dagdag: Answer Sheet sa Printable Exam Copies
+
+Gaya ng sa General Science, may bago nang pagpipilian sa **What to print**:
+
+- Student copy + Answer sheet
+- Answer sheet only
+- Student copy + Answer sheet + Answer key
+
+Ang answer sheet ay may:
+- Name, LRN, Section, Date, Score / items, at Checked by
+- bubbles A–D kada item: 1 column para sa 20 items, 2 para sa 30, 3 para sa 60
+- ang SET (A, B o Master) para tumugma sa test paper
+
+Kasama rin ito sa Save as Word. Pagkatapos i-check, i-encode ang scores sa **Offline Scores**.
+
+Files: `teacher/print-exam.js`, `teacher/print-exam.html`
+
+---
+
+## 8. Dagdag: TOS Generator → Save as Word (.docx)
+
+- Bagong button na **💾 Save as Word (.docx)**, katabi ng 🖨️ Print / PDF.
+- Ang .docx ay **landscape** at puwedeng short bond, long bond o A4. Laman nito:
+  - DepEd header
+  - ang buong TOS table
+  - ang Most/Least Learned (puwedeng hindi isama)
+  - Prepared / Checked / Approved by
+- Puwede mo itong i-edit sa Word bago i-print.
+- Kung hindi ma-load ang Word library (walang internet), mada-download ito bilang .doc na nabubuksan pa rin sa Word.
+
+File: `teacher/tos-generator.html`
+
+---
+
+## 9. Dagdag: Item Analysis — DepEd school format
+
+Sa **Item Analysis**, may bagong card sa itaas na kapareho ng ITEM ANALYSIS file ng school.
+
+**Ano ang ipinapakita, kada item:**
+
+| Column | Paliwanag |
+|---|---|
+| Item No. | |
+| Learning Competency | naka-merge kada competency |
+| Cognitive Domain | |
+| Correct Responses | |
+| % Success | correct ÷ total examinees |
+| Mastery Level | ≥85 ES · ≥70 MS · ≥50 AS · <50 NI |
+| Intervention Plan | |
+
+Kasama rin ang **Dashboard**:
+- Class Average Score, Overall Mean Mastery, at Mastered Items (≥70%)
+- Mastery Level Distribution
+- Key Findings & Action Plan na kusang isinusulat ayon sa resulta
+
+**Bagong filter:** Section. Gumagana rin ito sa ibang bahagi ng Item Analysis.
+
+**Paano gamitin:**
+- **⬇️ I-download ang Excel (school format).** Ito ang mismong file ng school (`data/templates/item-analysis-template.xlsx`). Inaayos ito para sa 20, 30 o 60 items: naka-merge ang competency, at itinuturo sa bagong rows ang formulas, dashboard at bar chart. Napupunan din ang school, learning area, grade & section, exam, examinees, teacher, at Approved by (natatandaan ang pangalan).
+- **📋 Copy "Correct Responses" lang.** Mga numero lang ito, para i-paste sa D18 ng sarili mong file.
+- **📋 Copy buong table.** Lahat ng 7 column, para i-paste sa Excel.
+
+**Paalala:** Ang mga estudyanteng kumuha ng lumang bersyon ng test ay hindi kasama sa bilang. Sasabihin ito ng page.
+
+**Files:**
+- `teacher/item-analysis.html`
+- `teacher/item-analysis-deped.js` (bago)
+- `assets/js/xlsx-lite.js` (bago, ginagamit din ng Fill DepEd ECR)
+- `data/templates/item-analysis-template.xlsx` (bago)
+- `teacher/deped-ecr.js`, `teacher/deped-ecr.html`
+
