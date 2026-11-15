@@ -1,417 +1,218 @@
 {
   "meta": {
-    "title": "Linear Transmutation Table",
+    "title": "DepEd SHS ECR 2026 Transmutation Table",
     "schoolYear": "2026–2027",
     "legalBasis": "DepEd Order No. 015, s. 2026",
-    "anchor": "Raw 70 → 75 (passing); 70–100 spread evenly to 75–100; below 70 = raw + 5",
+    "anchor": "Initial grade 70.00 → 75; 0 → 60 (from the official SHS ECR HELPER sheet)",
     "note": "Starting SY 2027–2028, transmutation will be removed for Grades 4–12 (raw 75 = final 75).",
-    "version": "2.0.0"
+    "version": "3.0.0"
   },
   "passingGrade": 75,
   "table": [
     {
-      "raw": 100,
+      "min": 99.5,
+      "max": 100,
       "transmuted": 100
     },
     {
-      "raw": 99,
+      "min": 98.32,
+      "max": 99.49,
       "transmuted": 99
     },
     {
-      "raw": 98,
+      "min": 97.14,
+      "max": 98.31,
       "transmuted": 98
     },
     {
-      "raw": 97,
-      "transmuted": 98
-    },
-    {
-      "raw": 96,
+      "min": 95.96,
+      "max": 97.13,
       "transmuted": 97
     },
     {
-      "raw": 95,
+      "min": 94.78,
+      "max": 95.95,
       "transmuted": 96
     },
     {
-      "raw": 94,
+      "min": 93.6,
+      "max": 94.77,
       "transmuted": 95
     },
     {
-      "raw": 93,
+      "min": 92.42,
+      "max": 93.59,
       "transmuted": 94
     },
     {
-      "raw": 92,
+      "min": 91.24,
+      "max": 92.41,
       "transmuted": 93
     },
     {
-      "raw": 91,
-      "transmuted": 93
-    },
-    {
-      "raw": 90,
+      "min": 90.06,
+      "max": 91.23,
       "transmuted": 92
     },
     {
-      "raw": 89,
+      "min": 88.88,
+      "max": 90.05,
       "transmuted": 91
     },
     {
-      "raw": 88,
+      "min": 87.7,
+      "max": 88.87,
       "transmuted": 90
     },
     {
-      "raw": 87,
+      "min": 86.52,
+      "max": 87.69,
       "transmuted": 89
     },
     {
-      "raw": 86,
+      "min": 85.34,
+      "max": 86.51,
       "transmuted": 88
     },
     {
-      "raw": 85,
-      "transmuted": 88
-    },
-    {
-      "raw": 84,
+      "min": 84.16,
+      "max": 85.33,
       "transmuted": 87
     },
     {
-      "raw": 83,
+      "min": 82.98,
+      "max": 84.15,
       "transmuted": 86
     },
     {
-      "raw": 82,
+      "min": 81.8,
+      "max": 82.97,
       "transmuted": 85
     },
     {
-      "raw": 81,
+      "min": 80.62,
+      "max": 81.79,
       "transmuted": 84
     },
     {
-      "raw": 80,
+      "min": 79.44,
+      "max": 80.61,
       "transmuted": 83
     },
     {
-      "raw": 79,
-      "transmuted": 83
-    },
-    {
-      "raw": 78,
+      "min": 78.26,
+      "max": 79.43,
       "transmuted": 82
     },
     {
-      "raw": 77,
+      "min": 77.08,
+      "max": 78.25,
       "transmuted": 81
     },
     {
-      "raw": 76,
+      "min": 75.9,
+      "max": 77.07,
       "transmuted": 80
     },
     {
-      "raw": 75,
+      "min": 74.72,
+      "max": 75.89,
       "transmuted": 79
     },
     {
-      "raw": 74,
+      "min": 73.54,
+      "max": 74.71,
       "transmuted": 78
     },
     {
-      "raw": 73,
-      "transmuted": 78
-    },
-    {
-      "raw": 72,
+      "min": 72.36,
+      "max": 73.53,
       "transmuted": 77
     },
     {
-      "raw": 71,
+      "min": 71.18,
+      "max": 72.35,
       "transmuted": 76
     },
     {
-      "raw": 70,
+      "min": 70,
+      "max": 71.17,
       "transmuted": 75
     },
     {
-      "raw": 69,
+      "min": 65.34,
+      "max": 69.99,
       "transmuted": 74
     },
     {
-      "raw": 68,
+      "min": 60.67,
+      "max": 65.33,
       "transmuted": 73
     },
     {
-      "raw": 67,
+      "min": 56.01,
+      "max": 60.66,
       "transmuted": 72
     },
     {
-      "raw": 66,
+      "min": 51.34,
+      "max": 56.0,
       "transmuted": 71
     },
     {
-      "raw": 65,
+      "min": 46.67,
+      "max": 51.33,
       "transmuted": 70
     },
     {
-      "raw": 64,
+      "min": 42.01,
+      "max": 46.66,
       "transmuted": 69
     },
     {
-      "raw": 63,
+      "min": 37.34,
+      "max": 42.0,
       "transmuted": 68
     },
     {
-      "raw": 62,
+      "min": 32.68,
+      "max": 37.33,
       "transmuted": 67
     },
     {
-      "raw": 61,
+      "min": 28.01,
+      "max": 32.67,
       "transmuted": 66
     },
     {
-      "raw": 60,
+      "min": 23.35,
+      "max": 28.0,
       "transmuted": 65
     },
     {
-      "raw": 59,
+      "min": 18.68,
+      "max": 23.34,
       "transmuted": 64
     },
     {
-      "raw": 58,
+      "min": 14.01,
+      "max": 18.67,
       "transmuted": 63
     },
     {
-      "raw": 57,
+      "min": 9.35,
+      "max": 14.0,
       "transmuted": 62
     },
     {
-      "raw": 56,
+      "min": 4.68,
+      "max": 9.34,
       "transmuted": 61
     },
     {
-      "raw": 55,
+      "min": 0,
+      "max": 4.67,
       "transmuted": 60
-    },
-    {
-      "raw": 54,
-      "transmuted": 59
-    },
-    {
-      "raw": 53,
-      "transmuted": 58
-    },
-    {
-      "raw": 52,
-      "transmuted": 57
-    },
-    {
-      "raw": 51,
-      "transmuted": 56
-    },
-    {
-      "raw": 50,
-      "transmuted": 55
-    },
-    {
-      "raw": 49,
-      "transmuted": 54
-    },
-    {
-      "raw": 48,
-      "transmuted": 53
-    },
-    {
-      "raw": 47,
-      "transmuted": 52
-    },
-    {
-      "raw": 46,
-      "transmuted": 51
-    },
-    {
-      "raw": 45,
-      "transmuted": 50
-    },
-    {
-      "raw": 44,
-      "transmuted": 49
-    },
-    {
-      "raw": 43,
-      "transmuted": 48
-    },
-    {
-      "raw": 42,
-      "transmuted": 47
-    },
-    {
-      "raw": 41,
-      "transmuted": 46
-    },
-    {
-      "raw": 40,
-      "transmuted": 45
-    },
-    {
-      "raw": 39,
-      "transmuted": 44
-    },
-    {
-      "raw": 38,
-      "transmuted": 43
-    },
-    {
-      "raw": 37,
-      "transmuted": 42
-    },
-    {
-      "raw": 36,
-      "transmuted": 41
-    },
-    {
-      "raw": 35,
-      "transmuted": 40
-    },
-    {
-      "raw": 34,
-      "transmuted": 39
-    },
-    {
-      "raw": 33,
-      "transmuted": 38
-    },
-    {
-      "raw": 32,
-      "transmuted": 37
-    },
-    {
-      "raw": 31,
-      "transmuted": 36
-    },
-    {
-      "raw": 30,
-      "transmuted": 35
-    },
-    {
-      "raw": 29,
-      "transmuted": 34
-    },
-    {
-      "raw": 28,
-      "transmuted": 33
-    },
-    {
-      "raw": 27,
-      "transmuted": 32
-    },
-    {
-      "raw": 26,
-      "transmuted": 31
-    },
-    {
-      "raw": 25,
-      "transmuted": 30
-    },
-    {
-      "raw": 24,
-      "transmuted": 29
-    },
-    {
-      "raw": 23,
-      "transmuted": 28
-    },
-    {
-      "raw": 22,
-      "transmuted": 27
-    },
-    {
-      "raw": 21,
-      "transmuted": 26
-    },
-    {
-      "raw": 20,
-      "transmuted": 25
-    },
-    {
-      "raw": 19,
-      "transmuted": 24
-    },
-    {
-      "raw": 18,
-      "transmuted": 23
-    },
-    {
-      "raw": 17,
-      "transmuted": 22
-    },
-    {
-      "raw": 16,
-      "transmuted": 21
-    },
-    {
-      "raw": 15,
-      "transmuted": 20
-    },
-    {
-      "raw": 14,
-      "transmuted": 19
-    },
-    {
-      "raw": 13,
-      "transmuted": 18
-    },
-    {
-      "raw": 12,
-      "transmuted": 17
-    },
-    {
-      "raw": 11,
-      "transmuted": 16
-    },
-    {
-      "raw": 10,
-      "transmuted": 15
-    },
-    {
-      "raw": 9,
-      "transmuted": 14
-    },
-    {
-      "raw": 8,
-      "transmuted": 13
-    },
-    {
-      "raw": 7,
-      "transmuted": 12
-    },
-    {
-      "raw": 6,
-      "transmuted": 11
-    },
-    {
-      "raw": 5,
-      "transmuted": 10
-    },
-    {
-      "raw": 4,
-      "transmuted": 9
-    },
-    {
-      "raw": 3,
-      "transmuted": 8
-    },
-    {
-      "raw": 2,
-      "transmuted": 7
-    },
-    {
-      "raw": 1,
-      "transmuted": 6
-    },
-    {
-      "raw": 0,
-      "transmuted": 5
     }
   ],
   "weighting": {
