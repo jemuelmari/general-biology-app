@@ -2,39 +2,1662 @@
   "assessmentId": "biol2-st2",
   "subject": "biol2",
   "type": "st",
-  "title": "Summative Test 2 — DNA, Protein Synthesis, Evolution & Systematics (Weeks 5–8)",
+  "title": "Summative Test 2 — Molecular Genetics, Biotechnology & Evolution (Weeks 5–8)",
+  "coverage": "Weeks 5–8",
   "timeLimit": 1800,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
-    { "id": "st2-01", "competency": "STEM_BIO11/12-IIIa-b-4", "text": "The two strands of DNA are held together by:", "options": [{"key":"a","label":"Peptide bonds","correct":false},{"key":"b","label":"Hydrogen bonds","correct":true},{"key":"c","label":"Ionic bonds","correct":false},{"key":"d","label":"Covalent bonds only","correct":false}] },
-    { "id": "st2-02", "competency": "STEM_BIO11/12-IIIa-b-4", "text": "In RNA, adenine pairs with:", "options": [{"key":"a","label":"Thymine","correct":false},{"key":"b","label":"Uracil","correct":true},{"key":"c","label":"Guanine","correct":false},{"key":"d","label":"Cytosine","correct":false}] },
-    { "id": "st2-03", "competency": "STEM_BIO11/12-IIIa-b-4", "text": "Which nitrogenous bases are purines?", "options": [{"key":"a","label":"Adenine and Guanine","correct":true},{"key":"b","label":"Cytosine and Thymine","correct":false},{"key":"c","label":"Adenine and Thymine","correct":false},{"key":"d","label":"Uracil and Cytosine","correct":false}] },
-    { "id": "st2-04", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "DNA replication is described as semi-conservative because:", "options": [{"key":"a","label":"Each new DNA has one old strand and one new strand","correct":true},{"key":"b","label":"Both strands are new","correct":false},{"key":"c","label":"Both strands are old","correct":false},{"key":"d","label":"Only RNA is made","correct":false}] },
-    { "id": "st2-05", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "Which enzyme adds nucleotides to a growing DNA strand?", "options": [{"key":"a","label":"Helicase","correct":false},{"key":"b","label":"DNA polymerase","correct":true},{"key":"c","label":"Ligase","correct":false},{"key":"d","label":"Primase","correct":false}] },
-    { "id": "st2-06", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "The process of making protein from mRNA is called:", "options": [{"key":"a","label":"Replication","correct":false},{"key":"b","label":"Transcription","correct":false},{"key":"c","label":"Translation","correct":true},{"key":"d","label":"Mutation","correct":false}] },
-    { "id": "st2-07", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "The start codon is:", "options": [{"key":"a","label":"AUG","correct":true},{"key":"b","label":"UAA","correct":false},{"key":"c","label":"UAG","correct":false},{"key":"d","label":"UGA","correct":false}] },
-    { "id": "st2-08", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "Which molecule brings amino acids to the ribosome?", "options": [{"key":"a","label":"mRNA","correct":false},{"key":"b","label":"tRNA","correct":true},{"key":"c","label":"rRNA","correct":false},{"key":"d","label":"DNA","correct":false}] },
-    { "id": "st2-09", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "The three stop codons are:", "options": [{"key":"a","label":"UAA, UAG, UGA","correct":true},{"key":"b","label":"AUG, UAA, UAG","correct":false},{"key":"c","label":"AAA, GGG, CCC","correct":false},{"key":"d","label":"UUA, UUC, UUG","correct":false}] },
-    { "id": "st2-10", "competency": "STEM_BIO11/12-IIIa-b-6", "text": "Restriction enzymes recognize:", "options": [{"key":"a","label":"Random sequences","correct":false},{"key":"b","label":"Specific DNA sequences","correct":true},{"key":"c","label":"Proteins","correct":false},{"key":"d","label":"RNA only","correct":false}] },
-    { "id": "st2-11", "competency": "STEM_BIO11/12-IIIa-b-6", "text": "Which enzyme seals DNA fragments together?", "options": [{"key":"a","label":"Ligase","correct":true},{"key":"b","label":"Polymerase","correct":false},{"key":"c","label":"Helicase","correct":false},{"key":"d","label":"Protease","correct":false}] },
-    { "id": "st2-12", "competency": "STEM_BIO11/12-IIIa-b-7", "text": "Recombinant insulin is produced using:", "options": [{"key":"a","label":"Bacteria with human insulin gene","correct":true},{"key":"b","label":"Cow pancreas only","correct":false},{"key":"c","label":"Fungi","correct":false},{"key":"d","label":"Plant extracts","correct":false}] },
-    { "id": "st2-13", "competency": "STEM_BIO11/12-IIIa-b-7", "text": "Genetically modified crops (GMOs) are used for:", "options": [{"key":"a","label":"Pest resistance and higher yield","correct":true},{"key":"b","label":"Reducing plant growth","correct":false},{"key":"c","label":"Stopping photosynthesis","correct":false},{"key":"d","label":"Making plants predators","correct":false}] },
-    { "id": "st2-14", "competency": "STEM_BIO11/12-IIIC-g-8", "text": "The oldest geologic era is:", "options": [{"key":"a","label":"Precambrian","correct":true},{"key":"b","label":"Paleozoic","correct":false},{"key":"c","label":"Mesozoic","correct":false},{"key":"d","label":"Cenozoic","correct":false}] },
-    { "id": "st2-15", "competency": "STEM_BIO11/12-IIIC-g-8", "text": "Which era is called the 'Age of Mammals'?", "options": [{"key":"a","label":"Paleozoic","correct":false},{"key":"b","label":"Mesozoic","correct":false},{"key":"c","label":"Cenozoic","correct":true},{"key":"d","label":"Precambrian","correct":false}] },
-    { "id": "st2-16", "competency": "STEM_BIO11/12-IIIC-g-9", "text": "The bottleneck effect is an example of:", "options": [{"key":"a","label":"Natural selection","correct":false},{"key":"b","label":"Genetic drift","correct":true},{"key":"c","label":"Mutation","correct":false},{"key":"d","label":"Gene flow","correct":false}] },
-    { "id": "st2-17", "competency": "STEM_BIO11/12-IIIC-g-9", "text": "Which mechanism introduces NEW alleles into a population?", "options": [{"key":"a","label":"Mutation","correct":true},{"key":"b","label":"Genetic drift","correct":false},{"key":"c","label":"Natural selection","correct":false},{"key":"d","label":"Gene flow out","correct":false}] },
-    { "id": "st2-18", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "Vestigial structures are evidence of:", "options": [{"key":"a","label":"Recent adaptation","correct":false},{"key":"b","label":"Common ancestry","correct":true},{"key":"c","label":"Convergent evolution","correct":false},{"key":"d","label":"Genetic drift","correct":false}] },
-    { "id": "st2-19", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Who first proposed that species change over time through inheritance of acquired characteristics?", "options": [{"key":"a","label":"Darwin","correct":false},{"key":"b","label":"Lamarck","correct":true},{"key":"c","label":"Wallace","correct":false},{"key":"d","label":"Malthus","correct":false}] },
-    { "id": "st2-20", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Darwin's key observation came from his voyage on the:", "options": [{"key":"a","label":"HMS Beagle","correct":true},{"key":"b","label":"HMS Victory","correct":false},{"key":"c","label":"Santa Maria","correct":false},{"key":"d","label":"Mayflower","correct":false}] },
-    { "id": "st2-21", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Analogous structures indicate:", "options": [{"key":"a","label":"Common ancestry","correct":false},{"key":"b","label":"Convergent evolution","correct":true},{"key":"c","label":"Random mutation","correct":false},{"key":"d","label":"Genetic drift","correct":false}] },
-    { "id": "st2-22", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "DNA sequence comparisons provide evidence for:", "options": [{"key":"a","label":"Common ancestry","correct":true},{"key":"b","label":"Spontaneous generation","correct":false},{"key":"c","label":"Creationism","correct":false},{"key":"d","label":"Convergent evolution only","correct":false}] },
-    { "id": "st2-23", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "Biogeography studies:", "options": [{"key":"a","label":"Geographic distribution of species","correct":true},{"key":"b","label":"Fossil ages only","correct":false},{"key":"c","label":"DNA sequences","correct":false},{"key":"d","label":"Embryos","correct":false}] },
-    { "id": "st2-24", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "The three-domain system includes:", "options": [{"key":"a","label":"Bacteria, Archaea, Eukarya","correct":true},{"key":"b","label":"Plants, Animals, Fungi","correct":false},{"key":"c","label":"Protists, Fungi, Plants","correct":false},{"key":"d","label":"Monera, Protista, Animalia","correct":false}] },
-    { "id": "st2-25", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Which molecule is most commonly used to infer evolutionary relationships?", "options": [{"key":"a","label":"rRNA","correct":true},{"key":"b","label":"Lipids","correct":false},{"key":"c","label":"Cellulose","correct":false},{"key":"d","label":"Starch","correct":false}] },
-    { "id": "st2-26", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Binomial nomenclature uses:", "options": [{"key":"a","label":"Genus + species","correct":true},{"key":"b","label":"Family + genus","correct":false},{"key":"c","label":"Kingdom + phylum","correct":false},{"key":"d","label":"Two common names","correct":false}] },
-    { "id": "st2-27", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Which is a correct way to write a scientific name?", "options": [{"key":"a","label":"Homo sapiens (italic, genus capitalized)","correct":true},{"key":"b","label":"homo Sapiens","correct":false},{"key":"c","label":"HOMO SAPIENS","correct":false},{"key":"d","label":"Homo Sapiens","correct":false}] },
-    { "id": "st2-28", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Cladistics groups organisms by:", "options": [{"key":"a","label":"Shared derived characteristics","correct":true},{"key":"b","label":"Random features","correct":false},{"key":"c","label":"Size","correct":false},{"key":"d","label":"Color","correct":false}] },
-    { "id": "st2-29", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "A cladogram shows:", "options": [{"key":"a","label":"Evolutionary relationships","correct":true},{"key":"b","label":"Food chains","correct":false},{"key":"c","label":"Genetic diseases","correct":false},{"key":"d","label":"Embryo development","correct":false}] },
-    { "id": "st2-30", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Species diversity is highest in:", "options": [{"key":"a","label":"Tropical rainforests","correct":true},{"key":"b","label":"Deserts","correct":false},{"key":"c","label":"Polar regions","correct":false},{"key":"d","label":"Temperate grasslands","correct":false}] }
+    {
+      "id": "st2-r01",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Remembering",
+      "text": "A cross between red and white snapdragons gives all pink flowers. This is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Incomplete dominance",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Codominance",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Complete dominance",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Multiple alleles",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r02",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Understanding",
+      "text": "How many alleles control the ABO blood group in a population?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "2",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "4",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "1",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r03",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Understanding",
+      "text": "Human height shows a smooth range of values because it is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "X-linked",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Polygenic",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Codominant",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Y-linked",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r04",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Applying",
+      "text": "Two pink snapdragons (RW) are crossed. What fraction of offspring will be white?",
+      "options": [
+        {
+          "key": "a",
+          "label": "1/2",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "3/4",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "1/4",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "0",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r05",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Remembering",
+      "text": "Which base is found in RNA but not DNA?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Thymine",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Uracil",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Adenine",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Guanine",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r06",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Understanding",
+      "text": "Which statement correctly describes DNA's structure?",
+      "options": [
+        {
+          "key": "a",
+          "label": "One single strand with uracil",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Two parallel strands with ribose",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Two antiparallel strands in a helix",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Four strands joined by peptides",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r07",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Understanding",
+      "text": "According to the central dogma, genetic information flows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Protein → RNA → DNA",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "RNA → DNA → protein",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "DNA → protein → RNA",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "DNA → RNA → protein",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r08",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Applying",
+      "text": "One DNA strand reads ATG CCA. What is the complementary DNA strand?",
+      "options": [
+        {
+          "key": "a",
+          "label": "UAC GGU",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "ATG CCA",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "GCA TTG",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "TAC GGT",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r09",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Remembering",
+      "text": "Which enzyme seals Okazaki fragments together?",
+      "options": [
+        {
+          "key": "a",
+          "label": "DNA ligase",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Helicase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Primase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "RNA polymerase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r10",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Remembering",
+      "text": "Where does translation take place?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Nucleus",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Ribosome",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Golgi apparatus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Lysosome",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r11",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Understanding",
+      "text": "What happens during mRNA splicing in eukaryotes?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Introns are removed; exons joined",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Exons are removed; introns joined",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A primer is added to the mRNA",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Thymine replaces uracil",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r12",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Understanding",
+      "text": "A mutation changes a codon into UAA. This is a:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Silent mutation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Missense mutation",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Frameshift mutation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nonsense mutation",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r13",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Applying",
+      "text": "A tRNA has the anticodon UAC. Which mRNA codon does it pair with?",
+      "options": [
+        {
+          "key": "a",
+          "label": "UAC",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "ATG",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "CAT",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "AUG",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r14",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Analyzing",
+      "text": "In sickle-cell anemia, one base change replaces one amino acid in hemoglobin. Which type of mutation is this?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Silent",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Nonsense",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Missense",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Frameshift",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r15",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Analyzing",
+      "text": "GAA changes to GAG, and both code for glutamic acid. What is the effect on the protein?",
+      "options": [
+        {
+          "key": "a",
+          "label": "A shorter protein",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "No change in the protein",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "A shifted reading frame",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A different amino acid",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r16",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Remembering",
+      "text": "What is a plasmid?",
+      "options": [
+        {
+          "key": "a",
+          "label": "A protein that cuts DNA",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "A type of RNA primer",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A small circular DNA in bacteria",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "A chromosome in the nucleus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r17",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Understanding",
+      "text": "How does gel electrophoresis separate DNA fragments?",
+      "options": [
+        {
+          "key": "a",
+          "label": "By size; small pieces move farther",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "By color; dark pieces move farther",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "By charge; positive pieces move first",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "By shape; circles move the slowest",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r18",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Understanding",
+      "text": "In making recombinant DNA, how are bacteria with the plasmid identified?",
+      "options": [
+        {
+          "key": "a",
+          "label": "By their larger size",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "By their bright color",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "By antibiotic resistance",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "By their faster motion",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r19",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Applying",
+      "text": "What is the correct order for making insulin-producing bacteria?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Transform, cut, select, ligate",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cut, ligate, transform, select",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Select, cut, transform, ligate",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Ligate, select, cut, transform",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r20",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Remembering",
+      "text": "Bt corn carries a gene from a bacterium that makes it:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Resistant to certain insects",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Rich in vitamin A",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Able to fix nitrogen",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Tolerant of salt water",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r21",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Understanding",
+      "text": "Which is a medical application of recombinant DNA?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Bt corn for pest control",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Microbes cleaning oil spills",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Hepatitis B vaccine from yeast",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Biofuel from sugarcane",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r22",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Understanding",
+      "text": "What is CRISPR-Cas9 mainly used for?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Precise gene editing",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Copying DNA by heating",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Separating DNA by size",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Sealing DNA fragments",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r23",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Evaluating",
+      "text": "Which use of gene editing raises the strongest ethical concern?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Making insulin in bacteria",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Treating sickle-cell in adults",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Producing vaccines in yeast",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Editing embryos to choose height",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r24",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "bloomLevel": "Remembering",
+      "text": "In which era did the first humans appear?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mesozoic",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cenozoic",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Paleozoic",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Precambrian",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r25",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "bloomLevel": "Understanding",
+      "text": "What happened at the end of the Cretaceous period?",
+      "options": [
+        {
+          "key": "a",
+          "label": "The first cells appeared",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "The Cambrian explosion began",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "The first fish appeared",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Non-bird dinosaurs went extinct",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r26",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Remembering",
+      "text": "Which is the only source of new alleles?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Recombination",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mutation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Gene flow",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Genetic drift",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r27",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Understanding",
+      "text": "Gene flow between populations tends to:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Make them more different",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Stop all mutations",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Increase drift",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Make them more similar",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r28",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Understanding",
+      "text": "Which is required for natural selection to occur?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Random mating",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Heritable variation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Identical individuals",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "No competition",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r29",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Applying",
+      "text": "In a finch population, birds with small and large beaks survive but medium beaks do not. Which selection is this?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Disruptive",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Stabilizing",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Directional",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Artificial",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r30",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Analyzing",
+      "text": "Ten birds from a mainland colonize an island; their offspring carry only their alleles. What is this?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Bottleneck effect",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Gene flow",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Founder effect",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Directional selection",
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
+    {
+      "id": "st2-01",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "The two strands of DNA are held together by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Peptide bonds",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Hydrogen bonds",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Ionic bonds",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Covalent bonds only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-02",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "In RNA, adenine pairs with:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Thymine",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Uracil",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Guanine",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cytosine",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-03",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "Which nitrogenous bases are purines?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Adenine and Guanine",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Cytosine and Thymine",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Adenine and Thymine",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Uracil and Cytosine",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-04",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "DNA replication is described as semi-conservative because:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Each new DNA has one old strand and one new strand",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Both strands are new",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both strands are old",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Only RNA is made",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-05",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "Which enzyme adds nucleotides to a growing DNA strand?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Helicase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "DNA polymerase",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Ligase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Primase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-06",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "The process of making protein from mRNA is called:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Replication",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Transcription",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Translation",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Mutation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-07",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "The start codon is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "AUG",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "UAA",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "UAG",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "UGA",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-08",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "Which molecule brings amino acids to the ribosome?",
+      "options": [
+        {
+          "key": "a",
+          "label": "mRNA",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "tRNA",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "rRNA",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "DNA",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-09",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "The three stop codons are:",
+      "options": [
+        {
+          "key": "a",
+          "label": "UAA, UAG, UGA",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "AUG, UAA, UAG",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "AAA, GGG, CCC",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "UUA, UUC, UUG",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-10",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "text": "Restriction enzymes recognize:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Random sequences",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Specific DNA sequences",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Proteins",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "RNA only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-11",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "text": "Which enzyme seals DNA fragments together?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Ligase",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Polymerase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Helicase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Protease",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-12",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "text": "Recombinant insulin is produced using:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Bacteria with human insulin gene",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Cow pancreas only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Fungi",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Plant extracts",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-13",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "text": "Genetically modified crops (GMOs) are used for:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Pest resistance and higher yield",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Reducing plant growth",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Stopping photosynthesis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Making plants predators",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-14",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "text": "The oldest geologic era is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Precambrian",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Paleozoic",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Mesozoic",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cenozoic",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-15",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "text": "Which era is called the 'Age of Mammals'?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Paleozoic",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mesozoic",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cenozoic",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Precambrian",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-16",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "text": "The bottleneck effect is an example of:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Natural selection",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Genetic drift",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Mutation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Gene flow",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-17",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "text": "Which mechanism introduces NEW alleles into a population?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mutation",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Genetic drift",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Natural selection",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Gene flow out",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-18",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "Vestigial structures are evidence of:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Recent adaptation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Common ancestry",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Convergent evolution",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Genetic drift",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-19",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Who first proposed that species change over time through inheritance of acquired characteristics?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Darwin",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lamarck",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Wallace",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Malthus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-20",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Darwin's key observation came from his voyage on the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "HMS Beagle",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "HMS Victory",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Santa Maria",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mayflower",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-21",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Analogous structures indicate:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Common ancestry",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Convergent evolution",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Random mutation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Genetic drift",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-22",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "DNA sequence comparisons provide evidence for:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Common ancestry",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Spontaneous generation",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Creationism",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Convergent evolution only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-23",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "Biogeography studies:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Geographic distribution of species",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Fossil ages only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "DNA sequences",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Embryos",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-24",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "The three-domain system includes:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Bacteria, Archaea, Eukarya",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Plants, Animals, Fungi",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Protists, Fungi, Plants",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Monera, Protista, Animalia",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-25",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Which molecule is most commonly used to infer evolutionary relationships?",
+      "options": [
+        {
+          "key": "a",
+          "label": "rRNA",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Lipids",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cellulose",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Starch",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-26",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Binomial nomenclature uses:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Genus + species",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Family + genus",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Kingdom + phylum",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Two common names",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-27",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Which is a correct way to write a scientific name?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Homo sapiens (italic, genus capitalized)",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "homo Sapiens",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "HOMO SAPIENS",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Homo Sapiens",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-28",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Cladistics groups organisms by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Shared derived characteristics",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Random features",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Size",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Color",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-29",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "A cladogram shows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Evolutionary relationships",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Food chains",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Genetic diseases",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Embryo development",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-30",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Species diversity is highest in:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Tropical rainforests",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Deserts",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Polar regions",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Temperate grasslands",
+          "correct": false
+        }
+      ]
+    }
   ]
 }

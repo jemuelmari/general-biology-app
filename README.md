@@ -1,5 +1,8 @@
 # General Biology Online Modular Application
 
+> **v2.6.0 (Nov 15, 2026):** see `CHANGES-BIO-2026-11-15.md` for deploy steps (new Code.gs v5.1.0, new teacher password, linear transmutation, 70% passing, WW 25 / PT 45 / QA 30, revised lessons and test banks, TOS Generator).
+
+
 **Version:** 2.3.7
 **Subjects:** General Biology 1 & General Biology 2
 **Grade Level:** Grade 12 — GAS

@@ -2,39 +2,1500 @@
   "assessmentId": "biol1-st2",
   "subject": "biol1",
   "type": "st",
-  "title": "Summative Test 2 — Biological Molecules, Enzymes, Photosynthesis & Respiration (Weeks 5–8)",
+  "title": "Summative Test 2 — Biomolecules, Enzymes, Photosynthesis & Respiration (Weeks 5–8)",
+  "coverage": "Weeks 5–8",
   "timeLimit": 1800,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
-    { "id": "st2-01", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which polysaccharide is used for energy storage in animals?", "options": [{"key":"a","label":"Cellulose","correct":false},{"key":"b","label":"Glycogen","correct":true},{"key":"c","label":"Starch","correct":false},{"key":"d","label":"Chitin","correct":false}] },
-    { "id": "st2-02", "competency": "STEM_BIO11/12-II-i-j-15", "text": "A disaccharide is formed by:", "options": [{"key":"a","label":"Two monosaccharides","correct":true},{"key":"b","label":"Many monosaccharides","correct":false},{"key":"c","label":"One monosaccharide","correct":false},{"key":"d","label":"Glycerol + fatty acids","correct":false}] },
-    { "id": "st2-03", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which is a saturated fat?", "options": [{"key":"a","label":"Olive oil","correct":false},{"key":"b","label":"Butter","correct":true},{"key":"c","label":"Fish oil","correct":false},{"key":"d","label":"Canola oil","correct":false}] },
-    { "id": "st2-04", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which level of protein structure involves multiple polypeptide chains?", "options": [{"key":"a","label":"Primary","correct":false},{"key":"b","label":"Secondary","correct":false},{"key":"c","label":"Tertiary","correct":false},{"key":"d","label":"Quaternary","correct":true}] },
-    { "id": "st2-05", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which is a function of proteins?", "options": [{"key":"a","label":"Genetic storage","correct":false},{"key":"b","label":"Enzyme catalysis","correct":true},{"key":"c","label":"Quick energy","correct":false},{"key":"d","label":"Insulation","correct":false}] },
-    { "id": "st2-06", "competency": "STEM_BIO11/12-II-i-j-15", "text": "DNA differs from RNA in that DNA:", "options": [{"key":"a","label":"Contains uracil","correct":false},{"key":"b","label":"Is double-stranded","correct":true},{"key":"c","label":"Contains ribose","correct":false},{"key":"d","label":"Is single-stranded","correct":false}] },
-    { "id": "st2-07", "competency": "STEM_BIO11/12-II-i-j-16", "text": "Which biomolecule primarily powers rapid bursts of cellular work?", "options": [{"key":"a","label":"Carbohydrates","correct":true},{"key":"b","label":"Lipids","correct":false},{"key":"c","label":"Proteins","correct":false},{"key":"d","label":"Nucleic acids","correct":false}] },
-    { "id": "st2-08", "competency": "STEM_BIO11/12-II-i-j-16", "text": "Which biomolecule serves as a long-term energy reservoir?", "options": [{"key":"a","label":"Carbohydrates","correct":false},{"key":"b","label":"Lipids","correct":true},{"key":"c","label":"Proteins","correct":false},{"key":"d","label":"Nucleic acids","correct":false}] },
-    { "id": "st2-09", "competency": "STEM_BIO11/12-II-i-j-17", "text": "A coenzyme is:", "options": [{"key":"a","label":"A metal ion","correct":false},{"key":"b","label":"An organic helper molecule","correct":true},{"key":"c","label":"A protein portion","correct":false},{"key":"d","label":"A substrate","correct":false}] },
-    { "id": "st2-10", "competency": "STEM_BIO11/12-II-i-j-17", "text": "Which factor, when too high, denatures most enzymes?", "options": [{"key":"a","label":"pH","correct":false},{"key":"b","label":"Substrate concentration","correct":false},{"key":"c","label":"Temperature","correct":true},{"key":"d","label":"Enzyme concentration","correct":false}] },
-    { "id": "st2-11", "competency": "STEM_BIO11/12-II-i-j-17", "text": "A competitive inhibitor:", "options": [{"key":"a","label":"Binds the active site","correct":true},{"key":"b","label":"Binds elsewhere","correct":false},{"key":"c","label":"Denatures the enzyme","correct":false},{"key":"d","label":"Adds a cofactor","correct":false}] },
-    { "id": "st2-12", "competency": "STEM_BIO11/12-II-i-j-18", "text": "Reduction is:", "options": [{"key":"a","label":"Loss of electrons","correct":false},{"key":"b","label":"Gain of electrons","correct":true},{"key":"c","label":"Loss of protons","correct":false},{"key":"d","label":"Gain of neutrons","correct":false}] },
-    { "id": "st2-13", "competency": "STEM_BIO11/12-II-i-j-18", "text": "Which electron carrier is used in photosynthesis?", "options": [{"key":"a","label":"NAD⁺","correct":false},{"key":"b","label":"FAD","correct":false},{"key":"c","label":"NADP⁺","correct":true},{"key":"d","label":"ATP","correct":false}] },
-    { "id": "st2-14", "competency": "STEM_BIO11/12-II-i-j-18", "text": "In respiration, glucose is:", "options": [{"key":"a","label":"Reduced","correct":false},{"key":"b","label":"Oxidized","correct":true},{"key":"c","label":"Denatured","correct":false},{"key":"d","label":"Neutralized","correct":false}] },
-    { "id": "st2-15", "competency": "STEM_BIO11/12-IIa-j-1", "text": "ATP hydrolysis produces:", "options": [{"key":"a","label":"ADP + Pi + Energy","correct":true},{"key":"b","label":"AMP + 2 Pi","correct":false},{"key":"c","label":"Adenine only","correct":false},{"key":"d","label":"NADH","correct":false}] },
-    { "id": "st2-16", "competency": "STEM_BIO11/12-IIa-j-2", "text": "The overall equation for photosynthesis is:", "options": [{"key":"a","label":"6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂","correct":true},{"key":"b","label":"C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O","correct":false},{"key":"c","label":"6O₂ + 6H₂O → C₆H₁₂O₆","correct":false},{"key":"d","label":"CO₂ + H₂O → ATP","correct":false}] },
-    { "id": "st2-17", "competency": "STEM_BIO11/12-IIa-j-3", "text": "Why do leaves appear green?", "options": [{"key":"a","label":"Chlorophyll absorbs green light","correct":false},{"key":"b","label":"Chlorophyll reflects green light","correct":true},{"key":"c","label":"Carotenoids reflect green","correct":false},{"key":"d","label":"Glucose is green","correct":false}] },
-    { "id": "st2-18", "competency": "STEM_BIO11/12-IIa-j-4", "text": "Electrons flow from PSII to PSI through:", "options": [{"key":"a","label":"ATP synthase","correct":false},{"key":"b","label":"The electron transport chain","correct":true},{"key":"c","label":"The Calvin cycle","correct":false},{"key":"d","label":"RuBisCO","correct":false}] },
-    { "id": "st2-19", "competency": "STEM_BIO11/12-IIa-j-4", "text": "O₂ released during photosynthesis comes from:", "options": [{"key":"a","label":"CO₂","correct":false},{"key":"b","label":"Glucose","correct":false},{"key":"c","label":"Water","correct":true},{"key":"d","label":"ATP","correct":false}] },
-    { "id": "st2-20", "competency": "STEM_BIO11/12-IIa-j-5", "text": "Which phase of the Calvin cycle uses ATP and NADPH?", "options": [{"key":"a","label":"Carbon fixation","correct":false},{"key":"b","label":"Reduction","correct":true},{"key":"c","label":"Regeneration","correct":false},{"key":"d","label":"Photolysis","correct":false}] },
-    { "id": "st2-21", "competency": "STEM_BIO11/12-IIa-j-5", "text": "The enzyme RuBisCO fixes:", "options": [{"key":"a","label":"O₂","correct":false},{"key":"b","label":"CO₂","correct":true},{"key":"c","label":"N₂","correct":false},{"key":"d","label":"H₂O","correct":false}] },
-    { "id": "st2-22", "competency": "STEM_BIO11/12-IIa-j-6", "text": "Which requires oxygen?", "options": [{"key":"a","label":"Fermentation","correct":false},{"key":"b","label":"Aerobic respiration","correct":true},{"key":"c","label":"Glycolysis","correct":false},{"key":"d","label":"Lactic acid production","correct":false}] },
-    { "id": "st2-23", "competency": "STEM_BIO11/12-IIa-j-6", "text": "Which organism produces ethanol during fermentation?", "options": [{"key":"a","label":"Yeast","correct":true},{"key":"b","label":"Muscle cells","correct":false},{"key":"c","label":"Nerve cells","correct":false},{"key":"d","label":"Red blood cells","correct":false}] },
-    { "id": "st2-24", "competency": "STEM_BIO11/12-IIa-j-7", "text": "Where does glycolysis occur?", "options": [{"key":"a","label":"Cytoplasm","correct":true},{"key":"b","label":"Mitochondria","correct":false},{"key":"c","label":"Nucleus","correct":false},{"key":"d","label":"Chloroplast","correct":false}] },
-    { "id": "st2-25", "competency": "STEM_BIO11/12-IIa-j-7", "text": "Products of glycolysis per glucose:", "options": [{"key":"a","label":"2 pyruvate, 2 ATP, 2 NADH","correct":true},{"key":"b","label":"1 pyruvate, 4 ATP","correct":false},{"key":"c","label":"6 CO₂, 2 ATP","correct":false},{"key":"d","label":"2 glucose, 4 ATP","correct":false}] },
-    { "id": "st2-26", "competency": "STEM_BIO11/12-IIa-j-8", "text": "Where does the Krebs cycle occur?", "options": [{"key":"a","label":"Cytoplasm","correct":false},{"key":"b","label":"Mitochondrial matrix","correct":true},{"key":"c","label":"Thylakoid","correct":false},{"key":"d","label":"Nucleus","correct":false}] },
-    { "id": "st2-27", "competency": "STEM_BIO11/12-IIa-j-8", "text": "Which produces the most ATP per glucose?", "options": [{"key":"a","label":"Glycolysis","correct":false},{"key":"b","label":"Krebs cycle","correct":false},{"key":"c","label":"Electron transport chain","correct":true},{"key":"d","label":"Fermentation","correct":false}] },
-    { "id": "st2-28", "competency": "STEM_BIO11/12-IIa-j-9", "text": "How many ATP does each NADH yield (modern estimate)?", "options": [{"key":"a","label":"1.5","correct":false},{"key":"b","label":"2.5","correct":true},{"key":"c","label":"3","correct":false},{"key":"d","label":"4","correct":false}] },
-    { "id": "st2-29", "competency": "STEM_BIO11/12-IIa-j-10", "text": "What is the final electron acceptor in aerobic respiration?", "options": [{"key":"a","label":"NAD⁺","correct":false},{"key":"b","label":"O₂","correct":true},{"key":"c","label":"FAD","correct":false},{"key":"d","label":"ATP","correct":false}] },
-    { "id": "st2-30", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which is a disadvantage of fermentation?", "options": [{"key":"a","label":"Requires oxygen","correct":false},{"key":"b","label":"Low ATP yield","correct":true},{"key":"c","label":"Very slow","correct":false},{"key":"d","label":"Produces O₂","correct":false}] }
+    {
+      "id": "st2-01",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Remembering",
+      "text": "Which polysaccharide is used for energy storage in animals?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Cellulose",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Starch",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Glycogen",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Chitin",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r01",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Understanding",
+      "text": "A disaccharide is formed when:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Many monosaccharides are joined",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Glycerol joins three fatty acids",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Two amino acids are joined",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Two monosaccharides are joined",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-04",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Remembering",
+      "text": "Which level of protein structure involves multiple polypeptide chains?",
+      "options": [
+        {
+          "key": "d",
+          "label": "Quaternary",
+          "correct": true
+        },
+        {
+          "key": "a",
+          "label": "Primary",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Secondary",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Tertiary",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-06",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Understanding",
+      "text": "DNA differs from RNA in that DNA:",
+      "options": [
+        {
+          "key": "b",
+          "label": "Is double-stranded",
+          "correct": true
+        },
+        {
+          "key": "a",
+          "label": "Contains uracil",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Contains ribose",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Is single-stranded",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r02",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Analyzing",
+      "text": "A food label lists a substance made of glycerol and three saturated fatty acids. Which biomolecule is it?",
+      "options": [
+        {
+          "key": "a",
+          "label": "A polysaccharide",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "A protein molecule",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A nucleic acid",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A triglyceride",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r03",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Applying",
+      "text": "In sickle-cell disease, one amino acid in hemoglobin is replaced. Which level of protein structure is changed first?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Quaternary structure only",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Primary structure",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Secondary structure only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "No level is changed",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r04",
+      "competency": "STEM_BIO11/12-II-i-j-16",
+      "bloomLevel": "Applying",
+      "text": "A marathon runner has used up her glycogen. Which biomolecule will her body rely on most next?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Stored fat",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Nucleic acids",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cellulose fiber",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Vitamin C",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-09",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Remembering",
+      "text": "A coenzyme is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "An inorganic metal ion",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "An organic helper molecule",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "The protein portion only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "The substrate molecule",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r05",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Understanding",
+      "text": "How do enzymes speed up chemical reactions?",
+      "options": [
+        {
+          "key": "a",
+          "label": "By raising the temperature of the cell",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "By being used up in the reaction",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "By lowering the activation energy",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "By adding energy to the products",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r06",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Understanding",
+      "text": "A competitive inhibitor works by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Binding to the active site",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Binding to another site",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Raising the temperature",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Changing the pH",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r07",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Analyzing",
+      "text": "An enzyme's activity rises from 20 °C to 37 °C, then drops to zero at 60 °C. What best explains the drop?",
+      "options": [
+        {
+          "key": "a",
+          "label": "The enzyme was denatured",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "The substrate ran out completely",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "The enzyme became a coenzyme",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "The product inhibited it permanently",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r08",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Remembering",
+      "text": "Reduction is the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Loss of electrons",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Loss of protons",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Gain of neutrons",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Gain of electrons",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-13",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Remembering",
+      "text": "Which electron carrier is used in photosynthesis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "NAD⁺",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "FAD",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "NADP⁺",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r09",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Understanding",
+      "text": "In cellular respiration, glucose is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Reduced",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Oxidized",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Denatured",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Hydrolyzed",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r10",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Analyzing",
+      "text": "In photosynthesis, which change shows that CO₂ is reduced?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It loses electrons and becomes oxygen",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It is split to release O₂ gas",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It joins ADP to form ATP",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It gains hydrogen and electrons to form sugar",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r11",
+      "competency": "STEM_BIO11/12-IIa-j-1",
+      "bloomLevel": "Understanding",
+      "text": "Which reaction is endergonic?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Building a protein from amino acids",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Breaking ATP into ADP and phosphate",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Breaking down glucose into CO₂",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Burning wood in a fire",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r12",
+      "competency": "STEM_BIO11/12-IIa-j-1",
+      "bloomLevel": "Applying",
+      "text": "Muscle contraction requires energy. Which reaction directly supplies it?",
+      "options": [
+        {
+          "key": "a",
+          "label": "ADP + Pi → ATP",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "CO₂ + H₂O → glucose",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "ATP → ADP + Pi",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "NAD⁺ → NADH",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r13",
+      "competency": "STEM_BIO11/12-IIa-j-2",
+      "bloomLevel": "Remembering",
+      "text": "Which is the overall equation for photosynthesis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "6O₂ + 6H₂O + light → C₆H₁₂O₆ + 6CO₂",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "C₆H₁₂O₆ + light → 6CO₂ + 6H₂O + O₂",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r14",
+      "competency": "STEM_BIO11/12-IIa-j-3",
+      "bloomLevel": "Understanding",
+      "text": "What is the role of carotenoids in photosynthesis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They fix carbon dioxide into sugar in the stroma",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They absorb extra light and protect chlorophyll",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "They split water molecules to release oxygen",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They make ATP inside the mitochondrial matrix",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r15",
+      "competency": "STEM_BIO11/12-IIa-j-4",
+      "bloomLevel": "Remembering",
+      "text": "Electrons flow from Photosystem II to Photosystem I through the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "ATP synthase enzyme",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Calvin cycle reactions",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Electron transport chain",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "RuBisCO in the stroma",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r16",
+      "competency": "STEM_BIO11/12-IIa-j-4",
+      "bloomLevel": "Understanding",
+      "text": "The products of the light reactions are:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glucose and O₂",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "ATP, NADPH and O₂",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "CO₂ and water",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "NADH and FADH₂",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r17",
+      "competency": "STEM_BIO11/12-IIa-j-5",
+      "bloomLevel": "Remembering",
+      "text": "Which phase of the Calvin cycle uses ATP and NADPH to form G3P?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Reduction",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Carbon fixation",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Regeneration",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Photolysis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r18",
+      "competency": "STEM_BIO11/12-IIa-j-5",
+      "bloomLevel": "Applying",
+      "text": "A plant is kept in bright light but with no CO₂. Which process stops first?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Splitting of water at PSII",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Absorption of light by chlorophyll",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Carbon fixation by RuBisCO",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Pumping of H⁺ in thylakoids",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-23",
+      "competency": "STEM_BIO11/12-IIa-j-6",
+      "bloomLevel": "Remembering",
+      "text": "Which organism produces ethanol during fermentation?",
+      "options": [
+        {
+          "key": "b",
+          "label": "Muscle cells",
+          "correct": false
+        },
+        {
+          "key": "a",
+          "label": "Yeast",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Nerve cells",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Red blood cells",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r19",
+      "competency": "STEM_BIO11/12-IIa-j-6",
+      "bloomLevel": "Applying",
+      "text": "Yeast in a covered bowl of dough uses up the oxygen, yet the dough keeps rising. Which process is the yeast now using?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Aerobic respiration",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lactic acid fermentation",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Photosynthesis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Alcoholic fermentation",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r20",
+      "competency": "STEM_BIO11/12-IIa-j-7",
+      "bloomLevel": "Remembering",
+      "text": "What are the products of glycolysis per glucose?",
+      "options": [
+        {
+          "key": "a",
+          "label": "2 pyruvate, net 2 ATP, 2 NADH",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "2 acetyl-CoA, 2 ATP, 2 CO₂",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "6 CO₂, 4 ATP, 2 FADH₂",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "2 lactate, 4 ATP, 2 NAD⁺",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r21",
+      "competency": "STEM_BIO11/12-IIa-j-7",
+      "bloomLevel": "Understanding",
+      "text": "Why must glycolysis invest 2 ATP at the start?",
+      "options": [
+        {
+          "key": "a",
+          "label": "To pump glucose out of the cell",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "To activate glucose for splitting",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "To make oxygen available",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "To convert pyruvate to lactate",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r22",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "bloomLevel": "Remembering",
+      "text": "Where does the electron transport chain take place?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mitochondrial matrix",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cytoplasm",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Outer mitochondrial membrane",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Inner mitochondrial membrane",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "st2-r23",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "bloomLevel": "Understanding",
+      "text": "What happens to the carbons of glucose by the end of the Krebs cycle?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They are stored inside ATP",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They become water molecules",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "They are released as CO₂",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "They form new glucose",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-r24",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "bloomLevel": "Analyzing",
+      "text": "Cyanide blocks the last protein of the ETC. Why does ATP production almost stop?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glucose can no longer enter the cell",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Oxygen is turned into carbon dioxide",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "NAD⁺ builds up and blocks ATP synthase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "The H⁺ gradient can no longer be maintained",
+          "correct": true
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
+    {
+      "id": "st2-02",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "A disaccharide is formed by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Two monosaccharides",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Many monosaccharides",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "One monosaccharide",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Glycerol + fatty acids",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-03",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "Which is a saturated fat?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Olive oil",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Butter",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Fish oil",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Canola oil",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-05",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "Which is a function of proteins?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Genetic storage",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Enzyme catalysis",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Quick energy",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Insulation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-07",
+      "competency": "STEM_BIO11/12-II-i-j-16",
+      "text": "Which biomolecule primarily powers rapid bursts of cellular work?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Carbohydrates",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Lipids",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Proteins",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nucleic acids",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-08",
+      "competency": "STEM_BIO11/12-II-i-j-16",
+      "text": "Which biomolecule serves as a long-term energy reservoir?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Carbohydrates",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lipids",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Proteins",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nucleic acids",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-10",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "text": "Which factor, when too high, denatures most enzymes?",
+      "options": [
+        {
+          "key": "a",
+          "label": "pH",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Substrate concentration",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Temperature",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Enzyme concentration",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-11",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "text": "A competitive inhibitor:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Binds the active site",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Binds elsewhere",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Denatures the enzyme",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Adds a cofactor",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-12",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "text": "Reduction is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Loss of electrons",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Gain of electrons",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Loss of protons",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Gain of neutrons",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-14",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "text": "In respiration, glucose is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Reduced",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Oxidized",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Denatured",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Neutralized",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-15",
+      "competency": "STEM_BIO11/12-IIa-j-1",
+      "text": "ATP hydrolysis produces:",
+      "options": [
+        {
+          "key": "a",
+          "label": "ADP + Pi + Energy",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "AMP + 2 Pi",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Adenine only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "NADH",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-16",
+      "competency": "STEM_BIO11/12-IIa-j-2",
+      "text": "The overall equation for photosynthesis is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "6CO₂ + 6H₂O + light → C₆H₁₂O₆ + 6O₂",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "6O₂ + 6H₂O → C₆H₁₂O₆",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "CO₂ + H₂O → ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-17",
+      "competency": "STEM_BIO11/12-IIa-j-3",
+      "text": "Why do leaves appear green?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Chlorophyll absorbs green light",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Chlorophyll reflects green light",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Carotenoids reflect green",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Glucose is green",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-18",
+      "competency": "STEM_BIO11/12-IIa-j-4",
+      "text": "Electrons flow from PSII to PSI through:",
+      "options": [
+        {
+          "key": "a",
+          "label": "ATP synthase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "The electron transport chain",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "The Calvin cycle",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "RuBisCO",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-19",
+      "competency": "STEM_BIO11/12-IIa-j-4",
+      "text": "O₂ released during photosynthesis comes from:",
+      "options": [
+        {
+          "key": "a",
+          "label": "CO₂",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Glucose",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Water",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-20",
+      "competency": "STEM_BIO11/12-IIa-j-5",
+      "text": "Which phase of the Calvin cycle uses ATP and NADPH?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Carbon fixation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Reduction",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Regeneration",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Photolysis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-21",
+      "competency": "STEM_BIO11/12-IIa-j-5",
+      "text": "The enzyme RuBisCO fixes:",
+      "options": [
+        {
+          "key": "a",
+          "label": "O₂",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "CO₂",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "N₂",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "H₂O",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-22",
+      "competency": "STEM_BIO11/12-IIa-j-6",
+      "text": "Which requires oxygen?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Fermentation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Aerobic respiration",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Glycolysis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Lactic acid production",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-24",
+      "competency": "STEM_BIO11/12-IIa-j-7",
+      "text": "Where does glycolysis occur?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Cytoplasm",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Mitochondria",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Nucleus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Chloroplast",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-25",
+      "competency": "STEM_BIO11/12-IIa-j-7",
+      "text": "Products of glycolysis per glucose:",
+      "options": [
+        {
+          "key": "a",
+          "label": "2 pyruvate, 2 ATP, 2 NADH",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "1 pyruvate, 4 ATP",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "6 CO₂, 2 ATP",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "2 glucose, 4 ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-26",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "text": "Where does the Krebs cycle occur?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Cytoplasm",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mitochondrial matrix",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Thylakoid",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nucleus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-27",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "text": "Which produces the most ATP per glucose?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glycolysis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Krebs cycle",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Electron transport chain",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Fermentation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-28",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "How many ATP does each NADH yield (modern estimate)?",
+      "options": [
+        {
+          "key": "a",
+          "label": "1.5",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "2.5",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "3",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-29",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "What is the final electron acceptor in aerobic respiration?",
+      "options": [
+        {
+          "key": "a",
+          "label": "NAD⁺",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "O₂",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "FAD",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "st2-30",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which is a disadvantage of fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Requires oxygen",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Low ATP yield",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Very slow",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Produces O₂",
+          "correct": false
+        }
+      ]
+    }
   ]
 }

@@ -2,29 +2,1058 @@
   "assessmentId": "biol1-quiz2",
   "subject": "biol1",
   "type": "quiz",
-  "title": "Quiz 2 — Biological Molecules, Enzymes & Photosynthesis",
+  "title": "Quiz 2 — Membrane Transport, Biomolecules & Enzymes (Weeks 4–6)",
+  "coverage": "Weeks 4–6",
   "timeLimit": 1200,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
-    { "id": "q2-01", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which of the following is a monosaccharide?", "options": [{"key":"a","label":"Glucose","correct":true},{"key":"b","label":"Sucrose","correct":false},{"key":"c","label":"Starch","correct":false},{"key":"d","label":"Cellulose","correct":false}] },
-    { "id": "q2-02", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which polysaccharide is found in plant cell walls?", "options": [{"key":"a","label":"Glycogen","correct":false},{"key":"b","label":"Cellulose","correct":true},{"key":"c","label":"Starch","correct":false},{"key":"d","label":"Chitin","correct":false}] },
-    { "id": "q2-03", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Triglycerides are composed of:", "options": [{"key":"a","label":"Amino acids","correct":false},{"key":"b","label":"Glycerol + 3 fatty acids","correct":true},{"key":"c","label":"Nucleotides","correct":false},{"key":"d","label":"Monosaccharides","correct":false}] },
-    { "id": "q2-04", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which lipid forms the cell membrane?", "options": [{"key":"a","label":"Triglyceride","correct":false},{"key":"b","label":"Phospholipid","correct":true},{"key":"c","label":"Steroid","correct":false},{"key":"d","label":"Wax","correct":false}] },
-    { "id": "q2-05", "competency": "STEM_BIO11/12-II-i-j-15", "text": "The monomer of proteins is:", "options": [{"key":"a","label":"Glucose","correct":false},{"key":"b","label":"Nucleotide","correct":false},{"key":"c","label":"Amino acid","correct":true},{"key":"d","label":"Fatty acid","correct":false}] },
-    { "id": "q2-06", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which level of protein structure is the amino acid sequence?", "options": [{"key":"a","label":"Primary","correct":true},{"key":"b","label":"Secondary","correct":false},{"key":"c","label":"Tertiary","correct":false},{"key":"d","label":"Quaternary","correct":false}] },
-    { "id": "q2-07", "competency": "STEM_BIO11/12-II-i-j-15", "text": "Which nitrogenous base is found in RNA but not DNA?", "options": [{"key":"a","label":"Thymine","correct":false},{"key":"b","label":"Uracil","correct":true},{"key":"c","label":"Adenine","correct":false},{"key":"d","label":"Guanine","correct":false}] },
-    { "id": "q2-08", "competency": "STEM_BIO11/12-II-i-j-15", "text": "ATP stands for:", "options": [{"key":"a","label":"Adenosine triphosphate","correct":true},{"key":"b","label":"Adenine triphosphate","correct":false},{"key":"c","label":"Amino triphosphate","correct":false},{"key":"d","label":"Adenosine diphosphate","correct":false}] },
-    { "id": "q2-09", "competency": "STEM_BIO11/12-II-i-j-17", "text": "The region where a substrate binds to an enzyme is the:", "options": [{"key":"a","label":"Allosteric site","correct":false},{"key":"b","label":"Active site","correct":true},{"key":"c","label":"Cofactor","correct":false},{"key":"d","label":"Holoenzyme","correct":false}] },
-    { "id": "q2-10", "competency": "STEM_BIO11/12-II-i-j-17", "text": "The protein portion of an enzyme is called the:", "options": [{"key":"a","label":"Apoenzyme","correct":true},{"key":"b","label":"Cofactor","correct":false},{"key":"c","label":"Holoenzyme","correct":false},{"key":"d","label":"Substrate","correct":false}] },
-    { "id": "q2-11", "competency": "STEM_BIO11/12-II-i-j-17", "text": "Which model describes the active site changing shape to fit the substrate?", "options": [{"key":"a","label":"Lock-and-key","correct":false},{"key":"b","label":"Induced fit","correct":true},{"key":"c","label":"Fluid mosaic","correct":false},{"key":"d","label":"Sandwich","correct":false}] },
-    { "id": "q2-12", "competency": "STEM_BIO11/12-II-i-j-17", "text": "What happens to most enzymes at very high temperatures?", "options": [{"key":"a","label":"Speed up indefinitely","correct":false},{"key":"b","label":"Denature","correct":true},{"key":"c","label":"Become coenzymes","correct":false},{"key":"d","label":"Dissolve","correct":false}] },
-    { "id": "q2-13", "competency": "STEM_BIO11/12-II-i-j-18", "text": "Oxidation is defined as:", "options": [{"key":"a","label":"Gain of electrons","correct":false},{"key":"b","label":"Loss of electrons","correct":true},{"key":"c","label":"Gain of protons","correct":false},{"key":"d","label":"Loss of neutrons","correct":false}] },
-    { "id": "q2-14", "competency": "STEM_BIO11/12-II-i-j-18", "text": "When NAD⁺ accepts electrons, it is:", "options": [{"key":"a","label":"Oxidized","correct":false},{"key":"b","label":"Reduced","correct":true},{"key":"c","label":"Denatured","correct":false},{"key":"d","label":"Hydrolyzed","correct":false}] },
-    { "id": "q2-15", "competency": "STEM_BIO11/12-IIa-j-1", "text": "ATP is produced primarily by which process in cells?", "options": [{"key":"a","label":"Hydrolysis","correct":false},{"key":"b","label":"Energy coupling","correct":false},{"key":"c","label":"Phosphorylation (substrate-level, oxidative, or photo-)","correct":true},{"key":"d","label":"Denaturation","correct":false}] },
-    { "id": "q2-16", "competency": "STEM_BIO11/12-IIa-j-3", "text": "Which pigment is the primary photosynthetic pigment?", "options": [{"key":"a","label":"Chlorophyll a","correct":true},{"key":"b","label":"Chlorophyll b","correct":false},{"key":"c","label":"Carotenoid","correct":false},{"key":"d","label":"Xanthophyll","correct":false}] },
-    { "id": "q2-17", "competency": "STEM_BIO11/12-IIa-j-4", "text": "Which photosystem splits water?", "options": [{"key":"a","label":"Photosystem I","correct":false},{"key":"b","label":"Photosystem II","correct":true},{"key":"c","label":"Both","correct":false},{"key":"d","label":"Neither","correct":false}] },
-    { "id": "q2-18", "competency": "STEM_BIO11/12-IIa-j-5", "text": "What is the main enzyme of carbon fixation in the Calvin cycle?", "options": [{"key":"a","label":"ATP synthase","correct":false},{"key":"b","label":"RuBisCO","correct":true},{"key":"c","label":"Hexokinase","correct":false},{"key":"d","label":"Pepsin","correct":false}] },
-    { "id": "q2-19", "competency": "STEM_BIO11/12-IIa-j-4", "text": "Where do the light reactions occur?", "options": [{"key":"a","label":"Stroma","correct":false},{"key":"b","label":"Thylakoid membrane","correct":true},{"key":"c","label":"Cytoplasm","correct":false},{"key":"d","label":"Mitochondria","correct":false}] },
-    { "id": "q2-20", "competency": "STEM_BIO11/12-IIa-j-5", "text": "The Calvin cycle uses how much ATP and NADPH per CO₂ fixed?", "options": [{"key":"a","label":"3 ATP + 2 NADPH","correct":true},{"key":"b","label":"2 ATP + 3 NADPH","correct":false},{"key":"c","label":"1 ATP + 1 NADPH","correct":false},{"key":"d","label":"4 ATP + 4 NADPH","correct":false}] }
+    {
+      "id": "q2-r01",
+      "competency": "STEM_BIO11/12-Ig-h-11",
+      "bloomLevel": "Understanding",
+      "text": "In the plasma membrane, the hydrophobic tails of phospholipids are found:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Facing the watery outside",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Facing the cytoplasm",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "In the middle of the bilayer",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Sticking out of the cell",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r02",
+      "competency": "STEM_BIO11/12-Ig-h-11",
+      "bloomLevel": "Remembering",
+      "text": "Which membrane component helps regulate membrane fluidity?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glycoprotein",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cholesterol",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Peripheral protein",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Carbohydrate chain",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r03",
+      "competency": "STEM_BIO11/12-Ig-h-12",
+      "bloomLevel": "Understanding",
+      "text": "Which statement correctly compares simple and facilitated diffusion?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Both move solutes down a gradient; only one uses proteins",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Both need ATP; only one uses a carrier protein",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both move solutes against a gradient without help",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Both need vesicles to carry the molecules inside",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r04",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "bloomLevel": "Applying",
+      "text": "A red blood cell is placed in distilled water. What will most likely happen?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It shrinks and shrivels",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It stays exactly the same",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It divides into two cells",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It swells and may burst",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r05",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "bloomLevel": "Analyzing",
+      "text": "Glucose is absorbed from the intestine even when glucose inside the cells is already higher. Which process must be involved?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Simple diffusion",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Facilitated diffusion",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Active transport",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Osmosis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r06",
+      "competency": "STEM_BIO11/12-Ig-h-14",
+      "bloomLevel": "Remembering",
+      "text": "Which process brings large particles such as bacteria into a cell?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Exocytosis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Osmosis",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Pinocytosis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Phagocytosis",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r07",
+      "competency": "STEM_BIO11/12-Ig-h-14",
+      "bloomLevel": "Understanding",
+      "text": "How do pancreatic cells release insulin out of the cell?",
+      "options": [
+        {
+          "key": "a",
+          "label": "By exocytosis of vesicles",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "By simple diffusion",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "By phagocytosis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "By osmosis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-01",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Remembering",
+      "text": "Which of the following is a monosaccharide?",
+      "options": [
+        {
+          "key": "b",
+          "label": "Sucrose",
+          "correct": false
+        },
+        {
+          "key": "a",
+          "label": "Glucose",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Starch",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cellulose",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-03",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Remembering",
+      "text": "Triglycerides are composed of:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Amino acids and peptide bonds",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Glycerol and three fatty acids",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Sugars, phosphates and bases",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Two monosaccharides together",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r08",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Understanding",
+      "text": "Why is butter solid at room temperature while olive oil is liquid?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Butter contains more water than oil",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Olive oil has longer fatty acid chains",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Olive oil is made of carbohydrates",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Butter's saturated chains pack tightly",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r09",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Remembering",
+      "text": "The monomer of proteins is the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Nucleotide",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fatty acid",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Monosaccharide",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Amino acid",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r10",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Understanding",
+      "text": "Cooking an egg turns the clear egg white solid and white. What happened to its proteins?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They were digested into amino acids",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They were denatured and lost their shape",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "They were changed into carbohydrates",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They gained new peptide bonds",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r11",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Analyzing",
+      "text": "An unknown molecule contains a sugar, a phosphate group and the base uracil. What is it most likely part of?",
+      "options": [
+        {
+          "key": "a",
+          "label": "RNA",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "DNA",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A protein",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A phospholipid",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r12",
+      "competency": "STEM_BIO11/12-II-i-j-16",
+      "bloomLevel": "Understanding",
+      "text": "Which biomolecule serves as the body's long-term energy reserve?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Carbohydrates",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lipids",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Nucleic acids",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Proteins",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r13",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Remembering",
+      "text": "The region of an enzyme where the substrate binds is the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Active site",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Allosteric site",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cofactor",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Coenzyme",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r14",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Applying",
+      "text": "Pepsin works best at pH 2. What would happen to its activity in the small intestine, where pH is about 8?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It would double",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It would stay the same",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It would drop sharply",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "It would turn into trypsin",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r15",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Analyzing",
+      "text": "Adding more substrate overcomes the effect of an inhibitor. What kind of inhibitor is it most likely to be?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Non-competitive inhibitor",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Coenzyme",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Competitive inhibitor",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Cofactor",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r16",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Remembering",
+      "text": "Oxidation is defined as the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Loss of electrons",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Gain of electrons",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Gain of protons",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Loss of neutrons",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r17",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Understanding",
+      "text": "When NAD⁺ accepts electrons and becomes NADH, it is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Oxidized",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Denatured",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Reduced",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Hydrolyzed",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r18",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Applying",
+      "text": "In cellular respiration, glucose becomes CO₂ while oxygen becomes water. Which substance is reduced?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glucose",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Carbon dioxide",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "ATP",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Oxygen",
+          "correct": true
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
+    {
+      "id": "q2-02",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "Which polysaccharide is found in plant cell walls?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glycogen",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cellulose",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Starch",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Chitin",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-04",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "Which lipid forms the cell membrane?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Triglyceride",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Phospholipid",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Steroid",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Wax",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-05",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "The monomer of proteins is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glucose",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Nucleotide",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Amino acid",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Fatty acid",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-06",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "Which level of protein structure is the amino acid sequence?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Primary",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Secondary",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Tertiary",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Quaternary",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-07",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "Which nitrogenous base is found in RNA but not DNA?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Thymine",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Uracil",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Adenine",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Guanine",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-08",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "text": "ATP stands for:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Adenosine triphosphate",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Adenine triphosphate",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Amino triphosphate",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Adenosine diphosphate",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-09",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "text": "The region where a substrate binds to an enzyme is the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Allosteric site",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Active site",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Cofactor",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Holoenzyme",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-10",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "text": "The protein portion of an enzyme is called the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Apoenzyme",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Cofactor",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Holoenzyme",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Substrate",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-11",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "text": "Which model describes the active site changing shape to fit the substrate?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Lock-and-key",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Induced fit",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Fluid mosaic",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Sandwich",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-12",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "text": "What happens to most enzymes at very high temperatures?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Speed up indefinitely",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Denature",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Become coenzymes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Dissolve",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-13",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "text": "Oxidation is defined as:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Gain of electrons",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Loss of electrons",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Gain of protons",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Loss of neutrons",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-14",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "text": "When NAD⁺ accepts electrons, it is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Oxidized",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Reduced",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Denatured",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Hydrolyzed",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-15",
+      "competency": "STEM_BIO11/12-IIa-j-1",
+      "text": "ATP is produced primarily by which process in cells?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Hydrolysis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Energy coupling",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Phosphorylation (substrate-level, oxidative, or photo-)",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Denaturation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-16",
+      "competency": "STEM_BIO11/12-IIa-j-3",
+      "text": "Which pigment is the primary photosynthetic pigment?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Chlorophyll a",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Chlorophyll b",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Carotenoid",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Xanthophyll",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-17",
+      "competency": "STEM_BIO11/12-IIa-j-4",
+      "text": "Which photosystem splits water?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Photosystem I",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Photosystem II",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Both",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Neither",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-18",
+      "competency": "STEM_BIO11/12-IIa-j-5",
+      "text": "What is the main enzyme of carbon fixation in the Calvin cycle?",
+      "options": [
+        {
+          "key": "a",
+          "label": "ATP synthase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "RuBisCO",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Hexokinase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Pepsin",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-19",
+      "competency": "STEM_BIO11/12-IIa-j-4",
+      "text": "Where do the light reactions occur?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Stroma",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Thylakoid membrane",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Cytoplasm",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mitochondria",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-20",
+      "competency": "STEM_BIO11/12-IIa-j-5",
+      "text": "The Calvin cycle uses how much ATP and NADPH per CO₂ fixed?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3 ATP + 2 NADPH",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "2 ATP + 3 NADPH",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "1 ATP + 1 NADPH",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "4 ATP + 4 NADPH",
+          "correct": false
+        }
+      ]
+    }
   ]
 }

@@ -2,19 +2,598 @@
   "assessmentId": "biol2-quiz1",
   "subject": "biol2",
   "type": "quiz",
-  "title": "Quiz 1 — Organismal Biology & Genetics Foundations",
+  "title": "Quiz 1 — Organ Systems, Homeostasis & Mendelian Genetics (Weeks 1–3)",
+  "coverage": "Weeks 1–3",
   "timeLimit": 1200,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
+    {
+      "id": "q1-r01",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Remembering",
+      "text": "Which organ system transports nutrients, gases and wastes throughout the body?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Respiratory system",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Digestive system",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Circulatory system",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Excretory system",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r02",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Remembering",
+      "text": "In which structures does gas exchange occur in human lungs?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Alveoli",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Villi",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Nephrons",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Bronchi",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r03",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Understanding",
+      "text": "Why do plants have no need for a heart to move water upward?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Phloem pumps water up from the roots",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Stomata push water down from leaves",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Root hairs squeeze water into leaves",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Transpiration pulls water up the xylem",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q1-r04",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Understanding",
+      "text": "Which plant tissue carries sugars from the leaves to the roots and fruits?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Xylem",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Phloem",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Epidermis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cuticle",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r05",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Understanding",
+      "text": "Plants are autotrophs while animals are heterotrophs. This means that:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Plants eat food; animals make it",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Both make their own food by photosynthesis",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Plants make food; animals must eat it",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Neither needs food to survive",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r06",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Understanding",
+      "text": "After eating a sugary snack, which organ responds by releasing insulin?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Pancreas",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Kidney",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Lung",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Small intestine",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r07",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Analyzing",
+      "text": "Both alveoli in lungs and villi in intestines are thin and greatly folded. What do these features have in common?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They help the organs contract strongly",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They protect the organs from germs",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "They store extra energy for later use",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They give a large surface for exchange",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q1-r08",
+      "competency": "STEM_BIO11/12-IVi-j-2",
+      "bloomLevel": "Remembering",
+      "text": "What is homeostasis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Growth of an organism over time",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Production of gametes for reproduction",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Keeping a stable internal environment",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Movement from one place to another",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r09",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Remembering",
+      "text": "In a negative feedback loop, the response:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Reverses the original change",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Amplifies the original change",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Has no effect on the change",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Doubles the original change",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r10",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Understanding",
+      "text": "Which hormone is released when blood glucose is too high?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glucagon",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Insulin",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "ADH",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Oxytocin",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r11",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Understanding",
+      "text": "Which is an example of positive feedback?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Sweating when hot",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Contractions during childbirth",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Shivering when cold",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Insulin after a meal",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r12",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Applying",
+      "text": "A student has not drunk water all day. What happens to her urine?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Large amount and pale",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "No change at all",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It becomes sugary",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Small amount and dark",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q1-r13",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Analyzing",
+      "text": "Why must positive feedback loops have an end point?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They always reverse the change too fast",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They work only in plants",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "They need no stimulus to start",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They push a change further and further",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q1-r14",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Remembering",
+      "text": "An organism with two different alleles for a gene (Tt) is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Homozygous dominant",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Homozygous recessive",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Heterozygous",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Pure-breeding",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r15",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Remembering",
+      "text": "What is the expected phenotypic ratio from Tt × Tt?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3 : 1",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "1 : 2 : 1",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "1 : 1",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "9 : 3 : 3 : 1",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r16",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Understanding",
+      "text": "What does the Law of Segregation state?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Dominant alleles hide recessive ones",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Allele pairs separate into gametes",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Different genes sort independently",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Alleles blend in the offspring",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r17",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Understanding",
+      "text": "What is the genotypic ratio from Tt × Tt?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3 TT : 1 tt",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "1 TT : 2 Tt : 1 tt",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "1 TT : 1 tt",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "2 TT : 1 Tt : 1 tt",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r18",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Applying",
+      "text": "A tall pea plant (Tt) is crossed with a short plant (tt). What percentage of the offspring will be short?",
+      "options": [
+        {
+          "key": "a",
+          "label": "25%",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "75%",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "0%",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "50%",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q1-r19",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Applying",
+      "text": "In RrYy × RrYy, what fraction of offspring is expected to be wrinkled and green (rryy)?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3/16",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "9/16",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "1/16",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "1/4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r20",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Analyzing",
+      "text": "Two unaffected parents have a child with a recessive disorder. What are the parents' genotypes?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Both heterozygous carriers",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Both homozygous dominant",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both homozygous recessive",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "One affected, one dominant",
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
     {
       "id": "q1-01",
       "competency": "STEM_BIO11/12-IVa-h-1",
       "text": "Which of the following is a distinguishing feature of the plant shoot system?",
       "options": [
-        { "key": "a", "label": "Contains leaves, stems, and flowers", "correct": true },
-        { "key": "b", "label": "Contains root hairs", "correct": false },
-        { "key": "c", "label": "Contains gills", "correct": false },
-        { "key": "d", "label": "Contains alveoli", "correct": false }
+        {
+          "key": "a",
+          "label": "Contains leaves, stems, and flowers",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Contains root hairs",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Contains gills",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Contains alveoli",
+          "correct": false
+        }
       ]
     },
     {
@@ -22,10 +601,26 @@
       "competency": "STEM_BIO11/12-IVa-h-1",
       "text": "Which plant tissue transports water and minerals from roots to leaves?",
       "options": [
-        { "key": "a", "label": "Phloem", "correct": false },
-        { "key": "b", "label": "Xylem", "correct": true },
-        { "key": "c", "label": "Epidermis", "correct": false },
-        { "key": "d", "label": "Cambium", "correct": false }
+        {
+          "key": "a",
+          "label": "Phloem",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Xylem",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Epidermis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cambium",
+          "correct": false
+        }
       ]
     },
     {
@@ -33,10 +628,26 @@
       "competency": "STEM_BIO11/12-IVa-h-1",
       "text": "Which structure in plants is responsible for gas exchange?",
       "options": [
-        { "key": "a", "label": "Xylem", "correct": false },
-        { "key": "b", "label": "Phloem", "correct": false },
-        { "key": "c", "label": "Stomata", "correct": true },
-        { "key": "d", "label": "Cuticle", "correct": false }
+        {
+          "key": "a",
+          "label": "Xylem",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Phloem",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Stomata",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Cuticle",
+          "correct": false
+        }
       ]
     },
     {
@@ -44,10 +655,26 @@
       "competency": "STEM_BIO11/12-IVa-h-1",
       "text": "Which animal organ system is primarily responsible for gas exchange?",
       "options": [
-        { "key": "a", "label": "Circulatory", "correct": false },
-        { "key": "b", "label": "Respiratory", "correct": true },
-        { "key": "c", "label": "Digestive", "correct": false },
-        { "key": "d", "label": "Excretory", "correct": false }
+        {
+          "key": "a",
+          "label": "Circulatory",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Respiratory",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Digestive",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Excretory",
+          "correct": false
+        }
       ]
     },
     {
@@ -55,10 +682,26 @@
       "competency": "STEM_BIO11/12-IVa-h-1",
       "text": "Which animal system releases hormones to regulate long-term body functions?",
       "options": [
-        { "key": "a", "label": "Nervous", "correct": false },
-        { "key": "b", "label": "Endocrine", "correct": true },
-        { "key": "c", "label": "Immune", "correct": false },
-        { "key": "d", "label": "Digestive", "correct": false }
+        {
+          "key": "a",
+          "label": "Nervous",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Endocrine",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Immune",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Digestive",
+          "correct": false
+        }
       ]
     },
     {
@@ -66,10 +709,26 @@
       "competency": "STEM_BIO11/12-IVa-h-1",
       "text": "Which organ is responsible for filtering blood and producing urine?",
       "options": [
-        { "key": "a", "label": "Liver", "correct": false },
-        { "key": "b", "label": "Kidney", "correct": true },
-        { "key": "c", "label": "Pancreas", "correct": false },
-        { "key": "d", "label": "Spleen", "correct": false }
+        {
+          "key": "a",
+          "label": "Liver",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Kidney",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Pancreas",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Spleen",
+          "correct": false
+        }
       ]
     },
     {
@@ -77,10 +736,26 @@
       "competency": "STEM_BIO11/12-IVa-h-1",
       "text": "What is the primary difference between plant and animal nutrition?",
       "options": [
-        { "key": "a", "label": "Plants are autotrophic; animals are heterotrophic", "correct": true },
-        { "key": "b", "label": "Plants are heterotrophic; animals are autotrophic", "correct": false },
-        { "key": "c", "label": "Both are autotrophic", "correct": false },
-        { "key": "d", "label": "Both are heterotrophic", "correct": false }
+        {
+          "key": "a",
+          "label": "Plants are autotrophic; animals are heterotrophic",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Plants are heterotrophic; animals are autotrophic",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both are autotrophic",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Both are heterotrophic",
+          "correct": false
+        }
       ]
     },
     {
@@ -88,10 +763,26 @@
       "competency": "STEM_BIO11/12-IVi-j-2",
       "text": "Which of the following best describes homeostasis?",
       "options": [
-        { "key": "a", "label": "Rapid growth of an organism", "correct": false },
-        { "key": "b", "label": "Maintenance of a stable internal environment", "correct": true },
-        { "key": "c", "label": "Production of gametes", "correct": false },
-        { "key": "d", "label": "Movement from place to place", "correct": false }
+        {
+          "key": "a",
+          "label": "Rapid growth of an organism",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Maintenance of a stable internal environment",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Production of gametes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Movement from place to place",
+          "correct": false
+        }
       ]
     },
     {
@@ -99,10 +790,26 @@
       "competency": "STEM_BIO11/12-IVi-j-3",
       "text": "Which of the following is an example of a negative feedback loop?",
       "options": [
-        { "key": "a", "label": "Blood clotting cascade", "correct": false },
-        { "key": "b", "label": "Regulation of blood glucose by insulin", "correct": true },
-        { "key": "c", "label": "Uterine contractions during childbirth", "correct": false },
-        { "key": "d", "label": "Production of milk during breastfeeding", "correct": false }
+        {
+          "key": "a",
+          "label": "Blood clotting cascade",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Regulation of blood glucose by insulin",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Uterine contractions during childbirth",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Production of milk during breastfeeding",
+          "correct": false
+        }
       ]
     },
     {
@@ -110,10 +817,26 @@
       "competency": "STEM_BIO11/12-IVi-j-3",
       "text": "Sweating when body temperature rises is an example of:",
       "options": [
-        { "key": "a", "label": "Positive feedback", "correct": false },
-        { "key": "b", "label": "Negative feedback", "correct": true },
-        { "key": "c", "label": "Feedforward control", "correct": false },
-        { "key": "d", "label": "Neutral feedback", "correct": false }
+        {
+          "key": "a",
+          "label": "Positive feedback",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Negative feedback",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Feedforward control",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Neutral feedback",
+          "correct": false
+        }
       ]
     },
     {
@@ -121,10 +844,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-1",
       "text": "What is the expected phenotypic ratio of a monohybrid cross between two heterozygous parents (Tt × Tt)?",
       "options": [
-        { "key": "a", "label": "1:1", "correct": false },
-        { "key": "b", "label": "3:1", "correct": true },
-        { "key": "c", "label": "1:2:1", "correct": false },
-        { "key": "d", "label": "9:3:3:1", "correct": false }
+        {
+          "key": "a",
+          "label": "1:1",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "3:1",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "1:2:1",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "9:3:3:1",
+          "correct": false
+        }
       ]
     },
     {
@@ -132,10 +871,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-1",
       "text": "Which of Mendel's laws states that alleles separate during gamete formation?",
       "options": [
-        { "key": "a", "label": "Law of Dominance", "correct": false },
-        { "key": "b", "label": "Law of Segregation", "correct": true },
-        { "key": "c", "label": "Law of Independent Assortment", "correct": false },
-        { "key": "d", "label": "Law of Linkage", "correct": false }
+        {
+          "key": "a",
+          "label": "Law of Dominance",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Law of Segregation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Law of Independent Assortment",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Law of Linkage",
+          "correct": false
+        }
       ]
     },
     {
@@ -143,10 +898,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-1",
       "text": "An organism with genotype Bb is described as:",
       "options": [
-        { "key": "a", "label": "Homozygous dominant", "correct": false },
-        { "key": "b", "label": "Homozygous recessive", "correct": false },
-        { "key": "c", "label": "Heterozygous", "correct": true },
-        { "key": "d", "label": "Pure-breeding", "correct": false }
+        {
+          "key": "a",
+          "label": "Homozygous dominant",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Homozygous recessive",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Heterozygous",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Pure-breeding",
+          "correct": false
+        }
       ]
     },
     {
@@ -154,10 +925,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-1",
       "text": "A dihybrid cross between two heterozygous organisms (RrYy × RrYy) produces what phenotypic ratio?",
       "options": [
-        { "key": "a", "label": "3:1", "correct": false },
-        { "key": "b", "label": "1:2:1", "correct": false },
-        { "key": "c", "label": "9:3:3:1", "correct": true },
-        { "key": "d", "label": "1:1:1:1", "correct": false }
+        {
+          "key": "a",
+          "label": "3:1",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "1:2:1",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "9:3:3:1",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "1:1:1:1",
+          "correct": false
+        }
       ]
     },
     {
@@ -165,10 +952,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-2",
       "text": "Which chromosome pair determines sex in humans?",
       "options": [
-        { "key": "a", "label": "Chromosome 21", "correct": false },
-        { "key": "b", "label": "The X and Y chromosomes", "correct": true },
-        { "key": "c", "label": "Chromosome 1", "correct": false },
-        { "key": "d", "label": "Mitochondrial DNA", "correct": false }
+        {
+          "key": "a",
+          "label": "Chromosome 21",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "The X and Y chromosomes",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Chromosome 1",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mitochondrial DNA",
+          "correct": false
+        }
       ]
     },
     {
@@ -176,10 +979,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-2",
       "text": "Why are X-linked recessive disorders more common in males?",
       "options": [
-        { "key": "a", "label": "Males have two X chromosomes", "correct": false },
-        { "key": "b", "label": "Males have only one X chromosome, so one recessive allele is enough to express the disorder", "correct": true },
-        { "key": "c", "label": "Males do not inherit X chromosomes", "correct": false },
-        { "key": "d", "label": "Females are immune to X-linked disorders", "correct": false }
+        {
+          "key": "a",
+          "label": "Males have two X chromosomes",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Males have only one X chromosome, so one recessive allele is enough to express the disorder",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Males do not inherit X chromosomes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Females are immune to X-linked disorders",
+          "correct": false
+        }
       ]
     },
     {
@@ -187,10 +1006,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-3",
       "text": "In incomplete dominance, the heterozygote shows:",
       "options": [
-        { "key": "a", "label": "The dominant phenotype", "correct": false },
-        { "key": "b", "label": "The recessive phenotype", "correct": false },
-        { "key": "c", "label": "A blended intermediate phenotype", "correct": true },
-        { "key": "d", "label": "Both phenotypes separately", "correct": false }
+        {
+          "key": "a",
+          "label": "The dominant phenotype",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "The recessive phenotype",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A blended intermediate phenotype",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Both phenotypes separately",
+          "correct": false
+        }
       ]
     },
     {
@@ -198,10 +1033,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-3",
       "text": "In codominance, the heterozygote shows:",
       "options": [
-        { "key": "a", "label": "A blend of the two traits", "correct": false },
-        { "key": "b", "label": "Both traits expressed distinctly", "correct": true },
-        { "key": "c", "label": "Only the dominant trait", "correct": false },
-        { "key": "d", "label": "Only the recessive trait", "correct": false }
+        {
+          "key": "a",
+          "label": "A blend of the two traits",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Both traits expressed distinctly",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Only the dominant trait",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Only the recessive trait",
+          "correct": false
+        }
       ]
     },
     {
@@ -209,10 +1060,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-4",
       "text": "Which of the following correctly describes the structure of DNA?",
       "options": [
-        { "key": "a", "label": "Single-stranded helix", "correct": false },
-        { "key": "b", "label": "Double-stranded helix with complementary base pairing", "correct": true },
-        { "key": "c", "label": "Triple-stranded helix", "correct": false },
-        { "key": "d", "label": "Flat linear chain", "correct": false }
+        {
+          "key": "a",
+          "label": "Single-stranded helix",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Double-stranded helix with complementary base pairing",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Triple-stranded helix",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Flat linear chain",
+          "correct": false
+        }
       ]
     },
     {
@@ -220,10 +1087,26 @@
       "competency": "STEM_BIO11/12-IIIa-b-4",
       "text": "Which nitrogenous base pairs with adenine in DNA?",
       "options": [
-        { "key": "a", "label": "Guanine", "correct": false },
-        { "key": "b", "label": "Cytosine", "correct": false },
-        { "key": "c", "label": "Thymine", "correct": true },
-        { "key": "d", "label": "Uracil", "correct": false }
+        {
+          "key": "a",
+          "label": "Guanine",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cytosine",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Thymine",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Uracil",
+          "correct": false
+        }
       ]
     }
   ]

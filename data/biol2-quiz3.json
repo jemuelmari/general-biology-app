@@ -2,29 +2,1112 @@
   "assessmentId": "biol2-quiz3",
   "subject": "biol2",
   "type": "quiz",
-  "title": "Quiz 3 — Evolution, Systematics & Taxonomy",
+  "title": "Quiz 3 — Biotechnology & Evolution (Weeks 7–9)",
+  "coverage": "Weeks 7–9",
   "timeLimit": 1200,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
-    { "id": "q3-01", "competency": "STEM_BIO11/12-IIIC-g-8", "text": "Which era is known as the 'Age of Reptiles'?", "options": [{"key":"a","label":"Precambrian","correct":false},{"key":"b","label":"Paleozoic","correct":false},{"key":"c","label":"Mesozoic","correct":true},{"key":"d","label":"Cenozoic","correct":false}] },
-    { "id": "q3-02", "competency": "STEM_BIO11/12-IIIC-g-8", "text": "Which era is called the 'Age of Mammals'?", "options": [{"key":"a","label":"Precambrian","correct":false},{"key":"b","label":"Paleozoic","correct":false},{"key":"c","label":"Mesozoic","correct":false},{"key":"d","label":"Cenozoic","correct":true}] },
-    { "id": "q3-03", "competency": "STEM_BIO11/12-IIIC-g-9", "text": "Genetic drift is:", "options": [{"key":"a","label":"Random","correct":true},{"key":"b","label":"Directional","correct":false},{"key":"c","label":"Predictable","correct":false},{"key":"d","label":"Adaptive","correct":false}] },
-    { "id": "q3-04", "competency": "STEM_BIO11/12-IIIC-g-9", "text": "Which is the only source of NEW alleles?", "options": [{"key":"a","label":"Mutation","correct":true},{"key":"b","label":"Recombination","correct":false},{"key":"c","label":"Selection","correct":false},{"key":"d","label":"Gene flow","correct":false}] },
-    { "id": "q3-05", "competency": "STEM_BIO11/12-IIIC-g-9", "text": "Natural selection acts on:", "options": [{"key":"a","label":"Genotypes","correct":false},{"key":"b","label":"Phenotypes","correct":true},{"key":"c","label":"Chromosomes","correct":false},{"key":"d","label":"Gametes","correct":false}] },
-    { "id": "q3-06", "competency": "STEM_BIO11/12-IIIC-g-9", "text": "Which type of selection favors the average?", "options": [{"key":"a","label":"Directional","correct":false},{"key":"b","label":"Stabilizing","correct":true},{"key":"c","label":"Disruptive","correct":false},{"key":"d","label":"Artificial","correct":false}] },
-    { "id": "q3-07", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "Descent with modification means:", "options": [{"key":"a","label":"Species are fixed","correct":false},{"key":"b","label":"Species change over time and share ancestors","correct":true},{"key":"c","label":"All life is unrelated","correct":false},{"key":"d","label":"Evolution is random","correct":false}] },
-    { "id": "q3-08", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Who proposed natural selection?", "options": [{"key":"a","label":"Lamarck","correct":false},{"key":"b","label":"Darwin","correct":true},{"key":"c","label":"Linnaeus","correct":false},{"key":"d","label":"Mendel","correct":false}] },
-    { "id": "q3-09", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Lamarck proposed:", "options": [{"key":"a","label":"Natural selection","correct":false},{"key":"b","label":"Inheritance of acquired characteristics","correct":true},{"key":"c","label":"Common ancestry","correct":false},{"key":"d","label":"Mutation","correct":false}] },
-    { "id": "q3-10", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "On the Origin of Species was published in:", "options": [{"key":"a","label":"1758","correct":false},{"key":"b","label":"1859","correct":true},{"key":"c","label":"1900","correct":false},{"key":"d","label":"1953","correct":false}] },
-    { "id": "q3-11", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Homologous structures provide evidence for:", "options": [{"key":"a","label":"Convergent evolution","correct":false},{"key":"b","label":"Common ancestry","correct":true},{"key":"c","label":"Spontaneous generation","correct":false},{"key":"d","label":"Genetic drift","correct":false}] },
-    { "id": "q3-12", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Vestigial structures are:", "options": [{"key":"a","label":"Newly evolved","correct":false},{"key":"b","label":"Reduced in function","correct":true},{"key":"c","label":"Only in plants","correct":false},{"key":"d","label":"Always harmful","correct":false}] },
-    { "id": "q3-13", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "The fossil record shows:", "options": [{"key":"a","label":"Evolutionary change over time","correct":true},{"key":"b","label":"Creationism","correct":false},{"key":"c","label":"Spontaneous generation","correct":false},{"key":"d","label":"Intelligent design","correct":false}] },
-    { "id": "q3-14", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "Two species that share more DNA are:", "options": [{"key":"a","label":"More closely related","correct":true},{"key":"b","label":"Less related","correct":false},{"key":"c","label":"Unrelated","correct":false},{"key":"d","label":"Identical","correct":false}] },
-    { "id": "q3-15", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "A node on a phylogenetic tree represents:", "options": [{"key":"a","label":"A common ancestor","correct":true},{"key":"b","label":"A modern species","correct":false},{"key":"c","label":"A mutation","correct":false},{"key":"d","label":"An extinction event","correct":false}] },
-    { "id": "q3-16", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Binomial nomenclature was developed by:", "options": [{"key":"a","label":"Darwin","correct":false},{"key":"b","label":"Linnaeus","correct":true},{"key":"c","label":"Mendel","correct":false},{"key":"d","label":"Lamarck","correct":false}] },
-    { "id": "q3-17", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "The largest taxonomic rank is:", "options": [{"key":"a","label":"Kingdom","correct":false},{"key":"b","label":"Domain","correct":true},{"key":"c","label":"Phylum","correct":false},{"key":"d","label":"Class","correct":false}] },
-    { "id": "q3-18", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Which kingdom has chitin cell walls?", "options": [{"key":"a","label":"Plantae","correct":false},{"key":"b","label":"Fungi","correct":true},{"key":"c","label":"Animalia","correct":false},{"key":"d","label":"Protista","correct":false}] },
-    { "id": "q3-19", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Cladistics groups organisms by:", "options": [{"key":"a","label":"Shared derived characteristics","correct":true},{"key":"b","label":"Color","correct":false},{"key":"c","label":"Size","correct":false},{"key":"d","label":"Habitat","correct":false}] },
-    { "id": "q3-20", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "A monophyletic group includes:", "options": [{"key":"a","label":"Ancestor + all descendants","correct":true},{"key":"b","label":"Only living species","correct":false},{"key":"c","label":"Only derived traits","correct":false},{"key":"d","label":"Ancestor only","correct":false}] }
+    {
+      "id": "q3-r01",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Remembering",
+      "text": "Which enzyme cuts DNA at specific base sequences?",
+      "options": [
+        {
+          "key": "a",
+          "label": "DNA ligase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "DNA polymerase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Helicase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Restriction enzyme",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q3-r02",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Understanding",
+      "text": "Why are a gene and a plasmid cut with the same restriction enzyme?",
+      "options": [
+        {
+          "key": "a",
+          "label": "So the plasmid becomes linear forever",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "So their sticky ends match",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "So the gene is copied by PCR",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "So bacteria cannot take it up",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r03",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Applying",
+      "text": "A crime lab has only a tiny drop of blood. Which technique will make enough DNA for testing?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Gel electrophoresis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Restriction digestion",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "PCR",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Transformation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r04",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Remembering",
+      "text": "Golden Rice was engineered to produce:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Insulin",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Bt toxin",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Beta-carotene",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Growth hormone",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r05",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Understanding",
+      "text": "Which is a major environmental concern about GMO crops?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Their seeds are too large",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Gene flow to wild relatives",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "They need no sunlight",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They make crops grow slowly",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r06",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Evaluating",
+      "text": "A community wants a crop that reduces pesticide spraying against corn borers. Which option best fits this goal?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Plant Golden Rice",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Plant Bt corn",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Use insulin bacteria",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Use gene therapy",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r07",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "bloomLevel": "Remembering",
+      "text": "Which era is known as the Age of Reptiles?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Paleozoic",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cenozoic",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Mesozoic",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Precambrian",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r08",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "bloomLevel": "Understanding",
+      "text": "Which event marks the start of the Paleozoic Era?",
+      "options": [
+        {
+          "key": "a",
+          "label": "The first humans",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "The extinction of dinosaurs",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "The first prokaryotes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "The Cambrian explosion",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q3-r09",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Remembering",
+      "text": "In evolution, fitness refers to an organism's:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Physical strength",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Body size",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Life span",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Reproductive success",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q3-r10",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Understanding",
+      "text": "Which type of selection favors the average and removes extremes?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Directional selection",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Disruptive selection",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Stabilizing selection",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Artificial selection",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r11",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Understanding",
+      "text": "Genetic drift has the greatest effect in:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Small populations",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Large populations",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Fast-growing populations",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Migrating populations",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r12",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Applying",
+      "text": "After repeated antibiotic use, most bacteria in a patient are resistant. Which type of selection happened?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Directional",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Stabilizing",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Disruptive",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Sexual",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r13",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Analyzing",
+      "text": "A typhoon kills most of a small lizard population at random. The survivors have less genetic variety. What is this?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Founder effect",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Gene flow",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Natural selection",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Bottleneck effect",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q3-r14",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "bloomLevel": "Remembering",
+      "text": "Darwin described evolution as:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Spontaneous generation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Descent with modification",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Inheritance of acquired traits",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Use and disuse",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r15",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "bloomLevel": "Understanding",
+      "text": "Why is the universal genetic code evidence of common ancestry?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Each species invented its own code",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "All life inherited the same code",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "The code changes in every generation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Only animals use the same code",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r16",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "bloomLevel": "Remembering",
+      "text": "Who proposed the inheritance of acquired characteristics?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Darwin",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Wallace",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Lamarck",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Mendel",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r17",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "bloomLevel": "Analyzing",
+      "text": "A student says giraffes have long necks because their ancestors stretched them. Whose idea is this, and why is it rejected?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Lamarck's; acquired changes aren't inherited",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Darwin's; selection never acts on necks",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Wallace's; long necks are vestigial",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mendel's; long necks are recessive",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r18",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "bloomLevel": "Understanding",
+      "text": "The forelimbs of humans, whales and bats have the same bone pattern. They are:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Homologous structures",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Analogous structures",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Vestigial structures",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Embryonic structures",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-r19",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "bloomLevel": "Analyzing",
+      "text": "Insect wings and bird wings both allow flight but are built differently. What do they show?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Close common ancestry",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Vestigial structures",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Identical DNA sequences",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Similar function, separate origin",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q3-r20",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "bloomLevel": "Understanding",
+      "text": "On a phylogenetic tree, a node represents:",
+      "options": [
+        {
+          "key": "a",
+          "label": "A common ancestor",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "A living species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "An extinct species only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A mutation in DNA",
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
+    {
+      "id": "q3-01",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "text": "Which era is known as the 'Age of Reptiles'?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Precambrian",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Paleozoic",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Mesozoic",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Cenozoic",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-02",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "text": "Which era is called the 'Age of Mammals'?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Precambrian",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Paleozoic",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Mesozoic",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cenozoic",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q3-03",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "text": "Genetic drift is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Random",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Directional",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Predictable",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Adaptive",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-04",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "text": "Which is the only source of NEW alleles?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mutation",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Recombination",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Selection",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Gene flow",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-05",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "text": "Natural selection acts on:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Genotypes",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Phenotypes",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Chromosomes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Gametes",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-06",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "text": "Which type of selection favors the average?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Directional",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Stabilizing",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Disruptive",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Artificial",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-07",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "Descent with modification means:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Species are fixed",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Species change over time and share ancestors",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "All life is unrelated",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Evolution is random",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-08",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Who proposed natural selection?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Lamarck",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Darwin",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Linnaeus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mendel",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-09",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Lamarck proposed:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Natural selection",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Inheritance of acquired characteristics",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Common ancestry",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mutation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-10",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "On the Origin of Species was published in:",
+      "options": [
+        {
+          "key": "a",
+          "label": "1758",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "1859",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "1900",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "1953",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-11",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Homologous structures provide evidence for:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Convergent evolution",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Common ancestry",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Spontaneous generation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Genetic drift",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-12",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Vestigial structures are:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Newly evolved",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Reduced in function",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Only in plants",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Always harmful",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-13",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "The fossil record shows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Evolutionary change over time",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Creationism",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Spontaneous generation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Intelligent design",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-14",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "Two species that share more DNA are:",
+      "options": [
+        {
+          "key": "a",
+          "label": "More closely related",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Less related",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Unrelated",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Identical",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-15",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "A node on a phylogenetic tree represents:",
+      "options": [
+        {
+          "key": "a",
+          "label": "A common ancestor",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "A modern species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A mutation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "An extinction event",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-16",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Binomial nomenclature was developed by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Darwin",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Linnaeus",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Mendel",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Lamarck",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-17",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "The largest taxonomic rank is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Kingdom",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Domain",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Phylum",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Class",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-18",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Which kingdom has chitin cell walls?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Plantae",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fungi",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Animalia",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Protista",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-19",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Cladistics groups organisms by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Shared derived characteristics",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Color",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Size",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Habitat",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q3-20",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "A monophyletic group includes:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Ancestor + all descendants",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Only living species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Only derived traits",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Ancestor only",
+          "correct": false
+        }
+      ]
+    }
   ]
 }

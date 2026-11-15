@@ -2,30 +2,598 @@
   "assessmentId": "biol1-quiz1",
   "subject": "biol1",
   "type": "quiz",
-  "title": "Quiz 1 — Cell Theory, Structure & Cell Cycle",
+  "title": "Quiz 1 — Cells, Tissues & Cell Division (Weeks 1–3)",
+  "coverage": "Weeks 1–3",
   "timeLimit": 1200,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
     {
       "id": "q1-01",
       "competency": "STEM_BIO11/12-Ia-c-1",
+      "bloomLevel": "Remembering",
       "text": "Which scientist first coined the term 'cell' after observing cork tissue under a microscope?",
       "options": [
-        { "key": "a", "label": "Anton van Leeuwenhoek", "correct": false },
-        { "key": "b", "label": "Robert Hooke", "correct": true },
-        { "key": "c", "label": "Robert Brown", "correct": false },
-        { "key": "d", "label": "Theodor Schwann", "correct": false }
+        {
+          "key": "a",
+          "label": "Anton van Leeuwenhoek",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Robert Brown",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Theodor Schwann",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Robert Hooke",
+          "correct": true
+        }
       ]
     },
+    {
+      "id": "q1-r01",
+      "competency": "STEM_BIO11/12-Ia-c-1",
+      "bloomLevel": "Analyzing",
+      "text": "A student says, \"Schleiden and Schwann completed the cell theory in 1839.\" Which statement best corrects this claim?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Hooke later proved that all living cells contain a nucleus",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Leeuwenhoek later showed that plants are not made of cells",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Virchow later added that cells come only from pre-existing cells",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Brown later showed that animal cells have no organelles",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-05",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Remembering",
+      "text": "Which organelle is the site of protein synthesis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Ribosome",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Lysosome",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Golgi apparatus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Vacuole",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r02",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Understanding",
+      "text": "What is the main function of the smooth endoplasmic reticulum?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Making lipids and detoxifying drugs",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Making proteins for export from the cell",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Producing ATP from glucose and oxygen",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Breaking down worn-out organelles",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r03",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Understanding",
+      "text": "Which organelle modifies, sorts and packages proteins into vesicles?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Smooth ER",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lysosome",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Golgi apparatus",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Nucleolus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r04",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Applying",
+      "text": "Cells of the pancreas secrete large amounts of digestive enzymes. Which organelles would you expect to be especially abundant in these cells?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Smooth ER and lysosomes",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Rough ER and Golgi apparatus",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Chloroplasts and vacuoles",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Centrioles and peroxisomes",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r05",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Applying",
+      "text": "A heart muscle cell beats continuously and needs a large, steady supply of energy. Which organelle would be most numerous in it?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Chloroplast",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Golgi apparatus",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Lysosome",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mitochondrion",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q1-r06",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "bloomLevel": "Understanding",
+      "text": "Which feature distinguishes prokaryotic cells from eukaryotic cells?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They lack ribosomes and DNA",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They lack a membrane-bound nucleus",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "They have linear chromosomes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They are always multicellular",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r07",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "bloomLevel": "Remembering",
+      "text": "Which structure is found in plant cells but NOT in animal cells?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mitochondrion",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Ribosome",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cell wall",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Nucleus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r08",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "bloomLevel": "Analyzing",
+      "text": "A cell has a cell wall, 70S ribosomes, a nucleoid and no mitochondria. How should it be classified?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Plant cell",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Prokaryotic cell",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Animal cell",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Fungal cell",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r09",
+      "competency": "STEM_BIO11/12-Ia-c-4",
+      "bloomLevel": "Remembering",
+      "text": "Which type of animal tissue covers body surfaces and lines internal cavities?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Connective tissue",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Muscle tissue",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Nervous tissue",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Epithelial tissue",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q1-r10",
+      "competency": "STEM_BIO11/12-Ia-c-4",
+      "bloomLevel": "Understanding",
+      "text": "Why is blood classified as a connective tissue?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It lines the inside of blood vessels",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Its cells are suspended in a liquid matrix",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "It can contract to push itself forward",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It carries electrical nerve signals",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r11",
+      "competency": "STEM_BIO11/12-Ia-c-5",
+      "bloomLevel": "Understanding",
+      "text": "Microvilli on cells of the small intestine mainly increase the cell's:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Surface area for absorption",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Speed of cell division",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Production of ATP",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Amount of DNA",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r12",
+      "competency": "STEM_BIO11/12-Ia-c-5",
+      "bloomLevel": "Applying",
+      "text": "Mature red blood cells lose their nucleus during development. Which advantage does this give them?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Faster division to replace lost cells",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Ability to swim using a flagellum",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "More room for hemoglobin to carry O₂",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Ability to make proteins quickly",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r13",
+      "competency": "STEM_BIO11/12-Id-f-6",
+      "bloomLevel": "Remembering",
+      "text": "During which phase of the cell cycle is DNA replicated?",
+      "options": [
+        {
+          "key": "a",
+          "label": "S phase",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "G1 phase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "G2 phase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "M phase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r14",
+      "competency": "STEM_BIO11/12-Id-f-7",
+      "bloomLevel": "Understanding",
+      "text": "During which stage of mitosis do sister chromatids separate and move to opposite poles?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Metaphase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Prophase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Telophase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Anaphase",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q1-r15",
+      "competency": "STEM_BIO11/12-Id-f-7",
+      "bloomLevel": "Analyzing",
+      "text": "A cell under the microscope shows chromosomes lined up in the middle and spindle fibers attached to each centromere. What stage is shown?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Prophase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Metaphase",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Anaphase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Telophase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-15",
+      "competency": "STEM_BIO11/12-Id-f-8",
+      "bloomLevel": "Understanding",
+      "text": "What is the significance of crossing over during meiosis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It reduces the chromosome number",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It produces identical cells",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It increases genetic variation",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "It repairs damaged DNA",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-r16",
+      "competency": "STEM_BIO11/12-Id-f-9",
+      "bloomLevel": "Remembering",
+      "text": "Which process produces gametes with half the chromosome number?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Meiosis",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Mitosis",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Binary fission",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cytokinesis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q1-17",
+      "competency": "STEM_BIO11/12-Id-f-10",
+      "bloomLevel": "Understanding",
+      "text": "Which condition results from uncontrolled cell division?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Diabetes",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Anemia",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Hemophilia",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cancer",
+          "correct": true
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
     {
       "id": "q1-02",
       "competency": "STEM_BIO11/12-Ia-c-1",
       "text": "Which of the following is NOT one of the three postulates of the cell theory?",
       "options": [
-        { "key": "a", "label": "All living organisms are composed of one or more cells", "correct": false },
-        { "key": "b", "label": "The cell is the basic unit of structure and function", "correct": false },
-        { "key": "c", "label": "All cells arise from pre-existing cells", "correct": false },
-        { "key": "d", "label": "Cells contain chlorophyll for photosynthesis", "correct": true }
+        {
+          "key": "a",
+          "label": "All living organisms are composed of one or more cells",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "The cell is the basic unit of structure and function",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "All cells arise from pre-existing cells",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cells contain chlorophyll for photosynthesis",
+          "correct": true
+        }
       ]
     },
     {
@@ -33,10 +601,26 @@
       "competency": "STEM_BIO11/12-Ia-c-1",
       "text": "Who proposed that all cells come from pre-existing cells?",
       "options": [
-        { "key": "a", "label": "Rudolf Virchow", "correct": true },
-        { "key": "b", "label": "Matthias Schleiden", "correct": false },
-        { "key": "c", "label": "Theodor Schwann", "correct": false },
-        { "key": "d", "label": "Robert Hooke", "correct": false }
+        {
+          "key": "a",
+          "label": "Rudolf Virchow",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Matthias Schleiden",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Theodor Schwann",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Robert Hooke",
+          "correct": false
+        }
       ]
     },
     {
@@ -44,21 +628,26 @@
       "competency": "STEM_BIO11/12-Ia-c-2",
       "text": "Which organelle is known as the control center of the cell because it contains DNA?",
       "options": [
-        { "key": "a", "label": "Mitochondrion", "correct": false },
-        { "key": "b", "label": "Ribosome", "correct": false },
-        { "key": "c", "label": "Nucleus", "correct": true },
-        { "key": "d", "label": "Golgi apparatus", "correct": false }
-      ]
-    },
-    {
-      "id": "q1-05",
-      "competency": "STEM_BIO11/12-Ia-c-2",
-      "text": "Which organelle is the site of protein synthesis?",
-      "options": [
-        { "key": "a", "label": "Ribosome", "correct": true },
-        { "key": "b", "label": "Lysosome", "correct": false },
-        { "key": "c", "label": "Golgi apparatus", "correct": false },
-        { "key": "d", "label": "Vacuole", "correct": false }
+        {
+          "key": "a",
+          "label": "Mitochondrion",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Ribosome",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Nucleus",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Golgi apparatus",
+          "correct": false
+        }
       ]
     },
     {
@@ -66,10 +655,26 @@
       "competency": "STEM_BIO11/12-Ia-c-2",
       "text": "Which organelle is responsible for producing ATP through cellular respiration?",
       "options": [
-        { "key": "a", "label": "Chloroplast", "correct": false },
-        { "key": "b", "label": "Mitochondrion", "correct": true },
-        { "key": "c", "label": "Ribosome", "correct": false },
-        { "key": "d", "label": "Smooth ER", "correct": false }
+        {
+          "key": "a",
+          "label": "Chloroplast",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mitochondrion",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Ribosome",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Smooth ER",
+          "correct": false
+        }
       ]
     },
     {
@@ -77,10 +682,26 @@
       "competency": "STEM_BIO11/12-Ia-c-2",
       "text": "What is the primary function of the smooth endoplasmic reticulum?",
       "options": [
-        { "key": "a", "label": "Protein synthesis", "correct": false },
-        { "key": "b", "label": "Lipid synthesis and detoxification", "correct": true },
-        { "key": "c", "label": "ATP production", "correct": false },
-        { "key": "d", "label": "Waste breakdown", "correct": false }
+        {
+          "key": "a",
+          "label": "Protein synthesis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lipid synthesis and detoxification",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "ATP production",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Waste breakdown",
+          "correct": false
+        }
       ]
     },
     {
@@ -88,10 +709,26 @@
       "competency": "STEM_BIO11/12-Ia-c-2",
       "text": "Which organelle would be most abundant in a muscle cell that requires a lot of energy?",
       "options": [
-        { "key": "a", "label": "Chloroplast", "correct": false },
-        { "key": "b", "label": "Mitochondrion", "correct": true },
-        { "key": "c", "label": "Golgi apparatus", "correct": false },
-        { "key": "d", "label": "Lysosome", "correct": false }
+        {
+          "key": "a",
+          "label": "Chloroplast",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mitochondrion",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Golgi apparatus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Lysosome",
+          "correct": false
+        }
       ]
     },
     {
@@ -99,10 +736,26 @@
       "competency": "STEM_BIO11/12-Ia-c-3",
       "text": "Which of the following is a distinguishing feature of prokaryotic cells?",
       "options": [
-        { "key": "a", "label": "Presence of a membrane-bound nucleus", "correct": false },
-        { "key": "b", "label": "Presence of mitochondria", "correct": false },
-        { "key": "c", "label": "Absence of a membrane-bound nucleus", "correct": true },
-        { "key": "d", "label": "Presence of chloroplasts", "correct": false }
+        {
+          "key": "a",
+          "label": "Presence of a membrane-bound nucleus",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Presence of mitochondria",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Absence of a membrane-bound nucleus",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Presence of chloroplasts",
+          "correct": false
+        }
       ]
     },
     {
@@ -110,10 +763,26 @@
       "competency": "STEM_BIO11/12-Ia-c-3",
       "text": "Which of the following is found in plant cells but NOT in animal cells?",
       "options": [
-        { "key": "a", "label": "Mitochondria", "correct": false },
-        { "key": "b", "label": "Chloroplasts", "correct": true },
-        { "key": "c", "label": "Ribosomes", "correct": false },
-        { "key": "d", "label": "Nucleus", "correct": false }
+        {
+          "key": "a",
+          "label": "Mitochondria",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Chloroplasts",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Ribosomes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nucleus",
+          "correct": false
+        }
       ]
     },
     {
@@ -121,10 +790,26 @@
       "competency": "STEM_BIO11/12-Ia-c-4",
       "text": "Which type of tissue covers body surfaces and lines internal cavities?",
       "options": [
-        { "key": "a", "label": "Epithelial tissue", "correct": true },
-        { "key": "b", "label": "Connective tissue", "correct": false },
-        { "key": "c", "label": "Muscle tissue", "correct": false },
-        { "key": "d", "label": "Nervous tissue", "correct": false }
+        {
+          "key": "a",
+          "label": "Epithelial tissue",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Connective tissue",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Muscle tissue",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nervous tissue",
+          "correct": false
+        }
       ]
     },
     {
@@ -132,10 +817,26 @@
       "competency": "STEM_BIO11/12-Ia-c-5",
       "text": "Microvilli in the small intestine are cell modifications that primarily increase:",
       "options": [
-        { "key": "a", "label": "Cell movement", "correct": false },
-        { "key": "b", "label": "Surface area for absorption", "correct": true },
-        { "key": "c", "label": "ATP production", "correct": false },
-        { "key": "d", "label": "DNA content", "correct": false }
+        {
+          "key": "a",
+          "label": "Cell movement",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Surface area for absorption",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "ATP production",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "DNA content",
+          "correct": false
+        }
       ]
     },
     {
@@ -143,10 +844,26 @@
       "competency": "STEM_BIO11/12-Id-f-6",
       "text": "During which phase of the cell cycle does DNA replication occur?",
       "options": [
-        { "key": "a", "label": "G1 phase", "correct": false },
-        { "key": "b", "label": "S phase", "correct": true },
-        { "key": "c", "label": "G2 phase", "correct": false },
-        { "key": "d", "label": "M phase", "correct": false }
+        {
+          "key": "a",
+          "label": "G1 phase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "S phase",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "G2 phase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "M phase",
+          "correct": false
+        }
       ]
     },
     {
@@ -154,21 +871,26 @@
       "competency": "STEM_BIO11/12-Id-f-7",
       "text": "During which stage of mitosis do chromosomes align at the cell's equator?",
       "options": [
-        { "key": "a", "label": "Prophase", "correct": false },
-        { "key": "b", "label": "Metaphase", "correct": true },
-        { "key": "c", "label": "Anaphase", "correct": false },
-        { "key": "d", "label": "Telophase", "correct": false }
-      ]
-    },
-    {
-      "id": "q1-15",
-      "competency": "STEM_BIO11/12-Id-f-8",
-      "text": "What is the significance of crossing over during meiosis?",
-      "options": [
-        { "key": "a", "label": "It reduces chromosome number", "correct": false },
-        { "key": "b", "label": "It increases genetic variation", "correct": true },
-        { "key": "c", "label": "It produces identical cells", "correct": false },
-        { "key": "d", "label": "It repairs damaged DNA", "correct": false }
+        {
+          "key": "a",
+          "label": "Prophase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Metaphase",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Anaphase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Telophase",
+          "correct": false
+        }
       ]
     },
     {
@@ -176,21 +898,26 @@
       "competency": "STEM_BIO11/12-Id-f-9",
       "text": "Which of the following is a key difference between mitosis and meiosis?",
       "options": [
-        { "key": "a", "label": "Mitosis produces 4 cells; meiosis produces 2", "correct": false },
-        { "key": "b", "label": "Mitosis produces identical cells; meiosis produces genetically diverse cells", "correct": true },
-        { "key": "c", "label": "Mitosis occurs only in gametes", "correct": false },
-        { "key": "d", "label": "Meiosis produces diploid cells", "correct": false }
-      ]
-    },
-    {
-      "id": "q1-17",
-      "competency": "STEM_BIO11/12-Id-f-10",
-      "text": "Which condition results from uncontrolled cell division?",
-      "options": [
-        { "key": "a", "label": "Diabetes", "correct": false },
-        { "key": "b", "label": "Cancer", "correct": true },
-        { "key": "c", "label": "Anemia", "correct": false },
-        { "key": "d", "label": "Hemophilia", "correct": false }
+        {
+          "key": "a",
+          "label": "Mitosis produces 4 cells; meiosis produces 2",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mitosis produces identical cells; meiosis produces genetically diverse cells",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Mitosis occurs only in gametes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Meiosis produces diploid cells",
+          "correct": false
+        }
       ]
     },
     {
@@ -198,10 +925,26 @@
       "competency": "STEM_BIO11/12-Id-f-6",
       "text": "What is the primary function of cell cycle checkpoints?",
       "options": [
-        { "key": "a", "label": "Speed up cell division", "correct": false },
-        { "key": "b", "label": "Ensure DNA is properly replicated and undamaged", "correct": true },
-        { "key": "c", "label": "Stop all cell division permanently", "correct": false },
-        { "key": "d", "label": "Produce gametes", "correct": false }
+        {
+          "key": "a",
+          "label": "Speed up cell division",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Ensure DNA is properly replicated and undamaged",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Stop all cell division permanently",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Produce gametes",
+          "correct": false
+        }
       ]
     },
     {
@@ -209,10 +952,26 @@
       "competency": "STEM_BIO11/12-Ig-h-11",
       "text": "Which model describes the plasma membrane as a fluid bilayer with embedded proteins?",
       "options": [
-        { "key": "a", "label": "Lock-and-key model", "correct": false },
-        { "key": "b", "label": "Fluid mosaic model", "correct": true },
-        { "key": "c", "label": "Unit membrane model", "correct": false },
-        { "key": "d", "label": "Sandwich model", "correct": false }
+        {
+          "key": "a",
+          "label": "Lock-and-key model",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fluid mosaic model",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Unit membrane model",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Sandwich model",
+          "correct": false
+        }
       ]
     },
     {
@@ -220,10 +979,26 @@
       "competency": "STEM_BIO11/12-Ig-h-13",
       "text": "Which type of transport requires energy (ATP) to move molecules against the concentration gradient?",
       "options": [
-        { "key": "a", "label": "Simple diffusion", "correct": false },
-        { "key": "b", "label": "Facilitated diffusion", "correct": false },
-        { "key": "c", "label": "Active transport", "correct": true },
-        { "key": "d", "label": "Osmosis", "correct": false }
+        {
+          "key": "a",
+          "label": "Simple diffusion",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Facilitated diffusion",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Active transport",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Osmosis",
+          "correct": false
+        }
       ]
     }
   ]

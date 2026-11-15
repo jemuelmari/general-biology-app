@@ -2,70 +2,3313 @@
   "assessmentId": "biol1-te",
   "subject": "biol1",
   "type": "te",
-  "title": "Term Exam — ATP, Oxygen's Role & Fermentation (Weeks 9–10)",
+  "title": "Term Exam — General Biology 1 (Weeks 1–10)",
+  "coverage": "Weeks 1–10",
   "timeLimit": 3600,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
-    { "id": "te-01", "competency": "STEM_BIO11/12-IIa-j-9", "text": "Which process produces ATP directly using a phosphate group transfer?", "options": [{"key":"a","label":"Substrate-level phosphorylation","correct":true},{"key":"b","label":"Oxidative phosphorylation","correct":false},{"key":"c","label":"Photophosphorylation","correct":false},{"key":"d","label":"Hydrolysis","correct":false}] },
-    { "id": "te-02", "competency": "STEM_BIO11/12-IIa-j-9", "text": "The Calvin cycle uses ATP and NADPH in a ratio of:", "options": [{"key":"a","label":"3:2","correct":true},{"key":"b","label":"2:3","correct":false},{"key":"c","label":"1:1","correct":false},{"key":"d","label":"4:1","correct":false}] },
-    { "id": "te-03", "competency": "STEM_BIO11/12-IIa-j-9", "text": "Total ATP consumed to make one glucose in photosynthesis:", "options": [{"key":"a","label":"12","correct":false},{"key":"b","label":"18","correct":true},{"key":"c","label":"32","correct":false},{"key":"d","label":"36","correct":false}] },
-    { "id": "te-04", "competency": "STEM_BIO11/12-IIa-j-9", "text": "In cellular respiration, how many ATP are produced by substrate-level phosphorylation (glycolysis + Krebs)?", "options": [{"key":"a","label":"2","correct":false},{"key":"b","label":"4","correct":true},{"key":"c","label":"28","correct":false},{"key":"d","label":"32","correct":false}] },
-    { "id": "te-05", "competency": "STEM_BIO11/12-IIa-j-9", "text": "Which reaction consumes ATP?", "options": [{"key":"a","label":"Glycolysis","correct":false},{"key":"b","label":"Krebs cycle","correct":false},{"key":"c","label":"Na⁺/K⁺ pump","correct":true},{"key":"d","label":"ETC","correct":false}] },
-    { "id": "te-06", "competency": "STEM_BIO11/12-IIa-j-9", "text": "Which reaction produces ATP?", "options": [{"key":"a","label":"Calvin cycle","correct":false},{"key":"b","label":"Protein synthesis","correct":false},{"key":"c","label":"Krebs cycle","correct":true},{"key":"d","label":"Muscle contraction","correct":false}] },
-    { "id": "te-07", "competency": "STEM_BIO11/12-IIa-j-10", "text": "The final electron acceptor in aerobic respiration is:", "options": [{"key":"a","label":"NAD⁺","correct":false},{"key":"b","label":"O₂","correct":true},{"key":"c","label":"FAD","correct":false},{"key":"d","label":"ATP","correct":false}] },
-    { "id": "te-08", "competency": "STEM_BIO11/12-IIa-j-10", "text": "When O₂ accepts electrons in the ETC, it forms:", "options": [{"key":"a","label":"CO₂","correct":false},{"key":"b","label":"H₂O","correct":true},{"key":"c","label":"Glucose","correct":false},{"key":"d","label":"ATP","correct":false}] },
-    { "id": "te-09", "competency": "STEM_BIO11/12-IIa-j-10", "text": "Without oxygen, the ETC:", "options": [{"key":"a","label":"Continues normally","correct":false},{"key":"b","label":"Halts; NADH accumulates","correct":true},{"key":"c","label":"Produces more ATP","correct":false},{"key":"d","label":"Runs backward","correct":false}] },
-    { "id": "te-10", "competency": "STEM_BIO11/12-IIa-j-10", "text": "Fermentation's main purpose is to:", "options": [{"key":"a","label":"Produce 36 ATP","correct":false},{"key":"b","label":"Regenerate NAD⁺","correct":true},{"key":"c","label":"Fix CO₂","correct":false},{"key":"d","label":"Produce O₂","correct":false}] },
-    { "id": "te-11", "competency": "STEM_BIO11/12-IIa-j-10", "text": "Which pathway occurs in muscle cells during intense exercise?", "options": [{"key":"a","label":"Alcoholic fermentation","correct":false},{"key":"b","label":"Lactic acid fermentation","correct":true},{"key":"c","label":"Photosynthesis","correct":false},{"key":"d","label":"Krebs cycle only","correct":false}] },
-    { "id": "te-12", "competency": "STEM_BIO11/12-IIa-j-10", "text": "The product of lactic acid fermentation is:", "options": [{"key":"a","label":"Ethanol","correct":false},{"key":"b","label":"CO₂","correct":false},{"key":"c","label":"Lactate","correct":true},{"key":"d","label":"Glucose","correct":false}] },
-    { "id": "te-13", "competency": "STEM_BIO11/12-IIa-j-11", "text": "If 4 glucose are fully oxidized aerobically, how many ATP (approx) are produced?", "options": [{"key":"a","label":"32","correct":false},{"key":"b","label":"64","correct":false},{"key":"c","label":"128","correct":true},{"key":"d","label":"200","correct":false}] },
-    { "id": "te-14", "competency": "STEM_BIO11/12-IIa-j-11", "text": "If 8 NADH pass through the ETC, ATP produced (approx)?", "options": [{"key":"a","label":"8","correct":false},{"key":"b","label":"16","correct":false},{"key":"c","label":"20","correct":true},{"key":"d","label":"24","correct":false}] },
-    { "id": "te-15", "competency": "STEM_BIO11/12-IIa-j-11", "text": "How many ATP are needed to fix 10 CO₂ in the Calvin cycle?", "options": [{"key":"a","label":"20","correct":false},{"key":"b","label":"30","correct":true},{"key":"c","label":"40","correct":false},{"key":"d","label":"60","correct":false}] },
-    { "id": "te-16", "competency": "STEM_BIO11/12-IIa-j-11", "text": "Which produces more ATP per glucose?", "options": [{"key":"a","label":"Fermentation","correct":false},{"key":"b","label":"Aerobic respiration","correct":true},{"key":"c","label":"Both equal","correct":false},{"key":"d","label":"Neither","correct":false}] },
-    { "id": "te-17", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which is an advantage of fermentation?", "options": [{"key":"a","label":"High ATP yield","correct":false},{"key":"b","label":"Works without oxygen","correct":true},{"key":"c","label":"Uses mitochondria","correct":false},{"key":"d","label":"Long-term sustainability","correct":false}] },
-    { "id": "te-18", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which is a disadvantage of aerobic respiration?", "options": [{"key":"a","label":"Requires oxygen","correct":true},{"key":"b","label":"Low ATP yield","correct":false},{"key":"c","label":"Very fast","correct":false},{"key":"d","label":"Produces O₂","correct":false}] },
-    { "id": "te-19", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which process is used in bread-making?", "options": [{"key":"a","label":"Lactic acid fermentation","correct":false},{"key":"b","label":"Alcoholic fermentation","correct":true},{"key":"c","label":"Aerobic respiration","correct":false},{"key":"d","label":"Photosynthesis","correct":false}] },
-    { "id": "te-20", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which food product uses lactic acid fermentation?", "options": [{"key":"a","label":"Bread","correct":false},{"key":"b","label":"Beer","correct":false},{"key":"c","label":"Yogurt","correct":true},{"key":"d","label":"Wine","correct":false}] },
-    { "id": "te-21", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which process produces CO₂ as a waste product?", "options": [{"key":"a","label":"Lactic acid fermentation","correct":false},{"key":"b","label":"Alcoholic fermentation","correct":true},{"key":"c","label":"Photosynthesis","correct":false},{"key":"d","label":"Photophosphorylation","correct":false}] },
-    { "id": "te-22", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Fermentation produces how many net ATP per glucose?", "options": [{"key":"a","label":"0","correct":false},{"key":"b","label":"2","correct":true},{"key":"c","label":"18","correct":false},{"key":"d","label":"32","correct":false}] },
-    { "id": "te-23", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Glycolysis occurs in which location?", "options": [{"key":"a","label":"Cytoplasm","correct":true},{"key":"b","label":"Mitochondrial matrix","correct":false},{"key":"c","label":"Inner mitochondrial membrane","correct":false},{"key":"d","label":"Nucleus","correct":false}] },
-    { "id": "te-24", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Krebs cycle occurs in which location?", "options": [{"key":"a","label":"Cytoplasm","correct":false},{"key":"b","label":"Mitochondrial matrix","correct":true},{"key":"c","label":"Inner membrane","correct":false},{"key":"d","label":"Nucleus","correct":false}] },
-    { "id": "te-25", "competency": "STEM_BIO11/12-IIa-j-12", "text": "ETC occurs in which location?", "options": [{"key":"a","label":"Cytoplasm","correct":false},{"key":"b","label":"Mitochondrial matrix","correct":false},{"key":"c","label":"Inner mitochondrial membrane","correct":true},{"key":"d","label":"Nucleus","correct":false}] },
-    { "id": "te-26", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Chemiosmosis produces ATP by:", "options": [{"key":"a","label":"Substrate-level phosphorylation","correct":false},{"key":"b","label":"H⁺ gradient through ATP synthase","correct":true},{"key":"c","label":"Light absorption","correct":false},{"key":"d","label":"Direct ATP transfer","correct":false}] },
-    { "id": "te-27", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which organism performs alcoholic fermentation?", "options": [{"key":"a","label":"Yeast","correct":true},{"key":"b","label":"Muscle cells","correct":false},{"key":"c","label":"Nerve cells","correct":false},{"key":"d","label":"Red blood cells","correct":false}] },
-    { "id": "te-28", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Anaerobic respiration yields how many ATP per glucose?", "options": [{"key":"a","label":"2","correct":true},{"key":"b","label":"18","correct":false},{"key":"c","label":"32","correct":false},{"key":"d","label":"36","correct":false}] },
-    { "id": "te-29", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which process would occur in a cell with no mitochondria?", "options": [{"key":"a","label":"Krebs cycle","correct":false},{"key":"b","label":"ETC","correct":false},{"key":"c","label":"Glycolysis + fermentation","correct":true},{"key":"d","label":"Photosynthesis","correct":false}] },
-    { "id": "te-30", "competency": "STEM_BIO11/12-IIa-j-12", "text": "In which scenario is aerobic respiration most important?", "options": [{"key":"a","label":"100m sprint","correct":false},{"key":"b","label":"Marathon running","correct":true},{"key":"c","label":"Yeast in bread","correct":false},{"key":"d","label":"Bacteria in yogurt","correct":false}] },
-    { "id": "te-31", "competency": "STEM_BIO11/12-IIa-j-9", "text": "Which molecule is the universal energy currency of cells?", "options": [{"key":"a","label":"ATP","correct":true},{"key":"b","label":"NADH","correct":false},{"key":"c","label":"FADH₂","correct":false},{"key":"d","label":"Glucose","correct":false}] },
-    { "id": "te-32", "competency": "STEM_BIO11/12-IIa-j-9", "text": "ATP hydrolysis releases approximately how much energy?", "options": [{"key":"a","label":"7.3 kcal/mol","correct":true},{"key":"b","label":"1 kcal/mol","correct":false},{"key":"c","label":"30 kcal/mol","correct":false},{"key":"d","label":"100 kcal/mol","correct":false}] },
-    { "id": "te-33", "competency": "STEM_BIO11/12-IIa-j-9", "text": "Which is NOT a product of glycolysis?", "options": [{"key":"a","label":"Pyruvate","correct":false},{"key":"b","label":"ATP","correct":false},{"key":"c","label":"NADH","correct":false},{"key":"d","label":"CO₂","correct":true}] },
-    { "id": "te-34", "competency": "STEM_BIO11/12-IIa-j-9", "text": "In the ETC, how many ATP molecules are produced from 10 NADH?", "options": [{"key":"a","label":"10","correct":false},{"key":"b","label":"25","correct":true},{"key":"c","label":"30","correct":false},{"key":"d","label":"40","correct":false}] },
-    { "id": "te-35", "competency": "STEM_BIO11/12-IIa-j-9", "text": "The ATP-ADP cycle is important because:", "options": [{"key":"a","label":"ATP is stored long-term","correct":false},{"key":"b","label":"ATP is regenerated on demand","correct":true},{"key":"c","label":"ATP is broken down permanently","correct":false},{"key":"d","label":"ATP is only made in plants","correct":false}] },
-    { "id": "te-36", "competency": "STEM_BIO11/12-IIa-j-10", "text": "Without oxygen, which process allows glycolysis to continue?", "options": [{"key":"a","label":"Krebs cycle","correct":false},{"key":"b","label":"Fermentation","correct":true},{"key":"c","label":"ETC","correct":false},{"key":"d","label":"Photosynthesis","correct":false}] },
-    { "id": "te-37", "competency": "STEM_BIO11/12-IIa-j-10", "text": "Which enzyme regenerates NAD⁺ during fermentation?", "options": [{"key":"a","label":"ATP synthase","correct":false},{"key":"b","label":"Lactate dehydrogenase or alcohol dehydrogenase","correct":true},{"key":"c","label":"RuBisCO","correct":false},{"key":"d","label":"DNA polymerase","correct":false}] },
-    { "id": "te-38", "competency": "STEM_BIO11/12-IIa-j-10", "text": "What happens to pyruvate in the absence of oxygen?", "options": [{"key":"a","label":"It enters the Krebs cycle","correct":false},{"key":"b","label":"It is converted to lactate or ethanol","correct":true},{"key":"c","label":"It is converted to glucose","correct":false},{"key":"d","label":"It is stored as glycogen","correct":false}] },
-    { "id": "te-39", "competency": "STEM_BIO11/12-IIa-j-10", "text": "The role of oxygen in respiration is to:", "options": [{"key":"a","label":"Accept electrons at the end of the ETC","correct":true},{"key":"b","label":"Produce glucose","correct":false},{"key":"c","label":"Fix carbon","correct":false},{"key":"d","label":"Generate heat only","correct":false}] },
-    { "id": "te-40", "competency": "STEM_BIO11/12-IIa-j-10", "text": "Which of the following does NOT require oxygen?", "options": [{"key":"a","label":"Krebs cycle","correct":false},{"key":"b","label":"ETC","correct":false},{"key":"c","label":"Glycolysis","correct":true},{"key":"d","label":"Oxidative phosphorylation","correct":false}] },
-    { "id": "te-41", "competency": "STEM_BIO11/12-IIa-j-11", "text": "If 6 FADH₂ pass through the ETC, how many ATP are produced?", "options": [{"key":"a","label":"6","correct":false},{"key":"b","label":"9","correct":true},{"key":"c","label":"15","correct":false},{"key":"d","label":"18","correct":false}] },
-    { "id": "te-42", "competency": "STEM_BIO11/12-IIa-j-11", "text": "How many ATP are needed to fix 6 CO₂ in the Calvin cycle?", "options": [{"key":"a","label":"6","correct":false},{"key":"b","label":"12","correct":false},{"key":"c","label":"18","correct":true},{"key":"d","label":"24","correct":false}] },
-    { "id": "te-43", "competency": "STEM_BIO11/12-IIa-j-11", "text": "Total ATP produced from 3 glucose in aerobic respiration (modern estimate)?", "options": [{"key":"a","label":"30","correct":false},{"key":"b","label":"64","correct":false},{"key":"c","label":"96","correct":true},{"key":"d","label":"120","correct":false}] },
-    { "id": "te-44", "competency": "STEM_BIO11/12-IIa-j-11", "text": "If 20 NADH are produced, how many ATP will the ETC generate?", "options": [{"key":"a","label":"20","correct":false},{"key":"b","label":"40","correct":false},{"key":"c","label":"50","correct":true},{"key":"d","label":"60","correct":false}] },
-    { "id": "te-45", "competency": "STEM_BIO11/12-IIa-j-11", "text": "Which stage produces the least ATP directly?", "options": [{"key":"a","label":"Glycolysis","correct":false},{"key":"b","label":"Krebs cycle","correct":true},{"key":"c","label":"ETC","correct":false},{"key":"d","label":"All equal","correct":false}] },
-    { "id": "te-46", "competency": "STEM_BIO11/12-IIa-j-11", "text": "The theoretical maximum ATP yield per glucose is:", "options": [{"key":"a","label":"2","correct":false},{"key":"b","label":"18","correct":false},{"key":"c","label":"32 (modern estimate)","correct":true},{"key":"d","label":"100","correct":false}] },
-    { "id": "te-47", "competency": "STEM_BIO11/12-IIa-j-11", "text": "Approximately what % of glucose's energy is captured as ATP in respiration?", "options": [{"key":"a","label":"1%","correct":false},{"key":"b","label":"10%","correct":false},{"key":"c","label":"34%","correct":true},{"key":"d","label":"90%","correct":false}] },
-    { "id": "te-48", "competency": "STEM_BIO11/12-IIa-j-11", "text": "Which yields more ATP: 1 glucose aerobic OR 1 glucose fermentation?", "options": [{"key":"a","label":"Fermentation","correct":false},{"key":"b","label":"Aerobic","correct":true},{"key":"c","label":"Equal","correct":false},{"key":"d","label":"Neither produces ATP","correct":false}] },
-    { "id": "te-49", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which condition allows rapid ATP production but with low yield?", "options": [{"key":"a","label":"Aerobic respiration","correct":false},{"key":"b","label":"Fermentation","correct":true},{"key":"c","label":"Photosynthesis","correct":false},{"key":"d","label":"Krebs cycle only","correct":false}] },
-    { "id": "te-50", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which process is used in the industrial production of ethanol?", "options": [{"key":"a","label":"Aerobic respiration","correct":false},{"key":"b","label":"Alcoholic fermentation","correct":true},{"key":"c","label":"Photosynthesis","correct":false},{"key":"d","label":"Krebs cycle","correct":false}] },
-    { "id": "te-51", "competency": "STEM_BIO11/12-IIa-j-12", "text": "A cell can switch between aerobic and anaerobic pathways based on:", "options": [{"key":"a","label":"Oxygen availability","correct":true},{"key":"b","label":"Cell color","correct":false},{"key":"c","label":"Cell size","correct":false},{"key":"d","label":"Number of chromosomes","correct":false}] },
-    { "id": "te-52", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Lactic acid buildup in muscles causes:", "options": [{"key":"a","label":"Muscle fatigue and soreness","correct":true},{"key":"b","label":"Faster ATP production permanently","correct":false},{"key":"c","label":"Muscle growth","correct":false},{"key":"d","label":"Improved oxygen transport","correct":false}] },
-    { "id": "te-53", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which of the following is a commercial use of fermentation?", "options": [{"key":"a","label":"Biofuel production","correct":true},{"key":"b","label":"Solar panels","correct":false},{"key":"c","label":"Wind turbines","correct":false},{"key":"d","label":"Nuclear energy","correct":false}] },
-    { "id": "te-54", "competency": "STEM_BIO11/12-IIa-j-12", "text": "In which scenario would a cell prefer aerobic respiration?", "options": [{"key":"a","label":"When O₂ is abundant","correct":true},{"key":"b","label":"When O₂ is absent","correct":false},{"key":"c","label":"In the cytoplasm only","correct":false},{"key":"d","label":"When glucose is absent","correct":false}] },
-    { "id": "te-55", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Fermentation regenerates which molecule needed for glycolysis?", "options": [{"key":"a","label":"ATP","correct":false},{"key":"b","label":"NAD⁺","correct":true},{"key":"c","label":"FAD","correct":false},{"key":"d","label":"Glucose","correct":false}] },
-    { "id": "te-56", "competency": "STEM_BIO11/12-IIa-j-12", "text": "What happens to yeast in an airtight container with sugar?", "choices": [], "options": [{"key":"a","label":"Alcoholic fermentation produces ethanol + CO₂","correct":true},{"key":"b","label":"Aerobic respiration produces H₂O","correct":false},{"key":"c","label":"Photosynthesis produces O₂","correct":false},{"key":"d","label":"Nothing happens","correct":false}] },
-    { "id": "te-57", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which of the following is a disadvantage of lactic acid fermentation?", "options": [{"key":"a","label":"Produces only 2 ATP per glucose","correct":true},{"key":"b","label":"Requires oxygen","correct":false},{"key":"c","label":"Produces too much ATP","correct":false},{"key":"d","label":"Requires mitochondria","correct":false}] },
-    { "id": "te-58", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which process would you expect in a marathon runner's muscle cells at mile 20?", "options": [{"key":"a","label":"Aerobic respiration","correct":true},{"key":"b","label":"Lactic acid fermentation","correct":false},{"key":"c","label":"Alcoholic fermentation","correct":false},{"key":"d","label":"Photosynthesis","correct":false}] },
-    { "id": "te-59", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which process would you expect during a 100m sprint?", "options": [{"key":"a","label":"Aerobic respiration","correct":false},{"key":"b","label":"Lactic acid fermentation","correct":true},{"key":"c","label":"Alcoholic fermentation","correct":false},{"key":"d","label":"Photosynthesis","correct":false}] },
-    { "id": "te-60", "competency": "STEM_BIO11/12-IIa-j-12", "text": "Which best summarizes the relationship between photosynthesis and respiration?", "options": [{"key":"a","label":"They are independent processes","correct":false},{"key":"b","label":"Products of one are reactants of the other — life's energy cycle","correct":true},{"key":"c","label":"They occur only in plants","correct":false},{"key":"d","label":"They both produce oxygen","correct":false}] }
-
+    {
+      "id": "te-r01",
+      "competency": "STEM_BIO11/12-Ia-c-1",
+      "bloomLevel": "Remembering",
+      "text": "Who concluded in 1855 that all cells come from pre-existing cells?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Rudolf Virchow",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Robert Hooke",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Theodor Schwann",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Robert Brown",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r02",
+      "competency": "STEM_BIO11/12-Ia-c-1",
+      "bloomLevel": "Applying",
+      "text": "A wound on your arm heals as new skin cells fill the gap. Which postulate of the cell theory does this best illustrate?",
+      "options": [
+        {
+          "key": "a",
+          "label": "All organisms are made of cells",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cells arise from pre-existing cells",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "The cell is the unit of function",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cells contain hereditary material",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r03",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Remembering",
+      "text": "Which organelle contains the cell's DNA and controls its activities?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Nucleus",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Ribosome",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Golgi apparatus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Vacuole",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r04",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Remembering",
+      "text": "Which organelle is the site of cellular respiration?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mitochondrion",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Chloroplast",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Ribosome",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Lysosome",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r05",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Understanding",
+      "text": "What is the function of the nuclear pores?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Assemble ribosome subunits inside",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Store calcium for muscle contraction",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Let mRNA and other materials pass",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Digest worn-out organelles",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r06",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Understanding",
+      "text": "Which part of the cytoskeleton forms the spindle fibers during cell division?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Microfilaments",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Intermediate filaments",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cell wall fibers",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Microtubules",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r07",
+      "competency": "STEM_BIO11/12-Ia-c-2",
+      "bloomLevel": "Analyzing",
+      "text": "Mitochondria have their own circular DNA, 70S ribosomes and a double membrane. Which idea do these features best support?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They came from engulfed bacteria",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "They are made by the nucleus",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "They are a kind of lysosome",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They come from chloroplasts",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r08",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "bloomLevel": "Remembering",
+      "text": "Which structure is found only in prokaryotic cells?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mitochondrion",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Nuclear envelope",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Nucleoid region",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Golgi apparatus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r09",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "bloomLevel": "Understanding",
+      "text": "Which structures do animal cells have that plant cells usually lack?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Centrioles",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Cell walls",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Chloroplasts",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Central vacuoles",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r10",
+      "competency": "STEM_BIO11/12-Ia-c-3",
+      "bloomLevel": "Analyzing",
+      "text": "A cell sample has chloroplasts, a cell wall and a large central vacuole. From which organism did it most likely come?",
+      "options": [
+        {
+          "key": "a",
+          "label": "An animal",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "A plant",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "A bacterium",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A fungus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r11",
+      "competency": "STEM_BIO11/12-Ia-c-4",
+      "bloomLevel": "Remembering",
+      "text": "Which tissue carries sugars from the leaves to other plant parts?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Xylem",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Epidermis",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Phloem",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Cork",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r12",
+      "competency": "STEM_BIO11/12-Ia-c-4",
+      "bloomLevel": "Understanding",
+      "text": "Which tissue type makes up the brain and spinal cord?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Nervous tissue",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Epithelial tissue",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Connective tissue",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Muscle tissue",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r13",
+      "competency": "STEM_BIO11/12-Ia-c-5",
+      "bloomLevel": "Understanding",
+      "text": "Guard cells are specialized to:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Carry water up the stem",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Absorb minerals from soil",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Store starch in roots",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Open and close stomata",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r14",
+      "competency": "STEM_BIO11/12-Ia-c-5",
+      "bloomLevel": "Applying",
+      "text": "Cells lining the airways are covered with tiny hair-like structures that sweep mucus upward. What are these structures?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Microvilli",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Flagella",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cilia",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Root hairs",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r15",
+      "competency": "STEM_BIO11/12-Id-f-6",
+      "bloomLevel": "Remembering",
+      "text": "In which phase does a cell grow and carry out its normal functions before DNA synthesis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "S",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "G2",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "M",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "G1",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r16",
+      "competency": "STEM_BIO11/12-Id-f-6",
+      "bloomLevel": "Analyzing",
+      "text": "Mature nerve cells rarely divide. Which statement best explains this?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They are stuck in metaphase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They stay permanently in G0",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "They skip the S phase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They lack any DNA to copy",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r17",
+      "competency": "STEM_BIO11/12-Id-f-7",
+      "bloomLevel": "Understanding",
+      "text": "In which stage of mitosis do new nuclear envelopes form around the chromosomes?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Prophase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Metaphase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Telophase",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Anaphase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r18",
+      "competency": "STEM_BIO11/12-Id-f-7",
+      "bloomLevel": "Understanding",
+      "text": "How does cytokinesis in plant cells differ from that in animal cells?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Plants form a cleavage furrow",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Plants skip cytokinesis",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Plants divide only the nucleus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Plants form a cell plate",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r19",
+      "competency": "STEM_BIO11/12-Id-f-8",
+      "bloomLevel": "Understanding",
+      "text": "Homologous chromosomes separate during:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Anaphase II",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Anaphase I",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Prophase I",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Telophase II",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r20",
+      "competency": "STEM_BIO11/12-Id-f-9",
+      "bloomLevel": "Applying",
+      "text": "A gardener grows many identical plants from cuttings of one plant. Which process makes this possible?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Meiosis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Crossing over",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Mitosis",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Fertilization",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r21",
+      "competency": "STEM_BIO11/12-Id-f-10",
+      "bloomLevel": "Understanding",
+      "text": "Which gene acts as a \"brake\" that stops division when DNA is damaged?",
+      "options": [
+        {
+          "key": "a",
+          "label": "p53 tumor suppressor gene",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "An oncogene for growth",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A gene for ribosomes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A gene for cholesterol",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r22",
+      "competency": "STEM_BIO11/12-Ig-h-11",
+      "bloomLevel": "Remembering",
+      "text": "Which model describes the membrane as a fluid bilayer with embedded proteins?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Fluid mosaic model",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Lock-and-key model",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Induced-fit model",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Sandwich model",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r23",
+      "competency": "STEM_BIO11/12-Ig-h-11",
+      "bloomLevel": "Understanding",
+      "text": "Why can O₂ and CO₂ pass directly through the lipid bilayer?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They are large and charged",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They use the Na⁺/K⁺ pump",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "They are carried in vesicles",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They are small and nonpolar",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r24",
+      "competency": "STEM_BIO11/12-Ig-h-12",
+      "bloomLevel": "Understanding",
+      "text": "What is the difference between osmosis and diffusion?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Osmosis needs ATP but diffusion doesn't",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Osmosis is diffusion of water only",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Osmosis moves solutes against gradients",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Osmosis happens only in plant cells",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r25",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "bloomLevel": "Understanding",
+      "text": "How many sodium ions does the Na⁺/K⁺ pump move out per ATP?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "2",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "1",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r26",
+      "competency": "STEM_BIO11/12-Ig-h-13",
+      "bloomLevel": "Applying",
+      "text": "A plant cell is placed in concentrated salt water. Which observation is expected?",
+      "options": [
+        {
+          "key": "a",
+          "label": "The membrane pulls away from the wall",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "The cell swells and bursts",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "The cell wall dissolves",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nothing changes inside the cell",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r27",
+      "competency": "STEM_BIO11/12-Ig-h-14",
+      "bloomLevel": "Remembering",
+      "text": "\"Cell drinking,\" in which a cell takes in droplets of fluid, is called:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Phagocytosis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Pinocytosis",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Exocytosis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Osmosis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r28",
+      "competency": "STEM_BIO11/12-Ig-h-14",
+      "bloomLevel": "Analyzing",
+      "text": "What do endocytosis and exocytosis have in common?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Both move only water molecules",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Both move substances down gradients",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both use channel proteins",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Both use vesicles and energy",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r29",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Remembering",
+      "text": "Which carbohydrate makes up plant cell walls?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glycogen",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Starch",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Sucrose",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cellulose",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r30",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Remembering",
+      "text": "What are the three parts of a nucleotide?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glycerol, fatty acid, phosphate",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Amino group, carboxyl, R group",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Sugar, phosphate, base",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Glucose, fructose, galactose",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r31",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Understanding",
+      "text": "What type of bond links amino acids in a protein?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glycosidic bond",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Peptide bond",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Hydrogen bond only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Phosphodiester bond",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r32",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Understanding",
+      "text": "Which lipid is the starting material for steroid hormones?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Triglyceride",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Wax",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Phospholipid",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cholesterol",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r33",
+      "competency": "STEM_BIO11/12-II-i-j-15",
+      "bloomLevel": "Analyzing",
+      "text": "A biomolecule contains C, H, O and N, is built from 20 different monomers, and speeds up reactions. What is it?",
+      "options": [
+        {
+          "key": "a",
+          "label": "A carbohydrate",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "A lipid",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A nucleic acid",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A protein",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r34",
+      "competency": "STEM_BIO11/12-II-i-j-16",
+      "bloomLevel": "Understanding",
+      "text": "Which biomolecule stores and transmits hereditary information?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Carbohydrates",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lipids",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Nucleic acids",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Proteins",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r35",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Remembering",
+      "text": "An inorganic helper of an enzyme, such as Zn²⁺, is called a:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Coenzyme",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Substrate",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cofactor",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Apoenzyme",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r36",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Understanding",
+      "text": "Why is each enzyme specific to one kind of substrate?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It is made of a single amino acid",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Its active site fits only that shape",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "It works at every pH and temperature",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It is used up after one reaction",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r37",
+      "competency": "STEM_BIO11/12-II-i-j-17",
+      "bloomLevel": "Applying",
+      "text": "A person lacks enough lactase. What happens when he drinks milk?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Lactose is turned into fat at once",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lactose is not broken down well",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Lactase is made by his stomach",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Milk proteins are not digested",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r38",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Remembering",
+      "text": "In the memory aid \"LEO GER,\" what does LEO mean?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Loss of electrons is oxidation",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Loss of electrons is reduction",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Loss of energy is oxidation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Loss of electrons is excitation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r39",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Understanding",
+      "text": "In photosynthesis, water is split and loses electrons. Water is therefore:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Oxidized",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Reduced",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Hydrolyzed",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Denatured",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r40",
+      "competency": "STEM_BIO11/12-II-i-j-18",
+      "bloomLevel": "Analyzing",
+      "text": "Which pair shows a molecule in its reduced (energy-rich) form?",
+      "options": [
+        {
+          "key": "a",
+          "label": "NAD⁺ and FAD",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "NADH and FADH₂",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "ADP and NADP⁺",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "O₂ and CO₂",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r41",
+      "competency": "STEM_BIO11/12-IIa-j-1",
+      "bloomLevel": "Understanding",
+      "text": "Which statement about ATP is correct?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It stores energy for months in fat cells",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It releases energy when a phosphate is removed",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "It has two phosphate groups",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It is made only during photosynthesis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r42",
+      "competency": "STEM_BIO11/12-IIa-j-2",
+      "bloomLevel": "Understanding",
+      "text": "Where do the light reactions and the Calvin cycle occur?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Stroma and thylakoids",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cytoplasm and matrix",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Thylakoids and stroma",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Matrix and cristae",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r43",
+      "competency": "STEM_BIO11/12-IIa-j-3",
+      "bloomLevel": "Analyzing",
+      "text": "An action spectrum shows photosynthesis is fastest in blue and red light and slowest in green. What does this suggest?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Chlorophyll absorbs green light best",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Green light is used to fix CO₂",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Red light is reflected by leaves",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Chlorophyll absorbs blue and red best",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r44",
+      "competency": "STEM_BIO11/12-IIa-j-4",
+      "bloomLevel": "Understanding",
+      "text": "Where does the O₂ released by photosynthesis come from?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Water split at Photosystem II",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "CO₂ fixed in the Calvin cycle",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Glucose made in the stroma",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "ATP broken in the thylakoid",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r45",
+      "competency": "STEM_BIO11/12-IIa-j-5",
+      "bloomLevel": "Remembering",
+      "text": "How many CO₂ molecules must be fixed to make one glucose?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "12",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "2",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "6",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r46",
+      "competency": "STEM_BIO11/12-IIa-j-6",
+      "bloomLevel": "Understanding",
+      "text": "What is the main advantage of aerobic respiration over fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It works without oxygen",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It is faster at making ATP",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A much higher ATP yield",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "It produces lactate for energy",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r47",
+      "competency": "STEM_BIO11/12-IIa-j-7",
+      "bloomLevel": "Remembering",
+      "text": "How many net ATP does glycolysis produce per glucose?",
+      "options": [
+        {
+          "key": "a",
+          "label": "4",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "32",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "36",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "2",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r48",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "bloomLevel": "Remembering",
+      "text": "What is formed when oxygen accepts electrons at the end of the ETC?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Carbon dioxide",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Water",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Glucose",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Ethanol",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r49",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "bloomLevel": "Understanding",
+      "text": "What is the role of ATP synthase?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Splits glucose into pyruvate",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Uses the H⁺ flow to make ATP",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Carries electrons to oxygen",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Fixes CO₂ into sugar",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r50",
+      "competency": "STEM_BIO11/12-IIa-j-8",
+      "bloomLevel": "Analyzing",
+      "text": "Which comparison of the Krebs cycle and the ETC is correct?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Krebs uses O₂; the ETC releases CO₂",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Krebs makes most ATP; the ETC makes none",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Krebs is in the cytoplasm; the ETC in stroma",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Krebs makes NADH; the ETC uses it",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r51",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "bloomLevel": "Remembering",
+      "text": "About how many ATP does each FADH₂ yield in the ETC?",
+      "options": [
+        {
+          "key": "a",
+          "label": "1.5",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "2.5",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "3",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r52",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "bloomLevel": "Understanding",
+      "text": "Which process produces ATP?",
+      "options": [
+        {
+          "key": "a",
+          "label": "The Calvin cycle",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Active transport",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Muscle contraction",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Oxidative phosphorylation",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r53",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "bloomLevel": "Applying",
+      "text": "10 NADH and 2 FADH₂ are oxidized in the ETC. About how many ATP are made?",
+      "options": [
+        {
+          "key": "a",
+          "label": "25",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "32",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "28",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "20",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r54",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "bloomLevel": "Applying",
+      "text": "How many NADPH does the Calvin cycle use to make 2 glucose molecules?",
+      "options": [
+        {
+          "key": "a",
+          "label": "12",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "18",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "36",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "24",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r55",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "bloomLevel": "Understanding",
+      "text": "Why do we need to breathe in oxygen?",
+      "options": [
+        {
+          "key": "a",
+          "label": "To provide carbons for glucose",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "To split water in the mitochondria",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "To accept electrons at the end of the ETC",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "To make carbon dioxide for the cell",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r56",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "bloomLevel": "Applying",
+      "text": "A cell breaks down 4 glucose by fermentation. How many ATP does it gain?",
+      "options": [
+        {
+          "key": "a",
+          "label": "4",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "8",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "64",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "128",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r57",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "bloomLevel": "Remembering",
+      "text": "Which food is produced by lactic acid fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Bread",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Yogurt",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Vinegar",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Wine",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r58",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "bloomLevel": "Understanding",
+      "text": "Why can fermentation NOT support a long marathon?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It requires too much oxygen",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It produces 32 ATP too slowly",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It yields only 2 ATP per glucose",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "It uses up all the lactate",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r59",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "bloomLevel": "Analyzing",
+      "text": "Why do sprinters rely on fermentation while marathon runners rely on aerobic respiration?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Fermentation is fast; aerobic yields more",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Fermentation yields more; aerobic is faster",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both make the same amount of ATP",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Marathoners do not need any oxygen",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r60",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "bloomLevel": "Evaluating",
+      "text": "A company wants to produce bioethanol fuel from sugarcane. Which organism and process is the best choice?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Muscle cells using lactic acid fermentation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Plants using the Calvin cycle",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Yeast using alcoholic fermentation",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Bacteria using aerobic respiration",
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
+    {
+      "id": "te-01",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "Which process produces ATP directly using a phosphate group transfer?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Substrate-level phosphorylation",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Oxidative phosphorylation",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Photophosphorylation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Hydrolysis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-02",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "The Calvin cycle uses ATP and NADPH in a ratio of:",
+      "options": [
+        {
+          "key": "a",
+          "label": "3:2",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "2:3",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "1:1",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "4:1",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-03",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "Total ATP consumed to make one glucose in photosynthesis:",
+      "options": [
+        {
+          "key": "a",
+          "label": "12",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "18",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "32",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "36",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-04",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "In cellular respiration, how many ATP are produced by substrate-level phosphorylation (glycolysis + Krebs)?",
+      "options": [
+        {
+          "key": "a",
+          "label": "2",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "4",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "28",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "32",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-05",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "Which reaction consumes ATP?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glycolysis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Krebs cycle",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Na⁺/K⁺ pump",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "ETC",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-06",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "Which reaction produces ATP?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Calvin cycle",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Protein synthesis",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Krebs cycle",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Muscle contraction",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-07",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "The final electron acceptor in aerobic respiration is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "NAD⁺",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "O₂",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "FAD",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-08",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "When O₂ accepts electrons in the ETC, it forms:",
+      "options": [
+        {
+          "key": "a",
+          "label": "CO₂",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "H₂O",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Glucose",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-09",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "Without oxygen, the ETC:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Continues normally",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Halts; NADH accumulates",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Produces more ATP",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Runs backward",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-10",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "Fermentation's main purpose is to:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Produce 36 ATP",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Regenerate NAD⁺",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Fix CO₂",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Produce O₂",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-11",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "Which pathway occurs in muscle cells during intense exercise?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Alcoholic fermentation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lactic acid fermentation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Photosynthesis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Krebs cycle only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-12",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "The product of lactic acid fermentation is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Ethanol",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "CO₂",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Lactate",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Glucose",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-13",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "If 4 glucose are fully oxidized aerobically, how many ATP (approx) are produced?",
+      "options": [
+        {
+          "key": "a",
+          "label": "32",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "64",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "128",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "200",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-14",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "If 8 NADH pass through the ETC, ATP produced (approx)?",
+      "options": [
+        {
+          "key": "a",
+          "label": "8",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "16",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "20",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "24",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-15",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "How many ATP are needed to fix 10 CO₂ in the Calvin cycle?",
+      "options": [
+        {
+          "key": "a",
+          "label": "20",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "30",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "40",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "60",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-16",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "Which produces more ATP per glucose?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Fermentation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Aerobic respiration",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Both equal",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Neither",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-17",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which is an advantage of fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "High ATP yield",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Works without oxygen",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Uses mitochondria",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Long-term sustainability",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-18",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which is a disadvantage of aerobic respiration?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Requires oxygen",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Low ATP yield",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Very fast",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Produces O₂",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-19",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which process is used in bread-making?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Lactic acid fermentation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Alcoholic fermentation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Aerobic respiration",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Photosynthesis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-20",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which food product uses lactic acid fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Bread",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Beer",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Yogurt",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Wine",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-21",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which process produces CO₂ as a waste product?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Lactic acid fermentation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Alcoholic fermentation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Photosynthesis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Photophosphorylation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-22",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Fermentation produces how many net ATP per glucose?",
+      "options": [
+        {
+          "key": "a",
+          "label": "0",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "2",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "18",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "32",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-23",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Glycolysis occurs in which location?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Cytoplasm",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Mitochondrial matrix",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Inner mitochondrial membrane",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nucleus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-24",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Krebs cycle occurs in which location?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Cytoplasm",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mitochondrial matrix",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Inner membrane",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nucleus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-25",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "ETC occurs in which location?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Cytoplasm",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mitochondrial matrix",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Inner mitochondrial membrane",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Nucleus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-26",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Chemiosmosis produces ATP by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Substrate-level phosphorylation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "H⁺ gradient through ATP synthase",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Light absorption",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Direct ATP transfer",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-27",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which organism performs alcoholic fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Yeast",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Muscle cells",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Nerve cells",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Red blood cells",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-28",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Anaerobic respiration yields how many ATP per glucose?",
+      "options": [
+        {
+          "key": "a",
+          "label": "2",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "18",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "32",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "36",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-29",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which process would occur in a cell with no mitochondria?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Krebs cycle",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "ETC",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Glycolysis + fermentation",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Photosynthesis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-30",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "In which scenario is aerobic respiration most important?",
+      "options": [
+        {
+          "key": "a",
+          "label": "100m sprint",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Marathon running",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Yeast in bread",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Bacteria in yogurt",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-31",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "Which molecule is the universal energy currency of cells?",
+      "options": [
+        {
+          "key": "a",
+          "label": "ATP",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "NADH",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "FADH₂",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Glucose",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-32",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "ATP hydrolysis releases approximately how much energy?",
+      "options": [
+        {
+          "key": "a",
+          "label": "7.3 kcal/mol",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "1 kcal/mol",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "30 kcal/mol",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "100 kcal/mol",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-33",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "Which is NOT a product of glycolysis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Pyruvate",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "ATP",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "NADH",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "CO₂",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-34",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "In the ETC, how many ATP molecules are produced from 10 NADH?",
+      "options": [
+        {
+          "key": "a",
+          "label": "10",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "25",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "30",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "40",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-35",
+      "competency": "STEM_BIO11/12-IIa-j-9",
+      "text": "The ATP-ADP cycle is important because:",
+      "options": [
+        {
+          "key": "a",
+          "label": "ATP is stored long-term",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "ATP is regenerated on demand",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "ATP is broken down permanently",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "ATP is only made in plants",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-36",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "Without oxygen, which process allows glycolysis to continue?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Krebs cycle",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fermentation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "ETC",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Photosynthesis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-37",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "Which enzyme regenerates NAD⁺ during fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "ATP synthase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lactate dehydrogenase or alcohol dehydrogenase",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "RuBisCO",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "DNA polymerase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-38",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "What happens to pyruvate in the absence of oxygen?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It enters the Krebs cycle",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It is converted to lactate or ethanol",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "It is converted to glucose",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It is stored as glycogen",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-39",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "The role of oxygen in respiration is to:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Accept electrons at the end of the ETC",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Produce glucose",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Fix carbon",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Generate heat only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-40",
+      "competency": "STEM_BIO11/12-IIa-j-10",
+      "text": "Which of the following does NOT require oxygen?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Krebs cycle",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "ETC",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Glycolysis",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Oxidative phosphorylation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-41",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "If 6 FADH₂ pass through the ETC, how many ATP are produced?",
+      "options": [
+        {
+          "key": "a",
+          "label": "6",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "9",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "15",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "18",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-42",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "How many ATP are needed to fix 6 CO₂ in the Calvin cycle?",
+      "options": [
+        {
+          "key": "a",
+          "label": "6",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "12",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "18",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "24",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-43",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "Total ATP produced from 3 glucose in aerobic respiration (modern estimate)?",
+      "options": [
+        {
+          "key": "a",
+          "label": "30",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "64",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "96",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "120",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-44",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "If 20 NADH are produced, how many ATP will the ETC generate?",
+      "options": [
+        {
+          "key": "a",
+          "label": "20",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "40",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "50",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "60",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-45",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "Which stage produces the least ATP directly?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Glycolysis",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Krebs cycle",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "ETC",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "All equal",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-46",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "The theoretical maximum ATP yield per glucose is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "2",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "18",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "32 (modern estimate)",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "100",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-47",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "Approximately what % of glucose's energy is captured as ATP in respiration?",
+      "options": [
+        {
+          "key": "a",
+          "label": "1%",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "10%",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "34%",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "90%",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-48",
+      "competency": "STEM_BIO11/12-IIa-j-11",
+      "text": "Which yields more ATP: 1 glucose aerobic OR 1 glucose fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Fermentation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Aerobic",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Equal",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Neither produces ATP",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-49",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which condition allows rapid ATP production but with low yield?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Aerobic respiration",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fermentation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Photosynthesis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Krebs cycle only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-50",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which process is used in the industrial production of ethanol?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Aerobic respiration",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Alcoholic fermentation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Photosynthesis",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Krebs cycle",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-51",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "A cell can switch between aerobic and anaerobic pathways based on:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Oxygen availability",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Cell color",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cell size",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Number of chromosomes",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-52",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Lactic acid buildup in muscles causes:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Muscle fatigue and soreness",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Faster ATP production permanently",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Muscle growth",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Improved oxygen transport",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-53",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which of the following is a commercial use of fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Biofuel production",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Solar panels",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Wind turbines",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nuclear energy",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-54",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "In which scenario would a cell prefer aerobic respiration?",
+      "options": [
+        {
+          "key": "a",
+          "label": "When O₂ is abundant",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "When O₂ is absent",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "In the cytoplasm only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "When glucose is absent",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-55",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Fermentation regenerates which molecule needed for glycolysis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "ATP",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "NAD⁺",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "FAD",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Glucose",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-56",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "What happens to yeast in an airtight container with sugar?",
+      "choices": [],
+      "options": [
+        {
+          "key": "a",
+          "label": "Alcoholic fermentation produces ethanol + CO₂",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Aerobic respiration produces H₂O",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Photosynthesis produces O₂",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Nothing happens",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-57",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which of the following is a disadvantage of lactic acid fermentation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Produces only 2 ATP per glucose",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Requires oxygen",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Produces too much ATP",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Requires mitochondria",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-58",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which process would you expect in a marathon runner's muscle cells at mile 20?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Aerobic respiration",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Lactic acid fermentation",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Alcoholic fermentation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Photosynthesis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-59",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which process would you expect during a 100m sprint?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Aerobic respiration",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lactic acid fermentation",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Alcoholic fermentation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Photosynthesis",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-60",
+      "competency": "STEM_BIO11/12-IIa-j-12",
+      "text": "Which best summarizes the relationship between photosynthesis and respiration?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They are independent processes",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Products of one are reactants of the other — life's energy cycle",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "They occur only in plants",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They both produce oxygen",
+          "correct": false
+        }
+      ]
+    }
   ]
 }

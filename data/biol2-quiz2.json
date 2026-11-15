@@ -2,29 +2,1085 @@
   "assessmentId": "biol2-quiz2",
   "subject": "biol2",
   "type": "quiz",
-  "title": "Quiz 2 — DNA, Protein Synthesis & Evolution Foundations",
+  "title": "Quiz 2 — Sex-Linkage, Non-Mendelian Inheritance & Molecular Genetics (Weeks 4–6)",
+  "coverage": "Weeks 4–6",
   "timeLimit": 1200,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
-    { "id": "q2-01", "competency": "STEM_BIO11/12-IIIa-b-4", "text": "Which sugar is found in DNA?", "options": [{"key":"a","label":"Ribose","correct":false},{"key":"b","label":"Deoxyribose","correct":true},{"key":"c","label":"Glucose","correct":false},{"key":"d","label":"Fructose","correct":false}] },
-    { "id": "q2-02", "competency": "STEM_BIO11/12-IIIa-b-4", "text": "In DNA, adenine pairs with:", "options": [{"key":"a","label":"Guanine","correct":false},{"key":"b","label":"Cytosine","correct":false},{"key":"c","label":"Thymine","correct":true},{"key":"d","label":"Uracil","correct":false}] },
-    { "id": "q2-03", "competency": "STEM_BIO11/12-IIIa-b-4", "text": "The three components of a nucleotide are:", "options": [{"key":"a","label":"Sugar, phosphate, nitrogenous base","correct":true},{"key":"b","label":"Glycerol, fatty acid, phosphate","correct":false},{"key":"c","label":"Amino, carboxyl, R group","correct":false},{"key":"d","label":"Carbon, hydrogen, oxygen","correct":false}] },
-    { "id": "q2-04", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "During DNA replication, the two strands are separated by:", "options": [{"key":"a","label":"DNA polymerase","correct":false},{"key":"b","label":"Helicase","correct":true},{"key":"c","label":"Ligase","correct":false},{"key":"d","label":"Primase","correct":false}] },
-    { "id": "q2-05", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "The process by which DNA makes mRNA is called:", "options": [{"key":"a","label":"Translation","correct":false},{"key":"b","label":"Transcription","correct":true},{"key":"c","label":"Replication","correct":false},{"key":"d","label":"Mutation","correct":false}] },
-    { "id": "q2-06", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "Translation occurs at the:", "options": [{"key":"a","label":"Nucleus","correct":false},{"key":"b","label":"Ribosome","correct":true},{"key":"c","label":"Mitochondria","correct":false},{"key":"d","label":"Golgi","correct":false}] },
-    { "id": "q2-07", "competency": "STEM_BIO11/12-IIIa-b-5", "text": "A codon consists of how many nucleotides?", "options": [{"key":"a","label":"1","correct":false},{"key":"b","label":"2","correct":false},{"key":"c","label":"3","correct":true},{"key":"d","label":"4","correct":false}] },
-    { "id": "q2-08", "competency": "STEM_BIO11/12-IIIa-b-6", "text": "Which enzyme cuts DNA at specific sequences for genetic engineering?", "options": [{"key":"a","label":"DNA ligase","correct":false},{"key":"b","label":"Restriction enzyme","correct":true},{"key":"c","label":"Helicase","correct":false},{"key":"d","label":"Polymerase","correct":false}] },
-    { "id": "q2-09", "competency": "STEM_BIO11/12-IIIa-b-6", "text": "A plasmid is:", "options": [{"key":"a","label":"A viral protein","correct":false},{"key":"b","label":"A circular DNA vector","correct":true},{"key":"c","label":"An enzyme","correct":false},{"key":"d","label":"A chromosome","correct":false}] },
-    { "id": "q2-10", "competency": "STEM_BIO11/12-IIIa-b-7", "text": "Which of the following is a real application of recombinant DNA?", "options": [{"key":"a","label":"Insulin production","correct":true},{"key":"b","label":"Water purification","correct":false},{"key":"c","label":"Metal smelting","correct":false},{"key":"d","label":"Solar panels","correct":false}] },
-    { "id": "q2-11", "competency": "STEM_BIO11/12-IIIC-g-8", "text": "Which era is known as the 'Age of Reptiles'?", "options": [{"key":"a","label":"Paleozoic","correct":false},{"key":"b","label":"Mesozoic","correct":true},{"key":"c","label":"Cenozoic","correct":false},{"key":"d","label":"Precambrian","correct":false}] },
-    { "id": "q2-12", "competency": "STEM_BIO11/12-IIIC-g-9", "text": "Which mechanism of evolution is random?", "options": [{"key":"a","label":"Natural selection","correct":false},{"key":"b","label":"Genetic drift","correct":true},{"key":"c","label":"Artificial selection","correct":false},{"key":"d","label":"Directional selection","correct":false}] },
-    { "id": "q2-13", "competency": "STEM_BIO11/12-IIIC-g-9", "text": "Natural selection acts on:", "options": [{"key":"a","label":"Genotypes directly","correct":false},{"key":"b","label":"Phenotypes","correct":true},{"key":"c","label":"Chromosomes","correct":false},{"key":"d","label":"Gametes only","correct":false}] },
-    { "id": "q2-14", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "Descent with modification means:", "options": [{"key":"a","label":"Species are fixed","correct":false},{"key":"b","label":"Species change over time and share common ancestors","correct":true},{"key":"c","label":"All life is unrelated","correct":false},{"key":"d","label":"Evolution is random","correct":false}] },
-    { "id": "q2-15", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Who proposed the theory of natural selection?", "options": [{"key":"a","label":"Lamarck","correct":false},{"key":"b","label":"Darwin","correct":true},{"key":"c","label":"Linnaeus","correct":false},{"key":"d","label":"Mendel","correct":false}] },
-    { "id": "q2-16", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Homologous structures provide evidence for:", "options": [{"key":"a","label":"Convergent evolution","correct":false},{"key":"b","label":"Common ancestry","correct":true},{"key":"c","label":"Spontaneous generation","correct":false},{"key":"d","label":"Genetic drift","correct":false}] },
-    { "id": "q2-17", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "The fossil record provides evidence for:", "options": [{"key":"a","label":"Evolutionary change over time","correct":true},{"key":"b","label":"Creationism","correct":false},{"key":"c","label":"Spontaneous generation","correct":false},{"key":"d","label":"Intelligent design","correct":false}] },
-    { "id": "q2-18", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "Comparative embryology shows:", "options": [{"key":"a","label":"Embryos of different species share common features","correct":true},{"key":"b","label":"Embryos are unrelated","correct":false},{"key":"c","label":"Only mammals have embryos","correct":false},{"key":"d","label":"Embryos don't change","correct":false}] },
-    { "id": "q2-19", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Which taxonomic rank is the broadest?", "options": [{"key":"a","label":"Domain","correct":true},{"key":"b","label":"Kingdom","correct":false},{"key":"c","label":"Phylum","correct":false},{"key":"d","label":"Genus","correct":false}] },
-    { "id": "q2-20", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "A taxon is:", "options": [{"key":"a","label":"A group of organisms at any level of classification","correct":true},{"key":"b","label":"A species only","correct":false},{"key":"c","label":"A gene","correct":false},{"key":"d","label":"A fossil","correct":false}] }
+    {
+      "id": "q2-r01",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Remembering",
+      "text": "Which chromosome carries the SRY gene that triggers male development?",
+      "options": [
+        {
+          "key": "a",
+          "label": "X chromosome",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Chromosome 21",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Y chromosome",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Chromosome 1",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r02",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Remembering",
+      "text": "A person with 47 chromosomes including XXY has:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Turner syndrome",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Klinefelter syndrome",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Down syndrome",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Hemophilia",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r03",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Understanding",
+      "text": "Why are X-linked recessive disorders more common in males?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Males have only one X chromosome",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Males have two X chromosomes",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "The Y carries the same genes as X",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Males inherit more mutations",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r04",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Understanding",
+      "text": "From which parent does a son inherit his X chromosome?",
+      "options": [
+        {
+          "key": "a",
+          "label": "His mother",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "His father",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Either parent equally",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Both parents together",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r05",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Applying",
+      "text": "A carrier mother (XᴴXʰ) and a normal father (XᴴY) have a son. What is the chance he has hemophilia?",
+      "options": [
+        {
+          "key": "a",
+          "label": "25%",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "50%",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "100%",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "0%",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r06",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Applying",
+      "text": "In a cross, 15 of 100 offspring are recombinants. How far apart are the two genes?",
+      "options": [
+        {
+          "key": "a",
+          "label": "85 map units",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "1.5 map units",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "15 map units",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "30 map units",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r07",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Analyzing",
+      "text": "A trait appears only in males and passes from every father to all his sons. Which pattern fits best?",
+      "options": [
+        {
+          "key": "a",
+          "label": "X-linked recessive",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Autosomal dominant",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Sex-influenced",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Y-linked",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r08",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Remembering",
+      "text": "In incomplete dominance, the heterozygote shows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Only the dominant phenotype",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Both phenotypes separately",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "An intermediate phenotype",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Only the recessive phenotype",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r09",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Understanding",
+      "text": "Type AB blood shows both A and B markers on red cells. This is an example of:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Incomplete dominance",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Sex linkage",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Codominance",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Polygenic inheritance",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r10",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Applying",
+      "text": "A mother with type O blood (ii) and a father with type AB (IᴬIᴮ) have a child. Which blood types are possible?",
+      "options": [
+        {
+          "key": "a",
+          "label": "O only",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "A or B only",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "AB only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A, B, AB or O",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-01",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Remembering",
+      "text": "Which sugar is found in DNA?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Ribose",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Glucose",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Fructose",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Deoxyribose",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r11",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Understanding",
+      "text": "In DNA, adenine always pairs with:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Thymine",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Uracil",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Guanine",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cytosine",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r12",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Understanding",
+      "text": "In which process is DNA used to make mRNA?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Translation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Transcription",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Replication",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mutation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r13",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Remembering",
+      "text": "Which enzyme unwinds the DNA double helix?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Ligase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Primase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "RNA polymerase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Helicase",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r14",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Remembering",
+      "text": "Which molecule brings amino acids to the ribosome?",
+      "options": [
+        {
+          "key": "a",
+          "label": "mRNA",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "tRNA",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "rRNA",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "DNA",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r15",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Understanding",
+      "text": "What does semi-conservative replication mean?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Each new DNA keeps one old strand",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Both strands of new DNA are new",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both strands of new DNA are old",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Only half of the DNA is copied",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r16",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Understanding",
+      "text": "Which is the start codon for translation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "AUG",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "UAA",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "UGA",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "UAG",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-r17",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Applying",
+      "text": "A DNA template strand reads TAC GGA. What is the mRNA sequence?",
+      "options": [
+        {
+          "key": "a",
+          "label": "ATG CCT",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "UAC GGA",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "TUG CCA",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "AUG CCU",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r18",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Remembering",
+      "text": "Which enzyme adds DNA nucleotides to a growing strand?",
+      "options": [
+        {
+          "key": "a",
+          "label": "RNA polymerase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Helicase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Primase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "DNA polymerase",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "q2-r19",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Analyzing",
+      "text": "A single base is deleted near the start of a gene. Why is this usually more harmful than a single substitution?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It changes only one amino acid",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It never affects the protein",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It shifts every codon after it",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "It always makes a silent change",
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
+    {
+      "id": "q2-02",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "In DNA, adenine pairs with:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Guanine",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cytosine",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Thymine",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Uracil",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-03",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "text": "The three components of a nucleotide are:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Sugar, phosphate, nitrogenous base",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Glycerol, fatty acid, phosphate",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Amino, carboxyl, R group",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Carbon, hydrogen, oxygen",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-04",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "During DNA replication, the two strands are separated by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "DNA polymerase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Helicase",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Ligase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Primase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-05",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "The process by which DNA makes mRNA is called:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Translation",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Transcription",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Replication",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mutation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-06",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "Translation occurs at the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Nucleus",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Ribosome",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Mitochondria",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Golgi",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-07",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "text": "A codon consists of how many nucleotides?",
+      "options": [
+        {
+          "key": "a",
+          "label": "1",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "2",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "3",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "4",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-08",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "text": "Which enzyme cuts DNA at specific sequences for genetic engineering?",
+      "options": [
+        {
+          "key": "a",
+          "label": "DNA ligase",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Restriction enzyme",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Helicase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Polymerase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-09",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "text": "A plasmid is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "A viral protein",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "A circular DNA vector",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "An enzyme",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A chromosome",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-10",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "text": "Which of the following is a real application of recombinant DNA?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Insulin production",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Water purification",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Metal smelting",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Solar panels",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-11",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "text": "Which era is known as the 'Age of Reptiles'?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Paleozoic",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Mesozoic",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Cenozoic",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Precambrian",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-12",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "text": "Which mechanism of evolution is random?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Natural selection",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Genetic drift",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Artificial selection",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Directional selection",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-13",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "text": "Natural selection acts on:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Genotypes directly",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Phenotypes",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Chromosomes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Gametes only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-14",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "Descent with modification means:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Species are fixed",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Species change over time and share common ancestors",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "All life is unrelated",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Evolution is random",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-15",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Who proposed the theory of natural selection?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Lamarck",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Darwin",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Linnaeus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mendel",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-16",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Homologous structures provide evidence for:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Convergent evolution",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Common ancestry",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Spontaneous generation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Genetic drift",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-17",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "The fossil record provides evidence for:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Evolutionary change over time",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Creationism",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Spontaneous generation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Intelligent design",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-18",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "Comparative embryology shows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Embryos of different species share common features",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Embryos are unrelated",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Only mammals have embryos",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Embryos don't change",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-19",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Which taxonomic rank is the broadest?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Domain",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Kingdom",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Phylum",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Genus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "q2-20",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "A taxon is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "A group of organisms at any level of classification",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "A species only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A gene",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A fossil",
+          "correct": false
+        }
+      ]
+    }
   ]
 }

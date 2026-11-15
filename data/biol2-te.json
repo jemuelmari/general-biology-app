@@ -2,69 +2,3312 @@
   "assessmentId": "biol2-te",
   "subject": "biol2",
   "type": "te",
-  "title": "Term Exam — Evolution Evidence & Systematics (Weeks 9–10)",
+  "title": "Term Exam — General Biology 2 (Weeks 1–10)",
+  "coverage": "Weeks 1–10",
   "timeLimit": 3600,
-  "passingScore": 80,
+  "passingScore": 70,
   "items": [
-    { "id": "te-01", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "Descent with modification means:", "options": [{"key":"a","label":"Species change over time and share ancestors","correct":true},{"key":"b","label":"Species are fixed","correct":false},{"key":"c","label":"Life is unrelated","correct":false},{"key":"d","label":"Evolution is random","correct":false}] },
-    { "id": "te-02", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "All life shares which fundamental molecules?", "options": [{"key":"a","label":"DNA, ribosomes, ATP","correct":true},{"key":"b","label":"Chlorophyll only","correct":false},{"key":"c","label":"Cellulose only","correct":false},{"key":"d","label":"Keratin","correct":false}] },
-    { "id": "te-03", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "A phylogenetic tree shows:", "options": [{"key":"a","label":"Evolutionary relationships","correct":true},{"key":"b","label":"Food chains","correct":false},{"key":"c","label":"Genetic diseases","correct":false},{"key":"d","label":"Cell division","correct":false}] },
-    { "id": "te-04", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "Speciation refers to:", "options": [{"key":"a","label":"Extinction","correct":false},{"key":"b","label":"Formation of new species","correct":true},{"key":"c","label":"Mutation","correct":false},{"key":"d","label":"Migration","correct":false}] },
-    { "id": "te-05", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Which scientist proposed the inheritance of acquired characteristics?", "options": [{"key":"a","label":"Darwin","correct":false},{"key":"b","label":"Lamarck","correct":true},{"key":"c","label":"Mendel","correct":false},{"key":"d","label":"Wallace","correct":false}] },
-    { "id": "te-06", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Darwin's main contribution was:", "options": [{"key":"a","label":"Binomial nomenclature","correct":false},{"key":"b","label":"Natural selection","correct":true},{"key":"c","label":"Genetics","correct":false},{"key":"d","label":"Cell theory","correct":false}] },
-    { "id": "te-07", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "On the Origin of Species was published in:", "options": [{"key":"a","label":"1759","correct":false},{"key":"b","label":"1859","correct":true},{"key":"c","label":"1900","correct":false},{"key":"d","label":"1953","correct":false}] },
-    { "id": "te-08", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Darwin's voyage was on the:", "options": [{"key":"a","label":"HMS Beagle","correct":true},{"key":"b","label":"HMS Victory","correct":false},{"key":"c","label":"Santa Maria","correct":false},{"key":"d","label":"Mayflower","correct":false}] },
-    { "id": "te-09", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Modern synthesis combines Darwinism with:", "options": [{"key":"a","label":"Genetics","correct":true},{"key":"b","label":"Lamarckism","correct":false},{"key":"c","label":"Creationism","correct":false},{"key":"d","label":"Cell theory","correct":false}] },
-    { "id": "te-10", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Homologous structures indicate:", "options": [{"key":"a","label":"Convergent evolution","correct":false},{"key":"b","label":"Common ancestry","correct":true},{"key":"c","label":"Random mutation","correct":false},{"key":"d","label":"Spontaneous generation","correct":false}] },
-    { "id": "te-11", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Vestigial structures are:", "options": [{"key":"a","label":"Newly evolved","correct":false},{"key":"b","label":"Reduced in function","correct":true},{"key":"c","label":"Only in plants","correct":false},{"key":"d","label":"Always harmful","correct":false}] },
-    { "id": "te-12", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "The fossil record shows:", "options": [{"key":"a","label":"Evolutionary change over time","correct":true},{"key":"b","label":"Static species","correct":false},{"key":"c","label":"Spontaneous generation","correct":false},{"key":"d","label":"Random chance only","correct":false}] },
-    { "id": "te-13", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Molecular evidence for evolution includes:", "options": [{"key":"a","label":"DNA sequence similarities","correct":true},{"key":"b","label":"Coloration only","correct":false},{"key":"c","label":"Habitat","correct":false},{"key":"d","label":"Size","correct":false}] },
-    { "id": "te-14", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Comparative embryology shows:", "options": [{"key":"a","label":"Embryos of related species are similar","correct":true},{"key":"b","label":"Embryos are unrelated","correct":false},{"key":"c","label":"Only mammals have embryos","correct":false},{"key":"d","label":"Embryos don't change","correct":false}] },
-    { "id": "te-15", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Biogeography studies:", "options": [{"key":"a","label":"Geographic distribution of species","correct":true},{"key":"b","label":"Fossil ages","correct":false},{"key":"c","label":"DNA sequences","correct":false},{"key":"d","label":"Cell structure","correct":false}] },
-    { "id": "te-16", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "Two species with more DNA in common are:", "options": [{"key":"a","label":"More closely related","correct":true},{"key":"b","label":"Less related","correct":false},{"key":"c","label":"Unrelated","correct":false},{"key":"d","label":"Identical","correct":false}] },
-    { "id": "te-17", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "A node on a phylogenetic tree represents:", "options": [{"key":"a","label":"A common ancestor","correct":true},{"key":"b","label":"A modern species","correct":false},{"key":"c","label":"A mutation","correct":false},{"key":"d","label":"An extinction","correct":false}] },
-    { "id": "te-18", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "A molecular clock uses:", "options": [{"key":"a","label":"DNA differences to estimate time","correct":true},{"key":"b","label":"Fossil size","correct":false},{"key":"c","label":"Color change","correct":false},{"key":"d","label":"Behavior","correct":false}] },
-    { "id": "te-19", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "A clade includes:", "options": [{"key":"a","label":"Ancestor + all descendants","correct":true},{"key":"b","label":"Only living species","correct":false},{"key":"c","label":"Only derived traits","correct":false},{"key":"d","label":"Ancestor only","correct":false}] },
-    { "id": "te-20", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "Which of the following is NOT evidence for evolution?", "options": [{"key":"a","label":"Homologous structures","correct":false},{"key":"b","label":"Fossil record","correct":false},{"key":"c","label":"DNA similarities","correct":false},{"key":"d","label":"Spontaneous generation","correct":true}] },
-    { "id": "te-21", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Binomial nomenclature was developed by:", "options": [{"key":"a","label":"Darwin","correct":false},{"key":"b","label":"Linnaeus","correct":true},{"key":"c","label":"Mendel","correct":false},{"key":"d","label":"Lamarck","correct":false}] },
-    { "id": "te-22", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "The correct format for a scientific name:", "options": [{"key":"a","label":"Homo sapiens (italic)","correct":true},{"key":"b","label":"homo sapiens","correct":false},{"key":"c","label":"HOMO SAPIENS","correct":false},{"key":"d","label":"Homo Sapiens","correct":false}] },
-    { "id": "te-23", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "The largest taxonomic rank is:", "options": [{"key":"a","label":"Kingdom","correct":false},{"key":"b","label":"Domain","correct":true},{"key":"c","label":"Phylum","correct":false},{"key":"d","label":"Class","correct":false}] },
-    { "id": "te-24", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Which domains are prokaryotic?", "options": [{"key":"a","label":"Bacteria and Archaea","correct":true},{"key":"b","label":"Eukarya only","correct":false},{"key":"c","label":"Protista and Fungi","correct":false},{"key":"d","label":"Plantae and Animalia","correct":false}] },
-    { "id": "te-25", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Which scheme does modern biology prefer?", "options": [{"key":"a","label":"3-Domain","correct":true},{"key":"b","label":"5-Kingdom","correct":false},{"key":"c","label":"2-Kingdom","correct":false},{"key":"d","label":"6-Kingdom","correct":false}] },
-    { "id": "te-26", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Which kingdom has chitin cell walls?", "options": [{"key":"a","label":"Plantae","correct":false},{"key":"b","label":"Fungi","correct":true},{"key":"c","label":"Animalia","correct":false},{"key":"d","label":"Protista","correct":false}] },
-    { "id": "te-27", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Which kingdom has NO cell wall?", "options": [{"key":"a","label":"Plantae","correct":false},{"key":"b","label":"Fungi","correct":false},{"key":"c","label":"Animalia","correct":true},{"key":"d","label":"Monera","correct":false}] },
-    { "id": "te-28", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Which kingdom is autotrophic?", "options": [{"key":"a","label":"Fungi","correct":false},{"key":"b","label":"Animalia","correct":false},{"key":"c","label":"Plantae","correct":true},{"key":"d","label":"Protista only","correct":false}] },
-    { "id": "te-29", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "A taxon is:", "options": [{"key":"a","label":"A group at any taxonomic level","correct":true},{"key":"b","label":"A species only","correct":false},{"key":"c","label":"A gene","correct":false},{"key":"d","label":"A fossil","correct":false}] },
-    { "id": "te-30", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Convergent evolution produces:", "options": [{"key":"a","label":"Analogous structures","correct":true},{"key":"b","label":"Homologous structures","correct":false},{"key":"c","label":"Vestigial structures","correct":false},{"key":"d","label":"Derived traits","correct":false}] },
-    { "id": "te-31", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Cladistics groups organisms by:", "options": [{"key":"a","label":"Shared derived characteristics","correct":true},{"key":"b","label":"Color","correct":false},{"key":"c","label":"Size","correct":false},{"key":"d","label":"Habitat","correct":false}] },
-    { "id": "te-32", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "A monophyletic group includes:", "options": [{"key":"a","label":"Ancestor + all descendants","correct":true},{"key":"b","label":"Only living species","correct":false},{"key":"c","label":"Only derived traits","correct":false},{"key":"d","label":"Ancestor only","correct":false}] },
-    { "id": "te-33", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "An outgroup is:", "options": [{"key":"a","label":"A reference taxon outside the study group","correct":true},{"key":"b","label":"A modern species","correct":false},{"key":"c","label":"A derived trait","correct":false},{"key":"d","label":"A node","correct":false}] },
-    { "id": "te-34", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Species richness refers to:", "options": [{"key":"a","label":"Number of species","correct":true},{"key":"b","label":"Distribution of individuals","correct":false},{"key":"c","label":"Size of organisms","correct":false},{"key":"d","label":"Genetic diversity","correct":false}] },
-    { "id": "te-35", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "A shared derived trait is called:", "options": [{"key":"a","label":"Synapomorphy","correct":true},{"key":"b","label":"Plesiomorphy","correct":false},{"key":"c","label":"Apomorphy only","correct":false},{"key":"d","label":"Homoplasy","correct":false}] },
-    { "id": "te-36", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "The highest species diversity is found in:", "options": [{"key":"a","label":"Tropical rainforests","correct":true},{"key":"b","label":"Deserts","correct":false},{"key":"c","label":"Polar regions","correct":false},{"key":"d","label":"Temperate grasslands","correct":false}] },
-    { "id": "te-37", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "First step in constructing a cladogram:", "options": [{"key":"a","label":"Choose the group of interest","correct":true},{"key":"b","label":"Draw nodes","correct":false},{"key":"c","label":"Choose an outgroup","correct":false},{"key":"d","label":"Mark traits","correct":false}] },
-    { "id": "te-38", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "A paraphyletic group:", "options": [{"key":"a","label":"Excludes some descendants of the ancestor","correct":true},{"key":"b","label":"Includes all descendants","correct":false},{"key":"c","label":"Has no ancestor","correct":false},{"key":"d","label":"Contains only fossils","correct":false}] },
-    { "id": "te-39", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "Which is the correct order of evolutionary relatedness?", "options": [{"key":"a","label":"More shared traits = closer relationship","correct":true},{"key":"b","label":"More traits = less related","correct":false},{"key":"c","label":"Traits don't matter","correct":false},{"key":"d","label":"Only DNA matters","correct":false}] },
-    { "id": "te-40", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "Homologous structures are evidence of:", "options": [{"key":"a","label":"Shared ancestry","correct":true},{"key":"b","label":"Convergent evolution","correct":false},{"key":"c","label":"Random chance","correct":false},{"key":"d","label":"Extinction","correct":false}] },
-    { "id": "te-41", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Which scientist argued that populations grow faster than resources?", "options": [{"key":"a","label":"Malthus","correct":true},{"key":"b","label":"Darwin","correct":false},{"key":"c","label":"Lamarck","correct":false},{"key":"d","label":"Wallace","correct":false}] },
-    { "id": "te-42", "competency": "STEM_BIO11/12-IIIC-g-11", "text": "Modern synthesis integrated Darwin's ideas with:", "options": [{"key":"a","label":"Mendelian genetics","correct":true},{"key":"b","label":"Lamarckism","correct":false},{"key":"c","label":"Spontaneous generation","correct":false},{"key":"d","label":"Cell theory","correct":false}] },
-    { "id": "te-43", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "The fossil Archaeopteryx provides evidence of:", "options": [{"key":"a","label":"A transition between reptiles and birds","correct":true},{"key":"b","label":"Dinosaurs only","correct":false},{"key":"c","label":"Mammals only","correct":false},{"key":"d","label":"Fish only","correct":false}] },
-    { "id": "te-44", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Human and chimpanzee DNA is approximately:", "options": [{"key":"a","label":"98% identical","correct":true},{"key":"b","label":"50% identical","correct":false},{"key":"c","label":"25% identical","correct":false},{"key":"d","label":"5% identical","correct":false}] },
-    { "id": "te-45", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "Branch lengths on a phylogenetic tree can represent:", "options": [{"key":"a","label":"Time or amount of change","correct":true},{"key":"b","label":"Color only","correct":false},{"key":"c","label":"Size only","correct":false},{"key":"d","label":"Population count","correct":false}] },
-    { "id": "te-46", "competency": "STEM_BIO11/12-IIIC-g-13", "text": "Which of the following is NOT a type of evidence used to build phylogenetic trees?", "options": [{"key":"a","label":"DNA sequences","correct":false},{"key":"b","label":"Fossil record","correct":false},{"key":"c","label":"Comparative anatomy","correct":false},{"key":"d","label":"Musical preference","correct":true}] },
-    { "id": "te-47", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Which taxonomic rank is most inclusive after Domain?", "options": [{"key":"a","label":"Kingdom","correct":true},{"key":"b","label":"Phylum","correct":false},{"key":"c","label":"Class","correct":false},{"key":"d","label":"Genus","correct":false}] },
-    { "id": "te-48", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Which of these is a correct species name?", "options": [{"key":"a","label":"Canis lupus (italic)","correct":true},{"key":"b","label":"canis Lupus","correct":false},{"key":"c","label":"CANIS LUPUS","correct":false},{"key":"d","label":"Canis lupus (bold)","correct":false}] },
-    { "id": "te-49", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Which of the following kingdoms are eukaryotic?", "options": [{"key":"a","label":"Protista, Fungi, Plantae, Animalia","correct":true},{"key":"b","label":"Bacteria, Archaea","correct":false},{"key":"c","label":"Monera only","correct":false},{"key":"d","label":"None","correct":false}] },
-    { "id": "te-50", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Kingdom Protista includes:", "options": [{"key":"a","label":"Mostly unicellular eukaryotes","correct":true},{"key":"b","label":"Only multicellular organisms","correct":false},{"key":"c","label":"Only prokaryotes","correct":false},{"key":"d","label":"Only animals","correct":false}] },
-    { "id": "te-51", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Which is the correct sequence from largest to smallest?", "options": [{"key":"a","label":"Domain → Kingdom → Phylum → Class → Order → Family → Genus → Species","correct":true},{"key":"b","label":"Species → Genus → Family → Order → Class → Phylum → Kingdom → Domain","correct":false},{"key":"c","label":"Kingdom → Domain → Species","correct":false},{"key":"d","label":"Phylum → Kingdom → Class","correct":false}] },
-    { "id": "te-52", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "A cladogram's branching pattern is based on:", "options": [{"key":"a","label":"Shared derived traits","correct":true},{"key":"b","label":"Random guessing","correct":false},{"key":"c","label":"Color patterns","correct":false},{"key":"d","label":"Population size","correct":false}] },
-    { "id": "te-53", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Analogous structures result from:", "options": [{"key":"a","label":"Convergent evolution","correct":true},{"key":"b","label":"Common ancestry","correct":false},{"key":"c","label":"Shared derived traits","correct":false},{"key":"d","label":"Synapomorphies","correct":false}] },
-    { "id": "te-54", "competency": "STEM_BIO11/12-IIIC-g-10", "text": "Which is NOT a mechanism of evolutionary change?", "options": [{"key":"a","label":"Natural selection","correct":false},{"key":"b","label":"Genetic drift","correct":false},{"key":"c","label":"Mutation","correct":false},{"key":"d","label":"Spontaneous generation","correct":true}] },
-    { "id": "te-55", "competency": "STEM_BIO11/12-IIIC-g-12", "text": "Vestigial structures provide evidence of:", "options": [{"key":"a","label":"Evolutionary history","correct":true},{"key":"b","label":"Recent adaptation","correct":false},{"key":"c","label":"Creation","correct":false},{"key":"d","label":"Random chance","correct":false}] },
-    { "id": "te-56", "competency": "STEM_BIO11/12-IIIH-j-14", "text": "Which scheme recognizes that Bacteria and Archaea are fundamentally different?", "options": [{"key":"a","label":"3-Domain","correct":true},{"key":"b","label":"5-Kingdom","correct":false},{"key":"c","label":"2-Kingdom","correct":false},{"key":"d","label":"4-Kingdom","correct":false}] },
-    { "id": "te-57", "competency": "STEM_BIO11/12-IIIH-j-15", "text": "Fungi are heterotrophic and have:", "options": [{"key":"a","label":"Chitin cell walls","correct":true},{"key":"b","label":"Cellulose cell walls","correct":false},{"key":"c","label":"No cell walls","correct":false},{"key":"d","label":"Peptidoglycan walls","correct":false}] },
-    { "id": "te-58", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Which best describes a clade?", "options": [{"key":"a","label":"An ancestor and all its descendants","correct":true},{"key":"b","label":"Only the most recent species","correct":false},{"key":"c","label":"Only extinct species","correct":false},{"key":"d","label":"Only the derived traits","correct":false}] },
-    { "id": "te-59", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "In a cladogram, the outgroup is used to:", "options": [{"key":"a","label":"Provide a reference for comparison","correct":true},{"key":"b","label":"Represent the newest species","correct":false},{"key":"c","label":"Add more branches","correct":false},{"key":"d","label":"Determine color","correct":false}] },
-    { "id": "te-60", "competency": "STEM_BIO11/12-IIIH-j-16", "text": "Which statement best summarizes systematics?", "options": [{"key":"a","label":"It studies evolutionary relationships using all available evidence","correct":true},{"key":"b","label":"It names organisms only","correct":false},{"key":"c","label":"It examines fossils only","correct":false},{"key":"d","label":"It ignores molecular data","correct":false}] }
+    {
+      "id": "te-r01",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Remembering",
+      "text": "Which organ system secretes hormones into the blood?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Nervous system",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Endocrine system",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Lymphatic system",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Integumentary system",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r02",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Remembering",
+      "text": "Which plant structure carries water from roots to leaves?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Xylem",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Phloem",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cuticle",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Stomata",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r03",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Understanding",
+      "text": "Which statement correctly compares gas exchange in plants and animals?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Animals ventilate; plants rely on diffusion",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Plants ventilate; animals rely on diffusion",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both use lungs to exchange gases",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Neither needs to exchange gases",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r04",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Understanding",
+      "text": "Why are villi important in the small intestine?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They produce bile for fat digestion",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They increase the surface for absorption",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "They pump food toward the stomach",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They kill bacteria in the food",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r05",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Understanding",
+      "text": "A patient's kidneys fail. Which substance will build up in the blood?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Oxygen and glucose",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Red blood cells",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Digestive enzymes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Urea and other wastes",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r06",
+      "competency": "STEM_BIO11/12-IVa-h-1",
+      "bloomLevel": "Analyzing",
+      "text": "Why do plants need only xylem and phloem, while animals need a heart and blood vessels?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Plants are less active and need less speed",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Plants have more cells than animals",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Animals do not need to move water",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Plants exchange gases using blood",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r07",
+      "competency": "STEM_BIO11/12-IVi-j-2",
+      "bloomLevel": "Understanding",
+      "text": "Why must body temperature stay close to 37 °C?",
+      "options": [
+        {
+          "key": "a",
+          "label": "So bones grow faster",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "So cells divide more often",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "So enzymes keep their shape",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "So blood becomes thicker",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r08",
+      "competency": "STEM_BIO11/12-IVi-j-2",
+      "bloomLevel": "Understanding",
+      "text": "In a home aircon, the thermostat detects room temperature. Which part of a feedback loop is it like?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Effector",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Response",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Sensor (receptor)",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Set point only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r09",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Remembering",
+      "text": "In a negative feedback loop, the effector's response:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Increases the change",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Counteracts the change",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Ignores the change",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Creates a new set point",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r10",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Understanding",
+      "text": "Which hormone helps the kidneys save water when you are dehydrated?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Insulin",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Glucagon",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Oxytocin",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "ADH",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r11",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Understanding",
+      "text": "Blood clotting is an example of positive feedback because:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Activated platelets attract more platelets",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Platelets stop the clot from forming",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Clotting reverses itself quickly",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Blood pressure always returns to normal",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r12",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Understanding",
+      "text": "On a cold night in Baguio, a person's skin blood vessels narrow. What is the purpose?",
+      "options": [
+        {
+          "key": "a",
+          "label": "To release more heat to the air",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "To make more sweat",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "To keep heat in the body core",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "To lower blood glucose",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r13",
+      "competency": "STEM_BIO11/12-IVi-j-3",
+      "bloomLevel": "Analyzing",
+      "text": "Insulin and glucagon have opposite effects. How does this pair help homeostasis?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It raises glucose after every meal",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It keeps glucose within a normal range",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "It lowers glucose during fasting",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It makes glucose levels unstable",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r14",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Remembering",
+      "text": "Different versions of the same gene are called:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Alleles",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Genotypes",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Phenotypes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Chromosomes",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r15",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Understanding",
+      "text": "What is the phenotypic ratio from RrYy × RrYy?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3 : 1",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "1 : 2 : 1",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "9 : 3 : 3 : 1",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "1 : 1 : 1 : 1",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r16",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Understanding",
+      "text": "In a pedigree, a shaded square represents:",
+      "options": [
+        {
+          "key": "a",
+          "label": "An affected female",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "An affected male",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "A carrier male",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A deceased female",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r17",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Applying",
+      "text": "Two heterozygous tall plants (Tt × Tt) produce 400 seeds. About how many will grow short?",
+      "options": [
+        {
+          "key": "a",
+          "label": "200",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "300",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "0",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "100",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r18",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Applying",
+      "text": "Albinism is recessive. Two carriers (Aa × Aa) have a child. What is the chance the child is albino?",
+      "options": [
+        {
+          "key": "a",
+          "label": "1/2",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "3/4",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "0",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "1/4",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r19",
+      "competency": "STEM_BIO11/12-IIIa-b-1",
+      "bloomLevel": "Analyzing",
+      "text": "A tall plant crossed with a short plant gives 52 tall and 48 short offspring. What is the tall parent's genotype?",
+      "options": [
+        {
+          "key": "a",
+          "label": "TT",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "tt",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Tt",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "TTt",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r20",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Remembering",
+      "text": "Turner syndrome results from which chromosome condition?",
+      "options": [
+        {
+          "key": "a",
+          "label": "A single X (45,X)",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "An extra X (XXY)",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Three copies of 21",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "An extra Y (XYY)",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r21",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Understanding",
+      "text": "Why does a father never pass an X-linked trait to his son?",
+      "options": [
+        {
+          "key": "a",
+          "label": "He gives his son an X chromosome",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "X-linked genes are never inherited",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Sons get no genes from fathers",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "He gives his son a Y chromosome",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r22",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Understanding",
+      "text": "Recombination frequency is used to estimate:",
+      "options": [
+        {
+          "key": "a",
+          "label": "The number of chromosomes",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "The size of a cell nucleus",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "The distance between linked genes",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "The age of an organism",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r23",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Applying",
+      "text": "An affected mother (XᵇXᵇ) and a normal father (XᴮY) have a son. What is the chance he is affected?",
+      "options": [
+        {
+          "key": "a",
+          "label": "50%",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "100%",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "25%",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "0%",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r24",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Analyzing",
+      "text": "Genes A and B show 5% recombination; genes A and C show 30%. Which conclusion is correct?",
+      "options": [
+        {
+          "key": "a",
+          "label": "A is closer to C than to B",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "B and C are on different chromosomes",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "All three genes are unlinked",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A is closer to B than to C",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r25",
+      "competency": "STEM_BIO11/12-IIIa-b-2",
+      "bloomLevel": "Understanding",
+      "text": "Which is an example of an X-linked recessive disorder?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Down syndrome",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cystic fibrosis",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Hemophilia A",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Huntington's disease",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r26",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Remembering",
+      "text": "A roan cow has red and white hairs side by side. This shows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Incomplete dominance",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Polygenic inheritance",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Sex linkage",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Codominance",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r27",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Understanding",
+      "text": "What are the possible genotypes of a person with type A blood?",
+      "options": [
+        {
+          "key": "a",
+          "label": "IᴬIᴬ or Iᴬi",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "IᴬIᴮ only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "ii only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "IᴬIᴮ or ii",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r28",
+      "competency": "STEM_BIO11/12-IIIa-b-3",
+      "bloomLevel": "Applying",
+      "text": "Parents with blood types A (Iᴬi) and B (Iᴮi) have a child. Which blood types are possible?",
+      "options": [
+        {
+          "key": "a",
+          "label": "A or B only",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "A, B, AB or O",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "AB only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "O only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r29",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Remembering",
+      "text": "In DNA, guanine pairs with:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Thymine",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Cytosine",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Adenine",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Uracil",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r30",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Understanding",
+      "text": "How does mRNA differ from DNA?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It is double-stranded with thymine",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "It contains deoxyribose sugar",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It is single-stranded with uracil",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "It stays inside the nucleus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r31",
+      "competency": "STEM_BIO11/12-IIIa-b-4",
+      "bloomLevel": "Applying",
+      "text": "A DNA sample has 30% adenine. What percentage is guanine?",
+      "options": [
+        {
+          "key": "a",
+          "label": "30%",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "20%",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "40%",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "70%",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r32",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Remembering",
+      "text": "Which enzyme builds mRNA during transcription?",
+      "options": [
+        {
+          "key": "a",
+          "label": "RNA polymerase",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "DNA polymerase",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "DNA ligase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Helicase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r33",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Understanding",
+      "text": "Why is the lagging strand made in Okazaki fragments?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Helicase cuts it into small pieces",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Ligase works only on short pieces",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Polymerase can build only 5' to 3'",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "The strand has no template bases",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r34",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Understanding",
+      "text": "Which codons signal the end of translation?",
+      "options": [
+        {
+          "key": "a",
+          "label": "UAA, UAG, UGA",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "AUG, GUG, UUG",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "AAA, GGG, CCC",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "UAC, GAC, CAC",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r35",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Applying",
+      "text": "How many amino acids are coded by the mRNA AUG GCA UUC UAA?",
+      "options": [
+        {
+          "key": "a",
+          "label": "4",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "12",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "3",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "2",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r36",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Analyzing",
+      "text": "Which mutation would most likely produce a completely nonfunctional protein?",
+      "options": [
+        {
+          "key": "a",
+          "label": "A silent change in the last codon",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "A substitution coding the same amino acid",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A change in a non-coding intron",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A deletion near the start of the gene",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r37",
+      "competency": "STEM_BIO11/12-IIIa-b-5",
+      "bloomLevel": "Understanding",
+      "text": "Why can bacteria make human insulin from a human gene?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Bacteria have human ribosomes",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Insulin is a type of lipid",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Bacteria have a nucleus",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "The genetic code is universal",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r38",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Remembering",
+      "text": "Which tool joins DNA fragments with matching sticky ends?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Restriction enzyme",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "DNA ligase",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Helicase",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Primase",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r39",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Understanding",
+      "text": "What is the main purpose of PCR?",
+      "options": [
+        {
+          "key": "a",
+          "label": "To cut DNA into pieces",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "To separate DNA by size",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "To insert genes into bacteria",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "To make many copies of DNA",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r40",
+      "competency": "STEM_BIO11/12-IIIa-b-6",
+      "bloomLevel": "Analyzing",
+      "text": "In a gel, fragment X traveled farther than fragment Y. What can you conclude?",
+      "options": [
+        {
+          "key": "a",
+          "label": "X is larger than Y",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "X has more charge",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "X is RNA, not DNA",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "X is smaller than Y",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r41",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Understanding",
+      "text": "Golden Rice was developed mainly to fight:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Iron deficiency anemia",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Vitamin A deficiency",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Corn borer pests",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Diabetes mellitus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r42",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Understanding",
+      "text": "Which is an ethical concern about genetic testing?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Misuse of genetic information",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Faster diagnosis of disease",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Lower cost of medicines",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "More accurate vaccines",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r43",
+      "competency": "STEM_BIO11/12-IIIa-b-7",
+      "bloomLevel": "Evaluating",
+      "text": "Which policy best balances benefits and risks of GMO crops?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Test each crop before approving it",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Ban all GMO crops without study",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Approve all GMO crops at once",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Let companies decide alone",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r44",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "bloomLevel": "Remembering",
+      "text": "Which was the largest mass extinction in Earth's history?",
+      "options": [
+        {
+          "key": "a",
+          "label": "End-Cretaceous",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "End-Permian",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "End-Ordovician",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "End-Triassic",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r45",
+      "competency": "STEM_BIO11/12-IIIC-g-8",
+      "bloomLevel": "Understanding",
+      "text": "About how old is Earth?",
+      "options": [
+        {
+          "key": "a",
+          "label": "4.6 million years",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "460 million years",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "46 billion years",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "4.6 billion years",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r46",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Remembering",
+      "text": "Which type of selection favors one extreme phenotype?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Directional",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Stabilizing",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Disruptive",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Neutral",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r47",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Understanding",
+      "text": "How does recombination contribute to evolution?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It shuffles alleles into new combinations",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "It creates brand-new alleles",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It removes harmful mutations",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It stops genetic drift",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r48",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Understanding",
+      "text": "Which statement about mutations is correct?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They occur only when helpful",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They are always harmful",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "They never affect evolution",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They occur randomly, not by need",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r49",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Applying",
+      "text": "Mice with dark fur survive better on dark lava rock. Over many generations, what happens?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Light fur becomes more common",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Dark fur becomes more common",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Fur color stays the same",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "All mice become light",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r50",
+      "competency": "STEM_BIO11/12-IIIC-g-9",
+      "bloomLevel": "Analyzing",
+      "text": "Why does genetic drift affect the Philippine tarsier on a small island more than on a large one?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Chance matters more in small groups",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Small islands have more mutations",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Large islands stop all selection",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Tarsiers do not reproduce on islands",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r51",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "bloomLevel": "Understanding",
+      "text": "Which observation best supports common ancestry of all life?",
+      "options": [
+        {
+          "key": "a",
+          "label": "All organisms live in water",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "All organisms are multicellular",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "All organisms use DNA and the same code",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "All organisms make their own food",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r52",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "bloomLevel": "Understanding",
+      "text": "Two species share a more recent common ancestor than a third. What should we expect?",
+      "options": [
+        {
+          "key": "a",
+          "label": "They share fewer DNA similarities",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "They share more DNA similarities",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "They have identical DNA",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "They cannot be compared",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r53",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "bloomLevel": "Analyzing",
+      "text": "How would Lamarck and Darwin each explain giraffes' long necks?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Lamarck: selection; Darwin: stretching",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Both: stretching was inherited",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Both: necks grew randomly",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Lamarck: stretching; Darwin: selection",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r54",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "bloomLevel": "Understanding",
+      "text": "The human tailbone, with little function, is an example of a:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Homologous organ",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Analogous structure",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Vestigial structure",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Transitional fossil",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r55",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "bloomLevel": "Understanding",
+      "text": "A molecular clock estimates:",
+      "options": [
+        {
+          "key": "a",
+          "label": "How large an organism is",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "How many species exist",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "When two lineages diverged",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "The age of a rock layer",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r56",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "bloomLevel": "Understanding",
+      "text": "Which is the correct way to write the scientific name of rice?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Oryza sativa",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "oryza sativa",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Oryza Sativa",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "ORYZA SATIVA",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r57",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "bloomLevel": "Understanding",
+      "text": "Fungi differ from plants because fungi:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Have cellulose walls and photosynthesize",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lack cell walls and ingest food",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Have chitin walls and absorb food",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Are prokaryotic and lack a nucleus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r58",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "bloomLevel": "Remembering",
+      "text": "A shared derived trait used to define a clade is a:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Vestigial trait",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Ancestral trait",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Synapomorphy",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Analogous trait",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-r59",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "bloomLevel": "Applying",
+      "text": "In a vertebrate cladogram, which trait would be placed closest to the root?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Hair",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Amniotic egg",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Four limbs",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Backbone",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-r60",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "bloomLevel": "Analyzing",
+      "text": "Forest A has 10 tree species in equal numbers; Forest B has 10 species but 90% are one species. Which is more diverse?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Forest B, because it is less even",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Forest A, because it is more even",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Both are equal in diversity",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Neither has species diversity",
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "archivedItems": [
+    {
+      "id": "te-01",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "Descent with modification means:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Species change over time and share ancestors",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Species are fixed",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Life is unrelated",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Evolution is random",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-02",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "All life shares which fundamental molecules?",
+      "options": [
+        {
+          "key": "a",
+          "label": "DNA, ribosomes, ATP",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Chlorophyll only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Cellulose only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Keratin",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-03",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "A phylogenetic tree shows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Evolutionary relationships",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Food chains",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Genetic diseases",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cell division",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-04",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "Speciation refers to:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Extinction",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Formation of new species",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Mutation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Migration",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-05",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Which scientist proposed the inheritance of acquired characteristics?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Darwin",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Lamarck",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Mendel",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Wallace",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-06",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Darwin's main contribution was:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Binomial nomenclature",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Natural selection",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Genetics",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cell theory",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-07",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "On the Origin of Species was published in:",
+      "options": [
+        {
+          "key": "a",
+          "label": "1759",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "1859",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "1900",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "1953",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-08",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Darwin's voyage was on the:",
+      "options": [
+        {
+          "key": "a",
+          "label": "HMS Beagle",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "HMS Victory",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Santa Maria",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mayflower",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-09",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Modern synthesis combines Darwinism with:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Genetics",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Lamarckism",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Creationism",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cell theory",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-10",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Homologous structures indicate:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Convergent evolution",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Common ancestry",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Random mutation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Spontaneous generation",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-11",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Vestigial structures are:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Newly evolved",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Reduced in function",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Only in plants",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Always harmful",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-12",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "The fossil record shows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Evolutionary change over time",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Static species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Spontaneous generation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Random chance only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-13",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Molecular evidence for evolution includes:",
+      "options": [
+        {
+          "key": "a",
+          "label": "DNA sequence similarities",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Coloration only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Habitat",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Size",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-14",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Comparative embryology shows:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Embryos of related species are similar",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Embryos are unrelated",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Only mammals have embryos",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Embryos don't change",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-15",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Biogeography studies:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Geographic distribution of species",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Fossil ages",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "DNA sequences",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cell structure",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-16",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "Two species with more DNA in common are:",
+      "options": [
+        {
+          "key": "a",
+          "label": "More closely related",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Less related",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Unrelated",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Identical",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-17",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "A node on a phylogenetic tree represents:",
+      "options": [
+        {
+          "key": "a",
+          "label": "A common ancestor",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "A modern species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A mutation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "An extinction",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-18",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "A molecular clock uses:",
+      "options": [
+        {
+          "key": "a",
+          "label": "DNA differences to estimate time",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Fossil size",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Color change",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Behavior",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-19",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "A clade includes:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Ancestor + all descendants",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Only living species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Only derived traits",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Ancestor only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-20",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "Which of the following is NOT evidence for evolution?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Homologous structures",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fossil record",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "DNA similarities",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Spontaneous generation",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-21",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Binomial nomenclature was developed by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Darwin",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Linnaeus",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Mendel",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Lamarck",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-22",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "The correct format for a scientific name:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Homo sapiens (italic)",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "homo sapiens",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "HOMO SAPIENS",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Homo Sapiens",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-23",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "The largest taxonomic rank is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Kingdom",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Domain",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Phylum",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Class",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-24",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Which domains are prokaryotic?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Bacteria and Archaea",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Eukarya only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Protista and Fungi",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Plantae and Animalia",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-25",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Which scheme does modern biology prefer?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3-Domain",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "5-Kingdom",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "2-Kingdom",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "6-Kingdom",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-26",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Which kingdom has chitin cell walls?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Plantae",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fungi",
+          "correct": true
+        },
+        {
+          "key": "c",
+          "label": "Animalia",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Protista",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-27",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Which kingdom has NO cell wall?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Plantae",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fungi",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Animalia",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Monera",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-28",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Which kingdom is autotrophic?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Fungi",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Animalia",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Plantae",
+          "correct": true
+        },
+        {
+          "key": "d",
+          "label": "Protista only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-29",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "A taxon is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "A group at any taxonomic level",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "A species only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A gene",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A fossil",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-30",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Convergent evolution produces:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Analogous structures",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Homologous structures",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Vestigial structures",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Derived traits",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-31",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Cladistics groups organisms by:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Shared derived characteristics",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Color",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Size",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Habitat",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-32",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "A monophyletic group includes:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Ancestor + all descendants",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Only living species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Only derived traits",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Ancestor only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-33",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "An outgroup is:",
+      "options": [
+        {
+          "key": "a",
+          "label": "A reference taxon outside the study group",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "A modern species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "A derived trait",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "A node",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-34",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Species richness refers to:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Number of species",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Distribution of individuals",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Size of organisms",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Genetic diversity",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-35",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "A shared derived trait is called:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Synapomorphy",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Plesiomorphy",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Apomorphy only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Homoplasy",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-36",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "The highest species diversity is found in:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Tropical rainforests",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Deserts",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Polar regions",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Temperate grasslands",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-37",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "First step in constructing a cladogram:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Choose the group of interest",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Draw nodes",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Choose an outgroup",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Mark traits",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-38",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "A paraphyletic group:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Excludes some descendants of the ancestor",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Includes all descendants",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Has no ancestor",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Contains only fossils",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-39",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "Which is the correct order of evolutionary relatedness?",
+      "options": [
+        {
+          "key": "a",
+          "label": "More shared traits = closer relationship",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "More traits = less related",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Traits don't matter",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Only DNA matters",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-40",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "Homologous structures are evidence of:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Shared ancestry",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Convergent evolution",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Random chance",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Extinction",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-41",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Which scientist argued that populations grow faster than resources?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Malthus",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Darwin",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Lamarck",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Wallace",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-42",
+      "competency": "STEM_BIO11/12-IIIC-g-11",
+      "text": "Modern synthesis integrated Darwin's ideas with:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mendelian genetics",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Lamarckism",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Spontaneous generation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Cell theory",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-43",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "The fossil Archaeopteryx provides evidence of:",
+      "options": [
+        {
+          "key": "a",
+          "label": "A transition between reptiles and birds",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Dinosaurs only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Mammals only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Fish only",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-44",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Human and chimpanzee DNA is approximately:",
+      "options": [
+        {
+          "key": "a",
+          "label": "98% identical",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "50% identical",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "25% identical",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "5% identical",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-45",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "Branch lengths on a phylogenetic tree can represent:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Time or amount of change",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Color only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Size only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Population count",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-46",
+      "competency": "STEM_BIO11/12-IIIC-g-13",
+      "text": "Which of the following is NOT a type of evidence used to build phylogenetic trees?",
+      "options": [
+        {
+          "key": "a",
+          "label": "DNA sequences",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Fossil record",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Comparative anatomy",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Musical preference",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-47",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Which taxonomic rank is most inclusive after Domain?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Kingdom",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Phylum",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Class",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Genus",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-48",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Which of these is a correct species name?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Canis lupus (italic)",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "canis Lupus",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "CANIS LUPUS",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Canis lupus (bold)",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-49",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Which of the following kingdoms are eukaryotic?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Protista, Fungi, Plantae, Animalia",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Bacteria, Archaea",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Monera only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "None",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-50",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Kingdom Protista includes:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Mostly unicellular eukaryotes",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Only multicellular organisms",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Only prokaryotes",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Only animals",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-51",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Which is the correct sequence from largest to smallest?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Domain → Kingdom → Phylum → Class → Order → Family → Genus → Species",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Species → Genus → Family → Order → Class → Phylum → Kingdom → Domain",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Kingdom → Domain → Species",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Phylum → Kingdom → Class",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-52",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "A cladogram's branching pattern is based on:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Shared derived traits",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Random guessing",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Color patterns",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Population size",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-53",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Analogous structures result from:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Convergent evolution",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Common ancestry",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Shared derived traits",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Synapomorphies",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-54",
+      "competency": "STEM_BIO11/12-IIIC-g-10",
+      "text": "Which is NOT a mechanism of evolutionary change?",
+      "options": [
+        {
+          "key": "a",
+          "label": "Natural selection",
+          "correct": false
+        },
+        {
+          "key": "b",
+          "label": "Genetic drift",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Mutation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Spontaneous generation",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "te-55",
+      "competency": "STEM_BIO11/12-IIIC-g-12",
+      "text": "Vestigial structures provide evidence of:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Evolutionary history",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Recent adaptation",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Creation",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Random chance",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-56",
+      "competency": "STEM_BIO11/12-IIIH-j-14",
+      "text": "Which scheme recognizes that Bacteria and Archaea are fundamentally different?",
+      "options": [
+        {
+          "key": "a",
+          "label": "3-Domain",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "5-Kingdom",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "2-Kingdom",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "4-Kingdom",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-57",
+      "competency": "STEM_BIO11/12-IIIH-j-15",
+      "text": "Fungi are heterotrophic and have:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Chitin cell walls",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Cellulose cell walls",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "No cell walls",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Peptidoglycan walls",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-58",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Which best describes a clade?",
+      "options": [
+        {
+          "key": "a",
+          "label": "An ancestor and all its descendants",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Only the most recent species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Only extinct species",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Only the derived traits",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-59",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "In a cladogram, the outgroup is used to:",
+      "options": [
+        {
+          "key": "a",
+          "label": "Provide a reference for comparison",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "Represent the newest species",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "Add more branches",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "Determine color",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "te-60",
+      "competency": "STEM_BIO11/12-IIIH-j-16",
+      "text": "Which statement best summarizes systematics?",
+      "options": [
+        {
+          "key": "a",
+          "label": "It studies evolutionary relationships using all available evidence",
+          "correct": true
+        },
+        {
+          "key": "b",
+          "label": "It names organisms only",
+          "correct": false
+        },
+        {
+          "key": "c",
+          "label": "It examines fossils only",
+          "correct": false
+        },
+        {
+          "key": "d",
+          "label": "It ignores molecular data",
+          "correct": false
+        }
+      ]
+    }
   ]
 }
