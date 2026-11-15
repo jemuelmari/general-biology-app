@@ -46,7 +46,7 @@
     <div class="container flex-between">
       <div>
         <h1>🖨️ Print Exam Copies</h1>
-        <span class="version">v2.6.0</span>
+        <span class="version">v1.0.0</span>
       </div>
       <nav class="teacher-nav">
         <a href="../instructor.html">🏠 Dashboard</a>
@@ -97,7 +97,10 @@
           <select id="pe-output">
             <option value="student">Student copy (no answers)</option>
             <option value="both">Student copy + Answer key (last page)</option>
+            <option value="student-sheet">Student copy + Answer sheet</option>
+            <option value="sheet">Answer sheet only</option>
             <option value="key">Answer key only</option>
+            <option value="all">Student copy + Answer sheet + Answer key</option>
           </select>
         </div>
         <div>
@@ -142,7 +145,9 @@
         <b>Tips:</b> Set A and Set B have different question orders (good for seatmates), and each always prints the same way,
         so the answer key always matches the paper. Choices are placed so the correct answers are evenly spread across A–D
         (the question banks mostly have them in A/B). In the print dialog, turn <b>off</b> “Headers and footers” for a clean page.
-        Performance Tasks are not included — they have no test questions.
+        Performance Tasks are not included — they have no test questions.<br>
+        📝 <b>Answer sheet:</b> one bubble row per item with Name / LRN / Section / Score. Print the same SET as the test paper.
+        After checking, record the scores in <a href="../classrecord/offline-scores.html">Offline Scores</a> so they go to the class record and the backend.
       </div>
     </div>
 
@@ -151,12 +156,12 @@
     </div>
   </main>
 
-  <footer class="app-footer no-print"><p>Print Exam Copies · v2.6.0</p></footer>
+  <footer class="app-footer no-print"><p>Print Exam Copies · v1.0.0</p></footer>
 
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-  <script src="../config.js?v=2.4.2-4b8c4cb"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.4.2-4b8c4cb"></script>
-  <script src="print-exam.js?v=2.4.2-4b8c4cb"></script>
+  <script src="../config.js?v=2.4.2-4a6e810"></script>
+  <script src="../assets/js/teacher-auth.js?v=2.4.2-4a6e810"></script>
+  <script src="print-exam.js?v=2.4.2-4a6e810"></script>
 
   <script>
     (function () {
