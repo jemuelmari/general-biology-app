@@ -140,6 +140,7 @@
     { icon: '📄', title: 'Exam Evidence', desc: 'Printable proof of each student\'s actual exam — questions, answers, correct answers, score — with parent/guardian signature', href: 'teacher/evidence.html', color: '#0d47a1', badge: { text: 'New', type: 'info' } },
     { icon: '📥', title: 'Sync Center', desc: 'Import student progress from other devices', href: 'teacher/sync-center.html', color: '#ed6c02', badge: { text: 'Cross-device', type: 'info' } },
     { icon: '📊', title: 'Item Analysis', desc: 'Per-item difficulty and Most/Least Learned competencies', href: 'teacher/item-analysis.html', color: '#6a1b9a', badge: null },
+    { icon: '📗', title: 'Fill DepEd ECR', desc: 'Upload the official SHS ECR (.xlsx) — the app types in every quiz, PT, ST and TE score, then you download the same DepEd file', href: 'teacher/deped-ecr.html', color: '#1b5e20', badge: { text: 'New', type: 'info' } },
     { icon: '🧮', title: 'TOS Generator', desc: 'Table of Specifications (70% LOTS : 30% HOTS) for each quiz, ST and Term Exam + 5 Most / 5 Least Learned competencies', href: 'teacher/tos-generator.html', color: '#00838f', badge: { text: 'New', type: 'info' } },
     { icon: '🎯', title: 'Intervention', desc: 'Students needing support, auto-classified', href: 'teacher/intervention.html', color: '#c62828', badge: stats.urgent > 0 ? { text: stats.urgent + ' urgent', type: 'alert' } : null },
     { icon: '🔤', title: 'Normalize Names', desc: 'Standardize record format across all students', href: 'teacher/normalize-names.html', color: '#00695c', badge: null },
