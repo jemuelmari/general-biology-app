@@ -6,19 +6,49 @@
       "n": 1,
       "title": "The Cell Theory — Historical Development and Postulates",
       "competency": "STEM_BIO11/12-Ia-c-1",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Trace the historical development of the cell theory.</li><li>State the three postulates of the cell theory.</li><li>Explain how each postulate is supported by evidence.</li><li>Appreciate how technological advances in microscopy enabled the discovery of the cell.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell</strong> — the basic structural and functional unit of all living organisms.</li><li><strong>Cell Theory</strong> — the foundational principle stating that all living things are made of cells.</li><li><strong>Microscopy</strong> — the technology that made cell discovery possible.</li></ul><h3>📚 Lesson Content</h3><h4>A. Before the Cell — A Quick Look Back</h4><p>Before the 1600s, people believed that life could arise spontaneously from non-living matter (<strong>spontaneous generation</strong>). This changed when the microscope was invented.</p><h4>B. The Scientists Behind the Cell Theory</h4><table><thead><tr><th>Year</th><th>Scientist</th><th>Contribution</th></tr></thead><tbody><tr><td>1665</td><td>Robert Hooke</td><td>Observed cork; called the tiny compartments <strong>\"cells\"</strong></td></tr><tr><td>1674</td><td>Anton van Leeuwenhoek</td><td>First to observe <strong>living cells</strong></td></tr><tr><td>1831</td><td>Robert Brown</td><td>Discovered the <strong>nucleus</strong></td></tr><tr><td>1838</td><td>Matthias Schleiden</td><td>All <strong>plants</strong> are made of cells</td></tr><tr><td>1839</td><td>Theodor Schwann</td><td>All <strong>animals</strong> are made of cells</td></tr><tr><td>1855</td><td>Rudolf Virchow</td><td>Cells arise only from <strong>pre-existing cells</strong></td></tr></tbody></table><h4>C. The Three Postulates</h4><ol><li>All living organisms are composed of one or more cells.</li><li>The cell is the basic unit of structure and function in living organisms.</li><li>All cells arise from pre-existing cells.</li></ol><h4>D. Modern Additions</h4><ul><li>Cells contain hereditary information (DNA).</li><li>All cells have similar chemical composition.</li><li>Cell activity depends on subcellular structures.</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Trace the historical development of the cell theory.</li><li>State the three postulates of the cell theory.</li><li>Explain how each postulate is supported by evidence.</li><li>Appreciate how technological advances in microscopy enabled the discovery of the cell.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell</strong> — the basic structural and functional unit of all living organisms.</li><li><strong>Cell Theory</strong> — the foundational principle stating that all living things are made of cells.</li><li><strong>Microscopy</strong> — the technology that made cell discovery possible.</li></ul><h3>📚 Lesson Content</h3><h4>A. Before the Cell — A Quick Look Back</h4><p>Before the 1600s, people believed that life could arise spontaneously from non-living matter (<strong>spontaneous generation</strong>). This changed when the microscope was invented.</p><h4>B. The Scientists Behind the Cell Theory</h4><table><thead><tr><th>Year</th><th>Scientist</th><th>Contribution</th></tr></thead><tbody><tr><td>1665</td><td>Robert Hooke</td><td>Observed cork; called the tiny compartments <strong>\"cells\"</strong></td></tr><tr><td>1674</td><td>Anton van Leeuwenhoek</td><td>First to observe <strong>living cells</strong></td></tr><tr><td>1831</td><td>Robert Brown</td><td>Discovered the <strong>nucleus</strong></td></tr><tr><td>1838</td><td>Matthias Schleiden</td><td>All <strong>plants</strong> are made of cells</td></tr><tr><td>1839</td><td>Theodor Schwann</td><td>All <strong>animals</strong> are made of cells</td></tr><tr><td>1855</td><td>Rudolf Virchow</td><td>Cells arise only from <strong>pre-existing cells</strong></td></tr></tbody></table><h4>C. The Three Postulates</h4><ol><li>All living organisms are composed of one or more cells.</li><li>The cell is the basic unit of structure and function in living organisms.</li><li>All cells arise from pre-existing cells.</li></ol><h4>D. Modern Additions</h4><ul><li>Cells contain hereditary information (DNA).</li><li>All cells have similar chemical composition.</li><li>Cell activity depends on subcellular structures.</li></ul><h3>💬 Let's Discuss</h3><p>Imagine living in the 1600s: no one had ever seen anything smaller than a grain of sand, so it made sense to believe that maggots simply \"appeared\" in rotting meat. The cell theory did not come from one genius on one day. It was built over almost 200 years, and every step depended on a better lens.</p><p>When <strong>Robert Hooke</strong> looked at cork in 1665, he saw empty boxes — the walls of dead plant cells — and named them <em>cells</em>. A few years later <strong>Anton van Leeuwenhoek</strong>, using his own powerful single-lens microscopes, saw something Hooke never did: <em>living</em> cells swimming in pond water and saliva. For more than a century after that, the idea stayed a collection of observations. Only in 1838–1839 did <strong>Schleiden</strong> (plants) and <strong>Schwann</strong> (animals) make the bold general claim that <em>all</em> organisms are made of cells. Notice what they still lacked: an explanation of where new cells come from. Schleiden actually thought cells crystallized out of fluid! In 1855 <strong>Rudolf Virchow</strong> completed the theory with <em>omnis cellula e cellula</em> — every cell comes from a pre-existing cell.</p><p>Why does this matter to you? The third postulate explains everyday events: a wound heals because skin cells divide, and you grew from one fertilized egg. It also ended the idea of spontaneous generation, which Louis Pasteur later disproved by experiment.</p><p><strong>Common mistake:</strong> saying Hooke discovered living cells. He saw only the empty walls of dead cork cells. A good way to remember the order is <em>see → claim → explain</em>: first scientists <em>saw</em> cells, then they <em>claimed</em> all living things have them, and finally they <em>explained</em> where cells come from.</p>",
       "activity1": {
         "timeLimit": 120,
         "badgeId": "historian",
         "badgeName": "Historian",
         "badgeIcon": "🏆",
         "pairs": [
-          { "key": "hooke", "left": "Robert Hooke (1665)", "right": "Coined the term \"cell\"" },
-          { "key": "leeuwenhoek", "left": "Anton van Leeuwenhoek", "right": "First to see living cells" },
-          { "key": "brown", "left": "Robert Brown (1831)", "right": "Discovered the nucleus" },
-          { "key": "schleiden", "left": "Matthias Schleiden (1838)", "right": "All plants are made of cells" },
-          { "key": "schwann", "left": "Theodor Schwann (1839)", "right": "All animals are made of cells" },
-          { "key": "virchow", "left": "Rudolf Virchow (1855)", "right": "Cells come from pre-existing cells" }
+          {
+            "key": "hooke",
+            "left": "Robert Hooke (1665)",
+            "right": "Coined the term \"cell\"",
+            "why": "Hooke saw empty cork compartments that reminded him of small rooms (cellulae)."
+          },
+          {
+            "key": "leeuwenhoek",
+            "left": "Anton van Leeuwenhoek",
+            "right": "First to see living cells",
+            "why": "Leeuwenhoek's lenses let him see moving \"animalcules\" — the first living cells observed."
+          },
+          {
+            "key": "brown",
+            "left": "Robert Brown (1831)",
+            "right": "Discovered the nucleus",
+            "why": "Brown described the dark central body in orchid cells — the nucleus."
+          },
+          {
+            "key": "schleiden",
+            "left": "Matthias Schleiden (1838)",
+            "right": "All plants are made of cells",
+            "why": "Schleiden studied plant tissues and concluded all plants are made of cells."
+          },
+          {
+            "key": "schwann",
+            "left": "Theodor Schwann (1839)",
+            "right": "All animals are made of cells",
+            "why": "Schwann extended the same idea to animal tissues."
+          },
+          {
+            "key": "virchow",
+            "left": "Rudolf Virchow (1855)",
+            "right": "Cells come from pre-existing cells",
+            "why": "Virchow's \"omnis cellula e cellula\" completed the theory: cells come only from cells."
+          }
         ]
       },
       "activity2": {
@@ -27,12 +57,114 @@
         "badgeName": "Postulate Master",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "A scientist observes bacteria under a microscope — a single cell performing all life functions.", "choices": [ { "label": "Postulate 1", "correct": false }, { "label": "Postulate 2", "correct": true }, { "label": "Postulate 3", "correct": false } ] },
-          { "text": "A cut heals because skin cells divide to replace damaged ones.", "choices": [ { "label": "Postulate 1", "correct": false }, { "label": "Postulate 2", "correct": false }, { "label": "Postulate 3", "correct": true } ] },
-          { "text": "A leaf, a root, and a stem are all made of microscopic units.", "choices": [ { "label": "Postulate 1", "correct": true }, { "label": "Postulate 2", "correct": false }, { "label": "Postulate 3", "correct": false } ] },
-          { "text": "A fertilized egg divides repeatedly to form an embryo.", "choices": [ { "label": "Postulate 1", "correct": false }, { "label": "Postulate 2", "correct": false }, { "label": "Postulate 3", "correct": true } ] },
-          { "text": "Every organism studied — from fungi to whales — is made of cells.", "choices": [ { "label": "Postulate 1", "correct": true }, { "label": "Postulate 2", "correct": false }, { "label": "Postulate 3", "correct": false } ] },
-          { "text": "A cell's mitochondria produce energy for the cell's activities.", "choices": [ { "label": "Postulate 1", "correct": false }, { "label": "Postulate 2", "correct": true }, { "label": "Postulate 3", "correct": false } ] }
+          {
+            "text": "A scientist observes bacteria under a microscope — a single cell performing all life functions.",
+            "choices": [
+              {
+                "label": "Postulate 1",
+                "correct": false
+              },
+              {
+                "label": "Postulate 2",
+                "correct": true
+              },
+              {
+                "label": "Postulate 3",
+                "correct": false
+              }
+            ],
+            "explanation": "One bacterial cell carries out every life function, so the cell is the basic unit of structure and function (Postulate 2)."
+          },
+          {
+            "text": "A cut heals because skin cells divide to replace damaged ones.",
+            "choices": [
+              {
+                "label": "Postulate 1",
+                "correct": false
+              },
+              {
+                "label": "Postulate 2",
+                "correct": false
+              },
+              {
+                "label": "Postulate 3",
+                "correct": true
+              }
+            ],
+            "explanation": "Healing happens because existing skin cells divide to make new ones — cells come from pre-existing cells (Postulate 3)."
+          },
+          {
+            "text": "A leaf, a root, and a stem are all made of microscopic units.",
+            "choices": [
+              {
+                "label": "Postulate 1",
+                "correct": true
+              },
+              {
+                "label": "Postulate 2",
+                "correct": false
+              },
+              {
+                "label": "Postulate 3",
+                "correct": false
+              }
+            ],
+            "explanation": "Leaf, root and stem tissues are all built from cells, so the plant is composed of cells (Postulate 1)."
+          },
+          {
+            "text": "A fertilized egg divides repeatedly to form an embryo.",
+            "choices": [
+              {
+                "label": "Postulate 1",
+                "correct": false
+              },
+              {
+                "label": "Postulate 2",
+                "correct": false
+              },
+              {
+                "label": "Postulate 3",
+                "correct": true
+              }
+            ],
+            "explanation": "Every cell of the embryo comes from division of the zygote — cells arise from pre-existing cells (Postulate 3)."
+          },
+          {
+            "text": "Every organism studied — from fungi to whales — is made of cells.",
+            "choices": [
+              {
+                "label": "Postulate 1",
+                "correct": true
+              },
+              {
+                "label": "Postulate 2",
+                "correct": false
+              },
+              {
+                "label": "Postulate 3",
+                "correct": false
+              }
+            ],
+            "explanation": "Finding cells in every organism studied is direct support for 'all living things are made of cells' (Postulate 1)."
+          },
+          {
+            "text": "A cell's mitochondria produce energy for the cell's activities.",
+            "choices": [
+              {
+                "label": "Postulate 1",
+                "correct": false
+              },
+              {
+                "label": "Postulate 2",
+                "correct": true
+              },
+              {
+                "label": "Postulate 3",
+                "correct": false
+              }
+            ],
+            "explanation": "Mitochondria work inside the cell to power its functions, showing the cell is the functional unit (Postulate 2)."
+          }
         ]
       },
       "formative": {
@@ -41,9 +173,72 @@
         "badgeIcon": "🎯",
         "lives": 3,
         "questions": [
-          { "text": "Who first coined the term \"cell,\" and what was he observing?", "choices": [ { "label": "Anton van Leeuwenhoek — bacteria", "correct": false }, { "label": "Robert Hooke — cork tissue", "correct": true }, { "label": "Robert Brown — plant nucleus", "correct": false }, { "label": "Rudolf Virchow — dividing cells", "correct": false } ] },
-          { "text": "Which postulate was added LAST, and who proposed it?", "choices": [ { "label": "Postulate 1 — Schleiden", "correct": false }, { "label": "Postulate 2 — Schwann", "correct": false }, { "label": "Postulate 3 — Virchow", "correct": true }, { "label": "Postulate 3 — Hooke", "correct": false } ] },
-          { "text": "Why was the invention of the microscope important to the cell theory?", "choices": [ { "label": "It made cells larger", "correct": false }, { "label": "It allowed scientists to see cells for the first time", "correct": true }, { "label": "It proved spontaneous generation", "correct": false }, { "label": "It replaced the need for experiments", "correct": false } ] }
+          {
+            "text": "Who first coined the term \"cell,\" and what was he observing?",
+            "choices": [
+              {
+                "label": "Anton van Leeuwenhoek — bacteria",
+                "correct": false
+              },
+              {
+                "label": "Robert Hooke — cork tissue",
+                "correct": true
+              },
+              {
+                "label": "Robert Brown — plant nucleus",
+                "correct": false
+              },
+              {
+                "label": "Rudolf Virchow — dividing cells",
+                "correct": false
+              }
+            ],
+            "explanation": "Hooke named the 'cells' he saw in thin slices of cork; Leeuwenhoek later saw living cells."
+          },
+          {
+            "text": "Which postulate was added LAST, and who proposed it?",
+            "choices": [
+              {
+                "label": "Postulate 1 — Schleiden",
+                "correct": false
+              },
+              {
+                "label": "Postulate 2 — Schwann",
+                "correct": false
+              },
+              {
+                "label": "Postulate 3 — Virchow",
+                "correct": true
+              },
+              {
+                "label": "Postulate 3 — Hooke",
+                "correct": false
+              }
+            ],
+            "explanation": "Virchow added the third postulate in 1855, about 17 years after Schleiden and Schwann's work."
+          },
+          {
+            "text": "Why was the invention of the microscope important to the cell theory?",
+            "choices": [
+              {
+                "label": "It let scientists see cells for the first time",
+                "correct": true
+              },
+              {
+                "label": "It made cells grow larger in the laboratory",
+                "correct": false
+              },
+              {
+                "label": "It proved that spontaneous generation is true",
+                "correct": false
+              },
+              {
+                "label": "It removed the need for doing any experiments",
+                "correct": false
+              }
+            ],
+            "explanation": "Cells are too small to see with the naked eye; the microscope let scientists observe them for the first time."
+          }
         ]
       },
       "takeaways": [
@@ -57,19 +252,49 @@
       "n": 2,
       "title": "The Plasma Membrane & Cytoplasm",
       "competency": "STEM_BIO11/12-Ia-c-2",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure of the plasma membrane using the fluid mosaic model.</li><li>Explain the functions of the plasma membrane.</li><li>Describe the composition and roles of the cytoplasm and cytosol.</li><li>Relate membrane structure to its selective permeability.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Plasma membrane</strong> — a selectively permeable phospholipid bilayer that surrounds the cell.</li><li><strong>Fluid mosaic model</strong> — describes the membrane as a fluid phospholipid bilayer with embedded proteins.</li><li><strong>Cytoplasm</strong> — the material within the cell, excluding the nucleus.</li><li><strong>Cytosol</strong> — the liquid portion of the cytoplasm.</li></ul><h3>📚 Lesson Content</h3><h4>A. The Plasma Membrane — Structure</h4><p>The plasma membrane follows the <strong>fluid mosaic model</strong> proposed by Singer and Nicolson (1972).</p><table><thead><tr><th>Component</th><th>Description</th><th>Function</th></tr></thead><tbody><tr><td><strong>Phospholipid bilayer</strong></td><td>Two layers of phospholipids with hydrophilic heads outward, hydrophobic tails inward</td><td>Forms the basic barrier</td></tr><tr><td><strong>Integral proteins</strong></td><td>Embedded within the bilayer</td><td>Transport, channels, receptors</td></tr><tr><td><strong>Peripheral proteins</strong></td><td>Attached to the surface</td><td>Signaling, structural support</td></tr><tr><td><strong>Cholesterol</strong></td><td>Wedged between phospholipids</td><td>Regulates membrane fluidity</td></tr><tr><td><strong>Glycolipids / Glycoproteins</strong></td><td>Carbohydrate chains on outer surface</td><td>Cell recognition, adhesion</td></tr></tbody></table><h4>B. Functions of the Plasma Membrane</h4><ul><li><strong>Selective permeability</strong> — allows some substances in, keeps others out.</li><li><strong>Cell signaling</strong> — receptors detect chemical messages.</li><li><strong>Cell recognition</strong> — identifies the cell as \"self.\"</li><li><strong>Anchoring</strong> — connects to cytoskeleton and other cells.</li></ul><h4>C. The Cytoplasm</h4><ul><li><strong>Cytosol</strong> — the jelly-like fluid (mostly water, ions, enzymes)</li><li><strong>Organelles</strong> — membrane-bound and non-membrane-bound structures</li><li><strong>Cytoskeleton</strong> — protein filaments providing shape and movement</li><li><strong>Inclusions</strong> — stored nutrients, pigments, crystals</li></ul><h4>D. Fluid Mosaic Model — Why \"Fluid\"?</h4><p>Phospholipids and proteins can move laterally within the membrane. Fluidity is essential for cell movement, protein function, and membrane fusion.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure of the plasma membrane using the fluid mosaic model.</li><li>Explain the functions of the plasma membrane.</li><li>Describe the composition and roles of the cytoplasm and cytosol.</li><li>Relate membrane structure to its selective permeability.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Plasma membrane</strong> — a selectively permeable phospholipid bilayer that surrounds the cell.</li><li><strong>Fluid mosaic model</strong> — describes the membrane as a fluid phospholipid bilayer with embedded proteins.</li><li><strong>Cytoplasm</strong> — the material within the cell, excluding the nucleus.</li><li><strong>Cytosol</strong> — the liquid portion of the cytoplasm.</li></ul><h3>📚 Lesson Content</h3><h4>A. The Plasma Membrane — Structure</h4><p>The plasma membrane follows the <strong>fluid mosaic model</strong> proposed by Singer and Nicolson (1972).</p><table><thead><tr><th>Component</th><th>Description</th><th>Function</th></tr></thead><tbody><tr><td><strong>Phospholipid bilayer</strong></td><td>Two layers of phospholipids with hydrophilic heads outward, hydrophobic tails inward</td><td>Forms the basic barrier</td></tr><tr><td><strong>Integral proteins</strong></td><td>Embedded within the bilayer</td><td>Transport, channels, receptors</td></tr><tr><td><strong>Peripheral proteins</strong></td><td>Attached to the surface</td><td>Signaling, structural support</td></tr><tr><td><strong>Cholesterol</strong></td><td>Wedged between phospholipids</td><td>Regulates membrane fluidity</td></tr><tr><td><strong>Glycolipids / Glycoproteins</strong></td><td>Carbohydrate chains on outer surface</td><td>Cell recognition, adhesion</td></tr></tbody></table><h4>B. Functions of the Plasma Membrane</h4><ul><li><strong>Selective permeability</strong> — allows some substances in, keeps others out.</li><li><strong>Cell signaling</strong> — receptors detect chemical messages.</li><li><strong>Cell recognition</strong> — identifies the cell as \"self.\"</li><li><strong>Anchoring</strong> — connects to cytoskeleton and other cells.</li></ul><h4>C. The Cytoplasm</h4><ul><li><strong>Cytosol</strong> — the jelly-like fluid (mostly water, ions, enzymes)</li><li><strong>Organelles</strong> — membrane-bound and non-membrane-bound structures</li><li><strong>Cytoskeleton</strong> — protein filaments providing shape and movement</li><li><strong>Inclusions</strong> — stored nutrients, pigments, crystals</li></ul><h4>D. Fluid Mosaic Model — Why \"Fluid\"?</h4><p>Phospholipids and proteins can move laterally within the membrane. Fluidity is essential for cell movement, protein function, and membrane fusion.</p><h3>💬 Let's Discuss</h3><p>Every cell needs a border that is strong enough to hold its contents in but smart enough to let the right things through. That border is the <strong>plasma membrane</strong>, and the best description of it is the <strong>fluid mosaic model</strong>.</p><p>Picture a crowded swimming pool. The water surface is the <strong>phospholipid bilayer</strong>: each phospholipid has a water-loving (hydrophilic) phosphate head and two water-fearing (hydrophobic) fatty-acid tails. In water, they arrange themselves into two layers with the tails hidden in the middle. The swimmers floating around are the <strong>proteins</strong>. Some go all the way through the bilayer (<em>integral</em> proteins, used as channels and pumps); others sit on the surface (<em>peripheral</em> proteins, used for signaling and support). Because the parts can drift sideways, the membrane is <em>fluid</em>; because it is made of many different pieces, it is a <em>mosaic</em>.</p><p><strong>Cholesterol</strong> acts like a buffer for fluidity: in warm conditions it keeps the membrane from becoming too runny, and in cold conditions it keeps it from becoming stiff. Sugar chains attached to lipids and proteins (<strong>glycolipids</strong> and <strong>glycoproteins</strong>) act like ID cards — this is how your immune system tells \"self\" from \"non-self,\" and it is the basis of ABO blood types.</p><p>Because small nonpolar molecules (O₂, CO₂) slip through the tails easily but ions and large polar molecules cannot, the membrane is <strong>selectively permeable</strong>.</p><p><strong>Common mistake:</strong> mixing up cytoplasm and cytosol. <em>Cytoplasm</em> is everything between the membrane and the nucleus, organelles included. <em>Cytosol</em> is only the jelly-like fluid part.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "membrane-master",
         "badgeName": "Membrane Master",
         "badgeIcon": "🧱",
         "pairs": [
-          { "key": "bilayer", "left": "Phospholipid bilayer", "right": "Forms the basic barrier" },
-          { "key": "integral", "left": "Integral proteins", "right": "Transport & channels" },
-          { "key": "periph", "left": "Peripheral proteins", "right": "Signaling & support" },
-          { "key": "chol", "left": "Cholesterol", "right": "Regulates fluidity" },
-          { "key": "glyco", "left": "Glycolipids/Glycoproteins", "right": "Cell recognition" },
-          { "key": "cytosol", "left": "Cytosol", "right": "Jelly-like fluid" }
+          {
+            "key": "bilayer",
+            "left": "Phospholipid bilayer",
+            "right": "Forms the basic barrier",
+            "why": "The double layer of phospholipids is the basic barrier — its hydrophobic core blocks ions and polar molecules."
+          },
+          {
+            "key": "integral",
+            "left": "Integral proteins",
+            "right": "Transport & channels",
+            "why": "Integral proteins span the bilayer, so they can form channels and carriers."
+          },
+          {
+            "key": "periph",
+            "left": "Peripheral proteins",
+            "right": "Signaling & support",
+            "why": "Peripheral proteins sit on the surface and help in signaling and anchoring the cytoskeleton."
+          },
+          {
+            "key": "chol",
+            "left": "Cholesterol",
+            "right": "Regulates fluidity",
+            "why": "Cholesterol sits between phospholipids and buffers fluidity in both heat and cold."
+          },
+          {
+            "key": "glyco",
+            "left": "Glycolipids/Glycoproteins",
+            "right": "Cell recognition",
+            "why": "Sugar chains on the outer surface act as identification tags for cell recognition."
+          },
+          {
+            "key": "cytosol",
+            "left": "Cytosol",
+            "right": "Jelly-like fluid",
+            "why": "Cytosol is the fluid part of the cytoplasm where organelles are suspended."
+          }
         ]
       },
       "activity2": {
@@ -78,12 +303,114 @@
         "badgeName": "Fluid Mosaic Pro",
         "badgeIcon": "💠",
         "scenarios": [
-          { "text": "A scientist notices that membrane proteins drift laterally within the bilayer.", "choices": [ { "label": "Fluidity ✓", "correct": true }, { "label": "Rigidity", "correct": false }, { "label": "Permeability", "correct": false } ] },
-          { "text": "Chains of sugars on the outer surface identify the cell as \"self.\"", "choices": [ { "label": "Glycoproteins ✓", "correct": true }, { "label": "Cholesterol", "correct": false }, { "label": "Integral proteins", "correct": false } ] },
-          { "text": "A molecule moves from outside to inside without using energy.", "choices": [ { "label": "Passive transport ✓", "correct": true }, { "label": "Active transport", "correct": false }, { "label": "Endocytosis", "correct": false } ] },
-          { "text": "Cholesterol keeps the membrane from becoming too rigid or too fluid.", "choices": [ { "label": "Fluidity regulation ✓", "correct": true }, { "label": "Recognition", "correct": false }, { "label": "Transport", "correct": false } ] },
-          { "text": "The plasma membrane lets K⁺ in but blocks Na⁺.", "choices": [ { "label": "Selective permeability ✓", "correct": true }, { "label": "Recognition", "correct": false }, { "label": "Fluidity", "correct": false } ] },
-          { "text": "Everything inside the cell except the nucleus.", "choices": [ { "label": "Cytoplasm ✓", "correct": true }, { "label": "Cytosol", "correct": false }, { "label": "Nucleoplasm", "correct": false } ] }
+          {
+            "text": "A scientist notices that membrane proteins drift laterally within the bilayer.",
+            "choices": [
+              {
+                "label": "Fluidity",
+                "correct": true
+              },
+              {
+                "label": "Rigidity",
+                "correct": false
+              },
+              {
+                "label": "Permeability",
+                "correct": false
+              }
+            ],
+            "explanation": "Lateral drifting of proteins is exactly what 'fluid' means in the fluid mosaic model."
+          },
+          {
+            "text": "Chains of sugars on the outer surface identify the cell as \"self.\"",
+            "choices": [
+              {
+                "label": "Glycoproteins",
+                "correct": true
+              },
+              {
+                "label": "Cholesterol",
+                "correct": false
+              },
+              {
+                "label": "Integral proteins",
+                "correct": false
+              }
+            ],
+            "explanation": "Glycoproteins carry sugar chains that mark the cell as 'self'."
+          },
+          {
+            "text": "A molecule moves from outside to inside without using energy.",
+            "choices": [
+              {
+                "label": "Passive transport",
+                "correct": true
+              },
+              {
+                "label": "Active transport",
+                "correct": false
+              },
+              {
+                "label": "Endocytosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Movement down a concentration gradient without ATP is passive transport."
+          },
+          {
+            "text": "Cholesterol keeps the membrane from becoming too rigid or too fluid.",
+            "choices": [
+              {
+                "label": "Fluidity regulation",
+                "correct": true
+              },
+              {
+                "label": "Cell recognition",
+                "correct": false
+              },
+              {
+                "label": "Active transport",
+                "correct": false
+              }
+            ],
+            "explanation": "Cholesterol prevents extremes — this is fluidity regulation."
+          },
+          {
+            "text": "The plasma membrane lets K⁺ in but blocks Na⁺.",
+            "choices": [
+              {
+                "label": "Selective permeability",
+                "correct": true
+              },
+              {
+                "label": "Cell recognition",
+                "correct": false
+              },
+              {
+                "label": "Membrane fluidity",
+                "correct": false
+              }
+            ],
+            "explanation": "Letting one ion in while blocking another shows the membrane chooses what passes: selective permeability."
+          },
+          {
+            "text": "Everything inside the cell except the nucleus.",
+            "choices": [
+              {
+                "label": "Cytoplasm",
+                "correct": true
+              },
+              {
+                "label": "Cytosol",
+                "correct": false
+              },
+              {
+                "label": "Nucleoplasm",
+                "correct": false
+              }
+            ],
+            "explanation": "Cytoplasm includes cytosol and organelles — everything inside except the nucleus."
+          }
         ]
       },
       "formative": {
@@ -92,9 +419,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Which model describes the plasma membrane as a fluid phospholipid bilayer with embedded proteins?", "choices": [ { "label": "Lock-and-key model", "correct": false }, { "label": "Fluid mosaic model", "correct": true }, { "label": "Sandwich model", "correct": false }, { "label": "Unit membrane model", "correct": false } ] },
-          { "text": "What is the primary function of cholesterol in the plasma membrane?", "choices": [ { "label": "Cell recognition", "correct": false }, { "label": "Transport of ions", "correct": false }, { "label": "Regulating membrane fluidity", "correct": true }, { "label": "Energy production", "correct": false } ] },
-          { "text": "What is the difference between cytoplasm and cytosol?", "choices": [ { "label": "They are the same", "correct": false }, { "label": "Cytoplasm includes all cell contents except the nucleus; cytosol is just the fluid portion", "correct": true }, { "label": "Cytosol includes organelles; cytoplasm does not", "correct": false }, { "label": "Cytoplasm is only in plant cells", "correct": false } ] }
+          {
+            "text": "Which model describes the plasma membrane as a fluid phospholipid bilayer with embedded proteins?",
+            "choices": [
+              {
+                "label": "Lock-and-key model",
+                "correct": false
+              },
+              {
+                "label": "Fluid mosaic model",
+                "correct": true
+              },
+              {
+                "label": "Sandwich model",
+                "correct": false
+              },
+              {
+                "label": "Unit membrane model",
+                "correct": false
+              }
+            ],
+            "explanation": "The fluid mosaic model (Singer & Nicolson, 1972) pictures moving proteins in a fluid lipid bilayer."
+          },
+          {
+            "text": "What is the primary function of cholesterol in the plasma membrane?",
+            "choices": [
+              {
+                "label": "Cell recognition",
+                "correct": false
+              },
+              {
+                "label": "Transport of ions",
+                "correct": false
+              },
+              {
+                "label": "Regulating fluidity",
+                "correct": true
+              },
+              {
+                "label": "Energy production",
+                "correct": false
+              }
+            ],
+            "explanation": "Cholesterol keeps the membrane from being too fluid when warm and too rigid when cold."
+          },
+          {
+            "text": "What is the difference between cytoplasm and cytosol?",
+            "choices": [
+              {
+                "label": "They are two names for exactly the same thing",
+                "correct": false
+              },
+              {
+                "label": "Cytoplasm includes organelles; cytosol is only fluid",
+                "correct": true
+              },
+              {
+                "label": "Cytosol includes the organelles; cytoplasm does not",
+                "correct": false
+              },
+              {
+                "label": "Cytoplasm is found only inside plant cells",
+                "correct": false
+              }
+            ],
+            "explanation": "Cytoplasm = cytosol + organelles (outside the nucleus); cytosol is only the fluid part."
+          }
         ]
       },
       "takeaways": [
@@ -108,21 +498,61 @@
       "n": 3,
       "title": "Major Organelles — Nucleus, Ribosomes, ER",
       "competency": "STEM_BIO11/12-Ia-c-2",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure and function of the nucleus.</li><li>Explain the roles of ribosomes in protein synthesis.</li><li>Differentiate rough and smooth endoplasmic reticulum.</li><li>Explain how the endomembrane system works together.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Nucleus</strong> — the control center of the cell containing DNA.</li><li><strong>Ribosome</strong> — the site of protein synthesis.</li><li><strong>Endoplasmic reticulum (ER)</strong> — a network of membranes for synthesis and transport.</li><li><strong>Endomembrane system</strong> — ER, Golgi, lysosomes, vesicles working together.</li></ul><h3>📚 Lesson Content</h3><h4>A. The Nucleus</h4><table><thead><tr><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td><strong>Nuclear envelope</strong> (double membrane)</td><td>Separates nucleus from cytoplasm</td></tr><tr><td><strong>Nuclear pores</strong></td><td>Allow exchange of materials (mRNA, proteins)</td></tr><tr><td><strong>Nucleolus</strong></td><td>Site of ribosome assembly</td></tr><tr><td><strong>Chromatin</strong></td><td>DNA + proteins (chromosomes when condensed)</td></tr><tr><td><strong>Nucleoplasm</strong></td><td>Jelly-like fluid inside the nucleus</td></tr></tbody></table><h4>B. Ribosomes</h4><ul><li><strong>Structure:</strong> Two subunits (large + small), made of rRNA and proteins</li><li><strong>Function:</strong> Protein synthesis (translation)</li><li><strong>Types:</strong> Free ribosomes (internal proteins) vs. Bound ribosomes (proteins for export)</li><li><strong>Found in:</strong> Both prokaryotes (70S) and eukaryotes (80S)</li></ul><h4>C. Endoplasmic Reticulum (ER)</h4><table><thead><tr><th>Type</th><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td><strong>Rough ER</strong></td><td>Studded with ribosomes</td><td>Protein synthesis, folding, and transport</td></tr><tr><td><strong>Smooth ER</strong></td><td>No ribosomes; tubular</td><td>Lipid synthesis, detoxification, calcium storage</td></tr></tbody></table><h4>D. The Endomembrane System</h4><ol><li>Ribosome → protein synthesized into rough ER</li><li>Rough ER → protein folded and modified</li><li>Vesicle → carries protein to Golgi apparatus</li><li>Golgi → further modifies, sorts, and packages</li><li>Vesicle → delivers to destination</li></ol>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure and function of the nucleus.</li><li>Explain the roles of ribosomes in protein synthesis.</li><li>Differentiate rough and smooth endoplasmic reticulum.</li><li>Explain how the endomembrane system works together.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Nucleus</strong> — the control center of the cell containing DNA.</li><li><strong>Ribosome</strong> — the site of protein synthesis.</li><li><strong>Endoplasmic reticulum (ER)</strong> — a network of membranes for synthesis and transport.</li><li><strong>Endomembrane system</strong> — ER, Golgi, lysosomes, vesicles working together.</li></ul><h3>📚 Lesson Content</h3><h4>A. The Nucleus</h4><table><thead><tr><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td><strong>Nuclear envelope</strong> (double membrane)</td><td>Separates nucleus from cytoplasm</td></tr><tr><td><strong>Nuclear pores</strong></td><td>Allow exchange of materials (mRNA, proteins)</td></tr><tr><td><strong>Nucleolus</strong></td><td>Site of ribosome assembly</td></tr><tr><td><strong>Chromatin</strong></td><td>DNA + proteins (chromosomes when condensed)</td></tr><tr><td><strong>Nucleoplasm</strong></td><td>Jelly-like fluid inside the nucleus</td></tr></tbody></table><h4>B. Ribosomes</h4><ul><li><strong>Structure:</strong> Two subunits (large + small), made of rRNA and proteins</li><li><strong>Function:</strong> Protein synthesis (translation)</li><li><strong>Types:</strong> Free ribosomes (internal proteins) vs. Bound ribosomes (proteins for export)</li><li><strong>Found in:</strong> Both prokaryotes (70S) and eukaryotes (80S)</li></ul><h4>C. Endoplasmic Reticulum (ER)</h4><table><thead><tr><th>Type</th><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td><strong>Rough ER</strong></td><td>Studded with ribosomes</td><td>Protein synthesis, folding, and transport</td></tr><tr><td><strong>Smooth ER</strong></td><td>No ribosomes; tubular</td><td>Lipid synthesis, detoxification, calcium storage</td></tr></tbody></table><h4>D. The Endomembrane System</h4><ol><li>Ribosome → protein synthesized into rough ER</li><li>Rough ER → protein folded and modified</li><li>Vesicle → carries protein to Golgi apparatus</li><li>Golgi → further modifies, sorts, and packages</li><li>Vesicle → delivers to destination</li></ol><h3>💬 Let's Discuss</h3><p>Think of a cell as a factory that makes proteins. The <strong>nucleus</strong> is the main office where the master plans (DNA) are kept. The plans never leave the office; instead, copies called <strong>mRNA</strong> exit through the <strong>nuclear pores</strong> in the double-layered <strong>nuclear envelope</strong>. Inside the nucleus, the <strong>nucleolus</strong> is the workshop that assembles <strong>ribosome</strong> subunits. DNA in a non-dividing cell is loose and wrapped around proteins — this is called <strong>chromatin</strong>.</p><p>Ribosomes are the machines that read mRNA and link amino acids into proteins. Where a ribosome works determines where its protein goes. <strong>Free ribosomes</strong> in the cytosol make proteins that stay inside the cell (for example, enzymes of glycolysis). <strong>Bound ribosomes</strong> attached to the ER make proteins that will be exported, placed in membranes, or sent to lysosomes.</p><p>The <strong>endoplasmic reticulum</strong> is a network of membranes continuous with the nuclear envelope. The <strong>rough ER</strong> is studded with ribosomes; newly made proteins enter its interior, where they are folded and often tagged with sugars. The <strong>smooth ER</strong> has no ribosomes and does other jobs: making lipids such as phospholipids and steroid hormones, storing calcium in muscle cells, and detoxifying drugs and alcohol — which is why liver cells are full of smooth ER.</p><p>So the protein \"assembly line\" runs: <em>ribosome → rough ER → (vesicle) → Golgi → vesicle → destination</em>. Pancreas cells that export digestive enzymes have huge amounts of rough ER.</p><p><strong>Common mistake:</strong> thinking the nucleolus is a separate organelle with its own membrane. It is only a dense region inside the nucleus.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "organelle-expert",
         "badgeName": "Organelle Expert",
         "badgeIcon": "🔬",
         "pairs": [
-          { "key": "env", "left": "Nuclear envelope", "right": "Separates nucleus from cytoplasm" },
-          { "key": "pores", "left": "Nuclear pores", "right": "Exchange of materials" },
-          { "key": "nucleolus", "left": "Nucleolus", "right": "Ribosome assembly" },
-          { "key": "chromatin", "left": "Chromatin", "right": "DNA + proteins" },
-          { "key": "free-rib", "left": "Free ribosomes", "right": "Make proteins for internal use" },
-          { "key": "bound-rib", "left": "Bound ribosomes", "right": "Make proteins for export" },
-          { "key": "rough-er", "left": "Rough ER", "right": "Protein synthesis & folding" },
-          { "key": "smooth-er", "left": "Smooth ER", "right": "Lipid synthesis & detox" }
+          {
+            "key": "env",
+            "left": "Nuclear envelope",
+            "right": "Separates nucleus from cytoplasm",
+            "why": "The double nuclear envelope separates DNA from the cytoplasm."
+          },
+          {
+            "key": "pores",
+            "left": "Nuclear pores",
+            "right": "Exchange of materials",
+            "why": "Nuclear pores let mRNA and ribosome subunits out and proteins in."
+          },
+          {
+            "key": "nucleolus",
+            "left": "Nucleolus",
+            "right": "Ribosome assembly",
+            "why": "The nucleolus makes rRNA and assembles ribosome subunits."
+          },
+          {
+            "key": "chromatin",
+            "left": "Chromatin",
+            "right": "DNA + proteins",
+            "why": "Chromatin is DNA wound around histone proteins."
+          },
+          {
+            "key": "free-rib",
+            "left": "Free ribosomes",
+            "right": "Make proteins for internal use",
+            "why": "Free ribosomes release their proteins into the cytosol, for use inside the cell."
+          },
+          {
+            "key": "bound-rib",
+            "left": "Bound ribosomes",
+            "right": "Make proteins for export",
+            "why": "Bound ribosomes send their proteins into the ER for export or for membranes."
+          },
+          {
+            "key": "rough-er",
+            "left": "Rough ER",
+            "right": "Protein synthesis & folding",
+            "why": "Rough ER receives new proteins and folds and modifies them."
+          },
+          {
+            "key": "smooth-er",
+            "left": "Smooth ER",
+            "right": "Lipid synthesis & detox",
+            "why": "Smooth ER lacks ribosomes and makes lipids and detoxifies chemicals."
+          }
         ]
       },
       "activity2": {
@@ -131,12 +561,114 @@
         "badgeName": "ER Master",
         "badgeIcon": "🧬",
         "scenarios": [
-          { "text": "A liver cell detoxifies alcohol after a night out.", "choices": [ { "label": "Smooth ER ✓", "correct": true }, { "label": "Rough ER", "correct": false }, { "label": "Golgi", "correct": false } ] },
-          { "text": "A cell produces a lot of digestive enzymes for export.", "choices": [ { "label": "Rough ER ✓", "correct": true }, { "label": "Smooth ER", "correct": false }, { "label": "Lysosome", "correct": false } ] },
-          { "text": "A cell is building new ribosomes.", "choices": [ { "label": "Nucleolus ✓", "correct": true }, { "label": "Nuclear pores", "correct": false }, { "label": "Chromatin", "correct": false } ] },
-          { "text": "mRNA exits the nucleus to reach ribosomes.", "choices": [ { "label": "Nuclear pores ✓", "correct": true }, { "label": "Nuclear envelope", "correct": false }, { "label": "Nucleoplasm", "correct": false } ] },
-          { "text": "A protein is folded into its 3D shape after synthesis.", "choices": [ { "label": "Rough ER ✓", "correct": true }, { "label": "Smooth ER", "correct": false }, { "label": "Nucleus", "correct": false } ] },
-          { "text": "A cell needs to synthesize new membrane phospholipids.", "choices": [ { "label": "Smooth ER ✓", "correct": true }, { "label": "Rough ER", "correct": false }, { "label": "Ribosome", "correct": false } ] }
+          {
+            "text": "A liver cell detoxifies alcohol after a night out.",
+            "choices": [
+              {
+                "label": "Smooth ER",
+                "correct": true
+              },
+              {
+                "label": "Rough ER",
+                "correct": false
+              },
+              {
+                "label": "Golgi",
+                "correct": false
+              }
+            ],
+            "explanation": "Detoxification of alcohol and drugs is a smooth ER job; liver cells have lots of it."
+          },
+          {
+            "text": "A cell produces a lot of digestive enzymes for export.",
+            "choices": [
+              {
+                "label": "Rough ER",
+                "correct": true
+              },
+              {
+                "label": "Smooth ER",
+                "correct": false
+              },
+              {
+                "label": "Lysosome",
+                "correct": false
+              }
+            ],
+            "explanation": "Exported enzymes are made on bound ribosomes and processed in the rough ER."
+          },
+          {
+            "text": "A cell is building new ribosomes.",
+            "choices": [
+              {
+                "label": "Nucleolus",
+                "correct": true
+              },
+              {
+                "label": "Nuclear pores",
+                "correct": false
+              },
+              {
+                "label": "Chromatin",
+                "correct": false
+              }
+            ],
+            "explanation": "Ribosome subunits are assembled in the nucleolus."
+          },
+          {
+            "text": "mRNA exits the nucleus to reach ribosomes.",
+            "choices": [
+              {
+                "label": "Nuclear pores",
+                "correct": true
+              },
+              {
+                "label": "Nuclear envelope",
+                "correct": false
+              },
+              {
+                "label": "Nucleoplasm",
+                "correct": false
+              }
+            ],
+            "explanation": "mRNA leaves the nucleus through nuclear pores."
+          },
+          {
+            "text": "A protein is folded into its 3D shape after synthesis.",
+            "choices": [
+              {
+                "label": "Rough ER",
+                "correct": true
+              },
+              {
+                "label": "Smooth ER",
+                "correct": false
+              },
+              {
+                "label": "Nucleus",
+                "correct": false
+              }
+            ],
+            "explanation": "Newly made proteins enter the rough ER, where they are folded."
+          },
+          {
+            "text": "A cell needs to synthesize new membrane phospholipids.",
+            "choices": [
+              {
+                "label": "Smooth ER",
+                "correct": true
+              },
+              {
+                "label": "Rough ER",
+                "correct": false
+              },
+              {
+                "label": "Ribosome",
+                "correct": false
+              }
+            ],
+            "explanation": "Phospholipids are lipids, and lipid synthesis happens in the smooth ER."
+          }
         ]
       },
       "formative": {
@@ -145,9 +677,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Which organelle is the site of ribosome assembly?", "choices": [ { "label": "Nuclear envelope", "correct": false }, { "label": "Nucleolus", "correct": true }, { "label": "Chromatin", "correct": false }, { "label": "Nuclear pore", "correct": false } ] },
-          { "text": "What is the main difference between rough and smooth ER?", "choices": [ { "label": "Rough ER has ribosomes; smooth ER does not", "correct": true }, { "label": "Smooth ER is found only in plants", "correct": false }, { "label": "Rough ER makes lipids; smooth ER makes proteins", "correct": false }, { "label": "There is no difference", "correct": false } ] },
-          { "text": "Which sequence correctly describes the endomembrane system?", "choices": [ { "label": "Ribosome → Golgi → rough ER → vesicle", "correct": false }, { "label": "Ribosome → rough ER → Golgi → vesicle", "correct": true }, { "label": "Golgi → ribosome → rough ER → vesicle", "correct": false }, { "label": "Rough ER → ribosome → Golgi → vesicle", "correct": false } ] }
+          {
+            "text": "Which organelle is the site of ribosome assembly?",
+            "choices": [
+              {
+                "label": "Nuclear envelope",
+                "correct": false
+              },
+              {
+                "label": "Nucleolus",
+                "correct": true
+              },
+              {
+                "label": "Chromatin",
+                "correct": false
+              },
+              {
+                "label": "Nuclear pore",
+                "correct": false
+              }
+            ],
+            "explanation": "The nucleolus makes rRNA and assembles ribosome subunits."
+          },
+          {
+            "text": "What is the main difference between rough and smooth ER?",
+            "choices": [
+              {
+                "label": "Rough ER has ribosomes; smooth ER does not",
+                "correct": true
+              },
+              {
+                "label": "Smooth ER is found only in plants",
+                "correct": false
+              },
+              {
+                "label": "Rough ER makes lipids; smooth ER makes proteins",
+                "correct": false
+              },
+              {
+                "label": "There is no difference",
+                "correct": false
+              }
+            ],
+            "explanation": "The 'rough' look comes from attached ribosomes; smooth ER has none and makes lipids instead."
+          },
+          {
+            "text": "Which sequence correctly describes the endomembrane system?",
+            "choices": [
+              {
+                "label": "Ribosome → Golgi → rough ER → vesicle",
+                "correct": false
+              },
+              {
+                "label": "Ribosome → rough ER → Golgi → vesicle",
+                "correct": true
+              },
+              {
+                "label": "Golgi → ribosome → rough ER → vesicle",
+                "correct": false
+              },
+              {
+                "label": "Rough ER → ribosome → Golgi → vesicle",
+                "correct": false
+              }
+            ],
+            "explanation": "Proteins are made on ribosomes, enter the rough ER, then go to the Golgi and leave in vesicles."
+          }
         ]
       },
       "takeaways": [
@@ -161,21 +756,61 @@
       "n": 4,
       "title": "Energy & Support Organelles — Mitochondria, Chloroplasts, Cytoskeleton",
       "competency": "STEM_BIO11/12-Ia-c-2",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure and function of mitochondria.</li><li>Describe the structure and function of chloroplasts.</li><li>Explain the roles of the cytoskeleton in cell shape and movement.</li><li>Compare energy-related organelles in plant and animal cells.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Mitochondrion</strong> — the powerhouse of the cell (ATP production).</li><li><strong>Chloroplast</strong> — site of photosynthesis in plant cells.</li><li><strong>Cytoskeleton</strong> — network of protein filaments for shape, support, and movement.</li><li><strong>Endosymbiotic theory</strong> — mitochondria and chloroplasts originated from engulfed prokaryotes.</li></ul><h3>📚 Lesson Content</h3><h4>A. Mitochondria — The Powerhouse</h4><ul><li><strong>Structure:</strong> Double membrane; inner membrane folded into <em>cristae</em>; interior called <em>matrix</em></li><li><strong>Function:</strong> Cellular respiration — produces ATP</li><li><strong>Contains:</strong> Its own DNA (mtDNA) and ribosomes</li><li><strong>Found in:</strong> Both plant and animal cells</li></ul><h4>B. Chloroplasts — Site of Photosynthesis</h4><table><thead><tr><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td><strong>Outer & inner membrane</strong></td><td>Enclose the organelle</td></tr><tr><td><strong>Thylakoids</strong></td><td>Membrane sacs containing chlorophyll</td></tr><tr><td><strong>Grana</strong></td><td>Stacks of thylakoids (light reactions)</td></tr><tr><td><strong>Stroma</strong></td><td>Fluid surrounding thylakoids (Calvin cycle)</td></tr></tbody></table><h4>C. The Cytoskeleton</h4><table><thead><tr><th>Component</th><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td><strong>Microfilaments</strong></td><td>Thin (actin)</td><td>Cell shape, movement, muscle contraction</td></tr><tr><td><strong>Intermediate filaments</strong></td><td>Medium</td><td>Mechanical support, anchor organelles</td></tr><tr><td><strong>Microtubules</strong></td><td>Thick (tubulin)</td><td>Spindle fibers, cilia, flagella, transport</td></tr></tbody></table><h4>D. Endosymbiotic Theory</h4><p>Mitochondria and chloroplasts likely originated from ancient prokaryotes engulfed by a host cell. Evidence: own circular DNA, own 70S ribosomes, reproduce by binary fission, double membranes.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the structure and function of mitochondria.</li><li>Describe the structure and function of chloroplasts.</li><li>Explain the roles of the cytoskeleton in cell shape and movement.</li><li>Compare energy-related organelles in plant and animal cells.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Mitochondrion</strong> — the powerhouse of the cell (ATP production).</li><li><strong>Chloroplast</strong> — site of photosynthesis in plant cells.</li><li><strong>Cytoskeleton</strong> — network of protein filaments for shape, support, and movement.</li><li><strong>Endosymbiotic theory</strong> — mitochondria and chloroplasts originated from engulfed prokaryotes.</li></ul><h3>📚 Lesson Content</h3><h4>A. Mitochondria — The Powerhouse</h4><ul><li><strong>Structure:</strong> Double membrane; inner membrane folded into <em>cristae</em>; interior called <em>matrix</em></li><li><strong>Function:</strong> Cellular respiration — produces ATP</li><li><strong>Contains:</strong> Its own DNA (mtDNA) and ribosomes</li><li><strong>Found in:</strong> Both plant and animal cells</li></ul><h4>B. Chloroplasts — Site of Photosynthesis</h4><table><thead><tr><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td><strong>Outer & inner membrane</strong></td><td>Enclose the organelle</td></tr><tr><td><strong>Thylakoids</strong></td><td>Membrane sacs containing chlorophyll</td></tr><tr><td><strong>Grana</strong></td><td>Stacks of thylakoids (light reactions)</td></tr><tr><td><strong>Stroma</strong></td><td>Fluid surrounding thylakoids (Calvin cycle)</td></tr></tbody></table><h4>C. The Cytoskeleton</h4><table><thead><tr><th>Component</th><th>Structure</th><th>Function</th></tr></thead><tbody><tr><td><strong>Microfilaments</strong></td><td>Thin (actin)</td><td>Cell shape, movement, muscle contraction</td></tr><tr><td><strong>Intermediate filaments</strong></td><td>Medium</td><td>Mechanical support, anchor organelles</td></tr><tr><td><strong>Microtubules</strong></td><td>Thick (tubulin)</td><td>Spindle fibers, cilia, flagella, transport</td></tr></tbody></table><h4>D. Endosymbiotic Theory</h4><p>Mitochondria and chloroplasts likely originated from ancient prokaryotes engulfed by a host cell. Evidence: own circular DNA, own 70S ribosomes, reproduce by binary fission, double membranes.</p><h3>💬 Let's Discuss</h3><p>A cell that works hard needs power and a strong framework. <strong>Mitochondria</strong> are the power plants: they carry out cellular respiration and turn the energy in glucose into <strong>ATP</strong>. The inner membrane is folded into <strong>cristae</strong>, which give more surface area for the electron transport chain — more folds, more ATP. The fluid inside, the <strong>matrix</strong>, is where the Krebs cycle happens. This is why heart and leg muscle cells contain hundreds to thousands of mitochondria.</p><p><strong>Chloroplasts</strong>, found in plants and algae, capture light energy. Their internal membranes form flattened sacs called <strong>thylakoids</strong>, which contain chlorophyll and are stacked into <strong>grana</strong>. The surrounding fluid, the <strong>stroma</strong>, is where sugar is built in the Calvin cycle. Notice the partnership: chloroplasts make glucose and O₂; mitochondria (present in plant cells too!) use them to make ATP.</p><p>Both organelles have their own circular DNA, 70S ribosomes like bacteria, and double membranes, and they divide by a fission-like process. These clues support the <strong>endosymbiotic theory</strong>: long ago, a larger cell engulfed bacteria that became mitochondria and chloroplasts instead of being digested.</p><p>The <strong>cytoskeleton</strong> gives shape and movement. <strong>Microfilaments</strong> (actin) help muscle contraction and the pinching of cells during division. <strong>Intermediate filaments</strong> resist pulling forces, like steel cables. <strong>Microtubules</strong> are hollow tubes that form spindle fibers, cilia and flagella, and act as tracks for vesicles.</p><p><strong>Common mistake:</strong> thinking plant cells have chloroplasts <em>instead of</em> mitochondria. Plant cells have both.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "energy-expert",
         "badgeName": "Energy Expert",
         "badgeIcon": "⚡",
         "pairs": [
-          { "key": "cristae", "left": "Cristae", "right": "Folds of inner mitochondrial membrane" },
-          { "key": "matrix", "left": "Matrix", "right": "Fluid inside mitochondria" },
-          { "key": "thylak", "left": "Thylakoids", "right": "Contain chlorophyll" },
-          { "key": "grana", "left": "Grana", "right": "Stacks of thylakoids" },
-          { "key": "stroma", "left": "Stroma", "right": "Fluid around thylakoids" },
-          { "key": "micro", "left": "Microfilaments", "right": "Actin — cell shape & movement" },
-          { "key": "inter", "left": "Intermediate filaments", "right": "Mechanical support" },
-          { "key": "microtube", "left": "Microtubules", "right": "Spindle fibers, cilia, flagella" }
+          {
+            "key": "cristae",
+            "left": "Cristae",
+            "right": "Folds of inner mitochondrial membrane",
+            "why": "Cristae are folds of the inner membrane that increase surface area for ATP production."
+          },
+          {
+            "key": "matrix",
+            "left": "Matrix",
+            "right": "Fluid inside mitochondria",
+            "why": "The matrix is the fluid inside the inner membrane where the Krebs cycle happens."
+          },
+          {
+            "key": "thylak",
+            "left": "Thylakoids",
+            "right": "Contain chlorophyll",
+            "why": "Thylakoid membranes hold chlorophyll and the light reactions."
+          },
+          {
+            "key": "grana",
+            "left": "Grana",
+            "right": "Stacks of thylakoids",
+            "why": "Grana are stacks of thylakoids, like piles of coins."
+          },
+          {
+            "key": "stroma",
+            "left": "Stroma",
+            "right": "Fluid around thylakoids",
+            "why": "The stroma surrounds the thylakoids; the Calvin cycle happens there."
+          },
+          {
+            "key": "micro",
+            "left": "Microfilaments",
+            "right": "Actin — cell shape & movement",
+            "why": "Actin microfilaments help the cell change shape and move."
+          },
+          {
+            "key": "inter",
+            "left": "Intermediate filaments",
+            "right": "Mechanical support",
+            "why": "Intermediate filaments are rope-like and resist tension."
+          },
+          {
+            "key": "microtube",
+            "left": "Microtubules",
+            "right": "Spindle fibers, cilia, flagella",
+            "why": "Microtubules form the spindle, cilia and flagella."
+          }
         ]
       },
       "activity2": {
@@ -184,12 +819,114 @@
         "badgeName": "Organelle Scout",
         "badgeIcon": "🔎",
         "scenarios": [
-          { "text": "A muscle cell needs huge amounts of ATP.", "choices": [ { "label": "Mitochondria ✓", "correct": true }, { "label": "Chloroplast", "correct": false }, { "label": "Golgi", "correct": false } ] },
-          { "text": "A leaf cell captures sunlight to make glucose.", "choices": [ { "label": "Chloroplast ✓", "correct": true }, { "label": "Mitochondria", "correct": false }, { "label": "Ribosome", "correct": false } ] },
-          { "text": "A cell divides and needs spindle fibers.", "choices": [ { "label": "Microtubules ✓", "correct": true }, { "label": "Microfilaments", "correct": false }, { "label": "Intermediate filaments", "correct": false } ] },
-          { "text": "A cell moves using a flagellum.", "choices": [ { "label": "Microtubules ✓", "correct": true }, { "label": "Microfilaments", "correct": false }, { "label": "Chloroplast", "correct": false } ] },
-          { "text": "A scientist finds circular DNA and 70S ribosomes in an organelle.", "choices": [ { "label": "Endosymbiotic evidence ✓", "correct": true }, { "label": "Random mutation", "correct": false }, { "label": "Contamination", "correct": false } ] },
-          { "text": "An organelle has stacked membranes filled with chlorophyll.", "choices": [ { "label": "Chloroplast ✓", "correct": true }, { "label": "Mitochondria", "correct": false }, { "label": "Ribosome", "correct": false } ] }
+          {
+            "text": "A muscle cell needs huge amounts of ATP.",
+            "choices": [
+              {
+                "label": "Mitochondria",
+                "correct": true
+              },
+              {
+                "label": "Chloroplast",
+                "correct": false
+              },
+              {
+                "label": "Golgi",
+                "correct": false
+              }
+            ],
+            "explanation": "ATP is produced mostly in mitochondria through cellular respiration."
+          },
+          {
+            "text": "A leaf cell captures sunlight to make glucose.",
+            "choices": [
+              {
+                "label": "Chloroplast",
+                "correct": true
+              },
+              {
+                "label": "Mitochondria",
+                "correct": false
+              },
+              {
+                "label": "Ribosome",
+                "correct": false
+              }
+            ],
+            "explanation": "Chloroplasts capture light and make glucose by photosynthesis."
+          },
+          {
+            "text": "A cell divides and needs spindle fibers.",
+            "choices": [
+              {
+                "label": "Microtubules",
+                "correct": true
+              },
+              {
+                "label": "Microfilaments",
+                "correct": false
+              },
+              {
+                "label": "Intermediate filaments",
+                "correct": false
+              }
+            ],
+            "explanation": "Spindle fibers that pull chromosomes apart are made of microtubules."
+          },
+          {
+            "text": "A cell moves using a flagellum.",
+            "choices": [
+              {
+                "label": "Microtubules",
+                "correct": true
+              },
+              {
+                "label": "Microfilaments",
+                "correct": false
+              },
+              {
+                "label": "Chloroplast",
+                "correct": false
+              }
+            ],
+            "explanation": "Flagella are built from microtubules in a 9+2 arrangement."
+          },
+          {
+            "text": "A scientist finds circular DNA and 70S ribosomes in an organelle.",
+            "choices": [
+              {
+                "label": "Endosymbiotic evidence",
+                "correct": true
+              },
+              {
+                "label": "Random mutation",
+                "correct": false
+              },
+              {
+                "label": "Contamination",
+                "correct": false
+              }
+            ],
+            "explanation": "Circular DNA and 70S ribosomes resemble bacteria — evidence for endosymbiosis."
+          },
+          {
+            "text": "An organelle has stacked membranes filled with chlorophyll.",
+            "choices": [
+              {
+                "label": "Chloroplast",
+                "correct": true
+              },
+              {
+                "label": "Mitochondria",
+                "correct": false
+              },
+              {
+                "label": "Ribosome",
+                "correct": false
+              }
+            ],
+            "explanation": "Stacked chlorophyll-filled membranes are the grana of a chloroplast."
+          }
         ]
       },
       "formative": {
@@ -198,9 +935,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "What is the main function of mitochondria?", "choices": [ { "label": "Protein synthesis", "correct": false }, { "label": "ATP production through cellular respiration", "correct": true }, { "label": "Photosynthesis", "correct": false }, { "label": "Lipid storage", "correct": false } ] },
-          { "text": "Which structure inside the chloroplast contains chlorophyll?", "choices": [ { "label": "Stroma", "correct": false }, { "label": "Outer membrane", "correct": false }, { "label": "Thylakoid", "correct": true }, { "label": "Cristae", "correct": false } ] },
-          { "text": "Which evidence supports the endosymbiotic theory?", "choices": [ { "label": "Mitochondria have their own circular DNA and 70S ribosomes", "correct": true }, { "label": "Mitochondria are found only in animal cells", "correct": false }, { "label": "Chloroplasts lack membranes", "correct": false }, { "label": "Both organelles have linear DNA", "correct": false } ] }
+          {
+            "text": "What is the main function of mitochondria?",
+            "choices": [
+              {
+                "label": "Protein synthesis",
+                "correct": false
+              },
+              {
+                "label": "ATP production",
+                "correct": true
+              },
+              {
+                "label": "Photosynthesis",
+                "correct": false
+              },
+              {
+                "label": "Lipid storage",
+                "correct": false
+              }
+            ],
+            "explanation": "Mitochondria produce most of the cell's ATP through cellular respiration."
+          },
+          {
+            "text": "Which structure inside the chloroplast contains chlorophyll?",
+            "choices": [
+              {
+                "label": "Stroma",
+                "correct": false
+              },
+              {
+                "label": "Outer membrane",
+                "correct": false
+              },
+              {
+                "label": "Thylakoid",
+                "correct": true
+              },
+              {
+                "label": "Cristae",
+                "correct": false
+              }
+            ],
+            "explanation": "Chlorophyll is located in the thylakoid membranes."
+          },
+          {
+            "text": "Which evidence supports the endosymbiotic theory?",
+            "choices": [
+              {
+                "label": "They have their own circular DNA and 70S ribosomes",
+                "correct": true
+              },
+              {
+                "label": "They are found only in animal cells",
+                "correct": false
+              },
+              {
+                "label": "Chloroplasts have no membranes at all",
+                "correct": false
+              },
+              {
+                "label": "Both organelles have linear DNA like the nucleus",
+                "correct": false
+              }
+            ],
+            "explanation": "Having bacterial-type circular DNA and 70S ribosomes suggests mitochondria were once free-living bacteria."
+          }
         ]
       },
       "takeaways": [

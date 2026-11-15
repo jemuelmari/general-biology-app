@@ -6,21 +6,61 @@
       "n": 1,
       "title": "Introduction to Organ Systems and Their Functions",
       "competency": "STEM_BIO11/12-IVa-h-1",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify the major organ systems in plants and animals.</li><li>Describe the primary function of each organ system.</li><li>Compare how plants and animals perform similar life processes.</li><li>Recognize that organ systems work together to maintain life.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Organ System</strong> — a group of organs that work together to perform a specific function.</li><li><strong>Organismal Biology</strong> — the study of structure, function, and behavior of whole organisms.</li><li><strong>Homeostasis</strong> — maintenance of a stable internal environment.</li></ul><h3>📚 Lesson Content</h3><h4>A. Why Organ Systems Matter</h4><p>Every living organism must perform the same fundamental life processes — but plants and animals do them in very different ways.</p><h4>B. The Nine Life Processes We Compare</h4><table><thead><tr><th>#</th><th>Process</th><th>Animals</th><th>Plants</th></tr></thead><tbody><tr><td>1</td><td>Reproduction</td><td>Sexual & asexual</td><td>Sexual & asexual</td></tr><tr><td>2</td><td>Development</td><td>Embryo → adult</td><td>Seed → mature plant</td></tr><tr><td>3</td><td>Nutrition</td><td>Heterotrophic</td><td>Autotrophic</td></tr><tr><td>4</td><td>Gas Exchange</td><td>Lungs, gills</td><td>Stomata, lenticels</td></tr><tr><td>5</td><td>Transport</td><td>Heart, blood vessels</td><td>Xylem, phloem</td></tr><tr><td>6</td><td>Body Fluids</td><td>Kidneys</td><td>Vacuoles, stomata</td></tr><tr><td>7</td><td>Control</td><td>Nervous, endocrine</td><td>Hormones</td></tr><tr><td>8</td><td>Immune</td><td>WBCs, antibodies</td><td>Barriers, chemicals</td></tr><tr><td>9</td><td>Sensory/Motor</td><td>Eyes, muscles</td><td>Tropisms</td></tr></tbody></table><h4>C. Major Animal Organ Systems</h4><table><thead><tr><th>System</th><th>Organs</th><th>Function</th></tr></thead><tbody><tr><td>Circulatory</td><td>Heart, vessels, blood</td><td>Transport</td></tr><tr><td>Respiratory</td><td>Lungs, trachea, gills</td><td>Gas exchange</td></tr><tr><td>Digestive</td><td>Mouth, stomach, intestines</td><td>Breakdown & absorb food</td></tr><tr><td>Nervous</td><td>Brain, spinal cord, nerves</td><td>Detect & respond</td></tr><tr><td>Endocrine</td><td>Glands</td><td>Hormones</td></tr><tr><td>Excretory</td><td>Kidneys, bladder</td><td>Remove wastes</td></tr><tr><td>Immune/Lymphatic</td><td>Lymph nodes, WBCs</td><td>Defense</td></tr><tr><td>Reproductive</td><td>Gonads</td><td>Offspring</td></tr><tr><td>Muscular/Skeletal</td><td>Muscles, bones</td><td>Support, movement</td></tr></tbody></table><h4>D. Major Plant Organ Systems</h4><table><thead><tr><th>System</th><th>Structures</th><th>Function</th></tr></thead><tbody><tr><td>Shoot System</td><td>Leaves, stems, flowers</td><td>Photosynthesis, reproduction</td></tr><tr><td>Root System</td><td>Roots, root hairs</td><td>Anchor, absorb water/minerals</td></tr><tr><td>Vascular System</td><td>Xylem, phloem</td><td>Transport water, nutrients, sugars</td></tr><tr><td>Dermal System</td><td>Epidermis, cuticle</td><td>Protection, gas exchange</td></tr></tbody></table><h4>E. Comparative Preview</h4><p>Today we set the stage. Over the next three days, we'll go deeper into how these systems work and how they maintain <strong>homeostasis</strong> — the body's internal balance.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify the major organ systems in plants and animals.</li><li>Describe the primary function of each organ system.</li><li>Compare how plants and animals perform similar life processes.</li><li>Recognize that organ systems work together to maintain life.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Organ System</strong> — a group of organs that work together to perform a specific function.</li><li><strong>Organismal Biology</strong> — the study of structure, function, and behavior of whole organisms.</li><li><strong>Homeostasis</strong> — maintenance of a stable internal environment.</li></ul><h3>📚 Lesson Content</h3><h4>A. Why Organ Systems Matter</h4><p>Every living organism must perform the same fundamental life processes — but plants and animals do them in very different ways.</p><h4>B. The Nine Life Processes We Compare</h4><table><thead><tr><th>#</th><th>Process</th><th>Animals</th><th>Plants</th></tr></thead><tbody><tr><td>1</td><td>Reproduction</td><td>Sexual & asexual</td><td>Sexual & asexual</td></tr><tr><td>2</td><td>Development</td><td>Embryo → adult</td><td>Seed → mature plant</td></tr><tr><td>3</td><td>Nutrition</td><td>Heterotrophic</td><td>Autotrophic</td></tr><tr><td>4</td><td>Gas Exchange</td><td>Lungs, gills</td><td>Stomata, lenticels</td></tr><tr><td>5</td><td>Transport</td><td>Heart, blood vessels</td><td>Xylem, phloem</td></tr><tr><td>6</td><td>Body Fluids</td><td>Kidneys</td><td>Vacuoles, stomata</td></tr><tr><td>7</td><td>Control</td><td>Nervous, endocrine</td><td>Hormones</td></tr><tr><td>8</td><td>Immune</td><td>WBCs, antibodies</td><td>Barriers, chemicals</td></tr><tr><td>9</td><td>Sensory/Motor</td><td>Eyes, muscles</td><td>Tropisms</td></tr></tbody></table><h4>C. Major Animal Organ Systems</h4><table><thead><tr><th>System</th><th>Organs</th><th>Function</th></tr></thead><tbody><tr><td>Circulatory</td><td>Heart, vessels, blood</td><td>Transport</td></tr><tr><td>Respiratory</td><td>Lungs, trachea, gills</td><td>Gas exchange</td></tr><tr><td>Digestive</td><td>Mouth, stomach, intestines</td><td>Breakdown & absorb food</td></tr><tr><td>Nervous</td><td>Brain, spinal cord, nerves</td><td>Detect & respond</td></tr><tr><td>Endocrine</td><td>Glands</td><td>Hormones</td></tr><tr><td>Excretory</td><td>Kidneys, bladder</td><td>Remove wastes</td></tr><tr><td>Immune/Lymphatic</td><td>Lymph nodes, WBCs</td><td>Defense</td></tr><tr><td>Reproductive</td><td>Gonads</td><td>Offspring</td></tr><tr><td>Muscular/Skeletal</td><td>Muscles, bones</td><td>Support, movement</td></tr></tbody></table><h4>D. Major Plant Organ Systems</h4><table><thead><tr><th>System</th><th>Structures</th><th>Function</th></tr></thead><tbody><tr><td>Shoot System</td><td>Leaves, stems, flowers</td><td>Photosynthesis, reproduction</td></tr><tr><td>Root System</td><td>Roots, root hairs</td><td>Anchor, absorb water/minerals</td></tr><tr><td>Vascular System</td><td>Xylem, phloem</td><td>Transport water, nutrients, sugars</td></tr><tr><td>Dermal System</td><td>Epidermis, cuticle</td><td>Protection, gas exchange</td></tr></tbody></table><h4>E. Comparative Preview</h4><p>Today we set the stage. Over the next three days, we'll go deeper into how these systems work and how they maintain <strong>homeostasis</strong> — the body's internal balance.</p><h3>💬 Let's Discuss</h3><p>A single cell can do everything itself. A large organism cannot: a cell deep inside your body is too far from the outside world to get its own food and oxygen or get rid of its own wastes. The solution is <strong>division of labor</strong>. Cells form tissues, tissues form <strong>organs</strong>, and organs work together as <strong>organ systems</strong>, each specializing in one life process while depending on the others.</p><p>Animals and plants face the same basic problems — getting nutrients, exchanging gases, moving materials, removing wastes, responding to the environment and reproducing — but solve them differently because of how they live. Animals move to find food (<strong>heterotrophs</strong>), so they have digestive, muscular and fast nervous systems. Plants stay in one place and make their own food (<strong>autotrophs</strong>), so they rely on two big systems: the <strong>shoot system</strong> (stems, leaves, flowers) above ground and the <strong>root system</strong> below, connected by <strong>vascular tissue</strong> — xylem and phloem.</p><p>Compare matching jobs: animals exchange gases in lungs or gills, plants through <strong>stomata</strong>; animals pump blood with a heart, plants move water using transpiration pull in the xylem; animals filter wastes in kidneys, plants store some wastes in vacuoles or drop them with old leaves. Some processes are shared by both — every living cell carries out <strong>cellular respiration</strong>.</p><p>Systems also cooperate. During a run, the respiratory system takes in O₂, the circulatory system delivers it, muscles use it, and the nervous system coordinates everything.</p><p><strong>Common mistake:</strong> thinking plants \"breathe in CO₂ instead of O₂.\" Plants take in CO₂ for photosynthesis, but they also take in O₂ for respiration, day and night.</p>",
       "activity1": {
         "timeLimit": 150,
         "badgeId": "system-master",
         "badgeName": "System Master",
         "badgeIcon": "🏆",
         "pairs": [
-          { "key": "circ", "left": "Circulatory", "right": "Transport nutrients, gases, wastes" },
-          { "key": "resp", "left": "Respiratory", "right": "Gas exchange — O₂ in, CO₂ out" },
-          { "key": "dig", "left": "Digestive", "right": "Break down food, absorb nutrients" },
-          { "key": "nerv", "left": "Nervous", "right": "Detect stimuli, coordinate responses" },
-          { "key": "end", "left": "Endocrine", "right": "Secrete hormones" },
-          { "key": "exc", "left": "Excretory", "right": "Remove wastes, regulate fluids" },
-          { "key": "imm", "left": "Immune/Lymphatic", "right": "Defend against pathogens" },
-          { "key": "msk", "left": "Muscular/Skeletal", "right": "Support and movement" }
+          {
+            "key": "circ",
+            "left": "Circulatory",
+            "right": "Transport nutrients, gases, wastes",
+            "why": "The circulatory system transports nutrients, gases and wastes."
+          },
+          {
+            "key": "resp",
+            "left": "Respiratory",
+            "right": "Gas exchange — O₂ in, CO₂ out",
+            "why": "The respiratory system exchanges O₂ and CO₂."
+          },
+          {
+            "key": "dig",
+            "left": "Digestive",
+            "right": "Break down food, absorb nutrients",
+            "why": "The digestive system breaks food into absorbable nutrients."
+          },
+          {
+            "key": "nerv",
+            "left": "Nervous",
+            "right": "Detect stimuli, coordinate responses",
+            "why": "The nervous system detects stimuli and coordinates fast responses."
+          },
+          {
+            "key": "end",
+            "left": "Endocrine",
+            "right": "Secrete hormones",
+            "why": "The endocrine system secretes hormones into the blood."
+          },
+          {
+            "key": "exc",
+            "left": "Excretory",
+            "right": "Remove wastes, regulate fluids",
+            "why": "The excretory system removes wastes and balances fluids."
+          },
+          {
+            "key": "imm",
+            "left": "Immune/Lymphatic",
+            "right": "Defend against pathogens",
+            "why": "The immune/lymphatic system defends against pathogens."
+          },
+          {
+            "key": "msk",
+            "left": "Muscular/Skeletal",
+            "right": "Support and movement",
+            "why": "Muscles and bones provide support and movement."
+          }
         ]
       },
       "activity2": {
@@ -29,12 +69,114 @@
         "badgeName": "Classifier Pro",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "Xylem and phloem", "choices": [ { "label": "🌱 Plant", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Lungs", "choices": [ { "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": true }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Stomata", "choices": [ { "label": "🌱 Plant", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Kidneys", "choices": [ { "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": true }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Photosynthesis", "choices": [ { "label": "🌱 Plant", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Cellular respiration", "choices": [ { "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": true } ] }
+          {
+            "text": "Xylem and phloem",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Xylem and phloem are plant vascular tissues."
+          },
+          {
+            "text": "Lungs",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": true
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Lungs are animal organs for gas exchange."
+          },
+          {
+            "text": "Stomata",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Stomata are pores on plant leaves."
+          },
+          {
+            "text": "Kidneys",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": true
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Kidneys are animal excretory organs."
+          },
+          {
+            "text": "Photosynthesis",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Photosynthesis happens in plants (autotrophs)."
+          },
+          {
+            "text": "Cellular respiration",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": true
+              }
+            ],
+            "explanation": "All living cells, plant and animal, carry out cellular respiration."
+          }
         ]
       },
       "formative": {
@@ -43,9 +185,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Name three organ systems found in animals but NOT in plants.", "choices": [ { "label": "Circulatory, respiratory, nervous", "correct": true }, { "label": "Vascular, dermal, shoot", "correct": false }, { "label": "Digestive, xylem, phloem", "correct": false }, { "label": "Root, stem, leaf", "correct": false } ] },
-          { "text": "What structure in plants performs gas exchange?", "choices": [ { "label": "Xylem", "correct": false }, { "label": "Stomata", "correct": true }, { "label": "Phloem", "correct": false }, { "label": "Cuticle", "correct": false } ] },
-          { "text": "Why do organisms need organ systems at all?", "choices": [ { "label": "To look complex", "correct": false }, { "label": "To divide labor so the organism can maintain life processes efficiently", "correct": true }, { "label": "To fill space in the body", "correct": false }, { "label": "To replace cells that die", "correct": false } ] }
+          {
+            "text": "Name three organ systems found in animals but NOT in plants.",
+            "choices": [
+              {
+                "label": "Circulatory, respiratory, nervous",
+                "correct": true
+              },
+              {
+                "label": "Vascular, dermal and ground systems",
+                "correct": false
+              },
+              {
+                "label": "Digestive system, xylem, phloem",
+                "correct": false
+              },
+              {
+                "label": "Root system, stem system, leaf system",
+                "correct": false
+              }
+            ],
+            "explanation": "Circulatory, respiratory and nervous systems are animal systems; the rest are plant structures."
+          },
+          {
+            "text": "What structure in plants performs gas exchange?",
+            "choices": [
+              {
+                "label": "Xylem",
+                "correct": false
+              },
+              {
+                "label": "Stomata",
+                "correct": true
+              },
+              {
+                "label": "Phloem",
+                "correct": false
+              },
+              {
+                "label": "Cuticle",
+                "correct": false
+              }
+            ],
+            "explanation": "Stomata let gases enter and leave the leaf."
+          },
+          {
+            "text": "Why do organisms need organ systems at all?",
+            "choices": [
+              {
+                "label": "To make the body look more complex",
+                "correct": false
+              },
+              {
+                "label": "To divide labor among specialized parts",
+                "correct": true
+              },
+              {
+                "label": "To fill up empty space inside the body",
+                "correct": false
+              },
+              {
+                "label": "To replace the cells that die every day",
+                "correct": false
+              }
+            ],
+            "explanation": "Organ systems divide labor so each life process is done efficiently."
+          }
         ]
       },
       "takeaways": [
@@ -59,21 +264,61 @@
       "n": 2,
       "title": "Animal Organ Systems — Detailed",
       "competency": "STEM_BIO11/12-IVa-h-1",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the major animal organ systems and their functions.</li><li>Explain how animal systems work together to maintain life.</li><li>Identify key organs of each system.</li><li>Explain how structure enables function in each system.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Organ</strong> — a group of tissues that work together for a specific function.</li><li><strong>System integration</strong> — organ systems coordinate for survival.</li><li><strong>Surface-area-to-volume ratio</strong> — drives specialization in exchange surfaces.</li></ul><h3>📚 Lesson Content</h3><h4>A. Digestive System</h4><ul><li><strong>Function:</strong> Break down food into absorbable nutrients</li><li><strong>Organs:</strong> Mouth, esophagus, stomach, small intestine, large intestine, liver, pancreas</li><li><strong>Key adaptations:</strong> Villi and microvilli increase surface area</li></ul><h4>B. Circulatory System</h4><ul><li><strong>Function:</strong> Transport nutrients, gases, hormones, wastes</li><li><strong>Organs:</strong> Heart, blood vessels, blood</li><li><strong>Types:</strong> Open vs closed</li></ul><h4>C. Respiratory System</h4><ul><li><strong>Function:</strong> Exchange O₂ and CO₂</li><li><strong>Organs:</strong> Lungs, trachea, bronchi, alveoli; gills in fish</li></ul><h4>D. Nervous System</h4><ul><li><strong>Function:</strong> Detect stimuli and coordinate rapid responses</li><li><strong>Organs:</strong> Brain, spinal cord, nerves</li></ul><h4>E. Endocrine System</h4><ul><li><strong>Function:</strong> Secrete hormones for slower, longer-lasting regulation</li><li><strong>Glands:</strong> Hypothalamus, pituitary, thyroid, adrenal, pancreas, gonads</li></ul><h4>F. Excretory System</h4><ul><li><strong>Function:</strong> Remove metabolic wastes, regulate water/salt</li><li><strong>Organs:</strong> Kidneys, ureters, bladder, urethra</li></ul><h4>G. Immune/Lymphatic System</h4><ul><li><strong>Function:</strong> Defend against pathogens</li><li><strong>Organs:</strong> Lymph nodes, spleen, thymus, tonsils, WBCs</li></ul><h4>H. Reproductive System</h4><ul><li><strong>Function:</strong> Produce gametes for species survival</li><li><strong>Organs:</strong> Gonads, ducts, accessory glands</li></ul><h4>I. Muscular & Skeletal Systems</h4><ul><li><strong>Function:</strong> Support, movement, protection</li><li><strong>Organs:</strong> Bones, cartilage, muscles, tendons, ligaments</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the major animal organ systems and their functions.</li><li>Explain how animal systems work together to maintain life.</li><li>Identify key organs of each system.</li><li>Explain how structure enables function in each system.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Organ</strong> — a group of tissues that work together for a specific function.</li><li><strong>System integration</strong> — organ systems coordinate for survival.</li><li><strong>Surface-area-to-volume ratio</strong> — drives specialization in exchange surfaces.</li></ul><h3>📚 Lesson Content</h3><h4>A. Digestive System</h4><ul><li><strong>Function:</strong> Break down food into absorbable nutrients</li><li><strong>Organs:</strong> Mouth, esophagus, stomach, small intestine, large intestine, liver, pancreas</li><li><strong>Key adaptations:</strong> Villi and microvilli increase surface area</li></ul><h4>B. Circulatory System</h4><ul><li><strong>Function:</strong> Transport nutrients, gases, hormones, wastes</li><li><strong>Organs:</strong> Heart, blood vessels, blood</li><li><strong>Types:</strong> Open vs closed</li></ul><h4>C. Respiratory System</h4><ul><li><strong>Function:</strong> Exchange O₂ and CO₂</li><li><strong>Organs:</strong> Lungs, trachea, bronchi, alveoli; gills in fish</li></ul><h4>D. Nervous System</h4><ul><li><strong>Function:</strong> Detect stimuli and coordinate rapid responses</li><li><strong>Organs:</strong> Brain, spinal cord, nerves</li></ul><h4>E. Endocrine System</h4><ul><li><strong>Function:</strong> Secrete hormones for slower, longer-lasting regulation</li><li><strong>Glands:</strong> Hypothalamus, pituitary, thyroid, adrenal, pancreas, gonads</li></ul><h4>F. Excretory System</h4><ul><li><strong>Function:</strong> Remove metabolic wastes, regulate water/salt</li><li><strong>Organs:</strong> Kidneys, ureters, bladder, urethra</li></ul><h4>G. Immune/Lymphatic System</h4><ul><li><strong>Function:</strong> Defend against pathogens</li><li><strong>Organs:</strong> Lymph nodes, spleen, thymus, tonsils, WBCs</li></ul><h4>H. Reproductive System</h4><ul><li><strong>Function:</strong> Produce gametes for species survival</li><li><strong>Organs:</strong> Gonads, ducts, accessory glands</li></ul><h4>I. Muscular & Skeletal Systems</h4><ul><li><strong>Function:</strong> Support, movement, protection</li><li><strong>Organs:</strong> Bones, cartilage, muscles, tendons, ligaments</li></ul><h3>💬 Let's Discuss</h3><p>Let us follow one meal through the human body to see how animal organ systems connect. When you eat <em>sinangag</em> and egg, the <strong>digestive system</strong> breaks starch and protein into glucose and amino acids. Most absorption happens in the <strong>small intestine</strong>, whose lining is folded into millions of <strong>villi</strong>, each covered in microvilli — together giving a surface area about the size of a badminton court.</p><p>The nutrients enter the <strong>circulatory system</strong>. The <strong>heart</strong>, a four-chambered pump, sends blood through arteries, capillaries and veins to every cell. Cells use the glucose in respiration, which needs O₂ — supplied by the <strong>respiratory system</strong>. Air travels down to about 300 million <strong>alveoli</strong>, thin-walled air sacs surrounded by capillaries where O₂ diffuses into the blood and CO₂ diffuses out.</p><p>Rising blood sugar is detected by the <strong>pancreas</strong>, part of the <strong>endocrine system</strong>, which secretes <strong>insulin</strong> to help cells take up glucose; between meals it releases <strong>glucagon</strong>. Hormones act slowly but for a long time. The <strong>nervous system</strong>, with neurons carrying electrical signals, acts in milliseconds — like the reflex that pulls your hand from a hot pan.</p><p>Wastes such as urea are removed by the <strong>excretory system</strong>: each kidney has about a million <strong>nephrons</strong> that <em>filter</em> blood, <em>reabsorb</em> what is useful, <em>secrete</em> extra wastes and finally <em>excrete</em> urine. Meanwhile, the <strong>immune system</strong> (lymph nodes, white blood cells) guards against pathogens, and <strong>bones and muscles</strong> support and move the body.</p><p><strong>Common mistake:</strong> mixing up villi (intestine, absorption) with alveoli (lungs, gas exchange).</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "organ-master",
         "badgeName": "Organ Master",
         "badgeIcon": "🫀",
         "pairs": [
-          { "key": "dig", "left": "Small intestine", "right": "Nutrient absorption via villi" },
-          { "key": "circ", "left": "Heart", "right": "Pumps blood to the body" },
-          { "key": "resp", "left": "Alveoli", "right": "Site of gas exchange" },
-          { "key": "nerv", "left": "Neurons", "right": "Transmit electrical signals" },
-          { "key": "end", "left": "Pancreas", "right": "Secretes insulin & glucagon" },
-          { "key": "exc", "left": "Kidneys", "right": "Filter blood and make urine" },
-          { "key": "imm", "left": "Lymph nodes", "right": "Filter lymph and store WBCs" },
-          { "key": "msk", "left": "Bones", "right": "Support and protect organs" }
+          {
+            "key": "dig",
+            "left": "Small intestine",
+            "right": "Nutrient absorption via villi",
+            "why": "Villi in the small intestine increase surface area for absorbing nutrients."
+          },
+          {
+            "key": "circ",
+            "left": "Heart",
+            "right": "Pumps blood to the body",
+            "why": "The heart pumps blood throughout the body."
+          },
+          {
+            "key": "resp",
+            "left": "Alveoli",
+            "right": "Site of gas exchange",
+            "why": "Alveoli are thin air sacs where O₂ and CO₂ are exchanged."
+          },
+          {
+            "key": "nerv",
+            "left": "Neurons",
+            "right": "Transmit electrical signals",
+            "why": "Neurons carry electrical impulses."
+          },
+          {
+            "key": "end",
+            "left": "Pancreas",
+            "right": "Secretes insulin & glucagon",
+            "why": "The pancreas releases insulin and glucagon to control blood glucose."
+          },
+          {
+            "key": "exc",
+            "left": "Kidneys",
+            "right": "Filter blood and make urine",
+            "why": "Kidneys filter blood and produce urine."
+          },
+          {
+            "key": "imm",
+            "left": "Lymph nodes",
+            "right": "Filter lymph and store WBCs",
+            "why": "Lymph nodes filter lymph and house white blood cells."
+          },
+          {
+            "key": "msk",
+            "left": "Bones",
+            "right": "Support and protect organs",
+            "why": "Bones support the body and protect organs such as the brain and heart."
+          }
         ]
       },
       "activity2": {
@@ -82,12 +327,114 @@
         "badgeName": "System Scout",
         "badgeIcon": "🔎",
         "scenarios": [
-          { "text": "A person eats a meal and absorbs glucose.", "choices": [ { "label": "Digestive", "correct": true }, { "label": "Respiratory", "correct": false }, { "label": "Immune", "correct": false } ] },
-          { "text": "Blood carries O₂ to muscles during exercise.", "choices": [ { "label": "Circulatory", "correct": true }, { "label": "Nervous", "correct": false }, { "label": "Excretory", "correct": false } ] },
-          { "text": "A person breathes faster on a run.", "choices": [ { "label": "Respiratory", "correct": true }, { "label": "Endocrine", "correct": false }, { "label": "Digestive", "correct": false } ] },
-          { "text": "A reflex makes you pull your hand away from a hot stove.", "choices": [ { "label": "Nervous", "correct": true }, { "label": "Muscular", "correct": false }, { "label": "Immune", "correct": false } ] },
-          { "text": "Insulin is released after a sugary snack.", "choices": [ { "label": "Endocrine", "correct": true }, { "label": "Digestive", "correct": false }, { "label": "Respiratory", "correct": false } ] },
-          { "text": "The bladder fills with urine.", "choices": [ { "label": "Excretory", "correct": true }, { "label": "Circulatory", "correct": false }, { "label": "Nervous", "correct": false } ] }
+          {
+            "text": "A person eats a meal and absorbs glucose.",
+            "choices": [
+              {
+                "label": "Digestive",
+                "correct": true
+              },
+              {
+                "label": "Respiratory",
+                "correct": false
+              },
+              {
+                "label": "Immune",
+                "correct": false
+              }
+            ],
+            "explanation": "Absorbing glucose from food is the job of the digestive system."
+          },
+          {
+            "text": "Blood carries O₂ to muscles during exercise.",
+            "choices": [
+              {
+                "label": "Circulatory",
+                "correct": true
+              },
+              {
+                "label": "Nervous",
+                "correct": false
+              },
+              {
+                "label": "Excretory",
+                "correct": false
+              }
+            ],
+            "explanation": "Blood delivering O₂ to muscles is the circulatory system."
+          },
+          {
+            "text": "A person breathes faster on a run.",
+            "choices": [
+              {
+                "label": "Respiratory",
+                "correct": true
+              },
+              {
+                "label": "Endocrine",
+                "correct": false
+              },
+              {
+                "label": "Digestive",
+                "correct": false
+              }
+            ],
+            "explanation": "Faster breathing during a run is the respiratory system responding."
+          },
+          {
+            "text": "A reflex makes you pull your hand away from a hot stove.",
+            "choices": [
+              {
+                "label": "Nervous",
+                "correct": true
+              },
+              {
+                "label": "Muscular",
+                "correct": false
+              },
+              {
+                "label": "Immune",
+                "correct": false
+              }
+            ],
+            "explanation": "A reflex is controlled by the nervous system."
+          },
+          {
+            "text": "Insulin is released after a sugary snack.",
+            "choices": [
+              {
+                "label": "Endocrine",
+                "correct": true
+              },
+              {
+                "label": "Digestive",
+                "correct": false
+              },
+              {
+                "label": "Respiratory",
+                "correct": false
+              }
+            ],
+            "explanation": "Insulin is a hormone from the endocrine system."
+          },
+          {
+            "text": "The bladder fills with urine.",
+            "choices": [
+              {
+                "label": "Excretory",
+                "correct": true
+              },
+              {
+                "label": "Circulatory",
+                "correct": false
+              },
+              {
+                "label": "Nervous",
+                "correct": false
+              }
+            ],
+            "explanation": "Urine stored in the bladder is part of the excretory system."
+          }
         ]
       },
       "formative": {
@@ -96,9 +443,72 @@
         "badgeIcon": "🐾",
         "lives": 3,
         "questions": [
-          { "text": "Which structure increases surface area for nutrient absorption in the small intestine?", "choices": [ { "label": "Alveoli", "correct": false }, { "label": "Villi", "correct": true }, { "label": "Nephrons", "correct": false }, { "label": "Neurons", "correct": false } ] },
-          { "text": "Which system releases hormones to regulate body functions over long periods?", "choices": [ { "label": "Nervous", "correct": false }, { "label": "Endocrine", "correct": true }, { "label": "Digestive", "correct": false }, { "label": "Lymphatic", "correct": false } ] },
-          { "text": "Which of the following correctly describes the excretory process?", "choices": [ { "label": "Filtration → Reabsorption → Secretion → Excretion", "correct": true }, { "label": "Excretion → Filtration → Secretion → Reabsorption", "correct": false }, { "label": "Secretion → Excretion → Filtration → Reabsorption", "correct": false }, { "label": "Reabsorption → Filtration → Secretion → Excretion", "correct": false } ] }
+          {
+            "text": "Which structure increases surface area for nutrient absorption in the small intestine?",
+            "choices": [
+              {
+                "label": "Alveoli",
+                "correct": false
+              },
+              {
+                "label": "Villi",
+                "correct": true
+              },
+              {
+                "label": "Nephrons",
+                "correct": false
+              },
+              {
+                "label": "Neurons",
+                "correct": false
+              }
+            ],
+            "explanation": "Villi increase the surface area of the small intestine."
+          },
+          {
+            "text": "Which system releases hormones to regulate body functions over long periods?",
+            "choices": [
+              {
+                "label": "Nervous",
+                "correct": false
+              },
+              {
+                "label": "Endocrine",
+                "correct": true
+              },
+              {
+                "label": "Digestive",
+                "correct": false
+              },
+              {
+                "label": "Lymphatic",
+                "correct": false
+              }
+            ],
+            "explanation": "The endocrine system uses hormones for long-term control."
+          },
+          {
+            "text": "Which of the following correctly describes the excretory process?",
+            "choices": [
+              {
+                "label": "Filtration → Reabsorption → Secretion → Excretion",
+                "correct": true
+              },
+              {
+                "label": "Excretion → Filtration → Secretion → Reabsorption",
+                "correct": false
+              },
+              {
+                "label": "Secretion → Excretion → Filtration → Reabsorption",
+                "correct": false
+              },
+              {
+                "label": "Reabsorption → Filtration → Secretion → Excretion",
+                "correct": false
+              }
+            ],
+            "explanation": "Urine forms by filtration, then reabsorption, then secretion, then excretion."
+          }
         ]
       },
       "takeaways": [
@@ -112,21 +522,61 @@
       "n": 3,
       "title": "Plant Organ Systems — Detailed",
       "competency": "STEM_BIO11/12-IVa-h-1",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the shoot and root systems in plants.</li><li>Explain how xylem and phloem transport materials.</li><li>Describe the dermal system and its protective role.</li><li>Compare plant structural adaptations to those of animals.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Shoot system</strong> — above-ground organs.</li><li><strong>Root system</strong> — below-ground organs.</li><li><strong>Vascular tissue</strong> — xylem (water) and phloem (sugars).</li><li><strong>Dermal tissue</strong> — outer protective layer.</li></ul><h3>📚 Lesson Content</h3><h4>A. Shoot System</h4><table><thead><tr><th>Organ</th><th>Function</th><th>Adaptations</th></tr></thead><tbody><tr><td>Leaves</td><td>Photosynthesis, gas exchange</td><td>Broad surface; stomata; cuticle</td></tr><tr><td>Stems</td><td>Support, transport</td><td>Vascular bundles</td></tr><tr><td>Flowers</td><td>Reproduction</td><td>Attract pollinators</td></tr></tbody></table><h4>B. Root System</h4><ul><li><strong>Taproot:</strong> One main root (e.g., carrots)</li><li><strong>Fibrous roots:</strong> Many thin roots (e.g., grasses)</li><li><strong>Root hairs:</strong> Increase surface area for absorption</li></ul><h4>C. Vascular Tissue — Xylem & Phloem</h4><table><thead><tr><th>Tissue</th><th>Transports</th><th>Direction</th></tr></thead><tbody><tr><td>Xylem</td><td>Water and minerals</td><td>Roots → shoots</td></tr><tr><td>Phloem</td><td>Sugars and nutrients</td><td>Both directions</td></tr></tbody></table><h4>D. Dermal Tissue</h4><ul><li><strong>Epidermis:</strong> Outer layer</li><li><strong>Cuticle:</strong> Waxy layer reducing water loss</li><li><strong>Stomata:</strong> Pores for gas exchange</li></ul><h4>E. Plant vs Animal Adaptations</h4><table><thead><tr><th>Function</th><th>Plants</th><th>Animals</th></tr></thead><tbody><tr><td>Gas exchange</td><td>Stomata</td><td>Lungs/gills</td></tr><tr><td>Transport</td><td>Xylem & phloem</td><td>Heart & vessels</td></tr><tr><td>Support</td><td>Cell walls, turgor</td><td>Skeletal system</td></tr></tbody></table>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the shoot and root systems in plants.</li><li>Explain how xylem and phloem transport materials.</li><li>Describe the dermal system and its protective role.</li><li>Compare plant structural adaptations to those of animals.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Shoot system</strong> — above-ground organs.</li><li><strong>Root system</strong> — below-ground organs.</li><li><strong>Vascular tissue</strong> — xylem (water) and phloem (sugars).</li><li><strong>Dermal tissue</strong> — outer protective layer.</li></ul><h3>📚 Lesson Content</h3><h4>A. Shoot System</h4><table><thead><tr><th>Organ</th><th>Function</th><th>Adaptations</th></tr></thead><tbody><tr><td>Leaves</td><td>Photosynthesis, gas exchange</td><td>Broad surface; stomata; cuticle</td></tr><tr><td>Stems</td><td>Support, transport</td><td>Vascular bundles</td></tr><tr><td>Flowers</td><td>Reproduction</td><td>Attract pollinators</td></tr></tbody></table><h4>B. Root System</h4><ul><li><strong>Taproot:</strong> One main root (e.g., carrots)</li><li><strong>Fibrous roots:</strong> Many thin roots (e.g., grasses)</li><li><strong>Root hairs:</strong> Increase surface area for absorption</li></ul><h4>C. Vascular Tissue — Xylem & Phloem</h4><table><thead><tr><th>Tissue</th><th>Transports</th><th>Direction</th></tr></thead><tbody><tr><td>Xylem</td><td>Water and minerals</td><td>Roots → shoots</td></tr><tr><td>Phloem</td><td>Sugars and nutrients</td><td>Both directions</td></tr></tbody></table><h4>D. Dermal Tissue</h4><ul><li><strong>Epidermis:</strong> Outer layer</li><li><strong>Cuticle:</strong> Waxy layer reducing water loss</li><li><strong>Stomata:</strong> Pores for gas exchange</li></ul><h4>E. Plant vs Animal Adaptations</h4><table><thead><tr><th>Function</th><th>Plants</th><th>Animals</th></tr></thead><tbody><tr><td>Gas exchange</td><td>Stomata</td><td>Lungs/gills</td></tr><tr><td>Transport</td><td>Xylem & phloem</td><td>Heart & vessels</td></tr><tr><td>Support</td><td>Cell walls, turgor</td><td>Skeletal system</td></tr></tbody></table><h3>💬 Let's Discuss</h3><p>A plant has two connected systems. The <strong>shoot system</strong> — stems, leaves and flowers — is above ground. <strong>Leaves</strong> are flat and thin to capture light and exchange gases. <strong>Stems</strong> hold leaves up toward light and carry materials between roots and leaves. <strong>Flowers</strong> are the reproductive organs. The <strong>root system</strong> anchors the plant, absorbs water and minerals, and often stores food. A <strong>taproot</strong> has one thick main root (carrot, radish, <em>labanos</em>) that reaches deep water and stores starch. <strong>Fibrous roots</strong> are many thin roots (rice, grasses, corn) that hold soil well — useful against erosion. Tiny <strong>root hairs</strong> greatly increase the absorbing surface.</p><p>The two systems are linked by vascular tissue. <strong>Xylem</strong> carries water and minerals <em>upward</em> from roots to leaves. There is no pump: as water evaporates from leaves (<strong>transpiration</strong>), it pulls the next water molecules up, like sipping through a straw. <strong>Phloem</strong> carries sugars from where they are made or stored (sources, such as leaves) to where they are needed (sinks, such as roots, fruits and growing tips) — so it can flow up or down.</p><p>Leaves must balance two needs: letting CO₂ in and keeping water from escaping. A waxy <strong>cuticle</strong> reduces water loss, while <strong>stomata</strong>, each controlled by two guard cells, open to let CO₂ in and O₂ and water vapor out. On a hot, dry afternoon, stomata close to save water — even though this slows photosynthesis.</p><p><strong>Common mistake:</strong> \"phloem carries food down only.\" Phloem moves sugars wherever they are needed, including up to new leaves and fruits.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "botanist",
         "badgeName": "Botanist",
         "badgeIcon": "🌿",
         "pairs": [
-          { "key": "leaf", "left": "Leaves", "right": "Photosynthesis & gas exchange" },
-          { "key": "stem", "left": "Stems", "right": "Support & transport" },
-          { "key": "flower", "left": "Flowers", "right": "Reproduction" },
-          { "key": "tap", "left": "Taproot", "right": "One main root — e.g., carrots" },
-          { "key": "fib", "left": "Fibrous roots", "right": "Many thin roots — e.g., grasses" },
-          { "key": "xyl", "left": "Xylem", "right": "Transports water upward" },
-          { "key": "phl", "left": "Phloem", "right": "Transports sugars both ways" },
-          { "key": "sto", "left": "Stomata", "right": "Pores for gas exchange" }
+          {
+            "key": "leaf",
+            "left": "Leaves",
+            "right": "Photosynthesis & gas exchange",
+            "why": "Leaves are the main site of photosynthesis and gas exchange."
+          },
+          {
+            "key": "stem",
+            "left": "Stems",
+            "right": "Support & transport",
+            "why": "Stems support the plant and carry materials between roots and shoots."
+          },
+          {
+            "key": "flower",
+            "left": "Flowers",
+            "right": "Reproduction",
+            "why": "Flowers contain the plant's reproductive organs."
+          },
+          {
+            "key": "tap",
+            "left": "Taproot",
+            "right": "One main root — e.g., carrots",
+            "why": "A taproot has one main thick root, as in carrots."
+          },
+          {
+            "key": "fib",
+            "left": "Fibrous roots",
+            "right": "Many thin roots — e.g., grasses",
+            "why": "Fibrous roots are many thin roots of similar size, as in grasses."
+          },
+          {
+            "key": "xyl",
+            "left": "Xylem",
+            "right": "Transports water upward",
+            "why": "Xylem moves water and minerals up from the roots."
+          },
+          {
+            "key": "phl",
+            "left": "Phloem",
+            "right": "Transports sugars both ways",
+            "why": "Phloem moves sugars from sources to sinks in either direction."
+          },
+          {
+            "key": "sto",
+            "left": "Stomata",
+            "right": "Pores for gas exchange",
+            "why": "Stomata are pores that let gases in and out."
+          }
         ]
       },
       "activity2": {
@@ -135,12 +585,114 @@
         "badgeName": "Tissue Pro",
         "badgeIcon": "🌱",
         "scenarios": [
-          { "text": "Water moves from roots to leaves on a hot day.", "choices": [ { "label": "Xylem", "correct": true }, { "label": "Phloem", "correct": false }, { "label": "Epidermis", "correct": false } ] },
-          { "text": "Sugars are transported from leaves to growing roots.", "choices": [ { "label": "Phloem", "correct": true }, { "label": "Xylem", "correct": false }, { "label": "Cuticle", "correct": false } ] },
-          { "text": "A leaf closes its pores to save water.", "choices": [ { "label": "Stomata", "correct": true }, { "label": "Cuticle", "correct": false }, { "label": "Xylem", "correct": false } ] },
-          { "text": "A waxy layer prevents water loss.", "choices": [ { "label": "Cuticle", "correct": true }, { "label": "Epidermis", "correct": false }, { "label": "Phloem", "correct": false } ] },
-          { "text": "A plant stores food in a thick underground root.", "choices": [ { "label": "Taproot", "correct": true }, { "label": "Fibrous roots", "correct": false }, { "label": "Stem", "correct": false } ] },
-          { "text": "Root hairs absorb minerals from the soil.", "choices": [ { "label": "Root system", "correct": true }, { "label": "Shoot system", "correct": false }, { "label": "Vascular system", "correct": false } ] }
+          {
+            "text": "Water moves from roots to leaves on a hot day.",
+            "choices": [
+              {
+                "label": "Xylem",
+                "correct": true
+              },
+              {
+                "label": "Phloem",
+                "correct": false
+              },
+              {
+                "label": "Epidermis",
+                "correct": false
+              }
+            ],
+            "explanation": "Water moves up through xylem."
+          },
+          {
+            "text": "Sugars are transported from leaves to growing roots.",
+            "choices": [
+              {
+                "label": "Phloem",
+                "correct": true
+              },
+              {
+                "label": "Xylem",
+                "correct": false
+              },
+              {
+                "label": "Cuticle",
+                "correct": false
+              }
+            ],
+            "explanation": "Sugars move from leaves to roots through phloem."
+          },
+          {
+            "text": "A leaf closes its pores to save water.",
+            "choices": [
+              {
+                "label": "Stomata",
+                "correct": true
+              },
+              {
+                "label": "Cuticle",
+                "correct": false
+              },
+              {
+                "label": "Xylem",
+                "correct": false
+              }
+            ],
+            "explanation": "Closing stomata reduces water loss."
+          },
+          {
+            "text": "A waxy layer prevents water loss.",
+            "choices": [
+              {
+                "label": "Cuticle",
+                "correct": true
+              },
+              {
+                "label": "Epidermis",
+                "correct": false
+              },
+              {
+                "label": "Phloem",
+                "correct": false
+              }
+            ],
+            "explanation": "The waxy cuticle prevents water loss."
+          },
+          {
+            "text": "A plant stores food in a thick underground root.",
+            "choices": [
+              {
+                "label": "Taproot",
+                "correct": true
+              },
+              {
+                "label": "Fibrous roots",
+                "correct": false
+              },
+              {
+                "label": "Stem",
+                "correct": false
+              }
+            ],
+            "explanation": "A thick storage root is a taproot."
+          },
+          {
+            "text": "Root hairs absorb minerals from the soil.",
+            "choices": [
+              {
+                "label": "Root system",
+                "correct": true
+              },
+              {
+                "label": "Shoot system",
+                "correct": false
+              },
+              {
+                "label": "Vascular system",
+                "correct": false
+              }
+            ],
+            "explanation": "Root hairs belong to the root system and absorb minerals."
+          }
         ]
       },
       "formative": {
@@ -149,9 +701,72 @@
         "badgeIcon": "🌳",
         "lives": 3,
         "questions": [
-          { "text": "Which tissue transports water and minerals upward in plants?", "choices": [ { "label": "Phloem", "correct": false }, { "label": "Xylem", "correct": true }, { "label": "Epidermis", "correct": false }, { "label": "Cambium", "correct": false } ] },
-          { "text": "What is the primary function of stomata?", "choices": [ { "label": "Transport water", "correct": false }, { "label": "Store food", "correct": false }, { "label": "Gas exchange and water regulation", "correct": true }, { "label": "Reproduction", "correct": false } ] },
-          { "text": "Which structure increases surface area for water absorption?", "choices": [ { "label": "Cuticle", "correct": false }, { "label": "Root hairs", "correct": true }, { "label": "Stomata", "correct": false }, { "label": "Phloem", "correct": false } ] }
+          {
+            "text": "Which tissue transports water and minerals upward in plants?",
+            "choices": [
+              {
+                "label": "Phloem",
+                "correct": false
+              },
+              {
+                "label": "Xylem",
+                "correct": true
+              },
+              {
+                "label": "Epidermis",
+                "correct": false
+              },
+              {
+                "label": "Cambium",
+                "correct": false
+              }
+            ],
+            "explanation": "Xylem carries water and minerals upward."
+          },
+          {
+            "text": "What is the primary function of stomata?",
+            "choices": [
+              {
+                "label": "Transport water",
+                "correct": false
+              },
+              {
+                "label": "Store food",
+                "correct": false
+              },
+              {
+                "label": "Gas exchange",
+                "correct": true
+              },
+              {
+                "label": "Reproduction",
+                "correct": false
+              }
+            ],
+            "explanation": "Stomata allow gas exchange and control water loss."
+          },
+          {
+            "text": "Which structure increases surface area for water absorption?",
+            "choices": [
+              {
+                "label": "Cuticle",
+                "correct": false
+              },
+              {
+                "label": "Root hairs",
+                "correct": true
+              },
+              {
+                "label": "Stomata",
+                "correct": false
+              },
+              {
+                "label": "Phloem",
+                "correct": false
+              }
+            ],
+            "explanation": "Root hairs increase the surface area for absorbing water."
+          }
         ]
       },
       "takeaways": [
@@ -165,19 +780,49 @@
       "n": 4,
       "title": "Comparative Processes — Reproduction, Nutrition, Gas Exchange",
       "competency": "STEM_BIO11/12-IVa-h-1",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compare reproduction strategies in plants and animals.</li><li>Compare nutrition modes in plants and animals.</li><li>Compare gas exchange mechanisms.</li><li>Explain how each adaptation supports survival.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Sexual vs asexual reproduction</strong> — genetic variation vs rapid multiplication.</li><li><strong>Autotroph vs heterotroph</strong> — make own food vs consume others.</li><li><strong>Diffusion surface</strong> — thin, moist, large surface for gas exchange.</li></ul><h3>📚 Lesson Content</h3><h4>A. Reproduction</h4><table><thead><tr><th>Aspect</th><th>Animals</th><th>Plants</th></tr></thead><tbody><tr><td>Sexual</td><td>Gametes → zygote</td><td>Pollination → seed</td></tr><tr><td>Asexual</td><td>Budding, fragmentation</td><td>Runners, tubers, bulbs</td></tr><tr><td>Advantage of sexual</td><td colspan=\"2\">Genetic diversity → adaptation</td></tr><tr><td>Advantage of asexual</td><td colspan=\"2\">Fast, no mate required</td></tr></tbody></table><h4>B. Nutrition</h4><table><thead><tr><th>Aspect</th><th>Animals</th><th>Plants</th></tr></thead><tbody><tr><td>Mode</td><td>Heterotrophic</td><td>Autotrophic</td></tr><tr><td>Source of carbon</td><td>Organic food</td><td>CO₂ from air</td></tr><tr><td>Energy source</td><td>Chemical energy</td><td>Light energy</td></tr><tr><td>Key structures</td><td>Mouth, digestive system</td><td>Leaves, chloroplasts, roots</td></tr></tbody></table><h4>C. Gas Exchange</h4><table><thead><tr><th>Aspect</th><th>Animals</th><th>Plants</th></tr></thead><tbody><tr><td>Organs</td><td>Lungs, gills, skin</td><td>Stomata, lenticels</td></tr><tr><td>O₂ intake</td><td>Active (breathing)</td><td>Passive (diffusion)</td></tr><tr><td>CO₂ release</td><td>Exhale</td><td>Diffuse through stomata</td></tr></tbody></table><h4>D. Why These Differences?</h4><ul><li>Animals are motile → need active systems.</li><li>Plants are sessile → rely on diffusion and environment.</li><li>Each group's structures reflect its environmental niche.</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compare reproduction strategies in plants and animals.</li><li>Compare nutrition modes in plants and animals.</li><li>Compare gas exchange mechanisms.</li><li>Explain how each adaptation supports survival.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Sexual vs asexual reproduction</strong> — genetic variation vs rapid multiplication.</li><li><strong>Autotroph vs heterotroph</strong> — make own food vs consume others.</li><li><strong>Diffusion surface</strong> — thin, moist, large surface for gas exchange.</li></ul><h3>📚 Lesson Content</h3><h4>A. Reproduction</h4><table><thead><tr><th>Aspect</th><th>Animals</th><th>Plants</th></tr></thead><tbody><tr><td>Sexual</td><td>Gametes → zygote</td><td>Pollination → seed</td></tr><tr><td>Asexual</td><td>Budding, fragmentation</td><td>Runners, tubers, bulbs</td></tr><tr><td>Advantage of sexual</td><td colspan=\"2\">Genetic diversity → adaptation</td></tr><tr><td>Advantage of asexual</td><td colspan=\"2\">Fast, no mate required</td></tr></tbody></table><h4>B. Nutrition</h4><table><thead><tr><th>Aspect</th><th>Animals</th><th>Plants</th></tr></thead><tbody><tr><td>Mode</td><td>Heterotrophic</td><td>Autotrophic</td></tr><tr><td>Source of carbon</td><td>Organic food</td><td>CO₂ from air</td></tr><tr><td>Energy source</td><td>Chemical energy</td><td>Light energy</td></tr><tr><td>Key structures</td><td>Mouth, digestive system</td><td>Leaves, chloroplasts, roots</td></tr></tbody></table><h4>C. Gas Exchange</h4><table><thead><tr><th>Aspect</th><th>Animals</th><th>Plants</th></tr></thead><tbody><tr><td>Organs</td><td>Lungs, gills, skin</td><td>Stomata, lenticels</td></tr><tr><td>O₂ intake</td><td>Active (breathing)</td><td>Passive (diffusion)</td></tr><tr><td>CO₂ release</td><td>Exhale</td><td>Diffuse through stomata</td></tr></tbody></table><h4>D. Why These Differences?</h4><ul><li>Animals are motile → need active systems.</li><li>Plants are sessile → rely on diffusion and environment.</li><li>Each group's structures reflect its environmental niche.</li></ul><h3>💬 Let's Discuss</h3><p>Plants and animals solve the same three problems — <strong>getting nutrients</strong>, <strong>exchanging gases</strong> and <strong>reproducing</strong> — in different but comparable ways. Comparing them helps you remember both.</p><p><strong>Nutrition.</strong> Plants are <strong>autotrophs</strong>: they make their own sugar by photosynthesis and absorb minerals from soil through roots. Animals are <strong>heterotrophs</strong>: they ingest other organisms and digest them into small molecules that can be absorbed. Both then use those molecules for energy and growth.</p><p><strong>Gas exchange.</strong> Both rely on <strong>diffusion</strong> across moist, thin surfaces. Animals usually ventilate actively: fish push water over <strong>gills</strong>; mammals breathe air into <strong>lungs</strong>, where alveoli give a huge surface. Blood with <strong>hemoglobin</strong> then carries O₂. Plants have no breathing movements; gases diffuse through <strong>stomata</strong> into air spaces inside the leaf, and no special carrier is needed.</p><p><strong>Reproduction.</strong> Both can reproduce <strong>sexually</strong>, combining gametes to create genetic diversity. In flowering plants, <strong>pollination</strong> transfers pollen to the stigma, followed by fertilization and the formation of seeds and fruit. In mammals, internal fertilization is followed by development in the uterus, where the <strong>placenta</strong> nourishes the embryo. Both can also reproduce <strong>asexually</strong>: plants by runners, cuttings or tubers (sweet potato, banana suckers), and some animals by budding (hydra) or fragmentation (starfish). Asexual reproduction is fast but produces identical offspring.</p><p><strong>Common mistake:</strong> \"Only plants reproduce asexually.\" Many animals do too, and most plants also reproduce sexually through flowers.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "comparative-pro",
         "badgeName": "Comparative Pro",
         "badgeIcon": "⚖️",
         "pairs": [
-          { "key": "poll", "left": "Pollination", "right": "Plants — transfer of pollen" },
-          { "key": "plac", "left": "Placenta", "right": "Animals — nourishes embryo" },
-          { "key": "photo", "left": "Photosynthesis", "right": "Plants — uses sunlight" },
-          { "key": "digest", "left": "Digestion", "right": "Animals — breaks down food" },
-          { "key": "stomata", "left": "Stomata", "right": "Plants — gas exchange pores" },
-          { "key": "alveoli", "left": "Alveoli", "right": "Animals — gas exchange sacs" }
+          {
+            "key": "poll",
+            "left": "Pollination",
+            "right": "Plants — transfer of pollen",
+            "why": "Pollination moves pollen to the stigma so fertilization can occur in plants."
+          },
+          {
+            "key": "plac",
+            "left": "Placenta",
+            "right": "Animals — nourishes embryo",
+            "why": "The placenta connects mother and embryo in mammals to supply nutrients."
+          },
+          {
+            "key": "photo",
+            "left": "Photosynthesis",
+            "right": "Plants — uses sunlight",
+            "why": "Photosynthesis is how plants make their own food from sunlight."
+          },
+          {
+            "key": "digest",
+            "left": "Digestion",
+            "right": "Animals — breaks down food",
+            "why": "Digestion breaks food down so animals can absorb nutrients."
+          },
+          {
+            "key": "stomata",
+            "left": "Stomata",
+            "right": "Plants — gas exchange pores",
+            "why": "Plants exchange gases through stomata."
+          },
+          {
+            "key": "alveoli",
+            "left": "Alveoli",
+            "right": "Animals — gas exchange sacs",
+            "why": "Animals exchange gases in alveoli of the lungs."
+          }
         ]
       },
       "activity2": {
@@ -186,12 +831,114 @@
         "badgeName": "Dual Master",
         "badgeIcon": "🌍",
         "scenarios": [
-          { "text": "Produces seeds after pollination.", "choices": [ { "label": "🌱 Plant", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Uses hemoglobin to carry oxygen in blood.", "choices": [ { "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": true }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Absorbs CO₂ through stomata.", "choices": [ { "label": "🌱 Plant", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Uses gills or lungs for gas exchange.", "choices": [ { "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": true }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Has an autotrophic mode of nutrition.", "choices": [ { "label": "🌱 Plant", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false } ] },
-          { "text": "Can reproduce asexually.", "choices": [ { "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": true } ] }
+          {
+            "text": "Produces seeds after pollination.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Seeds form after pollination in flowering plants."
+          },
+          {
+            "text": "Uses hemoglobin to carry oxygen in blood.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": true
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Hemoglobin in blood is an animal feature."
+          },
+          {
+            "text": "Absorbs CO₂ through stomata.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "CO₂ enters plants through stomata."
+          },
+          {
+            "text": "Uses gills or lungs for gas exchange.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": true
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Gills and lungs are animal gas-exchange organs."
+          },
+          {
+            "text": "Has an autotrophic mode of nutrition.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Autotrophic nutrition (making food) is a plant feature."
+          },
+          {
+            "text": "Can reproduce asexually.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": true
+              }
+            ],
+            "explanation": "Both plants (cuttings, runners) and animals (budding) can reproduce asexually."
+          }
         ]
       },
       "formative": {
@@ -200,9 +947,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "Which statement correctly compares nutrition in plants and animals?", "choices": [ { "label": "Both are autotrophic", "correct": false }, { "label": "Plants are autotrophic; animals are heterotrophic", "correct": true }, { "label": "Plants are heterotrophic; animals are autotrophic", "correct": false }, { "label": "Both are heterotrophic", "correct": false } ] },
-          { "text": "How does gas exchange differ between plants and animals?", "choices": [ { "label": "Both use active breathing", "correct": false }, { "label": "Animals use active breathing via lungs/gills; plants use passive diffusion through stomata", "correct": true }, { "label": "Plants use lungs; animals use stomata", "correct": false }, { "label": "Neither requires gas exchange", "correct": false } ] },
-          { "text": "Which mode of reproduction provides genetic diversity in both plants and animals?", "choices": [ { "label": "Asexual", "correct": false }, { "label": "Sexual", "correct": true }, { "label": "Budding", "correct": false }, { "label": "Fragmentation", "correct": false } ] }
+          {
+            "text": "Which statement correctly compares nutrition in plants and animals?",
+            "choices": [
+              {
+                "label": "Both are autotrophic",
+                "correct": false
+              },
+              {
+                "label": "Plants are autotrophic; animals are heterotrophic",
+                "correct": true
+              },
+              {
+                "label": "Plants are heterotrophic; animals are autotrophic",
+                "correct": false
+              },
+              {
+                "label": "Both are heterotrophic",
+                "correct": false
+              }
+            ],
+            "explanation": "Plants make their own food (autotrophs); animals must eat (heterotrophs)."
+          },
+          {
+            "text": "How does gas exchange differ between plants and animals?",
+            "choices": [
+              {
+                "label": "Both breathe actively using lungs or gills",
+                "correct": false
+              },
+              {
+                "label": "Animals ventilate lungs or gills; plants use stomata",
+                "correct": true
+              },
+              {
+                "label": "Plants use lungs and animals use stomata",
+                "correct": false
+              },
+              {
+                "label": "Neither needs gas exchange to stay alive",
+                "correct": false
+              }
+            ],
+            "explanation": "Animals breathe actively with lungs or gills; plants rely on passive diffusion through stomata."
+          },
+          {
+            "text": "Which mode of reproduction provides genetic diversity in both plants and animals?",
+            "choices": [
+              {
+                "label": "Asexual",
+                "correct": false
+              },
+              {
+                "label": "Sexual",
+                "correct": true
+              },
+              {
+                "label": "Budding",
+                "correct": false
+              },
+              {
+                "label": "Fragmentation",
+                "correct": false
+              }
+            ],
+            "explanation": "Sexual reproduction combines genes from two parents, giving diversity."
+          }
         ]
       },
       "takeaways": [

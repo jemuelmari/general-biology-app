@@ -6,20 +6,55 @@
       "n": 1,
       "title": "Enzyme Structure & Components",
       "competency": "STEM_BIO11/12-II-i-j-17",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define enzymes and their biological role.</li><li>Describe the components of an enzyme.</li><li>Explain the lock-and-key and induced fit models.</li><li>Identify the active site and substrate.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Enzyme</strong> — a biological catalyst, usually a protein.</li><li><strong>Substrate</strong> — the molecule an enzyme acts on.</li><li><strong>Active site</strong> — the region where the substrate binds.</li><li><strong>Cofactor</strong> — non-protein helper (e.g., metal ions).</li><li><strong>Coenzyme</strong> — organic helper (e.g., NAD⁺, FAD).</li></ul><h3>📚 Lesson Content</h3><h4>A. What Is an Enzyme?</h4><p>Enzymes are proteins that speed up chemical reactions by lowering activation energy. They are not consumed in the reaction.</p><h4>B. Components of an Enzyme</h4><table><thead><tr><th>Component</th><th>Description</th></tr></thead><tbody><tr><td>Apoenzyme</td><td>Protein portion</td></tr><tr><td>Cofactor</td><td>Non-protein helper (metal ions: Zn²⁺, Mg²⁺)</td></tr><tr><td>Coenzyme</td><td>Organic helper (NAD⁺, FAD, CoA)</td></tr><tr><td>Holoenzyme</td><td>Apoenzyme + cofactor/coenzyme</td></tr><tr><td>Active site</td><td>Where substrate binds</td></tr></tbody></table><h4>C. Models of Enzyme Action</h4><ul><li><strong>Lock-and-key</strong> — active site fits substrate exactly.</li><li><strong>Induced fit</strong> — active site adjusts to fit substrate better.</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define enzymes and their biological role.</li><li>Describe the components of an enzyme.</li><li>Explain the lock-and-key and induced fit models.</li><li>Identify the active site and substrate.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Enzyme</strong> — a biological catalyst, usually a protein.</li><li><strong>Substrate</strong> — the molecule an enzyme acts on.</li><li><strong>Active site</strong> — the region where the substrate binds.</li><li><strong>Cofactor</strong> — non-protein helper (e.g., metal ions).</li><li><strong>Coenzyme</strong> — organic helper (e.g., NAD⁺, FAD).</li></ul><h3>📚 Lesson Content</h3><h4>A. What Is an Enzyme?</h4><p>Enzymes are proteins that speed up chemical reactions by lowering activation energy. They are not consumed in the reaction.</p><h4>B. Components of an Enzyme</h4><table><thead><tr><th>Component</th><th>Description</th></tr></thead><tbody><tr><td>Apoenzyme</td><td>Protein portion</td></tr><tr><td>Cofactor</td><td>Non-protein helper (metal ions: Zn²⁺, Mg²⁺)</td></tr><tr><td>Coenzyme</td><td>Organic helper (NAD⁺, FAD, CoA)</td></tr><tr><td>Holoenzyme</td><td>Apoenzyme + cofactor/coenzyme</td></tr><tr><td>Active site</td><td>Where substrate binds</td></tr></tbody></table><h4>C. Models of Enzyme Action</h4><ul><li><strong>Lock-and-key</strong> — active site fits substrate exactly.</li><li><strong>Induced fit</strong> — active site adjusts to fit substrate better.</li></ul><h3>💬 Let's Discuss</h3><p>Many reactions in your body would take years to happen on their own at body temperature. <strong>Enzymes</strong> make them happen in fractions of a second. An enzyme is a <strong>biological catalyst</strong>: it speeds up a reaction without being used up, so one enzyme molecule can work on thousands of molecules per second. Most enzymes are proteins, and many have names ending in <em>-ase</em> (lactase, amylase, protease).</p><p>The molecule an enzyme acts on is its <strong>substrate</strong>. The substrate fits into a pocket on the enzyme called the <strong>active site</strong>, forming an <em>enzyme–substrate complex</em>; the reaction occurs; the products leave; and the enzyme is free to work again. The older <strong>lock-and-key model</strong> said the active site is a rigid, exact fit. The <strong>induced-fit model</strong>, now accepted, says the active site is flexible and molds itself around the substrate as it binds, like a glove tightening around a hand. This explains why enzymes are <strong>specific</strong>: lactase breaks lactose but not sucrose.</p><p>Some enzymes need helpers. The protein part alone is the <strong>apoenzyme</strong> — inactive. When it joins its non-protein helper, it becomes the active <strong>holoenzyme</strong>. Inorganic helpers such as Zn²⁺, Mg²⁺ and Fe²⁺ are called <strong>cofactors</strong>; organic helpers, often made from vitamins, are <strong>coenzymes</strong> — for example NAD⁺ (from niacin) and FAD (from riboflavin). This is one reason vitamins and minerals are needed in small amounts.</p><p><strong>Common mistake:</strong> mixing up the enzyme and the substrate. In \"lactase digests lactose,\" lactase (ends in -ase) is the enzyme and lactose is the substrate. People who are lactose intolerant make too little lactase.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "enzyme-master",
         "badgeName": "Enzyme Master",
         "badgeIcon": "🧪",
         "pairs": [
-          { "key": "enz", "left": "Enzyme", "right": "Biological catalyst" },
-          { "key": "sub", "left": "Substrate", "right": "Molecule acted upon" },
-          { "key": "as", "left": "Active site", "right": "Where substrate binds" },
-          { "key": "apo", "left": "Apoenzyme", "right": "Protein portion" },
-          { "key": "cof", "left": "Cofactor", "right": "Non-protein helper (metal ion)" },
-          { "key": "coe", "left": "Coenzyme", "right": "Organic helper (NAD⁺)" },
-          { "key": "holo", "left": "Holoenzyme", "right": "Complete active enzyme" }
+          {
+            "key": "enz",
+            "left": "Enzyme",
+            "right": "Biological catalyst",
+            "why": "An enzyme is a protein catalyst that speeds up reactions without being used up."
+          },
+          {
+            "key": "sub",
+            "left": "Substrate",
+            "right": "Molecule acted upon",
+            "why": "The substrate is the molecule the enzyme acts on."
+          },
+          {
+            "key": "as",
+            "left": "Active site",
+            "right": "Where substrate binds",
+            "why": "The active site is the pocket where the substrate binds."
+          },
+          {
+            "key": "apo",
+            "left": "Apoenzyme",
+            "right": "Protein portion",
+            "why": "The apoenzyme is the protein portion alone."
+          },
+          {
+            "key": "cof",
+            "left": "Cofactor",
+            "right": "Non-protein helper (metal ion)",
+            "why": "A cofactor is an inorganic helper such as a metal ion."
+          },
+          {
+            "key": "coe",
+            "left": "Coenzyme",
+            "right": "Organic helper (NAD⁺)",
+            "why": "A coenzyme is an organic helper, often derived from a vitamin."
+          },
+          {
+            "key": "holo",
+            "left": "Holoenzyme",
+            "right": "Complete active enzyme",
+            "why": "Apoenzyme + helper = the complete, active holoenzyme."
+          }
         ]
       },
       "activity2": {
@@ -28,12 +63,114 @@
         "badgeName": "Enzyme Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Lactase breaks down lactose.", "choices": [{ "label": "Substrate = lactose ✓", "correct": true }, { "label": "Substrate = lactase", "correct": false }, { "label": "Substrate = glucose", "correct": false }] },
-          { "text": "Where does the substrate bind?", "choices": [{ "label": "Active site ✓", "correct": true }, { "label": "Nucleus", "correct": false }, { "label": "Ribosome", "correct": false }] },
-          { "text": "Zinc is required for an enzyme to work.", "choices": [{ "label": "Zinc is a cofactor ✓", "correct": true }, { "label": "Zinc is a substrate", "correct": false }, { "label": "Zinc is an inhibitor", "correct": false }] },
-          { "text": "NAD⁺ assists an enzyme.", "choices": [{ "label": "NAD⁺ is a coenzyme ✓", "correct": true }, { "label": "NAD⁺ is a cofactor", "correct": false }, { "label": "NAD⁺ is a substrate", "correct": false }] },
-          { "text": "Active site adjusts shape after substrate binds.", "choices": [{ "label": "Induced fit ✓", "correct": true }, { "label": "Lock-and-key", "correct": false }, { "label": "Denaturation", "correct": false }] },
-          { "text": "Enzymes lower the:", "choices": [{ "label": "Activation energy ✓", "correct": true }, { "label": "Product concentration", "correct": false }, { "label": "Reaction temperature", "correct": false }] }
+          {
+            "text": "Lactase breaks down lactose.",
+            "choices": [
+              {
+                "label": "Substrate = lactose",
+                "correct": true
+              },
+              {
+                "label": "Substrate = lactase",
+                "correct": false
+              },
+              {
+                "label": "Substrate = glucose",
+                "correct": false
+              }
+            ],
+            "explanation": "Lactose is the molecule being broken down, so it is the substrate."
+          },
+          {
+            "text": "Where does the substrate bind?",
+            "choices": [
+              {
+                "label": "Active site",
+                "correct": true
+              },
+              {
+                "label": "Nucleus",
+                "correct": false
+              },
+              {
+                "label": "Ribosome",
+                "correct": false
+              }
+            ],
+            "explanation": "Substrates bind at the active site."
+          },
+          {
+            "text": "Zinc is required for an enzyme to work.",
+            "choices": [
+              {
+                "label": "Zinc is a cofactor",
+                "correct": true
+              },
+              {
+                "label": "Zinc is a substrate",
+                "correct": false
+              },
+              {
+                "label": "Zinc is an inhibitor",
+                "correct": false
+              }
+            ],
+            "explanation": "Zinc is an inorganic helper — a cofactor."
+          },
+          {
+            "text": "NAD⁺ assists an enzyme.",
+            "choices": [
+              {
+                "label": "NAD⁺ is a coenzyme",
+                "correct": true
+              },
+              {
+                "label": "NAD⁺ is a cofactor",
+                "correct": false
+              },
+              {
+                "label": "NAD⁺ is a substrate",
+                "correct": false
+              }
+            ],
+            "explanation": "NAD⁺ is an organic helper — a coenzyme."
+          },
+          {
+            "text": "Active site adjusts shape after substrate binds.",
+            "choices": [
+              {
+                "label": "Induced fit",
+                "correct": true
+              },
+              {
+                "label": "Lock-and-key",
+                "correct": false
+              },
+              {
+                "label": "Denaturation",
+                "correct": false
+              }
+            ],
+            "explanation": "The active site changing shape as substrate binds is induced fit."
+          },
+          {
+            "text": "Enzymes lower the:",
+            "choices": [
+              {
+                "label": "Activation energy",
+                "correct": true
+              },
+              {
+                "label": "Product concentration",
+                "correct": false
+              },
+              {
+                "label": "Reaction temperature",
+                "correct": false
+              }
+            ],
+            "explanation": "Enzymes speed reactions by lowering activation energy."
+          }
         ]
       },
       "formative": {
@@ -42,9 +179,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "What is the protein portion of an enzyme called?", "choices": [{ "label": "Cofactor", "correct": false }, { "label": "Apoenzyme", "correct": true }, { "label": "Holoenzyme", "correct": false }, { "label": "Substrate", "correct": false }] },
-          { "text": "Which model describes the active site changing shape to fit the substrate?", "choices": [{ "label": "Lock-and-key", "correct": false }, { "label": "Induced fit", "correct": true }, { "label": "Fluid mosaic", "correct": false }, { "label": "Sandwich", "correct": false }] },
-          { "text": "Which of the following is a coenzyme?", "choices": [{ "label": "Zn²⁺", "correct": false }, { "label": "NAD⁺", "correct": true }, { "label": "Mg²⁺", "correct": false }, { "label": "Fe³⁺", "correct": false }] }
+          {
+            "text": "What is the protein portion of an enzyme called?",
+            "choices": [
+              {
+                "label": "Cofactor",
+                "correct": false
+              },
+              {
+                "label": "Apoenzyme",
+                "correct": true
+              },
+              {
+                "label": "Holoenzyme",
+                "correct": false
+              },
+              {
+                "label": "Substrate",
+                "correct": false
+              }
+            ],
+            "explanation": "The protein part of an enzyme is the apoenzyme."
+          },
+          {
+            "text": "Which model describes the active site changing shape to fit the substrate?",
+            "choices": [
+              {
+                "label": "Lock-and-key",
+                "correct": false
+              },
+              {
+                "label": "Induced fit",
+                "correct": true
+              },
+              {
+                "label": "Fluid mosaic",
+                "correct": false
+              },
+              {
+                "label": "Sandwich",
+                "correct": false
+              }
+            ],
+            "explanation": "In the induced-fit model, the active site adjusts to the substrate."
+          },
+          {
+            "text": "Which of the following is a coenzyme?",
+            "choices": [
+              {
+                "label": "Zn²⁺",
+                "correct": false
+              },
+              {
+                "label": "NAD⁺",
+                "correct": true
+              },
+              {
+                "label": "Mg²⁺",
+                "correct": false
+              },
+              {
+                "label": "Fe³⁺",
+                "correct": false
+              }
+            ],
+            "explanation": "NAD⁺ is organic (a coenzyme); the metal ions are cofactors."
+          }
         ]
       },
       "takeaways": [
@@ -58,19 +258,49 @@
       "n": 2,
       "title": "Enzyme Function & Factors Affecting Activity",
       "competency": "STEM_BIO11/12-II-i-j-17",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain how enzymes catalyze reactions.</li><li>Describe factors affecting enzyme activity.</li><li>Explain denaturation.</li><li>Interpret enzyme activity graphs.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Activation energy</strong> — energy needed to start a reaction.</li><li><strong>Denaturation</strong> — loss of enzyme shape and function.</li><li><strong>Optimal pH/temperature</strong> — conditions where enzyme works best.</li><li><strong>Inhibitor</strong> — molecule that slows/prevents enzyme action.</li></ul><h3>📚 Lesson Content</h3><h4>A. How Enzymes Work</h4><p>Enzymes lower activation energy by bringing substrates together in the correct orientation. The enzyme is not consumed.</p><h4>B. Factors Affecting Enzyme Activity</h4><table><thead><tr><th>Factor</th><th>Effect</th></tr></thead><tbody><tr><td>Temperature</td><td>Activity increases until optimum, then denatures</td></tr><tr><td>pH</td><td>Each enzyme has an optimal pH</td></tr><tr><td>Substrate concentration</td><td>Rate increases until saturation</td></tr><tr><td>Enzyme concentration</td><td>Rate increases with more enzyme</td></tr><tr><td>Inhibitors</td><td>Reduce or block activity</td></tr></tbody></table><h4>C. Types of Inhibition</h4><ul><li><strong>Competitive</strong> — inhibitor binds active site</li><li><strong>Non-competitive</strong> — inhibitor binds elsewhere, changes shape</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain how enzymes catalyze reactions.</li><li>Describe factors affecting enzyme activity.</li><li>Explain denaturation.</li><li>Interpret enzyme activity graphs.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Activation energy</strong> — energy needed to start a reaction.</li><li><strong>Denaturation</strong> — loss of enzyme shape and function.</li><li><strong>Optimal pH/temperature</strong> — conditions where enzyme works best.</li><li><strong>Inhibitor</strong> — molecule that slows/prevents enzyme action.</li></ul><h3>📚 Lesson Content</h3><h4>A. How Enzymes Work</h4><p>Enzymes lower activation energy by bringing substrates together in the correct orientation. The enzyme is not consumed.</p><h4>B. Factors Affecting Enzyme Activity</h4><table><thead><tr><th>Factor</th><th>Effect</th></tr></thead><tbody><tr><td>Temperature</td><td>Activity increases until optimum, then denatures</td></tr><tr><td>pH</td><td>Each enzyme has an optimal pH</td></tr><tr><td>Substrate concentration</td><td>Rate increases until saturation</td></tr><tr><td>Enzyme concentration</td><td>Rate increases with more enzyme</td></tr><tr><td>Inhibitors</td><td>Reduce or block activity</td></tr></tbody></table><h4>C. Types of Inhibition</h4><ul><li><strong>Competitive</strong> — inhibitor binds active site</li><li><strong>Non-competitive</strong> — inhibitor binds elsewhere, changes shape</li></ul><h3>💬 Let's Discuss</h3><p>Every reaction needs a small push to get started, called the <strong>activation energy</strong> — like the push needed to roll a boulder over a small hill before it can roll downhill. Enzymes <strong>lower the activation energy</strong> by holding substrates in the best position and straining their bonds. They do <em>not</em> change how much energy the reaction releases.</p><p>Because enzymes depend on shape, anything that changes shape changes activity. <strong>Temperature:</strong> warming increases collisions, so activity rises up to the <em>optimum</em> (about 37 °C for human enzymes). Beyond that, bonds holding the enzyme's shape break, the active site is destroyed, and activity drops sharply — the enzyme is <strong>denatured</strong>. This is why very high fever is dangerous. <strong>pH:</strong> each enzyme has an optimum pH. Pepsin in the acidic stomach works best at pH 2; trypsin in the small intestine works best near pH 8. <strong>Substrate concentration:</strong> more substrate increases the rate until all active sites are busy. At that point the enzyme is <strong>saturated</strong>, and adding more substrate does not help — like a jeepney that is already full.</p><p><strong>Inhibitors</strong> slow enzymes. A <strong>competitive inhibitor</strong> resembles the substrate and occupies the active site; adding more substrate can outcompete it. A <strong>non-competitive inhibitor</strong> binds somewhere else (an allosteric site) and changes the enzyme's shape, so more substrate does not help. Many drugs and poisons are inhibitors: some antibiotics block bacterial enzymes, and certain pesticides block an enzyme in nerve cells.</p><p><strong>Common mistake:</strong> saying cold temperatures denature enzymes. Cold only slows them; they recover when warmed.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "activity-master",
         "badgeName": "Activity Master",
         "badgeIcon": "📈",
         "pairs": [
-          { "key": "ae", "left": "Activation energy", "right": "Energy needed to start reaction" },
-          { "key": "denat", "left": "Denaturation", "right": "Loss of enzyme shape" },
-          { "key": "opt", "left": "Optimal pH", "right": "pH where enzyme is most active" },
-          { "key": "comp", "left": "Competitive inhibitor", "right": "Binds the active site" },
-          { "key": "non", "left": "Non-competitive inhibitor", "right": "Binds elsewhere, changes shape" },
-          { "key": "sat", "left": "Saturation", "right": "All active sites occupied" }
+          {
+            "key": "ae",
+            "left": "Activation energy",
+            "right": "Energy needed to start reaction",
+            "why": "Activation energy is the energy needed to start a reaction."
+          },
+          {
+            "key": "denat",
+            "left": "Denaturation",
+            "right": "Loss of enzyme shape",
+            "why": "Denaturation is the loss of an enzyme's shape, so its active site fails."
+          },
+          {
+            "key": "opt",
+            "left": "Optimal pH",
+            "right": "pH where enzyme is most active",
+            "why": "Each enzyme works fastest at its optimal pH."
+          },
+          {
+            "key": "comp",
+            "left": "Competitive inhibitor",
+            "right": "Binds the active site",
+            "why": "A competitive inhibitor occupies the active site."
+          },
+          {
+            "key": "non",
+            "left": "Non-competitive inhibitor",
+            "right": "Binds elsewhere, changes shape",
+            "why": "A non-competitive inhibitor binds elsewhere and changes the enzyme's shape."
+          },
+          {
+            "key": "sat",
+            "left": "Saturation",
+            "right": "All active sites occupied",
+            "why": "Saturation means every active site is already occupied."
+          }
         ]
       },
       "activity2": {
@@ -79,12 +309,114 @@
         "badgeName": "Factor Pro",
         "badgeIcon": "🌡️",
         "scenarios": [
-          { "text": "Enzyme activity increases then drops sharply with temperature.", "choices": [{ "label": "Denaturation ✓", "correct": true }, { "label": "Activation", "correct": false }, { "label": "Inhibition", "correct": false }] },
-          { "text": "Stomach enzyme pepsin works best at pH 2.", "choices": [{ "label": "Optimal pH ✓", "correct": true }, { "label": "Denaturation", "correct": false }, { "label": "Saturation", "correct": false }] },
-          { "text": "Adding more substrate doesn't increase rate beyond a point.", "choices": [{ "label": "Saturation ✓", "correct": true }, { "label": "Denaturation", "correct": false }, { "label": "Inhibition", "correct": false }] },
-          { "text": "A molecule binds to the active site, blocking the substrate.", "choices": [{ "label": "Competitive inhibitor ✓", "correct": true }, { "label": "Non-competitive inhibitor", "correct": false }, { "label": "Coenzyme", "correct": false }] },
-          { "text": "A molecule binds elsewhere and changes enzyme shape.", "choices": [{ "label": "Non-competitive inhibitor ✓", "correct": true }, { "label": "Competitive inhibitor", "correct": false }, { "label": "Cofactor", "correct": false }] },
-          { "text": "Enzymes lower this to speed reactions.", "choices": [{ "label": "Activation energy ✓", "correct": true }, { "label": "Temperature", "correct": false }, { "label": "pH", "correct": false }] }
+          {
+            "text": "Enzyme activity increases then drops sharply with temperature.",
+            "choices": [
+              {
+                "label": "Denaturation",
+                "correct": true
+              },
+              {
+                "label": "Activation",
+                "correct": false
+              },
+              {
+                "label": "Inhibition",
+                "correct": false
+              }
+            ],
+            "explanation": "Activity drops sharply above the optimum because the enzyme denatures."
+          },
+          {
+            "text": "Stomach enzyme pepsin works best at pH 2.",
+            "choices": [
+              {
+                "label": "Optimal pH",
+                "correct": true
+              },
+              {
+                "label": "Denaturation",
+                "correct": false
+              },
+              {
+                "label": "Saturation",
+                "correct": false
+              }
+            ],
+            "explanation": "Pepsin's best pH, 2, is its optimal pH."
+          },
+          {
+            "text": "Adding more substrate doesn't increase rate beyond a point.",
+            "choices": [
+              {
+                "label": "Saturation",
+                "correct": true
+              },
+              {
+                "label": "Denaturation",
+                "correct": false
+              },
+              {
+                "label": "Inhibition",
+                "correct": false
+              }
+            ],
+            "explanation": "When all active sites are full, the enzyme is saturated."
+          },
+          {
+            "text": "A molecule binds to the active site, blocking the substrate.",
+            "choices": [
+              {
+                "label": "Competitive inhibitor",
+                "correct": true
+              },
+              {
+                "label": "Non-competitive inhibitor",
+                "correct": false
+              },
+              {
+                "label": "Coenzyme",
+                "correct": false
+              }
+            ],
+            "explanation": "Blocking the active site is competitive inhibition."
+          },
+          {
+            "text": "A molecule binds elsewhere and changes enzyme shape.",
+            "choices": [
+              {
+                "label": "Non-competitive inhibitor",
+                "correct": true
+              },
+              {
+                "label": "Competitive inhibitor",
+                "correct": false
+              },
+              {
+                "label": "Cofactor",
+                "correct": false
+              }
+            ],
+            "explanation": "Binding elsewhere and changing shape is non-competitive inhibition."
+          },
+          {
+            "text": "Enzymes lower this to speed reactions.",
+            "choices": [
+              {
+                "label": "Activation energy",
+                "correct": true
+              },
+              {
+                "label": "Temperature",
+                "correct": false
+              },
+              {
+                "label": "pH",
+                "correct": false
+              }
+            ],
+            "explanation": "Enzymes lower activation energy."
+          }
         ]
       },
       "formative": {
@@ -93,9 +425,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "What happens to most enzymes at very high temperatures?", "choices": [{ "label": "They speed up indefinitely", "correct": false }, { "label": "They denature", "correct": true }, { "label": "They become coenzymes", "correct": false }, { "label": "They stop being proteins", "correct": false }] },
-          { "text": "A competitive inhibitor works by:", "choices": [{ "label": "Binding the active site", "correct": true }, { "label": "Changing pH", "correct": false }, { "label": "Changing temperature", "correct": false }, { "label": "Adding coenzymes", "correct": false }] },
-          { "text": "Enzyme activity stops increasing with more substrate because:", "choices": [{ "label": "Substrate runs out", "correct": false }, { "label": "All active sites are saturated", "correct": true }, { "label": "Enzyme denatures", "correct": false }, { "label": "pH changes", "correct": false }] }
+          {
+            "text": "What happens to most enzymes at very high temperatures?",
+            "choices": [
+              {
+                "label": "They speed up indefinitely",
+                "correct": false
+              },
+              {
+                "label": "They denature",
+                "correct": true
+              },
+              {
+                "label": "They become coenzymes",
+                "correct": false
+              },
+              {
+                "label": "They stop being proteins",
+                "correct": false
+              }
+            ],
+            "explanation": "High heat breaks the bonds holding the enzyme's shape, so it denatures."
+          },
+          {
+            "text": "A competitive inhibitor works by:",
+            "choices": [
+              {
+                "label": "Binding the active site",
+                "correct": true
+              },
+              {
+                "label": "Changing pH",
+                "correct": false
+              },
+              {
+                "label": "Changing temperature",
+                "correct": false
+              },
+              {
+                "label": "Adding coenzymes",
+                "correct": false
+              }
+            ],
+            "explanation": "A competitive inhibitor binds the active site and blocks the substrate."
+          },
+          {
+            "text": "Enzyme activity stops increasing with more substrate because:",
+            "choices": [
+              {
+                "label": "The substrate runs out",
+                "correct": false
+              },
+              {
+                "label": "All active sites are full",
+                "correct": true
+              },
+              {
+                "label": "The enzyme denatures",
+                "correct": false
+              },
+              {
+                "label": "The pH changes",
+                "correct": false
+              }
+            ],
+            "explanation": "Once every active site is occupied, adding substrate cannot raise the rate."
+          }
         ]
       },
       "takeaways": [
@@ -109,19 +504,49 @@
       "n": 3,
       "title": "Oxidation & Reduction Reactions",
       "competency": "STEM_BIO11/12-II-i-j-18",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define oxidation and reduction.</li><li>Explain oxidation-reduction (redox) reactions.</li><li>Identify oxidizing and reducing agents.</li><li>Explain the role of electron carriers.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Oxidation</strong> — loss of electrons (LEO).</li><li><strong>Reduction</strong> — gain of electrons (GER).</li><li><strong>Redox reaction</strong> — coupled oxidation & reduction.</li><li><strong>Electron carrier</strong> — molecule that shuttles electrons (NAD⁺, FAD).</li></ul><h3>📚 Lesson Content</h3><h4>A. LEO GER</h4><ul><li><strong>L</strong>ose <strong>E</strong>lectrons = <strong>O</strong>xidation</li><li><strong>G</strong>ain <strong>E</strong>lectrons = <strong>R</strong>eduction</li></ul><h4>B. Redox in Biology</h4><table><thead><tr><th>Reaction</th><th>What Happens</th></tr></thead><tbody><tr><td>NAD⁺ + 2e⁻ + H⁺ → NADH</td><td>NAD⁺ is reduced (gains electrons)</td></tr><tr><td>NADH → NAD⁺ + 2e⁻ + H⁺</td><td>NADH is oxidized (loses electrons)</td></tr></tbody></table><h4>C. Electron Carriers</h4><ul><li><strong>NAD⁺/NADH</strong> — key carrier in respiration</li><li><strong>FAD/FADH₂</strong> — another carrier</li><li><strong>NADP⁺/NADPH</strong> — carrier in photosynthesis</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define oxidation and reduction.</li><li>Explain oxidation-reduction (redox) reactions.</li><li>Identify oxidizing and reducing agents.</li><li>Explain the role of electron carriers.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Oxidation</strong> — loss of electrons (LEO).</li><li><strong>Reduction</strong> — gain of electrons (GER).</li><li><strong>Redox reaction</strong> — coupled oxidation & reduction.</li><li><strong>Electron carrier</strong> — molecule that shuttles electrons (NAD⁺, FAD).</li></ul><h3>📚 Lesson Content</h3><h4>A. LEO GER</h4><ul><li><strong>L</strong>ose <strong>E</strong>lectrons = <strong>O</strong>xidation</li><li><strong>G</strong>ain <strong>E</strong>lectrons = <strong>R</strong>eduction</li></ul><h4>B. Redox in Biology</h4><table><thead><tr><th>Reaction</th><th>What Happens</th></tr></thead><tbody><tr><td>NAD⁺ + 2e⁻ + H⁺ → NADH</td><td>NAD⁺ is reduced (gains electrons)</td></tr><tr><td>NADH → NAD⁺ + 2e⁻ + H⁺</td><td>NADH is oxidized (loses electrons)</td></tr></tbody></table><h4>C. Electron Carriers</h4><ul><li><strong>NAD⁺/NADH</strong> — key carrier in respiration</li><li><strong>FAD/FADH₂</strong> — another carrier</li><li><strong>NADP⁺/NADPH</strong> — carrier in photosynthesis</li></ul><h3>💬 Let's Discuss</h3><p>Much of the energy work in living things is really the movement of <strong>electrons</strong>. When one molecule loses electrons, another must gain them. These paired reactions are called <strong>redox reactions</strong> (<em>red</em>uction + <em>ox</em>idation).</p><p><strong>Oxidation</strong> is the <em>loss</em> of electrons; <strong>reduction</strong> is the <em>gain</em> of electrons. The memory aid is <strong>LEO says GER</strong>: <em>Lose Electrons = Oxidation, Gain Electrons = Reduction</em> (or <em>OIL RIG</em>: Oxidation Is Loss, Reduction Is Gain). It may seem strange that gaining something is called \"reduction,\" but think of it as reducing the positive charge: adding a negative electron lowers it.</p><p>In biology, electrons usually travel together with hydrogen. So a molecule that <em>loses hydrogen</em> is usually being oxidized, and one that <em>gains hydrogen</em> is being reduced. Cells do not let electrons fly around freely; they use <strong>electron carriers</strong> like rechargeable batteries. <strong>NAD⁺</strong> picks up two electrons and a hydrogen ion to become <strong>NADH</strong> (reduced, \"charged\"). Later, NADH gives the electrons away and becomes NAD⁺ again (oxidized, \"empty\"). <strong>FAD</strong> becomes FADH₂ the same way. NAD⁺ and FAD work in cellular respiration; a close relative, <strong>NADP⁺/NADPH</strong>, works in photosynthesis.</p><p>The molecule that gives away electrons is the reducing agent; the one that takes them is the oxidizing agent. Oxygen is a strong electron taker, which is why it is the final electron acceptor in respiration.</p><p><strong>Common mistake:</strong> thinking oxidation always needs oxygen. It is defined by electrons, not by oxygen.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "redox-master",
         "badgeName": "Redox Master",
         "badgeIcon": "⚡",
         "pairs": [
-          { "key": "ox", "left": "Oxidation", "right": "Loss of electrons" },
-          { "key": "red", "left": "Reduction", "right": "Gain of electrons" },
-          { "key": "redox", "left": "Redox reaction", "right": "Coupled ox + red" },
-          { "key": "nadh", "left": "NAD⁺ → NADH", "right": "Reduction of NAD⁺" },
-          { "key": "nadh2", "left": "NADH → NAD⁺", "right": "Oxidation of NADH" },
-          { "key": "fad", "left": "FAD", "right": "Electron carrier in respiration" }
+          {
+            "key": "ox",
+            "left": "Oxidation",
+            "right": "Loss of electrons",
+            "why": "Oxidation means losing electrons (LEO)."
+          },
+          {
+            "key": "red",
+            "left": "Reduction",
+            "right": "Gain of electrons",
+            "why": "Reduction means gaining electrons (GER)."
+          },
+          {
+            "key": "redox",
+            "left": "Redox reaction",
+            "right": "Coupled ox + red",
+            "why": "Oxidation and reduction always occur together in a redox reaction."
+          },
+          {
+            "key": "nadh",
+            "left": "NAD⁺ → NADH",
+            "right": "Reduction of NAD⁺",
+            "why": "NAD⁺ gains electrons and H to become NADH — reduction."
+          },
+          {
+            "key": "nadh2",
+            "left": "NADH → NAD⁺",
+            "right": "Oxidation of NADH",
+            "why": "NADH gives up electrons to become NAD⁺ — oxidation."
+          },
+          {
+            "key": "fad",
+            "left": "FAD",
+            "right": "Electron carrier in respiration",
+            "why": "FAD accepts electrons in respiration and becomes FADH₂."
+          }
         ]
       },
       "activity2": {
@@ -130,12 +555,94 @@
         "badgeName": "Redox Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "A molecule loses electrons.", "choices": [{ "label": "Oxidation ✓", "correct": true }, { "label": "Reduction", "correct": false }] },
-          { "text": "A molecule gains electrons.", "choices": [{ "label": "Oxidation", "correct": false }, { "label": "Reduction ✓", "correct": true }] },
-          { "text": "NAD⁺ becomes NADH.", "choices": [{ "label": "Reduction ✓", "correct": true }, { "label": "Oxidation", "correct": false }] },
-          { "text": "NADH becomes NAD⁺.", "choices": [{ "label": "Oxidation ✓", "correct": true }, { "label": "Reduction", "correct": false }] },
-          { "text": "Photosynthesis uses this electron carrier.", "choices": [{ "label": "NADP⁺ ✓", "correct": true }, { "label": "NAD⁺", "correct": false }, { "label": "FAD", "correct": false }] },
-          { "text": "LEO GER means:", "choices": [{ "label": "Lose Electrons = Oxidation; Gain Electrons = Reduction ✓", "correct": true }, { "label": "Lose Electrons = Reduction", "correct": false }] }
+          {
+            "text": "A molecule loses electrons.",
+            "choices": [
+              {
+                "label": "Oxidation",
+                "correct": true
+              },
+              {
+                "label": "Reduction",
+                "correct": false
+              }
+            ],
+            "explanation": "Losing electrons is oxidation."
+          },
+          {
+            "text": "A molecule gains electrons.",
+            "choices": [
+              {
+                "label": "Oxidation",
+                "correct": false
+              },
+              {
+                "label": "Reduction",
+                "correct": true
+              }
+            ],
+            "explanation": "Gaining electrons is reduction."
+          },
+          {
+            "text": "NAD⁺ becomes NADH.",
+            "choices": [
+              {
+                "label": "Reduction",
+                "correct": true
+              },
+              {
+                "label": "Oxidation",
+                "correct": false
+              }
+            ],
+            "explanation": "NAD⁺ gains electrons to become NADH, so it is reduced."
+          },
+          {
+            "text": "NADH becomes NAD⁺.",
+            "choices": [
+              {
+                "label": "Oxidation",
+                "correct": true
+              },
+              {
+                "label": "Reduction",
+                "correct": false
+              }
+            ],
+            "explanation": "NADH loses electrons to become NAD⁺, so it is oxidized."
+          },
+          {
+            "text": "Photosynthesis uses this electron carrier.",
+            "choices": [
+              {
+                "label": "NADP⁺",
+                "correct": true
+              },
+              {
+                "label": "NAD⁺",
+                "correct": false
+              },
+              {
+                "label": "FAD",
+                "correct": false
+              }
+            ],
+            "explanation": "Photosynthesis uses NADP⁺/NADPH as its electron carrier."
+          },
+          {
+            "text": "LEO GER means:",
+            "choices": [
+              {
+                "label": "Lose e⁻ = oxidation; gain e⁻ = reduction",
+                "correct": true
+              },
+              {
+                "label": "Lose e⁻ = reduction; gain e⁻ = oxidation",
+                "correct": false
+              }
+            ],
+            "explanation": "LEO GER: lose electrons = oxidation, gain electrons = reduction."
+          }
         ]
       },
       "formative": {
@@ -144,9 +651,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Oxidation is defined as:", "choices": [{ "label": "Gain of electrons", "correct": false }, { "label": "Loss of electrons", "correct": true }, { "label": "Gain of protons", "correct": false }, { "label": "Loss of neutrons", "correct": false }] },
-          { "text": "When NAD⁺ accepts electrons, it is:", "choices": [{ "label": "Oxidized", "correct": false }, { "label": "Reduced", "correct": true }, { "label": "Denatured", "correct": false }, { "label": "Hydrolyzed", "correct": false }] },
-          { "text": "Which carrier is used in photosynthesis?", "choices": [{ "label": "NAD⁺", "correct": false }, { "label": "FAD", "correct": false }, { "label": "NADP⁺", "correct": true }, { "label": "ATP", "correct": false }] }
+          {
+            "text": "Oxidation is defined as:",
+            "choices": [
+              {
+                "label": "Gain of electrons",
+                "correct": false
+              },
+              {
+                "label": "Loss of electrons",
+                "correct": true
+              },
+              {
+                "label": "Gain of protons",
+                "correct": false
+              },
+              {
+                "label": "Loss of neutrons",
+                "correct": false
+              }
+            ],
+            "explanation": "Oxidation is the loss of electrons."
+          },
+          {
+            "text": "When NAD⁺ accepts electrons, it is:",
+            "choices": [
+              {
+                "label": "Oxidized",
+                "correct": false
+              },
+              {
+                "label": "Reduced",
+                "correct": true
+              },
+              {
+                "label": "Denatured",
+                "correct": false
+              },
+              {
+                "label": "Hydrolyzed",
+                "correct": false
+              }
+            ],
+            "explanation": "Accepting electrons means NAD⁺ is reduced."
+          },
+          {
+            "text": "Which carrier is used in photosynthesis?",
+            "choices": [
+              {
+                "label": "NAD⁺",
+                "correct": false
+              },
+              {
+                "label": "FAD",
+                "correct": false
+              },
+              {
+                "label": "NADP⁺",
+                "correct": true
+              },
+              {
+                "label": "ATP",
+                "correct": false
+              }
+            ],
+            "explanation": "Photosynthesis uses NADP⁺; respiration uses NAD⁺ and FAD."
+          }
         ]
       },
       "takeaways": [
@@ -160,18 +730,43 @@
       "n": 4,
       "title": "Redox in Biological Systems",
       "competency": "STEM_BIO11/12-II-i-j-18",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain redox in respiration and photosynthesis.</li><li>Describe how electron transport chains work.</li><li>Relate redox to energy production.</li><li>Identify examples of redox in daily life.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Electron transport chain (ETC)</strong> — series of redox reactions producing ATP.</li><li><strong>Oxidative phosphorylation</strong> — ATP production using ETC in respiration.</li><li><strong>Photophosphorylation</strong> — ATP production using ETC in photosynthesis.</li></ul><h3>📚 Lesson Content</h3><h4>A. Redox in Cellular Respiration</h4><ul><li>Glucose is oxidized → CO₂</li><li>O₂ is reduced → H₂O</li><li>Electrons carried by NADH/FADH₂ to the ETC</li><li>ATP produced by chemiosmosis</li></ul><h4>B. Redox in Photosynthesis</h4><ul><li>H₂O is oxidized → O₂</li><li>CO₂ is reduced → glucose</li><li>Electrons carried by NADPH</li><li>ATP produced by photophosphorylation</li></ul><h4>C. Everyday Redox</h4><ul><li>Rusting of iron (oxidation)</li><li>Burning of fuel (oxidation)</li><li>Batteries (electron flow)</li><li>Bleaching (oxidation of pigments)</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain redox in respiration and photosynthesis.</li><li>Describe how electron transport chains work.</li><li>Relate redox to energy production.</li><li>Identify examples of redox in daily life.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Electron transport chain (ETC)</strong> — series of redox reactions producing ATP.</li><li><strong>Oxidative phosphorylation</strong> — ATP production using ETC in respiration.</li><li><strong>Photophosphorylation</strong> — ATP production using ETC in photosynthesis.</li></ul><h3>📚 Lesson Content</h3><h4>A. Redox in Cellular Respiration</h4><ul><li>Glucose is oxidized → CO₂</li><li>O₂ is reduced → H₂O</li><li>Electrons carried by NADH/FADH₂ to the ETC</li><li>ATP produced by chemiosmosis</li></ul><h4>B. Redox in Photosynthesis</h4><ul><li>H₂O is oxidized → O₂</li><li>CO₂ is reduced → glucose</li><li>Electrons carried by NADPH</li><li>ATP produced by photophosphorylation</li></ul><h4>C. Everyday Redox</h4><ul><li>Rusting of iron (oxidation)</li><li>Burning of fuel (oxidation)</li><li>Batteries (electron flow)</li><li>Bleaching (oxidation of pigments)</li></ul><h3>💬 Let's Discuss</h3><p>Respiration and photosynthesis are giant redox processes, and they mirror each other. In <strong>cellular respiration</strong> (C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + energy), glucose loses its hydrogens and electrons as it becomes CO₂, so <strong>glucose is oxidized</strong>. Oxygen gains those electrons and hydrogens to become water, so <strong>oxygen is reduced</strong>. In <strong>photosynthesis</strong>, the direction reverses: water is split and loses electrons (<strong>water is oxidized</strong>, releasing O₂), and CO₂ gains electrons and hydrogens to build sugar (<strong>CO₂ is reduced</strong>).</p><p>Why not release all the energy at once? Burning glucose in a fire releases it explosively as heat. Cells instead pass electrons down an <strong>electron transport chain (ETC)</strong> — a series of membrane proteins, each slightly more electron-hungry than the last — like walking down a staircase instead of jumping off a roof. At each step, a little energy is used to pump H⁺ ions across a membrane, building a gradient.</p><p>Then H⁺ ions flow back through an enzyme called <strong>ATP synthase</strong>, which spins like a water turbine and makes ATP. Using an H⁺ gradient to make ATP is called <strong>chemiosmosis</strong>. In mitochondria, when the electrons come from food and end on oxygen, it is <strong>oxidative phosphorylation</strong>. In chloroplasts, when the energy comes from light, it is <strong>photophosphorylation</strong>.</p><p>Redox happens outside cells too: rusting iron and a burning candle are oxidations. <strong>Common mistake:</strong> saying \"oxygen is oxidized in respiration.\" Oxygen <em>accepts</em> electrons, so it is reduced.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "etc-master",
         "badgeName": "ETC Master",
         "badgeIcon": "🔗",
         "pairs": [
-          { "key": "etc", "left": "Electron transport chain", "right": "Series of redox reactions" },
-          { "key": "oxphos", "left": "Oxidative phosphorylation", "right": "ATP from ETC in respiration" },
-          { "key": "photophos", "left": "Photophosphorylation", "right": "ATP from ETC in photosynthesis" },
-          { "key": "chem", "left": "Chemiosmosis", "right": "ATP via H⁺ gradient" },
-          { "key": "rust", "left": "Rusting", "right": "Everyday oxidation" }
+          {
+            "key": "etc",
+            "left": "Electron transport chain",
+            "right": "Series of redox reactions",
+            "why": "An ETC passes electrons through a series of carriers in a membrane."
+          },
+          {
+            "key": "oxphos",
+            "left": "Oxidative phosphorylation",
+            "right": "ATP from ETC in respiration",
+            "why": "In mitochondria, ATP made using the ETC and oxygen is oxidative phosphorylation."
+          },
+          {
+            "key": "photophos",
+            "left": "Photophosphorylation",
+            "right": "ATP from ETC in photosynthesis",
+            "why": "In chloroplasts, ATP made using light-driven ETC is photophosphorylation."
+          },
+          {
+            "key": "chem",
+            "left": "Chemiosmosis",
+            "right": "ATP via H⁺ gradient",
+            "why": "Chemiosmosis is ATP synthesis powered by H⁺ flowing through ATP synthase."
+          },
+          {
+            "key": "rust",
+            "left": "Rusting",
+            "right": "Everyday oxidation",
+            "why": "Rusting is iron losing electrons to oxygen — an oxidation."
+          }
         ]
       },
       "activity2": {
@@ -180,12 +775,94 @@
         "badgeName": "Bio Redox Pro",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "Glucose is broken down to CO₂ in respiration.", "choices": [{ "label": "Glucose is oxidized ✓", "correct": true }, { "label": "Glucose is reduced", "correct": false }] },
-          { "text": "O₂ becomes H₂O in respiration.", "choices": [{ "label": "O₂ is reduced ✓", "correct": true }, { "label": "O₂ is oxidized", "correct": false }] },
-          { "text": "H₂O becomes O₂ in photosynthesis.", "choices": [{ "label": "H₂O is oxidized ✓", "correct": true }, { "label": "H₂O is reduced", "correct": false }] },
-          { "text": "CO₂ becomes glucose in photosynthesis.", "choices": [{ "label": "CO₂ is reduced ✓", "correct": true }, { "label": "CO₂ is oxidized", "correct": false }] },
-          { "text": "Electrons pass through a series of proteins.", "choices": [{ "label": "ETC ✓", "correct": true }, { "label": "Glycolysis", "correct": false }, { "label": "Krebs cycle", "correct": false }] },
-          { "text": "Iron rusts.", "choices": [{ "label": "Oxidation ✓", "correct": true }, { "label": "Reduction", "correct": false }] }
+          {
+            "text": "Glucose is broken down to CO₂ in respiration.",
+            "choices": [
+              {
+                "label": "Glucose is oxidized",
+                "correct": true
+              },
+              {
+                "label": "Glucose is reduced",
+                "correct": false
+              }
+            ],
+            "explanation": "Glucose loses electrons and hydrogen as it becomes CO₂ — it is oxidized."
+          },
+          {
+            "text": "O₂ becomes H₂O in respiration.",
+            "choices": [
+              {
+                "label": "O₂ is reduced",
+                "correct": true
+              },
+              {
+                "label": "O₂ is oxidized",
+                "correct": false
+              }
+            ],
+            "explanation": "O₂ gains electrons and hydrogen to form water — it is reduced."
+          },
+          {
+            "text": "H₂O becomes O₂ in photosynthesis.",
+            "choices": [
+              {
+                "label": "H₂O is oxidized",
+                "correct": true
+              },
+              {
+                "label": "H₂O is reduced",
+                "correct": false
+              }
+            ],
+            "explanation": "Splitting water releases electrons and O₂ — water is oxidized."
+          },
+          {
+            "text": "CO₂ becomes glucose in photosynthesis.",
+            "choices": [
+              {
+                "label": "CO₂ is reduced",
+                "correct": true
+              },
+              {
+                "label": "CO₂ is oxidized",
+                "correct": false
+              }
+            ],
+            "explanation": "CO₂ gains electrons to build glucose — it is reduced."
+          },
+          {
+            "text": "Electrons pass through a series of proteins.",
+            "choices": [
+              {
+                "label": "ETC",
+                "correct": true
+              },
+              {
+                "label": "Glycolysis",
+                "correct": false
+              },
+              {
+                "label": "Krebs cycle",
+                "correct": false
+              }
+            ],
+            "explanation": "Electrons passing through a series of proteins is the ETC."
+          },
+          {
+            "text": "Iron rusts.",
+            "choices": [
+              {
+                "label": "Oxidation",
+                "correct": true
+              },
+              {
+                "label": "Reduction",
+                "correct": false
+              }
+            ],
+            "explanation": "Iron losing electrons to oxygen is oxidation."
+          }
         ]
       },
       "formative": {
@@ -194,9 +871,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "In respiration, glucose is:", "choices": [{ "label": "Reduced", "correct": false }, { "label": "Oxidized", "correct": true }, { "label": "Denatured", "correct": false }, { "label": "Hydrolyzed", "correct": false }] },
-          { "text": "In photosynthesis, CO₂ is:", "choices": [{ "label": "Oxidized", "correct": false }, { "label": "Reduced", "correct": true }, { "label": "Destroyed", "correct": false }, { "label": "Ionized", "correct": false }] },
-          { "text": "ATP production from the ETC in respiration is called:", "choices": [{ "label": "Photophosphorylation", "correct": false }, { "label": "Oxidative phosphorylation", "correct": true }, { "label": "Glycolysis", "correct": false }, { "label": "Fermentation", "correct": false }] }
+          {
+            "text": "In respiration, glucose is:",
+            "choices": [
+              {
+                "label": "Reduced",
+                "correct": false
+              },
+              {
+                "label": "Oxidized",
+                "correct": true
+              },
+              {
+                "label": "Denatured",
+                "correct": false
+              },
+              {
+                "label": "Hydrolyzed",
+                "correct": false
+              }
+            ],
+            "explanation": "Glucose loses electrons in respiration, so it is oxidized."
+          },
+          {
+            "text": "In photosynthesis, CO₂ is:",
+            "choices": [
+              {
+                "label": "Oxidized",
+                "correct": false
+              },
+              {
+                "label": "Reduced",
+                "correct": true
+              },
+              {
+                "label": "Destroyed",
+                "correct": false
+              },
+              {
+                "label": "Ionized",
+                "correct": false
+              }
+            ],
+            "explanation": "CO₂ gains electrons and hydrogen to form sugar, so it is reduced."
+          },
+          {
+            "text": "ATP production from the ETC in respiration is called:",
+            "choices": [
+              {
+                "label": "Photophosphorylation",
+                "correct": false
+              },
+              {
+                "label": "Oxidative phosphorylation",
+                "correct": true
+              },
+              {
+                "label": "Glycolysis",
+                "correct": false
+              },
+              {
+                "label": "Fermentation",
+                "correct": false
+              }
+            ],
+            "explanation": "The ETC in respiration makes ATP by oxidative phosphorylation."
+          }
         ]
       },
       "takeaways": [

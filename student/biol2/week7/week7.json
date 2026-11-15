@@ -6,19 +6,49 @@
       "n": 1,
       "title": "Tools of Genetic Engineering",
       "competency": "STEM_BIO11/12-IIIa-b-6",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify the tools used in genetic engineering.</li><li>Describe restriction enzymes.</li><li>Explain the role of plasmids and vectors.</li><li>Describe DNA ligase and gel electrophoresis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Restriction enzyme</strong> — cuts DNA at specific sequences.</li><li><strong>Plasmid</strong> — circular DNA vector.</li><li><strong>DNA ligase</strong> — seals DNA fragments.</li><li><strong>Gel electrophoresis</strong> — separates DNA by size.</li></ul><h3>📚 Lesson Content</h3><h4>A. Tools of Genetic Engineering</h4><table><thead><tr><th>Tool</th><th>Function</th></tr></thead><tbody><tr><td>Restriction enzyme</td><td>Cuts DNA at specific sites</td></tr><tr><td>DNA ligase</td><td>Seals DNA fragments together</td></tr><tr><td>Plasmid</td><td>Carrier/vector for DNA</td></tr><tr><td>Gel electrophoresis</td><td>Separates fragments by size</td></tr><tr><td>PCR</td><td>Amplifies DNA</td></tr></tbody></table><h4>B. Why Restriction Enzymes?</h4><p>They produce sticky ends that allow complementary base pairing — essential for building recombinant DNA.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify the tools used in genetic engineering.</li><li>Describe restriction enzymes.</li><li>Explain the role of plasmids and vectors.</li><li>Describe DNA ligase and gel electrophoresis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Restriction enzyme</strong> — cuts DNA at specific sequences.</li><li><strong>Plasmid</strong> — circular DNA vector.</li><li><strong>DNA ligase</strong> — seals DNA fragments.</li><li><strong>Gel electrophoresis</strong> — separates DNA by size.</li></ul><h3>📚 Lesson Content</h3><h4>A. Tools of Genetic Engineering</h4><table><thead><tr><th>Tool</th><th>Function</th></tr></thead><tbody><tr><td>Restriction enzyme</td><td>Cuts DNA at specific sites</td></tr><tr><td>DNA ligase</td><td>Seals DNA fragments together</td></tr><tr><td>Plasmid</td><td>Carrier/vector for DNA</td></tr><tr><td>Gel electrophoresis</td><td>Separates fragments by size</td></tr><tr><td>PCR</td><td>Amplifies DNA</td></tr></tbody></table><h4>B. Why Restriction Enzymes?</h4><p>They produce sticky ends that allow complementary base pairing — essential for building recombinant DNA.</p><h3>💬 Let's Discuss</h3><p><strong>Genetic engineering</strong> is the direct, deliberate change of an organism's DNA, often by moving a gene from one organism into another. It depends on a small toolkit, much of it borrowed from bacteria.</p><p><strong>Restriction enzymes</strong> are \"molecular scissors.\" Bacteria use them to chop up the DNA of invading viruses. Each enzyme cuts at a specific short sequence; for example, <em>EcoRI</em> cuts at <strong>GAATTC</strong>. Many cut in a staggered way, leaving short single-stranded overhangs called <strong>sticky ends</strong>. Any two pieces of DNA cut with the same enzyme have matching sticky ends that can base-pair — whether they came from a human or a bacterium. <strong>DNA ligase</strong> is the \"molecular glue\" that seals the backbone, joining the pieces permanently.</p><p>A <strong>vector</strong> carries the gene into a host cell. The most common vector is a <strong>plasmid</strong>, a small circle of bacterial DNA that copies itself independently and often carries an antibiotic-resistance gene useful for selection. Viruses can also serve as vectors.</p><p>Two techniques let scientists handle tiny amounts of DNA. <strong>PCR (polymerase chain reaction)</strong> copies a chosen DNA segment millions of times in a few hours by repeated heating and cooling with a heat-stable DNA polymerase; it is used in COVID-19 tests and forensic work. <strong>Gel electrophoresis</strong> separates DNA fragments by <strong>size</strong>: DNA is negatively charged, so it moves toward the positive electrode through a gel, and smaller pieces travel farther. The band pattern is used in DNA fingerprinting and paternity testing.</p><p><strong>Common mistake:</strong> thinking PCR separates DNA or that electrophoresis copies it. PCR <em>amplifies</em>; electrophoresis <em>sorts by size</em>.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "tools-master",
         "badgeName": "Tools Master",
         "badgeIcon": "🔧",
         "pairs": [
-          { "key": "re", "left": "Restriction enzyme", "right": "Cuts DNA at specific sites" },
-          { "key": "lig", "left": "DNA ligase", "right": "Seals DNA fragments" },
-          { "key": "plas", "left": "Plasmid", "right": "Circular DNA vector" },
-          { "key": "gel", "left": "Gel electrophoresis", "right": "Separates DNA by size" },
-          { "key": "pcr", "left": "PCR", "right": "Amplifies DNA" },
-          { "key": "sticky", "left": "Sticky ends", "right": "Produced by restriction enzymes" }
+          {
+            "key": "re",
+            "left": "Restriction enzyme",
+            "right": "Cuts DNA at specific sites",
+            "why": "Restriction enzymes cut DNA at specific recognition sequences."
+          },
+          {
+            "key": "lig",
+            "left": "DNA ligase",
+            "right": "Seals DNA fragments",
+            "why": "DNA ligase seals the sugar–phosphate backbone between fragments."
+          },
+          {
+            "key": "plas",
+            "left": "Plasmid",
+            "right": "Circular DNA vector",
+            "why": "A plasmid is a circular DNA used to carry genes into bacteria."
+          },
+          {
+            "key": "gel",
+            "left": "Gel electrophoresis",
+            "right": "Separates DNA by size",
+            "why": "Gel electrophoresis separates DNA fragments by size."
+          },
+          {
+            "key": "pcr",
+            "left": "PCR",
+            "right": "Amplifies DNA",
+            "why": "PCR makes millions of copies of a DNA segment."
+          },
+          {
+            "key": "sticky",
+            "left": "Sticky ends",
+            "right": "Produced by restriction enzymes",
+            "why": "Staggered cuts leave single-stranded overhangs — sticky ends."
+          }
         ]
       },
       "activity2": {
@@ -27,12 +57,94 @@
         "badgeName": "Tools Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "An enzyme cuts DNA at GAATTC.", "choices": [ { "label": "Restriction enzyme", "correct": true }, { "label": "Ligase", "correct": false }, { "label": "Polymerase", "correct": false } ] },
-          { "text": "Two DNA fragments are joined together.", "choices": [ { "label": "Ligase", "correct": true }, { "label": "Restriction enzyme", "correct": false } ] },
-          { "text": "A circular DNA is used to carry a gene.", "choices": [ { "label": "Plasmid", "correct": true }, { "label": "Chromosome", "correct": false } ] },
-          { "text": "DNA fragments are separated by size.", "choices": [ { "label": "Gel electrophoresis", "correct": true }, { "label": "PCR", "correct": false } ] },
-          { "text": "A small DNA sample is amplified millions of times.", "choices": [ { "label": "PCR", "correct": true }, { "label": "Ligase", "correct": false } ] },
-          { "text": "DNA fragments have overhanging single-stranded ends.", "choices": [ { "label": "Sticky ends", "correct": true }, { "label": "Blunt ends", "correct": false } ] }
+          {
+            "text": "An enzyme cuts DNA at GAATTC.",
+            "choices": [
+              {
+                "label": "Restriction enzyme",
+                "correct": true
+              },
+              {
+                "label": "DNA ligase",
+                "correct": false
+              },
+              {
+                "label": "Polymerase",
+                "correct": false
+              }
+            ],
+            "explanation": "Cutting at a specific site (GAATTC) is done by a restriction enzyme."
+          },
+          {
+            "text": "Two DNA fragments are joined together.",
+            "choices": [
+              {
+                "label": "Ligase",
+                "correct": true
+              },
+              {
+                "label": "Restriction enzyme",
+                "correct": false
+              }
+            ],
+            "explanation": "Joining DNA fragments is ligase's job."
+          },
+          {
+            "text": "A circular DNA is used to carry a gene.",
+            "choices": [
+              {
+                "label": "Plasmid",
+                "correct": true
+              },
+              {
+                "label": "Chromosome",
+                "correct": false
+              }
+            ],
+            "explanation": "Plasmids are circular DNA used as vectors."
+          },
+          {
+            "text": "DNA fragments are separated by size.",
+            "choices": [
+              {
+                "label": "Electrophoresis",
+                "correct": true
+              },
+              {
+                "label": "PCR",
+                "correct": false
+              }
+            ],
+            "explanation": "Separating fragments by size is gel electrophoresis."
+          },
+          {
+            "text": "A small DNA sample is amplified millions of times.",
+            "choices": [
+              {
+                "label": "PCR",
+                "correct": true
+              },
+              {
+                "label": "Ligase",
+                "correct": false
+              }
+            ],
+            "explanation": "Amplifying DNA millions of times is PCR."
+          },
+          {
+            "text": "DNA fragments have overhanging single-stranded ends.",
+            "choices": [
+              {
+                "label": "Sticky ends",
+                "correct": true
+              },
+              {
+                "label": "Blunt ends",
+                "correct": false
+              }
+            ],
+            "explanation": "Overhanging single-stranded ends are sticky ends."
+          }
         ]
       },
       "formative": {
@@ -41,9 +153,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Which enzyme cuts DNA at specific sequences?", "choices": [ { "label": "DNA ligase", "correct": false }, { "label": "Restriction enzyme", "correct": true }, { "label": "Polymerase", "correct": false }, { "label": "Helicase", "correct": false } ] },
-          { "text": "Which molecule is used as a vector in gene cloning?", "choices": [ { "label": "Plasmid", "correct": true }, { "label": "Protein", "correct": false }, { "label": "Lipid", "correct": false }, { "label": "Carbohydrate", "correct": false } ] },
-          { "text": "Which technique amplifies DNA?", "choices": [ { "label": "PCR", "correct": true }, { "label": "Gel electrophoresis", "correct": false }, { "label": "Ligase chain reaction", "correct": false }, { "label": "Electrolysis", "correct": false } ] }
+          {
+            "text": "Which enzyme cuts DNA at specific sequences?",
+            "choices": [
+              {
+                "label": "DNA ligase",
+                "correct": false
+              },
+              {
+                "label": "Restriction enzyme",
+                "correct": true
+              },
+              {
+                "label": "Polymerase",
+                "correct": false
+              },
+              {
+                "label": "Helicase",
+                "correct": false
+              }
+            ],
+            "explanation": "Restriction enzymes cut DNA at specific sequences."
+          },
+          {
+            "text": "Which molecule is used as a vector in gene cloning?",
+            "choices": [
+              {
+                "label": "Plasmid",
+                "correct": true
+              },
+              {
+                "label": "Protein",
+                "correct": false
+              },
+              {
+                "label": "Lipid",
+                "correct": false
+              },
+              {
+                "label": "Carbohydrate",
+                "correct": false
+              }
+            ],
+            "explanation": "Plasmids are the usual vectors in gene cloning."
+          },
+          {
+            "text": "Which technique amplifies DNA?",
+            "choices": [
+              {
+                "label": "PCR",
+                "correct": true
+              },
+              {
+                "label": "Gel electrophoresis",
+                "correct": false
+              },
+              {
+                "label": "Ligase chain reaction",
+                "correct": false
+              },
+              {
+                "label": "Electrolysis",
+                "correct": false
+              }
+            ],
+            "explanation": "PCR amplifies DNA."
+          }
         ]
       },
       "takeaways": [
@@ -57,18 +232,43 @@
       "n": 2,
       "title": "Steps in Creating Recombinant DNA",
       "competency": "STEM_BIO11/12-IIIa-b-6",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Outline the steps in creating recombinant DNA.</li><li>Explain gene cloning.</li><li>Describe transformation of bacteria.</li><li>Explain selection of successful recombinants.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Recombinant DNA</strong> — DNA combining sequences from different sources.</li><li><strong>Transformation</strong> — uptake of foreign DNA by bacteria.</li><li><strong>Selection</strong> — identifying bacteria that took up the plasmid.</li><li><strong>Gene cloning</strong> — producing many copies of a gene.</li></ul><h3>📚 Lesson Content</h3><h4>A. Steps in Creating Recombinant DNA</h4><ol><li>Isolate gene of interest</li><li>Cut plasmid with same restriction enzyme</li><li>Ligate gene into plasmid</li><li>Introduce plasmid into bacteria (transformation)</li><li>Select successful recombinants</li><li>Grow bacteria — they produce the gene product</li></ol><h4>B. Example: Human Insulin</h4><p>The human insulin gene is inserted into E. coli plasmids. Bacteria produce insulin, which is harvested and purified.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Outline the steps in creating recombinant DNA.</li><li>Explain gene cloning.</li><li>Describe transformation of bacteria.</li><li>Explain selection of successful recombinants.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Recombinant DNA</strong> — DNA combining sequences from different sources.</li><li><strong>Transformation</strong> — uptake of foreign DNA by bacteria.</li><li><strong>Selection</strong> — identifying bacteria that took up the plasmid.</li><li><strong>Gene cloning</strong> — producing many copies of a gene.</li></ul><h3>📚 Lesson Content</h3><h4>A. Steps in Creating Recombinant DNA</h4><ol><li>Isolate gene of interest</li><li>Cut plasmid with same restriction enzyme</li><li>Ligate gene into plasmid</li><li>Introduce plasmid into bacteria (transformation)</li><li>Select successful recombinants</li><li>Grow bacteria — they produce the gene product</li></ol><h4>B. Example: Human Insulin</h4><p>The human insulin gene is inserted into E. coli plasmids. Bacteria produce insulin, which is harvested and purified.</p><h3>💬 Let's Discuss</h3><p><strong>Recombinant DNA</strong> is DNA that combines sequences from two different sources. The classic example — and one of the first great successes of biotechnology — is making <strong>human insulin</strong> in bacteria. Before 1982, people with diabetes used insulin extracted from cow and pig pancreases, which was limited and sometimes caused allergies.</p><p>The process follows six steps. <strong>1. Isolate the gene:</strong> the human insulin gene is obtained and cut out with a restriction enzyme. <strong>2. Cut the plasmid:</strong> a plasmid is opened with the <em>same</em> restriction enzyme, so both have matching sticky ends. <strong>3. Ligate:</strong> the gene and plasmid are mixed; sticky ends pair, and <strong>DNA ligase</strong> seals them, forming a recombinant plasmid. <strong>4. Transform:</strong> bacteria such as <em>E. coli</em> are treated (with calcium salts and a heat shock) so that some take up the plasmid. <strong>5. Select:</strong> bacteria are grown on a medium with an antibiotic. Only bacteria carrying the plasmid's <strong>antibiotic-resistance gene</strong> survive; further tests identify those carrying the insulin gene. <strong>6. Produce:</strong> the selected bacteria are grown in huge fermentation tanks. Every time they divide, they copy the plasmid — this is <strong>gene cloning</strong> — and they make human insulin, which is purified for patients.</p><p>The same method produces human growth hormone, clotting factors for hemophilia and the hepatitis B vaccine (in yeast). It works because the genetic code is <strong>universal</strong>: bacteria read human codons the same way human cells do.</p><p><strong>Common mistake:</strong> using two different restriction enzymes for the gene and plasmid. The ends would not match; the same enzyme must cut both.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "recombinant-master",
         "badgeName": "Recombinant Master",
         "badgeIcon": "🔬",
         "pairs": [
-          { "key": "rdna", "left": "Recombinant DNA", "right": "DNA from different sources" },
-          { "key": "trans", "left": "Transformation", "right": "Bacteria take up foreign DNA" },
-          { "key": "select", "left": "Selection", "right": "Finding successful recombinants" },
-          { "key": "clone", "left": "Gene cloning", "right": "Many copies of a gene" },
-          { "key": "insulin", "left": "Human insulin", "right": "Produced by engineered bacteria" }
+          {
+            "key": "rdna",
+            "left": "Recombinant DNA",
+            "right": "DNA from different sources",
+            "why": "Recombinant DNA combines DNA from different sources."
+          },
+          {
+            "key": "trans",
+            "left": "Transformation",
+            "right": "Bacteria take up foreign DNA",
+            "why": "Transformation is the uptake of foreign DNA by bacteria."
+          },
+          {
+            "key": "select",
+            "left": "Selection",
+            "right": "Finding successful recombinants",
+            "why": "Selection identifies bacteria that took up the recombinant plasmid."
+          },
+          {
+            "key": "clone",
+            "left": "Gene cloning",
+            "right": "Many copies of a gene",
+            "why": "Gene cloning makes many copies of a gene as bacteria multiply."
+          },
+          {
+            "key": "insulin",
+            "left": "Human insulin",
+            "right": "Produced by engineered bacteria",
+            "why": "Engineered E. coli produce human insulin for diabetics."
+          }
         ]
       },
       "activity2": {
@@ -77,12 +277,90 @@
         "badgeName": "Steps Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "A gene is cut out of human DNA.", "choices": [ { "label": "Step 1 — Isolate gene", "correct": true }, { "label": "Step 4 — Transform", "correct": false } ] },
-          { "text": "A plasmid is cut with the same enzyme.", "choices": [ { "label": "Step 2 — Cut plasmid", "correct": true }, { "label": "Step 5 — Select", "correct": false } ] },
-          { "text": "Ligase joins gene and plasmid.", "choices": [ { "label": "Step 3 — Ligate", "correct": true }, { "label": "Step 1", "correct": false } ] },
-          { "text": "Bacteria take up the plasmid.", "choices": [ { "label": "Step 4 — Transformation", "correct": true }, { "label": "Step 6 — Grow", "correct": false } ] },
-          { "text": "Antibiotic resistance identifies successful recombinants.", "choices": [ { "label": "Step 5 — Selection", "correct": true }, { "label": "Step 2", "correct": false } ] },
-          { "text": "Bacteria grow and produce insulin.", "choices": [ { "label": "Step 6 — Production", "correct": true }, { "label": "Step 3", "correct": false } ] }
+          {
+            "text": "A gene is cut out of human DNA.",
+            "choices": [
+              {
+                "label": "Isolate the gene",
+                "correct": true
+              },
+              {
+                "label": "Transform bacteria",
+                "correct": false
+              }
+            ],
+            "explanation": "Cutting the human gene out is step 1, isolating the gene."
+          },
+          {
+            "text": "A plasmid is cut with the same enzyme.",
+            "choices": [
+              {
+                "label": "Cut the plasmid",
+                "correct": true
+              },
+              {
+                "label": "Select bacteria",
+                "correct": false
+              }
+            ],
+            "explanation": "Cutting the plasmid with the same enzyme is step 2."
+          },
+          {
+            "text": "Ligase joins gene and plasmid.",
+            "choices": [
+              {
+                "label": "Ligation",
+                "correct": true
+              },
+              {
+                "label": "Isolation",
+                "correct": false
+              }
+            ],
+            "explanation": "Ligase joining gene and plasmid is step 3, ligation."
+          },
+          {
+            "text": "Bacteria take up the plasmid.",
+            "choices": [
+              {
+                "label": "Transformation",
+                "correct": true
+              },
+              {
+                "label": "Production",
+                "correct": false
+              }
+            ],
+            "explanation": "Bacteria taking up the plasmid is step 4, transformation."
+          },
+          {
+            "text": "Antibiotic resistance identifies successful recombinants.",
+            "choices": [
+              {
+                "label": "Selection",
+                "correct": true
+              },
+              {
+                "label": "Cutting",
+                "correct": false
+              }
+            ],
+            "explanation": "Using antibiotic resistance to find recombinants is step 5, selection."
+          },
+          {
+            "text": "Bacteria grow and produce insulin.",
+            "choices": [
+              {
+                "label": "Production",
+                "correct": true
+              },
+              {
+                "label": "Ligation",
+                "correct": false
+              }
+            ],
+            "explanation": "Growing bacteria to make insulin is step 6, production."
+          }
         ]
       },
       "formative": {
@@ -91,9 +369,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "What is the FIRST step in creating recombinant DNA?", "choices": [ { "label": "Isolate the gene of interest", "correct": true }, { "label": "Transform bacteria", "correct": false }, { "label": "Select recombinants", "correct": false }, { "label": "Grow bacteria", "correct": false } ] },
-          { "text": "Which enzyme joins the gene to the plasmid?", "choices": [ { "label": "Restriction enzyme", "correct": false }, { "label": "DNA ligase", "correct": true }, { "label": "Polymerase", "correct": false }, { "label": "Helicase", "correct": false } ] },
-          { "text": "How are successful recombinants identified?", "choices": [ { "label": "By antibiotic resistance markers", "correct": true }, { "label": "By smell", "correct": false }, { "label": "By color", "correct": false }, { "label": "By size", "correct": false } ] }
+          {
+            "text": "What is the FIRST step in creating recombinant DNA?",
+            "choices": [
+              {
+                "label": "Isolate the gene",
+                "correct": true
+              },
+              {
+                "label": "Transform bacteria",
+                "correct": false
+              },
+              {
+                "label": "Select recombinants",
+                "correct": false
+              },
+              {
+                "label": "Grow the bacteria",
+                "correct": false
+              }
+            ],
+            "explanation": "The first step is isolating the gene of interest."
+          },
+          {
+            "text": "Which enzyme joins the gene to the plasmid?",
+            "choices": [
+              {
+                "label": "Restriction enzyme",
+                "correct": false
+              },
+              {
+                "label": "DNA ligase",
+                "correct": true
+              },
+              {
+                "label": "Polymerase",
+                "correct": false
+              },
+              {
+                "label": "Helicase",
+                "correct": false
+              }
+            ],
+            "explanation": "DNA ligase joins the gene to the plasmid."
+          },
+          {
+            "text": "How are successful recombinants identified?",
+            "choices": [
+              {
+                "label": "By antibiotic resistance",
+                "correct": true
+              },
+              {
+                "label": "By the smell of colonies",
+                "correct": false
+              },
+              {
+                "label": "By the color of the cells",
+                "correct": false
+              },
+              {
+                "label": "By the size of each cell",
+                "correct": false
+              }
+            ],
+            "explanation": "Antibiotic-resistance markers show which bacteria have the plasmid."
+          }
         ]
       },
       "takeaways": [
@@ -107,19 +448,49 @@
       "n": 3,
       "title": "Applications of Recombinant DNA",
       "competency": "STEM_BIO11/12-IIIa-b-7",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify real-world applications of recombinant DNA.</li><li>Describe medical applications.</li><li>Describe agricultural applications.</li><li>Explain industrial uses.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Medicine</strong> — insulin, vaccines, gene therapy.</li><li><strong>Agriculture</strong> — pest-resistant crops, Golden Rice.</li><li><strong>Industry</strong> — enzymes, biofuels.</li><li><strong>Research</strong> — gene function studies.</li></ul><h3>📚 Lesson Content</h3><h4>A. Medical Applications</h4><ul><li>Human insulin for diabetes</li><li>Human growth hormone</li><li>Hepatitis B vaccine</li><li>Gene therapy</li></ul><h4>B. Agricultural Applications</h4><ul><li>Bt corn (pest-resistant)</li><li>Golden Rice (Vitamin A)</li><li>Herbicide-resistant soybeans</li><li>Drought-tolerant crops</li></ul><h4>C. Industrial Applications</h4><ul><li>Enzymes for detergents and food</li><li>Biofuels from engineered microbes</li><li>Bioremediation of pollutants</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify real-world applications of recombinant DNA.</li><li>Describe medical applications.</li><li>Describe agricultural applications.</li><li>Explain industrial uses.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Medicine</strong> — insulin, vaccines, gene therapy.</li><li><strong>Agriculture</strong> — pest-resistant crops, Golden Rice.</li><li><strong>Industry</strong> — enzymes, biofuels.</li><li><strong>Research</strong> — gene function studies.</li></ul><h3>📚 Lesson Content</h3><h4>A. Medical Applications</h4><ul><li>Human insulin for diabetes</li><li>Human growth hormone</li><li>Hepatitis B vaccine</li><li>Gene therapy</li></ul><h4>B. Agricultural Applications</h4><ul><li>Bt corn (pest-resistant)</li><li>Golden Rice (Vitamin A)</li><li>Herbicide-resistant soybeans</li><li>Drought-tolerant crops</li></ul><h4>C. Industrial Applications</h4><ul><li>Enzymes for detergents and food</li><li>Biofuels from engineered microbes</li><li>Bioremediation of pollutants</li></ul><h3>💬 Let's Discuss</h3><p>Recombinant DNA technology has moved from the laboratory into hospitals, farms and factories. It helps to sort applications into three groups.</p><p><strong>Medical.</strong> Bacteria make <strong>human insulin</strong> for diabetics and growth hormone for children with growth problems. Yeast makes the <strong>hepatitis B vaccine</strong> by producing just a harmless virus surface protein. Some COVID-19 vaccines were made using recombinant viral vectors. <strong>Gene therapy</strong> delivers a working gene into a patient's cells to treat inherited disorders, and has treated some forms of inherited blindness and immune deficiency.</p><p><strong>Agricultural.</strong> <strong>Bt corn</strong> and <strong>Bt eggplant</strong> carry a gene from the soil bacterium <em>Bacillus thuringiensis</em> that makes a protein toxic to certain insect larvae but harmless to people, so farmers spray less pesticide. Bt corn has been grown in the Philippines since 2003. <strong>Golden Rice</strong>, developed with the Philippine Rice Research Institute (PhilRice) and IRRI, makes <strong>beta-carotene</strong>, which the body converts to <strong>vitamin A</strong>, to help fight vitamin A deficiency that causes blindness in children. Other crops are engineered for drought tolerance or virus resistance (like papaya ringspot-resistant papaya).</p><p><strong>Industrial and environmental.</strong> Engineered microbes produce enzymes for detergents and food processing, <strong>biofuels</strong> such as ethanol, and biodegradable plastics. In <strong>bioremediation</strong>, microbes break down pollutants such as oil spills and toxic chemicals.</p><p><strong>Common mistake:</strong> thinking Bt crops contain \"pesticide sprayed into them.\" The plant makes its own Bt protein from an inserted gene.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "applications-master",
         "badgeName": "Applications Master",
         "badgeIcon": "🌟",
         "pairs": [
-          { "key": "insulin", "left": "Human insulin", "right": "Medical — treats diabetes" },
-          { "key": "vaccine", "left": "Hepatitis B vaccine", "right": "Medical — prevents disease" },
-          { "key": "bt", "left": "Bt corn", "right": "Agricultural — pest-resistant" },
-          { "key": "golden", "left": "Golden Rice", "right": "Agricultural — Vitamin A" },
-          { "key": "biofuel", "left": "Biofuels", "right": "Industrial — from microbes" },
-          { "key": "biorem", "left": "Bioremediation", "right": "Industrial — cleans pollutants" }
+          {
+            "key": "insulin",
+            "left": "Human insulin",
+            "right": "Medical — treats diabetes",
+            "why": "Engineered bacteria produce human insulin to treat diabetes."
+          },
+          {
+            "key": "vaccine",
+            "left": "Hepatitis B vaccine",
+            "right": "Medical — prevents disease",
+            "why": "Recombinant yeast make a hepatitis B surface protein for vaccines."
+          },
+          {
+            "key": "bt",
+            "left": "Bt corn",
+            "right": "Agricultural — pest-resistant",
+            "why": "Bt corn makes its own insect-killing protein."
+          },
+          {
+            "key": "golden",
+            "left": "Golden Rice",
+            "right": "Agricultural — Vitamin A",
+            "why": "Golden Rice produces beta-carotene, a source of vitamin A."
+          },
+          {
+            "key": "biofuel",
+            "left": "Biofuels",
+            "right": "Industrial — from microbes",
+            "why": "Engineered microbes can produce fuels such as ethanol."
+          },
+          {
+            "key": "biorem",
+            "left": "Bioremediation",
+            "right": "Industrial — cleans pollutants",
+            "why": "Bioremediation uses microbes to break down pollutants."
+          }
         ]
       },
       "activity2": {
@@ -128,12 +499,90 @@
         "badgeName": "Applications Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Diabetics use bacterially-produced insulin.", "choices": [ { "label": "Medical", "correct": true }, { "label": "Agricultural", "correct": false } ] },
-          { "text": "A corn plant produces its own pesticide.", "choices": [ { "label": "Agricultural", "correct": true }, { "label": "Medical", "correct": false } ] },
-          { "text": "Rice is enriched with beta-carotene.", "choices": [ { "label": "Agricultural", "correct": true }, { "label": "Industrial", "correct": false } ] },
-          { "text": "Bacteria digest oil spills.", "choices": [ { "label": "Bioremediation", "correct": true }, { "label": "Medical", "correct": false } ] },
-          { "text": "A vaccine is produced using yeast.", "choices": [ { "label": "Medical", "correct": true }, { "label": "Agricultural", "correct": false } ] },
-          { "text": "A gene therapy treats a genetic disorder.", "choices": [ { "label": "Medical", "correct": true }, { "label": "Industrial", "correct": false } ] }
+          {
+            "text": "Diabetics use bacterially-produced insulin.",
+            "choices": [
+              {
+                "label": "Medical",
+                "correct": true
+              },
+              {
+                "label": "Agricultural",
+                "correct": false
+              }
+            ],
+            "explanation": "Insulin from bacteria treats a disease — medical."
+          },
+          {
+            "text": "A corn plant produces its own pesticide.",
+            "choices": [
+              {
+                "label": "Agricultural",
+                "correct": true
+              },
+              {
+                "label": "Medical",
+                "correct": false
+              }
+            ],
+            "explanation": "A crop producing its own pesticide is agricultural."
+          },
+          {
+            "text": "Rice is enriched with beta-carotene.",
+            "choices": [
+              {
+                "label": "Agricultural",
+                "correct": true
+              },
+              {
+                "label": "Industrial",
+                "correct": false
+              }
+            ],
+            "explanation": "Beta-carotene rice is an agricultural application."
+          },
+          {
+            "text": "Bacteria digest oil spills.",
+            "choices": [
+              {
+                "label": "Bioremediation",
+                "correct": true
+              },
+              {
+                "label": "Medical",
+                "correct": false
+              }
+            ],
+            "explanation": "Microbes cleaning oil spills is bioremediation."
+          },
+          {
+            "text": "A vaccine is produced using yeast.",
+            "choices": [
+              {
+                "label": "Medical",
+                "correct": true
+              },
+              {
+                "label": "Agricultural",
+                "correct": false
+              }
+            ],
+            "explanation": "Vaccines made in yeast are medical."
+          },
+          {
+            "text": "A gene therapy treats a genetic disorder.",
+            "choices": [
+              {
+                "label": "Medical",
+                "correct": true
+              },
+              {
+                "label": "Industrial",
+                "correct": false
+              }
+            ],
+            "explanation": "Gene therapy to treat a disorder is medical."
+          }
         ]
       },
       "formative": {
@@ -142,9 +591,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Human insulin is produced using:", "choices": [ { "label": "Engineered bacteria", "correct": true }, { "label": "Cow pancreas only", "correct": false }, { "label": "Fungi", "correct": false }, { "label": "Plant extracts", "correct": false } ] },
-          { "text": "Bt corn is an example of:", "choices": [ { "label": "Medical application", "correct": false }, { "label": "Agricultural application", "correct": true }, { "label": "Industrial application", "correct": false }, { "label": "Environmental application", "correct": false } ] },
-          { "text": "Which is a medical application of recombinant DNA?", "choices": [ { "label": "Golden Rice", "correct": false }, { "label": "Bt corn", "correct": false }, { "label": "Hepatitis B vaccine", "correct": true }, { "label": "Biofuel", "correct": false } ] }
+          {
+            "text": "Human insulin is produced using:",
+            "choices": [
+              {
+                "label": "Engineered bacteria",
+                "correct": true
+              },
+              {
+                "label": "Cow pancreas only",
+                "correct": false
+              },
+              {
+                "label": "Wild fungi",
+                "correct": false
+              },
+              {
+                "label": "Plant extracts",
+                "correct": false
+              }
+            ],
+            "explanation": "Human insulin is made by engineered bacteria."
+          },
+          {
+            "text": "Bt corn is an example of:",
+            "choices": [
+              {
+                "label": "Medical application",
+                "correct": false
+              },
+              {
+                "label": "Agricultural application",
+                "correct": true
+              },
+              {
+                "label": "Industrial application",
+                "correct": false
+              },
+              {
+                "label": "Environmental application",
+                "correct": false
+              }
+            ],
+            "explanation": "Bt corn is an agricultural application."
+          },
+          {
+            "text": "Which is a medical application of recombinant DNA?",
+            "choices": [
+              {
+                "label": "Golden Rice",
+                "correct": false
+              },
+              {
+                "label": "Bt corn",
+                "correct": false
+              },
+              {
+                "label": "Hepatitis B vaccine",
+                "correct": true
+              },
+              {
+                "label": "Biofuel",
+                "correct": false
+              }
+            ],
+            "explanation": "The hepatitis B vaccine is a medical application."
+          }
         ]
       },
       "takeaways": [
@@ -158,19 +670,49 @@
       "n": 4,
       "title": "Ethical Issues & Future Directions",
       "competency": "STEM_BIO11/12-IIIa-b-7",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify ethical issues in genetic engineering.</li><li>Discuss pros and cons of GMOs.</li><li>Describe future directions in biotechnology.</li><li>Analyze bioethical dilemmas.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Bioethics</strong> — ethics of biological research.</li><li><strong>GMO</strong> — genetically modified organism.</li><li><strong>CRISPR</strong> — gene editing tool.</li><li><strong>Gene therapy</strong> — correcting genetic disorders.</li></ul><h3>📚 Lesson Content</h3><h4>A. Ethical Concerns</h4><ul><li>Safety of GMO foods</li><li>Environmental impact (gene flow)</li><li>Designer babies</li><li>Privacy of genetic information</li><li>Access and cost of gene therapies</li></ul><h4>B. Future Directions</h4><ul><li>CRISPR-based therapies</li><li>Personalized medicine</li><li>Engineered organs</li><li>Synthetic biology</li></ul><h4>C. Balanced View</h4><p>Recombinant DNA technology has transformed medicine, agriculture, and industry. Responsible use requires oversight, transparency, and ethical review.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify ethical issues in genetic engineering.</li><li>Discuss pros and cons of GMOs.</li><li>Describe future directions in biotechnology.</li><li>Analyze bioethical dilemmas.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Bioethics</strong> — ethics of biological research.</li><li><strong>GMO</strong> — genetically modified organism.</li><li><strong>CRISPR</strong> — gene editing tool.</li><li><strong>Gene therapy</strong> — correcting genetic disorders.</li></ul><h3>📚 Lesson Content</h3><h4>A. Ethical Concerns</h4><ul><li>Safety of GMO foods</li><li>Environmental impact (gene flow)</li><li>Designer babies</li><li>Privacy of genetic information</li><li>Access and cost of gene therapies</li></ul><h4>B. Future Directions</h4><ul><li>CRISPR-based therapies</li><li>Personalized medicine</li><li>Engineered organs</li><li>Synthetic biology</li></ul><h4>C. Balanced View</h4><p>Recombinant DNA technology has transformed medicine, agriculture, and industry. Responsible use requires oversight, transparency, and ethical review.</p><h3>💬 Let's Discuss</h3><p>Because genetic engineering can change living things directly, it raises questions that science alone cannot answer. <strong>Bioethics</strong> is the study of what is right and wrong in biology and medicine.</p><p><strong>Environmental concerns:</strong> genes from <strong>GMO</strong> crops could spread to wild relatives through pollen (<strong>gene flow</strong>), and pests may evolve resistance to Bt proteins. <strong>Safety and regulation:</strong> people ask whether GM foods are safe to eat. Major scientific bodies have found approved GM foods as safe as conventional ones, and in the Philippines they must pass evaluation under the Department of Agriculture's Bureau of Plant Industry before release. Still, the 2015 Supreme Court case on Bt eggplant field trials shows how much public debate exists.</p><p><strong>Genetic privacy:</strong> if insurance companies or employers learned your genetic risks, they could discriminate against you. Who should own and see your DNA data? <strong>Access and equity:</strong> gene therapies can cost millions of pesos, so they may help only the wealthy. <strong>Designer babies:</strong> new tools such as <strong>CRISPR-Cas9</strong> can edit genes precisely and cheaply. Editing body cells to cure disease is widely accepted; editing embryos so the changes are inherited — or choosing traits like height or eye color — is highly controversial. In 2018, a scientist in China was imprisoned for editing human embryos.</p><p><strong>Future directions:</strong> personalized medicine (drugs chosen by your genes), faster vaccine design, CRISPR cures for sickle-cell disease, and climate-resilient crops.</p><p>When you evaluate an issue, weigh the <em>benefits</em>, <em>risks</em>, <em>who is affected</em>, and <em>who decides</em>. <strong>Common mistake:</strong> treating every GMO as either all good or all bad; each case should be judged on evidence.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "ethics-master",
         "badgeName": "Ethics Master",
         "badgeIcon": "⚖️",
         "pairs": [
-          { "key": "bio", "left": "Bioethics", "right": "Ethics of biological research" },
-          { "key": "gmo", "left": "GMO", "right": "Genetically modified organism" },
-          { "key": "crispr", "left": "CRISPR", "right": "Gene editing tool" },
-          { "key": "therapy", "left": "Gene therapy", "right": "Corrects genetic disorders" },
-          { "key": "privacy", "left": "Genetic privacy", "right": "Ethical concern" },
-          { "key": "designer", "left": "Designer babies", "right": "Ethical dilemma" }
+          {
+            "key": "bio",
+            "left": "Bioethics",
+            "right": "Ethics of biological research",
+            "why": "Bioethics studies the moral questions raised by biology and medicine."
+          },
+          {
+            "key": "gmo",
+            "left": "GMO",
+            "right": "Genetically modified organism",
+            "why": "A GMO has DNA altered by genetic engineering."
+          },
+          {
+            "key": "crispr",
+            "left": "CRISPR",
+            "right": "Gene editing tool",
+            "why": "CRISPR-Cas9 is a precise gene-editing tool."
+          },
+          {
+            "key": "therapy",
+            "left": "Gene therapy",
+            "right": "Corrects genetic disorders",
+            "why": "Gene therapy adds or fixes genes to treat genetic disorders."
+          },
+          {
+            "key": "privacy",
+            "left": "Genetic privacy",
+            "right": "Ethical concern",
+            "why": "Genetic privacy is about who can see and use your DNA information."
+          },
+          {
+            "key": "designer",
+            "left": "Designer babies",
+            "right": "Ethical dilemma",
+            "why": "Choosing a baby's traits by editing embryos is a major ethical dilemma."
+          }
         ]
       },
       "activity2": {
@@ -179,12 +721,90 @@
         "badgeName": "Ethics Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "A GMO crop could spread genes to wild plants.", "choices": [ { "label": "Environmental concern", "correct": true }, { "label": "Medical benefit", "correct": false } ] },
-          { "text": "A couple wants to select their baby's traits.", "choices": [ { "label": "Designer baby ethics", "correct": true }, { "label": "Standard medical practice", "correct": false } ] },
-          { "text": "A person's genetic info could be used against them.", "choices": [ { "label": "Privacy concern", "correct": true }, { "label": "Environmental concern", "correct": false } ] },
-          { "text": "CRISPR corrects a mutation causing a disease.", "choices": [ { "label": "Gene therapy", "correct": true }, { "label": "GMO concern", "correct": false } ] },
-          { "text": "Gene therapy is expensive and not accessible to all.", "choices": [ { "label": "Access equity concern", "correct": true }, { "label": "Safety concern", "correct": false } ] },
-          { "text": "GMO foods are extensively tested before release.", "choices": [ { "label": "Regulatory safety", "correct": true }, { "label": "Unregulated", "correct": false } ] }
+          {
+            "text": "A GMO crop could spread genes to wild plants.",
+            "choices": [
+              {
+                "label": "Environmental concern",
+                "correct": true
+              },
+              {
+                "label": "Medical benefit",
+                "correct": false
+              }
+            ],
+            "explanation": "Genes spreading to wild plants is an environmental concern."
+          },
+          {
+            "text": "A couple wants to select their baby's traits.",
+            "choices": [
+              {
+                "label": "Designer babies",
+                "correct": true
+              },
+              {
+                "label": "Routine checkup",
+                "correct": false
+              }
+            ],
+            "explanation": "Selecting a baby's traits raises designer-baby ethics."
+          },
+          {
+            "text": "A person's genetic info could be used against them.",
+            "choices": [
+              {
+                "label": "Privacy concern",
+                "correct": true
+              },
+              {
+                "label": "Environmental concern",
+                "correct": false
+              }
+            ],
+            "explanation": "Misuse of genetic data is a privacy concern."
+          },
+          {
+            "text": "CRISPR corrects a mutation causing a disease.",
+            "choices": [
+              {
+                "label": "Gene therapy",
+                "correct": true
+              },
+              {
+                "label": "GMO concern",
+                "correct": false
+              }
+            ],
+            "explanation": "Correcting a disease-causing mutation is gene therapy."
+          },
+          {
+            "text": "Gene therapy is expensive and not accessible to all.",
+            "choices": [
+              {
+                "label": "Equity concern",
+                "correct": true
+              },
+              {
+                "label": "Safety concern",
+                "correct": false
+              }
+            ],
+            "explanation": "High cost limiting access is an equity concern."
+          },
+          {
+            "text": "GMO foods are extensively tested before release.",
+            "choices": [
+              {
+                "label": "Regulatory safety",
+                "correct": true
+              },
+              {
+                "label": "Unregulated",
+                "correct": false
+              }
+            ],
+            "explanation": "Testing before release is regulatory safety."
+          }
         ]
       },
       "formative": {
@@ -193,9 +813,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "What is a major ethical concern about GMOs?", "choices": [ { "label": "Cost", "correct": false }, { "label": "Gene flow to wild species", "correct": true }, { "label": "Too much nutrition", "correct": false }, { "label": "Too easy to grow", "correct": false } ] },
-          { "text": "CRISPR is used for:", "choices": [ { "label": "Gene editing", "correct": true }, { "label": "DNA sequencing", "correct": false }, { "label": "Protein synthesis", "correct": false }, { "label": "Cell division", "correct": false } ] },
-          { "text": "Which is a future direction of genetic engineering?", "choices": [ { "label": "Personalized medicine", "correct": true }, { "label": "Slower drug development", "correct": false }, { "label": "Less crop yield", "correct": false }, { "label": "Reduced research", "correct": false } ] }
+          {
+            "text": "What is a major ethical concern about GMOs?",
+            "choices": [
+              {
+                "label": "Cost",
+                "correct": false
+              },
+              {
+                "label": "Gene flow to wild species",
+                "correct": true
+              },
+              {
+                "label": "Too much nutrition",
+                "correct": false
+              },
+              {
+                "label": "Too easy to grow",
+                "correct": false
+              }
+            ],
+            "explanation": "Gene flow from GMOs to wild species is a major environmental concern."
+          },
+          {
+            "text": "CRISPR is used for:",
+            "choices": [
+              {
+                "label": "Gene editing",
+                "correct": true
+              },
+              {
+                "label": "DNA sequencing",
+                "correct": false
+              },
+              {
+                "label": "Protein synthesis",
+                "correct": false
+              },
+              {
+                "label": "Cell division",
+                "correct": false
+              }
+            ],
+            "explanation": "CRISPR is used for gene editing."
+          },
+          {
+            "text": "Which is a future direction of genetic engineering?",
+            "choices": [
+              {
+                "label": "Personalized medicine",
+                "correct": true
+              },
+              {
+                "label": "Slower drug development",
+                "correct": false
+              },
+              {
+                "label": "Less crop yield",
+                "correct": false
+              },
+              {
+                "label": "Reduced research",
+                "correct": false
+              }
+            ],
+            "explanation": "Personalized medicine is a growing future direction."
+          }
         ]
       },
       "takeaways": [

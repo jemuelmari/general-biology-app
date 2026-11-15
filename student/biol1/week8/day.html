@@ -30,19 +30,39 @@
 
   <footer class="app-footer"><p>General Biology 1 · Week 8 · v2.6.0</p></footer>
 
+  <script src="../../../config.js?v=2.6.0"></script>
+  <script src="../../../assets/js/app.js?v=2.6.0"></script>
+  <script src="../../../assets/js/store.js?v=2.6.0"></script>
+  <script src="../../../assets/js/sync.js?v=2.6.0"></script>
+  <script src="../../../assets/js/sync-master.js?v=2.6.0"></script>
   <script src="../../../assets/js/bundle.js?v=2.6.0"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
+      const SUBJECT = 'biol1', WEEK = 8;
       const params = new URLSearchParams(window.location.search);
-      const dayNum = parseInt(params.get('day') || '1');
+      const dayNum = parseInt(params.get('day') || '1', 10);
+      const user = Store.getCurrentUser();
+      if (!user) { window.location.href = '../../login.html'; return; }
 
-      const res = await fetch('week8.json');
+      // Days open in order: previous day (or previous week's Day 4) must be complete
+      const prevKey = dayNum > 1 ? `${SUBJECT}-w${WEEK}-d${dayNum - 1}` : (WEEK > 1 ? `${SUBJECT}-w${WEEK - 1}-d4` : null);
+      const isDone = () => ((Store.getProgress(user.lrn)[SUBJECT] || {}).completed || []).includes(prevKey);
+      if (prevKey && !isDone() && navigator.onLine && window.SyncMaster) {
+        // maybe it was finished on another device: pull once (max 5 s)
+        await Promise.race([SyncMaster.pullFromBackend(user.lrn).catch(() => null), new Promise((r) => setTimeout(r, 5000))]);
+      }
+      if (prevKey && !isDone()) {
+        document.getElementById('lesson-content').innerHTML =
+          '<div class="card text-center"><div style="font-size:2.5rem;">🔒</div><h2>Locked</h2><p class="text-muted">Finish the previous day first (pass its Formative).</p><a class="btn btn-primary" href="index.html">← Back to Week ' + WEEK + '</a></div>';
+        return;
+      }
+
+      const res = await fetch('week8.json?v=' + encodeURIComponent(CONFIG.VERSION));
       const week = await res.json();
-      const day = week.days.find((d) => d.n === dayNum);
+      const day = week.days.find((d) => Number(d.n) === dayNum);
 
       if (!day) {
-        document.getElementById('lesson-content').innerHTML =
-          '<div class="alert alert-danger">Lesson not found.</div>';
+        document.getElementById('lesson-content').innerHTML = '<div class="alert alert-danger">Lesson not found.</div>';
         return;
       }
 
@@ -54,20 +74,18 @@
           <h2>📖 ${day.title}</h2>
           <p class="text-muted text-small">Competency: ${day.competency}</p>
           ${day.content}
-        </div>
-      `;
+        </div>`;
 
       document.getElementById('lesson-footer').innerHTML = `
         <h3>📌 Key Takeaways</h3>
-        <ul>${day.takeaways.map((t) => `<li>${t}</li>`).join('')}</ul>
+        <ul>${(day.takeaways || []).map((t) => `<li>${t}</li>`).join('')}</ul>
         <h3>📚 References</h3>
         <ul class="text-small text-muted">
-          <li>Reece, J. B. et al. (2011). <em>Campbell Biology</em> (9th ed.). Pearson.</li>
-          <li>DepEd K to 12 Curriculum Guide — Biology 1 (August 2016).</li>
-        </ul>
-      `;
+          <li>Urry, L. A. et al. (2020). <em>Campbell Biology</em> (12th ed.). Pearson.</li>
+          <li>DepEd K to 12 Senior High School STEM Specialized Subject Curriculum Guide — General Biology 1.</li>
+        </ul>`;
 
-      window.Lesson.init({ subject: 'biol1', week: 8, day: day.n, title: day.title, maxPoints: 300 });
+      window.Lesson.init({ subject: SUBJECT, week: WEEK, day: day.n, title: day.title, maxPoints: 300 });
       window.Lesson.renderMatchGame('activity-1', day.activity1);
       window.Lesson.renderScenarioGame('activity-2', day.activity2);
       window.Lesson.renderEscapeRoom('formative', day.formative);

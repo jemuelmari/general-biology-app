@@ -169,4 +169,20 @@
 
   renderHeader();
   populateForm();
+
+  // The class list in the Google Sheet is the official record: a student device can no longer
+  // rename itself (any device can send data with any LRN). Corrections are made by the teacher.
+  (function lockForm() {
+    form.querySelectorAll('input, select').forEach((el) => { el.disabled = true; });
+    const submit = form.querySelector('button[type="submit"]');
+    if (submit) submit.style.display = 'none';
+    const reset = document.getElementById('btn-reset');
+    if (reset) reset.style.display = 'none';
+    const note = document.createElement('div');
+    note.className = 'alert alert-info';
+    note.style.marginBottom = '12px';
+    note.textContent = 'ℹ️ Your name, sex, grade and section come from your teacher\'s class list. If something is wrong, ask your teacher to correct it — the change will appear here after the next sync.';
+    form.insertBefore(note, form.firstChild);
+  })();
+
 })();

@@ -6,18 +6,43 @@
       "n": 1,
       "title": "Descent with Modification & Common Ancestry",
       "competency": "STEM_BIO11/12-IIIC-g-10",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define descent with modification.</li><li>Explain common ancestry.</li><li>Describe how species diverge over time.</li><li>Relate phylogeny to evolutionary history.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Descent with modification</strong> — species change over time and share common ancestors.</li><li><strong>Common ancestry</strong> — all life shares a common ancestor.</li><li><strong>Phylogeny</strong> — evolutionary history of a species.</li><li><strong>Speciation</strong> — formation of new species.</li></ul><h3>📚 Lesson Content</h3><h4>A. Descent with Modification</h4><p>Darwin proposed that species change over time through natural selection, and that all species descend from common ancestors.</p><h4>B. Common Ancestry</h4><ul><li>All life shares fundamental features (DNA, ribosomes, ATP)</li><li>Similarities reflect shared ancestry</li><li>Differences reflect adaptations</li></ul><h4>C. Phylogeny</h4><p>Phylogenetic trees show evolutionary relationships. The base represents a common ancestor; branches represent lineages.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define descent with modification.</li><li>Explain common ancestry.</li><li>Describe how species diverge over time.</li><li>Relate phylogeny to evolutionary history.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Descent with modification</strong> — species change over time and share common ancestors.</li><li><strong>Common ancestry</strong> — all life shares a common ancestor.</li><li><strong>Phylogeny</strong> — evolutionary history of a species.</li><li><strong>Speciation</strong> — formation of new species.</li></ul><h3>📚 Lesson Content</h3><h4>A. Descent with Modification</h4><p>Darwin proposed that species change over time through natural selection, and that all species descend from common ancestors.</p><h4>B. Common Ancestry</h4><ul><li>All life shares fundamental features (DNA, ribosomes, ATP)</li><li>Similarities reflect shared ancestry</li><li>Differences reflect adaptations</li></ul><h4>C. Phylogeny</h4><p>Phylogenetic trees show evolutionary relationships. The base represents a common ancestor; branches represent lineages.</p><h3>💬 Let's Discuss</h3><p>Darwin summarized evolution in three words: <strong>descent with modification</strong>. \"Descent\" means that species today are descended from earlier species; \"modification\" means that, over many generations, descendants change from their ancestors. Follow the branches back far enough and every living thing — bacteria, mushrooms, mango trees, carabaos and you — shares a <strong>common ancestor</strong>.</p><p>The strongest evidence for a single origin of life is what all organisms share at the deepest level: every cell uses <strong>DNA</strong> as its genetic material, the same <strong>genetic code</strong> (the codon AUG means methionine in a bacterium and in a human), <strong>ribosomes</strong> to make proteins, and <strong>ATP</strong> as its energy currency. It is very unlikely that all these would match by coincidence.</p><p>When populations of one species become separated and accumulate different changes, they may become unable to interbreed. This is <strong>speciation</strong>, the formation of new species, and it is how one ancestor gives rise to many descendants. The Philippines, with over 7,000 islands, is a natural laboratory: many species of tarsiers, cloud rats and hornbills evolved on separate islands from shared ancestors.</p><p>These relationships are shown in a <strong>phylogenetic tree</strong>, a branching diagram of <strong>phylogeny</strong> (evolutionary history). Branch points stand for common ancestors; tips are descendant species. Structures that look different but share an underlying pattern because of common ancestry are <strong>homologous</strong> (the arm of a human and the flipper of a whale).</p><p><strong>Common mistake:</strong> \"Humans evolved from chimpanzees.\" Humans and chimpanzees are cousins: both descended from a common ancestor that lived about 6–7 million years ago.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "descent-master",
         "badgeName": "Descent Master",
         "badgeIcon": "🌳",
         "pairs": [
-          { "key": "dm", "left": "Descent with modification", "right": "Species change and share ancestors" },
-          { "key": "ca", "left": "Common ancestry", "right": "All life shares one ancestor" },
-          { "key": "phy", "left": "Phylogeny", "right": "Evolutionary history" },
-          { "key": "spec", "left": "Speciation", "right": "Formation of new species" },
-          { "key": "tree", "left": "Phylogenetic tree", "right": "Diagram of relationships" }
+          {
+            "key": "dm",
+            "left": "Descent with modification",
+            "right": "Species change and share ancestors",
+            "why": "Species change over time and are descended from ancestors."
+          },
+          {
+            "key": "ca",
+            "left": "Common ancestry",
+            "right": "All life shares one ancestor",
+            "why": "All life traces back to one common ancestor."
+          },
+          {
+            "key": "phy",
+            "left": "Phylogeny",
+            "right": "Evolutionary history",
+            "why": "A phylogeny is the evolutionary history of a group."
+          },
+          {
+            "key": "spec",
+            "left": "Speciation",
+            "right": "Formation of new species",
+            "why": "Speciation is the formation of new species."
+          },
+          {
+            "key": "tree",
+            "left": "Phylogenetic tree",
+            "right": "Diagram of relationships",
+            "why": "A phylogenetic tree diagrams evolutionary relationships."
+          }
         ]
       },
       "activity2": {
@@ -26,12 +51,90 @@
         "badgeName": "Descent Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Two species share a recent common ancestor.", "choices": [ { "label": "Close relatives", "correct": true }, { "label": "Unrelated", "correct": false } ] },
-          { "text": "All living things use DNA and ATP.", "choices": [ { "label": "Evidence of common ancestry", "correct": true }, { "label": "Coincidence", "correct": false } ] },
-          { "text": "A diagram shows evolutionary relationships.", "choices": [ { "label": "Phylogenetic tree", "correct": true }, { "label": "Pedigree", "correct": false } ] },
-          { "text": "Two populations diverge into separate species.", "choices": [ { "label": "Speciation", "correct": true }, { "label": "Extinction", "correct": false } ] },
-          { "text": "Similar structures in different species due to shared ancestry.", "choices": [ { "label": "Homology", "correct": true }, { "label": "Analogy", "correct": false } ] },
-          { "text": "Darwin's phrase for evolutionary change.", "choices": [ { "label": "Descent with modification", "correct": true }, { "label": "Spontaneous generation", "correct": false } ] }
+          {
+            "text": "Two species share a recent common ancestor.",
+            "choices": [
+              {
+                "label": "Close relatives",
+                "correct": true
+              },
+              {
+                "label": "Unrelated",
+                "correct": false
+              }
+            ],
+            "explanation": "A recent shared ancestor means the species are close relatives."
+          },
+          {
+            "text": "All living things use DNA and ATP.",
+            "choices": [
+              {
+                "label": "Common ancestry",
+                "correct": true
+              },
+              {
+                "label": "Coincidence",
+                "correct": false
+              }
+            ],
+            "explanation": "Shared DNA and ATP across all life point to common ancestry."
+          },
+          {
+            "text": "A diagram shows evolutionary relationships.",
+            "choices": [
+              {
+                "label": "Phylogenetic tree",
+                "correct": true
+              },
+              {
+                "label": "Pedigree chart",
+                "correct": false
+              }
+            ],
+            "explanation": "Evolutionary relationships are drawn as a phylogenetic tree."
+          },
+          {
+            "text": "Two populations diverge into separate species.",
+            "choices": [
+              {
+                "label": "Speciation",
+                "correct": true
+              },
+              {
+                "label": "Extinction",
+                "correct": false
+              }
+            ],
+            "explanation": "Populations becoming separate species is speciation."
+          },
+          {
+            "text": "Similar structures in different species due to shared ancestry.",
+            "choices": [
+              {
+                "label": "Homology",
+                "correct": true
+              },
+              {
+                "label": "Analogy",
+                "correct": false
+              }
+            ],
+            "explanation": "Similar structures from shared ancestry are homologous."
+          },
+          {
+            "text": "Darwin's phrase for evolutionary change.",
+            "choices": [
+              {
+                "label": "Descent with modification",
+                "correct": true
+              },
+              {
+                "label": "Spontaneous generation",
+                "correct": false
+              }
+            ],
+            "explanation": "Darwin called evolutionary change 'descent with modification'."
+          }
         ]
       },
       "formative": {
@@ -40,9 +143,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "What does 'descent with modification' mean?", "choices": [ { "label": "Species don't change", "correct": false }, { "label": "Species change over time and share ancestors", "correct": true }, { "label": "All species are unrelated", "correct": false }, { "label": "Evolution is random", "correct": false } ] },
-          { "text": "A phylogenetic tree shows:", "choices": [ { "label": "Food chains", "correct": false }, { "label": "Evolutionary relationships", "correct": true }, { "label": "Cell structure", "correct": false }, { "label": "Genetic diseases", "correct": false } ] },
-          { "text": "Shared DNA across all life is evidence of:", "choices": [ { "label": "Common ancestry", "correct": true }, { "label": "Random chance", "correct": false }, { "label": "Spontaneous generation", "correct": false }, { "label": "Convergent evolution", "correct": false } ] }
+          {
+            "text": "What does 'descent with modification' mean?",
+            "choices": [
+              {
+                "label": "Species never change over time",
+                "correct": false
+              },
+              {
+                "label": "Species change and share ancestors",
+                "correct": true
+              },
+              {
+                "label": "All species are completely unrelated",
+                "correct": false
+              },
+              {
+                "label": "Evolution happens with no causes at all",
+                "correct": false
+              }
+            ],
+            "explanation": "Descent with modification means species change over time and share ancestors."
+          },
+          {
+            "text": "A phylogenetic tree shows:",
+            "choices": [
+              {
+                "label": "Feeding links in a food chain",
+                "correct": false
+              },
+              {
+                "label": "Evolutionary relationships",
+                "correct": true
+              },
+              {
+                "label": "Structures inside a cell",
+                "correct": false
+              },
+              {
+                "label": "Inherited genetic diseases",
+                "correct": false
+              }
+            ],
+            "explanation": "A phylogenetic tree shows evolutionary relationships."
+          },
+          {
+            "text": "Shared DNA across all life is evidence of:",
+            "choices": [
+              {
+                "label": "Common ancestry",
+                "correct": true
+              },
+              {
+                "label": "Random chance",
+                "correct": false
+              },
+              {
+                "label": "Spontaneous generation",
+                "correct": false
+              },
+              {
+                "label": "Convergent evolution",
+                "correct": false
+              }
+            ],
+            "explanation": "Universal DNA and genetic code point to common ancestry."
+          }
         ]
       },
       "takeaways": [
@@ -56,19 +222,49 @@
       "n": 2,
       "title": "Development of Evolutionary Thought",
       "competency": "STEM_BIO11/12-IIIC-g-11",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Trace the history of evolutionary thought.</li><li>Compare Lamarck's and Darwin's ideas.</li><li>Explain Darwin's contributions.</li><li>Describe the modern synthesis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Lamarckism</strong> — inheritance of acquired characteristics (disproven).</li><li><strong>Darwinism</strong> — natural selection as the mechanism of evolution.</li><li><strong>Modern synthesis</strong> — combines Darwinism with genetics.</li></ul><h3>📚 Lesson Content</h3><h4>A. Early Thinkers</h4><ul><li><strong>Linnaeus</strong> — classification system</li><li><strong>Cuvier</strong> — fossils, catastrophism</li><li><strong>Lamarck</strong> — inheritance of acquired characteristics</li><li><strong>Malthus</strong> — populations grow faster than resources</li></ul><h4>B. Darwin & Wallace</h4><ul><li>Voyage of the HMS Beagle (1831–1836)</li><li>Observations in the Galápagos Islands</li><li>On the Origin of Species (1859)</li><li>Natural selection as the mechanism</li></ul><h4>C. Modern Synthesis</h4><ul><li>Combines Darwin's natural selection with Mendel's genetics</li><li>Explains how variation arises</li><li>Forms the basis of modern biology</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Trace the history of evolutionary thought.</li><li>Compare Lamarck's and Darwin's ideas.</li><li>Explain Darwin's contributions.</li><li>Describe the modern synthesis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Lamarckism</strong> — inheritance of acquired characteristics (disproven).</li><li><strong>Darwinism</strong> — natural selection as the mechanism of evolution.</li><li><strong>Modern synthesis</strong> — combines Darwinism with genetics.</li></ul><h3>📚 Lesson Content</h3><h4>A. Early Thinkers</h4><ul><li><strong>Linnaeus</strong> — classification system</li><li><strong>Cuvier</strong> — fossils, catastrophism</li><li><strong>Lamarck</strong> — inheritance of acquired characteristics</li><li><strong>Malthus</strong> — populations grow faster than resources</li></ul><h4>B. Darwin & Wallace</h4><ul><li>Voyage of the HMS Beagle (1831–1836)</li><li>Observations in the Galápagos Islands</li><li>On the Origin of Species (1859)</li><li>Natural selection as the mechanism</li></ul><h4>C. Modern Synthesis</h4><ul><li>Combines Darwin's natural selection with Mendel's genetics</li><li>Explains how variation arises</li><li>Forms the basis of modern biology</li></ul><h3>💬 Let's Discuss</h3><p>Ideas about how living things change developed over about a century, and comparing them shows how science improves.</p><p><strong>Jean-Baptiste Lamarck</strong> (1809) was one of the first to say clearly that species change over time — an important step. But his mechanism was the <strong>inheritance of acquired characteristics</strong>: organisms change during their lifetime through use or disuse of body parts, and pass those changes to offspring. In his giraffe example, ancestors stretched their necks to reach leaves, and their slightly longer necks were inherited. We now know this is wrong for most traits: a bodybuilder's muscles or a tattoo are not passed to children, because changes in body cells do not change the DNA in gametes.</p><p><strong>Charles Darwin</strong> sailed around the world on the <strong>HMS Beagle</strong> (1831–1836). He studied fossils, and finches and tortoises on the Galápagos Islands that differed from island to island. Combined with ideas on population growth from Malthus and on Earth's age from geologist Charles Lyell, this led him to <strong>natural selection</strong>. <strong>Alfred Russel Wallace</strong>, working in the Malay Archipelago, reached the same idea independently; their papers were presented together in 1858. Darwin's book <strong><em>On the Origin of Species</em></strong> appeared in <strong>1859</strong>.</p><p>Darwin did not know how traits were inherited. Mendel's work, rediscovered in 1900, provided the answer. In the 1930s–40s, the <strong>modern synthesis</strong> combined <strong>natural selection with genetics</strong>, defining evolution as a change in allele frequencies in a population.</p><p><strong>Compare giraffes:</strong> Lamarck — necks grew <em>because</em> of stretching; Darwin — giraffes that <em>already</em> had longer necks survived and reproduced more.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "thought-master",
         "badgeName": "Evolutionary Thought Master",
         "badgeIcon": "📜",
         "pairs": [
-          { "key": "lam", "left": "Lamarck", "right": "Inheritance of acquired traits" },
-          { "key": "dar", "left": "Darwin", "right": "Natural selection" },
-          { "key": "wall", "left": "Wallace", "right": "Co-founder of natural selection" },
-          { "key": "beagle", "left": "HMS Beagle", "right": "Darwin's voyage" },
-          { "key": "origin", "left": "On the Origin of Species", "right": "1859 book by Darwin" },
-          { "key": "mod", "left": "Modern synthesis", "right": "Darwinism + genetics" }
+          {
+            "key": "lam",
+            "left": "Lamarck",
+            "right": "Inheritance of acquired traits",
+            "why": "Lamarck proposed that traits acquired in life are inherited."
+          },
+          {
+            "key": "dar",
+            "left": "Darwin",
+            "right": "Natural selection",
+            "why": "Darwin proposed natural selection as the mechanism of evolution."
+          },
+          {
+            "key": "wall",
+            "left": "Wallace",
+            "right": "Co-founder of natural selection",
+            "why": "Wallace independently arrived at natural selection."
+          },
+          {
+            "key": "beagle",
+            "left": "HMS Beagle",
+            "right": "Darwin's voyage",
+            "why": "Darwin's observations on the Beagle voyage shaped his theory."
+          },
+          {
+            "key": "origin",
+            "left": "On the Origin of Species",
+            "right": "1859 book by Darwin",
+            "why": "Darwin published On the Origin of Species in 1859."
+          },
+          {
+            "key": "mod",
+            "left": "Modern synthesis",
+            "right": "Darwinism + genetics",
+            "why": "The modern synthesis joined natural selection with Mendelian genetics."
+          }
         ]
       },
       "activity2": {
@@ -77,12 +273,90 @@
         "badgeName": "Thought Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Giraffes stretch their necks and pass long necks to offspring.", "choices": [ { "label": "Lamarck", "correct": true }, { "label": "Darwin", "correct": false } ] },
-          { "text": "Longer-necked giraffes survive better and pass genes.", "choices": [ { "label": "Darwin", "correct": true }, { "label": "Lamarck", "correct": false } ] },
-          { "text": "A naturalist sailed on the HMS Beagle.", "choices": [ { "label": "Darwin", "correct": true }, { "label": "Lamarck", "correct": false } ] },
-          { "text": "Published 'On the Origin of Species' in 1859.", "choices": [ { "label": "Darwin", "correct": true }, { "label": "Wallace", "correct": false } ] },
-          { "text": "Proposed natural selection independently.", "choices": [ { "label": "Wallace", "correct": true }, { "label": "Lamarck", "correct": false } ] },
-          { "text": "Combines Darwin's ideas with genetics.", "choices": [ { "label": "Modern synthesis", "correct": true }, { "label": "Lamarckism", "correct": false } ] }
+          {
+            "text": "Giraffes stretch their necks and pass long necks to offspring.",
+            "choices": [
+              {
+                "label": "Lamarck",
+                "correct": true
+              },
+              {
+                "label": "Darwin",
+                "correct": false
+              }
+            ],
+            "explanation": "Passing on a trait gained by stretching is Lamarck's idea."
+          },
+          {
+            "text": "Longer-necked giraffes survive better and pass genes.",
+            "choices": [
+              {
+                "label": "Darwin",
+                "correct": true
+              },
+              {
+                "label": "Lamarck",
+                "correct": false
+              }
+            ],
+            "explanation": "Survival of giraffes already having long necks is Darwin's idea."
+          },
+          {
+            "text": "A naturalist sailed on the HMS Beagle.",
+            "choices": [
+              {
+                "label": "Darwin",
+                "correct": true
+              },
+              {
+                "label": "Lamarck",
+                "correct": false
+              }
+            ],
+            "explanation": "Darwin sailed on the HMS Beagle."
+          },
+          {
+            "text": "Published 'On the Origin of Species' in 1859.",
+            "choices": [
+              {
+                "label": "Darwin",
+                "correct": true
+              },
+              {
+                "label": "Wallace",
+                "correct": false
+              }
+            ],
+            "explanation": "Darwin published On the Origin of Species in 1859."
+          },
+          {
+            "text": "Proposed natural selection independently.",
+            "choices": [
+              {
+                "label": "Wallace",
+                "correct": true
+              },
+              {
+                "label": "Lamarck",
+                "correct": false
+              }
+            ],
+            "explanation": "Wallace proposed natural selection independently."
+          },
+          {
+            "text": "Combines Darwin's ideas with genetics.",
+            "choices": [
+              {
+                "label": "Modern synthesis",
+                "correct": true
+              },
+              {
+                "label": "Lamarckism",
+                "correct": false
+              }
+            ],
+            "explanation": "The modern synthesis combines Darwin's theory with genetics."
+          }
         ]
       },
       "formative": {
@@ -91,9 +365,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Who proposed the inheritance of acquired characteristics?", "choices": [ { "label": "Darwin", "correct": false }, { "label": "Lamarck", "correct": true }, { "label": "Wallace", "correct": false }, { "label": "Mendel", "correct": false } ] },
-          { "text": "Darwin's key contribution was:", "choices": [ { "label": "Classification", "correct": false }, { "label": "Natural selection", "correct": true }, { "label": "Genetics", "correct": false }, { "label": "Cell theory", "correct": false } ] },
-          { "text": "What does the modern synthesis combine?", "choices": [ { "label": "Darwinism + genetics", "correct": true }, { "label": "Lamarckism + Darwinism", "correct": false }, { "label": "Genetics + cell theory", "correct": false }, { "label": "Evolution + creationism", "correct": false } ] }
+          {
+            "text": "Who proposed the inheritance of acquired characteristics?",
+            "choices": [
+              {
+                "label": "Darwin",
+                "correct": false
+              },
+              {
+                "label": "Lamarck",
+                "correct": true
+              },
+              {
+                "label": "Wallace",
+                "correct": false
+              },
+              {
+                "label": "Mendel",
+                "correct": false
+              }
+            ],
+            "explanation": "Lamarck proposed inheritance of acquired characteristics."
+          },
+          {
+            "text": "Darwin's key contribution was:",
+            "choices": [
+              {
+                "label": "Classification",
+                "correct": false
+              },
+              {
+                "label": "Natural selection",
+                "correct": true
+              },
+              {
+                "label": "Genetics",
+                "correct": false
+              },
+              {
+                "label": "Cell theory",
+                "correct": false
+              }
+            ],
+            "explanation": "Darwin's key contribution was natural selection."
+          },
+          {
+            "text": "What does the modern synthesis combine?",
+            "choices": [
+              {
+                "label": "Darwinism and genetics",
+                "correct": true
+              },
+              {
+                "label": "Lamarckism and Darwinism",
+                "correct": false
+              },
+              {
+                "label": "Genetics and cell theory",
+                "correct": false
+              },
+              {
+                "label": "Evolution and creationism",
+                "correct": false
+              }
+            ],
+            "explanation": "The modern synthesis combines natural selection with genetics."
+          }
         ]
       },
       "takeaways": [
@@ -107,19 +444,49 @@
       "n": 3,
       "title": "Evidence of Evolution",
       "competency": "STEM_BIO11/12-IIIC-g-12",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe multiple lines of evidence for evolution.</li><li>Explain biogeography.</li><li>Describe the fossil record.</li><li>Explain homology and molecular evidence.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Biogeography</strong> — geographic distribution of species.</li><li><strong>Fossil record</strong> — preserved remains showing past life.</li><li><strong>Homology</strong> — similar structures from common ancestry.</li><li><strong>Molecular evidence</strong> — DNA/protein similarities.</li></ul><h3>📚 Lesson Content</h3><h4>A. Lines of Evidence</h4><table><thead><tr><th>Type</th><th>Example</th></tr></thead><tbody><tr><td>Biogeography</td><td>Island species resemble mainland species</td></tr><tr><td>Fossil record</td><td>Transitional fossils (e.g., Archaeopteryx)</td></tr><tr><td>Comparative anatomy</td><td>Homologous structures (forelimbs of mammals)</td></tr><tr><td>Comparative embryology</td><td>Embryos of related species look similar</td></tr><tr><td>Molecular biology</td><td>DNA/protein sequence similarities</td></tr><tr><td>Direct observation</td><td>Antibiotic resistance in bacteria</td></tr></tbody></table><h4>B. Vestigial Structures</h4><ul><li>Structures with reduced function</li><li>Examples: human appendix, whale pelvic bones</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe multiple lines of evidence for evolution.</li><li>Explain biogeography.</li><li>Describe the fossil record.</li><li>Explain homology and molecular evidence.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Biogeography</strong> — geographic distribution of species.</li><li><strong>Fossil record</strong> — preserved remains showing past life.</li><li><strong>Homology</strong> — similar structures from common ancestry.</li><li><strong>Molecular evidence</strong> — DNA/protein similarities.</li></ul><h3>📚 Lesson Content</h3><h4>A. Lines of Evidence</h4><table><thead><tr><th>Type</th><th>Example</th></tr></thead><tbody><tr><td>Biogeography</td><td>Island species resemble mainland species</td></tr><tr><td>Fossil record</td><td>Transitional fossils (e.g., Archaeopteryx)</td></tr><tr><td>Comparative anatomy</td><td>Homologous structures (forelimbs of mammals)</td></tr><tr><td>Comparative embryology</td><td>Embryos of related species look similar</td></tr><tr><td>Molecular biology</td><td>DNA/protein sequence similarities</td></tr><tr><td>Direct observation</td><td>Antibiotic resistance in bacteria</td></tr></tbody></table><h4>B. Vestigial Structures</h4><ul><li>Structures with reduced function</li><li>Examples: human appendix, whale pelvic bones</li></ul><h3>💬 Let's Discuss</h3><p>Evolution is supported by many independent lines of evidence that all point to the same conclusion.</p><p><strong>Fossil record.</strong> Fossils in rock layers show life changing over time, with simpler organisms in older layers. <strong>Transitional fossils</strong> show intermediate features: <em>Archaeopteryx</em> had feathers like a bird but teeth, claws and a bony tail like a reptile; <em>Tiktaalik</em> was a fish with limb-like fins.</p><p><strong>Comparative anatomy.</strong> <strong>Homologous structures</strong> have the same basic bone pattern but different functions — the forelimbs of humans (grasping), whales (swimming), bats (flying) and cats (walking) — showing descent from a common ancestor. <strong>Analogous structures</strong>, like the wings of insects and birds, do the same job but evolved separately; they show similar environments, not close relationship. <strong>Vestigial structures</strong> are reduced, with little or no function: the human tailbone, the pelvic bones of whales and pythons, wisdom teeth.</p><p><strong>Comparative embryology.</strong> Early embryos of fish, chickens and humans look alike, with pharyngeal pouches and tails, revealing shared developmental genes.</p><p><strong>Molecular biology.</strong> The more closely related two species are, the more similar their DNA and proteins. Human and chimpanzee DNA is about <strong>98–99%</strong> identical; human and mouse proteins are less similar; human and yeast less still.</p><p><strong>Biogeography.</strong> Species on islands resemble those on the nearest mainland, not those on islands with similar climates far away. Palawan's wildlife, for example, resembles that of Borneo, to which it was once connected.</p><p><strong>Common mistake:</strong> using analogous structures as evidence of close relationship. Only homologous structures indicate common ancestry.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "evidence-master",
         "badgeName": "Evidence Master",
         "badgeIcon": "🔍",
         "pairs": [
-          { "key": "bio", "left": "Biogeography", "right": "Geographic distribution" },
-          { "key": "fossil", "left": "Fossil record", "right": "Preserved remains" },
-          { "key": "hom", "left": "Homology", "right": "Similar structures, shared ancestry" },
-          { "key": "emb", "left": "Embryology", "right": "Similar embryos in related species" },
-          { "key": "mol", "left": "Molecular", "right": "DNA/protein similarities" },
-          { "key": "vest", "left": "Vestigial", "right": "Reduced-function structures" }
+          {
+            "key": "bio",
+            "left": "Biogeography",
+            "right": "Geographic distribution",
+            "why": "Biogeography studies where species are found and why."
+          },
+          {
+            "key": "fossil",
+            "left": "Fossil record",
+            "right": "Preserved remains",
+            "why": "The fossil record preserves evidence of past life."
+          },
+          {
+            "key": "hom",
+            "left": "Homology",
+            "right": "Similar structures, shared ancestry",
+            "why": "Homologous structures share an underlying pattern from common ancestry."
+          },
+          {
+            "key": "emb",
+            "left": "Embryology",
+            "right": "Similar embryos in related species",
+            "why": "Related species have similar early embryos."
+          },
+          {
+            "key": "mol",
+            "left": "Molecular",
+            "right": "DNA/protein similarities",
+            "why": "Molecular evidence compares DNA and protein sequences."
+          },
+          {
+            "key": "vest",
+            "left": "Vestigial",
+            "right": "Reduced-function structures",
+            "why": "Vestigial structures are reduced and have little or no function."
+          }
         ]
       },
       "activity2": {
@@ -128,12 +495,90 @@
         "badgeName": "Evidence Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Forelimbs of humans, whales, and bats share a similar bone pattern.", "choices": [ { "label": "Homology", "correct": true }, { "label": "Analogy", "correct": false } ] },
-          { "text": "Island species resemble nearby mainland species.", "choices": [ { "label": "Biogeography", "correct": true }, { "label": "Embryology", "correct": false } ] },
-          { "text": "Archaeopteryx has features of both reptiles and birds.", "choices": [ { "label": "Fossil record", "correct": true }, { "label": "Molecular evidence", "correct": false } ] },
-          { "text": "Human and chimp DNA is ~98% identical.", "choices": [ { "label": "Molecular evidence", "correct": true }, { "label": "Biogeography", "correct": false } ] },
-          { "text": "Whales have pelvic bones that no longer function.", "choices": [ { "label": "Vestigial structures", "correct": true }, { "label": "Homology", "correct": false } ] },
-          { "text": "Chicken, human, and fish embryos look similar early on.", "choices": [ { "label": "Comparative embryology", "correct": true }, { "label": "Fossil record", "correct": false } ] }
+          {
+            "text": "Forelimbs of humans, whales, and bats share a similar bone pattern.",
+            "choices": [
+              {
+                "label": "Homology",
+                "correct": true
+              },
+              {
+                "label": "Analogy",
+                "correct": false
+              }
+            ],
+            "explanation": "The same bone pattern in different limbs is homology."
+          },
+          {
+            "text": "Island species resemble nearby mainland species.",
+            "choices": [
+              {
+                "label": "Biogeography",
+                "correct": true
+              },
+              {
+                "label": "Embryology",
+                "correct": false
+              }
+            ],
+            "explanation": "Island species resembling nearby mainland species is biogeography."
+          },
+          {
+            "text": "Archaeopteryx has features of both reptiles and birds.",
+            "choices": [
+              {
+                "label": "Fossil record",
+                "correct": true
+              },
+              {
+                "label": "Molecular evidence",
+                "correct": false
+              }
+            ],
+            "explanation": "Archaeopteryx, a transitional fossil, is fossil evidence."
+          },
+          {
+            "text": "Human and chimp DNA is ~98% identical.",
+            "choices": [
+              {
+                "label": "Molecular evidence",
+                "correct": true
+              },
+              {
+                "label": "Biogeography",
+                "correct": false
+              }
+            ],
+            "explanation": "Comparing DNA sequences is molecular evidence."
+          },
+          {
+            "text": "Whales have pelvic bones that no longer function.",
+            "choices": [
+              {
+                "label": "Vestigial",
+                "correct": true
+              },
+              {
+                "label": "Homologous",
+                "correct": false
+              }
+            ],
+            "explanation": "Pelvic bones in whales are vestigial."
+          },
+          {
+            "text": "Chicken, human, and fish embryos look similar early on.",
+            "choices": [
+              {
+                "label": "Embryology",
+                "correct": true
+              },
+              {
+                "label": "Fossil record",
+                "correct": false
+              }
+            ],
+            "explanation": "Similar early embryos are evidence from embryology."
+          }
         ]
       },
       "formative": {
@@ -142,9 +587,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Which is evidence from comparative anatomy?", "choices": [ { "label": "Homologous structures", "correct": true }, { "label": "Fossil age", "correct": false }, { "label": "DNA sequences", "correct": false }, { "label": "Geographic location", "correct": false } ] },
-          { "text": "Vestigial structures are:", "choices": [ { "label": "Newly evolved", "correct": false }, { "label": "Reduced in function", "correct": true }, { "label": "Only in plants", "correct": false }, { "label": "Always harmful", "correct": false } ] },
-          { "text": "Which line of evidence compares embryos?", "choices": [ { "label": "Embryology", "correct": true }, { "label": "Biogeography", "correct": false }, { "label": "Molecular", "correct": false }, { "label": "Fossil", "correct": false } ] }
+          {
+            "text": "Which is evidence from comparative anatomy?",
+            "choices": [
+              {
+                "label": "Homologous structures",
+                "correct": true
+              },
+              {
+                "label": "Fossil age",
+                "correct": false
+              },
+              {
+                "label": "DNA sequences",
+                "correct": false
+              },
+              {
+                "label": "Geographic location",
+                "correct": false
+              }
+            ],
+            "explanation": "Homologous structures are evidence from comparative anatomy."
+          },
+          {
+            "text": "Vestigial structures are:",
+            "choices": [
+              {
+                "label": "Newly evolved",
+                "correct": false
+              },
+              {
+                "label": "Reduced in function",
+                "correct": true
+              },
+              {
+                "label": "Only in plants",
+                "correct": false
+              },
+              {
+                "label": "Always harmful",
+                "correct": false
+              }
+            ],
+            "explanation": "Vestigial structures have reduced or no function."
+          },
+          {
+            "text": "Which line of evidence compares embryos?",
+            "choices": [
+              {
+                "label": "Embryology",
+                "correct": true
+              },
+              {
+                "label": "Biogeography",
+                "correct": false
+              },
+              {
+                "label": "Molecular",
+                "correct": false
+              },
+              {
+                "label": "Fossil",
+                "correct": false
+              }
+            ],
+            "explanation": "Comparing embryos is embryology."
+          }
         ]
       },
       "takeaways": [
@@ -158,18 +666,43 @@
       "n": 4,
       "title": "Inferring Evolutionary Relationships",
       "competency": "STEM_BIO11/12-IIIC-g-13",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Use evidence to infer relationships.</li><li>Explain how molecular data builds trees.</li><li>Describe how fossils fill gaps.</li><li>Interpret phylogenetic trees.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Phylogenetic tree</strong> — diagram of evolutionary relationships.</li><li><strong>Node</strong> — common ancestor point.</li><li><strong>Clade</strong> — ancestor + all descendants.</li><li><strong>Molecular clock</strong> — uses DNA differences to estimate time.</li></ul><h3>📚 Lesson Content</h3><h4>A. Inferring Relationships</h4><ul><li>Compare anatomy, embryology, DNA, fossils</li><li>Shared features → shared ancestry</li><li>More shared features → closer relationship</li></ul><h4>B. Molecular Clocks</h4><p>Assume mutation rate is roughly constant over time. The more differences in DNA, the longer ago two species diverged.</p><h4>C. Reading a Phylogenetic Tree</h4><ul><li>Nodes = common ancestors</li><li>Branch length = time or amount of change</li><li>Tips = present-day species</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Use evidence to infer relationships.</li><li>Explain how molecular data builds trees.</li><li>Describe how fossils fill gaps.</li><li>Interpret phylogenetic trees.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Phylogenetic tree</strong> — diagram of evolutionary relationships.</li><li><strong>Node</strong> — common ancestor point.</li><li><strong>Clade</strong> — ancestor + all descendants.</li><li><strong>Molecular clock</strong> — uses DNA differences to estimate time.</li></ul><h3>📚 Lesson Content</h3><h4>A. Inferring Relationships</h4><ul><li>Compare anatomy, embryology, DNA, fossils</li><li>Shared features → shared ancestry</li><li>More shared features → closer relationship</li></ul><h4>B. Molecular Clocks</h4><p>Assume mutation rate is roughly constant over time. The more differences in DNA, the longer ago two species diverged.</p><h4>C. Reading a Phylogenetic Tree</h4><ul><li>Nodes = common ancestors</li><li>Branch length = time or amount of change</li><li>Tips = present-day species</li></ul><h3>💬 Let's Discuss</h3><p>How do scientists decide who is related to whom? They compare <strong>characters</strong> — anatomical features, behaviors and especially DNA and protein sequences — and assume that species sharing <strong>more</strong> homologous features share a <strong>more recent</strong> common ancestor.</p><p>The result is a <strong>phylogenetic tree</strong>. Read it from the root (oldest ancestor) toward the tips (present-day species). Each branching point is a <strong>node</strong>, representing a <strong>common ancestor</strong> that split into two lineages. A <strong>clade</strong> is a group made of one ancestor and <em>all</em> of its descendants — like a branch you could cut off with one snip. To find how closely two species are related, trace back to their most recent shared node: the more recent it is, the closer they are. The order of tips can be rotated without changing the relationships, like a mobile hanging from the ceiling.</p><p><strong>Molecular clocks</strong> estimate <em>when</em> lineages split. Mutations in certain genes build up at a fairly steady rate, so the number of differences between two species' DNA indicates how long ago they diverged. Calibrated with dated fossils, this suggests that humans and chimpanzees split about 6–7 million years ago, while humans and mice split about 75–90 million years ago. Species that diverged 50 million years ago have had more time to accumulate differences than species that split 5 million years ago.</p><p>Molecular data sometimes surprise us: whales turned out to be closely related to hippopotamuses.</p><p><strong>Common mistake:</strong> reading a tree as a ladder of \"lower\" to \"higher\" organisms. Every living species at a tip has been evolving for the same amount of time.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "infer-master",
         "badgeName": "Inference Master",
         "badgeIcon": "🔗",
         "pairs": [
-          { "key": "tree", "left": "Phylogenetic tree", "right": "Diagram of relationships" },
-          { "key": "node", "left": "Node", "right": "Common ancestor point" },
-          { "key": "clade", "left": "Clade", "right": "Ancestor + descendants" },
-          { "key": "clock", "left": "Molecular clock", "right": "Uses DNA differences" },
-          { "key": "share", "left": "More shared features", "right": "Closer relationship" }
+          {
+            "key": "tree",
+            "left": "Phylogenetic tree",
+            "right": "Diagram of relationships",
+            "why": "A phylogenetic tree diagrams evolutionary relationships."
+          },
+          {
+            "key": "node",
+            "left": "Node",
+            "right": "Common ancestor point",
+            "why": "Each node represents a common ancestor."
+          },
+          {
+            "key": "clade",
+            "left": "Clade",
+            "right": "Ancestor + descendants",
+            "why": "A clade is an ancestor plus all of its descendants."
+          },
+          {
+            "key": "clock",
+            "left": "Molecular clock",
+            "right": "Uses DNA differences",
+            "why": "A molecular clock uses the number of DNA differences to estimate divergence time."
+          },
+          {
+            "key": "share",
+            "left": "More shared features",
+            "right": "Closer relationship",
+            "why": "Sharing more features indicates a more recent common ancestor."
+          }
         ]
       },
       "activity2": {
@@ -178,12 +711,90 @@
         "badgeName": "Inference Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Humans and chimps share 98% of DNA.", "choices": [ { "label": "Close relatives", "correct": true }, { "label": "Distant relatives", "correct": false } ] },
-          { "text": "Two species share many homologs.", "choices": [ { "label": "Close relatives", "correct": true }, { "label": "Unrelated", "correct": false } ] },
-          { "text": "Species diverged 5M years ago vs 50M years ago.", "choices": [ { "label": "Species with 50M divergence are more different", "correct": true }, { "label": "Same relationship", "correct": false } ] },
-          { "text": "A node on a tree represents:", "choices": [ { "label": "Common ancestor", "correct": true }, { "label": "Extinct species only", "correct": false } ] },
-          { "text": "A clade includes:", "choices": [ { "label": "Ancestor + all descendants", "correct": true }, { "label": "Only living species", "correct": false } ] },
-          { "text": "The molecular clock uses:", "choices": [ { "label": "DNA differences", "correct": true }, { "label": "Fossil size", "correct": false } ] }
+          {
+            "text": "Humans and chimps share 98% of DNA.",
+            "choices": [
+              {
+                "label": "Close relatives",
+                "correct": true
+              },
+              {
+                "label": "Distant relatives",
+                "correct": false
+              }
+            ],
+            "explanation": "98% shared DNA means close relatives."
+          },
+          {
+            "text": "Two species share many homologs.",
+            "choices": [
+              {
+                "label": "Close relatives",
+                "correct": true
+              },
+              {
+                "label": "Unrelated",
+                "correct": false
+              }
+            ],
+            "explanation": "Many shared homologous structures means close relatives."
+          },
+          {
+            "text": "Species diverged 5M years ago vs 50M years ago.",
+            "choices": [
+              {
+                "label": "The 50M-year pair differs more",
+                "correct": true
+              },
+              {
+                "label": "Both pairs differ by the same amount",
+                "correct": false
+              }
+            ],
+            "explanation": "An older split leaves more time for differences to build up."
+          },
+          {
+            "text": "A node on a tree represents:",
+            "choices": [
+              {
+                "label": "Common ancestor",
+                "correct": true
+              },
+              {
+                "label": "Extinct species only",
+                "correct": false
+              }
+            ],
+            "explanation": "A node marks a common ancestor."
+          },
+          {
+            "text": "A clade includes:",
+            "choices": [
+              {
+                "label": "Ancestor + all descendants",
+                "correct": true
+              },
+              {
+                "label": "Only living species",
+                "correct": false
+              }
+            ],
+            "explanation": "A clade is an ancestor plus all its descendants."
+          },
+          {
+            "text": "The molecular clock uses:",
+            "choices": [
+              {
+                "label": "DNA differences",
+                "correct": true
+              },
+              {
+                "label": "Fossil size",
+                "correct": false
+              }
+            ],
+            "explanation": "The molecular clock counts DNA differences."
+          }
         ]
       },
       "formative": {
@@ -192,9 +803,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "Two species that share more DNA are:", "choices": [ { "label": "More closely related", "correct": true }, { "label": "Less related", "correct": false }, { "label": "Unrelated", "correct": false }, { "label": "Identical", "correct": false } ] },
-          { "text": "A node on a phylogenetic tree represents:", "choices": [ { "label": "A common ancestor", "correct": true }, { "label": "A modern species", "correct": false }, { "label": "A mutation", "correct": false }, { "label": "An extinction event", "correct": false } ] },
-          { "text": "The molecular clock estimates:", "choices": [ { "label": "Time of divergence", "correct": true }, { "label": "Organism size", "correct": false }, { "label": "Number of species", "correct": false }, { "label": "Fossil age only", "correct": false } ] }
+          {
+            "text": "Two species that share more DNA are:",
+            "choices": [
+              {
+                "label": "More closely related",
+                "correct": true
+              },
+              {
+                "label": "Less closely related",
+                "correct": false
+              },
+              {
+                "label": "Completely unrelated",
+                "correct": false
+              },
+              {
+                "label": "Exactly identical",
+                "correct": false
+              }
+            ],
+            "explanation": "Species with more DNA in common are more closely related."
+          },
+          {
+            "text": "A node on a phylogenetic tree represents:",
+            "choices": [
+              {
+                "label": "A common ancestor",
+                "correct": true
+              },
+              {
+                "label": "A modern species",
+                "correct": false
+              },
+              {
+                "label": "A mutation",
+                "correct": false
+              },
+              {
+                "label": "An extinction event",
+                "correct": false
+              }
+            ],
+            "explanation": "A node represents a common ancestor."
+          },
+          {
+            "text": "The molecular clock estimates:",
+            "choices": [
+              {
+                "label": "Time of divergence",
+                "correct": true
+              },
+              {
+                "label": "Organism size",
+                "correct": false
+              },
+              {
+                "label": "Number of species",
+                "correct": false
+              },
+              {
+                "label": "Fossil age only",
+                "correct": false
+              }
+            ],
+            "explanation": "The molecular clock estimates when two lineages diverged."
+          }
         ]
       },
       "takeaways": [

@@ -6,19 +6,49 @@
       "n": 1,
       "title": "Incomplete Dominance & Codominance",
       "competency": "STEM_BIO11/12-IIIa-b-3",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define incomplete dominance.</li><li>Define codominance.</li><li>Differentiate these from complete dominance.</li><li>Predict offspring ratios.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Incomplete dominance</strong> — heterozygote shows an intermediate phenotype.</li><li><strong>Codominance</strong> — both alleles expressed distinctly.</li><li><strong>Complete dominance</strong> — one allele masks the other.</li></ul><h3>📚 Lesson Content</h3><h4>A. Incomplete Dominance</h4><p>Red flower (RR) × White flower (WW) → All Pink (RW). The heterozygote shows a blend.</p><h4>B. Codominance</h4><p>Red flower (RR) × White flower (WW) → Red AND White patches (RW). Both alleles expressed.</p><h4>C. Human Example</h4><ul><li><strong>AB blood type</strong> — codominance (A and B both expressed)</li><li><strong>Sickle-cell trait</strong> — codominance at the molecular level</li></ul><h4>D. Comparison</h4><table><thead><tr><th>Pattern</th><th>Heterozygote Phenotype</th></tr></thead><tbody><tr><td>Complete dominance</td><td>Dominant trait only</td></tr><tr><td>Incomplete dominance</td><td>Intermediate (blended)</td></tr><tr><td>Codominance</td><td>Both traits expressed</td></tr></tbody></table>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define incomplete dominance.</li><li>Define codominance.</li><li>Differentiate these from complete dominance.</li><li>Predict offspring ratios.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Incomplete dominance</strong> — heterozygote shows an intermediate phenotype.</li><li><strong>Codominance</strong> — both alleles expressed distinctly.</li><li><strong>Complete dominance</strong> — one allele masks the other.</li></ul><h3>📚 Lesson Content</h3><h4>A. Incomplete Dominance</h4><p>Red flower (RR) × White flower (WW) → All Pink (RW). The heterozygote shows a blend.</p><h4>B. Codominance</h4><p>Red flower (RR) × White flower (WW) → Red AND White patches (RW). Both alleles expressed.</p><h4>C. Human Example</h4><ul><li><strong>AB blood type</strong> — codominance (A and B both expressed)</li><li><strong>Sickle-cell trait</strong> — codominance at the molecular level</li></ul><h4>D. Comparison</h4><table><thead><tr><th>Pattern</th><th>Heterozygote Phenotype</th></tr></thead><tbody><tr><td>Complete dominance</td><td>Dominant trait only</td></tr><tr><td>Incomplete dominance</td><td>Intermediate (blended)</td></tr><tr><td>Codominance</td><td>Both traits expressed</td></tr></tbody></table><h3>💬 Let's Discuss</h3><p>Mendel's peas showed <strong>complete dominance</strong>: in a heterozygote, one allele completely masks the other (Tt looks exactly like TT). But many traits do not follow this rule. There are two important exceptions.</p><p>In <strong>incomplete dominance</strong>, neither allele fully masks the other, so the heterozygote shows an <strong>intermediate</strong> or blended phenotype. In four-o'clock plants and snapdragons, red (RR) × white (WW) gives all <strong>pink</strong> (RW) flowers. The single R allele makes only enough pigment for pink. Crossing two pinks (RW × RW) gives <strong>1 red : 2 pink : 1 white</strong> — here the phenotypic ratio matches the genotypic ratio, because each genotype looks different. Notice the red and white reappear, which proves the alleles never actually \"mixed\"; they only shared expression.</p><p>In <strong>codominance</strong>, <strong>both alleles are fully and separately expressed</strong>. A red bull × white cow can produce a <strong>roan</strong> calf whose coat has both red hairs and white hairs side by side — not pink hairs. In humans, a person with genotype IᴬIᴮ has <strong>type AB blood</strong>: red blood cells carry <em>both</em> the A and the B markers. People with <strong>sickle-cell trait</strong> (one normal and one sickle allele) make both normal and sickle hemoglobin, an example of codominance at the molecular level.</p><p>A quick test: look at the heterozygote. If it is <em>in between</em> (pink, wavy hair between curly and straight), it is incomplete dominance. If it shows <em>both</em> parental traits at once (spots, patches, two markers), it is codominance.</p><p><strong>Common mistake:</strong> calling a speckled or spotted flower \"incomplete dominance.\" Patches of both colors mean codominance.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "dominance-master",
         "badgeName": "Dominance Master",
         "badgeIcon": "🌸",
         "pairs": [
-          { "key": "comp", "left": "Complete dominance", "right": "One allele masks the other" },
-          { "key": "incomp", "left": "Incomplete dominance", "right": "Intermediate phenotype" },
-          { "key": "codom", "left": "Codominance", "right": "Both alleles expressed" },
-          { "key": "pink", "left": "RR × WW → RW", "right": "Pink in incomplete dominance" },
-          { "key": "patch", "left": "RR × WW → patches", "right": "Codominance" },
-          { "key": "ab", "left": "AB blood type", "right": "Codominance example" }
+          {
+            "key": "comp",
+            "left": "Complete dominance",
+            "right": "One allele masks the other",
+            "why": "In complete dominance, the dominant allele hides the recessive one."
+          },
+          {
+            "key": "incomp",
+            "left": "Incomplete dominance",
+            "right": "Intermediate phenotype",
+            "why": "In incomplete dominance, the heterozygote is intermediate between the parents."
+          },
+          {
+            "key": "codom",
+            "left": "Codominance",
+            "right": "Both alleles expressed",
+            "why": "In codominance, both alleles show up fully in the heterozygote."
+          },
+          {
+            "key": "pink",
+            "left": "RR × WW → RW",
+            "right": "Pink in incomplete dominance",
+            "why": "Red × white giving pink flowers is incomplete dominance."
+          },
+          {
+            "key": "patch",
+            "left": "RR × WW → patches",
+            "right": "Codominance",
+            "why": "Red × white giving red-and-white patches is codominance."
+          },
+          {
+            "key": "ab",
+            "left": "AB blood type",
+            "right": "Codominance example",
+            "why": "Type AB blood shows both A and B markers — codominance."
+          }
         ]
       },
       "activity2": {
@@ -27,12 +57,98 @@
         "badgeName": "Dominance Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Red × White → All Pink flowers.", "choices": [{ "label": "Incomplete dominance ✓", "correct": true }, { "label": "Codominance", "correct": false }, { "label": "Complete dominance", "correct": false }] },
-          { "text": "Red × White → Red AND White patches.", "choices": [{ "label": "Incomplete dominance", "correct": false }, { "label": "Codominance ✓", "correct": true }, { "label": "Complete dominance", "correct": false }] },
-          { "text": "AB blood type shows both A and B.", "choices": [{ "label": "Codominance ✓", "correct": true }, { "label": "Incomplete dominance", "correct": false }] },
-          { "text": "Heterozygote shows a blend of parental traits.", "choices": [{ "label": "Incomplete dominance ✓", "correct": true }, { "label": "Codominance", "correct": false }] },
-          { "text": "Sickle-cell trait shows both normal and sickled cells.", "choices": [{ "label": "Codominance ✓", "correct": true }, { "label": "Incomplete dominance", "correct": false }] },
-          { "text": "RW × RW → what ratio?", "choices": [{ "label": "1 RR : 2 RW : 1 WW ✓", "correct": true }, { "label": "3:1", "correct": false }] }
+          {
+            "text": "Red × White → All Pink flowers.",
+            "choices": [
+              {
+                "label": "Incomplete dominance",
+                "correct": true
+              },
+              {
+                "label": "Codominance",
+                "correct": false
+              },
+              {
+                "label": "Complete dominance",
+                "correct": false
+              }
+            ],
+            "explanation": "All-pink offspring are intermediate — incomplete dominance."
+          },
+          {
+            "text": "Red × White → Red AND White patches.",
+            "choices": [
+              {
+                "label": "Incomplete dominance",
+                "correct": false
+              },
+              {
+                "label": "Codominance",
+                "correct": true
+              },
+              {
+                "label": "Complete dominance",
+                "correct": false
+              }
+            ],
+            "explanation": "Separate red and white patches mean both alleles show — codominance."
+          },
+          {
+            "text": "AB blood type shows both A and B.",
+            "choices": [
+              {
+                "label": "Codominance",
+                "correct": true
+              },
+              {
+                "label": "Incomplete dominance",
+                "correct": false
+              }
+            ],
+            "explanation": "Both A and B markers appear in type AB — codominance."
+          },
+          {
+            "text": "Heterozygote shows a blend of parental traits.",
+            "choices": [
+              {
+                "label": "Incomplete dominance",
+                "correct": true
+              },
+              {
+                "label": "Codominance",
+                "correct": false
+              }
+            ],
+            "explanation": "A blend of the parental traits is incomplete dominance."
+          },
+          {
+            "text": "Sickle-cell trait shows both normal and sickled cells.",
+            "choices": [
+              {
+                "label": "Codominance",
+                "correct": true
+              },
+              {
+                "label": "Incomplete dominance",
+                "correct": false
+              }
+            ],
+            "explanation": "Both normal and sickle hemoglobin are made — codominance."
+          },
+          {
+            "text": "RW × RW → what ratio?",
+            "choices": [
+              {
+                "label": "1 red : 2 pink : 1 white",
+                "correct": true
+              },
+              {
+                "label": "3 red : 1 white only",
+                "correct": false
+              }
+            ],
+            "explanation": "Pink × pink gives 1 red : 2 pink : 1 white."
+          }
         ]
       },
       "formative": {
@@ -41,9 +157,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "In incomplete dominance, the heterozygote shows:", "choices": [{ "label": "Dominant trait", "correct": false }, { "label": "Intermediate phenotype", "correct": true }, { "label": "Recessive trait", "correct": false }, { "label": "Neither trait", "correct": false }] },
-          { "text": "AB blood type is an example of:", "choices": [{ "label": "Complete dominance", "correct": false }, { "label": "Incomplete dominance", "correct": false }, { "label": "Codominance", "correct": true }, { "label": "Sex linkage", "correct": false }] },
-          { "text": "Which pattern shows BOTH alleles expressed distinctly?", "choices": [{ "label": "Complete dominance", "correct": false }, { "label": "Incomplete dominance", "correct": false }, { "label": "Codominance", "correct": true }, { "label": "Epistasis", "correct": false }] }
+          {
+            "text": "In incomplete dominance, the heterozygote shows:",
+            "choices": [
+              {
+                "label": "Dominant trait",
+                "correct": false
+              },
+              {
+                "label": "Intermediate phenotype",
+                "correct": true
+              },
+              {
+                "label": "Recessive trait",
+                "correct": false
+              },
+              {
+                "label": "Neither trait",
+                "correct": false
+              }
+            ],
+            "explanation": "In incomplete dominance the heterozygote has an intermediate phenotype."
+          },
+          {
+            "text": "AB blood type is an example of:",
+            "choices": [
+              {
+                "label": "Complete dominance",
+                "correct": false
+              },
+              {
+                "label": "Incomplete dominance",
+                "correct": false
+              },
+              {
+                "label": "Codominance",
+                "correct": true
+              },
+              {
+                "label": "Sex linkage",
+                "correct": false
+              }
+            ],
+            "explanation": "AB blood shows both A and B antigens — codominance."
+          },
+          {
+            "text": "Which pattern shows BOTH alleles expressed distinctly?",
+            "choices": [
+              {
+                "label": "Complete dominance",
+                "correct": false
+              },
+              {
+                "label": "Incomplete dominance",
+                "correct": false
+              },
+              {
+                "label": "Codominance",
+                "correct": true
+              },
+              {
+                "label": "Epistasis",
+                "correct": false
+              }
+            ],
+            "explanation": "Codominance shows both alleles distinctly at the same time."
+          }
         ]
       },
       "takeaways": [
@@ -57,20 +236,55 @@
       "n": 2,
       "title": "Multiple Alleles & Polygenic Traits",
       "competency": "STEM_BIO11/12-IIIa-b-3",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define multiple alleles.</li><li>Describe the ABO blood group system.</li><li>Define polygenic inheritance.</li><li>Give examples of polygenic traits.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Multiple alleles</strong> — more than two alleles in a population.</li><li><strong>ABO blood group</strong> — 3 alleles: Iᴬ, Iᴮ, i.</li><li><strong>Polygenic trait</strong> — controlled by multiple genes.</li><li><strong>Continuous variation</strong> — a range of phenotypes.</li></ul><h3>📚 Lesson Content</h3><h4>A. Multiple Alleles — ABO Blood Type</h4><table><thead><tr><th>Genotype</th><th>Blood Type</th></tr></thead><tbody><tr><td>IᴬIᴬ or Iᴬi</td><td>A</td></tr><tr><td>IᴮIᴮ or Iᴮi</td><td>B</td></tr><tr><td>IᴬIᴮ</td><td>AB</td></tr><tr><td>ii</td><td>O</td></tr></tbody></table><h4>B. Polygenic Traits</h4><ul><li>Height, skin color, eye color</li><li>Show continuous variation</li><li>Each gene adds a small effect</li></ul><h4>C. Other Modifications</h4><ul><li><strong>Epistasis</strong> — one gene masks another</li><li><strong>Pleiotropy</strong> — one gene affects multiple traits</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define multiple alleles.</li><li>Describe the ABO blood group system.</li><li>Define polygenic inheritance.</li><li>Give examples of polygenic traits.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Multiple alleles</strong> — more than two alleles in a population.</li><li><strong>ABO blood group</strong> — 3 alleles: Iᴬ, Iᴮ, i.</li><li><strong>Polygenic trait</strong> — controlled by multiple genes.</li><li><strong>Continuous variation</strong> — a range of phenotypes.</li></ul><h3>📚 Lesson Content</h3><h4>A. Multiple Alleles — ABO Blood Type</h4><table><thead><tr><th>Genotype</th><th>Blood Type</th></tr></thead><tbody><tr><td>IᴬIᴬ or Iᴬi</td><td>A</td></tr><tr><td>IᴮIᴮ or Iᴮi</td><td>B</td></tr><tr><td>IᴬIᴮ</td><td>AB</td></tr><tr><td>ii</td><td>O</td></tr></tbody></table><h4>B. Polygenic Traits</h4><ul><li>Height, skin color, eye color</li><li>Show continuous variation</li><li>Each gene adds a small effect</li></ul><h4>C. Other Modifications</h4><ul><li><strong>Epistasis</strong> — one gene masks another</li><li><strong>Pleiotropy</strong> — one gene affects multiple traits</li></ul><h3>💬 Let's Discuss</h3><p>So far each gene had only two alleles. In a population, though, a gene can have <strong>multiple alleles</strong> — more than two versions — even though each person still carries only two of them.</p><p>The best-known example is the <strong>ABO blood group</strong>, controlled by one gene with <strong>three alleles</strong>: <strong>Iᴬ</strong> and <strong>Iᴮ</strong>, which are <em>codominant</em> to each other, and <strong>i</strong>, which is <em>recessive</em> to both. This gives six genotypes and four blood types: <strong>Type A</strong> = IᴬIᴬ or Iᴬi; <strong>Type B</strong> = IᴮIᴮ or Iᴮi; <strong>Type AB</strong> = IᴬIᴮ; <strong>Type O</strong> = ii. Blood type matters in transfusions: type O can donate red cells to all types; type AB can receive from all. Blood typing was once used in paternity cases: for example, a type AB parent cannot have a type O child, because the child would need an i allele from each parent.</p><p><strong>Polygenic traits</strong> are controlled by <strong>many genes</strong>, each adding a small effect. Human <strong>height</strong>, <strong>skin color</strong>, eye color and intelligence are polygenic. Instead of a few clear categories, they show <strong>continuous variation</strong> that forms a bell-shaped curve in a population: most people are medium height, few are very tall or very short. The environment also matters — nutrition affects height, and sun exposure affects skin tone.</p><p>Two related terms: <strong>pleiotropy</strong> is when <em>one gene affects many traits</em> (the sickle-cell allele affects blood cells, organs and resistance to malaria), and <strong>epistasis</strong> is when one gene affects the expression of another.</p><p><strong>Common mistake:</strong> confusing \"multiple alleles\" (one gene, many versions) with \"polygenic\" (many genes, one trait).</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "multiple-allele-master",
         "badgeName": "Multiple Allele Master",
         "badgeIcon": "🩸",
         "pairs": [
-          { "key": "multi", "left": "Multiple alleles", "right": "More than 2 in population" },
-          { "key": "abo", "left": "ABO blood", "right": "3 alleles: Iᴬ, Iᴮ, i" },
-          { "key": "typeA", "left": "IᴬIᴬ or Iᴬi", "right": "Blood type A" },
-          { "key": "typeB", "left": "IᴮIᴮ or Iᴮi", "right": "Blood type B" },
-          { "key": "typeAB", "left": "IᴬIᴮ", "right": "Blood type AB" },
-          { "key": "typeO", "left": "ii", "right": "Blood type O" },
-          { "key": "poly", "left": "Polygenic trait", "right": "Controlled by multiple genes" }
+          {
+            "key": "multi",
+            "left": "Multiple alleles",
+            "right": "More than 2 in population",
+            "why": "Multiple alleles means a gene has more than two alleles in a population."
+          },
+          {
+            "key": "abo",
+            "left": "ABO blood",
+            "right": "3 alleles: Iᴬ, Iᴮ, i",
+            "why": "The ABO gene has three alleles: Iᴬ, Iᴮ and i."
+          },
+          {
+            "key": "typeA",
+            "left": "IᴬIᴬ or Iᴬi",
+            "right": "Blood type A",
+            "why": "Type A can be IᴬIᴬ or Iᴬi."
+          },
+          {
+            "key": "typeB",
+            "left": "IᴮIᴮ or Iᴮi",
+            "right": "Blood type B",
+            "why": "Type B can be IᴮIᴮ or Iᴮi."
+          },
+          {
+            "key": "typeAB",
+            "left": "IᴬIᴮ",
+            "right": "Blood type AB",
+            "why": "Type AB is IᴬIᴮ because Iᴬ and Iᴮ are codominant."
+          },
+          {
+            "key": "typeO",
+            "left": "ii",
+            "right": "Blood type O",
+            "why": "Type O requires two recessive i alleles."
+          },
+          {
+            "key": "poly",
+            "left": "Polygenic trait",
+            "right": "Controlled by multiple genes",
+            "why": "A polygenic trait is controlled by many genes."
+          }
         ]
       },
       "activity2": {
@@ -79,12 +293,102 @@
         "badgeName": "Blood Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Blood type AB.", "choices": [{ "label": "IᴬIᴮ ✓", "correct": true }, { "label": "IᴬIᴬ", "correct": false }, { "label": "ii", "correct": false }] },
-          { "text": "Blood type O.", "choices": [{ "label": "ii ✓", "correct": true }, { "label": "Iᴬi", "correct": false }, { "label": "Iᴮi", "correct": false }] },
-          { "text": "Blood type A (heterozygous).", "choices": [{ "label": "Iᴬi ✓", "correct": true }, { "label": "IᴬIᴬ", "correct": false }, { "label": "IᴬIᴮ", "correct": false }] },
-          { "text": "Skin color shows a range of tones.", "choices": [{ "label": "Polygenic ✓", "correct": true }, { "label": "Multiple alleles", "correct": false }] },
-          { "text": "Height varies continuously in a population.", "choices": [{ "label": "Polygenic ✓", "correct": true }, { "label": "Codominance", "correct": false }] },
-          { "text": "One gene affects multiple traits.", "choices": [{ "label": "Pleiotropy ✓", "correct": true }, { "label": "Epistasis", "correct": false }] }
+          {
+            "text": "Blood type AB.",
+            "choices": [
+              {
+                "label": "IᴬIᴮ",
+                "correct": true
+              },
+              {
+                "label": "IᴬIᴬ",
+                "correct": false
+              },
+              {
+                "label": "ii",
+                "correct": false
+              }
+            ],
+            "explanation": "Type AB is IᴬIᴮ."
+          },
+          {
+            "text": "Blood type O.",
+            "choices": [
+              {
+                "label": "ii",
+                "correct": true
+              },
+              {
+                "label": "Iᴬi",
+                "correct": false
+              },
+              {
+                "label": "Iᴮi",
+                "correct": false
+              }
+            ],
+            "explanation": "Type O must be ii."
+          },
+          {
+            "text": "Blood type A (heterozygous).",
+            "choices": [
+              {
+                "label": "Iᴬi",
+                "correct": true
+              },
+              {
+                "label": "IᴬIᴬ",
+                "correct": false
+              },
+              {
+                "label": "IᴬIᴮ",
+                "correct": false
+              }
+            ],
+            "explanation": "Heterozygous type A is Iᴬi."
+          },
+          {
+            "text": "Skin color shows a range of tones.",
+            "choices": [
+              {
+                "label": "Polygenic",
+                "correct": true
+              },
+              {
+                "label": "Multiple alleles",
+                "correct": false
+              }
+            ],
+            "explanation": "A range of skin tones comes from several genes — polygenic."
+          },
+          {
+            "text": "Height varies continuously in a population.",
+            "choices": [
+              {
+                "label": "Polygenic",
+                "correct": true
+              },
+              {
+                "label": "Codominance",
+                "correct": false
+              }
+            ],
+            "explanation": "Continuous variation in height is polygenic."
+          },
+          {
+            "text": "One gene affects multiple traits.",
+            "choices": [
+              {
+                "label": "Pleiotropy",
+                "correct": true
+              },
+              {
+                "label": "Epistasis",
+                "correct": false
+              }
+            ],
+            "explanation": "One gene affecting many traits is pleiotropy."
+          }
         ]
       },
       "formative": {
@@ -93,9 +397,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "How many alleles control the ABO blood group?", "choices": [{ "label": "1", "correct": false }, { "label": "2", "correct": false }, { "label": "3", "correct": true }, { "label": "4", "correct": false }] },
-          { "text": "What is the genotype for blood type O?", "choices": [{ "label": "IᴬIᴬ", "correct": false }, { "label": "IᴬIᴮ", "correct": false }, { "label": "ii", "correct": true }, { "label": "IᴮIᴮ", "correct": false }] },
-          { "text": "Which is a polygenic trait?", "choices": [{ "label": "ABO blood type", "correct": false }, { "label": "Height", "correct": true }, { "label": "Hemophilia", "correct": false }, { "label": "Color blindness", "correct": false }] }
+          {
+            "text": "How many alleles control the ABO blood group?",
+            "choices": [
+              {
+                "label": "1",
+                "correct": false
+              },
+              {
+                "label": "2",
+                "correct": false
+              },
+              {
+                "label": "3",
+                "correct": true
+              },
+              {
+                "label": "4",
+                "correct": false
+              }
+            ],
+            "explanation": "The ABO group has three alleles: Iᴬ, Iᴮ and i."
+          },
+          {
+            "text": "What is the genotype for blood type O?",
+            "choices": [
+              {
+                "label": "IᴬIᴬ",
+                "correct": false
+              },
+              {
+                "label": "IᴬIᴮ",
+                "correct": false
+              },
+              {
+                "label": "ii",
+                "correct": true
+              },
+              {
+                "label": "IᴮIᴮ",
+                "correct": false
+              }
+            ],
+            "explanation": "Type O is ii."
+          },
+          {
+            "text": "Which is a polygenic trait?",
+            "choices": [
+              {
+                "label": "ABO blood type",
+                "correct": false
+              },
+              {
+                "label": "Height",
+                "correct": true
+              },
+              {
+                "label": "Hemophilia",
+                "correct": false
+              },
+              {
+                "label": "Color blindness",
+                "correct": false
+              }
+            ],
+            "explanation": "Height is controlled by many genes — polygenic."
+          }
         ]
       },
       "takeaways": [
@@ -109,20 +476,55 @@
       "n": 3,
       "title": "DNA & RNA Structure",
       "competency": "STEM_BIO11/12-IIIa-b-4",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the molecular structure of DNA.</li><li>Describe the structure of RNA.</li><li>Compare DNA and RNA.</li><li>Explain base pairing.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Nucleotide</strong> — sugar + phosphate + base.</li><li><strong>Double helix</strong> — DNA's twisted ladder structure.</li><li><strong>Base pairing</strong> — A–T, G–C (DNA); A–U, G–C (RNA).</li><li><strong>Antiparallel</strong> — strands run in opposite directions.</li></ul><h3>📚 Lesson Content</h3><h4>A. DNA Structure</h4><ul><li>Double-stranded helix</li><li>Sugar: deoxyribose</li><li>Bases: A, T, G, C</li><li>Base pairing: A–T, G–C</li><li>Antiparallel strands</li></ul><h4>B. RNA Structure</h4><ul><li>Single-stranded</li><li>Sugar: ribose</li><li>Bases: A, U, G, C</li><li>Base pairing: A–U, G–C</li><li>Three types: mRNA, tRNA, rRNA</li></ul><h4>C. DNA vs RNA</h4><table><thead><tr><th>Feature</th><th>DNA</th><th>RNA</th></tr></thead><tbody><tr><td>Sugar</td><td>Deoxyribose</td><td>Ribose</td></tr><tr><td>Strands</td><td>Double</td><td>Single</td></tr><tr><td>Bases</td><td>A, T, G, C</td><td>A, U, G, C</td></tr><tr><td>Function</td><td>Genetic storage</td><td>Protein synthesis</td></tr></tbody></table>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the molecular structure of DNA.</li><li>Describe the structure of RNA.</li><li>Compare DNA and RNA.</li><li>Explain base pairing.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Nucleotide</strong> — sugar + phosphate + base.</li><li><strong>Double helix</strong> — DNA's twisted ladder structure.</li><li><strong>Base pairing</strong> — A–T, G–C (DNA); A–U, G–C (RNA).</li><li><strong>Antiparallel</strong> — strands run in opposite directions.</li></ul><h3>📚 Lesson Content</h3><h4>A. DNA Structure</h4><ul><li>Double-stranded helix</li><li>Sugar: deoxyribose</li><li>Bases: A, T, G, C</li><li>Base pairing: A–T, G–C</li><li>Antiparallel strands</li></ul><h4>B. RNA Structure</h4><ul><li>Single-stranded</li><li>Sugar: ribose</li><li>Bases: A, U, G, C</li><li>Base pairing: A–U, G–C</li><li>Three types: mRNA, tRNA, rRNA</li></ul><h4>C. DNA vs RNA</h4><table><thead><tr><th>Feature</th><th>DNA</th><th>RNA</th></tr></thead><tbody><tr><td>Sugar</td><td>Deoxyribose</td><td>Ribose</td></tr><tr><td>Strands</td><td>Double</td><td>Single</td></tr><tr><td>Bases</td><td>A, T, G, C</td><td>A, U, G, C</td></tr><tr><td>Function</td><td>Genetic storage</td><td>Protein synthesis</td></tr></tbody></table><h3>💬 Let's Discuss</h3><p>Genes are made of <strong>DNA</strong>, and to understand how genes work you need to know its structure. In 1953, <strong>James Watson</strong> and <strong>Francis Crick</strong> built the double-helix model, using X-ray images made by <strong>Rosalind Franklin</strong> and Maurice Wilkins.</p><p>DNA is a <strong>polymer of nucleotides</strong>. Each nucleotide has a <strong>deoxyribose</strong> sugar, a <strong>phosphate</strong> and one of four <strong>bases</strong>: adenine (A), thymine (T), guanine (G) and cytosine (C). Sugars and phosphates link to form the sides of a twisted ladder — the <strong>double helix</strong>. The rungs are base pairs held by hydrogen bonds, following strict <strong>complementary base pairing</strong>: <strong>A–T</strong> (2 hydrogen bonds) and <strong>G–C</strong> (3 hydrogen bonds). So if one strand reads ATGC, the other must read TACG. This is why the amount of A always equals T, and G equals C (Chargaff's rule). The two strands run in opposite directions — they are <strong>antiparallel</strong> (one 5'→3', the other 3'→5').</p><p><strong>RNA</strong> differs in three ways: its sugar is <strong>ribose</strong>, it uses <strong>uracil (U)</strong> instead of thymine (so A pairs with U), and it is usually <strong>single-stranded</strong>. There are three main types: <strong>mRNA</strong> carries the gene's message from the nucleus to the ribosome; <strong>tRNA</strong> carries amino acids; <strong>rRNA</strong> forms part of ribosomes.</p><p>Think of DNA as the master cookbook kept safely in the library (nucleus), and mRNA as a photocopy of one recipe taken to the kitchen (ribosome).</p><p><strong>Common mistake:</strong> pairing A with U in DNA. In DNA, A pairs with T; A–U pairs occur only when RNA is involved.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "dna-structure-master",
         "badgeName": "DNA Structure Master",
         "badgeIcon": "🧬",
         "pairs": [
-          { "key": "nuc", "left": "Nucleotide", "right": "Sugar + phosphate + base" },
-          { "key": "helix", "left": "Double helix", "right": "DNA's twisted ladder" },
-          { "key": "at", "left": "A–T pairing", "right": "DNA base pairing" },
-          { "key": "gc", "left": "G–C pairing", "right": "Both DNA and RNA" },
-          { "key": "au", "left": "A–U pairing", "right": "RNA base pairing" },
-          { "key": "anti", "left": "Antiparallel", "right": "Strands run opposite directions" },
-          { "key": "mrna", "left": "mRNA", "right": "Carries genetic message" }
+          {
+            "key": "nuc",
+            "left": "Nucleotide",
+            "right": "Sugar + phosphate + base",
+            "why": "A nucleotide is a sugar, a phosphate and a base."
+          },
+          {
+            "key": "helix",
+            "left": "Double helix",
+            "right": "DNA's twisted ladder",
+            "why": "DNA's two strands twist into a double helix."
+          },
+          {
+            "key": "at",
+            "left": "A–T pairing",
+            "right": "DNA base pairing",
+            "why": "In DNA, adenine pairs with thymine."
+          },
+          {
+            "key": "gc",
+            "left": "G–C pairing",
+            "right": "Both DNA and RNA",
+            "why": "Guanine pairs with cytosine in both DNA and RNA."
+          },
+          {
+            "key": "au",
+            "left": "A–U pairing",
+            "right": "RNA base pairing",
+            "why": "In RNA, adenine pairs with uracil."
+          },
+          {
+            "key": "anti",
+            "left": "Antiparallel",
+            "right": "Strands run opposite directions",
+            "why": "The two DNA strands run in opposite directions."
+          },
+          {
+            "key": "mrna",
+            "left": "mRNA",
+            "right": "Carries genetic message",
+            "why": "mRNA carries the gene's message to the ribosome."
+          }
         ]
       },
       "activity2": {
@@ -131,12 +533,94 @@
         "badgeName": "DNA Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "A molecule is double-stranded.", "choices": [{ "label": "DNA ✓", "correct": true }, { "label": "RNA", "correct": false }] },
-          { "text": "A molecule contains uracil.", "choices": [{ "label": "DNA", "correct": false }, { "label": "RNA ✓", "correct": true }] },
-          { "text": "A molecule contains deoxyribose.", "choices": [{ "label": "DNA ✓", "correct": true }, { "label": "RNA", "correct": false }] },
-          { "text": "A pairs with T.", "choices": [{ "label": "DNA ✓", "correct": true }, { "label": "RNA", "correct": false }] },
-          { "text": "A pairs with U.", "choices": [{ "label": "DNA", "correct": false }, { "label": "RNA ✓", "correct": true }] },
-          { "text": "Carries genetic info from DNA to ribosome.", "choices": [{ "label": "mRNA ✓", "correct": true }, { "label": "tRNA", "correct": false }, { "label": "rRNA", "correct": false }] }
+          {
+            "text": "A molecule is double-stranded.",
+            "choices": [
+              {
+                "label": "DNA",
+                "correct": true
+              },
+              {
+                "label": "RNA",
+                "correct": false
+              }
+            ],
+            "explanation": "Double-stranded nucleic acid is DNA."
+          },
+          {
+            "text": "A molecule contains uracil.",
+            "choices": [
+              {
+                "label": "DNA",
+                "correct": false
+              },
+              {
+                "label": "RNA",
+                "correct": true
+              }
+            ],
+            "explanation": "Uracil is found only in RNA."
+          },
+          {
+            "text": "A molecule contains deoxyribose.",
+            "choices": [
+              {
+                "label": "DNA",
+                "correct": true
+              },
+              {
+                "label": "RNA",
+                "correct": false
+              }
+            ],
+            "explanation": "Deoxyribose is DNA's sugar."
+          },
+          {
+            "text": "A pairs with T.",
+            "choices": [
+              {
+                "label": "DNA",
+                "correct": true
+              },
+              {
+                "label": "RNA",
+                "correct": false
+              }
+            ],
+            "explanation": "A–T pairing occurs in DNA."
+          },
+          {
+            "text": "A pairs with U.",
+            "choices": [
+              {
+                "label": "DNA",
+                "correct": false
+              },
+              {
+                "label": "RNA",
+                "correct": true
+              }
+            ],
+            "explanation": "A–U pairing involves RNA."
+          },
+          {
+            "text": "Carries genetic info from DNA to ribosome.",
+            "choices": [
+              {
+                "label": "mRNA",
+                "correct": true
+              },
+              {
+                "label": "tRNA",
+                "correct": false
+              },
+              {
+                "label": "rRNA",
+                "correct": false
+              }
+            ],
+            "explanation": "mRNA carries the message from DNA to the ribosome."
+          }
         ]
       },
       "formative": {
@@ -145,9 +629,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Which sugar is found in DNA?", "choices": [{ "label": "Ribose", "correct": false }, { "label": "Deoxyribose", "correct": true }, { "label": "Glucose", "correct": false }, { "label": "Fructose", "correct": false }] },
-          { "text": "Which base pairs with adenine in RNA?", "choices": [{ "label": "Thymine", "correct": false }, { "label": "Uracil", "correct": true }, { "label": "Guanine", "correct": false }, { "label": "Cytosine", "correct": false }] },
-          { "text": "Which of the following describes DNA?", "choices": [{ "label": "Single-stranded", "correct": false }, { "label": "Contains uracil", "correct": false }, { "label": "Double-stranded with deoxyribose", "correct": true }, { "label": "Only found in bacteria", "correct": false }] }
+          {
+            "text": "Which sugar is found in DNA?",
+            "choices": [
+              {
+                "label": "Ribose",
+                "correct": false
+              },
+              {
+                "label": "Deoxyribose",
+                "correct": true
+              },
+              {
+                "label": "Glucose",
+                "correct": false
+              },
+              {
+                "label": "Fructose",
+                "correct": false
+              }
+            ],
+            "explanation": "DNA contains deoxyribose."
+          },
+          {
+            "text": "Which base pairs with adenine in RNA?",
+            "choices": [
+              {
+                "label": "Thymine",
+                "correct": false
+              },
+              {
+                "label": "Uracil",
+                "correct": true
+              },
+              {
+                "label": "Guanine",
+                "correct": false
+              },
+              {
+                "label": "Cytosine",
+                "correct": false
+              }
+            ],
+            "explanation": "In RNA, adenine pairs with uracil."
+          },
+          {
+            "text": "Which of the following describes DNA?",
+            "choices": [
+              {
+                "label": "Single-stranded",
+                "correct": false
+              },
+              {
+                "label": "Contains uracil",
+                "correct": false
+              },
+              {
+                "label": "Double-stranded",
+                "correct": true
+              },
+              {
+                "label": "Found only in bacteria",
+                "correct": false
+              }
+            ],
+            "explanation": "DNA is double-stranded and contains deoxyribose."
+          }
         ]
       },
       "takeaways": [
@@ -161,19 +708,49 @@
       "n": 4,
       "title": "Protein Structure & the Central Dogma",
       "competency": "STEM_BIO11/12-IIIa-b-4",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe protein structure.</li><li>Explain the central dogma of molecular biology.</li><li>Define transcription and translation.</li><li>Relate DNA to protein function.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Central dogma</strong> — DNA → RNA → Protein.</li><li><strong>Transcription</strong> — DNA → mRNA.</li><li><strong>Translation</strong> — mRNA → protein.</li><li><strong>Codon</strong> — 3 nucleotides that code for an amino acid.</li></ul><h3>📚 Lesson Content</h3><h4>A. The Central Dogma</h4><p>DNA → RNA → Protein. Genetic information flows from DNA to RNA to protein.</p><h4>B. Transcription</h4><p>Occurs in the nucleus. RNA polymerase makes mRNA from a DNA template.</p><h4>C. Translation</h4><p>Occurs at the ribosome. mRNA codons are matched to tRNA anticodons, adding amino acids to a growing polypeptide.</p><h4>D. Protein Structure</h4><ul><li>Primary — amino acid sequence</li><li>Secondary — alpha helices, beta sheets</li><li>Tertiary — 3D folding</li><li>Quaternary — multiple chains</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe protein structure.</li><li>Explain the central dogma of molecular biology.</li><li>Define transcription and translation.</li><li>Relate DNA to protein function.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Central dogma</strong> — DNA → RNA → Protein.</li><li><strong>Transcription</strong> — DNA → mRNA.</li><li><strong>Translation</strong> — mRNA → protein.</li><li><strong>Codon</strong> — 3 nucleotides that code for an amino acid.</li></ul><h3>📚 Lesson Content</h3><h4>A. The Central Dogma</h4><p>DNA → RNA → Protein. Genetic information flows from DNA to RNA to protein.</p><h4>B. Transcription</h4><p>Occurs in the nucleus. RNA polymerase makes mRNA from a DNA template.</p><h4>C. Translation</h4><p>Occurs at the ribosome. mRNA codons are matched to tRNA anticodons, adding amino acids to a growing polypeptide.</p><h4>D. Protein Structure</h4><ul><li>Primary — amino acid sequence</li><li>Secondary — alpha helices, beta sheets</li><li>Tertiary — 3D folding</li><li>Quaternary — multiple chains</li></ul><h3>💬 Let's Discuss</h3><p>How does a sequence of DNA bases become a trait like eye color or a working enzyme? The answer is the <strong>central dogma of molecular biology</strong>: <strong>DNA → RNA → Protein</strong>. Information flows from genes to proteins, and proteins do the work that creates traits.</p><p><strong>Transcription</strong> (DNA → mRNA) happens in the <strong>nucleus</strong> in eukaryotes. A gene's DNA is copied into a matching mRNA strand. \"Transcribe\" means to copy in the same language — both are nucleic acids.</p><p><strong>Translation</strong> (mRNA → protein) happens at the <strong>ribosome</strong> in the cytoplasm. The mRNA is read in groups of three bases called <strong>codons</strong>; each codon specifies <strong>one amino acid</strong>. \"Translate\" means to change languages — from nucleotides to amino acids. With 4 bases taken 3 at a time there are 64 codons, more than enough for 20 amino acids, so most amino acids have several codons. The genetic code is nearly <strong>universal</strong>: the same codons mean the same amino acids in bacteria, plants and humans — which is why bacteria can be engineered to make human insulin.</p><p>The amino acid chain then folds into a protein with four levels of structure: <strong>primary</strong> (sequence), <strong>secondary</strong> (helices and sheets), <strong>tertiary</strong> (3D shape) and <strong>quaternary</strong> (several chains, like hemoglobin's four). The DNA sequence determines the amino acid sequence, which determines the shape, which determines the function — and ultimately the phenotype.</p><p><strong>Common mistake:</strong> thinking DNA leaves the nucleus to make proteins. DNA stays inside; the mRNA copy travels to the ribosome.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "central-dogma-master",
         "badgeName": "Central Dogma Master",
         "badgeIcon": "🔁",
         "pairs": [
-          { "key": "cd", "left": "Central dogma", "right": "DNA → RNA → Protein" },
-          { "key": "transc", "left": "Transcription", "right": "DNA → mRNA" },
-          { "key": "transla", "left": "Translation", "right": "mRNA → Protein" },
-          { "key": "codon", "left": "Codon", "right": "3 nucleotides for 1 amino acid" },
-          { "key": "prim", "left": "Primary structure", "right": "Amino acid sequence" },
-          { "key": "quat", "left": "Quaternary", "right": "Multiple polypeptide chains" }
+          {
+            "key": "cd",
+            "left": "Central dogma",
+            "right": "DNA → RNA → Protein",
+            "why": "The central dogma: information flows DNA → RNA → protein."
+          },
+          {
+            "key": "transc",
+            "left": "Transcription",
+            "right": "DNA → mRNA",
+            "why": "Transcription copies DNA into mRNA."
+          },
+          {
+            "key": "transla",
+            "left": "Translation",
+            "right": "mRNA → Protein",
+            "why": "Translation uses mRNA to build a protein."
+          },
+          {
+            "key": "codon",
+            "left": "Codon",
+            "right": "3 nucleotides for 1 amino acid",
+            "why": "A codon is three bases that code for one amino acid."
+          },
+          {
+            "key": "prim",
+            "left": "Primary structure",
+            "right": "Amino acid sequence",
+            "why": "Primary structure is the sequence of amino acids."
+          },
+          {
+            "key": "quat",
+            "left": "Quaternary",
+            "right": "Multiple polypeptide chains",
+            "why": "Quaternary structure is several polypeptide chains together."
+          }
         ]
       },
       "activity2": {
@@ -182,12 +759,106 @@
         "badgeName": "Dogma Pro",
         "badgeIcon": "🔁",
         "scenarios": [
-          { "text": "DNA is used to make mRNA.", "choices": [{ "label": "Transcription ✓", "correct": true }, { "label": "Translation", "correct": false }, { "label": "Replication", "correct": false }] },
-          { "text": "mRNA is used to make protein.", "choices": [{ "label": "Transcription", "correct": false }, { "label": "Translation ✓", "correct": true }, { "label": "Replication", "correct": false }] },
-          { "text": "Occurs at the ribosome.", "choices": [{ "label": "Translation ✓", "correct": true }, { "label": "Transcription", "correct": false }] },
-          { "text": "Occurs in the nucleus.", "choices": [{ "label": "Transcription ✓", "correct": true }, { "label": "Translation", "correct": false }] },
-          { "text": "A codon codes for:", "choices": [{ "label": "One amino acid ✓", "correct": true }, { "label": "One protein", "correct": false }, { "label": "One nucleotide", "correct": false }] },
-          { "text": "Hemoglobin has 4 subunits. This is:", "choices": [{ "label": "Quaternary ✓", "correct": true }, { "label": "Tertiary", "correct": false }, { "label": "Secondary", "correct": false }] }
+          {
+            "text": "DNA is used to make mRNA.",
+            "choices": [
+              {
+                "label": "Transcription",
+                "correct": true
+              },
+              {
+                "label": "Translation",
+                "correct": false
+              },
+              {
+                "label": "Replication",
+                "correct": false
+              }
+            ],
+            "explanation": "Making mRNA from DNA is transcription."
+          },
+          {
+            "text": "mRNA is used to make protein.",
+            "choices": [
+              {
+                "label": "Transcription",
+                "correct": false
+              },
+              {
+                "label": "Translation",
+                "correct": true
+              },
+              {
+                "label": "Replication",
+                "correct": false
+              }
+            ],
+            "explanation": "Making protein from mRNA is translation."
+          },
+          {
+            "text": "Occurs at the ribosome.",
+            "choices": [
+              {
+                "label": "Translation",
+                "correct": true
+              },
+              {
+                "label": "Transcription",
+                "correct": false
+              }
+            ],
+            "explanation": "Translation takes place at the ribosome."
+          },
+          {
+            "text": "Occurs in the nucleus.",
+            "choices": [
+              {
+                "label": "Transcription",
+                "correct": true
+              },
+              {
+                "label": "Translation",
+                "correct": false
+              }
+            ],
+            "explanation": "In eukaryotes, transcription happens in the nucleus."
+          },
+          {
+            "text": "A codon codes for:",
+            "choices": [
+              {
+                "label": "One amino acid",
+                "correct": true
+              },
+              {
+                "label": "One protein",
+                "correct": false
+              },
+              {
+                "label": "One nucleotide",
+                "correct": false
+              }
+            ],
+            "explanation": "Each codon specifies one amino acid."
+          },
+          {
+            "text": "Hemoglobin has 4 subunits. This is:",
+            "choices": [
+              {
+                "label": "Quaternary",
+                "correct": true
+              },
+              {
+                "label": "Tertiary",
+                "correct": false
+              },
+              {
+                "label": "Secondary",
+                "correct": false
+              }
+            ],
+            "explanation": "Four subunits joined together is quaternary structure."
+          }
         ]
       },
       "formative": {
@@ -196,9 +867,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "The central dogma states:", "choices": [{ "label": "DNA → RNA → Protein", "correct": true }, { "label": "RNA → DNA → Protein", "correct": false }, { "label": "Protein → RNA → DNA", "correct": false }, { "label": "DNA → Protein directly", "correct": false }] },
-          { "text": "Where does transcription occur?", "choices": [{ "label": "Nucleus", "correct": true }, { "label": "Ribosome", "correct": false }, { "label": "Cytoplasm", "correct": false }, { "label": "Mitochondria", "correct": false }] },
-          { "text": "A codon consists of how many nucleotides?", "choices": [{ "label": "1", "correct": false }, { "label": "2", "correct": false }, { "label": "3", "correct": true }, { "label": "4", "correct": false }] }
+          {
+            "text": "The central dogma states:",
+            "choices": [
+              {
+                "label": "DNA → RNA → Protein",
+                "correct": true
+              },
+              {
+                "label": "RNA → DNA → Protein",
+                "correct": false
+              },
+              {
+                "label": "Protein → RNA → DNA",
+                "correct": false
+              },
+              {
+                "label": "DNA → Protein directly",
+                "correct": false
+              }
+            ],
+            "explanation": "The central dogma is DNA → RNA → protein."
+          },
+          {
+            "text": "Where does transcription occur?",
+            "choices": [
+              {
+                "label": "Nucleus",
+                "correct": true
+              },
+              {
+                "label": "Ribosome",
+                "correct": false
+              },
+              {
+                "label": "Cytoplasm",
+                "correct": false
+              },
+              {
+                "label": "Mitochondria",
+                "correct": false
+              }
+            ],
+            "explanation": "Transcription happens in the nucleus."
+          },
+          {
+            "text": "A codon consists of how many nucleotides?",
+            "choices": [
+              {
+                "label": "1",
+                "correct": false
+              },
+              {
+                "label": "2",
+                "correct": false
+              },
+              {
+                "label": "3",
+                "correct": true
+              },
+              {
+                "label": "4",
+                "correct": false
+              }
+            ],
+            "explanation": "A codon is three nucleotides."
+          }
         ]
       },
       "takeaways": [

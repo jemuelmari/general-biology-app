@@ -6,19 +6,49 @@
       "n": 1,
       "title": "Cell Membrane Structure",
       "competency": "STEM_BIO11/12-Ig-h-11",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the fluid mosaic model of the membrane.</li><li>Identify the components of the membrane.</li><li>Explain the functions of each component.</li><li>Relate structure to selective permeability.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Fluid mosaic model</strong> — describes membrane as a fluid bilayer with embedded proteins.</li><li><strong>Phospholipid bilayer</strong> — two layers of phospholipids.</li><li><strong>Amphipathic</strong> — having both hydrophilic and hydrophobic regions.</li></ul><h3>📚 Lesson Content</h3><h4>A. The Fluid Mosaic Model</h4><p>Proposed by Singer and Nicolson (1972). The membrane is a dynamic structure — phospholipids and proteins move laterally.</p><h4>B. Components</h4><table><thead><tr><th>Component</th><th>Function</th></tr></thead><tbody><tr><td>Phospholipids</td><td>Form the bilayer barrier</td></tr><tr><td>Integral proteins</td><td>Transport, channels, receptors</td></tr><tr><td>Peripheral proteins</td><td>Signaling, structural support</td></tr><tr><td>Cholesterol</td><td>Regulates fluidity</td></tr><tr><td>Glycolipids/Glycoproteins</td><td>Cell recognition, adhesion</td></tr></tbody></table><h4>C. Selective Permeability</h4><p>The membrane allows some substances to pass but blocks others. Small nonpolar molecules (O₂, CO₂) cross easily; ions and large polar molecules need transport proteins.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the fluid mosaic model of the membrane.</li><li>Identify the components of the membrane.</li><li>Explain the functions of each component.</li><li>Relate structure to selective permeability.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Fluid mosaic model</strong> — describes membrane as a fluid bilayer with embedded proteins.</li><li><strong>Phospholipid bilayer</strong> — two layers of phospholipids.</li><li><strong>Amphipathic</strong> — having both hydrophilic and hydrophobic regions.</li></ul><h3>📚 Lesson Content</h3><h4>A. The Fluid Mosaic Model</h4><p>Proposed by Singer and Nicolson (1972). The membrane is a dynamic structure — phospholipids and proteins move laterally.</p><h4>B. Components</h4><table><thead><tr><th>Component</th><th>Function</th></tr></thead><tbody><tr><td>Phospholipids</td><td>Form the bilayer barrier</td></tr><tr><td>Integral proteins</td><td>Transport, channels, receptors</td></tr><tr><td>Peripheral proteins</td><td>Signaling, structural support</td></tr><tr><td>Cholesterol</td><td>Regulates fluidity</td></tr><tr><td>Glycolipids/Glycoproteins</td><td>Cell recognition, adhesion</td></tr></tbody></table><h4>C. Selective Permeability</h4><p>The membrane allows some substances to pass but blocks others. Small nonpolar molecules (O₂, CO₂) cross easily; ions and large polar molecules need transport proteins.</p><h3>💬 Let's Discuss</h3><p>This week we look at the plasma membrane again, this time as a <em>gatekeeper</em>. To understand how things cross it, you first need to understand why the membrane forms at all.</p><p>A phospholipid is <strong>amphipathic</strong>: its phosphate <em>head</em> is polar and attracted to water (hydrophilic), while its two fatty-acid <em>tails</em> are nonpolar and avoid water (hydrophobic). Put phospholipids in water and they arrange themselves automatically into a <strong>bilayer</strong> — heads facing the watery inside and outside of the cell, tails hidden in the middle. No energy is needed; it is the same reason oil and water separate. If the membrane is punctured slightly, it seals itself.</p><p>That oily middle is the key to transport. Small, nonpolar molecules such as O₂, CO₂ and steroid hormones dissolve in the tails and pass straight through. Ions (Na⁺, K⁺, Cl⁻) and large polar molecules such as glucose are blocked; they need help from <strong>membrane proteins</strong>. <em>Integral</em> proteins cross the whole bilayer and form channels and carriers. <em>Peripheral</em> proteins stay on one surface and work in signaling or as anchors. <strong>Glycoproteins</strong> and <strong>glycolipids</strong> carry sugar chains that serve as identity tags, and <strong>cholesterol</strong> keeps fluidity steady across temperatures.</p><p>So the structure explains the function: the bilayer makes the membrane <strong>selectively permeable</strong>, and the proteins decide which other substances get through and how.</p><p><strong>Common mistake:</strong> calling the whole phospholipid \"hydrophobic.\" Only the tails are. If you remember the head \"loves\" water and the tails \"fear\" it, you can predict how the bilayer forms.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "membrane-builder",
         "badgeName": "Membrane Builder",
         "badgeIcon": "🧱",
         "pairs": [
-          { "key": "phos", "left": "Phospholipids", "right": "Form the bilayer" },
-          { "key": "int", "left": "Integral proteins", "right": "Transport & channels" },
-          { "key": "per", "left": "Peripheral proteins", "right": "Signaling & support" },
-          { "key": "chol", "left": "Cholesterol", "right": "Regulates fluidity" },
-          { "key": "glyco", "left": "Glycoproteins", "right": "Cell recognition" },
-          { "key": "amphi", "left": "Amphipathic", "right": "Both hydrophilic & hydrophobic" }
+          {
+            "key": "phos",
+            "left": "Phospholipids",
+            "right": "Form the bilayer",
+            "why": "Phospholipids arrange into two layers that form the basic membrane."
+          },
+          {
+            "key": "int",
+            "left": "Integral proteins",
+            "right": "Transport & channels",
+            "why": "Integral proteins span the bilayer and act as channels or carriers."
+          },
+          {
+            "key": "per",
+            "left": "Peripheral proteins",
+            "right": "Signaling & support",
+            "why": "Peripheral proteins sit on one face and help in signaling and support."
+          },
+          {
+            "key": "chol",
+            "left": "Cholesterol",
+            "right": "Regulates fluidity",
+            "why": "Cholesterol buffers membrane fluidity across temperatures."
+          },
+          {
+            "key": "glyco",
+            "left": "Glycoproteins",
+            "right": "Cell recognition",
+            "why": "Glycoproteins carry sugar chains used for recognition."
+          },
+          {
+            "key": "amphi",
+            "left": "Amphipathic",
+            "right": "Both hydrophilic & hydrophobic",
+            "why": "Amphipathic molecules have both a water-loving and a water-fearing part."
+          }
         ]
       },
       "activity2": {
@@ -27,12 +57,114 @@
         "badgeName": "Component Pro",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "Forms the basic barrier of the membrane.", "choices": [{ "label": "Phospholipid bilayer ✓", "correct": true }, { "label": "Cholesterol", "correct": false }, { "label": "Glycoprotein", "correct": false }] },
-          { "text": "Helps the membrane stay fluid at low temperatures.", "choices": [{ "label": "Cholesterol ✓", "correct": true }, { "label": "Integral protein", "correct": false }, { "label": "Peripheral protein", "correct": false }] },
-          { "text": "Acts as a channel for ions.", "choices": [{ "label": "Integral protein ✓", "correct": true }, { "label": "Phospholipid", "correct": false }, { "label": "Glycolipid", "correct": false }] },
-          { "text": "Identifies the cell as 'self'.", "choices": [{ "label": "Glycoprotein ✓", "correct": true }, { "label": "Cholesterol", "correct": false }, { "label": "Peripheral protein", "correct": false }] },
-          { "text": "Sits on the inner or outer surface, not embedded.", "choices": [{ "label": "Peripheral protein ✓", "correct": true }, { "label": "Integral protein", "correct": false }, { "label": "Phospholipid", "correct": false }] },
-          { "text": "O₂ crosses the membrane freely.", "choices": [{ "label": "Passive diffusion ✓", "correct": true }, { "label": "Active transport", "correct": false }, { "label": "Endocytosis", "correct": false }] }
+          {
+            "text": "Forms the basic barrier of the membrane.",
+            "choices": [
+              {
+                "label": "Lipid bilayer",
+                "correct": true
+              },
+              {
+                "label": "Cholesterol",
+                "correct": false
+              },
+              {
+                "label": "Glycoprotein",
+                "correct": false
+              }
+            ],
+            "explanation": "The phospholipid bilayer is the basic barrier."
+          },
+          {
+            "text": "Helps the membrane stay fluid at low temperatures.",
+            "choices": [
+              {
+                "label": "Cholesterol",
+                "correct": true
+              },
+              {
+                "label": "Integral protein",
+                "correct": false
+              },
+              {
+                "label": "Peripheral protein",
+                "correct": false
+              }
+            ],
+            "explanation": "Cholesterol prevents phospholipids from packing too tightly in the cold."
+          },
+          {
+            "text": "Acts as a channel for ions.",
+            "choices": [
+              {
+                "label": "Integral protein",
+                "correct": true
+              },
+              {
+                "label": "Phospholipid",
+                "correct": false
+              },
+              {
+                "label": "Glycolipid",
+                "correct": false
+              }
+            ],
+            "explanation": "Ions cross through integral channel proteins."
+          },
+          {
+            "text": "Identifies the cell as 'self'.",
+            "choices": [
+              {
+                "label": "Glycoprotein",
+                "correct": true
+              },
+              {
+                "label": "Cholesterol",
+                "correct": false
+              },
+              {
+                "label": "Peripheral protein",
+                "correct": false
+              }
+            ],
+            "explanation": "Glycoproteins act as 'self' identification tags."
+          },
+          {
+            "text": "Sits on the inner or outer surface, not embedded.",
+            "choices": [
+              {
+                "label": "Peripheral protein",
+                "correct": true
+              },
+              {
+                "label": "Integral protein",
+                "correct": false
+              },
+              {
+                "label": "Phospholipid",
+                "correct": false
+              }
+            ],
+            "explanation": "Peripheral proteins are attached to the surface, not embedded."
+          },
+          {
+            "text": "O₂ crosses the membrane freely.",
+            "choices": [
+              {
+                "label": "Passive diffusion",
+                "correct": true
+              },
+              {
+                "label": "Active transport",
+                "correct": false
+              },
+              {
+                "label": "Endocytosis",
+                "correct": false
+              }
+            ],
+            "explanation": "O₂ is small and nonpolar, so it diffuses straight through the bilayer."
+          }
         ]
       },
       "formative": {
@@ -41,9 +173,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Which model describes the membrane as a fluid structure with embedded proteins?", "choices": [{ "label": "Lock-and-key", "correct": false }, { "label": "Fluid mosaic", "correct": true }, { "label": "Sandwich", "correct": false }, { "label": "Unit membrane", "correct": false }] },
-          { "text": "What is the role of cholesterol in the membrane?", "choices": [{ "label": "Transport ions", "correct": false }, { "label": "Cell recognition", "correct": false }, { "label": "Regulate fluidity", "correct": true }, { "label": "Form channels", "correct": false }] },
-          { "text": "Which part of the phospholipid is hydrophobic?", "choices": [{ "label": "Head", "correct": false }, { "label": "Tail", "correct": true }, { "label": "Both", "correct": false }, { "label": "Neither", "correct": false }] }
+          {
+            "text": "Which model describes the membrane as a fluid structure with embedded proteins?",
+            "choices": [
+              {
+                "label": "Lock-and-key",
+                "correct": false
+              },
+              {
+                "label": "Fluid mosaic",
+                "correct": true
+              },
+              {
+                "label": "Sandwich",
+                "correct": false
+              },
+              {
+                "label": "Unit membrane",
+                "correct": false
+              }
+            ],
+            "explanation": "The fluid mosaic model describes moving proteins in a fluid bilayer."
+          },
+          {
+            "text": "What is the role of cholesterol in the membrane?",
+            "choices": [
+              {
+                "label": "Transport ions",
+                "correct": false
+              },
+              {
+                "label": "Cell recognition",
+                "correct": false
+              },
+              {
+                "label": "Regulate fluidity",
+                "correct": true
+              },
+              {
+                "label": "Form channels",
+                "correct": false
+              }
+            ],
+            "explanation": "Cholesterol regulates fluidity; proteins do transport and recognition."
+          },
+          {
+            "text": "Which part of the phospholipid is hydrophobic?",
+            "choices": [
+              {
+                "label": "Head",
+                "correct": false
+              },
+              {
+                "label": "Tail",
+                "correct": true
+              },
+              {
+                "label": "Both",
+                "correct": false
+              },
+              {
+                "label": "Neither",
+                "correct": false
+              }
+            ],
+            "explanation": "The fatty-acid tails are nonpolar and hydrophobic; the phosphate head is hydrophilic."
+          }
         ]
       },
       "takeaways": [
@@ -57,19 +252,49 @@
       "n": 2,
       "title": "Passive Transport & Osmosis",
       "competency": "STEM_BIO11/12-Ig-h-12, -13",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Differentiate diffusion, osmosis, and facilitated diffusion.</li><li>Explain how concentration gradients drive passive transport.</li><li>Predict the effect of tonicity on cells.</li><li>Relate passive transport to real-life examples.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Diffusion</strong> — movement of molecules from high to low concentration.</li><li><strong>Osmosis</strong> — diffusion of water across a semipermeable membrane.</li><li><strong>Facilitated diffusion</strong> — passive transport using a protein channel.</li><li><strong>Tonicity</strong> — relative solute concentration of a solution.</li></ul><h3>📚 Lesson Content</h3><h4>A. Passive Transport Types</h4><table><thead><tr><th>Type</th><th>Description</th><th>Energy?</th></tr></thead><tbody><tr><td>Simple diffusion</td><td>Small nonpolar molecules pass directly</td><td>No</td></tr><tr><td>Facilitated diffusion</td><td>Uses a channel/carrier protein</td><td>No</td></tr><tr><td>Osmosis</td><td>Water moves through a semipermeable membrane</td><td>No</td></tr></tbody></table><h4>B. Tonicity</h4><ul><li><strong>Isotonic</strong> — equal solute; cell stays the same.</li><li><strong>Hypertonic</strong> — higher solute outside; cell shrinks (crenation).</li><li><strong>Hypotonic</strong> — lower solute outside; cell swells (may lyse).</li></ul><h4>C. Real-Life Examples</h4><ul><li>Water absorbed by plant roots (osmosis)</li><li>Oxygen entering red blood cells (diffusion)</li><li>Glucose entering cells via GLUT transporters (facilitated diffusion)</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Differentiate diffusion, osmosis, and facilitated diffusion.</li><li>Explain how concentration gradients drive passive transport.</li><li>Predict the effect of tonicity on cells.</li><li>Relate passive transport to real-life examples.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Diffusion</strong> — movement of molecules from high to low concentration.</li><li><strong>Osmosis</strong> — diffusion of water across a semipermeable membrane.</li><li><strong>Facilitated diffusion</strong> — passive transport using a protein channel.</li><li><strong>Tonicity</strong> — relative solute concentration of a solution.</li></ul><h3>📚 Lesson Content</h3><h4>A. Passive Transport Types</h4><table><thead><tr><th>Type</th><th>Description</th><th>Energy?</th></tr></thead><tbody><tr><td>Simple diffusion</td><td>Small nonpolar molecules pass directly</td><td>No</td></tr><tr><td>Facilitated diffusion</td><td>Uses a channel/carrier protein</td><td>No</td></tr><tr><td>Osmosis</td><td>Water moves through a semipermeable membrane</td><td>No</td></tr></tbody></table><h4>B. Tonicity</h4><ul><li><strong>Isotonic</strong> — equal solute; cell stays the same.</li><li><strong>Hypertonic</strong> — higher solute outside; cell shrinks (crenation).</li><li><strong>Hypotonic</strong> — lower solute outside; cell swells (may lyse).</li></ul><h4>C. Real-Life Examples</h4><ul><li>Water absorbed by plant roots (osmosis)</li><li>Oxygen entering red blood cells (diffusion)</li><li>Glucose entering cells via GLUT transporters (facilitated diffusion)</li></ul><h3>💬 Let's Discuss</h3><p>Spray perfume in one corner of a room and soon people across the room can smell it. Molecules are always moving, and they spread from where they are crowded to where they are less crowded. This is <strong>diffusion</strong>, and it is <strong>passive</strong> — no ATP is needed because the molecules move <em>down</em> their concentration gradient.</p><p>There are three kinds of passive transport. In <strong>simple diffusion</strong>, small nonpolar molecules (O₂, CO₂) pass directly through the lipid bilayer. In <strong>facilitated diffusion</strong>, molecules that cannot cross the bilayer — ions, glucose — still move down their gradient, but through a <em>channel</em> or <em>carrier</em> protein, such as the GLUT glucose carrier. <strong>Osmosis</strong> is the diffusion of <em>water</em> across a selectively permeable membrane, often through water channels called aquaporins. Water moves toward the side with <em>more solute</em> (less free water).</p><p>To predict osmosis, compare the solution outside the cell with the inside. In a <strong>hypotonic</strong> solution (fewer solutes outside), water rushes in: animal cells swell and may burst (lyse), while plant cells become firm or turgid — which is the healthy state for plants. In a <strong>hypertonic</strong> solution (more solutes outside), water leaves: animal cells shrivel (crenate) and plant cells undergo <strong>plasmolysis</strong>, where the membrane pulls away from the wall. In an <strong>isotonic</strong> solution, there is no net movement. That is why IV fluids in hospitals are isotonic (0.9% saline), and why salting fish or making <em>tuyo</em> preserves it — bacteria lose water and die.</p><p><strong>Common mistake:</strong> saying \"salt moves into the cell.\" In osmosis, it is the <em>water</em> that moves, not the solute.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "passive-transport",
         "badgeName": "Passive Transport Pro",
         "badgeIcon": "💧",
         "pairs": [
-          { "key": "diff", "left": "Simple diffusion", "right": "Direct passage of small molecules" },
-          { "key": "osm", "left": "Osmosis", "right": "Water across a semipermeable membrane" },
-          { "key": "fac", "left": "Facilitated diffusion", "right": "Uses a protein channel, no ATP" },
-          { "key": "iso", "left": "Isotonic", "right": "Equal solute concentrations" },
-          { "key": "hypo", "left": "Hypotonic", "right": "Cell swells" },
-          { "key": "hyper", "left": "Hypertonic", "right": "Cell shrinks" }
+          {
+            "key": "diff",
+            "left": "Simple diffusion",
+            "right": "Direct passage of small molecules",
+            "why": "Small nonpolar molecules pass directly through the bilayer."
+          },
+          {
+            "key": "osm",
+            "left": "Osmosis",
+            "right": "Water across a semipermeable membrane",
+            "why": "Osmosis is the passive movement of water across a selectively permeable membrane."
+          },
+          {
+            "key": "fac",
+            "left": "Facilitated diffusion",
+            "right": "Uses a protein channel, no ATP",
+            "why": "A protein channel or carrier helps, but no ATP is used."
+          },
+          {
+            "key": "iso",
+            "left": "Isotonic",
+            "right": "Equal solute concentrations",
+            "why": "Isotonic means equal solute concentration, so there is no net water movement."
+          },
+          {
+            "key": "hypo",
+            "left": "Hypotonic",
+            "right": "Cell swells",
+            "why": "Fewer solutes outside: water enters and the cell swells."
+          },
+          {
+            "key": "hyper",
+            "left": "Hypertonic",
+            "right": "Cell shrinks",
+            "why": "More solutes outside: water leaves and the cell shrinks."
+          }
         ]
       },
       "activity2": {
@@ -78,12 +303,114 @@
         "badgeName": "Tonicity Master",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "A red blood cell in pure water swells and bursts.", "choices": [{ "label": "Hypotonic ✓", "correct": true }, { "label": "Hypertonic", "correct": false }, { "label": "Isotonic", "correct": false }] },
-          { "text": "A plant wilts in saltwater.", "choices": [{ "label": "Hypotonic", "correct": false }, { "label": "Hypertonic ✓", "correct": true }, { "label": "Isotonic", "correct": false }] },
-          { "text": "A cell stays the same size in a solution.", "choices": [{ "label": "Isotonic ✓", "correct": true }, { "label": "Hypotonic", "correct": false }, { "label": "Hypertonic", "correct": false }] },
-          { "text": "Water moves into a plant root hair.", "choices": [{ "label": "Osmosis ✓", "correct": true }, { "label": "Active transport", "correct": false }, { "label": "Endocytosis", "correct": false }] },
-          { "text": "Oxygen enters a cell without a protein.", "choices": [{ "label": "Simple diffusion ✓", "correct": true }, { "label": "Facilitated diffusion", "correct": false }, { "label": "Active transport", "correct": false }] },
-          { "text": "Glucose enters via GLUT protein.", "choices": [{ "label": "Facilitated diffusion ✓", "correct": true }, { "label": "Simple diffusion", "correct": false }, { "label": "Active transport", "correct": false }] }
+          {
+            "text": "A red blood cell in pure water swells and bursts.",
+            "choices": [
+              {
+                "label": "Hypotonic",
+                "correct": true
+              },
+              {
+                "label": "Hypertonic",
+                "correct": false
+              },
+              {
+                "label": "Isotonic",
+                "correct": false
+              }
+            ],
+            "explanation": "Pure water is hypotonic to the cell, so water enters until it bursts."
+          },
+          {
+            "text": "A plant wilts in saltwater.",
+            "choices": [
+              {
+                "label": "Hypotonic",
+                "correct": false
+              },
+              {
+                "label": "Hypertonic",
+                "correct": true
+              },
+              {
+                "label": "Isotonic",
+                "correct": false
+              }
+            ],
+            "explanation": "Saltwater is hypertonic, so water leaves the plant cells and it wilts."
+          },
+          {
+            "text": "A cell stays the same size in a solution.",
+            "choices": [
+              {
+                "label": "Isotonic",
+                "correct": true
+              },
+              {
+                "label": "Hypotonic",
+                "correct": false
+              },
+              {
+                "label": "Hypertonic",
+                "correct": false
+              }
+            ],
+            "explanation": "No change in size means the solution is isotonic."
+          },
+          {
+            "text": "Water moves into a plant root hair.",
+            "choices": [
+              {
+                "label": "Osmosis",
+                "correct": true
+              },
+              {
+                "label": "Active transport",
+                "correct": false
+              },
+              {
+                "label": "Endocytosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Water moving into the root hair is osmosis."
+          },
+          {
+            "text": "Oxygen enters a cell without a protein.",
+            "choices": [
+              {
+                "label": "Simple diffusion",
+                "correct": true
+              },
+              {
+                "label": "Facilitated diffusion",
+                "correct": false
+              },
+              {
+                "label": "Active transport",
+                "correct": false
+              }
+            ],
+            "explanation": "O₂ crosses the bilayer by simple diffusion."
+          },
+          {
+            "text": "Glucose enters via GLUT protein.",
+            "choices": [
+              {
+                "label": "Facilitated diffusion",
+                "correct": true
+              },
+              {
+                "label": "Simple diffusion",
+                "correct": false
+              },
+              {
+                "label": "Active transport",
+                "correct": false
+              }
+            ],
+            "explanation": "GLUT is a carrier protein, so glucose enters by facilitated diffusion."
+          }
         ]
       },
       "formative": {
@@ -92,9 +419,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Which of the following does NOT require ATP?", "choices": [{ "label": "Active transport", "correct": false }, { "label": "Endocytosis", "correct": false }, { "label": "Osmosis", "correct": true }, { "label": "Sodium-potassium pump", "correct": false }] },
-          { "text": "A cell in a hypertonic solution will:", "choices": [{ "label": "Swell", "correct": false }, { "label": "Shrink", "correct": true }, { "label": "Remain the same", "correct": false }, { "label": "Divide", "correct": false }] },
-          { "text": "Facilitated diffusion differs from simple diffusion because it:", "choices": [{ "label": "Uses ATP", "correct": false }, { "label": "Uses a protein channel", "correct": true }, { "label": "Moves against the gradient", "correct": false }, { "label": "Only moves water", "correct": false }] }
+          {
+            "text": "Which of the following does NOT require ATP?",
+            "choices": [
+              {
+                "label": "Active transport",
+                "correct": false
+              },
+              {
+                "label": "Endocytosis",
+                "correct": false
+              },
+              {
+                "label": "Osmosis",
+                "correct": true
+              },
+              {
+                "label": "Sodium-potassium pump",
+                "correct": false
+              }
+            ],
+            "explanation": "Osmosis is passive; pumps and endocytosis need ATP."
+          },
+          {
+            "text": "A cell in a hypertonic solution will:",
+            "choices": [
+              {
+                "label": "Swell",
+                "correct": false
+              },
+              {
+                "label": "Shrink",
+                "correct": true
+              },
+              {
+                "label": "Remain the same",
+                "correct": false
+              },
+              {
+                "label": "Divide",
+                "correct": false
+              }
+            ],
+            "explanation": "In a hypertonic solution water leaves the cell, so it shrinks."
+          },
+          {
+            "text": "Facilitated diffusion differs from simple diffusion because it:",
+            "choices": [
+              {
+                "label": "Uses ATP",
+                "correct": false
+              },
+              {
+                "label": "Uses a protein channel",
+                "correct": true
+              },
+              {
+                "label": "Moves against the gradient",
+                "correct": false
+              },
+              {
+                "label": "Only moves water",
+                "correct": false
+              }
+            ],
+            "explanation": "Facilitated diffusion uses a protein but still moves down the gradient without ATP."
+          }
         ]
       },
       "takeaways": [
@@ -108,18 +498,43 @@
       "n": 3,
       "title": "Active Transport",
       "competency": "STEM_BIO11/12-Ig-h-13",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain what active transport is.</li><li>Describe the sodium-potassium pump.</li><li>Differentiate primary from secondary active transport.</li><li>Relate active transport to real-life applications.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Active transport</strong> — movement against the concentration gradient using ATP.</li><li><strong>Sodium-potassium pump</strong> — 3 Na⁺ out, 2 K⁺ in per ATP.</li><li><strong>Primary active transport</strong> — directly uses ATP.</li><li><strong>Secondary active transport</strong> — uses the gradient created by primary transport.</li></ul><h3>📚 Lesson Content</h3><h4>A. What Is Active Transport?</h4><p>Moves molecules against their concentration gradient — from low to high concentration. Requires energy (ATP).</p><h4>B. The Sodium-Potassium Pump</h4><ul><li>Pumps 3 Na⁺ OUT of the cell</li><li>Pumps 2 K⁺ INTO the cell</li><li>Uses 1 ATP per cycle</li><li>Maintains resting membrane potential in nerve cells</li></ul><h4>C. Why It Matters</h4><ul><li>Nerve impulse transmission</li><li>Muscle contraction</li><li>Nutrient uptake in the intestine</li><li>Kidney function (reabsorbing nutrients)</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain what active transport is.</li><li>Describe the sodium-potassium pump.</li><li>Differentiate primary from secondary active transport.</li><li>Relate active transport to real-life applications.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Active transport</strong> — movement against the concentration gradient using ATP.</li><li><strong>Sodium-potassium pump</strong> — 3 Na⁺ out, 2 K⁺ in per ATP.</li><li><strong>Primary active transport</strong> — directly uses ATP.</li><li><strong>Secondary active transport</strong> — uses the gradient created by primary transport.</li></ul><h3>📚 Lesson Content</h3><h4>A. What Is Active Transport?</h4><p>Moves molecules against their concentration gradient — from low to high concentration. Requires energy (ATP).</p><h4>B. The Sodium-Potassium Pump</h4><ul><li>Pumps 3 Na⁺ OUT of the cell</li><li>Pumps 2 K⁺ INTO the cell</li><li>Uses 1 ATP per cycle</li><li>Maintains resting membrane potential in nerve cells</li></ul><h4>C. Why It Matters</h4><ul><li>Nerve impulse transmission</li><li>Muscle contraction</li><li>Nutrient uptake in the intestine</li><li>Kidney function (reabsorbing nutrients)</li></ul><h3>💬 Let's Discuss</h3><p>Sometimes a cell must move substances <em>uphill</em> — from low concentration to high concentration. That is like pushing a cart up a slope: it needs energy. <strong>Active transport</strong> uses carrier proteins called <strong>pumps</strong> and energy, usually from ATP, to move substances <em>against</em> their gradient.</p><p>The most famous example is the <strong>sodium–potassium pump</strong>. For each ATP used, it pushes <strong>3 Na⁺ out</strong> and brings <strong>2 K⁺ in</strong>. As a result, the inside of the cell stays rich in K⁺ and poor in Na⁺, and slightly negative compared with the outside. This difference, the <strong>resting membrane potential</strong>, is the stored energy that lets nerve cells fire impulses and muscle cells contract. The pump is so important that it uses about a quarter of your body's ATP — and up to two-thirds in nerve cells.</p><p>Because this pump uses ATP directly, it is <strong>primary active transport</strong>. The Na⁺ gradient it builds can then be used like water behind a dam. In <strong>secondary active transport</strong> (cotransport), Na⁺ flowing back into the cell through a carrier drags another molecule, such as glucose, in with it — even against glucose's own gradient. This is how cells lining your small intestine absorb glucose completely from digested food. Oral rehydration solution for diarrhea contains both salt and sugar for exactly this reason: the sodium–glucose cotransporter pulls water in along with them.</p><p><strong>Compare:</strong> passive = down the gradient, no ATP; active = against the gradient, energy required. <strong>Common mistake:</strong> thinking every protein carrier means active transport. Facilitated diffusion also uses carriers but no ATP.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "active-transport",
         "badgeName": "Active Transport Ace",
         "badgeIcon": "⚡",
         "pairs": [
-          { "key": "at", "left": "Active transport", "right": "Against gradient, uses ATP" },
-          { "key": "pump", "left": "Na⁺/K⁺ pump", "right": "3 Na⁺ out, 2 K⁺ in" },
-          { "key": "prim", "left": "Primary active transport", "right": "Directly uses ATP" },
-          { "key": "sec", "left": "Secondary active transport", "right": "Uses a gradient from primary" },
-          { "key": "nerve", "left": "Nerve impulse", "right": "Depends on Na⁺/K⁺ pump" }
+          {
+            "key": "at",
+            "left": "Active transport",
+            "right": "Against gradient, uses ATP",
+            "why": "Active transport moves substances against their gradient using energy."
+          },
+          {
+            "key": "pump",
+            "left": "Na⁺/K⁺ pump",
+            "right": "3 Na⁺ out, 2 K⁺ in",
+            "why": "The pump exchanges 3 Na⁺ out for 2 K⁺ in per ATP."
+          },
+          {
+            "key": "prim",
+            "left": "Primary active transport",
+            "right": "Directly uses ATP",
+            "why": "Primary active transport uses ATP directly."
+          },
+          {
+            "key": "sec",
+            "left": "Secondary active transport",
+            "right": "Uses a gradient from primary",
+            "why": "Secondary active transport uses an ion gradient made by a primary pump."
+          },
+          {
+            "key": "nerve",
+            "left": "Nerve impulse",
+            "right": "Depends on Na⁺/K⁺ pump",
+            "why": "Nerve impulses depend on the Na⁺/K⁺ gradient the pump maintains."
+          }
         ]
       },
       "activity2": {
@@ -128,12 +543,114 @@
         "badgeName": "AT Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "A molecule moves from low to high concentration.", "choices": [{ "label": "Active transport ✓", "correct": true }, { "label": "Passive diffusion", "correct": false }, { "label": "Osmosis", "correct": false }] },
-          { "text": "3 Na⁺ exit the cell while 2 K⁺ enter.", "choices": [{ "label": "Na⁺/K⁺ pump ✓", "correct": true }, { "label": "Simple diffusion", "correct": false }, { "label": "Facilitated diffusion", "correct": false }] },
-          { "text": "Cell uses ATP directly for transport.", "choices": [{ "label": "Primary active transport ✓", "correct": true }, { "label": "Secondary active transport", "correct": false }, { "label": "Osmosis", "correct": false }] },
-          { "text": "A nerve cell maintains its resting potential.", "choices": [{ "label": "Na⁺/K⁺ pump ✓", "correct": true }, { "label": "Passive diffusion", "correct": false }, { "label": "Endocytosis", "correct": false }] },
-          { "text": "Glucose is absorbed in the intestine against its gradient.", "choices": [{ "label": "Active transport ✓", "correct": true }, { "label": "Simple diffusion", "correct": false }, { "label": "Osmosis", "correct": false }] },
-          { "text": "A cell uses a Na⁺ gradient to move another molecule.", "choices": [{ "label": "Secondary active transport ✓", "correct": true }, { "label": "Primary active transport", "correct": false }, { "label": "Passive diffusion", "correct": false }] }
+          {
+            "text": "A molecule moves from low to high concentration.",
+            "choices": [
+              {
+                "label": "Active transport",
+                "correct": true
+              },
+              {
+                "label": "Passive diffusion",
+                "correct": false
+              },
+              {
+                "label": "Osmosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Moving from low to high concentration requires active transport."
+          },
+          {
+            "text": "3 Na⁺ exit the cell while 2 K⁺ enter.",
+            "choices": [
+              {
+                "label": "Na⁺/K⁺ pump",
+                "correct": true
+              },
+              {
+                "label": "Simple diffusion",
+                "correct": false
+              },
+              {
+                "label": "Facilitated diffusion",
+                "correct": false
+              }
+            ],
+            "explanation": "3 Na⁺ out and 2 K⁺ in is the Na⁺/K⁺ pump."
+          },
+          {
+            "text": "Cell uses ATP directly for transport.",
+            "choices": [
+              {
+                "label": "Primary active transport",
+                "correct": true
+              },
+              {
+                "label": "Secondary active transport",
+                "correct": false
+              },
+              {
+                "label": "Osmosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Using ATP directly is primary active transport."
+          },
+          {
+            "text": "A nerve cell maintains its resting potential.",
+            "choices": [
+              {
+                "label": "Na⁺/K⁺ pump",
+                "correct": true
+              },
+              {
+                "label": "Passive diffusion",
+                "correct": false
+              },
+              {
+                "label": "Endocytosis",
+                "correct": false
+              }
+            ],
+            "explanation": "The resting potential is maintained by the Na⁺/K⁺ pump."
+          },
+          {
+            "text": "Glucose is absorbed in the intestine against its gradient.",
+            "choices": [
+              {
+                "label": "Active transport",
+                "correct": true
+              },
+              {
+                "label": "Simple diffusion",
+                "correct": false
+              },
+              {
+                "label": "Osmosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Absorbing glucose against its gradient requires active transport."
+          },
+          {
+            "text": "A cell uses a Na⁺ gradient to move another molecule.",
+            "choices": [
+              {
+                "label": "Secondary active transport",
+                "correct": true
+              },
+              {
+                "label": "Primary active transport",
+                "correct": false
+              },
+              {
+                "label": "Passive diffusion",
+                "correct": false
+              }
+            ],
+            "explanation": "Using a Na⁺ gradient to move another molecule is secondary active transport."
+          }
         ]
       },
       "formative": {
@@ -142,9 +659,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "What does active transport require that passive transport does not?", "choices": [{ "label": "A protein channel", "correct": false }, { "label": "ATP", "correct": true }, { "label": "Water", "correct": false }, { "label": "Cholesterol", "correct": false }] },
-          { "text": "How many Na⁺ ions does the Na⁺/K⁺ pump move per ATP?", "choices": [{ "label": "1", "correct": false }, { "label": "2", "correct": false }, { "label": "3", "correct": true }, { "label": "4", "correct": false }] },
-          { "text": "Which process relies on the Na⁺/K⁺ pump?", "choices": [{ "label": "Photosynthesis", "correct": false }, { "label": "Nerve impulse transmission", "correct": true }, { "label": "Osmosis", "correct": false }, { "label": "Simple diffusion", "correct": false }] }
+          {
+            "text": "What does active transport require that passive transport does not?",
+            "choices": [
+              {
+                "label": "A protein channel",
+                "correct": false
+              },
+              {
+                "label": "ATP",
+                "correct": true
+              },
+              {
+                "label": "Water",
+                "correct": false
+              },
+              {
+                "label": "Cholesterol",
+                "correct": false
+              }
+            ],
+            "explanation": "Active transport requires energy (ATP); passive transport does not."
+          },
+          {
+            "text": "How many Na⁺ ions does the Na⁺/K⁺ pump move per ATP?",
+            "choices": [
+              {
+                "label": "1",
+                "correct": false
+              },
+              {
+                "label": "2",
+                "correct": false
+              },
+              {
+                "label": "3",
+                "correct": true
+              },
+              {
+                "label": "4",
+                "correct": false
+              }
+            ],
+            "explanation": "The pump moves 3 Na⁺ out and 2 K⁺ in for each ATP."
+          },
+          {
+            "text": "Which process relies on the Na⁺/K⁺ pump?",
+            "choices": [
+              {
+                "label": "Photosynthesis",
+                "correct": false
+              },
+              {
+                "label": "Nerve impulses",
+                "correct": true
+              },
+              {
+                "label": "Osmosis",
+                "correct": false
+              },
+              {
+                "label": "Simple diffusion",
+                "correct": false
+              }
+            ],
+            "explanation": "Nerve impulses depend on the ion gradients kept by the Na⁺/K⁺ pump."
+          }
         ]
       },
       "takeaways": [
@@ -158,18 +738,43 @@
       "n": 4,
       "title": "Endocytosis & Exocytosis",
       "competency": "STEM_BIO11/12-Ig-h-14",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Differentiate endocytosis from exocytosis.</li><li>Distinguish phagocytosis from pinocytosis.</li><li>Describe receptor-mediated endocytosis.</li><li>Give real-life examples of bulk transport.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Endocytosis</strong> — cell takes in material via vesicles.</li><li><strong>Exocytosis</strong> — cell releases material via vesicles.</li><li><strong>Phagocytosis</strong> — cell engulfs large particles (cell eating).</li><li><strong>Pinocytosis</strong> — cell takes in fluids (cell drinking).</li></ul><h3>📚 Lesson Content</h3><h4>A. Endocytosis — Three Types</h4><table><thead><tr><th>Type</th><th>What It Takes In</th><th>Example</th></tr></thead><tbody><tr><td>Phagocytosis</td><td>Large particles/cells</td><td>WBC engulfing bacteria</td></tr><tr><td>Pinocytosis</td><td>Fluids & small solutes</td><td>Intestinal cells</td></tr><tr><td>Receptor-mediated</td><td>Specific molecules</td><td>Cholesterol uptake via LDL receptors</td></tr></tbody></table><h4>B. Exocytosis</h4><p>Vesicles fuse with the plasma membrane and release contents outside.</p><ul><li>Neurotransmitter release</li><li>Hormone secretion (insulin)</li><li>Mucus release</li><li>Waste removal</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Differentiate endocytosis from exocytosis.</li><li>Distinguish phagocytosis from pinocytosis.</li><li>Describe receptor-mediated endocytosis.</li><li>Give real-life examples of bulk transport.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Endocytosis</strong> — cell takes in material via vesicles.</li><li><strong>Exocytosis</strong> — cell releases material via vesicles.</li><li><strong>Phagocytosis</strong> — cell engulfs large particles (cell eating).</li><li><strong>Pinocytosis</strong> — cell takes in fluids (cell drinking).</li></ul><h3>📚 Lesson Content</h3><h4>A. Endocytosis — Three Types</h4><table><thead><tr><th>Type</th><th>What It Takes In</th><th>Example</th></tr></thead><tbody><tr><td>Phagocytosis</td><td>Large particles/cells</td><td>WBC engulfing bacteria</td></tr><tr><td>Pinocytosis</td><td>Fluids & small solutes</td><td>Intestinal cells</td></tr><tr><td>Receptor-mediated</td><td>Specific molecules</td><td>Cholesterol uptake via LDL receptors</td></tr></tbody></table><h4>B. Exocytosis</h4><p>Vesicles fuse with the plasma membrane and release contents outside.</p><ul><li>Neurotransmitter release</li><li>Hormone secretion (insulin)</li><li>Mucus release</li><li>Waste removal</li></ul><h3>💬 Let's Discuss</h3><p>Pumps and channels work for ions and small molecules, but what about a whole bacterium, a droplet of fluid, or a large protein like insulin? These are moved in <strong>bulk</strong> by wrapping them in pieces of membrane called <strong>vesicles</strong>. Bulk transport requires energy.</p><p><strong>Endocytosis</strong> brings material <em>into</em> the cell. The membrane folds inward around the material and pinches off as a vesicle. There are three types. In <strong>phagocytosis</strong> (\"cell eating\"), the cell extends arm-like pseudopodia around a large particle. White blood cells such as macrophages and neutrophils destroy bacteria this way; the vesicle then fuses with a lysosome that digests its contents. In <strong>pinocytosis</strong> (\"cell drinking\"), the cell takes in small droplets of extracellular fluid with whatever is dissolved in it — not selective. In <strong>receptor-mediated endocytosis</strong>, only molecules that bind specific receptors are taken in. Cells absorb cholesterol from blood this way by grabbing LDL particles. People with faulty LDL receptors cannot remove cholesterol from their blood and develop heart disease early (familial hypercholesterolemia).</p><p><strong>Exocytosis</strong> is the reverse: vesicles from the Golgi move to the membrane, fuse with it, and release their contents <em>outside</em>. Pancreatic cells secrete insulin and digestive enzymes, and neurons release neurotransmitters at synapses, by exocytosis. Each time, the vesicle's membrane becomes part of the plasma membrane, which is also how the cell adds new membrane.</p><p><strong>Memory aid:</strong> <em>endo</em> = enter, <em>exo</em> = exit. <strong>Common mistake:</strong> thinking endocytosis uses channel proteins. It uses vesicles.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "bulk-transport",
         "badgeName": "Bulk Transport Boss",
         "badgeIcon": "📦",
         "pairs": [
-          { "key": "endo", "left": "Endocytosis", "right": "Cell takes in material" },
-          { "key": "exo", "left": "Exocytosis", "right": "Cell releases material" },
-          { "key": "phago", "left": "Phagocytosis", "right": "Cell eating (large particles)" },
-          { "key": "pino", "left": "Pinocytosis", "right": "Cell drinking (fluids)" },
-          { "key": "rec", "left": "Receptor-mediated", "right": "Specific molecules via receptors" }
+          {
+            "key": "endo",
+            "left": "Endocytosis",
+            "right": "Cell takes in material",
+            "why": "Endocytosis brings material into the cell inside vesicles."
+          },
+          {
+            "key": "exo",
+            "left": "Exocytosis",
+            "right": "Cell releases material",
+            "why": "Exocytosis releases material when vesicles fuse with the membrane."
+          },
+          {
+            "key": "phago",
+            "left": "Phagocytosis",
+            "right": "Cell eating (large particles)",
+            "why": "Phagocytosis engulfs large particles such as bacteria."
+          },
+          {
+            "key": "pino",
+            "left": "Pinocytosis",
+            "right": "Cell drinking (fluids)",
+            "why": "Pinocytosis takes in small droplets of fluid."
+          },
+          {
+            "key": "rec",
+            "left": "Receptor-mediated",
+            "right": "Specific molecules via receptors",
+            "why": "Receptor-mediated endocytosis takes in only molecules that bind specific receptors."
+          }
         ]
       },
       "activity2": {
@@ -178,12 +783,114 @@
         "badgeName": "Bulk Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "A white blood cell engulfs a bacterium.", "choices": [{ "label": "Phagocytosis ✓", "correct": true }, { "label": "Pinocytosis", "correct": false }, { "label": "Exocytosis", "correct": false }] },
-          { "text": "A cell takes in extracellular fluid.", "choices": [{ "label": "Pinocytosis ✓", "correct": true }, { "label": "Phagocytosis", "correct": false }, { "label": "Exocytosis", "correct": false }] },
-          { "text": "Insulin is released from a pancreatic cell.", "choices": [{ "label": "Exocytosis ✓", "correct": true }, { "label": "Endocytosis", "correct": false }, { "label": "Osmosis", "correct": false }] },
-          { "text": "Cholesterol is taken in via LDL receptors.", "choices": [{ "label": "Receptor-mediated endocytosis ✓", "correct": true }, { "label": "Phagocytosis", "correct": false }, { "label": "Exocytosis", "correct": false }] },
-          { "text": "A neuron releases neurotransmitters.", "choices": [{ "label": "Exocytosis ✓", "correct": true }, { "label": "Endocytosis", "correct": false }, { "label": "Diffusion", "correct": false }] },
-          { "text": "A cell expels waste through vesicles.", "choices": [{ "label": "Exocytosis ✓", "correct": true }, { "label": "Pinocytosis", "correct": false }, { "label": "Osmosis", "correct": false }] }
+          {
+            "text": "A white blood cell engulfs a bacterium.",
+            "choices": [
+              {
+                "label": "Phagocytosis",
+                "correct": true
+              },
+              {
+                "label": "Pinocytosis",
+                "correct": false
+              },
+              {
+                "label": "Exocytosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Engulfing a whole bacterium is phagocytosis."
+          },
+          {
+            "text": "A cell takes in extracellular fluid.",
+            "choices": [
+              {
+                "label": "Pinocytosis",
+                "correct": true
+              },
+              {
+                "label": "Phagocytosis",
+                "correct": false
+              },
+              {
+                "label": "Exocytosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Taking in fluid droplets is pinocytosis."
+          },
+          {
+            "text": "Insulin is released from a pancreatic cell.",
+            "choices": [
+              {
+                "label": "Exocytosis",
+                "correct": true
+              },
+              {
+                "label": "Endocytosis",
+                "correct": false
+              },
+              {
+                "label": "Osmosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Releasing insulin to the outside is exocytosis."
+          },
+          {
+            "text": "Cholesterol is taken in via LDL receptors.",
+            "choices": [
+              {
+                "label": "Receptor-mediated uptake",
+                "correct": true
+              },
+              {
+                "label": "Phagocytosis",
+                "correct": false
+              },
+              {
+                "label": "Exocytosis",
+                "correct": false
+              }
+            ],
+            "explanation": "LDL binds specific receptors — receptor-mediated endocytosis."
+          },
+          {
+            "text": "A neuron releases neurotransmitters.",
+            "choices": [
+              {
+                "label": "Exocytosis",
+                "correct": true
+              },
+              {
+                "label": "Endocytosis",
+                "correct": false
+              },
+              {
+                "label": "Diffusion",
+                "correct": false
+              }
+            ],
+            "explanation": "Neurotransmitters leave in vesicles by exocytosis."
+          },
+          {
+            "text": "A cell expels waste through vesicles.",
+            "choices": [
+              {
+                "label": "Exocytosis",
+                "correct": true
+              },
+              {
+                "label": "Pinocytosis",
+                "correct": false
+              },
+              {
+                "label": "Osmosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Expelling wastes in vesicles is exocytosis."
+          }
         ]
       },
       "formative": {
@@ -192,9 +899,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "What is the difference between endocytosis and exocytosis?", "choices": [{ "label": "Direction of transport", "correct": true }, { "label": "Energy use", "correct": false }, { "label": "Only endocytosis uses vesicles", "correct": false }, { "label": "No difference", "correct": false }] },
-          { "text": "Which process involves engulfing large particles?", "choices": [{ "label": "Phagocytosis", "correct": true }, { "label": "Pinocytosis", "correct": false }, { "label": "Osmosis", "correct": false }, { "label": "Diffusion", "correct": false }] },
-          { "text": "Which of the following is an example of exocytosis?", "choices": [{ "label": "WBC engulfing bacteria", "correct": false }, { "label": "Insulin release", "correct": true }, { "label": "Water absorption", "correct": false }, { "label": "Cholesterol uptake", "correct": false }] }
+          {
+            "text": "What is the difference between endocytosis and exocytosis?",
+            "choices": [
+              {
+                "label": "Direction of transport",
+                "correct": true
+              },
+              {
+                "label": "Energy use",
+                "correct": false
+              },
+              {
+                "label": "Only endocytosis uses vesicles",
+                "correct": false
+              },
+              {
+                "label": "No difference",
+                "correct": false
+              }
+            ],
+            "explanation": "Endocytosis brings material in; exocytosis sends it out — they differ in direction."
+          },
+          {
+            "text": "Which process involves engulfing large particles?",
+            "choices": [
+              {
+                "label": "Phagocytosis",
+                "correct": true
+              },
+              {
+                "label": "Pinocytosis",
+                "correct": false
+              },
+              {
+                "label": "Osmosis",
+                "correct": false
+              },
+              {
+                "label": "Diffusion",
+                "correct": false
+              }
+            ],
+            "explanation": "Phagocytosis engulfs large particles."
+          },
+          {
+            "text": "Which of the following is an example of exocytosis?",
+            "choices": [
+              {
+                "label": "WBC engulfing bacteria",
+                "correct": false
+              },
+              {
+                "label": "Insulin release",
+                "correct": true
+              },
+              {
+                "label": "Water absorption",
+                "correct": false
+              },
+              {
+                "label": "Cholesterol uptake",
+                "correct": false
+              }
+            ],
+            "explanation": "Insulin is secreted by exocytosis; the other choices bring material into the cell."
+          }
         ]
       },
       "takeaways": [

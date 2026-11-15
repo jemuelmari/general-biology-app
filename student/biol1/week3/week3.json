@@ -6,20 +6,55 @@
       "n": 1,
       "title": "The Cell Cycle & Its Control Points",
       "competency": "STEM_BIO11/12-Id-f-6",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the phases of the cell cycle.</li><li>Identify the three major checkpoints.</li><li>Explain the importance of checkpoints.</li><li>Relate cell cycle failure to disease.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell cycle</strong> — the series of stages a cell goes through to divide.</li><li><strong>Interphase</strong> — G1, S, G2 phases (90% of cycle).</li><li><strong>M phase</strong> — mitosis + cytokinesis.</li><li><strong>Checkpoint</strong> — a control point that ensures accuracy.</li></ul><h3>📚 Lesson Content</h3><h4>A. Phases of the Cell Cycle</h4><table><thead><tr><th>Phase</th><th>What Happens</th></tr></thead><tbody><tr><td>G1</td><td>Cell grows, carries out normal functions</td></tr><tr><td>S</td><td>DNA replication</td></tr><tr><td>G2</td><td>Further growth; prepares for division</td></tr><tr><td>M (mitosis)</td><td>Nuclear division: prophase, metaphase, anaphase, telophase</td></tr><tr><td>Cytokinesis</td><td>Division of cytoplasm</td></tr></tbody></table><h4>B. Control Points (Checkpoints)</h4><ul><li><strong>G1 checkpoint</strong> — checks size, nutrients, DNA damage. If failed, cell exits cycle (G0).</li><li><strong>G2 checkpoint</strong> — confirms DNA replication complete and undamaged.</li><li><strong>M checkpoint</strong> — ensures chromosomes are properly attached to spindle fibers.</li></ul><h4>C. When Checkpoints Fail</h4><p>Uncontrolled cell division → cancer. Mutations in checkpoint genes (e.g., p53) allow damaged cells to keep dividing.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the phases of the cell cycle.</li><li>Identify the three major checkpoints.</li><li>Explain the importance of checkpoints.</li><li>Relate cell cycle failure to disease.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell cycle</strong> — the series of stages a cell goes through to divide.</li><li><strong>Interphase</strong> — G1, S, G2 phases (90% of cycle).</li><li><strong>M phase</strong> — mitosis + cytokinesis.</li><li><strong>Checkpoint</strong> — a control point that ensures accuracy.</li></ul><h3>📚 Lesson Content</h3><h4>A. Phases of the Cell Cycle</h4><table><thead><tr><th>Phase</th><th>What Happens</th></tr></thead><tbody><tr><td>G1</td><td>Cell grows, carries out normal functions</td></tr><tr><td>S</td><td>DNA replication</td></tr><tr><td>G2</td><td>Further growth; prepares for division</td></tr><tr><td>M (mitosis)</td><td>Nuclear division: prophase, metaphase, anaphase, telophase</td></tr><tr><td>Cytokinesis</td><td>Division of cytoplasm</td></tr></tbody></table><h4>B. Control Points (Checkpoints)</h4><ul><li><strong>G1 checkpoint</strong> — checks size, nutrients, DNA damage. If failed, cell exits cycle (G0).</li><li><strong>G2 checkpoint</strong> — confirms DNA replication complete and undamaged.</li><li><strong>M checkpoint</strong> — ensures chromosomes are properly attached to spindle fibers.</li></ul><h4>C. When Checkpoints Fail</h4><p>Uncontrolled cell division → cancer. Mutations in checkpoint genes (e.g., p53) allow damaged cells to keep dividing.</p><h3>💬 Let's Discuss</h3><p>A cell does not divide at random. It follows a cycle with two big parts: <strong>interphase</strong> (about 90% of the time) and the <strong>mitotic (M) phase</strong>. Interphase is not a resting stage — it is the busiest time. In <strong>G1</strong> the cell grows, makes proteins and does its normal job. In <strong>S</strong> it copies (synthesizes) all of its DNA, so each chromosome becomes two identical sister chromatids. In <strong>G2</strong> it makes more organelles and the proteins needed for division. Then in <strong>M</strong>, the nucleus divides (mitosis) and the cytoplasm divides (cytokinesis).</p><p>Like a car passing through checkpoints on a highway, the cell must pass three <strong>checkpoints</strong>. At the <strong>G1 checkpoint</strong> it asks: Am I big enough? Are there enough nutrients? Is my DNA undamaged? If the answer is no, the cell may pause or enter <strong>G0</strong>, a non-dividing state. Most mature neurons and muscle cells stay in G0 permanently. At the <strong>G2 checkpoint</strong> it checks that DNA was copied completely and correctly. At the <strong>M (spindle) checkpoint</strong> it makes sure every chromosome is attached to spindle fibers before chromatids are pulled apart.</p><p>These checks are run by proteins called <strong>cyclins</strong> and <strong>cyclin-dependent kinases (Cdks)</strong>, and by guardians such as <strong>p53</strong>, which can stop the cycle or trigger cell death if DNA is badly damaged.</p><p>When checkpoints fail, damaged cells keep dividing and mistakes pile up — the path to <strong>cancer</strong>. This is why smoking and UV light, which damage DNA, raise cancer risk. <strong>Common mistake:</strong> thinking DNA is copied during mitosis. It is copied earlier, in S phase.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "cell-cycle-master",
         "badgeName": "Cell Cycle Master",
         "badgeIcon": "🔄",
         "pairs": [
-          { "key": "g1", "left": "G1 phase", "right": "Cell grows, normal functions" },
-          { "key": "s", "left": "S phase", "right": "DNA replication" },
-          { "key": "g2", "left": "G2 phase", "right": "Prepares for division" },
-          { "key": "m", "left": "M phase", "right": "Mitosis + cytokinesis" },
-          { "key": "g1cp", "left": "G1 checkpoint", "right": "Size, nutrients, DNA damage" },
-          { "key": "g2cp", "left": "G2 checkpoint", "right": "DNA replication complete" },
-          { "key": "mcp", "left": "M checkpoint", "right": "Chromosomes attached" }
+          {
+            "key": "g1",
+            "left": "G1 phase",
+            "right": "Cell grows, normal functions",
+            "why": "G1 is the main growth phase where the cell does its usual work."
+          },
+          {
+            "key": "s",
+            "left": "S phase",
+            "right": "DNA replication",
+            "why": "S stands for synthesis — the DNA is replicated."
+          },
+          {
+            "key": "g2",
+            "left": "G2 phase",
+            "right": "Prepares for division",
+            "why": "In G2 the cell makes proteins and organelles needed for division."
+          },
+          {
+            "key": "m",
+            "left": "M phase",
+            "right": "Mitosis + cytokinesis",
+            "why": "M phase is mitosis plus cytokinesis."
+          },
+          {
+            "key": "g1cp",
+            "left": "G1 checkpoint",
+            "right": "Size, nutrients, DNA damage",
+            "why": "The G1 checkpoint checks size, nutrients and DNA damage before committing to S phase."
+          },
+          {
+            "key": "g2cp",
+            "left": "G2 checkpoint",
+            "right": "DNA replication complete",
+            "why": "The G2 checkpoint confirms DNA was copied completely and correctly."
+          },
+          {
+            "key": "mcp",
+            "left": "M checkpoint",
+            "right": "Chromosomes attached",
+            "why": "The M checkpoint makes sure all chromosomes are attached to the spindle."
+          }
         ]
       },
       "activity2": {
@@ -28,12 +63,114 @@
         "badgeName": "Phase Pro",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "The cell is replicating its DNA.", "choices": [{ "label": "S phase ✓", "correct": true }, { "label": "G1", "correct": false }, { "label": "G2", "correct": false }] },
-          { "text": "The cell is growing and carrying out normal functions.", "choices": [{ "label": "G1 ✓", "correct": true }, { "label": "S", "correct": false }, { "label": "M", "correct": false }] },
-          { "text": "The cell is checking that DNA replication is complete.", "choices": [{ "label": "G1 checkpoint", "correct": false }, { "label": "G2 checkpoint ✓", "correct": true }, { "label": "M checkpoint", "correct": false }] },
-          { "text": "The cell is dividing its nucleus.", "choices": [{ "label": "S", "correct": false }, { "label": "M phase ✓", "correct": true }, { "label": "G1", "correct": false }] },
-          { "text": "The cell has stopped dividing and entered G0.", "choices": [{ "label": "Failed G1 checkpoint ✓", "correct": true }, { "label": "Passed G2", "correct": false }, { "label": "Passed M", "correct": false }] },
-          { "text": "Chromosomes are being checked for proper spindle attachment.", "choices": [{ "label": "G1", "correct": false }, { "label": "G2", "correct": false }, { "label": "M checkpoint ✓", "correct": true }] }
+          {
+            "text": "The cell is replicating its DNA.",
+            "choices": [
+              {
+                "label": "S phase",
+                "correct": true
+              },
+              {
+                "label": "G1",
+                "correct": false
+              },
+              {
+                "label": "G2",
+                "correct": false
+              }
+            ],
+            "explanation": "DNA replication happens in S (synthesis) phase."
+          },
+          {
+            "text": "The cell is growing and carrying out normal functions.",
+            "choices": [
+              {
+                "label": "G1",
+                "correct": true
+              },
+              {
+                "label": "S",
+                "correct": false
+              },
+              {
+                "label": "M",
+                "correct": false
+              }
+            ],
+            "explanation": "Growth and normal functions happen in G1."
+          },
+          {
+            "text": "The cell is checking that DNA replication is complete.",
+            "choices": [
+              {
+                "label": "G1 checkpoint",
+                "correct": false
+              },
+              {
+                "label": "G2 checkpoint",
+                "correct": true
+              },
+              {
+                "label": "M checkpoint",
+                "correct": false
+              }
+            ],
+            "explanation": "Completeness of DNA replication is checked at the G2 checkpoint."
+          },
+          {
+            "text": "The cell is dividing its nucleus.",
+            "choices": [
+              {
+                "label": "S",
+                "correct": false
+              },
+              {
+                "label": "M phase",
+                "correct": true
+              },
+              {
+                "label": "G1",
+                "correct": false
+              }
+            ],
+            "explanation": "Nuclear division is mitosis, part of M phase."
+          },
+          {
+            "text": "The cell has stopped dividing and entered G0.",
+            "choices": [
+              {
+                "label": "G1 checkpoint not passed",
+                "correct": true
+              },
+              {
+                "label": "G2 checkpoint passed",
+                "correct": false
+              },
+              {
+                "label": "M checkpoint passed",
+                "correct": false
+              }
+            ],
+            "explanation": "When a cell does not pass the G1 checkpoint, it can exit into G0."
+          },
+          {
+            "text": "Chromosomes are being checked for proper spindle attachment.",
+            "choices": [
+              {
+                "label": "G1 checkpoint",
+                "correct": false
+              },
+              {
+                "label": "G2 checkpoint",
+                "correct": false
+              },
+              {
+                "label": "M checkpoint",
+                "correct": true
+              }
+            ],
+            "explanation": "Spindle attachment is checked at the M checkpoint."
+          }
         ]
       },
       "formative": {
@@ -42,9 +179,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "During which phase does DNA replication occur?", "choices": [{ "label": "G1", "correct": false }, { "label": "S", "correct": true }, { "label": "G2", "correct": false }, { "label": "M", "correct": false }] },
-          { "text": "What happens if the G1 checkpoint fails?", "choices": [{ "label": "Cell divides immediately", "correct": false }, { "label": "Cell may enter G0", "correct": true }, { "label": "Cell skips S phase", "correct": false }, { "label": "Cell becomes cancerous instantly", "correct": false }] },
-          { "text": "Which of the following would result from failure of cell cycle control?", "choices": [{ "label": "Normal growth", "correct": false }, { "label": "Cancer", "correct": true }, { "label": "Faster healing", "correct": false }, { "label": "Improved immunity", "correct": false }] }
+          {
+            "text": "During which phase does DNA replication occur?",
+            "choices": [
+              {
+                "label": "G1",
+                "correct": false
+              },
+              {
+                "label": "S",
+                "correct": true
+              },
+              {
+                "label": "G2",
+                "correct": false
+              },
+              {
+                "label": "M",
+                "correct": false
+              }
+            ],
+            "explanation": "DNA is replicated during S phase of interphase."
+          },
+          {
+            "text": "What happens if the G1 checkpoint fails?",
+            "choices": [
+              {
+                "label": "Cell divides immediately",
+                "correct": false
+              },
+              {
+                "label": "Cell may enter G0",
+                "correct": true
+              },
+              {
+                "label": "Cell skips S phase",
+                "correct": false
+              },
+              {
+                "label": "Cell becomes cancerous instantly",
+                "correct": false
+              }
+            ],
+            "explanation": "A cell that does not pass G1 can pause or enter G0, a non-dividing state."
+          },
+          {
+            "text": "Which of the following would result from failure of cell cycle control?",
+            "choices": [
+              {
+                "label": "Normal growth",
+                "correct": false
+              },
+              {
+                "label": "Cancer",
+                "correct": true
+              },
+              {
+                "label": "Faster healing",
+                "correct": false
+              },
+              {
+                "label": "Improved immunity",
+                "correct": false
+              }
+            ],
+            "explanation": "If checkpoints fail, cells divide without control, which can lead to cancer."
+          }
         ]
       },
       "takeaways": [
@@ -58,19 +258,49 @@
       "n": 2,
       "title": "Mitosis: Stages & Significance",
       "competency": "STEM_BIO11/12-Id-f-7",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the stages of mitosis.</li><li>Explain what happens to chromosomes in each stage.</li><li>Identify the significance of mitosis.</li><li>Explain cytokinesis in plant vs animal cells.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Mitosis</strong> — division producing two genetically identical daughter cells.</li><li><strong>Chromatid</strong> — one half of a duplicated chromosome.</li><li><strong>Centromere</strong> — the point where sister chromatids are joined.</li><li><strong>Cytokinesis</strong> — division of cytoplasm.</li></ul><h3>📚 Lesson Content</h3><h4>A. Stages of Mitosis (PMAT)</h4><table><thead><tr><th>Stage</th><th>What Happens</th></tr></thead><tbody><tr><td>Prophase</td><td>Chromatin condenses into chromosomes; nuclear envelope breaks down; spindle fibers form</td></tr><tr><td>Metaphase</td><td>Chromosomes align at the cell's equator (metaphase plate)</td></tr><tr><td>Anaphase</td><td>Sister chromatids separate; move to opposite poles</td></tr><tr><td>Telophase</td><td>Nuclear envelopes reform; chromosomes decondense; cytokinesis begins</td></tr></tbody></table><h4>B. Significance of Mitosis</h4><ul><li>Growth</li><li>Repair and healing</li><li>Asexual reproduction (in some organisms)</li><li>Maintains chromosome number (diploid → diploid)</li></ul><h4>C. Cytokinesis</h4><ul><li><strong>Animal cells:</strong> Cleavage furrow pinches cell in two</li><li><strong>Plant cells:</strong> Cell plate forms between the two nuclei</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the stages of mitosis.</li><li>Explain what happens to chromosomes in each stage.</li><li>Identify the significance of mitosis.</li><li>Explain cytokinesis in plant vs animal cells.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Mitosis</strong> — division producing two genetically identical daughter cells.</li><li><strong>Chromatid</strong> — one half of a duplicated chromosome.</li><li><strong>Centromere</strong> — the point where sister chromatids are joined.</li><li><strong>Cytokinesis</strong> — division of cytoplasm.</li></ul><h3>📚 Lesson Content</h3><h4>A. Stages of Mitosis (PMAT)</h4><table><thead><tr><th>Stage</th><th>What Happens</th></tr></thead><tbody><tr><td>Prophase</td><td>Chromatin condenses into chromosomes; nuclear envelope breaks down; spindle fibers form</td></tr><tr><td>Metaphase</td><td>Chromosomes align at the cell's equator (metaphase plate)</td></tr><tr><td>Anaphase</td><td>Sister chromatids separate; move to opposite poles</td></tr><tr><td>Telophase</td><td>Nuclear envelopes reform; chromosomes decondense; cytokinesis begins</td></tr></tbody></table><h4>B. Significance of Mitosis</h4><ul><li>Growth</li><li>Repair and healing</li><li>Asexual reproduction (in some organisms)</li><li>Maintains chromosome number (diploid → diploid)</li></ul><h4>C. Cytokinesis</h4><ul><li><strong>Animal cells:</strong> Cleavage furrow pinches cell in two</li><li><strong>Plant cells:</strong> Cell plate forms between the two nuclei</li></ul><h3>💬 Let's Discuss</h3><p>Mitosis is how one cell becomes two cells with <em>exactly the same</em> chromosomes. Remember that the DNA was already copied in S phase, so each chromosome enters mitosis as two sister chromatids joined at the centromere. Mitosis simply separates those copies fairly. A useful memory aid is <strong>PMAT</strong>.</p><p>In <strong>prophase</strong>, the long chromatin threads coil into short, thick chromosomes that can be seen under a microscope, the nuclear envelope breaks down, and spindle fibers start to grow from the centrosomes. In <strong>metaphase</strong>, the chromosomes line up single-file along the middle of the cell (the metaphase plate) — <em>M for middle</em>. In <strong>anaphase</strong>, the centromeres split and the sister chromatids are pulled toward opposite poles — <em>A for apart</em>. In <strong>telophase</strong>, the chromosomes uncoil and a nuclear envelope forms around each set — <em>T for two nuclei</em>.</p><p>Mitosis divides the nucleus; <strong>cytokinesis</strong> divides the cytoplasm. In animal cells, a ring of actin pinches the membrane inward to form a <strong>cleavage furrow</strong>, like tightening a drawstring bag. Plant cells cannot pinch because of their rigid wall, so vesicles from the Golgi build a <strong>cell plate</strong> across the middle that becomes a new wall.</p><p>Why is mitosis important? It allows <strong>growth</strong> (one zygote becomes trillions of cells), <strong>repair</strong> (healing wounds, replacing skin and blood cells) and <strong>asexual reproduction</strong> (yeast budding, new plants from cuttings). <strong>Common mistake:</strong> saying chromosomes are \"copied\" in anaphase. They are only <em>separated</em> there; copying happened in S phase.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "mitosis-master",
         "badgeName": "Mitosis Master",
         "badgeIcon": "🧬",
         "pairs": [
-          { "key": "pro", "left": "Prophase", "right": "Chromosomes condense; spindle forms" },
-          { "key": "met", "left": "Metaphase", "right": "Chromosomes align at equator" },
-          { "key": "ana", "left": "Anaphase", "right": "Sister chromatids separate" },
-          { "key": "tel", "left": "Telophase", "right": "Nuclear envelopes reform" },
-          { "key": "ck", "left": "Cytokinesis", "right": "Division of cytoplasm" },
-          { "key": "sig", "left": "Significance", "right": "Growth, repair, identical cells" }
+          {
+            "key": "pro",
+            "left": "Prophase",
+            "right": "Chromosomes condense; spindle forms",
+            "why": "In prophase chromosomes condense and the spindle starts forming."
+          },
+          {
+            "key": "met",
+            "left": "Metaphase",
+            "right": "Chromosomes align at equator",
+            "why": "In metaphase chromosomes line up at the middle (equator)."
+          },
+          {
+            "key": "ana",
+            "left": "Anaphase",
+            "right": "Sister chromatids separate",
+            "why": "In anaphase sister chromatids are pulled apart to opposite poles."
+          },
+          {
+            "key": "tel",
+            "left": "Telophase",
+            "right": "Nuclear envelopes reform",
+            "why": "In telophase nuclear envelopes form around the two sets."
+          },
+          {
+            "key": "ck",
+            "left": "Cytokinesis",
+            "right": "Division of cytoplasm",
+            "why": "Cytokinesis splits the cytoplasm into two cells."
+          },
+          {
+            "key": "sig",
+            "left": "Significance",
+            "right": "Growth, repair, identical cells",
+            "why": "Mitosis makes identical cells for growth and tissue repair."
+          }
         ]
       },
       "activity2": {
@@ -79,12 +309,114 @@
         "badgeName": "Stage Spotter",
         "badgeIcon": "🔎",
         "scenarios": [
-          { "text": "Chromosomes line up at the cell's center.", "choices": [{ "label": "Metaphase ✓", "correct": true }, { "label": "Prophase", "correct": false }, { "label": "Anaphase", "correct": false }] },
-          { "text": "Sister chromatids move to opposite poles.", "choices": [{ "label": "Anaphase ✓", "correct": true }, { "label": "Metaphase", "correct": false }, { "label": "Telophase", "correct": false }] },
-          { "text": "Chromatin condenses; nuclear envelope breaks down.", "choices": [{ "label": "Prophase ✓", "correct": true }, { "label": "Anaphase", "correct": false }, { "label": "Telophase", "correct": false }] },
-          { "text": "Two new nuclear envelopes form.", "choices": [{ "label": "Telophase ✓", "correct": true }, { "label": "Prophase", "correct": false }, { "label": "Metaphase", "correct": false }] },
-          { "text": "A cleavage furrow appears in an animal cell.", "choices": [{ "label": "Cytokinesis ✓", "correct": true }, { "label": "Prophase", "correct": false }, { "label": "Anaphase", "correct": false }] },
-          { "text": "A cell plate forms in a plant cell.", "choices": [{ "label": "Cytokinesis (plant) ✓", "correct": true }, { "label": "Metaphase", "correct": false }, { "label": "Prophase", "correct": false }] }
+          {
+            "text": "Chromosomes line up at the cell's center.",
+            "choices": [
+              {
+                "label": "Metaphase",
+                "correct": true
+              },
+              {
+                "label": "Prophase",
+                "correct": false
+              },
+              {
+                "label": "Anaphase",
+                "correct": false
+              }
+            ],
+            "explanation": "Lining up at the center is metaphase."
+          },
+          {
+            "text": "Sister chromatids move to opposite poles.",
+            "choices": [
+              {
+                "label": "Anaphase",
+                "correct": true
+              },
+              {
+                "label": "Metaphase",
+                "correct": false
+              },
+              {
+                "label": "Telophase",
+                "correct": false
+              }
+            ],
+            "explanation": "Chromatids moving to opposite poles is anaphase."
+          },
+          {
+            "text": "Chromatin condenses; nuclear envelope breaks down.",
+            "choices": [
+              {
+                "label": "Prophase",
+                "correct": true
+              },
+              {
+                "label": "Anaphase",
+                "correct": false
+              },
+              {
+                "label": "Telophase",
+                "correct": false
+              }
+            ],
+            "explanation": "Condensing chromosomes and envelope breakdown happen in prophase."
+          },
+          {
+            "text": "Two new nuclear envelopes form.",
+            "choices": [
+              {
+                "label": "Telophase",
+                "correct": true
+              },
+              {
+                "label": "Prophase",
+                "correct": false
+              },
+              {
+                "label": "Metaphase",
+                "correct": false
+              }
+            ],
+            "explanation": "New nuclear envelopes form in telophase."
+          },
+          {
+            "text": "A cleavage furrow appears in an animal cell.",
+            "choices": [
+              {
+                "label": "Cytokinesis",
+                "correct": true
+              },
+              {
+                "label": "Prophase",
+                "correct": false
+              },
+              {
+                "label": "Anaphase",
+                "correct": false
+              }
+            ],
+            "explanation": "A cleavage furrow is how animal cells undergo cytokinesis."
+          },
+          {
+            "text": "A cell plate forms in a plant cell.",
+            "choices": [
+              {
+                "label": "Cytokinesis",
+                "correct": true
+              },
+              {
+                "label": "Metaphase",
+                "correct": false
+              },
+              {
+                "label": "Prophase",
+                "correct": false
+              }
+            ],
+            "explanation": "Plant cells form a cell plate during cytokinesis because they cannot pinch inward."
+          }
         ]
       },
       "formative": {
@@ -93,9 +425,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "During which stage do chromosomes align at the equator?", "choices": [{ "label": "Prophase", "correct": false }, { "label": "Metaphase", "correct": true }, { "label": "Anaphase", "correct": false }, { "label": "Telophase", "correct": false }] },
-          { "text": "What is the main significance of mitosis?", "choices": [{ "label": "Genetic diversity", "correct": false }, { "label": "Growth and repair", "correct": true }, { "label": "Gamete formation", "correct": false }, { "label": "Reduction division", "correct": false }] },
-          { "text": "How does cytokinesis differ in plant vs animal cells?", "choices": [{ "label": "No difference", "correct": false }, { "label": "Animal: cleavage furrow; Plant: cell plate", "correct": true }, { "label": "Plant: furrow; Animal: plate", "correct": false }, { "label": "Both use cell plate", "correct": false }] }
+          {
+            "text": "During which stage do chromosomes align at the equator?",
+            "choices": [
+              {
+                "label": "Prophase",
+                "correct": false
+              },
+              {
+                "label": "Metaphase",
+                "correct": true
+              },
+              {
+                "label": "Anaphase",
+                "correct": false
+              },
+              {
+                "label": "Telophase",
+                "correct": false
+              }
+            ],
+            "explanation": "Chromosomes align at the equator in metaphase."
+          },
+          {
+            "text": "What is the main significance of mitosis?",
+            "choices": [
+              {
+                "label": "Genetic diversity",
+                "correct": false
+              },
+              {
+                "label": "Growth and repair",
+                "correct": true
+              },
+              {
+                "label": "Gamete formation",
+                "correct": false
+              },
+              {
+                "label": "Reduction division",
+                "correct": false
+              }
+            ],
+            "explanation": "Mitosis produces identical cells for growth and repair; diversity comes from meiosis."
+          },
+          {
+            "text": "How does cytokinesis differ in plant vs animal cells?",
+            "choices": [
+              {
+                "label": "There is no difference at all",
+                "correct": false
+              },
+              {
+                "label": "Animal: cleavage furrow; plant: cell plate",
+                "correct": true
+              },
+              {
+                "label": "Plant: cleavage furrow; animal: cell plate",
+                "correct": false
+              },
+              {
+                "label": "Both form a cell plate in the middle",
+                "correct": false
+              }
+            ],
+            "explanation": "Animal cells pinch in with a cleavage furrow; plant cells build a cell plate."
+          }
         ]
       },
       "takeaways": [
@@ -109,20 +504,55 @@
       "n": 3,
       "title": "Meiosis: Stages & Crossing Over",
       "competency": "STEM_BIO11/12-Id-f-7, -8",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the stages of meiosis.</li><li>Explain crossing over and recombination.</li><li>Differentiate mitosis from meiosis.</li><li>Explain how meiosis generates genetic diversity.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Meiosis</strong> — reduction division producing four haploid cells.</li><li><strong>Homologous chromosomes</strong> — pairs of chromosomes (one from each parent).</li><li><strong>Crossing over</strong> — exchange of segments between homologs.</li><li><strong>Chiasma</strong> — the point of crossing over.</li></ul><h3>📚 Lesson Content</h3><h4>A. Two Rounds of Division</h4><table><thead><tr><th>Stage</th><th>Key Event</th></tr></thead><tbody><tr><td>Prophase I</td><td>Homologs pair (synapsis); crossing over occurs</td></tr><tr><td>Metaphase I</td><td>Homolog pairs line up at equator</td></tr><tr><td>Anaphase I</td><td>Homologs separate (not sister chromatids)</td></tr><tr><td>Telophase I</td><td>Two haploid cells formed</td></tr><tr><td>Meiosis II</td><td>Sister chromatids separate — like mitosis</td></tr></tbody></table><h4>B. Crossing Over</h4><p>During Prophase I, homologous chromosomes exchange segments at chiasmata. This creates new allele combinations, generating genetic diversity.</p><h4>C. Mitosis vs Meiosis</h4><table><thead><tr><th>Aspect</th><th>Mitosis</th><th>Meiosis</th></tr></thead><tbody><tr><td>Purpose</td><td>Growth, repair</td><td>Gametes</td></tr><tr><td>Divisions</td><td>1</td><td>2</td></tr><tr><td>Daughter cells</td><td>2 (diploid)</td><td>4 (haploid)</td></tr><tr><td>Genetic diversity</td><td>No</td><td>Yes</td></tr><tr><td>Crossing over</td><td>No</td><td>Yes</td></tr></tbody></table>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe the stages of meiosis.</li><li>Explain crossing over and recombination.</li><li>Differentiate mitosis from meiosis.</li><li>Explain how meiosis generates genetic diversity.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Meiosis</strong> — reduction division producing four haploid cells.</li><li><strong>Homologous chromosomes</strong> — pairs of chromosomes (one from each parent).</li><li><strong>Crossing over</strong> — exchange of segments between homologs.</li><li><strong>Chiasma</strong> — the point of crossing over.</li></ul><h3>📚 Lesson Content</h3><h4>A. Two Rounds of Division</h4><table><thead><tr><th>Stage</th><th>Key Event</th></tr></thead><tbody><tr><td>Prophase I</td><td>Homologs pair (synapsis); crossing over occurs</td></tr><tr><td>Metaphase I</td><td>Homolog pairs line up at equator</td></tr><tr><td>Anaphase I</td><td>Homologs separate (not sister chromatids)</td></tr><tr><td>Telophase I</td><td>Two haploid cells formed</td></tr><tr><td>Meiosis II</td><td>Sister chromatids separate — like mitosis</td></tr></tbody></table><h4>B. Crossing Over</h4><p>During Prophase I, homologous chromosomes exchange segments at chiasmata. This creates new allele combinations, generating genetic diversity.</p><h4>C. Mitosis vs Meiosis</h4><table><thead><tr><th>Aspect</th><th>Mitosis</th><th>Meiosis</th></tr></thead><tbody><tr><td>Purpose</td><td>Growth, repair</td><td>Gametes</td></tr><tr><td>Divisions</td><td>1</td><td>2</td></tr><tr><td>Daughter cells</td><td>2 (diploid)</td><td>4 (haploid)</td></tr><tr><td>Genetic diversity</td><td>No</td><td>Yes</td></tr><tr><td>Crossing over</td><td>No</td><td>Yes</td></tr></tbody></table><h3>💬 Let's Discuss</h3><p>If body cells used mitosis to make eggs and sperm, each gamete would have 46 chromosomes and the baby would have 92 — and the number would double every generation. <strong>Meiosis</strong> solves this. It is a <em>reduction division</em>: one diploid cell (2n = 46 in humans) divides twice to make <strong>four haploid cells</strong> (n = 23), each genetically different.</p><p><strong>Meiosis I</strong> separates <em>homologous chromosomes</em> — the matching pair you received, one from your mother and one from your father. In <strong>prophase I</strong>, homologs pair up closely (synapsis) and swap segments at points called <strong>chiasmata</strong>. This is <strong>crossing over</strong>, and it creates chromosomes with new combinations of alleles. In <strong>metaphase I</strong>, the pairs line up at the equator, and each pair's orientation is random — this is <strong>independent assortment</strong>. In <strong>anaphase I</strong>, homologs move to opposite poles, while sister chromatids stay together. Telophase I gives two haploid cells.</p><p><strong>Meiosis II</strong> works like mitosis: the sister chromatids finally separate, giving four haploid cells in total.</p><p>Crossing over plus independent assortment (over 8 million combinations from 23 pairs alone) plus random fertilization explain why siblings with the same parents look different. Genetic variety helps a population survive changing environments.</p><p><strong>Compare:</strong> mitosis = 1 division, 2 identical diploid cells, for growth and repair; meiosis = 2 divisions, 4 unique haploid cells, for gametes. <strong>Common mistake:</strong> thinking homologous chromosomes are the same as sister chromatids. Sisters are identical copies; homologs carry the same genes but may have different alleles.</p>",
       "activity1": {
         "timeLimit": 120,
         "badgeId": "meiosis-master",
         "badgeName": "Meiosis Master",
         "badgeIcon": "🔀",
         "pairs": [
-          { "key": "p1", "left": "Prophase I", "right": "Crossing over occurs" },
-          { "key": "m1", "left": "Metaphase I", "right": "Homolog pairs at equator" },
-          { "key": "a1", "left": "Anaphase I", "right": "Homologs separate" },
-          { "key": "t1", "left": "Telophase I", "right": "Two haploid cells form" },
-          { "key": "m2", "left": "Meiosis II", "right": "Sister chromatids separate" },
-          { "key": "cross", "left": "Crossing over", "right": "Exchange between homologs" },
-          { "key": "chiasma", "left": "Chiasma", "right": "Point of exchange" }
+          {
+            "key": "p1",
+            "left": "Prophase I",
+            "right": "Crossing over occurs",
+            "why": "Crossing over happens in prophase I when homologs pair up."
+          },
+          {
+            "key": "m1",
+            "left": "Metaphase I",
+            "right": "Homolog pairs at equator",
+            "why": "In metaphase I homologous pairs, not single chromosomes, line up at the equator."
+          },
+          {
+            "key": "a1",
+            "left": "Anaphase I",
+            "right": "Homologs separate",
+            "why": "In anaphase I the homologs separate; sister chromatids stay joined."
+          },
+          {
+            "key": "t1",
+            "left": "Telophase I",
+            "right": "Two haploid cells form",
+            "why": "Telophase I ends with two haploid cells."
+          },
+          {
+            "key": "m2",
+            "left": "Meiosis II",
+            "right": "Sister chromatids separate",
+            "why": "Meiosis II separates sister chromatids, like mitosis."
+          },
+          {
+            "key": "cross",
+            "left": "Crossing over",
+            "right": "Exchange between homologs",
+            "why": "Crossing over is the exchange of segments between homologous chromosomes."
+          },
+          {
+            "key": "chiasma",
+            "left": "Chiasma",
+            "right": "Point of exchange",
+            "why": "A chiasma is the visible X-shaped point where crossing over happened."
+          }
         ]
       },
       "activity2": {
@@ -131,12 +561,114 @@
         "badgeName": "Mito vs Meio",
         "badgeIcon": "⚖️",
         "scenarios": [
-          { "text": "Produces two genetically identical cells.", "choices": [{ "label": "Mitosis ✓", "correct": true }, { "label": "Meiosis", "correct": false }, { "label": "Both", "correct": false }] },
-          { "text": "Produces four haploid cells.", "choices": [{ "label": "Mitosis", "correct": false }, { "label": "Meiosis ✓", "correct": true }, { "label": "Both", "correct": false }] },
-          { "text": "Crossing over occurs.", "choices": [{ "label": "Mitosis", "correct": false }, { "label": "Meiosis ✓", "correct": true }, { "label": "Both", "correct": false }] },
-          { "text": "Used for growth and repair.", "choices": [{ "label": "Mitosis ✓", "correct": true }, { "label": "Meiosis", "correct": false }, { "label": "Both", "correct": false }] },
-          { "text": "Reduces chromosome number by half.", "choices": [{ "label": "Mitosis", "correct": false }, { "label": "Meiosis ✓", "correct": true }, { "label": "Both", "correct": false }] },
-          { "text": "Produces gametes.", "choices": [{ "label": "Mitosis", "correct": false }, { "label": "Meiosis ✓", "correct": true }, { "label": "Both", "correct": false }] }
+          {
+            "text": "Produces two genetically identical cells.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": true
+              },
+              {
+                "label": "Meiosis",
+                "correct": false
+              },
+              {
+                "label": "Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Mitosis gives two genetically identical cells."
+          },
+          {
+            "text": "Produces four haploid cells.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": false
+              },
+              {
+                "label": "Meiosis",
+                "correct": true
+              },
+              {
+                "label": "Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Meiosis ends with four haploid cells."
+          },
+          {
+            "text": "Crossing over occurs.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": false
+              },
+              {
+                "label": "Meiosis",
+                "correct": true
+              },
+              {
+                "label": "Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Crossing over occurs only in prophase I of meiosis."
+          },
+          {
+            "text": "Used for growth and repair.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": true
+              },
+              {
+                "label": "Meiosis",
+                "correct": false
+              },
+              {
+                "label": "Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Growth and repair use mitosis."
+          },
+          {
+            "text": "Reduces chromosome number by half.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": false
+              },
+              {
+                "label": "Meiosis",
+                "correct": true
+              },
+              {
+                "label": "Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Meiosis halves the chromosome number (2n → n)."
+          },
+          {
+            "text": "Produces gametes.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": false
+              },
+              {
+                "label": "Meiosis",
+                "correct": true
+              },
+              {
+                "label": "Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Gametes are produced by meiosis."
+          }
         ]
       },
       "formative": {
@@ -145,9 +677,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "During which stage of meiosis does crossing over occur?", "choices": [{ "label": "Prophase I", "correct": true }, { "label": "Metaphase I", "correct": false }, { "label": "Anaphase II", "correct": false }, { "label": "Telophase II", "correct": false }] },
-          { "text": "How many daughter cells are produced at the end of meiosis?", "choices": [{ "label": "1", "correct": false }, { "label": "2", "correct": false }, { "label": "4", "correct": true }, { "label": "8", "correct": false }] },
-          { "text": "What is the significance of crossing over?", "choices": [{ "label": "Reduces chromosome number", "correct": false }, { "label": "Increases genetic diversity", "correct": true }, { "label": "Produces identical cells", "correct": false }, { "label": "Repairs DNA", "correct": false }] }
+          {
+            "text": "During which stage of meiosis does crossing over occur?",
+            "choices": [
+              {
+                "label": "Prophase I",
+                "correct": true
+              },
+              {
+                "label": "Metaphase I",
+                "correct": false
+              },
+              {
+                "label": "Anaphase II",
+                "correct": false
+              },
+              {
+                "label": "Telophase II",
+                "correct": false
+              }
+            ],
+            "explanation": "Crossing over takes place in prophase I."
+          },
+          {
+            "text": "How many daughter cells are produced at the end of meiosis?",
+            "choices": [
+              {
+                "label": "1",
+                "correct": false
+              },
+              {
+                "label": "2",
+                "correct": false
+              },
+              {
+                "label": "4",
+                "correct": true
+              },
+              {
+                "label": "8",
+                "correct": false
+              }
+            ],
+            "explanation": "Two divisions (meiosis I and II) give four daughter cells."
+          },
+          {
+            "text": "What is the significance of crossing over?",
+            "choices": [
+              {
+                "label": "Reduces chromosome number",
+                "correct": false
+              },
+              {
+                "label": "Increases genetic diversity",
+                "correct": true
+              },
+              {
+                "label": "Produces identical cells",
+                "correct": false
+              },
+              {
+                "label": "Repairs DNA",
+                "correct": false
+              }
+            ],
+            "explanation": "Swapping segments between homologs creates new allele combinations, increasing diversity."
+          }
         ]
       },
       "takeaways": [
@@ -161,19 +756,49 @@
       "n": 4,
       "title": "Applications & Cell Cycle Disorders",
       "competency": "STEM_BIO11/12-Id-f-9, -10",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain applications of mitosis and meiosis.</li><li>Identify disorders caused by cell cycle malfunction.</li><li>Describe how cancer develops.</li><li>Explain nondisjunction and its effects.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Nondisjunction</strong> — failure of chromosomes to separate properly.</li><li><strong>Aneuploidy</strong> — abnormal chromosome number.</li><li><strong>Oncogene</strong> — gene that promotes cancer.</li><li><strong>Tumor suppressor gene</strong> — gene that prevents cancer (e.g., p53).</li></ul><h3>📚 Lesson Content</h3><h4>A. Applications of Mitosis</h4><ul><li>Wound healing and tissue repair</li><li>Asexual reproduction in plants (cuttings, grafting)</li><li>Cloning</li><li>Cancer research (studying uncontrolled division)</li></ul><h4>B. Applications of Meiosis</h4><ul><li>Gamete production (sperm/egg)</li><li>Genetic diversity in offspring</li><li>Selective breeding</li><li>Understanding genetic disorders</li></ul><h4>C. Cell Cycle Disorders</h4><table><thead><tr><th>Disorder</th><th>Cause</th></tr></thead><tbody><tr><td>Cancer</td><td>Uncontrolled cell division</td></tr><tr><td>Down syndrome</td><td>Trisomy 21 (nondisjunction)</td></tr><tr><td>Turner syndrome</td><td>Monosomy X</td></tr><tr><td>Klinefelter syndrome</td><td>XXY</td></tr></tbody></table>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain applications of mitosis and meiosis.</li><li>Identify disorders caused by cell cycle malfunction.</li><li>Describe how cancer develops.</li><li>Explain nondisjunction and its effects.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Nondisjunction</strong> — failure of chromosomes to separate properly.</li><li><strong>Aneuploidy</strong> — abnormal chromosome number.</li><li><strong>Oncogene</strong> — gene that promotes cancer.</li><li><strong>Tumor suppressor gene</strong> — gene that prevents cancer (e.g., p53).</li></ul><h3>📚 Lesson Content</h3><h4>A. Applications of Mitosis</h4><ul><li>Wound healing and tissue repair</li><li>Asexual reproduction in plants (cuttings, grafting)</li><li>Cloning</li><li>Cancer research (studying uncontrolled division)</li></ul><h4>B. Applications of Meiosis</h4><ul><li>Gamete production (sperm/egg)</li><li>Genetic diversity in offspring</li><li>Selective breeding</li><li>Understanding genetic disorders</li></ul><h4>C. Cell Cycle Disorders</h4><table><thead><tr><th>Disorder</th><th>Cause</th></tr></thead><tbody><tr><td>Cancer</td><td>Uncontrolled cell division</td></tr><tr><td>Down syndrome</td><td>Trisomy 21 (nondisjunction)</td></tr><tr><td>Turner syndrome</td><td>Monosomy X</td></tr><tr><td>Klinefelter syndrome</td><td>XXY</td></tr></tbody></table><h3>💬 Let's Discuss</h3><p>Because cell division is everywhere in life, errors in it are behind several important health conditions — and understanding it also gives us tools for medicine and agriculture.</p><p><strong>Cancer</strong> is mitosis out of control. Normally, <em>proto-oncogenes</em> act like a car's gas pedal (they promote division) and <em>tumor suppressor genes</em> act like the brakes. The best-known brake is <strong>p53</strong>, which stops the cycle when DNA is damaged and can trigger cell suicide (apoptosis). If mutations jam the gas pedal or cut the brakes, cells divide again and again, forming a <strong>tumor</strong>. When tumor cells invade other tissues, the cancer is <em>malignant</em> and can spread (metastasize). Many chemotherapy drugs work by blocking the spindle or DNA copying in rapidly dividing cells — which is also why hair cells and the lining of the gut are affected, causing hair loss and nausea.</p><p>Meiosis errors produce cells with the wrong number of chromosomes. In <strong>nondisjunction</strong>, homologs (in meiosis I) or chromatids (in meiosis II) fail to separate, so one gamete gets an extra chromosome and another gets one fewer. If such a gamete is fertilized: an extra chromosome 21 causes <strong>Down syndrome</strong> (trisomy 21); one X with no second sex chromosome causes <strong>Turner syndrome</strong> (45,X); XXY causes <strong>Klinefelter syndrome</strong>. The risk of nondisjunction increases with maternal age.</p><p>On the useful side, mitosis lets gardeners grow new plants from cuttings and lets scientists grow tissues in the lab. Doctors use a <strong>karyotype</strong> — a photo of chromosomes arranged in pairs — to detect these conditions. <strong>Common mistake:</strong> thinking all tumors are cancer. Benign tumors do not invade or spread.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "disorder-detective",
         "badgeName": "Disorder Detective",
         "badgeIcon": "🕵️",
         "pairs": [
-          { "key": "cancer", "left": "Cancer", "right": "Uncontrolled cell division" },
-          { "key": "down", "left": "Down syndrome", "right": "Trisomy 21" },
-          { "key": "turner", "left": "Turner syndrome", "right": "Monosomy X" },
-          { "key": "kline", "left": "Klinefelter syndrome", "right": "XXY" },
-          { "key": "p53", "left": "p53", "right": "Tumor suppressor gene" },
-          { "key": "nondis", "left": "Nondisjunction", "right": "Failure of chromosomes to separate" }
+          {
+            "key": "cancer",
+            "left": "Cancer",
+            "right": "Uncontrolled cell division",
+            "why": "Cancer cells keep dividing because their cell-cycle controls are broken."
+          },
+          {
+            "key": "down",
+            "left": "Down syndrome",
+            "right": "Trisomy 21",
+            "why": "Down syndrome results from three copies of chromosome 21."
+          },
+          {
+            "key": "turner",
+            "left": "Turner syndrome",
+            "right": "Monosomy X",
+            "why": "Turner syndrome results from a single X chromosome (45,X)."
+          },
+          {
+            "key": "kline",
+            "left": "Klinefelter syndrome",
+            "right": "XXY",
+            "why": "Klinefelter syndrome results from an extra X in a male (47,XXY)."
+          },
+          {
+            "key": "p53",
+            "left": "p53",
+            "right": "Tumor suppressor gene",
+            "why": "p53 is a tumor suppressor that stops division when DNA is damaged."
+          },
+          {
+            "key": "nondis",
+            "left": "Nondisjunction",
+            "right": "Failure of chromosomes to separate",
+            "why": "Nondisjunction is the failure of chromosomes or chromatids to separate."
+          }
         ]
       },
       "activity2": {
@@ -182,12 +807,90 @@
         "badgeName": "Application Pro",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "A cut on your skin heals.", "choices": [{ "label": "Mitosis ✓", "correct": true }, { "label": "Meiosis", "correct": false }] },
-          { "text": "Sperm cells are produced.", "choices": [{ "label": "Mitosis", "correct": false }, { "label": "Meiosis ✓", "correct": true }] },
-          { "text": "A plant grows from a cutting.", "choices": [{ "label": "Mitosis ✓", "correct": true }, { "label": "Meiosis", "correct": false }] },
-          { "text": "Genetic diversity is generated in offspring.", "choices": [{ "label": "Mitosis", "correct": false }, { "label": "Meiosis ✓", "correct": true }] },
-          { "text": "A tumor forms from uncontrolled division.", "choices": [{ "label": "Mitosis gone wrong ✓", "correct": true }, { "label": "Meiosis gone wrong", "correct": false }] },
-          { "text": "A zygote has an extra chromosome 21.", "choices": [{ "label": "Nondisjunction in meiosis ✓", "correct": true }, { "label": "Normal mitosis", "correct": false }] }
+          {
+            "text": "A cut on your skin heals.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": true
+              },
+              {
+                "label": "Meiosis",
+                "correct": false
+              }
+            ],
+            "explanation": "Healing replaces lost cells through mitosis."
+          },
+          {
+            "text": "Sperm cells are produced.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": false
+              },
+              {
+                "label": "Meiosis",
+                "correct": true
+              }
+            ],
+            "explanation": "Sperm are gametes produced by meiosis."
+          },
+          {
+            "text": "A plant grows from a cutting.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": true
+              },
+              {
+                "label": "Meiosis",
+                "correct": false
+              }
+            ],
+            "explanation": "A new plant from a cutting grows by mitosis."
+          },
+          {
+            "text": "Genetic diversity is generated in offspring.",
+            "choices": [
+              {
+                "label": "Mitosis",
+                "correct": false
+              },
+              {
+                "label": "Meiosis",
+                "correct": true
+              }
+            ],
+            "explanation": "Crossing over and independent assortment in meiosis create diversity."
+          },
+          {
+            "text": "A tumor forms from uncontrolled division.",
+            "choices": [
+              {
+                "label": "Uncontrolled mitosis",
+                "correct": true
+              },
+              {
+                "label": "Uncontrolled meiosis",
+                "correct": false
+              }
+            ],
+            "explanation": "A tumor forms when mitosis continues without control."
+          },
+          {
+            "text": "A zygote has an extra chromosome 21.",
+            "choices": [
+              {
+                "label": "Nondisjunction in meiosis",
+                "correct": true
+              },
+              {
+                "label": "Normal mitosis in the zygote",
+                "correct": false
+              }
+            ],
+            "explanation": "An extra chromosome 21 comes from nondisjunction during meiosis."
+          }
         ]
       },
       "formative": {
@@ -196,9 +899,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "Which condition results from trisomy 21?", "choices": [{ "label": "Turner syndrome", "correct": false }, { "label": "Down syndrome", "correct": true }, { "label": "Klinefelter syndrome", "correct": false }, { "label": "Cancer", "correct": false }] },
-          { "text": "Which application is specific to mitosis?", "choices": [{ "label": "Gamete formation", "correct": false }, { "label": "Genetic diversity", "correct": false }, { "label": "Wound healing", "correct": true }, { "label": "Crossing over", "correct": false }] },
-          { "text": "What is a tumor suppressor gene?", "choices": [{ "label": "A gene that promotes cancer", "correct": false }, { "label": "A gene that prevents uncontrolled division", "correct": true }, { "label": "A gene only in prokaryotes", "correct": false }, { "label": "A gene for ribosomes", "correct": false }] }
+          {
+            "text": "Which condition results from trisomy 21?",
+            "choices": [
+              {
+                "label": "Turner syndrome",
+                "correct": false
+              },
+              {
+                "label": "Down syndrome",
+                "correct": true
+              },
+              {
+                "label": "Klinefelter syndrome",
+                "correct": false
+              },
+              {
+                "label": "Cancer",
+                "correct": false
+              }
+            ],
+            "explanation": "Trisomy 21 — three copies of chromosome 21 — causes Down syndrome."
+          },
+          {
+            "text": "Which application is specific to mitosis?",
+            "choices": [
+              {
+                "label": "Gamete formation",
+                "correct": false
+              },
+              {
+                "label": "Genetic diversity",
+                "correct": false
+              },
+              {
+                "label": "Wound healing",
+                "correct": true
+              },
+              {
+                "label": "Crossing over",
+                "correct": false
+              }
+            ],
+            "explanation": "Wound healing needs identical replacement cells, made by mitosis."
+          },
+          {
+            "text": "What is a tumor suppressor gene?",
+            "choices": [
+              {
+                "label": "A gene that causes cancer to spread",
+                "correct": false
+              },
+              {
+                "label": "A gene that stops uncontrolled division",
+                "correct": true
+              },
+              {
+                "label": "A gene found only in prokaryotes",
+                "correct": false
+              },
+              {
+                "label": "A gene that codes for ribosomes",
+                "correct": false
+              }
+            ],
+            "explanation": "Tumor suppressor genes such as p53 act as brakes that stop uncontrolled division."
+          }
         ]
       },
       "takeaways": [

@@ -6,19 +6,49 @@
       "n": 1,
       "title": "Reactions That Produce & Consume ATP",
       "competency": "STEM_BIO11/12-IIa-j-9",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify reactions that produce ATP.</li><li>Identify reactions that consume ATP.</li><li>Explain the ATP-ADP cycle.</li><li>Relate ATP turnover to cell activity.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>ATP-ADP cycle</strong> — continuous regeneration of ATP.</li><li><strong>Substrate-level phosphorylation</strong> — direct ATP formation.</li><li><strong>Oxidative phosphorylation</strong> — ATP via ETC + chemiosmosis.</li><li><strong>Photophosphorylation</strong> — ATP via light-driven ETC.</li></ul><h3>📚 Lesson Content</h3><h4>A. ATP-Producing Reactions</h4><ul><li>Glycolysis (substrate-level)</li><li>Krebs cycle (substrate-level)</li><li>Oxidative phosphorylation (ETC + chemiosmosis) — the biggest producer</li><li>Light reactions (photophosphorylation)</li></ul><h4>B. ATP-Consuming Reactions</h4><ul><li>Calvin cycle (uses ATP + NADPH)</li><li>Active transport (Na⁺/K⁺ pump)</li><li>Muscle contraction</li><li>Protein synthesis</li><li>Cell division</li></ul><h4>C. ATP Turnover</h4><p>A typical cell uses and regenerates ~10 million ATP molecules per second. ATP is not stored — it is generated on demand.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Identify reactions that produce ATP.</li><li>Identify reactions that consume ATP.</li><li>Explain the ATP-ADP cycle.</li><li>Relate ATP turnover to cell activity.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>ATP-ADP cycle</strong> — continuous regeneration of ATP.</li><li><strong>Substrate-level phosphorylation</strong> — direct ATP formation.</li><li><strong>Oxidative phosphorylation</strong> — ATP via ETC + chemiosmosis.</li><li><strong>Photophosphorylation</strong> — ATP via light-driven ETC.</li></ul><h3>📚 Lesson Content</h3><h4>A. ATP-Producing Reactions</h4><ul><li>Glycolysis (substrate-level)</li><li>Krebs cycle (substrate-level)</li><li>Oxidative phosphorylation (ETC + chemiosmosis) — the biggest producer</li><li>Light reactions (photophosphorylation)</li></ul><h4>B. ATP-Consuming Reactions</h4><ul><li>Calvin cycle (uses ATP + NADPH)</li><li>Active transport (Na⁺/K⁺ pump)</li><li>Muscle contraction</li><li>Protein synthesis</li><li>Cell division</li></ul><h4>C. ATP Turnover</h4><p>A typical cell uses and regenerates ~10 million ATP molecules per second. ATP is not stored — it is generated on demand.</p><h3>💬 Let's Discuss</h3><p>Think of ATP as cash in a cell's wallet. Some processes <strong>earn</strong> ATP (they make it from ADP + Pi), and many more <strong>spend</strong> it. Sorting them correctly is the key skill this week.</p><p><strong>ATP-producing processes:</strong> <em>Glycolysis</em> makes a net 2 ATP per glucose by substrate-level phosphorylation. The <em>Krebs cycle</em> makes 2 more ATP per glucose the same way. <em>Oxidative phosphorylation</em> (ETC + chemiosmosis in mitochondria) makes by far the most, because it cashes in all the NADH and FADH₂. In plants, <em>photophosphorylation</em> in the thylakoids makes ATP using light energy.</p><p><strong>ATP-consuming processes:</strong> the <em>Calvin cycle</em> spends ATP (and NADPH) to build sugar. <em>Active transport</em>, such as the Na⁺/K⁺ pump, spends ATP to move ions uphill. <em>Muscle contraction</em> spends ATP each time myosin pulls on actin; after death, ATP runs out and muscles lock in place (rigor mortis). <em>Protein synthesis</em> spends energy to link each amino acid. Even the first steps of glycolysis spend 2 ATP before earning 4.</p><p>A good rule: <em>breaking down</em> fuel molecules (catabolism) usually releases energy and makes ATP; <em>building</em> molecules, moving things and doing mechanical work (anabolism and work) usually consumes it. Note that photosynthesis as a whole stores energy: the light reactions make ATP, but the Calvin cycle immediately spends it, so the plant gains sugar, not spare ATP.</p><p><strong>Common mistake:</strong> saying the ETC \"uses\" ATP. The ETC uses the energy of electrons to build an H⁺ gradient, which ATP synthase then uses to <em>make</em> ATP.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "atp-balance",
         "badgeName": "ATP Balance",
         "badgeIcon": "⚖️",
         "pairs": [
-          { "key": "gly", "left": "Glycolysis", "right": "Produces 2 ATP (substrate-level)" },
-          { "key": "krebs", "left": "Krebs cycle", "right": "Produces 2 ATP per glucose" },
-          { "key": "oxphos", "left": "Oxidative phosphorylation", "right": "Produces most ATP" },
-          { "key": "photo", "left": "Photophosphorylation", "right": "Light-driven ATP" },
-          { "key": "calvin", "left": "Calvin cycle", "right": "Consumes ATP" },
-          { "key": "pump", "left": "Na⁺/K⁺ pump", "right": "Consumes ATP" }
+          {
+            "key": "gly",
+            "left": "Glycolysis",
+            "right": "Produces 2 ATP (substrate-level)",
+            "why": "Glycolysis makes a net 2 ATP by substrate-level phosphorylation."
+          },
+          {
+            "key": "krebs",
+            "left": "Krebs cycle",
+            "right": "Produces 2 ATP per glucose",
+            "why": "The Krebs cycle makes 2 ATP per glucose (1 per turn)."
+          },
+          {
+            "key": "oxphos",
+            "left": "Oxidative phosphorylation",
+            "right": "Produces most ATP",
+            "why": "Oxidative phosphorylation makes most of the ATP using the ETC."
+          },
+          {
+            "key": "photo",
+            "left": "Photophosphorylation",
+            "right": "Light-driven ATP",
+            "why": "Photophosphorylation makes ATP using light energy in thylakoids."
+          },
+          {
+            "key": "calvin",
+            "left": "Calvin cycle",
+            "right": "Consumes ATP",
+            "why": "The Calvin cycle spends ATP to build sugar."
+          },
+          {
+            "key": "pump",
+            "left": "Na⁺/K⁺ pump",
+            "right": "Consumes ATP",
+            "why": "The Na⁺/K⁺ pump spends ATP to move ions against their gradients."
+          }
         ]
       },
       "activity2": {
@@ -27,12 +57,90 @@
         "badgeName": "ATP Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Glucose → pyruvate with 2 ATP produced.", "choices": [{ "label": "Produces ATP ✓", "correct": true }, { "label": "Consumes ATP", "correct": false }] },
-          { "text": "CO₂ → glucose in the Calvin cycle.", "choices": [{ "label": "Produces ATP", "correct": false }, { "label": "Consumes ATP ✓", "correct": true }] },
-          { "text": "Na⁺/K⁺ pump moves ions against the gradient.", "choices": [{ "label": "Produces ATP", "correct": false }, { "label": "Consumes ATP ✓", "correct": true }] },
-          { "text": "Electrons flow through the ETC.", "choices": [{ "label": "Produces ATP ✓", "correct": true }, { "label": "Consumes ATP", "correct": false }] },
-          { "text": "Muscle fibers contract.", "choices": [{ "label": "Produces ATP", "correct": false }, { "label": "Consumes ATP ✓", "correct": true }] },
-          { "text": "Ribosomes assemble proteins.", "choices": [{ "label": "Produces ATP", "correct": false }, { "label": "Consumes ATP ✓", "correct": true }] }
+          {
+            "text": "Glucose → pyruvate with 2 ATP produced.",
+            "choices": [
+              {
+                "label": "Produces ATP",
+                "correct": true
+              },
+              {
+                "label": "Consumes ATP",
+                "correct": false
+              }
+            ],
+            "explanation": "Glycolysis yields a net gain of 2 ATP."
+          },
+          {
+            "text": "CO₂ → glucose in the Calvin cycle.",
+            "choices": [
+              {
+                "label": "Produces ATP",
+                "correct": false
+              },
+              {
+                "label": "Consumes ATP",
+                "correct": true
+              }
+            ],
+            "explanation": "Building glucose in the Calvin cycle spends ATP."
+          },
+          {
+            "text": "Na⁺/K⁺ pump moves ions against the gradient.",
+            "choices": [
+              {
+                "label": "Produces ATP",
+                "correct": false
+              },
+              {
+                "label": "Consumes ATP",
+                "correct": true
+              }
+            ],
+            "explanation": "Pumping ions against a gradient spends ATP."
+          },
+          {
+            "text": "Electrons flow through the ETC.",
+            "choices": [
+              {
+                "label": "Produces ATP",
+                "correct": true
+              },
+              {
+                "label": "Consumes ATP",
+                "correct": false
+              }
+            ],
+            "explanation": "The ETC drives ATP synthase, so it produces ATP."
+          },
+          {
+            "text": "Muscle fibers contract.",
+            "choices": [
+              {
+                "label": "Produces ATP",
+                "correct": false
+              },
+              {
+                "label": "Consumes ATP",
+                "correct": true
+              }
+            ],
+            "explanation": "Muscle contraction spends ATP."
+          },
+          {
+            "text": "Ribosomes assemble proteins.",
+            "choices": [
+              {
+                "label": "Produces ATP",
+                "correct": false
+              },
+              {
+                "label": "Consumes ATP",
+                "correct": true
+              }
+            ],
+            "explanation": "Linking amino acids into proteins spends energy."
+          }
         ]
       },
       "formative": {
@@ -41,9 +149,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Which process produces the most ATP?", "choices": [{ "label": "Glycolysis", "correct": false }, { "label": "Krebs cycle", "correct": false }, { "label": "Oxidative phosphorylation", "correct": true }, { "label": "Fermentation", "correct": false }] },
-          { "text": "The Calvin cycle:", "choices": [{ "label": "Produces ATP", "correct": false }, { "label": "Consumes ATP", "correct": true }, { "label": "Neither", "correct": false }, { "label": "Only produces NADPH", "correct": false }] },
-          { "text": "Which of the following consumes ATP?", "choices": [{ "label": "Glycolysis", "correct": false }, { "label": "Krebs cycle", "correct": false }, { "label": "Active transport", "correct": true }, { "label": "ETC", "correct": false }] }
+          {
+            "text": "Which process produces the most ATP?",
+            "choices": [
+              {
+                "label": "Glycolysis",
+                "correct": false
+              },
+              {
+                "label": "Krebs cycle",
+                "correct": false
+              },
+              {
+                "label": "The ETC",
+                "correct": true
+              },
+              {
+                "label": "Fermentation",
+                "correct": false
+              }
+            ],
+            "explanation": "Oxidative phosphorylation produces most of the cell's ATP."
+          },
+          {
+            "text": "The Calvin cycle:",
+            "choices": [
+              {
+                "label": "Produces ATP",
+                "correct": false
+              },
+              {
+                "label": "Consumes ATP",
+                "correct": true
+              },
+              {
+                "label": "Neither",
+                "correct": false
+              },
+              {
+                "label": "Only produces NADPH",
+                "correct": false
+              }
+            ],
+            "explanation": "The Calvin cycle consumes the ATP made in the light reactions."
+          },
+          {
+            "text": "Which of the following consumes ATP?",
+            "choices": [
+              {
+                "label": "Glycolysis",
+                "correct": false
+              },
+              {
+                "label": "Krebs cycle",
+                "correct": false
+              },
+              {
+                "label": "Active transport",
+                "correct": true
+              },
+              {
+                "label": "ETC",
+                "correct": false
+              }
+            ],
+            "explanation": "Active transport consumes ATP; the other three produce it."
+          }
         ]
       },
       "takeaways": [
@@ -57,19 +228,49 @@
       "n": 2,
       "title": "ATP Accounting in Respiration",
       "competency": "STEM_BIO11/12-IIa-j-9",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compute ATP yield per stage of respiration.</li><li>Explain why the total is ~36–38 ATP, not 40.</li><li>Account for ATP used in transport.</li><li>Interpret ATP yield tables.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>ATP yield</strong> — total ATP produced per glucose.</li><li><strong>NADH</strong> — carries 2.5 ATP each (in ETC).</li><li><strong>FADH₂</strong> — carries 1.5 ATP each.</li><li><strong>Shuttle cost</strong> — 2 ATP used to move NADH into mitochondria.</li></ul><h3>📚 Lesson Content</h3><h4>ATP Yield Table (per glucose)</h4><table><thead><tr><th>Stage</th><th>ATP</th><th>NADH</th><th>FADH₂</th></tr></thead><tbody><tr><td>Glycolysis</td><td>2</td><td>2</td><td>0</td></tr><tr><td>Pyruvate oxidation</td><td>0</td><td>2</td><td>0</td></tr><tr><td>Krebs cycle</td><td>2</td><td>6</td><td>2</td></tr><tr><td><strong>Subtotal</strong></td><td><strong>4</strong></td><td><strong>10</strong></td><td><strong>2</strong></td></tr></tbody></table><h4>ETC ATP Conversion</h4><ul><li>10 NADH × 2.5 ATP = 25 ATP</li><li>2 FADH₂ × 1.5 ATP = 3 ATP</li><li>Substrate-level = 4 ATP</li><li><strong>Total = 32 ATP</strong> (modern estimate)</li><li>Older textbooks say 36–38 (using 3 ATP/NADH)</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compute ATP yield per stage of respiration.</li><li>Explain why the total is ~36–38 ATP, not 40.</li><li>Account for ATP used in transport.</li><li>Interpret ATP yield tables.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>ATP yield</strong> — total ATP produced per glucose.</li><li><strong>NADH</strong> — carries 2.5 ATP each (in ETC).</li><li><strong>FADH₂</strong> — carries 1.5 ATP each.</li><li><strong>Shuttle cost</strong> — 2 ATP used to move NADH into mitochondria.</li></ul><h3>📚 Lesson Content</h3><h4>ATP Yield Table (per glucose)</h4><table><thead><tr><th>Stage</th><th>ATP</th><th>NADH</th><th>FADH₂</th></tr></thead><tbody><tr><td>Glycolysis</td><td>2</td><td>2</td><td>0</td></tr><tr><td>Pyruvate oxidation</td><td>0</td><td>2</td><td>0</td></tr><tr><td>Krebs cycle</td><td>2</td><td>6</td><td>2</td></tr><tr><td><strong>Subtotal</strong></td><td><strong>4</strong></td><td><strong>10</strong></td><td><strong>2</strong></td></tr></tbody></table><h4>ETC ATP Conversion</h4><ul><li>10 NADH × 2.5 ATP = 25 ATP</li><li>2 FADH₂ × 1.5 ATP = 3 ATP</li><li>Substrate-level = 4 ATP</li><li><strong>Total = 32 ATP</strong> (modern estimate)</li><li>Older textbooks say 36–38 (using 3 ATP/NADH)</li></ul><h3>💬 Let's Discuss</h3><p>How many ATP does one glucose really give? Let us count, step by step, like doing a budget.</p><p><strong>Direct ATP (substrate-level):</strong> glycolysis, net 2; Krebs cycle, 2 (one per turn). Total = <strong>4 ATP</strong>.</p><p><strong>Electron carriers:</strong> glycolysis gives 2 NADH; pyruvate oxidation gives 2 NADH; the Krebs cycle gives 6 NADH and 2 FADH₂. Total = <strong>10 NADH and 2 FADH₂</strong>.</p><p><strong>Cashing in at the ETC:</strong> modern measurements show each NADH yields about <strong>2.5 ATP</strong> and each FADH₂ about <strong>1.5 ATP</strong> (FADH₂ enters the chain at a later point, so it pumps fewer H⁺). So 10 × 2.5 = 25, plus 2 × 1.5 = 3, giving <strong>28 ATP</strong> from oxidative phosphorylation.</p><p><strong>Grand total:</strong> 4 + 28 = about <strong>32 ATP per glucose</strong>.</p><p>Why do older books say <strong>36–38</strong>? They used whole-number values (3 ATP per NADH, 2 per FADH₂), which give 38. Later research found the ratios are not whole numbers, that some H⁺ leaks across the membrane, and that energy is spent moving ATP and pyruvate across mitochondrial membranes — so the real yield is closer to 30–32. You may see either answer; what matters is understanding the method.</p><p>Compare with fermentation: only 2 ATP per glucose. Aerobic respiration is about 16 times more efficient, capturing roughly a third of glucose's energy as ATP; the rest is released as heat, which helps keep our bodies warm.</p><p><strong>Common mistake:</strong> forgetting the 2 NADH from pyruvate oxidation, which makes the total come out too low.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "atp-accountant",
         "badgeName": "ATP Accountant",
         "badgeIcon": "🧮",
         "pairs": [
-          { "key": "gly", "left": "Glycolysis", "right": "2 ATP + 2 NADH" },
-          { "key": "pyr", "left": "Pyruvate oxidation", "right": "0 ATP + 2 NADH" },
-          { "key": "krebs", "left": "Krebs", "right": "2 ATP + 6 NADH + 2 FADH₂" },
-          { "key": "nadh", "left": "NADH", "right": "~2.5 ATP each" },
-          { "key": "fadh", "left": "FADH₂", "right": "~1.5 ATP each" },
-          { "key": "total", "left": "Modern total", "right": "~32 ATP per glucose" }
+          {
+            "key": "gly",
+            "left": "Glycolysis",
+            "right": "2 ATP + 2 NADH",
+            "why": "Glycolysis gives 2 net ATP and 2 NADH."
+          },
+          {
+            "key": "pyr",
+            "left": "Pyruvate oxidation",
+            "right": "0 ATP + 2 NADH",
+            "why": "Pyruvate oxidation makes no ATP but gives 2 NADH per glucose."
+          },
+          {
+            "key": "krebs",
+            "left": "Krebs",
+            "right": "2 ATP + 6 NADH + 2 FADH₂",
+            "why": "Two Krebs turns give 2 ATP, 6 NADH and 2 FADH₂."
+          },
+          {
+            "key": "nadh",
+            "left": "NADH",
+            "right": "~2.5 ATP each",
+            "why": "Each NADH yields about 2.5 ATP in the ETC."
+          },
+          {
+            "key": "fadh",
+            "left": "FADH₂",
+            "right": "~1.5 ATP each",
+            "why": "Each FADH₂ yields about 1.5 ATP because it enters later in the chain."
+          },
+          {
+            "key": "total",
+            "left": "Modern total",
+            "right": "~32 ATP per glucose",
+            "why": "4 direct ATP + 28 from the ETC ≈ 32 ATP."
+          }
         ]
       },
       "activity2": {
@@ -78,12 +279,114 @@
         "badgeName": "ATP Calculator",
         "badgeIcon": "🔢",
         "scenarios": [
-          { "text": "Glycolysis produces this many ATP.", "choices": [{ "label": "2 ✓", "correct": true }, { "label": "4", "correct": false }, { "label": "36", "correct": false }] },
-          { "text": "Krebs produces this many ATP per glucose.", "choices": [{ "label": "1", "correct": false }, { "label": "2 ✓", "correct": true }, { "label": "4", "correct": false }] },
-          { "text": "Each NADH yields roughly this much ATP.", "choices": [{ "label": "1.5", "correct": false }, { "label": "2.5 ✓", "correct": true }, { "label": "3.5", "correct": false }] },
-          { "text": "Each FADH₂ yields roughly this much ATP.", "choices": [{ "label": "1.5 ✓", "correct": true }, { "label": "2.5", "correct": false }, { "label": "3.5", "correct": false }] },
-          { "text": "Total ATP (modern estimate) per glucose.", "choices": [{ "label": "32 ✓", "correct": true }, { "label": "18", "correct": false }, { "label": "100", "correct": false }] },
-          { "text": "Older textbooks said the total ATP was:", "choices": [{ "label": "36–38 ✓", "correct": true }, { "label": "10", "correct": false }, { "label": "50", "correct": false }] }
+          {
+            "text": "Glycolysis produces this many ATP.",
+            "choices": [
+              {
+                "label": "2",
+                "correct": true
+              },
+              {
+                "label": "4",
+                "correct": false
+              },
+              {
+                "label": "36",
+                "correct": false
+              }
+            ],
+            "explanation": "Glycolysis yields a net of 2 ATP."
+          },
+          {
+            "text": "Krebs produces this many ATP per glucose.",
+            "choices": [
+              {
+                "label": "1",
+                "correct": false
+              },
+              {
+                "label": "2",
+                "correct": true
+              },
+              {
+                "label": "4",
+                "correct": false
+              }
+            ],
+            "explanation": "The Krebs cycle turns twice, making 2 ATP."
+          },
+          {
+            "text": "Each NADH yields roughly this much ATP.",
+            "choices": [
+              {
+                "label": "1.5",
+                "correct": false
+              },
+              {
+                "label": "2.5",
+                "correct": true
+              },
+              {
+                "label": "3.5",
+                "correct": false
+              }
+            ],
+            "explanation": "Each NADH gives about 2.5 ATP."
+          },
+          {
+            "text": "Each FADH₂ yields roughly this much ATP.",
+            "choices": [
+              {
+                "label": "1.5",
+                "correct": true
+              },
+              {
+                "label": "2.5",
+                "correct": false
+              },
+              {
+                "label": "3.5",
+                "correct": false
+              }
+            ],
+            "explanation": "Each FADH₂ gives about 1.5 ATP."
+          },
+          {
+            "text": "Total ATP (modern estimate) per glucose.",
+            "choices": [
+              {
+                "label": "32",
+                "correct": true
+              },
+              {
+                "label": "18",
+                "correct": false
+              },
+              {
+                "label": "100",
+                "correct": false
+              }
+            ],
+            "explanation": "The modern total is about 32 ATP."
+          },
+          {
+            "text": "Older textbooks said the total ATP was:",
+            "choices": [
+              {
+                "label": "36–38",
+                "correct": true
+              },
+              {
+                "label": "10",
+                "correct": false
+              },
+              {
+                "label": "50",
+                "correct": false
+              }
+            ],
+            "explanation": "Older textbooks, using whole numbers, said 36–38."
+          }
         ]
       },
       "formative": {
@@ -92,9 +395,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "How many NADH are produced by the Krebs cycle per glucose?", "choices": [{ "label": "2", "correct": false }, { "label": "4", "correct": false }, { "label": "6", "correct": true }, { "label": "10", "correct": false }] },
-          { "text": "How many ATP does each NADH yield in the ETC (modern estimate)?", "choices": [{ "label": "1.5", "correct": false }, { "label": "2.5", "correct": true }, { "label": "3", "correct": false }, { "label": "4", "correct": false }] },
-          { "text": "What is the modern total ATP yield per glucose?", "choices": [{ "label": "18", "correct": false }, { "label": "32", "correct": true }, { "label": "38", "correct": false }, { "label": "50", "correct": false }] }
+          {
+            "text": "How many NADH are produced by the Krebs cycle per glucose?",
+            "choices": [
+              {
+                "label": "2",
+                "correct": false
+              },
+              {
+                "label": "4",
+                "correct": false
+              },
+              {
+                "label": "6",
+                "correct": true
+              },
+              {
+                "label": "10",
+                "correct": false
+              }
+            ],
+            "explanation": "Two turns × 3 NADH = 6 NADH per glucose."
+          },
+          {
+            "text": "How many ATP does each NADH yield in the ETC (modern estimate)?",
+            "choices": [
+              {
+                "label": "1.5",
+                "correct": false
+              },
+              {
+                "label": "2.5",
+                "correct": true
+              },
+              {
+                "label": "3",
+                "correct": false
+              },
+              {
+                "label": "4",
+                "correct": false
+              }
+            ],
+            "explanation": "Each NADH yields about 2.5 ATP."
+          },
+          {
+            "text": "What is the modern total ATP yield per glucose?",
+            "choices": [
+              {
+                "label": "18",
+                "correct": false
+              },
+              {
+                "label": "32",
+                "correct": true
+              },
+              {
+                "label": "38",
+                "correct": false
+              },
+              {
+                "label": "50",
+                "correct": false
+              }
+            ],
+            "explanation": "4 direct ATP + 28 from the ETC ≈ 32 ATP."
+          }
         ]
       },
       "takeaways": [
@@ -108,18 +474,43 @@
       "n": 3,
       "title": "ATP Accounting in Photosynthesis",
       "competency": "STEM_BIO11/12-IIa-j-9",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compute ATP and NADPH used in the Calvin cycle.</li><li>Explain the ATP/NADPH ratio needed.</li><li>Compare ATP usage in photosynthesis vs respiration.</li><li>Summarize photosynthesis energetics.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Calvin cycle cost</strong> — 18 ATP + 12 NADPH per glucose.</li><li><strong>Ratio</strong> — 3 ATP : 2 NADPH per CO₂ fixed.</li><li><strong>Photophosphorylation</strong> — ATP production in light reactions.</li></ul><h3>📚 Lesson Content</h3><h4>A. Calvin Cycle Cost (per glucose)</h4><ul><li>6 CO₂ fixed</li><li>18 ATP used</li><li>12 NADPH used</li><li>Produces 1 glucose</li></ul><h4>B. Per CO₂ Fixed</h4><ul><li>3 ATP</li><li>2 NADPH</li></ul><h4>C. ATP/NADPH Ratio</h4><p>The light reactions must produce ATP and NADPH in a 3:2 ratio to match the Calvin cycle's needs.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compute ATP and NADPH used in the Calvin cycle.</li><li>Explain the ATP/NADPH ratio needed.</li><li>Compare ATP usage in photosynthesis vs respiration.</li><li>Summarize photosynthesis energetics.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Calvin cycle cost</strong> — 18 ATP + 12 NADPH per glucose.</li><li><strong>Ratio</strong> — 3 ATP : 2 NADPH per CO₂ fixed.</li><li><strong>Photophosphorylation</strong> — ATP production in light reactions.</li></ul><h3>📚 Lesson Content</h3><h4>A. Calvin Cycle Cost (per glucose)</h4><ul><li>6 CO₂ fixed</li><li>18 ATP used</li><li>12 NADPH used</li><li>Produces 1 glucose</li></ul><h4>B. Per CO₂ Fixed</h4><ul><li>3 ATP</li><li>2 NADPH</li></ul><h4>C. ATP/NADPH Ratio</h4><p>The light reactions must produce ATP and NADPH in a 3:2 ratio to match the Calvin cycle's needs.</p><h3>💬 Let's Discuss</h3><p>Photosynthesis also has a budget, but it runs in the opposite direction: instead of earning ATP from glucose, the plant <strong>spends</strong> ATP and NADPH to build glucose.</p><p>Each time the Calvin cycle fixes <strong>one CO₂</strong>, it uses <strong>3 ATP and 2 NADH</strong>P. Glucose has six carbons, so to make <strong>one glucose</strong> the plant must fix <strong>6 CO₂</strong>. Multiply by six: 6 × 3 = <strong>18 ATP</strong> and 6 × 2 = <strong>12 NADPH</strong>. That is an ATP:NADPH ratio of <strong>3:2</strong>.</p><p>Where does the ATP go? Some is spent in the <em>reduction</em> phase (converting fixed carbon into G3P, along with all the NADPH), and the rest in the <em>regeneration</em> phase (rebuilding RuBP so the cycle can continue). Every turn of the cycle must rebuild its starting molecule, so a share of the energy goes to \"maintenance,\" not to new sugar.</p><p>The light reactions must supply this mix. Linear electron flow makes ATP and NADPH in roughly equal amounts, which is a little short on ATP. Plants solve this with <em>cyclic electron flow</em> around Photosystem I, which makes extra ATP without making NADPH.</p><p>Compare the two budgets: building one glucose costs 18 ATP + 12 NADPH, while breaking it down aerobically returns only about 32 ATP. Energy is lost as heat at each conversion — a reminder that no energy transfer in living things is 100% efficient.</p><p><strong>Problem-solving tip:</strong> always convert to \"per CO₂\" first (3 ATP, 2 NADPH), then multiply. For example, 12 CO₂ need 36 ATP and 24 NADPH, and give 2 glucose.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "photo-accountant",
         "badgeName": "Photo Accountant",
         "badgeIcon": "🌿",
         "pairs": [
-          { "key": "atp", "left": "ATP used per glucose", "right": "18" },
-          { "key": "nadph", "left": "NADPH used per glucose", "right": "12" },
-          { "key": "co2", "left": "CO₂ fixed per glucose", "right": "6" },
-          { "key": "ratio", "left": "ATP:NADPH ratio", "right": "3:2" },
-          { "key": "product", "left": "Product", "right": "1 glucose" }
+          {
+            "key": "atp",
+            "left": "ATP used per glucose",
+            "right": "18",
+            "why": "Making one glucose uses 6 × 3 = 18 ATP."
+          },
+          {
+            "key": "nadph",
+            "left": "NADPH used per glucose",
+            "right": "12",
+            "why": "Making one glucose uses 6 × 2 = 12 NADPH."
+          },
+          {
+            "key": "co2",
+            "left": "CO₂ fixed per glucose",
+            "right": "6",
+            "why": "Six CO₂ provide the six carbons of one glucose."
+          },
+          {
+            "key": "ratio",
+            "left": "ATP:NADPH ratio",
+            "right": "3:2",
+            "why": "18 ATP : 12 NADPH simplifies to 3:2."
+          },
+          {
+            "key": "product",
+            "left": "Product",
+            "right": "1 glucose",
+            "why": "Six turns of the cycle produce enough G3P for one glucose."
+          }
         ]
       },
       "activity2": {
@@ -128,12 +519,114 @@
         "badgeName": "Calvin Accountant",
         "badgeIcon": "🔢",
         "scenarios": [
-          { "text": "ATP used per CO₂ fixed.", "choices": [{ "label": "3 ✓", "correct": true }, { "label": "2", "correct": false }, { "label": "6", "correct": false }] },
-          { "text": "NADPH used per CO₂ fixed.", "choices": [{ "label": "1", "correct": false }, { "label": "2 ✓", "correct": true }, { "label": "3", "correct": false }] },
-          { "text": "Total ATP used to make one glucose.", "choices": [{ "label": "12", "correct": false }, { "label": "18 ✓", "correct": true }, { "label": "32", "correct": false }] },
-          { "text": "Total NADPH used to make one glucose.", "choices": [{ "label": "6", "correct": false }, { "label": "12 ✓", "correct": true }, { "label": "18", "correct": false }] },
-          { "text": "The Calvin cycle needs ATP and NADPH in a ratio of:", "choices": [{ "label": "3:2 ✓", "correct": true }, { "label": "2:3", "correct": false }, { "label": "1:1", "correct": false }] },
-          { "text": "CO₂ fixed to make one glucose.", "choices": [{ "label": "3", "correct": false }, { "label": "6 ✓", "correct": true }, { "label": "12", "correct": false }] }
+          {
+            "text": "ATP used per CO₂ fixed.",
+            "choices": [
+              {
+                "label": "3",
+                "correct": true
+              },
+              {
+                "label": "2",
+                "correct": false
+              },
+              {
+                "label": "6",
+                "correct": false
+              }
+            ],
+            "explanation": "Each CO₂ fixed costs 3 ATP."
+          },
+          {
+            "text": "NADPH used per CO₂ fixed.",
+            "choices": [
+              {
+                "label": "1",
+                "correct": false
+              },
+              {
+                "label": "2",
+                "correct": true
+              },
+              {
+                "label": "3",
+                "correct": false
+              }
+            ],
+            "explanation": "Each CO₂ fixed costs 2 NADPH."
+          },
+          {
+            "text": "Total ATP used to make one glucose.",
+            "choices": [
+              {
+                "label": "12",
+                "correct": false
+              },
+              {
+                "label": "18",
+                "correct": true
+              },
+              {
+                "label": "32",
+                "correct": false
+              }
+            ],
+            "explanation": "6 CO₂ × 3 ATP = 18 ATP per glucose."
+          },
+          {
+            "text": "Total NADPH used to make one glucose.",
+            "choices": [
+              {
+                "label": "6",
+                "correct": false
+              },
+              {
+                "label": "12",
+                "correct": true
+              },
+              {
+                "label": "18",
+                "correct": false
+              }
+            ],
+            "explanation": "6 CO₂ × 2 NADPH = 12 NADPH per glucose."
+          },
+          {
+            "text": "The Calvin cycle needs ATP and NADPH in a ratio of:",
+            "choices": [
+              {
+                "label": "3:2",
+                "correct": true
+              },
+              {
+                "label": "2:3",
+                "correct": false
+              },
+              {
+                "label": "1:1",
+                "correct": false
+              }
+            ],
+            "explanation": "3 ATP for every 2 NADPH is a 3:2 ratio."
+          },
+          {
+            "text": "CO₂ fixed to make one glucose.",
+            "choices": [
+              {
+                "label": "3",
+                "correct": false
+              },
+              {
+                "label": "6",
+                "correct": true
+              },
+              {
+                "label": "12",
+                "correct": false
+              }
+            ],
+            "explanation": "Glucose has 6 carbons, so 6 CO₂ are fixed."
+          }
         ]
       },
       "formative": {
@@ -142,9 +635,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "How many ATP are used to produce one glucose in the Calvin cycle?", "choices": [{ "label": "6", "correct": false }, { "label": "12", "correct": false }, { "label": "18", "correct": true }, { "label": "36", "correct": false }] },
-          { "text": "How many NADPH are used per glucose?", "choices": [{ "label": "6", "correct": false }, { "label": "12", "correct": true }, { "label": "18", "correct": false }, { "label": "24", "correct": false }] },
-          { "text": "The ATP:NADPH ratio needed by the Calvin cycle is:", "choices": [{ "label": "1:1", "correct": false }, { "label": "2:3", "correct": false }, { "label": "3:2", "correct": true }, { "label": "4:1", "correct": false }] }
+          {
+            "text": "How many ATP are used to produce one glucose in the Calvin cycle?",
+            "choices": [
+              {
+                "label": "6",
+                "correct": false
+              },
+              {
+                "label": "12",
+                "correct": false
+              },
+              {
+                "label": "18",
+                "correct": true
+              },
+              {
+                "label": "36",
+                "correct": false
+              }
+            ],
+            "explanation": "6 CO₂ × 3 ATP = 18 ATP per glucose."
+          },
+          {
+            "text": "How many NADPH are used per glucose?",
+            "choices": [
+              {
+                "label": "6",
+                "correct": false
+              },
+              {
+                "label": "12",
+                "correct": true
+              },
+              {
+                "label": "18",
+                "correct": false
+              },
+              {
+                "label": "24",
+                "correct": false
+              }
+            ],
+            "explanation": "6 CO₂ × 2 NADPH = 12 NADPH per glucose."
+          },
+          {
+            "text": "The ATP:NADPH ratio needed by the Calvin cycle is:",
+            "choices": [
+              {
+                "label": "1:1",
+                "correct": false
+              },
+              {
+                "label": "2:3",
+                "correct": false
+              },
+              {
+                "label": "3:2",
+                "correct": true
+              },
+              {
+                "label": "4:1",
+                "correct": false
+              }
+            ],
+            "explanation": "18 ATP : 12 NADPH = 3:2."
+          }
         ]
       },
       "takeaways": [
@@ -158,19 +714,49 @@
       "n": 4,
       "title": "Oxygen's Role & Anaerobic Pathways",
       "competency": "STEM_BIO11/12-IIa-j-10",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain the role of oxygen in respiration.</li><li>Describe electron flow without oxygen.</li><li>Explain fermentation pathways.</li><li>Compare anaerobic vs aerobic energetics.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>O₂</strong> — final electron acceptor in ETC.</li><li><strong>Anaerobic respiration</strong> — ETC without O₂ (using other acceptors).</li><li><strong>Fermentation</strong> — regenerates NAD⁺ without ETC.</li><li><strong>Lactate / ethanol</strong> — fermentation end products.</li></ul><h3>📚 Lesson Content</h3><h4>A. Oxygen's Role</h4><ul><li>Accepts electrons at the end of ETC</li><li>Combines with H⁺ → H₂O</li><li>Keeps ETC running</li><li>Without O₂: ETC halts → NADH accumulates</li></ul><h4>B. Anaerobic Pathways</h4><table><thead><tr><th>Pathway</th><th>End Product</th><th>Where</th></tr></thead><tbody><tr><td>Lactic acid fermentation</td><td>Lactate</td><td>Muscle cells, bacteria (yogurt)</td></tr><tr><td>Alcoholic fermentation</td><td>Ethanol + CO₂</td><td>Yeast, some bacteria</td></tr></tbody></table><h4>C. Why Fermentation Matters</h4><p>Fermentation regenerates NAD⁺ so glycolysis can continue producing 2 ATP per glucose — enough for short bursts of activity.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Explain the role of oxygen in respiration.</li><li>Describe electron flow without oxygen.</li><li>Explain fermentation pathways.</li><li>Compare anaerobic vs aerobic energetics.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>O₂</strong> — final electron acceptor in ETC.</li><li><strong>Anaerobic respiration</strong> — ETC without O₂ (using other acceptors).</li><li><strong>Fermentation</strong> — regenerates NAD⁺ without ETC.</li><li><strong>Lactate / ethanol</strong> — fermentation end products.</li></ul><h3>📚 Lesson Content</h3><h4>A. Oxygen's Role</h4><ul><li>Accepts electrons at the end of ETC</li><li>Combines with H⁺ → H₂O</li><li>Keeps ETC running</li><li>Without O₂: ETC halts → NADH accumulates</li></ul><h4>B. Anaerobic Pathways</h4><table><thead><tr><th>Pathway</th><th>End Product</th><th>Where</th></tr></thead><tbody><tr><td>Lactic acid fermentation</td><td>Lactate</td><td>Muscle cells, bacteria (yogurt)</td></tr><tr><td>Alcoholic fermentation</td><td>Ethanol + CO₂</td><td>Yeast, some bacteria</td></tr></tbody></table><h4>C. Why Fermentation Matters</h4><p>Fermentation regenerates NAD⁺ so glycolysis can continue producing 2 ATP per glucose — enough for short bursts of activity.</p><h3>💬 Let's Discuss</h3><p>Why do we die within minutes without oxygen? Because oxygen does a single, irreplaceable job: it is the <strong>final electron acceptor</strong> at the end of the electron transport chain. It pulls electrons off the last protein complex and combines with H⁺ to form <strong>water</strong>. Without it, the chain backs up like a blocked drain: electrons have nowhere to go, the H⁺ pumps stop, ATP synthase stops, NADH cannot be turned back into NAD⁺, and the Krebs cycle halts.</p><p>Only glycolysis can continue — but it needs NAD⁺ too. That is where <strong>fermentation</strong> comes in. Its purpose is <em>not</em> to make extra ATP; it is to <strong>regenerate NAD⁺</strong> by passing NADH's electrons to pyruvate (or a product of it). In <strong>lactic acid fermentation</strong>, pyruvate becomes <strong>lactate</strong> (in muscles during intense exercise and in lactobacilli). In <strong>alcoholic fermentation</strong>, pyruvate becomes <strong>ethanol and CO₂</strong> (in yeast). Either way, the cell gets only the <strong>2 ATP</strong> from glycolysis.</p><p>Some bacteria and archaea do something different called <strong>anaerobic respiration</strong>: they still run an ETC, but use another final electron acceptor such as nitrate or sulfate instead of oxygen. Bacteria in mangrove mud and deep soil do this, producing the rotten-egg smell of hydrogen sulfide. Don't confuse this with fermentation, which uses no ETC at all.</p><p>After a sprint, you keep breathing hard: this \"oxygen debt\" provides oxygen to convert lactate back to pyruvate and restore ATP. <strong>Common mistake:</strong> thinking oxygen becomes the CO₂ we exhale. The CO₂ comes from the carbons of glucose; oxygen ends up in water.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "oxygen-master",
         "badgeName": "Oxygen Master",
         "badgeIcon": "🫁",
         "pairs": [
-          { "key": "o2", "left": "Oxygen", "right": "Final electron acceptor" },
-          { "key": "h2o", "left": "Water", "right": "Formed when O₂ accepts electrons" },
-          { "key": "anaer", "left": "Anaerobic respiration", "right": "ETC without O₂" },
-          { "key": "ferm", "left": "Fermentation", "right": "Regenerates NAD⁺" },
-          { "key": "lact", "left": "Lactate", "right": "Lactic acid fermentation product" },
-          { "key": "eth", "left": "Ethanol + CO₂", "right": "Alcoholic fermentation product" }
+          {
+            "key": "o2",
+            "left": "Oxygen",
+            "right": "Final electron acceptor",
+            "why": "Oxygen accepts electrons at the end of the ETC."
+          },
+          {
+            "key": "h2o",
+            "left": "Water",
+            "right": "Formed when O₂ accepts electrons",
+            "why": "Oxygen + electrons + H⁺ form water."
+          },
+          {
+            "key": "anaer",
+            "left": "Anaerobic respiration",
+            "right": "ETC without O₂",
+            "why": "Anaerobic respiration uses an ETC with a different final acceptor, like nitrate or sulfate."
+          },
+          {
+            "key": "ferm",
+            "left": "Fermentation",
+            "right": "Regenerates NAD⁺",
+            "why": "Fermentation regenerates NAD⁺ so glycolysis can continue."
+          },
+          {
+            "key": "lact",
+            "left": "Lactate",
+            "right": "Lactic acid fermentation product",
+            "why": "Lactate is the product of lactic acid fermentation."
+          },
+          {
+            "key": "eth",
+            "left": "Ethanol + CO₂",
+            "right": "Alcoholic fermentation product",
+            "why": "Alcoholic fermentation makes ethanol and CO₂."
+          }
         ]
       },
       "activity2": {
@@ -179,12 +765,114 @@
         "badgeName": "Oxygen Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "O₂ accepts electrons at the end of the ETC.", "choices": [{ "label": "Forms water ✓", "correct": true }, { "label": "Forms CO₂", "correct": false }, { "label": "Forms glucose", "correct": false }] },
-          { "text": "No oxygen → ETC halts.", "choices": [{ "label": "NADH accumulates ✓", "correct": true }, { "label": "ATP increases", "correct": false }, { "label": "Krebs accelerates", "correct": false }] },
-          { "text": "Muscles run out of oxygen during intense exercise.", "choices": [{ "label": "Lactate forms ✓", "correct": true }, { "label": "Ethanol forms", "correct": false }, { "label": "CO₂ forms", "correct": false }] },
-          { "text": "Yeast in bread dough produces gas.", "choices": [{ "label": "CO₂ from alcoholic fermentation ✓", "correct": true }, { "label": "O₂ from photosynthesis", "correct": false }, { "label": "N₂", "correct": false }] },
-          { "text": "Fermentation's purpose is to:", "choices": [{ "label": "Regenerate NAD⁺ ✓", "correct": true }, { "label": "Produce 36 ATP", "correct": false }, { "label": "Fix CO₂", "correct": false }] },
-          { "text": "Anaerobic pathways produce:", "choices": [{ "label": "2 ATP ✓", "correct": true }, { "label": "32 ATP", "correct": false }, { "label": "0 ATP", "correct": false }] }
+          {
+            "text": "O₂ accepts electrons at the end of the ETC.",
+            "choices": [
+              {
+                "label": "Forms water",
+                "correct": true
+              },
+              {
+                "label": "Forms CO₂",
+                "correct": false
+              },
+              {
+                "label": "Forms glucose",
+                "correct": false
+              }
+            ],
+            "explanation": "O₂ accepting electrons forms water."
+          },
+          {
+            "text": "No oxygen → ETC halts.",
+            "choices": [
+              {
+                "label": "NADH accumulates",
+                "correct": true
+              },
+              {
+                "label": "ATP increases",
+                "correct": false
+              },
+              {
+                "label": "Krebs accelerates",
+                "correct": false
+              }
+            ],
+            "explanation": "Without O₂ the ETC stops, so NADH builds up."
+          },
+          {
+            "text": "Muscles run out of oxygen during intense exercise.",
+            "choices": [
+              {
+                "label": "Lactate forms",
+                "correct": true
+              },
+              {
+                "label": "Ethanol forms",
+                "correct": false
+              },
+              {
+                "label": "CO₂ forms",
+                "correct": false
+              }
+            ],
+            "explanation": "Muscles low on oxygen form lactate."
+          },
+          {
+            "text": "Yeast in bread dough produces gas.",
+            "choices": [
+              {
+                "label": "CO₂ from yeast",
+                "correct": true
+              },
+              {
+                "label": "O₂ from yeast",
+                "correct": false
+              },
+              {
+                "label": "N₂ from the air",
+                "correct": false
+              }
+            ],
+            "explanation": "The CO₂ from yeast fermentation makes dough rise."
+          },
+          {
+            "text": "Fermentation's purpose is to:",
+            "choices": [
+              {
+                "label": "Regenerate NAD⁺",
+                "correct": true
+              },
+              {
+                "label": "Produce 36 ATP",
+                "correct": false
+              },
+              {
+                "label": "Fix CO₂",
+                "correct": false
+              }
+            ],
+            "explanation": "The main purpose of fermentation is to regenerate NAD⁺."
+          },
+          {
+            "text": "Anaerobic pathways produce:",
+            "choices": [
+              {
+                "label": "2 ATP",
+                "correct": true
+              },
+              {
+                "label": "32 ATP",
+                "correct": false
+              },
+              {
+                "label": "0 ATP",
+                "correct": false
+              }
+            ],
+            "explanation": "Anaerobic pathways give only the 2 ATP from glycolysis."
+          }
         ]
       },
       "formative": {
@@ -193,9 +881,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "What is the role of oxygen in respiration?", "choices": [{ "label": "Final electron acceptor", "correct": true }, { "label": "Produces CO₂", "correct": false }, { "label": "Activates RuBisCO", "correct": false }, { "label": "Produces ATP directly", "correct": false }] },
-          { "text": "Why is fermentation important?", "choices": [{ "label": "Produces 36 ATP", "correct": false }, { "label": "Regenerates NAD⁺", "correct": true }, { "label": "Fixes CO₂", "correct": false }, { "label": "Produces O₂", "correct": false }] },
-          { "text": "Anaerobic respiration produces how many ATP per glucose?", "choices": [{ "label": "2", "correct": true }, { "label": "18", "correct": false }, { "label": "32", "correct": false }, { "label": "36", "correct": false }] }
+          {
+            "text": "What is the role of oxygen in respiration?",
+            "choices": [
+              {
+                "label": "Final electron acceptor",
+                "correct": true
+              },
+              {
+                "label": "Source of CO₂",
+                "correct": false
+              },
+              {
+                "label": "Activator of RuBisCO",
+                "correct": false
+              },
+              {
+                "label": "Direct ATP producer",
+                "correct": false
+              }
+            ],
+            "explanation": "Oxygen serves as the final electron acceptor."
+          },
+          {
+            "text": "Why is fermentation important?",
+            "choices": [
+              {
+                "label": "Produces 36 ATP",
+                "correct": false
+              },
+              {
+                "label": "Regenerates NAD⁺",
+                "correct": true
+              },
+              {
+                "label": "Fixes CO₂",
+                "correct": false
+              },
+              {
+                "label": "Produces O₂",
+                "correct": false
+              }
+            ],
+            "explanation": "Fermentation regenerates NAD⁺ so glycolysis can keep running."
+          },
+          {
+            "text": "Anaerobic respiration produces how many ATP per glucose?",
+            "choices": [
+              {
+                "label": "2",
+                "correct": true
+              },
+              {
+                "label": "18",
+                "correct": false
+              },
+              {
+                "label": "32",
+                "correct": false
+              },
+              {
+                "label": "36",
+                "correct": false
+              }
+            ],
+            "explanation": "Without oxygen, only glycolysis yields ATP: 2 per glucose."
+          }
         ]
       },
       "takeaways": [

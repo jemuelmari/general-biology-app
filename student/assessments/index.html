@@ -101,7 +101,7 @@
     <div class="container flex-between">
       <div>
         <h1>📝 Assessments</h1>
-        <span class="version">v2.6.0</span>
+        <span class="version">v2.5.5</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -137,13 +137,13 @@
 
   </main>
 
-  <footer class="app-footer"><p>Assessments · <span class="version">v2.6.0</span></p></footer>
+  <footer class="app-footer"><p>Assessments · <span class="version">v2.5.5</span></p></footer>
 
-  <script src="../../config.js?v=2.6.0"></script>
-  <script src="../../assets/js/app.js?v=2.6.0"></script>
-  <script src="../../assets/js/store.js?v=2.6.0"></script>
-  <script src="../../assets/js/security.js?v=2.6.0"></script>
-  <script src="../../assets/js/sync.js?v=2.6.0"></script>
+  <script src="../../config.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/app.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/store.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/security.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/sync.js?v=2.4.2-4a6e810"></script>
   <script>
     const MAX_RETAKES = 2;
 
@@ -170,13 +170,15 @@
       });
 
       const ASSESSMENTS = [
-        { id: 'quiz1', file: 'quiz1.html', type: 'quiz', title: 'Quiz 1', desc: 'First quarterly quiz', unlockWeek: 1, unlockDay: 1 },
-        { id: 'quiz2', file: 'quiz2.html', type: 'quiz', title: 'Quiz 2', desc: 'Second quarterly quiz', unlockWeek: 4, unlockDay: 4 },
-        { id: 'quiz3', file: 'quiz3.html', type: 'quiz', title: 'Quiz 3', desc: 'Third quarterly quiz', unlockWeek: 6, unlockDay: 4 },
-        { id: 'st1', file: 'st1.html', type: 'st', title: 'Summative Test 1', desc: 'Weeks 1–4', unlockWeek: 4, unlockDay: 4 },
-        { id: 'st2', file: 'st2.html', type: 'st', title: 'Summative Test 2', desc: 'Weeks 5–8', unlockWeek: 8, unlockDay: 4 },
-        { id: 'te', file: 'te.html', type: 'te', title: 'Term Exam', desc: 'Weeks 9–10 · 60 items', unlockWeek: 10, unlockDay: 4 },
-        { id: 'pt1', file: 'pt1.html', type: 'pt', title: 'Performance Task 1', desc: 'Choose from 4 options', unlockWeek: 4, unlockDay: 4 }
+        { id: 'quiz1', file: 'quiz1.html', type: 'quiz', title: 'Quiz 1', desc: 'Weeks 1–3 · 20 items', unlockWeek: 3, unlockDay: 4 },
+        { id: 'quiz2', file: 'quiz2.html', type: 'quiz', title: 'Quiz 2', desc: 'Weeks 4–6 · 20 items', unlockWeek: 6, unlockDay: 4 },
+        { id: 'quiz3', file: 'quiz3.html', type: 'quiz', title: 'Quiz 3', desc: 'Weeks 7–9 · 20 items', unlockWeek: 9, unlockDay: 4 },
+        { id: 'st1', file: 'st1.html', type: 'st', title: 'Summative Test 1', desc: 'Weeks 1–4 · 30 items', unlockWeek: 4, unlockDay: 4 },
+        { id: 'st2', file: 'st2.html', type: 'st', title: 'Summative Test 2', desc: 'Weeks 5–8 · 30 items', unlockWeek: 8, unlockDay: 4 },
+        { id: 'te', file: 'te.html', type: 'te', title: 'Term Exam', desc: 'Weeks 1–10 · 60 items', unlockWeek: 10, unlockDay: 4 },
+        { id: 'pt1', file: 'pt1.html', type: 'pt', title: 'Performance Task 1', desc: 'Weeks 1–4 · choose from 4 options', unlockWeek: 4, unlockDay: 4 },
+        { id: 'pt2', file: 'pt2.html', type: 'pt', title: 'Performance Task 2', desc: 'Weeks 5–8 · choose from 4 options', unlockWeek: 8, unlockDay: 4 },
+        { id: 'pt3', file: 'pt3.html', type: 'pt', title: 'Performance Task 3', desc: 'Weeks 9–10 · choose from 4 options', unlockWeek: 10, unlockDay: 4 }
       ];
 
       function isWeekComplete(subject, week, day) {
@@ -188,7 +190,7 @@
       function isUnlocked(a) { return isWeekComplete(currentSubject, a.unlockWeek, a.unlockDay); }
 
       function getScore(subject, type, assessmentId) {
-        const scores = Store.getScores(user.lrn)[subject] || {};
+        const scores = Store.getScores(user.lrn, { includePending: true })[subject] || {};
         const fullId = `${subject}-${assessmentId}`;
         if (type === 'pt') return scores.pt?.[fullId] || null;
         const bucket = type === 'quiz' ? 'quizzes' : type === 'st' ? 'st' : 'te';
@@ -247,8 +249,19 @@
           return { status: 'available', score };
         }
 
+        // Started but not submitted
+        if (score && score.status === 'in-progress' && (score.score === null || score.score === undefined)) {
+          let here = null;
+          try { here = localStorage.getItem(`gba_v1_attempt_${user.lrn}_${scoreId}`); } catch (e) { /* ignore */ }
+          if (here) return { status: 'in-progress', score };
+          if (retakesUsed >= MAX_RETAKES) return { status: 'maxed', score, retakesUsed };
+          if (request && request.status === 'approved' && request.unlockCode) return { status: 'awaiting-code', score, request, retakesUsed };
+          if (request && request.status === 'pending') return { status: 'waiting', score, request, retakesUsed };
+          return { status: 'started-elsewhere', score, retakesUsed };
+        }
+
         // Priority 3: Locked (has score) — retake flow
-        if (hasLocalLock || (score && score.score !== undefined)) {
+        if (hasLocalLock || (score && score.score !== undefined && score.score !== null)) {
           // Max retakes reached?
           if (retakesUsed >= MAX_RETAKES) {
             return { status: 'maxed', score, retakesUsed };
@@ -370,6 +383,21 @@
                 </button>
               </div>
             `;
+          }
+          else if (status === 'in-progress') {
+            badge = '<span class="badge badge-warning">⏳ In progress</span>';
+            borderColor = 'var(--color-warning)';
+            extra = `<a href="${link}" class="btn btn-primary" style="margin-top:10px;display:block;text-align:center;text-decoration:none;">▶ Continue (timer is running)</a>`;
+          }
+          else if (status === 'started-elsewhere') {
+            badge = '<span class="badge" style="background:#fff3e0;color:#e65100;font-weight:700;">📱 Started</span>';
+            borderColor = '#ed6c02';
+            extra = `
+              <div class="retake-request-box">
+                <strong>Started on another device</strong>
+                <p style="margin:6px 0 8px;color:#37474f;font-size:0.83rem;">Finish it on that device, or ask your teacher for a code.</p>
+                <button class="btn-request-retake" data-request="${a.id}">🔑 Request Retake Code</button>
+              </div>`;
           }
           else if (status === 'available') {
             badge = '<span class="badge badge-warning">▶ Start</span>';

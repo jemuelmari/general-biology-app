@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>📚 Remediation Module</h1>
-        <span class="version">v2.6.0</span>
+        <span class="version">v2.5.5</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -31,15 +31,15 @@
   </main>
 
   <footer class="app-footer">
-    <p>Remediation · v2.6.0</p>
+    <p>Remediation · v2.5.5</p>
   </footer>
 
-  <script src="../../config.js?v=2.6.0"></script>
-  <script src="../../assets/js/app.js?v=2.6.0"></script>
-  <script src="../../assets/js/store.js?v=2.6.0"></script>
-  <script src="../../assets/js/transmutation.js?v=2.6.0"></script>
-  <script src="../../assets/js/security.js?v=2.6.0"></script>
-  <script src="../../assets/js/sync.js?v=2.6.0"></script>
+  <script src="../../config.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/app.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/store.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/transmutation.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/security.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/sync.js?v=2.4.2-4a6e810"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const user = Store.getCurrentUser();
@@ -62,24 +62,56 @@
 
       document.getElementById('rem-intro').textContent = `You scored ${stData.percent}% on ${stId.toUpperCase()}. Focus on the following competencies to improve.`;
 
-      // ... [compTitles loading and render unchanged] ...
+      // Competency statements + the week that teaches each one
+      const esc = (v) => String(v === null || v === undefined ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      const compInfo = {};
+      try {
+        const cr = await fetch(`../../data/${subject}-competencies.json?v=` + encodeURIComponent(CONFIG.VERSION));
+        const cj = await cr.json();
+        (cj.contentAreas || []).forEach((ca) => (ca.competencies || []).forEach((c) => { compInfo[c.code] = { desc: c.desc, week: String(c.week || '').split(/[^0-9]+/)[0], area: ca.title }; }));
+      } catch (e) { /* show codes only */ }
+      const items = (stData.breakdown || []);
+      const perComp = {};
+      items.forEach((b) => {
+        const k = b.competency || 'General';
+        perComp[k] = perComp[k] || { total: 0, wrong: 0 };
+        perComp[k].total++;
+        if (!b.isCorrect) perComp[k].wrong++;
+      });
 
       const content = document.getElementById('rem-content');
       if (missedComps.length === 0) {
         content.innerHTML = `<div class="alert alert-success">🎉 No missed competencies found. Great work!</div>`;
         return;
       }
+      const ordered = missedComps.slice().sort((x, y) => (perComp[y]?.wrong / perComp[y]?.total || 0) - (perComp[x]?.wrong / perComp[x]?.total || 0));
 
       content.innerHTML = `
         <div class="card">
           <h3>📋 Competencies to Review</h3>
-          <ul> ... </ul>
+          <p class="text-small text-muted">Most-missed first. Open the week, re-read the daily discussions, and redo the activities.</p>
+          <ul style="margin-top:12px;line-height:1.6;">
+            ${ordered.map((code) => {
+              const info = compInfo[code] || {};
+              const pc = perComp[code] || { total: 0, wrong: 0 };
+              const link = info.week ? `../${subject}/week${info.week}/index.html` : `../${subject}/index.html`;
+              return `<li style="margin-bottom:10px;">
+                <strong>${esc(code)}</strong> — ${esc(info.desc || 'See the lesson for this competency')}
+                <br><span class="text-small text-muted">Missed ${pc.wrong} of ${pc.total} item(s)${info.week ? ' · Week ' + esc(info.week) : ''}</span>
+                · <a href="${link}">Review →</a></li>`;
+            }).join('')}
+          </ul>
         </div>
         <div class="card">
           <h3>✅ Next Steps</h3>
-          <ol> ... </ol>
+          <ol style="line-height:1.7;">
+            <li>Review each competency above — start with the one you missed most.</li>
+            <li>Redo the day activities for those weeks ("Practice Again" keeps your passing score).</li>
+            <li>When you are ready, request a retake code for ${esc(stId.toUpperCase())} from the Assessments page.</li>
+          </ol>
           <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
             <a href="../${subject}/index.html" class="btn btn-primary">📖 Review Lessons</a>
+            <a href="../assessments/index.html?subject=${subject}" class="btn btn-outline">📝 Assessments</a>
             <button id="btn-complete-rem" class="btn btn-accent">✅ Mark Remediation Complete</button>
           </div>
         </div>
@@ -88,18 +120,8 @@
       document.getElementById('btn-complete-rem').addEventListener('click', async () => {
         const btn = document.getElementById('btn-complete-rem');
         btn.disabled = true;
-        btn.textContent = '⏳ Clearing...';
+        btn.textContent = '⏳ Saving...';
 
-        // 1. Clear the retake-unlock flag locally
-        if (window.Sync && typeof Sync.clearRetakeUnlock === 'function') {
-          Sync.clearRetakeUnlock(user.lrn, stId);
-        }
-
-        // 2. Delete the lock from the backend
-        if (window.Sync && typeof Sync.deleteLock === 'function') {
-          const lockId = `${user.lrn}-${stId}`;
-          await Sync.deleteLock(lockId); // This is a best-effort call
-        }
 
         // 3. Update user record in localStorage
         const updated = Store.getUser(user.lrn) || { ...user };
@@ -108,7 +130,7 @@
         updated.remediationUnlocked = false;
         Store.saveUser(updated);
         
-        APP.toast('Remediation marked complete! You can now retake the assessment.', 'success');
+        APP.toast('Remediation marked complete! You can now request a retake code.', 'success');
         setTimeout(() => (window.location.href = '../dashboard.html'), 1500);
       });
     });

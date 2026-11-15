@@ -6,19 +6,49 @@
       "n": 1,
       "title": "Prokaryotic vs Eukaryotic Cells",
       "competency": "STEM_BIO11/12-Ia-c-3",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Distinguish prokaryotic from eukaryotic cells.</li><li>Identify key structural differences.</li><li>Give examples of each cell type.</li><li>Explain evolutionary significance.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Prokaryote</strong> — a cell without a membrane-bound nucleus.</li><li><strong>Eukaryote</strong> — a cell with a true nucleus and membrane-bound organelles.</li><li><strong>Nucleoid</strong> — the region in prokaryotes where DNA is concentrated.</li></ul><h3>📚 Lesson Content</h3><h4>A. Defining Features</h4><table><thead><tr><th>Feature</th><th>Prokaryote</th><th>Eukaryote</th></tr></thead><tbody><tr><td>Nucleus</td><td>Absent (nucleoid)</td><td>Present</td></tr><tr><td>Membrane-bound organelles</td><td>Absent</td><td>Present</td></tr><tr><td>Ribosomes</td><td>70S</td><td>80S</td></tr><tr><td>Cell size</td><td>1–5 µm</td><td>10–100 µm</td></tr><tr><td>DNA</td><td>Circular, naked</td><td>Linear, histone-bound</td></tr><tr><td>Cell wall</td><td>Peptidoglycan (bacteria)</td><td>Cellulose (plants), chitin (fungi)</td></tr></tbody></table><h4>B. Examples</h4><ul><li><strong>Prokaryotes:</strong> Bacteria (E. coli), Archaea</li><li><strong>Eukaryotes:</strong> Plants, animals, fungi, protists</li></ul><h4>C. Evolutionary Significance</h4><p>Prokaryotes appeared ~3.5 billion years ago; eukaryotes ~1.5 billion years ago. The endosymbiotic theory explains how eukaryotes arose from prokaryotes engulfing smaller prokaryotes.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Distinguish prokaryotic from eukaryotic cells.</li><li>Identify key structural differences.</li><li>Give examples of each cell type.</li><li>Explain evolutionary significance.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Prokaryote</strong> — a cell without a membrane-bound nucleus.</li><li><strong>Eukaryote</strong> — a cell with a true nucleus and membrane-bound organelles.</li><li><strong>Nucleoid</strong> — the region in prokaryotes where DNA is concentrated.</li></ul><h3>📚 Lesson Content</h3><h4>A. Defining Features</h4><table><thead><tr><th>Feature</th><th>Prokaryote</th><th>Eukaryote</th></tr></thead><tbody><tr><td>Nucleus</td><td>Absent (nucleoid)</td><td>Present</td></tr><tr><td>Membrane-bound organelles</td><td>Absent</td><td>Present</td></tr><tr><td>Ribosomes</td><td>70S</td><td>80S</td></tr><tr><td>Cell size</td><td>1–5 µm</td><td>10–100 µm</td></tr><tr><td>DNA</td><td>Circular, naked</td><td>Linear, histone-bound</td></tr><tr><td>Cell wall</td><td>Peptidoglycan (bacteria)</td><td>Cellulose (plants), chitin (fungi)</td></tr></tbody></table><h4>B. Examples</h4><ul><li><strong>Prokaryotes:</strong> Bacteria (E. coli), Archaea</li><li><strong>Eukaryotes:</strong> Plants, animals, fungi, protists</li></ul><h4>C. Evolutionary Significance</h4><p>Prokaryotes appeared ~3.5 billion years ago; eukaryotes ~1.5 billion years ago. The endosymbiotic theory explains how eukaryotes arose from prokaryotes engulfing smaller prokaryotes.</p><h3>💬 Let's Discuss</h3><p>All cells share four things: a plasma membrane, cytoplasm, ribosomes and DNA. What separates the two great groups of life is <em>where the DNA is kept</em> and <em>how the inside is organized</em>.</p><p><strong>Prokaryotes</strong> (\"before nucleus\") — bacteria and archaea — keep their single circular chromosome in an unwalled area called the <strong>nucleoid</strong>. They have no membrane-bound organelles, their ribosomes are small (<strong>70S</strong>), and they are tiny, usually 1–5 µm. Many also carry extra small DNA rings called <em>plasmids</em>, which can hold genes for antibiotic resistance. Their small size is an advantage: a high surface-area-to-volume ratio lets nutrients reach every part quickly, so some bacteria can divide every 20 minutes.</p><p><strong>Eukaryotes</strong> (\"true nucleus\") — protists, fungi, plants and animals — enclose linear chromosomes wrapped around histone proteins inside a <strong>nucleus</strong>. They have membrane-bound organelles such as mitochondria, ER and Golgi, larger <strong>80S</strong> ribosomes, and are usually 10–100 µm. The membranes divide the cell into compartments, so different chemical reactions can happen at the same time without interfering with each other — the way a house has a kitchen and a bedroom.</p><p>This difference has real medical uses. Antibiotics such as streptomycin attack 70S ribosomes, so they stop bacterial protein synthesis but leave our 80S ribosomes alone.</p><p><strong>Common mistake:</strong> \"Prokaryotes have no DNA\" or \"prokaryotes have no ribosomes.\" They have both — they just lack a nucleus and membrane-bound organelles. Another trap: yeast is a single-celled organism, but it is a eukaryote (a fungus).</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "pro-vs-eu",
         "badgeName": "Pro vs Eu",
         "badgeIcon": "🔬",
         "pairs": [
-          { "key": "nuc", "left": "Nucleus present", "right": "Eukaryote" },
-          { "key": "nuc2", "left": "Nucleoid region", "right": "Prokaryote" },
-          { "key": "rib", "left": "80S ribosomes", "right": "Eukaryote" },
-          { "key": "rib2", "left": "70S ribosomes", "right": "Prokaryote" },
-          { "key": "size", "left": "1–5 µm", "right": "Prokaryote" },
-          { "key": "size2", "left": "10–100 µm", "right": "Eukaryote" }
+          {
+            "key": "nuc",
+            "left": "Nucleus present",
+            "right": "Eukaryote",
+            "why": "A true, membrane-bound nucleus defines a eukaryote."
+          },
+          {
+            "key": "nuc2",
+            "left": "Nucleoid region",
+            "right": "Prokaryote",
+            "why": "Prokaryotic DNA lies in the nucleoid, a region with no membrane."
+          },
+          {
+            "key": "rib",
+            "left": "80S ribosomes",
+            "right": "Eukaryote",
+            "why": "Eukaryotic cytoplasmic ribosomes are the larger 80S type."
+          },
+          {
+            "key": "rib2",
+            "left": "70S ribosomes",
+            "right": "Prokaryote",
+            "why": "Prokaryotes have smaller 70S ribosomes."
+          },
+          {
+            "key": "size",
+            "left": "1–5 µm",
+            "right": "Prokaryote",
+            "why": "Most prokaryotes are only 1–5 micrometers long."
+          },
+          {
+            "key": "size2",
+            "left": "10–100 µm",
+            "right": "Eukaryote",
+            "why": "Eukaryotic cells are usually 10–100 micrometers."
+          }
         ]
       },
       "activity2": {
@@ -27,12 +57,90 @@
         "badgeName": "Cell Classifier",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "A cell has no membrane-bound nucleus.", "choices": [{ "label": "Prokaryote ✓", "correct": true }, { "label": "Eukaryote", "correct": false }] },
-          { "text": "A cell has mitochondria and ER.", "choices": [{ "label": "Prokaryote", "correct": false }, { "label": "Eukaryote ✓", "correct": true }] },
-          { "text": "A bacterium.", "choices": [{ "label": "Prokaryote ✓", "correct": true }, { "label": "Eukaryote", "correct": false }] },
-          { "text": "A cell with linear chromosomes bound to histones.", "choices": [{ "label": "Prokaryote", "correct": false }, { "label": "Eukaryote ✓", "correct": true }] },
-          { "text": "An organism with a nucleoid region.", "choices": [{ "label": "Prokaryote ✓", "correct": true }, { "label": "Eukaryote", "correct": false }] },
-          { "text": "A plant leaf cell.", "choices": [{ "label": "Prokaryote", "correct": false }, { "label": "Eukaryote ✓", "correct": true }] }
+          {
+            "text": "A cell has no membrane-bound nucleus.",
+            "choices": [
+              {
+                "label": "Prokaryote",
+                "correct": true
+              },
+              {
+                "label": "Eukaryote",
+                "correct": false
+              }
+            ],
+            "explanation": "No membrane-bound nucleus is the defining feature of prokaryotes."
+          },
+          {
+            "text": "A cell has mitochondria and ER.",
+            "choices": [
+              {
+                "label": "Prokaryote",
+                "correct": false
+              },
+              {
+                "label": "Eukaryote",
+                "correct": true
+              }
+            ],
+            "explanation": "Mitochondria and ER are membrane-bound organelles found only in eukaryotes."
+          },
+          {
+            "text": "A bacterium.",
+            "choices": [
+              {
+                "label": "Prokaryote",
+                "correct": true
+              },
+              {
+                "label": "Eukaryote",
+                "correct": false
+              }
+            ],
+            "explanation": "Bacteria are prokaryotes."
+          },
+          {
+            "text": "A cell with linear chromosomes bound to histones.",
+            "choices": [
+              {
+                "label": "Prokaryote",
+                "correct": false
+              },
+              {
+                "label": "Eukaryote",
+                "correct": true
+              }
+            ],
+            "explanation": "Linear chromosomes with histones are found in eukaryotic nuclei."
+          },
+          {
+            "text": "An organism with a nucleoid region.",
+            "choices": [
+              {
+                "label": "Prokaryote",
+                "correct": true
+              },
+              {
+                "label": "Eukaryote",
+                "correct": false
+              }
+            ],
+            "explanation": "A nucleoid region instead of a nucleus means prokaryote."
+          },
+          {
+            "text": "A plant leaf cell.",
+            "choices": [
+              {
+                "label": "Prokaryote",
+                "correct": false
+              },
+              {
+                "label": "Eukaryote",
+                "correct": true
+              }
+            ],
+            "explanation": "Plant cells have a nucleus and organelles, so they are eukaryotic."
+          }
         ]
       },
       "formative": {
@@ -41,9 +149,72 @@
         "badgeIcon": "🎯",
         "lives": 3,
         "questions": [
-          { "text": "Which structure is present in eukaryotic cells but absent in prokaryotic cells?", "choices": [{ "label": "Ribosomes", "correct": false }, { "label": "Membrane-bound nucleus", "correct": true }, { "label": "Cell membrane", "correct": false }, { "label": "DNA", "correct": false }] },
-          { "text": "What type of ribosomes do prokaryotes have?", "choices": [{ "label": "70S", "correct": true }, { "label": "80S", "correct": false }, { "label": "60S only", "correct": false }, { "label": "None", "correct": false }] },
-          { "text": "Which of the following is a prokaryote?", "choices": [{ "label": "Yeast", "correct": false }, { "label": "E. coli", "correct": true }, { "label": "Onion cell", "correct": false }, { "label": "Human neuron", "correct": false }] }
+          {
+            "text": "Which structure is present in eukaryotic cells but absent in prokaryotic cells?",
+            "choices": [
+              {
+                "label": "Ribosomes",
+                "correct": false
+              },
+              {
+                "label": "Membrane-bound nucleus",
+                "correct": true
+              },
+              {
+                "label": "Cell membrane",
+                "correct": false
+              },
+              {
+                "label": "DNA",
+                "correct": false
+              }
+            ],
+            "explanation": "Both cell types have ribosomes, membranes and DNA; only eukaryotes have a membrane-bound nucleus."
+          },
+          {
+            "text": "What type of ribosomes do prokaryotes have?",
+            "choices": [
+              {
+                "label": "70S",
+                "correct": true
+              },
+              {
+                "label": "80S",
+                "correct": false
+              },
+              {
+                "label": "60S only",
+                "correct": false
+              },
+              {
+                "label": "None",
+                "correct": false
+              }
+            ],
+            "explanation": "Prokaryotes have 70S ribosomes; eukaryotes have 80S."
+          },
+          {
+            "text": "Which of the following is a prokaryote?",
+            "choices": [
+              {
+                "label": "Yeast",
+                "correct": false
+              },
+              {
+                "label": "E. coli",
+                "correct": true
+              },
+              {
+                "label": "Onion cell",
+                "correct": false
+              },
+              {
+                "label": "Human neuron",
+                "correct": false
+              }
+            ],
+            "explanation": "E. coli is a bacterium; yeast, onion cells and neurons are eukaryotic."
+          }
         ]
       },
       "takeaways": [
@@ -57,21 +228,61 @@
       "n": 2,
       "title": "Plant vs Animal Cells",
       "competency": "STEM_BIO11/12-Ia-c-3",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compare plant and animal cell structures.</li><li>Identify structures unique to each.</li><li>Relate structure to function.</li><li>Explain why certain organelles are more abundant in specific cells.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell wall</strong> — rigid outer layer in plant cells (cellulose).</li><li><strong>Central vacuole</strong> — large water-storage organelle in plants.</li><li><strong>Chloroplast</strong> — site of photosynthesis in plants.</li><li><strong>Centriole</strong> — aids in cell division in animals.</li></ul><h3>📚 Lesson Content</h3><h4>Structures Unique to Plant Cells</h4><ul><li><strong>Cell wall</strong> — cellulose; provides support and shape</li><li><strong>Chloroplasts</strong> — photosynthesis</li><li><strong>Central vacuole</strong> — stores water; maintains turgor pressure</li><li><strong>Plasmodesmata</strong> — channels between plant cells</li></ul><h4>Structures Unique to Animal Cells</h4><ul><li><strong>Centrioles</strong> — organize spindle fibers during cell division</li><li><strong>Lysosomes</strong> — abundant in animal cells (plants have fewer)</li><li><strong>Flagella/cilia</strong> — movement (some animal cells)</li></ul><h4>Structures in BOTH</h4><ul><li>Plasma membrane, nucleus, mitochondria, ER, Golgi, ribosomes, cytoskeleton</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Compare plant and animal cell structures.</li><li>Identify structures unique to each.</li><li>Relate structure to function.</li><li>Explain why certain organelles are more abundant in specific cells.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell wall</strong> — rigid outer layer in plant cells (cellulose).</li><li><strong>Central vacuole</strong> — large water-storage organelle in plants.</li><li><strong>Chloroplast</strong> — site of photosynthesis in plants.</li><li><strong>Centriole</strong> — aids in cell division in animals.</li></ul><h3>📚 Lesson Content</h3><h4>Structures Unique to Plant Cells</h4><ul><li><strong>Cell wall</strong> — cellulose; provides support and shape</li><li><strong>Chloroplasts</strong> — photosynthesis</li><li><strong>Central vacuole</strong> — stores water; maintains turgor pressure</li><li><strong>Plasmodesmata</strong> — channels between plant cells</li></ul><h4>Structures Unique to Animal Cells</h4><ul><li><strong>Centrioles</strong> — organize spindle fibers during cell division</li><li><strong>Lysosomes</strong> — abundant in animal cells (plants have fewer)</li><li><strong>Flagella/cilia</strong> — movement (some animal cells)</li></ul><h4>Structures in BOTH</h4><ul><li>Plasma membrane, nucleus, mitochondria, ER, Golgi, ribosomes, cytoskeleton</li></ul><h3>💬 Let's Discuss</h3><p>Plant and animal cells are both eukaryotic, so they share the nucleus, mitochondria, ER, Golgi, ribosomes and plasma membrane. Their differences make sense once you remember how each organism lives.</p><p>A plant cannot walk to find food or run from danger, so it must make its own food and support its own weight. That explains its three special structures. The <strong>cell wall</strong> made of cellulose gives a rigid box shape and protects against bursting. <strong>Chloroplasts</strong> make sugar from sunlight. The <strong>large central vacuole</strong> stores water, ions and pigments; when it is full, it pushes against the wall and creates <strong>turgor pressure</strong> that keeps leaves and young stems firm. A wilted kangkong leaf is simply a plant whose vacuoles have lost water. Plant cells also connect to their neighbors through channels called <strong>plasmodesmata</strong>.</p><p>An animal cell has no wall, so it can change shape — think of a white blood cell squeezing out of a capillary or a muscle cell contracting. Animal cells usually have <strong>centrioles</strong>, which help organize spindle fibers during division, and many <strong>lysosomes</strong> that digest food particles and worn-out parts. Animals store energy as glycogen; plants store it as starch.</p><p><strong>Common mistakes:</strong> (1) \"Plant cells have no mitochondria.\" They do — chloroplasts make sugar, but mitochondria still convert it into ATP. (2) \"Only plant cells have vacuoles.\" Animal cells have vacuoles too; they are just small and temporary. The difference is the single <em>large central</em> vacuole.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "plant-vs-animal",
         "badgeName": "Plant vs Animal",
         "badgeIcon": "🌱",
         "pairs": [
-          { "key": "wall", "left": "Cell wall (cellulose)", "right": "Plant only" },
-          { "key": "chloro", "left": "Chloroplast", "right": "Plant only" },
-          { "key": "vac", "left": "Large central vacuole", "right": "Plant only" },
-          { "key": "cent", "left": "Centrioles", "right": "Animal only" },
-          { "key": "lyso", "left": "Numerous lysosomes", "right": "Animal only" },
-          { "key": "mito", "left": "Mitochondria", "right": "Both" },
-          { "key": "nuc", "left": "Nucleus", "right": "Both" },
-          { "key": "rib", "left": "Ribosomes", "right": "Both" }
+          {
+            "key": "wall",
+            "left": "Cell wall (cellulose)",
+            "right": "Plant only",
+            "why": "Only plants have a cellulose cell wall for rigid support."
+          },
+          {
+            "key": "chloro",
+            "left": "Chloroplast",
+            "right": "Plant only",
+            "why": "Chloroplasts for photosynthesis are found in plant cells."
+          },
+          {
+            "key": "vac",
+            "left": "Large central vacuole",
+            "right": "Plant only",
+            "why": "The single large central vacuole that maintains turgor is a plant feature."
+          },
+          {
+            "key": "cent",
+            "left": "Centrioles",
+            "right": "Animal only",
+            "why": "Centrioles that organize spindle fibers are typical of animal cells."
+          },
+          {
+            "key": "lyso",
+            "left": "Numerous lysosomes",
+            "right": "Animal only",
+            "why": "Animal cells rely on many lysosomes for intracellular digestion."
+          },
+          {
+            "key": "mito",
+            "left": "Mitochondria",
+            "right": "Both",
+            "why": "Both plant and animal cells need mitochondria for ATP."
+          },
+          {
+            "key": "nuc",
+            "left": "Nucleus",
+            "right": "Both",
+            "why": "Both are eukaryotic, so both have a nucleus."
+          },
+          {
+            "key": "rib",
+            "left": "Ribosomes",
+            "right": "Both",
+            "why": "All cells, plant or animal, have ribosomes."
+          }
         ]
       },
       "activity2": {
@@ -80,12 +291,114 @@
         "badgeName": "Cell Spotter",
         "badgeIcon": "🔎",
         "scenarios": [
-          { "text": "A cell has a large central vacuole and chloroplasts.", "choices": [{ "label": "🌱 Plant ✓", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false }] },
-          { "text": "A cell has centrioles for spindle fiber formation.", "choices": [{ "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal ✓", "correct": true }, { "label": "🌍 Both", "correct": false }] },
-          { "text": "A cell has a plasma membrane and nucleus.", "choices": [{ "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both ✓", "correct": true }] },
-          { "text": "A cell has a rigid cell wall.", "choices": [{ "label": "🌱 Plant ✓", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false }] },
-          { "text": "A cell has mitochondria.", "choices": [{ "label": "🌱 Plant", "correct": false }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both ✓", "correct": true }] },
-          { "text": "A cell contains plasmodesmata.", "choices": [{ "label": "🌱 Plant ✓", "correct": true }, { "label": "🐾 Animal", "correct": false }, { "label": "🌍 Both", "correct": false }] }
+          {
+            "text": "A cell has a large central vacuole and chloroplasts.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "A large central vacuole together with chloroplasts identifies a plant cell."
+          },
+          {
+            "text": "A cell has centrioles for spindle fiber formation.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": true
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Centrioles are characteristic of animal cells."
+          },
+          {
+            "text": "A cell has a plasma membrane and nucleus.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": true
+              }
+            ],
+            "explanation": "Every eukaryotic cell has a plasma membrane and nucleus."
+          },
+          {
+            "text": "A cell has a rigid cell wall.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "A rigid cellulose cell wall is found in plant cells."
+          },
+          {
+            "text": "A cell has mitochondria.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": false
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": true
+              }
+            ],
+            "explanation": "Both plant and animal cells need mitochondria to make ATP."
+          },
+          {
+            "text": "A cell contains plasmodesmata.",
+            "choices": [
+              {
+                "label": "🌱 Plant",
+                "correct": true
+              },
+              {
+                "label": "🐾 Animal",
+                "correct": false
+              },
+              {
+                "label": "🌍 Both",
+                "correct": false
+              }
+            ],
+            "explanation": "Plasmodesmata are channels through plant cell walls."
+          }
         ]
       },
       "formative": {
@@ -94,9 +407,72 @@
         "badgeIcon": "🎯",
         "lives": 3,
         "questions": [
-          { "text": "Which of the following is found ONLY in plant cells?", "choices": [{ "label": "Mitochondria", "correct": false }, { "label": "Chloroplast", "correct": true }, { "label": "Nucleus", "correct": false }, { "label": "Ribosome", "correct": false }] },
-          { "text": "Which organelle helps organize spindle fibers during animal cell division?", "choices": [{ "label": "Chloroplast", "correct": false }, { "label": "Centriole", "correct": true }, { "label": "Central vacuole", "correct": false }, { "label": "Cell wall", "correct": false }] },
-          { "text": "What is the main function of the central vacuole in plant cells?", "choices": [{ "label": "Photosynthesis", "correct": false }, { "label": "ATP production", "correct": false }, { "label": "Storing water and maintaining turgor", "correct": true }, { "label": "Protein synthesis", "correct": false }] }
+          {
+            "text": "Which of the following is found ONLY in plant cells?",
+            "choices": [
+              {
+                "label": "Mitochondria",
+                "correct": false
+              },
+              {
+                "label": "Chloroplast",
+                "correct": true
+              },
+              {
+                "label": "Nucleus",
+                "correct": false
+              },
+              {
+                "label": "Ribosome",
+                "correct": false
+              }
+            ],
+            "explanation": "Chloroplasts are found only in plant cells; mitochondria, nucleus and ribosomes are in both."
+          },
+          {
+            "text": "Which organelle helps organize spindle fibers during animal cell division?",
+            "choices": [
+              {
+                "label": "Chloroplast",
+                "correct": false
+              },
+              {
+                "label": "Centriole",
+                "correct": true
+              },
+              {
+                "label": "Central vacuole",
+                "correct": false
+              },
+              {
+                "label": "Cell wall",
+                "correct": false
+              }
+            ],
+            "explanation": "Centrioles help organize the spindle in animal cells."
+          },
+          {
+            "text": "What is the main function of the central vacuole in plant cells?",
+            "choices": [
+              {
+                "label": "Carrying out photosynthesis",
+                "correct": false
+              },
+              {
+                "label": "Producing ATP for the cell",
+                "correct": false
+              },
+              {
+                "label": "Storing water to keep turgor",
+                "correct": true
+              },
+              {
+                "label": "Making proteins for export",
+                "correct": false
+              }
+            ],
+            "explanation": "The central vacuole stores water and creates turgor pressure against the wall."
+          }
         ]
       },
       "takeaways": [
@@ -109,20 +485,55 @@
       "n": 3,
       "title": "Plant & Animal Tissue Types",
       "competency": "STEM_BIO11/12-Ia-c-4",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Classify the four main animal tissue types.</li><li>Describe the three main plant tissue systems.</li><li>Relate tissue structure to function.</li><li>Locate tissues within the organism.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Tissue</strong> — a group of similar cells performing a specific function.</li><li><strong>Epithelial tissue</strong> — covers body surfaces, lines cavities.</li><li><strong>Connective tissue</strong> — binds, supports, protects.</li><li><strong>Muscle tissue</strong> — contracts for movement.</li><li><strong>Nervous tissue</strong> — transmits electrical signals.</li></ul><h3>📚 Lesson Content</h3><h4>A. Animal Tissues</h4><table><thead><tr><th>Type</th><th>Function</th><th>Location</th></tr></thead><tbody><tr><td>Epithelial</td><td>Covering, lining, protection, absorption</td><td>Skin, intestine lining</td></tr><tr><td>Connective</td><td>Binding, support, transport</td><td>Bone, blood, cartilage, fat</td></tr><tr><td>Muscle</td><td>Movement</td><td>Skeletal, smooth, cardiac muscle</td></tr><tr><td>Nervous</td><td>Signaling</td><td>Brain, spinal cord, nerves</td></tr></tbody></table><h4>B. Plant Tissues</h4><table><thead><tr><th>System</th><th>Tissue</th><th>Function</th></tr></thead><tbody><tr><td>Dermal</td><td>Epidermis, cuticle</td><td>Protection</td></tr><tr><td>Ground</td><td>Parenchyma, collenchyma, sclerenchyma</td><td>Photosynthesis, support</td></tr><tr><td>Vascular</td><td>Xylem, phloem</td><td>Transport</td></tr></tbody></table>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Classify the four main animal tissue types.</li><li>Describe the three main plant tissue systems.</li><li>Relate tissue structure to function.</li><li>Locate tissues within the organism.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Tissue</strong> — a group of similar cells performing a specific function.</li><li><strong>Epithelial tissue</strong> — covers body surfaces, lines cavities.</li><li><strong>Connective tissue</strong> — binds, supports, protects.</li><li><strong>Muscle tissue</strong> — contracts for movement.</li><li><strong>Nervous tissue</strong> — transmits electrical signals.</li></ul><h3>📚 Lesson Content</h3><h4>A. Animal Tissues</h4><table><thead><tr><th>Type</th><th>Function</th><th>Location</th></tr></thead><tbody><tr><td>Epithelial</td><td>Covering, lining, protection, absorption</td><td>Skin, intestine lining</td></tr><tr><td>Connective</td><td>Binding, support, transport</td><td>Bone, blood, cartilage, fat</td></tr><tr><td>Muscle</td><td>Movement</td><td>Skeletal, smooth, cardiac muscle</td></tr><tr><td>Nervous</td><td>Signaling</td><td>Brain, spinal cord, nerves</td></tr></tbody></table><h4>B. Plant Tissues</h4><table><thead><tr><th>System</th><th>Tissue</th><th>Function</th></tr></thead><tbody><tr><td>Dermal</td><td>Epidermis, cuticle</td><td>Protection</td></tr><tr><td>Ground</td><td>Parenchyma, collenchyma, sclerenchyma</td><td>Photosynthesis, support</td></tr><tr><td>Vascular</td><td>Xylem, phloem</td><td>Transport</td></tr></tbody></table><h3>💬 Let's Discuss</h3><p>A <strong>tissue</strong> is a group of similar cells working together for one function. Animals have only four basic tissue types, and you can sort almost any example by asking, \"What is its main job?\"</p><p><strong>Epithelial tissue</strong> covers and lines — skin, the lining of your mouth and intestines, the walls of air sacs. Its cells are packed tightly with almost no space between them, forming a barrier. <strong>Connective tissue</strong> supports, binds and connects; its cells are scattered in a large amount of material called the matrix. That is why bone, cartilage, tendons, fat and even blood (with liquid plasma as its matrix) are all connective. <strong>Muscle tissue</strong> contracts: skeletal (voluntary), cardiac (heart) and smooth (walls of organs). <strong>Nervous tissue</strong> carries electrical signals through neurons, supported by glial cells.</p><p>Plants have three tissue systems. The <strong>dermal</strong> system (epidermis) is the protective outer layer, often coated with a waxy cuticle that reduces water loss. The <strong>vascular</strong> system transports: <strong>xylem</strong> carries water and minerals <em>up</em> from roots, while <strong>phloem</strong> carries sugars from leaves to where they are needed. The <strong>ground</strong> system fills the rest and does photosynthesis, storage and support. All of these come from <strong>meristems</strong>, regions of dividing cells at root and shoot tips.</p><p><strong>Common mistake:</strong> calling blood a \"liquid organ\" or muscle tissue. Blood is connective tissue because its cells float in a matrix (plasma). Another trap is mixing up xylem and phloem: remember \"<em>x</em>ylem = water goes up; <em>ph</em>loem = food.\"</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "tissue-master",
         "badgeName": "Tissue Master",
         "badgeIcon": "🧬",
         "pairs": [
-          { "key": "epi", "left": "Epithelial", "right": "Covers and lines surfaces" },
-          { "key": "conn", "left": "Connective", "right": "Binds and supports other tissues" },
-          { "key": "musc", "left": "Muscle", "right": "Contracts for movement" },
-          { "key": "nerv", "left": "Nervous", "right": "Transmits electrical signals" },
-          { "key": "epi2", "left": "Epidermis", "right": "Plant dermal tissue" },
-          { "key": "vas", "left": "Vascular tissue", "right": "Xylem + phloem" },
-          { "key": "ground", "left": "Ground tissue", "right": "Photosynthesis + storage" }
+          {
+            "key": "epi",
+            "left": "Epithelial",
+            "right": "Covers and lines surfaces",
+            "why": "Epithelium forms sheets that cover outer surfaces and line cavities."
+          },
+          {
+            "key": "conn",
+            "left": "Connective",
+            "right": "Binds and supports other tissues",
+            "why": "Connective tissue has scattered cells in a matrix and binds and supports."
+          },
+          {
+            "key": "musc",
+            "left": "Muscle",
+            "right": "Contracts for movement",
+            "why": "Muscle cells contain contractile proteins that shorten to move parts."
+          },
+          {
+            "key": "nerv",
+            "left": "Nervous",
+            "right": "Transmits electrical signals",
+            "why": "Neurons in nervous tissue conduct electrical impulses."
+          },
+          {
+            "key": "epi2",
+            "left": "Epidermis",
+            "right": "Plant dermal tissue",
+            "why": "The epidermis is the dermal tissue covering the plant."
+          },
+          {
+            "key": "vas",
+            "left": "Vascular tissue",
+            "right": "Xylem + phloem",
+            "why": "Vascular tissue is made of xylem (water) and phloem (sugar)."
+          },
+          {
+            "key": "ground",
+            "left": "Ground tissue",
+            "right": "Photosynthesis + storage",
+            "why": "Ground tissue does photosynthesis, storage and support."
+          }
         ]
       },
       "activity2": {
@@ -131,12 +542,138 @@
         "badgeName": "Tissue Classifier",
         "badgeIcon": "🔬",
         "scenarios": [
-          { "text": "Lines the inside of the small intestine.", "choices": [{ "label": "Epithelial ✓", "correct": true }, { "label": "Connective", "correct": false }, { "label": "Muscle", "correct": false }, { "label": "Nervous", "correct": false }] },
-          { "text": "Transmits signals in the brain.", "choices": [{ "label": "Epithelial", "correct": false }, { "label": "Connective", "correct": false }, { "label": "Muscle", "correct": false }, { "label": "Nervous ✓", "correct": true }] },
-          { "text": "Blood and bone.", "choices": [{ "label": "Epithelial", "correct": false }, { "label": "Connective ✓", "correct": true }, { "label": "Muscle", "correct": false }, { "label": "Nervous", "correct": false }] },
-          { "text": "Skeletal muscle fibers.", "choices": [{ "label": "Epithelial", "correct": false }, { "label": "Connective", "correct": false }, { "label": "Muscle ✓", "correct": true }, { "label": "Nervous", "correct": false }] },
-          { "text": "Transports water in plants.", "choices": [{ "label": "Dermal", "correct": false }, { "label": "Ground", "correct": false }, { "label": "Vascular ✓", "correct": true }, { "label": "Meristem", "correct": false }] },
-          { "text": "Outer protective layer of a leaf.", "choices": [{ "label": "Dermal ✓", "correct": true }, { "label": "Ground", "correct": false }, { "label": "Vascular", "correct": false }, { "label": "Meristem", "correct": false }] }
+          {
+            "text": "Lines the inside of the small intestine.",
+            "choices": [
+              {
+                "label": "Epithelial",
+                "correct": true
+              },
+              {
+                "label": "Connective",
+                "correct": false
+              },
+              {
+                "label": "Muscle",
+                "correct": false
+              },
+              {
+                "label": "Nervous",
+                "correct": false
+              }
+            ],
+            "explanation": "The intestinal lining is a sheet of epithelial cells."
+          },
+          {
+            "text": "Transmits signals in the brain.",
+            "choices": [
+              {
+                "label": "Epithelial",
+                "correct": false
+              },
+              {
+                "label": "Connective",
+                "correct": false
+              },
+              {
+                "label": "Muscle",
+                "correct": false
+              },
+              {
+                "label": "Nervous",
+                "correct": true
+              }
+            ],
+            "explanation": "Neurons in the brain belong to nervous tissue."
+          },
+          {
+            "text": "Blood and bone.",
+            "choices": [
+              {
+                "label": "Epithelial",
+                "correct": false
+              },
+              {
+                "label": "Connective",
+                "correct": true
+              },
+              {
+                "label": "Muscle",
+                "correct": false
+              },
+              {
+                "label": "Nervous",
+                "correct": false
+              }
+            ],
+            "explanation": "Blood and bone have cells in a matrix — connective tissue."
+          },
+          {
+            "text": "Skeletal muscle fibers.",
+            "choices": [
+              {
+                "label": "Epithelial",
+                "correct": false
+              },
+              {
+                "label": "Connective",
+                "correct": false
+              },
+              {
+                "label": "Muscle",
+                "correct": true
+              },
+              {
+                "label": "Nervous",
+                "correct": false
+              }
+            ],
+            "explanation": "Skeletal muscle fibers are muscle tissue."
+          },
+          {
+            "text": "Transports water in plants.",
+            "choices": [
+              {
+                "label": "Dermal",
+                "correct": false
+              },
+              {
+                "label": "Ground",
+                "correct": false
+              },
+              {
+                "label": "Vascular",
+                "correct": true
+              },
+              {
+                "label": "Meristem",
+                "correct": false
+              }
+            ],
+            "explanation": "Xylem, part of vascular tissue, carries water."
+          },
+          {
+            "text": "Outer protective layer of a leaf.",
+            "choices": [
+              {
+                "label": "Dermal",
+                "correct": true
+              },
+              {
+                "label": "Ground",
+                "correct": false
+              },
+              {
+                "label": "Vascular",
+                "correct": false
+              },
+              {
+                "label": "Meristem",
+                "correct": false
+              }
+            ],
+            "explanation": "The epidermis, a dermal tissue, protects the leaf surface."
+          }
         ]
       },
       "formative": {
@@ -145,9 +682,72 @@
         "badgeIcon": "🎯",
         "lives": 3,
         "questions": [
-          { "text": "Which animal tissue covers and lines body surfaces?", "choices": [{ "label": "Connective", "correct": false }, { "label": "Epithelial", "correct": true }, { "label": "Muscle", "correct": false }, { "label": "Nervous", "correct": false }] },
-          { "text": "Which plant tissue transports water and minerals?", "choices": [{ "label": "Phloem", "correct": false }, { "label": "Xylem", "correct": true }, { "label": "Epidermis", "correct": false }, { "label": "Parenchyma", "correct": false }] },
-          { "text": "Blood is an example of which tissue type?", "choices": [{ "label": "Epithelial", "correct": false }, { "label": "Connective", "correct": true }, { "label": "Muscle", "correct": false }, { "label": "Nervous", "correct": false }] }
+          {
+            "text": "Which animal tissue covers and lines body surfaces?",
+            "choices": [
+              {
+                "label": "Connective",
+                "correct": false
+              },
+              {
+                "label": "Epithelial",
+                "correct": true
+              },
+              {
+                "label": "Muscle",
+                "correct": false
+              },
+              {
+                "label": "Nervous",
+                "correct": false
+              }
+            ],
+            "explanation": "Epithelial tissue covers body surfaces and lines cavities."
+          },
+          {
+            "text": "Which plant tissue transports water and minerals?",
+            "choices": [
+              {
+                "label": "Phloem",
+                "correct": false
+              },
+              {
+                "label": "Xylem",
+                "correct": true
+              },
+              {
+                "label": "Epidermis",
+                "correct": false
+              },
+              {
+                "label": "Parenchyma",
+                "correct": false
+              }
+            ],
+            "explanation": "Xylem moves water and minerals upward; phloem moves sugars."
+          },
+          {
+            "text": "Blood is an example of which tissue type?",
+            "choices": [
+              {
+                "label": "Epithelial",
+                "correct": false
+              },
+              {
+                "label": "Connective",
+                "correct": true
+              },
+              {
+                "label": "Muscle",
+                "correct": false
+              },
+              {
+                "label": "Nervous",
+                "correct": false
+              }
+            ],
+            "explanation": "Blood is connective tissue: its cells are suspended in plasma, a liquid matrix."
+          }
         ]
       },
       "takeaways": [
@@ -160,19 +760,49 @@
       "n": 4,
       "title": "Cell Modifications & Specialization",
       "competency": "STEM_BIO11/12-Ia-c-5",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe examples of cell modifications.</li><li>Explain how modifications enable specialized functions.</li><li>Relate structure to function at the cellular level.</li><li>Recognize cell modifications in real-world tissues.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell modification</strong> — a structural change that enables a specialized function.</li><li><strong>Surface-area-to-volume ratio</strong> — the reason cells modify their surfaces.</li><li><strong>Differentiation</strong> — process by which cells become specialized.</li></ul><h3>📚 Lesson Content</h3><h4>A. Examples of Cell Modifications</h4><table><thead><tr><th>Cell</th><th>Modification</th><th>Function</th></tr></thead><tbody><tr><td>Intestinal cell</td><td>Microvilli</td><td>Increase surface area for absorption</td></tr><tr><td>Root hair cell</td><td>Root hairs (elongations)</td><td>Increase surface area for water/mineral absorption</td></tr><tr><td>Nerve cell</td><td>Long axon, dendrites</td><td>Transmit signals over long distances</td></tr><tr><td>Red blood cell</td><td>Biconcave, no nucleus</td><td>Maximize O₂ carrying capacity</td></tr><tr><td>Sperm cell</td><td>Flagellum</td><td>Motility</td></tr><tr><td>Guard cell</td><td>Bean-shaped, thick walls</td><td>Open/close stomata</td></tr></tbody></table><h4>B. Why Modifications?</h4><p>Cells modify their structure to maximize surface area, minimize diffusion distance, or perform specialized tasks. This is the cellular basis of differentiation.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Describe examples of cell modifications.</li><li>Explain how modifications enable specialized functions.</li><li>Relate structure to function at the cellular level.</li><li>Recognize cell modifications in real-world tissues.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Cell modification</strong> — a structural change that enables a specialized function.</li><li><strong>Surface-area-to-volume ratio</strong> — the reason cells modify their surfaces.</li><li><strong>Differentiation</strong> — process by which cells become specialized.</li></ul><h3>📚 Lesson Content</h3><h4>A. Examples of Cell Modifications</h4><table><thead><tr><th>Cell</th><th>Modification</th><th>Function</th></tr></thead><tbody><tr><td>Intestinal cell</td><td>Microvilli</td><td>Increase surface area for absorption</td></tr><tr><td>Root hair cell</td><td>Root hairs (elongations)</td><td>Increase surface area for water/mineral absorption</td></tr><tr><td>Nerve cell</td><td>Long axon, dendrites</td><td>Transmit signals over long distances</td></tr><tr><td>Red blood cell</td><td>Biconcave, no nucleus</td><td>Maximize O₂ carrying capacity</td></tr><tr><td>Sperm cell</td><td>Flagellum</td><td>Motility</td></tr><tr><td>Guard cell</td><td>Bean-shaped, thick walls</td><td>Open/close stomata</td></tr></tbody></table><h4>B. Why Modifications?</h4><p>Cells modify their structure to maximize surface area, minimize diffusion distance, or perform specialized tasks. This is the cellular basis of differentiation.</p><h3>💬 Let's Discuss</h3><p>Every cell in your body has the same DNA, yet a neuron looks nothing like a red blood cell. During development, cells switch on different sets of genes, a process called <strong>differentiation</strong>, and their shape becomes fitted to their job. The key idea is simple: <em>structure fits function</em>.</p><p>Many modifications increase <strong>surface area</strong>. Cells lining the small intestine have <strong>microvilli</strong>, tiny finger-like folds of the membrane that multiply the absorbing surface many times — like how a crumpled towel holds more water than a flat sheet. In plants, <strong>root hairs</strong> are long, thin outgrowths of epidermal cells that reach into soil to absorb water and minerals.</p><p>Other modifications help with <strong>movement and communication</strong>. A sperm cell has a <strong>flagellum</strong> to swim and many mitochondria in its midpiece to power it. Cells lining the airways have <strong>cilia</strong> that sweep mucus and dust upward. A motor neuron can have an <strong>axon</strong> about a meter long so a signal travels from your spinal cord to your toes without passing through extra cells.</p><p>Some cells even give things up. Mature <strong>red blood cells</strong> lose their nucleus and most organelles, leaving room for more hemoglobin; their <strong>biconcave</strong> disc shape increases surface area and lets them bend through narrow capillaries. In leaves, pairs of bean-shaped <strong>guard cells</strong> swell or shrink to open and close stomata, balancing CO₂ intake against water loss.</p><p><strong>Common mistake:</strong> confusing cilia and microvilli. Cilia <em>move</em> things; microvilli only <em>absorb</em>.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "mod-master",
         "badgeName": "Modification Master",
         "badgeIcon": "🎨",
         "pairs": [
-          { "key": "mv", "left": "Microvilli", "right": "Increase absorption in intestine" },
-          { "key": "rh", "left": "Root hairs", "right": "Absorb water and minerals" },
-          { "key": "axon", "left": "Long axon", "right": "Transmit nerve signals over distance" },
-          { "key": "rbc", "left": "Biconcave RBC", "right": "Maximize O₂ transport" },
-          { "key": "flag", "left": "Flagellum", "right": "Cell motility (sperm)" },
-          { "key": "guard", "left": "Guard cell", "right": "Regulate stomata opening" }
+          {
+            "key": "mv",
+            "left": "Microvilli",
+            "right": "Increase absorption in intestine",
+            "why": "Microvilli fold the membrane outward, greatly increasing absorptive surface."
+          },
+          {
+            "key": "rh",
+            "left": "Root hairs",
+            "right": "Absorb water and minerals",
+            "why": "Root hairs extend into the soil to absorb water and minerals."
+          },
+          {
+            "key": "axon",
+            "left": "Long axon",
+            "right": "Transmit nerve signals over distance",
+            "why": "A long axon carries impulses over long distances in one cell."
+          },
+          {
+            "key": "rbc",
+            "left": "Biconcave RBC",
+            "right": "Maximize O₂ transport",
+            "why": "The biconcave shape and missing nucleus allow more hemoglobin and better O₂ exchange."
+          },
+          {
+            "key": "flag",
+            "left": "Flagellum",
+            "right": "Cell motility (sperm)",
+            "why": "The flagellum whips to propel the sperm cell."
+          },
+          {
+            "key": "guard",
+            "left": "Guard cell",
+            "right": "Regulate stomata opening",
+            "why": "Guard cells change shape to open or close the stoma."
+          }
         ]
       },
       "activity2": {
@@ -181,12 +811,114 @@
         "badgeName": "Modification Pro",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "An intestinal cell has many tiny projections on its surface.", "choices": [{ "label": "Microvilli ✓", "correct": true }, { "label": "Cilia", "correct": false }, { "label": "Flagella", "correct": false }] },
-          { "text": "A root cell has a long, thin extension.", "choices": [{ "label": "Microvillus", "correct": false }, { "label": "Root hair ✓", "correct": true }, { "label": "Axon", "correct": false }] },
-          { "text": "A red blood cell lacks a nucleus.", "choices": [{ "label": "To carry more O₂ ✓", "correct": true }, { "label": "To divide faster", "correct": false }, { "label": "To become a nerve cell", "correct": false }] },
-          { "text": "A nerve cell is very long.", "choices": [{ "label": "To absorb nutrients", "correct": false }, { "label": "To transmit signals over distance ✓", "correct": true }, { "label": "To photosynthesize", "correct": false }] },
-          { "text": "A sperm cell has a tail-like structure.", "choices": [{ "label": "Flagellum ✓", "correct": true }, { "label": "Microvillus", "correct": false }, { "label": "Root hair", "correct": false }] },
-          { "text": "A pair of bean-shaped cells controls gas exchange on a leaf.", "choices": [{ "label": "Guard cells ✓", "correct": true }, { "label": "Epidermal cells", "correct": false }, { "label": "Palisade cells", "correct": false }] }
+          {
+            "text": "An intestinal cell has many tiny projections on its surface.",
+            "choices": [
+              {
+                "label": "Microvilli",
+                "correct": true
+              },
+              {
+                "label": "Cilia",
+                "correct": false
+              },
+              {
+                "label": "Flagella",
+                "correct": false
+              }
+            ],
+            "explanation": "Many tiny surface projections that absorb nutrients are microvilli."
+          },
+          {
+            "text": "A root cell has a long, thin extension.",
+            "choices": [
+              {
+                "label": "Microvillus",
+                "correct": false
+              },
+              {
+                "label": "Root hair",
+                "correct": true
+              },
+              {
+                "label": "Axon",
+                "correct": false
+              }
+            ],
+            "explanation": "The long extension of a root epidermal cell is a root hair."
+          },
+          {
+            "text": "A red blood cell lacks a nucleus.",
+            "choices": [
+              {
+                "label": "To carry more O₂",
+                "correct": true
+              },
+              {
+                "label": "To divide faster",
+                "correct": false
+              },
+              {
+                "label": "To become a nerve cell",
+                "correct": false
+              }
+            ],
+            "explanation": "Without a nucleus, a red blood cell has more room for hemoglobin to carry O₂."
+          },
+          {
+            "text": "A nerve cell is very long.",
+            "choices": [
+              {
+                "label": "To absorb nutrients from food",
+                "correct": false
+              },
+              {
+                "label": "To carry signals far",
+                "correct": true
+              },
+              {
+                "label": "To carry out photosynthesis",
+                "correct": false
+              }
+            ],
+            "explanation": "A long nerve cell carries signals over large distances."
+          },
+          {
+            "text": "A sperm cell has a tail-like structure.",
+            "choices": [
+              {
+                "label": "Flagellum",
+                "correct": true
+              },
+              {
+                "label": "Microvillus",
+                "correct": false
+              },
+              {
+                "label": "Root hair",
+                "correct": false
+              }
+            ],
+            "explanation": "The sperm's tail is a flagellum."
+          },
+          {
+            "text": "A pair of bean-shaped cells controls gas exchange on a leaf.",
+            "choices": [
+              {
+                "label": "Guard cells",
+                "correct": true
+              },
+              {
+                "label": "Epidermal cells",
+                "correct": false
+              },
+              {
+                "label": "Palisade cells",
+                "correct": false
+              }
+            ],
+            "explanation": "Guard cells regulate the opening of stomata for gas exchange."
+          }
         ]
       },
       "formative": {
@@ -195,9 +927,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "Microvilli primarily increase a cell's:", "choices": [{ "label": "Volume", "correct": false }, { "label": "Surface area for absorption", "correct": true }, { "label": "DNA content", "correct": false }, { "label": "Motility", "correct": false }] },
-          { "text": "Which modification allows sperm cells to swim?", "choices": [{ "label": "Microvilli", "correct": false }, { "label": "Flagellum", "correct": true }, { "label": "Cilia", "correct": false }, { "label": "Root hair", "correct": false }] },
-          { "text": "Why do red blood cells lack a nucleus?", "choices": [{ "label": "To carry more oxygen", "correct": true }, { "label": "To divide faster", "correct": false }, { "label": "To photosynthesize", "correct": false }, { "label": "To store water", "correct": false }] }
+          {
+            "text": "Microvilli primarily increase a cell's:",
+            "choices": [
+              {
+                "label": "Volume of cytoplasm",
+                "correct": false
+              },
+              {
+                "label": "Absorbing surface",
+                "correct": true
+              },
+              {
+                "label": "Amount of DNA inside",
+                "correct": false
+              },
+              {
+                "label": "Ability to swim",
+                "correct": false
+              }
+            ],
+            "explanation": "Microvilli increase the surface area available for absorption."
+          },
+          {
+            "text": "Which modification allows sperm cells to swim?",
+            "choices": [
+              {
+                "label": "Microvilli",
+                "correct": false
+              },
+              {
+                "label": "Flagellum",
+                "correct": true
+              },
+              {
+                "label": "Cilia",
+                "correct": false
+              },
+              {
+                "label": "Root hair",
+                "correct": false
+              }
+            ],
+            "explanation": "The flagellum lets sperm swim; cilia move fluid over a surface."
+          },
+          {
+            "text": "Why do red blood cells lack a nucleus?",
+            "choices": [
+              {
+                "label": "To carry more oxygen",
+                "correct": true
+              },
+              {
+                "label": "To divide faster",
+                "correct": false
+              },
+              {
+                "label": "To photosynthesize",
+                "correct": false
+              },
+              {
+                "label": "To store water",
+                "correct": false
+              }
+            ],
+            "explanation": "Losing the nucleus makes room for more hemoglobin, so more oxygen can be carried."
+          }
         ]
       },
       "takeaways": [

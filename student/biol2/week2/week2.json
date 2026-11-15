@@ -6,20 +6,55 @@
       "n": 1,
       "title": "Homeostasis — Steady Internal Conditions",
       "competency": "STEM_BIO11/12-IVi-j-2",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define homeostasis.</li><li>Explain why organisms need stable internal conditions.</li><li>Identify examples of homeostasis in plants and animals.</li><li>Describe the roles of various organ systems in maintaining homeostasis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Homeostasis</strong> — maintenance of a stable internal environment.</li><li><strong>Set point</strong> — the target value a system tries to maintain.</li><li><strong>Sensor</strong> — detects changes.</li><li><strong>Effector</strong> — produces the response.</li></ul><h3>📚 Lesson Content</h3><h4>A. Why Homeostasis Matters</h4><p>Enzymes and cells work best under specific conditions (temperature, pH, ion concentrations). Without homeostasis, proteins denature and life processes fail.</p><h4>B. Homeostatic Variables</h4><table><thead><tr><th>Variable</th><th>Normal Range</th></tr></thead><tbody><tr><td>Body temperature (human)</td><td>~36.5–37.5 °C</td></tr><tr><td>Blood pH</td><td>~7.35–7.45</td></tr><tr><td>Blood glucose</td><td>~70–110 mg/dL (fasting)</td></tr><tr><td>Osmotic balance</td><td>~0.9% NaCl</td></tr></tbody></table><h4>C. Examples in Organisms</h4><ul><li><strong>Animals:</strong> sweating, shivering, insulin/glucagon, kidney filtration</li><li><strong>Plants:</strong> stomatal control, water uptake by roots, turgor regulation</li></ul>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define homeostasis.</li><li>Explain why organisms need stable internal conditions.</li><li>Identify examples of homeostasis in plants and animals.</li><li>Describe the roles of various organ systems in maintaining homeostasis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Homeostasis</strong> — maintenance of a stable internal environment.</li><li><strong>Set point</strong> — the target value a system tries to maintain.</li><li><strong>Sensor</strong> — detects changes.</li><li><strong>Effector</strong> — produces the response.</li></ul><h3>📚 Lesson Content</h3><h4>A. Why Homeostasis Matters</h4><p>Enzymes and cells work best under specific conditions (temperature, pH, ion concentrations). Without homeostasis, proteins denature and life processes fail.</p><h4>B. Homeostatic Variables</h4><table><thead><tr><th>Variable</th><th>Normal Range</th></tr></thead><tbody><tr><td>Body temperature (human)</td><td>~36.5–37.5 °C</td></tr><tr><td>Blood pH</td><td>~7.35–7.45</td></tr><tr><td>Blood glucose</td><td>~70–110 mg/dL (fasting)</td></tr><tr><td>Osmotic balance</td><td>~0.9% NaCl</td></tr></tbody></table><h4>C. Examples in Organisms</h4><ul><li><strong>Animals:</strong> sweating, shivering, insulin/glucagon, kidney filtration</li><li><strong>Plants:</strong> stomatal control, water uptake by roots, turgor regulation</li></ul><h3>💬 Let's Discuss</h3><p>Your enzymes work best at about 37 °C and pH 7.4. Too hot and they denature; too acidic and they stop. Yet the world outside keeps changing: hot afternoons, cold mornings, salty meals, long hours without water. <strong>Homeostasis</strong> is the ability of an organism to keep its <em>internal</em> environment stable even when the <em>external</em> environment changes.</p><p>\"Stable\" does not mean fixed. Each variable has a <strong>set point</strong> and a normal range: body temperature about <strong>36.5–37.5 °C</strong>, blood pH <strong>7.35–7.45</strong>, fasting blood glucose about <strong>70–110 mg/dL</strong>. Values move a little, and the body keeps pulling them back — like a driver making small steering corrections to stay in the lane.</p><p>Every homeostatic control has three parts. A <strong>sensor</strong> (receptor) detects a change, a <strong>control center</strong> (often the brain's hypothalamus or an endocrine gland) compares it with the set point and decides what to do, and an <strong>effector</strong> (a muscle or gland) makes the response. For example, when you overheat, temperature receptors signal the hypothalamus, which makes sweat glands (effectors) produce sweat.</p><p>Homeostasis covers many variables: <strong>thermoregulation</strong> (temperature), <strong>osmoregulation</strong> (water and salt balance, controlled mainly by the kidneys), and <strong>glucoregulation</strong> (blood sugar, controlled by insulin and glucagon). Plants have homeostasis too: they close stomata in drought to keep water.</p><p>Many diseases are failures of homeostasis: diabetes (glucose), heat stroke (temperature), dehydration (water balance). <strong>Common mistake:</strong> calling any life process homeostasis. Photosynthesis or reproduction are not about keeping a variable steady, so they are not homeostasis.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "homeostasis-master",
         "badgeName": "Homeostasis Master",
         "badgeIcon": "⚖️",
         "pairs": [
-          { "key": "homeo", "left": "Homeostasis", "right": "Stable internal environment" },
-          { "key": "set", "left": "Set point", "right": "Target value" },
-          { "key": "sens", "left": "Sensor", "right": "Detects changes" },
-          { "key": "eff", "left": "Effector", "right": "Produces the response" },
-          { "key": "temp", "left": "Body temperature", "right": "~36.5–37.5 °C" },
-          { "key": "ph", "left": "Blood pH", "right": "~7.35–7.45" },
-          { "key": "glucose", "left": "Blood glucose", "right": "~70–110 mg/dL" }
+          {
+            "key": "homeo",
+            "left": "Homeostasis",
+            "right": "Stable internal environment",
+            "why": "Homeostasis keeps internal conditions stable."
+          },
+          {
+            "key": "set",
+            "left": "Set point",
+            "right": "Target value",
+            "why": "The set point is the target value the body tries to keep."
+          },
+          {
+            "key": "sens",
+            "left": "Sensor",
+            "right": "Detects changes",
+            "why": "Sensors (receptors) detect changes from the set point."
+          },
+          {
+            "key": "eff",
+            "left": "Effector",
+            "right": "Produces the response",
+            "why": "Effectors are muscles or glands that carry out the response."
+          },
+          {
+            "key": "temp",
+            "left": "Body temperature",
+            "right": "~36.5–37.5 °C",
+            "why": "Normal human body temperature is about 36.5–37.5 °C."
+          },
+          {
+            "key": "ph",
+            "left": "Blood pH",
+            "right": "~7.35–7.45",
+            "why": "Normal blood pH is about 7.35–7.45."
+          },
+          {
+            "key": "glucose",
+            "left": "Blood glucose",
+            "right": "~70–110 mg/dL",
+            "why": "Normal fasting blood glucose is about 70–110 mg/dL."
+          }
         ]
       },
       "activity2": {
@@ -28,12 +63,90 @@
         "badgeName": "Homeo Detective",
         "badgeIcon": "🕵️",
         "scenarios": [
-          { "text": "Body temperature rises during exercise.", "choices": [{ "label": "Change detected ✓", "correct": true }, { "label": "Set point", "correct": false }] },
-          { "text": "Blood pH is normally 7.4.", "choices": [{ "label": "Set point ✓", "correct": true }, { "label": "Sensor", "correct": false }] },
-          { "text": "Sweat glands produce sweat.", "choices": [{ "label": "Effector response ✓", "correct": true }, { "label": "Sensor", "correct": false }] },
-          { "text": "A plant closes stomata in drought.", "choices": [{ "label": "Homeostasis in plants ✓", "correct": true }, { "label": "Photosynthesis", "correct": false }] },
-          { "text": "Kidneys filter blood and adjust water.", "choices": [{ "label": "Osmoregulation ✓", "correct": true }, { "label": "Digestion", "correct": false }] },
-          { "text": "Insulin lowers blood glucose.", "choices": [{ "label": "Homeostasis ✓", "correct": true }, { "label": "Reproduction", "correct": false }] }
+          {
+            "text": "Body temperature rises during exercise.",
+            "choices": [
+              {
+                "label": "Change detected",
+                "correct": true
+              },
+              {
+                "label": "Set point",
+                "correct": false
+              }
+            ],
+            "explanation": "A rise in temperature is the change (stimulus) that sensors detect."
+          },
+          {
+            "text": "Blood pH is normally 7.4.",
+            "choices": [
+              {
+                "label": "Set point",
+                "correct": true
+              },
+              {
+                "label": "Sensor",
+                "correct": false
+              }
+            ],
+            "explanation": "pH 7.4 is the target value — the set point."
+          },
+          {
+            "text": "Sweat glands produce sweat.",
+            "choices": [
+              {
+                "label": "Effector",
+                "correct": true
+              },
+              {
+                "label": "Sensor",
+                "correct": false
+              }
+            ],
+            "explanation": "Sweat glands produce the response, so they are effectors."
+          },
+          {
+            "text": "A plant closes stomata in drought.",
+            "choices": [
+              {
+                "label": "Homeostasis in plants",
+                "correct": true
+              },
+              {
+                "label": "Photosynthesis",
+                "correct": false
+              }
+            ],
+            "explanation": "Closing stomata keeps water steady — plant homeostasis."
+          },
+          {
+            "text": "Kidneys filter blood and adjust water.",
+            "choices": [
+              {
+                "label": "Osmoregulation",
+                "correct": true
+              },
+              {
+                "label": "Digestion",
+                "correct": false
+              }
+            ],
+            "explanation": "Kidneys balancing water and salt is osmoregulation."
+          },
+          {
+            "text": "Insulin lowers blood glucose.",
+            "choices": [
+              {
+                "label": "Homeostasis",
+                "correct": true
+              },
+              {
+                "label": "Reproduction",
+                "correct": false
+              }
+            ],
+            "explanation": "Insulin returning glucose to normal is homeostasis."
+          }
         ]
       },
       "formative": {
@@ -42,9 +155,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "What is homeostasis?", "choices": [{ "label": "Growth of organisms", "correct": false }, { "label": "Maintenance of a stable internal environment", "correct": true }, { "label": "Production of gametes", "correct": false }, { "label": "Movement from place to place", "correct": false }] },
-          { "text": "Which of the following is NOT an example of homeostasis?", "choices": [{ "label": "Temperature regulation", "correct": false }, { "label": "Blood pH balance", "correct": false }, { "label": "Photosynthesis", "correct": true }, { "label": "Osmotic balance", "correct": false }] },
-          { "text": "Why do organisms need homeostasis?", "choices": [{ "label": "To look complex", "correct": false }, { "label": "To keep enzymes and cells working optimally", "correct": true }, { "label": "To reproduce faster", "correct": false }, { "label": "To grow larger", "correct": false }] }
+          {
+            "text": "What is homeostasis?",
+            "choices": [
+              {
+                "label": "Growth of the organism",
+                "correct": false
+              },
+              {
+                "label": "Stable internal conditions",
+                "correct": true
+              },
+              {
+                "label": "Production of gametes",
+                "correct": false
+              },
+              {
+                "label": "Movement from place to place",
+                "correct": false
+              }
+            ],
+            "explanation": "Homeostasis is keeping a stable internal environment."
+          },
+          {
+            "text": "Which of the following is NOT an example of homeostasis?",
+            "choices": [
+              {
+                "label": "Temperature regulation",
+                "correct": false
+              },
+              {
+                "label": "Blood pH balance",
+                "correct": false
+              },
+              {
+                "label": "Photosynthesis",
+                "correct": true
+              },
+              {
+                "label": "Osmotic balance",
+                "correct": false
+              }
+            ],
+            "explanation": "Photosynthesis makes food; it does not keep a variable stable."
+          },
+          {
+            "text": "Why do organisms need homeostasis?",
+            "choices": [
+              {
+                "label": "To look more complex than others",
+                "correct": false
+              },
+              {
+                "label": "To keep enzymes working well",
+                "correct": true
+              },
+              {
+                "label": "To reproduce faster than others",
+                "correct": false
+              },
+              {
+                "label": "To grow larger than their parents",
+                "correct": false
+              }
+            ],
+            "explanation": "Stable conditions keep enzymes and cells working properly."
+          }
         ]
       },
       "takeaways": [
@@ -58,19 +234,49 @@
       "n": 2,
       "title": "Negative Feedback Loops",
       "competency": "STEM_BIO11/12-IVi-j-3",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define negative feedback.</li><li>Identify components of a feedback loop.</li><li>Describe examples of negative feedback.</li><li>Explain how negative feedback maintains homeostasis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Negative feedback</strong> — response reverses the original stimulus.</li><li><strong>Stimulus</strong> — change that triggers the loop.</li><li><strong>Response</strong> — action that counteracts the stimulus.</li><li><strong>Receptor, control center, effector</strong> — the three parts.</li></ul><h3>📚 Lesson Content</h3><h4>A. How Negative Feedback Works</h4><ol><li>Stimulus — a change from the set point</li><li>Receptor — detects the change</li><li>Control center — processes the info</li><li>Effector — produces a response</li><li>Response — reverses the change</li></ol><h4>B. Examples</h4><table><thead><tr><th>System</th><th>Stimulus</th><th>Response</th></tr></thead><tbody><tr><td>Thermoregulation</td><td>Body too hot</td><td>Sweating, vasodilation</td></tr><tr><td>Thermoregulation</td><td>Body too cold</td><td>Shivering, vasoconstriction</td></tr><tr><td>Blood glucose</td><td>High glucose</td><td>Insulin released</td></tr><tr><td>Blood glucose</td><td>Low glucose</td><td>Glucagon released</td></tr><tr><td>Osmoregulation</td><td>Dehydration</td><td>ADH released → water reabsorbed</td></tr></tbody></table>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define negative feedback.</li><li>Identify components of a feedback loop.</li><li>Describe examples of negative feedback.</li><li>Explain how negative feedback maintains homeostasis.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Negative feedback</strong> — response reverses the original stimulus.</li><li><strong>Stimulus</strong> — change that triggers the loop.</li><li><strong>Response</strong> — action that counteracts the stimulus.</li><li><strong>Receptor, control center, effector</strong> — the three parts.</li></ul><h3>📚 Lesson Content</h3><h4>A. How Negative Feedback Works</h4><ol><li>Stimulus — a change from the set point</li><li>Receptor — detects the change</li><li>Control center — processes the info</li><li>Effector — produces a response</li><li>Response — reverses the change</li></ol><h4>B. Examples</h4><table><thead><tr><th>System</th><th>Stimulus</th><th>Response</th></tr></thead><tbody><tr><td>Thermoregulation</td><td>Body too hot</td><td>Sweating, vasodilation</td></tr><tr><td>Thermoregulation</td><td>Body too cold</td><td>Shivering, vasoconstriction</td></tr><tr><td>Blood glucose</td><td>High glucose</td><td>Insulin released</td></tr><tr><td>Blood glucose</td><td>Low glucose</td><td>Glucagon released</td></tr><tr><td>Osmoregulation</td><td>Dehydration</td><td>ADH released → water reabsorbed</td></tr></tbody></table><h3>💬 Let's Discuss</h3><p>Most homeostasis works by <strong>negative feedback</strong>: the response <em>opposes</em> or <em>reverses</em> the change, bringing the variable back toward the set point. \"Negative\" does not mean bad; it means \"opposite.\" A home air-conditioner is the classic model: when the room gets warmer than the set temperature, the thermostat turns the cooling on; when it gets cool enough, it turns it off.</p><p>Every loop has the same steps: <strong>stimulus</strong> (a change) → <strong>receptor</strong> (detects it) → <strong>control center</strong> (compares with the set point) → <strong>effector</strong> (acts) → <strong>response</strong> (reverses the change) → stimulus reduced, so the loop slows down.</p><p><strong>Blood glucose:</strong> after you eat rice, glucose rises; the pancreas releases <strong>insulin</strong>, which makes cells take in glucose and the liver store it as glycogen, so glucose falls. Between meals glucose drops; the pancreas releases <strong>glucagon</strong>, which makes the liver release glucose. Two opposing hormones keep levels in range. <strong>Temperature:</strong> when hot, you sweat and blood vessels in the skin widen (vasodilation) to lose heat; when cold, you shiver and skin vessels narrow (vasoconstriction). <strong>Water:</strong> when dehydrated, the pituitary releases <strong>ADH</strong>, which makes kidneys reabsorb water, producing dark, concentrated urine. <strong>Calcium:</strong> low blood calcium triggers <strong>parathyroid hormone</strong>, which releases calcium from bone.</p><p>Negative feedback makes systems <strong>stable</strong>, which is why it is so common. <strong>Common mistake:</strong> thinking negative feedback stops the process forever. It simply reduces the response once the variable returns to normal, and starts again if the variable drifts away.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "negative-feedback-master",
         "badgeName": "Negative Feedback Master",
         "badgeIcon": "🔄",
         "pairs": [
-          { "key": "neg", "left": "Negative feedback", "right": "Reverses the stimulus" },
-          { "key": "stim", "left": "Stimulus", "right": "Change from set point" },
-          { "key": "rec", "left": "Receptor", "right": "Detects change" },
-          { "key": "cc", "left": "Control center", "right": "Processes info" },
-          { "key": "eff", "left": "Effector", "right": "Produces response" },
-          { "key": "resp", "left": "Response", "right": "Counteracts change" }
+          {
+            "key": "neg",
+            "left": "Negative feedback",
+            "right": "Reverses the stimulus",
+            "why": "Negative feedback reverses the change and restores the set point."
+          },
+          {
+            "key": "stim",
+            "left": "Stimulus",
+            "right": "Change from set point",
+            "why": "The stimulus is the change away from the set point."
+          },
+          {
+            "key": "rec",
+            "left": "Receptor",
+            "right": "Detects change",
+            "why": "The receptor detects the change."
+          },
+          {
+            "key": "cc",
+            "left": "Control center",
+            "right": "Processes info",
+            "why": "The control center compares the input with the set point and sends commands."
+          },
+          {
+            "key": "eff",
+            "left": "Effector",
+            "right": "Produces response",
+            "why": "The effector produces the response."
+          },
+          {
+            "key": "resp",
+            "left": "Response",
+            "right": "Counteracts change",
+            "why": "The response counteracts the original change."
+          }
         ]
       },
       "activity2": {
@@ -79,12 +285,90 @@
         "badgeName": "Neg Feedback Pro",
         "badgeIcon": "🌡️",
         "scenarios": [
-          { "text": "Body temperature rises → sweating begins.", "choices": [{ "label": "Negative feedback ✓", "correct": true }, { "label": "Positive feedback", "correct": false }] },
-          { "text": "Blood glucose is high → insulin released.", "choices": [{ "label": "Negative feedback ✓", "correct": true }, { "label": "Positive feedback", "correct": false }] },
-          { "text": "Blood glucose is low → glucagon released.", "choices": [{ "label": "Negative feedback ✓", "correct": true }, { "label": "Positive feedback", "correct": false }] },
-          { "text": "Body temperature drops → shivering.", "choices": [{ "label": "Negative feedback ✓", "correct": true }, { "label": "Positive feedback", "correct": false }] },
-          { "text": "A person is dehydrated → ADH released.", "choices": [{ "label": "Negative feedback ✓", "correct": true }, { "label": "Positive feedback", "correct": false }] },
-          { "text": "Blood calcium drops → PTH released.", "choices": [{ "label": "Negative feedback ✓", "correct": true }, { "label": "Positive feedback", "correct": false }] }
+          {
+            "text": "Body temperature rises → sweating begins.",
+            "choices": [
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Positive feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Sweating lowers temperature, reversing the rise — negative feedback."
+          },
+          {
+            "text": "Blood glucose is high → insulin released.",
+            "choices": [
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Positive feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Insulin lowers high glucose — negative feedback."
+          },
+          {
+            "text": "Blood glucose is low → glucagon released.",
+            "choices": [
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Positive feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Glucagon raises low glucose — negative feedback."
+          },
+          {
+            "text": "Body temperature drops → shivering.",
+            "choices": [
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Positive feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Shivering raises low temperature — negative feedback."
+          },
+          {
+            "text": "A person is dehydrated → ADH released.",
+            "choices": [
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Positive feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "ADH saves water when dehydrated — negative feedback."
+          },
+          {
+            "text": "Blood calcium drops → PTH released.",
+            "choices": [
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Positive feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "PTH raises low calcium — negative feedback."
+          }
         ]
       },
       "formative": {
@@ -93,9 +377,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "In negative feedback, the response does what to the stimulus?", "choices": [{ "label": "Amplifies it", "correct": false }, { "label": "Reverses it", "correct": true }, { "label": "Ignores it", "correct": false }, { "label": "Doubles it", "correct": false }] },
-          { "text": "Which hormone is released when blood glucose is HIGH?", "choices": [{ "label": "Glucagon", "correct": false }, { "label": "Insulin", "correct": true }, { "label": "ADH", "correct": false }, { "label": "Thyroxine", "correct": false }] },
-          { "text": "Sweating when hot is an example of:", "choices": [{ "label": "Positive feedback", "correct": false }, { "label": "Negative feedback", "correct": true }, { "label": "Reflex action only", "correct": false }, { "label": "Endocrine failure", "correct": false }] }
+          {
+            "text": "In negative feedback, the response does what to the stimulus?",
+            "choices": [
+              {
+                "label": "Amplifies it",
+                "correct": false
+              },
+              {
+                "label": "Reverses it",
+                "correct": true
+              },
+              {
+                "label": "Ignores it",
+                "correct": false
+              },
+              {
+                "label": "Doubles it",
+                "correct": false
+              }
+            ],
+            "explanation": "Negative feedback reverses the stimulus."
+          },
+          {
+            "text": "Which hormone is released when blood glucose is HIGH?",
+            "choices": [
+              {
+                "label": "Glucagon",
+                "correct": false
+              },
+              {
+                "label": "Insulin",
+                "correct": true
+              },
+              {
+                "label": "ADH",
+                "correct": false
+              },
+              {
+                "label": "Thyroxine",
+                "correct": false
+              }
+            ],
+            "explanation": "Insulin is released when blood glucose is high."
+          },
+          {
+            "text": "Sweating when hot is an example of:",
+            "choices": [
+              {
+                "label": "Positive feedback",
+                "correct": false
+              },
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Reflex action only",
+                "correct": false
+              },
+              {
+                "label": "Endocrine failure",
+                "correct": false
+              }
+            ],
+            "explanation": "Sweating cools the body, reversing the temperature rise."
+          }
         ]
       },
       "takeaways": [
@@ -109,19 +456,49 @@
       "n": 3,
       "title": "Positive Feedback Loops",
       "competency": "STEM_BIO11/12-IVi-j-3",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define positive feedback.</li><li>Differentiate positive from negative feedback.</li><li>Describe examples of positive feedback.</li><li>Explain why positive feedback must be short-lived.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Positive feedback</strong> — response amplifies the original stimulus.</li><li><strong>Amplification</strong> — increases the stimulus.</li><li><strong>Stop signal</strong> — external event that halts the loop.</li></ul><h3>📚 Lesson Content</h3><h4>A. How Positive Feedback Works</h4><p>The response increases the original stimulus, causing further response. This cycle continues until an external event stops it.</p><h4>B. Examples</h4><table><thead><tr><th>System</th><th>Stimulus</th><th>Response</th><th>Stop</th></tr></thead><tbody><tr><td>Childbirth</td><td>Pressure on cervix</td><td>Oxytocin → more contractions</td><td>Baby delivered</td></tr><tr><td>Blood clotting</td><td>Vessel injury</td><td>Platelets attract more platelets</td><td>Clot formed</td></tr><tr><td>Lactation</td><td>Suckling</td><td>Prolactin → more milk</td><td>Stop nursing</td></tr></tbody></table><h4>C. Why It Must Stop</h4><p>Runaway positive feedback is dangerous — e.g., uncontrolled clotting or runaway fever.</p>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Define positive feedback.</li><li>Differentiate positive from negative feedback.</li><li>Describe examples of positive feedback.</li><li>Explain why positive feedback must be short-lived.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Positive feedback</strong> — response amplifies the original stimulus.</li><li><strong>Amplification</strong> — increases the stimulus.</li><li><strong>Stop signal</strong> — external event that halts the loop.</li></ul><h3>📚 Lesson Content</h3><h4>A. How Positive Feedback Works</h4><p>The response increases the original stimulus, causing further response. This cycle continues until an external event stops it.</p><h4>B. Examples</h4><table><thead><tr><th>System</th><th>Stimulus</th><th>Response</th><th>Stop</th></tr></thead><tbody><tr><td>Childbirth</td><td>Pressure on cervix</td><td>Oxytocin → more contractions</td><td>Baby delivered</td></tr><tr><td>Blood clotting</td><td>Vessel injury</td><td>Platelets attract more platelets</td><td>Clot formed</td></tr><tr><td>Lactation</td><td>Suckling</td><td>Prolactin → more milk</td><td>Stop nursing</td></tr></tbody></table><h4>C. Why It Must Stop</h4><p>Runaway positive feedback is dangerous — e.g., uncontrolled clotting or runaway fever.</p><h3>💬 Let's Discuss</h3><p><strong>Positive feedback</strong> is the opposite of negative feedback: the response <em>increases</em> or <em>amplifies</em> the original change, pushing the variable even further from where it started. Think of a microphone held too close to a speaker: the sound gets louder, is picked up again, gets louder still — until someone pulls the plug.</p><p>Because positive feedback runs away, it is rare in the body and used only for processes that must be finished quickly and then stopped. Each loop needs an <strong>end point</strong> — an outside event that breaks the cycle.</p><p><strong>Childbirth:</strong> the baby's head presses on the cervix; stretch receptors signal the brain; the pituitary releases <strong>oxytocin</strong>; oxytocin makes the uterus contract harder, pushing the head down further, which causes more oxytocin. The loop ends when the baby is born and the pressure stops. (Doctors give synthetic oxytocin to start or speed labor.) <strong>Blood clotting:</strong> injured vessel walls activate platelets, which release chemicals that attract and activate more platelets, quickly forming a plug. The loop stops when the wound is sealed. <strong>Breastfeeding:</strong> the baby's sucking stimulates <strong>prolactin</strong> (milk production) and oxytocin (milk release); more sucking means more milk. It ends when the baby stops nursing.</p><p>When positive feedback happens where it should not, it can be dangerous: in very high fever, rising temperature speeds up metabolism, which makes even more heat; in severe blood loss, a weak heart pumps less blood, weakening itself further.</p><p><strong>Common mistake:</strong> saying positive feedback is \"good\" and negative feedback is \"bad.\" Negative feedback keeps us stable; positive feedback must be tightly limited.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "positive-feedback-master",
         "badgeName": "Positive Feedback Master",
         "badgeIcon": "⬆️",
         "pairs": [
-          { "key": "pos", "left": "Positive feedback", "right": "Amplifies the stimulus" },
-          { "key": "amp", "left": "Amplification", "right": "Increases the stimulus" },
-          { "key": "child", "left": "Childbirth", "right": "Oxytocin + contractions" },
-          { "key": "clot", "left": "Blood clotting", "right": "Platelets attract platelets" },
-          { "key": "lact", "left": "Lactation", "right": "Prolactin + milk" },
-          { "key": "stop", "left": "Stop signal", "right": "External event ends loop" }
+          {
+            "key": "pos",
+            "left": "Positive feedback",
+            "right": "Amplifies the stimulus",
+            "why": "Positive feedback amplifies the original change."
+          },
+          {
+            "key": "amp",
+            "left": "Amplification",
+            "right": "Increases the stimulus",
+            "why": "Amplification means the response makes the stimulus stronger."
+          },
+          {
+            "key": "child",
+            "left": "Childbirth",
+            "right": "Oxytocin + contractions",
+            "why": "In childbirth, oxytocin causes stronger contractions, which cause more oxytocin."
+          },
+          {
+            "key": "clot",
+            "left": "Blood clotting",
+            "right": "Platelets attract platelets",
+            "why": "Activated platelets attract more platelets until a clot forms."
+          },
+          {
+            "key": "lact",
+            "left": "Lactation",
+            "right": "Prolactin + milk",
+            "why": "Nursing stimulates prolactin, and prolactin increases milk production."
+          },
+          {
+            "key": "stop",
+            "left": "Stop signal",
+            "right": "External event ends loop",
+            "why": "An outside event, like birth or sealing a wound, stops the loop."
+          }
         ]
       },
       "activity2": {
@@ -130,12 +507,90 @@
         "badgeName": "Pos Feedback Pro",
         "badgeIcon": "🔺",
         "scenarios": [
-          { "text": "Uterine contractions strengthen until baby is born.", "choices": [{ "label": "Positive feedback ✓", "correct": true }, { "label": "Negative feedback", "correct": false }] },
-          { "text": "Platelets release chemicals that attract more platelets.", "choices": [{ "label": "Positive feedback ✓", "correct": true }, { "label": "Negative feedback", "correct": false }] },
-          { "text": "Sweating to cool down.", "choices": [{ "label": "Negative feedback ✓", "correct": true }, { "label": "Positive feedback", "correct": false }] },
-          { "text": "Oxytocin release during labor.", "choices": [{ "label": "Positive feedback ✓", "correct": true }, { "label": "Negative feedback", "correct": false }] },
-          { "text": "Insulin lowers blood sugar.", "choices": [{ "label": "Negative feedback ✓", "correct": true }, { "label": "Positive feedback", "correct": false }] },
-          { "text": "Milk production increases with nursing.", "choices": [{ "label": "Positive feedback ✓", "correct": true }, { "label": "Negative feedback", "correct": false }] }
+          {
+            "text": "Uterine contractions strengthen until baby is born.",
+            "choices": [
+              {
+                "label": "Positive feedback",
+                "correct": true
+              },
+              {
+                "label": "Negative feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Contractions getting stronger until birth is positive feedback."
+          },
+          {
+            "text": "Platelets release chemicals that attract more platelets.",
+            "choices": [
+              {
+                "label": "Positive feedback",
+                "correct": true
+              },
+              {
+                "label": "Negative feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Platelets recruiting more platelets is positive feedback."
+          },
+          {
+            "text": "Sweating to cool down.",
+            "choices": [
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Positive feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Sweating reverses rising temperature — negative feedback."
+          },
+          {
+            "text": "Oxytocin release during labor.",
+            "choices": [
+              {
+                "label": "Positive feedback",
+                "correct": true
+              },
+              {
+                "label": "Negative feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Oxytocin increasing contractions during labor is positive feedback."
+          },
+          {
+            "text": "Insulin lowers blood sugar.",
+            "choices": [
+              {
+                "label": "Negative feedback",
+                "correct": true
+              },
+              {
+                "label": "Positive feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Insulin reversing high glucose is negative feedback."
+          },
+          {
+            "text": "Milk production increases with nursing.",
+            "choices": [
+              {
+                "label": "Positive feedback",
+                "correct": true
+              },
+              {
+                "label": "Negative feedback",
+                "correct": false
+              }
+            ],
+            "explanation": "Nursing increasing milk output is positive feedback."
+          }
         ]
       },
       "formative": {
@@ -144,9 +599,72 @@
         "badgeIcon": "🔐",
         "lives": 3,
         "questions": [
-          { "text": "In positive feedback, the response does what to the stimulus?", "choices": [{ "label": "Reverses it", "correct": false }, { "label": "Amplifies it", "correct": true }, { "label": "Ignores it", "correct": false }, { "label": "Halves it", "correct": false }] },
-          { "text": "Which of the following is a positive feedback loop?", "choices": [{ "label": "Sweating", "correct": false }, { "label": "Childbirth contractions", "correct": true }, { "label": "Blood glucose regulation", "correct": false }, { "label": "Thermoregulation", "correct": false }] },
-          { "text": "Why must positive feedback stop?", "choices": [{ "label": "It's too slow", "correct": false }, { "label": "It can cause runaway effects", "correct": true }, { "label": "It uses too much oxygen", "correct": false }, { "label": "It doesn't produce ATP", "correct": false }] }
+          {
+            "text": "In positive feedback, the response does what to the stimulus?",
+            "choices": [
+              {
+                "label": "Reverses it",
+                "correct": false
+              },
+              {
+                "label": "Amplifies it",
+                "correct": true
+              },
+              {
+                "label": "Ignores it",
+                "correct": false
+              },
+              {
+                "label": "Halves it",
+                "correct": false
+              }
+            ],
+            "explanation": "Positive feedback amplifies the stimulus."
+          },
+          {
+            "text": "Which of the following is a positive feedback loop?",
+            "choices": [
+              {
+                "label": "Sweating",
+                "correct": false
+              },
+              {
+                "label": "Childbirth contractions",
+                "correct": true
+              },
+              {
+                "label": "Blood glucose regulation",
+                "correct": false
+              },
+              {
+                "label": "Thermoregulation",
+                "correct": false
+              }
+            ],
+            "explanation": "Childbirth contractions build up by positive feedback; the others are negative feedback."
+          },
+          {
+            "text": "Why must positive feedback stop?",
+            "choices": [
+              {
+                "label": "It is too slow to help",
+                "correct": false
+              },
+              {
+                "label": "It can run out of control",
+                "correct": true
+              },
+              {
+                "label": "It uses too much oxygen",
+                "correct": false
+              },
+              {
+                "label": "It does not produce ATP",
+                "correct": false
+              }
+            ],
+            "explanation": "Positive feedback must stop or it causes runaway, harmful effects."
+          }
         ]
       },
       "takeaways": [
@@ -160,19 +678,49 @@
       "n": 4,
       "title": "Real-Life Homeostasis Examples",
       "competency": "STEM_BIO11/12-IVi-j-3",
-      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Apply homeostasis concepts to real-life scenarios.</li><li>Describe plant homeostasis mechanisms.</li><li>Describe animal homeostasis mechanisms.</li><li>Analyze what happens when homeostasis fails.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Thermoregulation</strong> — temperature balance.</li><li><strong>Osmoregulation</strong> — water/salt balance.</li><li><strong>Glucoregulation</strong> — glucose balance.</li><li><strong>Homeostatic failure</strong> — disease or death.</li></ul><h3>📚 Lesson Content</h3><h4>A. Animal Homeostasis</h4><ul><li><strong>Temperature:</strong> sweating, shivering, vasodilation, vasoconstriction</li><li><strong>Glucose:</strong> insulin, glucagon</li><li><strong>Water:</strong> ADH, kidneys</li><li><strong>pH:</strong> buffers, breathing rate</li></ul><h4>B. Plant Homeostasis</h4><ul><li><strong>Water:</strong> stomatal opening/closing via guard cells</li><li><strong>Temperature:</strong> transpiration cooling</li><li><strong>Nutrients:</strong> root uptake, vascular transport</li><li><strong>Turgor:</strong> vacuole regulation</li></ul><h4>C. When Homeostasis Fails</h4><table><thead><tr><th>Failure</th><th>Result</th></tr></thead><tbody><tr><td>Thermoregulation fails (high)</td><td>Heat stroke</td></tr><tr><td>Thermoregulation fails (low)</td><td>Hypothermia</td></tr><tr><td>Glucose regulation fails</td><td>Diabetes</td></tr><tr><td>Osmoregulation fails</td><td>Dehydration or edema</td></tr></tbody></table>",
+      "content": "<h3>🎯 Learning Objectives</h3><ul><li>Apply homeostasis concepts to real-life scenarios.</li><li>Describe plant homeostasis mechanisms.</li><li>Describe animal homeostasis mechanisms.</li><li>Analyze what happens when homeostasis fails.</li></ul><h3>🔑 Key Concepts</h3><ul><li><strong>Thermoregulation</strong> — temperature balance.</li><li><strong>Osmoregulation</strong> — water/salt balance.</li><li><strong>Glucoregulation</strong> — glucose balance.</li><li><strong>Homeostatic failure</strong> — disease or death.</li></ul><h3>📚 Lesson Content</h3><h4>A. Animal Homeostasis</h4><ul><li><strong>Temperature:</strong> sweating, shivering, vasodilation, vasoconstriction</li><li><strong>Glucose:</strong> insulin, glucagon</li><li><strong>Water:</strong> ADH, kidneys</li><li><strong>pH:</strong> buffers, breathing rate</li></ul><h4>B. Plant Homeostasis</h4><ul><li><strong>Water:</strong> stomatal opening/closing via guard cells</li><li><strong>Temperature:</strong> transpiration cooling</li><li><strong>Nutrients:</strong> root uptake, vascular transport</li><li><strong>Turgor:</strong> vacuole regulation</li></ul><h4>C. When Homeostasis Fails</h4><table><thead><tr><th>Failure</th><th>Result</th></tr></thead><tbody><tr><td>Thermoregulation fails (high)</td><td>Heat stroke</td></tr><tr><td>Thermoregulation fails (low)</td><td>Hypothermia</td></tr><tr><td>Glucose regulation fails</td><td>Diabetes</td></tr><tr><td>Osmoregulation fails</td><td>Dehydration or edema</td></tr></tbody></table><h3>💬 Let's Discuss</h3><p>Homeostasis is easiest to understand through situations you actually experience in the Philippines.</p><p><strong>A hot afternoon in PE class.</strong> Muscles release heat; the hypothalamus detects rising blood temperature and triggers <strong>sweating</strong> and <strong>vasodilation</strong> (skin looks flushed). Evaporating sweat carries heat away. On humid days sweat evaporates slowly, so cooling is weaker — that is why heat index matters. If water is not replaced, sweating stops and temperature climbs above 40 °C: <strong>heat stroke</strong>, a failure of thermoregulation and a medical emergency.</p><p><strong>A cold night in Baguio.</strong> Temperature falls; you <strong>shiver</strong> (muscle activity makes heat), and skin vessels <strong>constrict</strong> to keep warm blood near the core. If heat loss wins, body temperature drops below 35 °C — <strong>hypothermia</strong>.</p><p><strong>A big lunch.</strong> Blood sugar rises, insulin is released, and glucose is stored. In <strong>diabetes mellitus</strong>, the pancreas makes too little insulin (type 1) or cells ignore it (type 2), so glucose stays high and damages vessels, nerves, eyes and kidneys.</p><p><strong>A day without drinking water.</strong> Blood becomes more concentrated; ADH is released; kidneys save water, so urine becomes small in amount and dark yellow. You also feel thirsty — a behavioral response.</p><p><strong>Plants in summer.</strong> When water loss through leaves exceeds uptake by roots, cells lose turgor and the plant <strong>wilts</strong>. Guard cells close stomata to reduce water loss.</p><p><strong>Common mistake:</strong> thinking dehydration and heat stroke are the same. Dehydration can lead to heat stroke, but heat stroke is the failure of temperature control itself.</p>",
       "activity1": {
         "timeLimit": 90,
         "badgeId": "homeo-application-master",
         "badgeName": "Homeo Application Master",
         "badgeIcon": "🌟",
         "pairs": [
-          { "key": "thermo", "left": "Thermoregulation", "right": "Temperature balance" },
-          { "key": "osmo", "left": "Osmoregulation", "right": "Water/salt balance" },
-          { "key": "gluco", "left": "Glucoregulation", "right": "Glucose balance" },
-          { "key": "stroke", "left": "Heat stroke", "right": "Thermoregulation failure (high)" },
-          { "key": "hypo", "left": "Hypothermia", "right": "Thermoregulation failure (low)" },
-          { "key": "diab", "left": "Diabetes", "right": "Glucose regulation failure" }
+          {
+            "key": "thermo",
+            "left": "Thermoregulation",
+            "right": "Temperature balance",
+            "why": "Thermoregulation keeps body temperature in range."
+          },
+          {
+            "key": "osmo",
+            "left": "Osmoregulation",
+            "right": "Water/salt balance",
+            "why": "Osmoregulation balances water and salts."
+          },
+          {
+            "key": "gluco",
+            "left": "Glucoregulation",
+            "right": "Glucose balance",
+            "why": "Glucoregulation keeps blood glucose in range."
+          },
+          {
+            "key": "stroke",
+            "left": "Heat stroke",
+            "right": "Thermoregulation failure (high)",
+            "why": "Heat stroke is thermoregulation failing on the hot side."
+          },
+          {
+            "key": "hypo",
+            "left": "Hypothermia",
+            "right": "Thermoregulation failure (low)",
+            "why": "Hypothermia is body temperature falling too low."
+          },
+          {
+            "key": "diab",
+            "left": "Diabetes",
+            "right": "Glucose regulation failure",
+            "why": "Diabetes is a failure of blood glucose regulation."
+          }
         ]
       },
       "activity2": {
@@ -181,12 +729,90 @@
         "badgeName": "Homeo Real Pro",
         "badgeIcon": "🧠",
         "scenarios": [
-          { "text": "A person exercises in hot weather.", "choices": [{ "label": "Sweating, vasodilation ✓", "correct": true }, { "label": "Shivering", "correct": false }] },
-          { "text": "A person walks in the cold.", "choices": [{ "label": "Shivering, vasoconstriction ✓", "correct": true }, { "label": "Sweating", "correct": false }] },
-          { "text": "A plant wilts.", "choices": [{ "label": "Water loss exceeds uptake ✓", "correct": true }, { "label": "Photosynthesis stops", "correct": false }] },
-          { "text": "A person eats a large meal.", "choices": [{ "label": "Insulin released ✓", "correct": true }, { "label": "Glucagon released", "correct": false }] },
-          { "text": "A person hasn't drunk water all day.", "choices": [{ "label": "ADH released, urine concentrated ✓", "correct": true }, { "label": "Urine diluted", "correct": false }] },
-          { "text": "A marathon runner collapses with heat stroke.", "choices": [{ "label": "Thermoregulation failed ✓", "correct": true }, { "label": "Homeostasis normal", "correct": false }] }
+          {
+            "text": "A person exercises in hot weather.",
+            "choices": [
+              {
+                "label": "Sweating",
+                "correct": true
+              },
+              {
+                "label": "Shivering",
+                "correct": false
+              }
+            ],
+            "explanation": "In heat, the body sweats and widens skin blood vessels."
+          },
+          {
+            "text": "A person walks in the cold.",
+            "choices": [
+              {
+                "label": "Shivering",
+                "correct": true
+              },
+              {
+                "label": "Sweating",
+                "correct": false
+              }
+            ],
+            "explanation": "In cold, the body shivers and narrows skin blood vessels."
+          },
+          {
+            "text": "A plant wilts.",
+            "choices": [
+              {
+                "label": "Water loss exceeds uptake",
+                "correct": true
+              },
+              {
+                "label": "Photosynthesis stops",
+                "correct": false
+              }
+            ],
+            "explanation": "A plant wilts when it loses more water than it takes in."
+          },
+          {
+            "text": "A person eats a large meal.",
+            "choices": [
+              {
+                "label": "Insulin released",
+                "correct": true
+              },
+              {
+                "label": "Glucagon released",
+                "correct": false
+              }
+            ],
+            "explanation": "After a large meal, insulin is released."
+          },
+          {
+            "text": "A person hasn't drunk water all day.",
+            "choices": [
+              {
+                "label": "ADH released",
+                "correct": true
+              },
+              {
+                "label": "Urine diluted",
+                "correct": false
+              }
+            ],
+            "explanation": "Dehydration triggers ADH, which concentrates urine."
+          },
+          {
+            "text": "A marathon runner collapses with heat stroke.",
+            "choices": [
+              {
+                "label": "Thermoregulation failed",
+                "correct": true
+              },
+              {
+                "label": "Homeostasis normal",
+                "correct": false
+              }
+            ],
+            "explanation": "Collapse from heat stroke means thermoregulation failed."
+          }
         ]
       },
       "formative": {
@@ -195,9 +821,72 @@
         "badgeIcon": "🏅",
         "lives": 3,
         "questions": [
-          { "text": "Which is a plant homeostatic mechanism?", "choices": [{ "label": "Sweating", "correct": false }, { "label": "Stomatal opening/closing", "correct": true }, { "label": "Shivering", "correct": false }, { "label": "Insulin release", "correct": false }] },
-          { "text": "What happens when thermoregulation fails in hot weather?", "choices": [{ "label": "Heat stroke", "correct": true }, { "label": "Hypothermia", "correct": false }, { "label": "Diabetes", "correct": false }, { "label": "Dehydration only", "correct": false }] },
-          { "text": "Which hormone regulates water balance?", "choices": [{ "label": "Insulin", "correct": false }, { "label": "Glucagon", "correct": false }, { "label": "ADH", "correct": true }, { "label": "Thyroxine", "correct": false }] }
+          {
+            "text": "Which is a plant homeostatic mechanism?",
+            "choices": [
+              {
+                "label": "Sweating",
+                "correct": false
+              },
+              {
+                "label": "Stomatal closing",
+                "correct": true
+              },
+              {
+                "label": "Shivering",
+                "correct": false
+              },
+              {
+                "label": "Insulin release",
+                "correct": false
+              }
+            ],
+            "explanation": "Opening and closing stomata is a plant homeostatic mechanism."
+          },
+          {
+            "text": "What happens when thermoregulation fails in hot weather?",
+            "choices": [
+              {
+                "label": "Heat stroke",
+                "correct": true
+              },
+              {
+                "label": "Hypothermia",
+                "correct": false
+              },
+              {
+                "label": "Diabetes",
+                "correct": false
+              },
+              {
+                "label": "Dehydration only",
+                "correct": false
+              }
+            ],
+            "explanation": "Failure of thermoregulation in heat causes heat stroke."
+          },
+          {
+            "text": "Which hormone regulates water balance?",
+            "choices": [
+              {
+                "label": "Insulin",
+                "correct": false
+              },
+              {
+                "label": "Glucagon",
+                "correct": false
+              },
+              {
+                "label": "ADH",
+                "correct": true
+              },
+              {
+                "label": "Thyroxine",
+                "correct": false
+              }
+            ],
+            "explanation": "ADH regulates water balance through the kidneys."
+          }
         ]
       },
       "takeaways": [
