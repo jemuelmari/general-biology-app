@@ -56,7 +56,13 @@
           </select></div>
         <div><label class="form-label">Section (for Most/Least Learned)</label>
           <select id="tos-section" class="form-control"><option value="">All sections</option></select></div>
-        <button class="btn btn-primary" onclick="window.print()">🖨️ Print</button>
+        <div><label class="form-label">Paper (Word)</label>
+          <select id="tos-paper" class="form-control">
+            <option value="letter">Short bond (8.5 × 11)</option><option value="long">Long bond (8.5 × 13)</option><option value="a4">A4</option></select></div>
+        <label style="display:flex;gap:6px;align-items:center;font-size:0.85rem;margin-bottom:8px;"><input type="checkbox" id="tos-with-mll" checked /> Isama ang Most/Least Learned</label>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ Print / PDF</button>
+        <button class="btn btn-accent" id="tos-word">💾 Save as Word (.docx)</button>
+        <span id="tos-word-status" class="text-small"></span>
       </div>
     </div>
 
@@ -66,10 +72,11 @@
 
   <footer class="app-footer"><p>TOS Generator · <span class="version">v2.6.0</span></p></footer>
 
-  <script src="../config.js?v=2.4.2-4b8c4cb"></script>
-  <script src="../assets/js/app.js?v=2.4.2-4b8c4cb"></script>
-  <script src="../assets/js/store.js?v=2.4.2-4b8c4cb"></script>
-  <script src="../assets/js/teacher-auth.js?v=2.4.2-4b8c4cb"></script>
+  <script src="../config.js?v=2.6.0"></script>
+  <script src="../assets/js/app.js?v=2.6.0"></script>
+  <script src="../assets/js/store.js?v=2.6.0"></script>
+  <script src="../assets/js/teacher-auth.js?v=2.6.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script>
     (function () {
       'use strict';
@@ -79,6 +86,7 @@
       const esc = (v) => String(v === null || v === undefined ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       const V = '?v=' + encodeURIComponent(CONFIG.VERSION);
       const cache = {};
+      let TOS = null, MLL = null;   // last rendered data, used for the Word export
       const getJson = async (url) => (cache[url] = cache[url] || fetch(url + V).then((r) => r.json()));
 
       // "STEM_BIO11/12-Id-f-7, -8" -> ["...-7", "...-8"]
@@ -153,6 +161,21 @@
         const hots = tagged - lots;
         const lp = tagged ? Math.round(lots / tagged * 100) : 0;
         const ok = tagged === items.length && Math.abs(lp - 70) <= 2;
+        TOS = {
+          title: bank.title || test.toUpperCase(),
+          subjectName: subject === 'biol1' ? 'General Biology 1' : 'General Biology 2',
+          coverage: bank.coverage || '', items: items.length, minutes: Math.round((bank.timeLimit || 0) / 60),
+          lots, hots, lp, tagged,
+          rows: codes.map((c, idx) => {
+            const r = rows[c], d = ctx.days[c] || 0;
+            return {
+              no: idx + 1, code: c, desc: (ctx.info[c] || {}).desc || '', week: ctx.firstWeek[c] || '—',
+              days: d ? String(Math.round(d * 10) / 10) : '—', pct: totalDays ? Math.round(d / totalDays * 1000) / 10 + '%' : '—',
+              items: r.items.length, blooms: BLOOMS.map((b) => r.blooms[b] || ''), placement: ranges(r.items)
+            };
+          }),
+          total: { days: String(Math.round(tot.days * 10) / 10), items: tot.items, blooms: BLOOMS.map((b) => tot.blooms[b] || 0) }
+        };
         out.innerHTML = `
           <div class="print-only" style="text-align:center;margin-bottom:8px;">
             <div style="font-weight:700;">${esc(CONFIG.DEVELOPER.school)}</div>
@@ -213,12 +236,15 @@
         });
         const list = Object.keys(per).map((code) => ({ code, mps: per[code].n ? per[code].c / per[code].n * 100 : 0, n: per[code].n }))
           .sort((a, b) => b.mps - a.mps);
+        MLL = null;
         if (!list.length) {
           out.innerHTML = '<h3 style="margin-top:0;">🏅 Most &amp; Least Learned Competencies</h3><p class="text-muted">No Summative Test results with item data yet' + (section ? ' for this section' : '') + '.</p>';
           return;
         }
         const most = list.slice(0, Math.min(5, Math.ceil(list.length / 2)));
         const least = list.slice().reverse().filter((x) => most.indexOf(x) === -1).slice(0, 5);
+        const pack = (x) => ({ code: x.code, desc: (ctx.info[x.code] || {}).desc || '', mps: Math.round(x.mps * 10) / 10, n: x.n, week: ctx.firstWeek[x.code] || '' });
+        MLL = { takers, section, most: most.map(pack), least: least.map(pack) };
         const row = (x) => `<div class="mll-row"><strong>${esc(x.code)}</strong> — ${esc((ctx.info[x.code] || {}).desc || '')}
           <div class="text-small" style="margin-top:2px;">MPS <strong>${Math.round(x.mps * 10) / 10}%</strong> · ${x.n} responses${ctx.firstWeek[x.code] ? ' · taught in Week ' + ctx.firstWeek[x.code] : ''}</div></div>`;
         out.innerHTML = `
@@ -228,6 +254,115 @@
             <div class="mll-card"><h4 style="color:#1b5e20;">✅ 5 Most Learned</h4>${most.map(row).join('')}</div>
             <div class="mll-card"><h4 style="color:#b71c1c;">⚠️ 5 Least Learned</h4>${least.map(row).join('') || '<p class="text-muted">—</p>'}</div>
           </div>`;
+      }
+
+      // ---------- Word export (.docx via docx@8.5.0; .doc fallback) ----------
+      const PAPERS = { letter: { w: 12240, h: 15840, css: '11in 8.5in' }, long: { w: 12240, h: 18720, css: '13in 8.5in' }, a4: { w: 11906, h: 16838, css: '297mm 210mm' } };
+      const fileBase = () => {
+        const subj = document.getElementById('tos-subject').value.toUpperCase(), test = document.getElementById('tos-test').value.toUpperCase();
+        return 'TOS_' + subj + '_' + test;
+      };
+      function download(blob, name) {
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      }
+      function buildDocx(withMll, paper) {
+        const D = window.docx, FONT = 'Arial', SZ = 18;   // 9 pt body
+        const run = (t, x) => new D.TextRun(Object.assign({ text: t == null ? '' : String(t), font: FONT, size: SZ }, x || {}));
+        const para = (ch, x) => new D.Paragraph(Object.assign({ children: Array.isArray(ch) ? ch : [ch] }, x || {}));
+        const center = (t, x) => para(run(t, x), { alignment: D.AlignmentType.CENTER });
+        const B = { style: D.BorderStyle.SINGLE, size: 4, color: '607D8B' };
+        const borders = { top: B, bottom: B, left: B, right: B };
+        const cell = (content, o) => {
+          o = o || {};
+          const kids = (Array.isArray(content) ? content : [content]).map((c) => c instanceof D.Paragraph ? c : para(run(c, { bold: !!o.bold, size: o.size || SZ }), { alignment: o.left ? D.AlignmentType.LEFT : D.AlignmentType.CENTER }));
+          return new D.TableCell({ children: kids, borders, columnSpan: o.span, rowSpan: o.rows, verticalAlign: D.VerticalAlign.CENTER,
+            shading: o.fill ? { type: D.ShadingType.CLEAR, color: 'auto', fill: o.fill } : undefined,
+            width: o.w ? { size: o.w, type: D.WidthType.DXA } : undefined,
+            margins: { top: 40, bottom: 40, left: 60, right: 60 } });
+        };
+        const H = { bold: true, fill: 'ECEFF1', size: 16 };
+        const m = 720;
+        const usable = Math.max(paper.w, paper.h) - 2 * m;          // landscape width in twips
+        const pctW = [3, 37, 5, 6, 6, 6, 4, 4, 4, 4, 4, 4, 13];        // # · competency · week · days · % · items · R U Ap An E C · placement
+        const W = pctW.map((x) => Math.round(usable * x / 100));
+        const sum = (a, b) => W.slice(a, b + 1).reduce((t, x) => t + x, 0);
+        const grid = (rows) => new D.Table({ width: { size: usable, type: D.WidthType.DXA }, columnWidths: W, layout: D.TableLayoutType.FIXED, rows });
+        const short = ['R', 'U', 'Ap', 'An', 'E', 'C'];
+        const head1 = new D.TableRow({ tableHeader: true, children: [
+          cell('#', Object.assign({ rows: 2, w: W[0] }, H)), cell('Learning Competency', Object.assign({ rows: 2, w: W[1] }, H)),
+          cell('Week', Object.assign({ rows: 2, w: W[2] }, H)), cell('No. of Days', Object.assign({ rows: 2, w: W[3] }, H)),
+          cell('% of Time', Object.assign({ rows: 2, w: W[4] }, H)), cell('No. of Items', Object.assign({ rows: 2, w: W[5] }, H)),
+          cell('LOTS (70%)', Object.assign({ span: 2, w: sum(6, 7) }, H)), cell('HOTS (30%)', Object.assign({ span: 4, w: sum(8, 11) }, H)),
+          cell('Item Placement', Object.assign({ rows: 2, w: W[12] }, H))] });
+        const head2 = new D.TableRow({ tableHeader: true, children: short.map((x, k) => cell(x, Object.assign({ w: W[6 + k] }, H))) });
+        const body = TOS.rows.map((r) => new D.TableRow({ cantSplit: true, children: [
+          cell(r.no, { w: W[0] }), cell([para([run(r.code, { bold: true }), run(' — ' + r.desc)])], { left: true, w: W[1] }), cell(r.week, { w: W[2] }), cell(r.days, { w: W[3] }), cell(r.pct, { w: W[4] }),
+          cell(r.items, { bold: true, w: W[5] })].concat(r.blooms.map((b, k) => cell(b, { w: W[6 + k] }))).concat([cell(r.placement, { size: 16, w: W[12] })]) }));
+        const foot = new D.TableRow({ children: [cell('TOTAL', { span: 3, bold: true, fill: 'F5F7FA', w: sum(0, 2) }), cell(TOS.total.days, { bold: true, fill: 'F5F7FA', w: W[3] }),
+          cell('100%', { bold: true, fill: 'F5F7FA', w: W[4] }), cell(TOS.total.items, { bold: true, fill: 'F5F7FA', w: W[5] })]
+          .concat(TOS.total.blooms.map((b, k) => cell(b, { bold: true, fill: 'F5F7FA', w: W[6 + k] }))).concat([cell('', { fill: 'F5F7FA', w: W[12] })]) });
+        const dev = CONFIG.DEVELOPER || {};
+        const noB = { style: D.BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+        const sigCell = (label, name, pos) => new D.TableCell({ borders: { top: noB, bottom: noB, left: noB, right: noB }, children: [
+          para(run(label)), para(run('')), para(run(name, { bold: true })), para(run(pos))] });
+        const children = [
+          center('Republic of the Philippines', { size: 18 }), center('Department of Education', { bold: true, size: 20 }),
+          dev.division ? center(dev.division, { size: 18 }) : null, dev.school ? center(dev.school, { bold: true, size: 20 }) : null,
+          para(run(''), {}),
+          center('TABLE OF SPECIFICATIONS', { bold: true, size: 26 }),
+          center(TOS.title, { bold: true, size: 20 }),
+          center(`${TOS.subjectName} · ${TOS.coverage} · ${TOS.items} items · ${TOS.minutes} minutes · LOTS ${TOS.lots} (${TOS.lp}%) : HOTS ${TOS.hots} (${TOS.tagged ? 100 - TOS.lp : 0}%)`, { size: 18 }),
+          para(run(''), { spacing: { after: 60 } }),
+          grid([head1, head2].concat(body, [foot])),
+          para(run('R = Remembering · U = Understanding · Ap = Applying · An = Analyzing · E = Evaluating · C = Creating. Item numbers follow the Master copy in Print Exam.', { size: 15, italics: true }), { spacing: { before: 80 } })
+        ].filter(Boolean);
+        if (withMll && MLL) {
+          const MW = [4, 76, 10, 10].map((x) => Math.round(usable * x / 100));
+          const mllTable = (title, list, fill) => new D.Table({ width: { size: usable, type: D.WidthType.DXA }, columnWidths: MW, layout: D.TableLayoutType.FIXED, rows: [
+            new D.TableRow({ tableHeader: true, children: [cell('#', Object.assign({}, H, { fill, w: MW[0] })), cell(title, Object.assign({}, H, { fill, w: MW[1] })), cell('MPS', Object.assign({}, H, { fill, w: MW[2] })), cell('Week', Object.assign({}, H, { fill, w: MW[3] }))] })
+          ].concat(list.map((x, i) => new D.TableRow({ cantSplit: true, children: [cell(i + 1, { w: MW[0] }), cell([para([run(x.code, { bold: true }), run(' — ' + x.desc)])], { left: true, w: MW[1] }), cell(x.mps + '%', { w: MW[2] }), cell(x.week || '—', { w: MW[3] })] }))) });
+          children.push(para(run('MOST AND LEAST LEARNED COMPETENCIES (ST1 + ST2)', { bold: true, size: 22 }), { spacing: { before: 280, after: 60 } }));
+          children.push(para(run(`${MLL.takers} student(s)${MLL.section ? ' — ' + MLL.section : ''}. MPS = percentage of correct responses per competency.`, { size: 16 }), { spacing: { after: 80 } }));
+          children.push(mllTable('5 Most Learned Competencies', MLL.most, 'E8F5E9'));
+          children.push(para(run(''), { spacing: { after: 80 } }));
+          children.push(mllTable('5 Least Learned Competencies', MLL.least, 'FFEBEE'));
+        }
+        children.push(para(run(''), { spacing: { before: 360 } }));
+        children.push(new D.Table({ width: { size: usable, type: D.WidthType.DXA }, columnWidths: [1, 1, 1].map(() => Math.round(usable / 3)), borders: { top: noB, bottom: noB, left: noB, right: noB, insideHorizontal: noB, insideVertical: noB },
+          rows: [new D.TableRow({ children: [sigCell('Prepared by:', dev.name || '______________________', dev.position || 'Teacher'),
+            sigCell('Checked by:', '______________________', 'Subject Group Head'), sigCell('Approved by:', '______________________', 'School Head')] })] }));
+        const doc = new D.Document({
+          creator: dev.name || 'Teacher', title: 'TOS — ' + TOS.title,
+          styles: { default: { document: { run: { font: FONT, size: SZ } } } },
+          sections: [{ properties: { page: { size: { width: paper.w, height: paper.h, orientation: D.PageOrientation.LANDSCAPE }, margin: { top: m, right: m, bottom: m, left: m } } }, children }]
+        });
+        return D.Packer.toBlob(doc);
+      }
+      function buildDocFallback(withMll, paper) {
+        const css = `@page{size:${paper.css};margin:0.5in;} body{font-family:Arial;font-size:9pt;} table{border-collapse:collapse;width:100%;} th,td{border:1px solid #607d8b;padding:3px 5px;font-size:9pt;} th{background:#eceff1;} .print-only{display:block !important;} .text-muted,.alert{display:none;}`;
+        const html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><style>' + css + '</style></head><body>' +
+          document.getElementById('tos-out').innerHTML + (withMll ? document.getElementById('mll-out').innerHTML : '') + '</body></html>';
+        return new Blob(['﻿', html], { type: 'application/msword' });
+      }
+      async function saveWord() {
+        const st = document.getElementById('tos-word-status');
+        if (!TOS) { st.textContent = 'Hintayin munang lumabas ang TOS.'; return; }
+        const withMll = document.getElementById('tos-with-mll').checked;
+        const paper = PAPERS[document.getElementById('tos-paper').value] || PAPERS.letter;
+        st.textContent = '⏳ Ginagawa...';
+        try {
+          if (window.docx && window.docx.Document) {
+            download(await buildDocx(withMll, paper), fileBase() + '.docx');
+            st.textContent = '✅ Na-save ang .docx — buksan sa Word, i-edit, tapos i-print.';
+          } else {
+            download(buildDocFallback(withMll, paper), fileBase() + '.doc');
+            st.textContent = '✅ Na-save bilang .doc (hindi na-load ang Word library) — buksan sa Word at i-edit.';
+          }
+        } catch (e) {
+          download(buildDocFallback(withMll, paper), fileBase() + '.doc');
+          st.textContent = '⚠️ Ginamit ang .doc format: ' + e.message;
+        }
       }
 
       function fillSections() {
@@ -241,6 +376,7 @@
         fillSections();
         ['tos-subject', 'tos-test'].forEach((id) => document.getElementById(id).addEventListener('change', all));
         document.getElementById('tos-section').addEventListener('change', renderMLL);
+        document.getElementById('tos-word').addEventListener('click', saveWord);
         window.addEventListener('teacher-students-updated', () => { fillSections(); renderMLL(); });
         all();
       });
