@@ -1,6 +1,6 @@
-/* ============================================================
+\/* ============================================================
    profile.js — Student profile edit logic
-   Version: 2.1.0
+   Version: 2.1.1
    ============================================================ */
 
 (() => {
@@ -133,7 +133,11 @@
     Object.assign(user, updated);
 
     renderHeader();
-    showSuccess('✅ Profile updated successfully!');
+    if (APP.getSexValue(user.sex)) {
+      fSex.disabled = true;
+      const sb = form.querySelector('button[type="submit"]'); if (sb) sb.style.display = 'none';
+    }
+    showSuccess('✅ Saved! It will be sent to your teacher on the next sync (open your Dashboard).');
     APP.toast('Profile saved!', 'success', 2500);
   });
 
@@ -173,15 +177,23 @@
   // The class list in the Google Sheet is the official record: a student device can no longer
   // rename itself (any device can send data with any LRN). Corrections are made by the teacher.
   (function lockForm() {
-    form.querySelectorAll('input, select').forEach((el) => { el.disabled = true; });
+    // Sex is the one exception: while it is still blank, the student may fill it in once.
+    // (The backend also keeps a Sex that is already on the class list.)
+    const sexOpen = !APP.getSexValue(user.sex);
+    form.querySelectorAll('input, select').forEach((el) => { el.disabled = !(sexOpen && el === fSex); });
     const submit = form.querySelector('button[type="submit"]');
-    if (submit) submit.style.display = 'none';
+    if (submit) {
+      if (sexOpen) submit.textContent = '💾 Save Sex';
+      else submit.style.display = 'none';
+    }
     const reset = document.getElementById('btn-reset');
     if (reset) reset.style.display = 'none';
     const note = document.createElement('div');
     note.className = 'alert alert-info';
     note.style.marginBottom = '12px';
-    note.textContent = 'ℹ️ Your name, sex, grade and section come from your teacher\'s class list. If something is wrong, ask your teacher to correct it — the change will appear here after the next sync.';
+    note.textContent = sexOpen
+      ? 'ℹ️ Please select your Sex, then tap Save. Your name, grade and section come from your teacher\'s class list — if something is wrong, ask your teacher to correct it.'
+      : 'ℹ️ Your name, sex, grade and section come from your teacher\'s class list. If something is wrong, ask your teacher to correct it — the change will appear here after the next sync.';
     form.insertBefore(note, form.firstChild);
   })();
 
