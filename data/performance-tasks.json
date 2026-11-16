@@ -8,10 +8,474 @@
         "coverage": "Weeks 1–4",
         "maxScore": 100,
         "options": [
-          { "key": "A", "label": "3D Cell Model (recyclable materials) — individual" },
-          { "key": "B", "label": "Cell Membrane Model — individual" },
-          { "key": "C", "label": "Mitosis/Meiosis Stop-Motion Video — individual" },
-          { "key": "D", "label": "Transport Mechanisms Poster — individual" }
+          {
+            "key": "A",
+            "label": "3D Cell Model (recyclable materials) — individual",
+            "type": "Model",
+            "guide": "Build a 3D model of a plant OR animal cell from recyclable materials. Show and label at least 10 organelles, and attach an explanation card giving each organelle's function.",
+            "deliverables": [
+              "3D cell model (plant or animal)",
+              "Labels for at least 10 organelles",
+              "Explanation card: function of each organelle"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy of Organelles",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "10+ organelles, correctly shaped, sized and placed for the chosen cell type (e.g., cell wall/chloroplast only in plant cells)."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "8–9 organelles correct; minor placement errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "5–7 organelles or some wrong for the cell type."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Fewer than 5 or mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Craftsmanship & Materials",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Neat, sturdy and carefully built; uses recyclable/safe materials creatively."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Neat and sturdy with minor flaws; appropriate materials."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some parts loose or messy; materials partly suitable."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Fragile or unfinished; materials poorly chosen."
+                  }
+                ]
+              },
+              {
+                "name": "Labels & Explanation Card",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "All parts labeled correctly; explanation card clearly states each part's function."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Most parts labeled; explanation mostly clear."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several labels missing or unclear; explanation brief."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Few or no labels; no explanation."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Submitted on time; clearly the student's own work and design."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Submitted on time; mostly original."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or largely copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "B",
+            "label": "Cell Membrane Model — individual",
+            "type": "Model",
+            "guide": "Build a model of the fluid mosaic cell membrane. Show the phospholipid bilayer (heads and tails), integral and peripheral proteins, cholesterol, glycoproteins/glycolipids and a channel or carrier protein.",
+            "deliverables": [
+              "Membrane model",
+              "Labels of each component",
+              "Short explanation of why it is called \"fluid mosaic\""
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy of Membrane Parts",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All parts present and correct (hydrophilic heads out, hydrophobic tails in, proteins spanning or attached, cholesterol between tails)."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Most parts correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Some parts missing or misplaced."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Bilayer structure wrong or missing."
+                  }
+                ]
+              },
+              {
+                "name": "Craftsmanship & Materials",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Neat, sturdy and carefully built; uses recyclable/safe materials creatively."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Neat and sturdy with minor flaws; appropriate materials."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some parts loose or messy; materials partly suitable."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Fragile or unfinished; materials poorly chosen."
+                  }
+                ]
+              },
+              {
+                "name": "Labels & Explanation Card",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "All parts labeled correctly; explanation card clearly states each part's function."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Most parts labeled; explanation mostly clear."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several labels missing or unclear; explanation brief."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Few or no labels; no explanation."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Submitted on time; clearly the student's own work and design."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Submitted on time; mostly original."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or largely copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "C",
+            "label": "Mitosis/Meiosis Stop-Motion Video — individual",
+            "type": "Video",
+            "guide": "Make a 1–3 minute stop-motion video showing mitosis OR meiosis (clay, paper cutouts, drawings). Show every stage in order and name it in narration or captions.",
+            "deliverables": [
+              "Stop-motion video (1–3 minutes, MP4 or link)",
+              "Captions or narration for every stage",
+              "Short note: the key difference between mitosis and meiosis"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy of the Process",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Chromosome behavior correct at every stage (e.g., homologous pairs and crossing over in meiosis I; sister chromatids separate in anaphase/anaphase II)."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors in chromosome behavior."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Process mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Accuracy of Stages / Sequence",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Every stage shown in the correct order with the key event of each stage visible."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "All stages shown; one minor sequence or detail error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some stages missing or out of order."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Most stages missing or wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Narration / Captions",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear narration or captions name and explain each stage."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Narration/captions name each stage with brief explanation."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Narration/captions incomplete or hard to follow."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "No narration or captions."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "On time; original frames made by the student."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "On time; mostly original."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "D",
+            "label": "Transport Mechanisms Poster — individual",
+            "type": "Poster",
+            "guide": "Make a poster comparing passive transport (simple diffusion, facilitated diffusion, osmosis) and active transport (pumps, endocytosis, exocytosis). Use a diagram for each.",
+            "deliverables": [
+              "Poster (1/2 illustration board or A3 / digital)",
+              "Diagram of each transport mechanism",
+              "Comparison: energy use, direction of movement, proteins involved"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Every mechanism correct: concentration gradient direction, need for ATP, and the protein involved."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors or a mechanism missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Visual Design",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear title, logical layout, readable text, effective use of color and visuals."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Organized and readable with minor layout issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Somewhat cluttered; some parts hard to read."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Disorganized; hard to follow."
+                  }
+                ]
+              },
+              {
+                "name": "Use of Scientific Terms & Labels",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Correct terms and labels throughout; key terms explained."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Mostly correct terms; few minor errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several wrong or missing terms."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Terms mostly wrong or absent."
+                  }
+                ]
+              },
+              {
+                "name": "Sources, Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Cites at least 2 reliable sources; on time; original work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Cites 1 source; on time; mostly original."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "No sources but original; or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or largely copied."
+                  }
+                ]
+              }
+            ]
+          }
         ]
       },
       {
@@ -20,10 +484,474 @@
         "coverage": "Weeks 5–8",
         "maxScore": 100,
         "options": [
-          { "key": "A", "label": "Enzyme Activity Lab Report (catalase/yeast) — individual" },
-          { "key": "B", "label": "Photosynthesis Pigment Extraction — individual" },
-          { "key": "C", "label": "Biomolecule Concept Map — individual" },
-          { "key": "D", "label": "Redox Reaction Demonstration — individual" }
+          {
+            "key": "A",
+            "label": "Enzyme Activity Lab Report (catalase/yeast) — individual",
+            "type": "Report",
+            "guide": "Do an experiment on catalase activity using yeast (or potato/liver) and hydrogen peroxide. Test ONE factor (temperature, pH, or amount of enzyme) and measure the foam height or bubbles. Write a lab report.",
+            "deliverables": [
+              "Lab report: title, objective, hypothesis, materials, procedure, results (table + graph), discussion, conclusion",
+              "Photos of the setup",
+              "Safety: use 3% hydrogen peroxide only; wear gloves"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Concepts (Enzymes)",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Correctly explains how the factor affects the active site/enzyme activity (optimum, denaturation) using the data."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Explains the effect with minor gaps."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Explanation partly wrong or vague."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "No connection to enzyme concepts."
+                  }
+                ]
+              },
+              {
+                "name": "Procedure & Data",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Steps clear enough to repeat; data recorded in a complete, labeled table/graph."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Steps mostly clear; data table complete with small gaps."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Steps unclear; data incomplete or poorly labeled."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Little or no procedure or data."
+                  }
+                ]
+              },
+              {
+                "name": "Analysis & Conclusion",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Explains results using biology concepts; answers the question; notes sources of error."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Explains results with some concepts; conclusion answers the question."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Conclusion only restates data; little explanation."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "No analysis or conclusion."
+                  }
+                ]
+              },
+              {
+                "name": "Format, Safety & Timeliness",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Complete parts (title, objective, materials, procedure, results, conclusion); safety followed; on time."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "One part missing or minor format errors; on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Several parts missing or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very incomplete or very late."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "B",
+            "label": "Photosynthesis Pigment Extraction — individual",
+            "type": "Report",
+            "guide": "Extract leaf pigments (e.g., malunggay or spinach) and separate them using paper chromatography with alcohol or acetone. Identify the pigment bands and explain their role in photosynthesis.",
+            "deliverables": [
+              "Lab report with a photo of the chromatogram",
+              "Labeled bands (chlorophyll a, chlorophyll b, carotenes, xanthophylls)",
+              "Rf values computed for each band"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Concepts (Pigments)",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Bands identified correctly; Rf values correct; explains why pigments separate and how each absorbs light for photosynthesis."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Bands and Rf mostly correct; explanation brief."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Some bands wrong or Rf missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "No identification or explanation."
+                  }
+                ]
+              },
+              {
+                "name": "Procedure & Data",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Steps clear enough to repeat; data recorded in a complete, labeled table/graph."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Steps mostly clear; data table complete with small gaps."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Steps unclear; data incomplete or poorly labeled."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Little or no procedure or data."
+                  }
+                ]
+              },
+              {
+                "name": "Analysis & Conclusion",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Explains results using biology concepts; answers the question; notes sources of error."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Explains results with some concepts; conclusion answers the question."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Conclusion only restates data; little explanation."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "No analysis or conclusion."
+                  }
+                ]
+              },
+              {
+                "name": "Format, Safety & Timeliness",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Complete parts (title, objective, materials, procedure, results, conclusion); safety followed; on time."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "One part missing or minor format errors; on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Several parts missing or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very incomplete or very late."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "C",
+            "label": "Biomolecule Concept Map — individual",
+            "type": "Diagram / Map",
+            "guide": "Make a concept map of the four biomolecules (carbohydrates, lipids, proteins, nucleic acids). For each, show its monomer, bond type, examples, and functions in the body.",
+            "deliverables": [
+              "Concept map (paper or digital)",
+              "For each biomolecule: monomer, bond, 2+ examples, 2+ functions",
+              "Linking words on every arrow"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All monomers, bonds (glycosidic, ester, peptide, phosphodiester), examples and functions correct."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; 1–2 minor errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors or a biomolecule incomplete."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong or incomplete."
+                  }
+                ]
+              },
+              {
+                "name": "Structure & Links",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear hierarchy; every link has a correct linking word/arrow showing the relationship."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear structure; most links labeled correctly."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some links missing or unlabeled; structure unclear in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Few links; relationships not shown."
+                  }
+                ]
+              },
+              {
+                "name": "Neatness & Readability",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Neat, readable, well-spaced; color or symbols used meaningfully."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Neat and readable with minor issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Crowded or hard to read in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Messy and hard to read."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "On time; own work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "On time; mostly own work."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "D",
+            "label": "Redox Reaction Demonstration — individual",
+            "type": "Report",
+            "guide": "Demonstrate a redox reaction (e.g., iodine-vitamin C decolorization or steel wool rusting) and relate it to oxidation and reduction in photosynthesis and respiration. Record it as a short demo report or video.",
+            "deliverables": [
+              "Demonstration (video 1–3 min or photos)",
+              "Report: what was oxidized, what was reduced, the electron carrier involved",
+              "Link to NAD⁺/NADH or NADP⁺/NADPH in cells"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Concepts (Redox)",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Correctly identifies oxidized and reduced substances and explains electron transfer; links clearly to NADH/NADPH in cells."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; link to cells brief."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Partly wrong or link missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "No correct explanation."
+                  }
+                ]
+              },
+              {
+                "name": "Procedure & Data",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Steps clear enough to repeat; data recorded in a complete, labeled table/graph."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Steps mostly clear; data table complete with small gaps."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Steps unclear; data incomplete or poorly labeled."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Little or no procedure or data."
+                  }
+                ]
+              },
+              {
+                "name": "Analysis & Conclusion",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Explains results using biology concepts; answers the question; notes sources of error."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Explains results with some concepts; conclusion answers the question."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Conclusion only restates data; little explanation."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "No analysis or conclusion."
+                  }
+                ]
+              },
+              {
+                "name": "Format, Safety & Timeliness",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Complete parts (title, objective, materials, procedure, results, conclusion); safety followed; on time."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "One part missing or minor format errors; on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Several parts missing or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very incomplete or very late."
+                  }
+                ]
+              }
+            ]
+          }
         ]
       },
       {
@@ -32,10 +960,474 @@
         "coverage": "Weeks 9–10",
         "maxScore": 100,
         "options": [
-          { "key": "A", "label": "Fermentation vs Aerobic Respiration Poster — individual" },
-          { "key": "B", "label": "ATP Accounting Worksheet — individual" },
-          { "key": "C", "label": "Cellular Respiration Flowchart — individual" },
-          { "key": "D", "label": "Anaerobic Pathways Diagram — individual" }
+          {
+            "key": "A",
+            "label": "Fermentation vs Aerobic Respiration Poster — individual",
+            "type": "Poster",
+            "guide": "Make a poster comparing aerobic respiration and fermentation (alcoholic and lactic acid). Include the equations, where each occurs, oxygen need, products, and ATP yield.",
+            "deliverables": [
+              "Poster with a side-by-side comparison",
+              "Balanced equations",
+              "One real-life example of each (e.g., bread, muscle fatigue)"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All points correct: location, O₂ need, products, ATP (about 36–38 vs 2), equations balanced."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Visual Design",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear title, logical layout, readable text, effective use of color and visuals."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Organized and readable with minor layout issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Somewhat cluttered; some parts hard to read."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Disorganized; hard to follow."
+                  }
+                ]
+              },
+              {
+                "name": "Use of Scientific Terms & Labels",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Correct terms and labels throughout; key terms explained."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Mostly correct terms; few minor errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several wrong or missing terms."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Terms mostly wrong or absent."
+                  }
+                ]
+              },
+              {
+                "name": "Sources, Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Cites at least 2 reliable sources; on time; original work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Cites 1 source; on time; mostly original."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "No sources but original; or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or largely copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "B",
+            "label": "ATP Accounting Worksheet — individual",
+            "type": "Worksheet",
+            "guide": "Answer an ATP accounting worksheet: count the ATP, NADH and FADH₂ made in glycolysis, pyruvate oxidation, the Krebs cycle and the electron transport chain for one glucose, then total the ATP.",
+            "deliverables": [
+              "Completed worksheet for one glucose molecule",
+              "Table per stage: ATP, NADH, FADH₂",
+              "Total ATP with explanation"
+            ],
+            "rubric": [
+              {
+                "name": "Accuracy of Computations",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All counts per stage and the total correct (using the conversion your teacher gave, e.g., 1 NADH ≈ 2.5–3 ATP)."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "1–2 small errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Solutions Shown",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Every step of each computation shown and labeled."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Most steps shown."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Only some steps shown."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Answers only, no steps."
+                  }
+                ]
+              },
+              {
+                "name": "Explanation of Results",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Explains in own words where each ATP/NADH/FADH₂ comes from and why totals differ."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Explains most results correctly."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Explanation brief or partly wrong."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "No explanation."
+                  }
+                ]
+              },
+              {
+                "name": "Neatness & Timeliness",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Neat, organized, on time."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Organized, on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Messy or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very messy or very late."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "C",
+            "label": "Cellular Respiration Flowchart — individual",
+            "type": "Diagram / Map",
+            "guide": "Make a flowchart of cellular respiration from glucose to ATP: glycolysis → pyruvate oxidation → Krebs cycle → electron transport chain.",
+            "deliverables": [
+              "Flowchart (paper or digital)",
+              "For each stage: location, inputs, outputs",
+              "Arrows showing where CO₂, NADH, FADH₂, ATP and H₂O come from"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Every stage in correct order with correct location, inputs and outputs."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors or a stage missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Structure & Links",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear hierarchy; every link has a correct linking word/arrow showing the relationship."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear structure; most links labeled correctly."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some links missing or unlabeled; structure unclear in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Few links; relationships not shown."
+                  }
+                ]
+              },
+              {
+                "name": "Neatness & Readability",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Neat, readable, well-spaced; color or symbols used meaningfully."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Neat and readable with minor issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Crowded or hard to read in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Messy and hard to read."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "On time; own work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "On time; mostly own work."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "D",
+            "label": "Anaerobic Pathways Diagram — individual",
+            "type": "Diagram / Map",
+            "guide": "Draw a labeled diagram of anaerobic pathways: glycolysis followed by alcoholic fermentation and lactic acid fermentation. Show how NAD⁺ is regenerated.",
+            "deliverables": [
+              "Labeled diagram",
+              "Both pathways with products",
+              "Short explanation: why NAD⁺ regeneration lets glycolysis continue"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Both pathways correct (pyruvate → ethanol + CO₂; pyruvate → lactate) with NADH → NAD⁺ shown."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors or a pathway missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Structure & Links",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear hierarchy; every link has a correct linking word/arrow showing the relationship."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear structure; most links labeled correctly."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some links missing or unlabeled; structure unclear in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Few links; relationships not shown."
+                  }
+                ]
+              },
+              {
+                "name": "Neatness & Readability",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Neat, readable, well-spaced; color or symbols used meaningfully."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Neat and readable with minor issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Crowded or hard to read in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Messy and hard to read."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "On time; own work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "On time; mostly own work."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ]
@@ -49,10 +1441,474 @@
         "coverage": "Weeks 1–4",
         "maxScore": 100,
         "options": [
-          { "key": "A", "label": "Homeostasis Role-Play/Dramatization — individual" },
-          { "key": "B", "label": "Organ System Comparative Chart — individual" },
-          { "key": "C", "label": "Pedigree Analysis (family trait) — individual" },
-          { "key": "D", "label": "Punnett Square Portfolio — individual" }
+          {
+            "key": "A",
+            "label": "Homeostasis Role-Play/Dramatization — individual",
+            "type": "Role-play",
+            "guide": "In a 3–5 minute role-play, act out how the body keeps homeostasis through a feedback loop (e.g., body temperature, blood sugar). Show the stimulus, receptor, control center, effector and response.",
+            "deliverables": [
+              "Written script (submit before the performance)",
+              "Role-play 3–5 minutes (live or video)",
+              "Clear negative (or positive) feedback loop"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All parts of the feedback loop correct and in order; correctly shows negative vs positive feedback."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one part unclear."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several parts missing or wrong."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Feedback loop not shown."
+                  }
+                ]
+              },
+              {
+                "name": "Script & Roles",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Written script with clear roles; each role matches a body part or process."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Script complete; roles mostly clear."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Script incomplete or roles unclear."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "No script."
+                  }
+                ]
+              },
+              {
+                "name": "Delivery & Creativity",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear voice, confident, creative props or actions that help explain the concept; 3–5 minutes."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear and mostly confident; some creativity; time met."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Hard to hear or follow; little creativity; too short/long."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Not delivered or very hard to follow."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Participation",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Ready on schedule; prepared."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Ready on schedule; mostly prepared."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late or underprepared."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Did not perform."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "B",
+            "label": "Organ System Comparative Chart — individual",
+            "type": "Chart",
+            "guide": "Make a chart comparing one organ system (digestive, circulatory, respiratory, excretory, or nervous) across at least 4 animal groups (e.g., cnidarian, earthworm, fish, frog, human).",
+            "deliverables": [
+              "Comparison chart",
+              "At least 4 organisms × 4 comparison points (structures, how it works, adaptation)",
+              "Short paragraph: the trend you see from simple to complex"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All entries correct; adaptations explained for each group."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; 1–2 errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Completeness of Comparison",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "All required organisms/systems and all comparison points filled in."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "One or two cells missing."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several cells missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Mostly empty."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Readability",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear table with headings; easy to compare across rows/columns."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear table with minor issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Hard to compare; headings unclear."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Disorganized."
+                  }
+                ]
+              },
+              {
+                "name": "Sources, Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Cites at least 2 reliable sources; on time; own work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Cites 1 source; on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "No sources or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "C",
+            "label": "Pedigree Analysis (family trait) — individual",
+            "type": "Chart",
+            "guide": "Build a pedigree of ONE visible trait in your family (e.g., dimples, hairline, earlobes) for at least 3 generations. Use the standard symbols and infer the genotypes and the inheritance pattern.",
+            "deliverables": [
+              "Pedigree chart (3+ generations) with a legend",
+              "Genotypes for each member where possible",
+              "Explanation: dominant or recessive, autosomal or sex-linked, and why"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Standard symbols used correctly; genotypes and inheritance pattern correctly inferred with reasons."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors in symbols or genotypes."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Completeness of Comparison",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "All required organisms/systems and all comparison points filled in."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "One or two cells missing."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several cells missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Mostly empty."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Readability",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear table with headings; easy to compare across rows/columns."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear table with minor issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Hard to compare; headings unclear."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Disorganized."
+                  }
+                ]
+              },
+              {
+                "name": "Sources, Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Cites at least 2 reliable sources; on time; own work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Cites 1 source; on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "No sources or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "D",
+            "label": "Punnett Square Portfolio — individual",
+            "type": "Portfolio",
+            "guide": "Compile a portfolio of Punnett squares: monohybrid, dihybrid, and at least one non-Mendelian cross (incomplete dominance, codominance, multiple alleles or sex-linked).",
+            "deliverables": [
+              "Portfolio (at least 5 crosses)",
+              "Each cross: parents' genotypes, Punnett square, genotype and phenotype ratios",
+              "Short explanation for each"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All squares, gametes and ratios correct (e.g., 3:1, 9:3:3:1, 1:2:1)."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "1–2 small errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Completeness of Crosses",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "At least 5 crosses, including monohybrid, dihybrid, and one non-Mendelian (incomplete/codominance or sex-linked)."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "4 crosses including one dihybrid."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "2–3 crosses, monohybrid only."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "1 cross or none."
+                  }
+                ]
+              },
+              {
+                "name": "Explanation of Ratios",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Each cross states genotype and phenotype ratios and explains them in words."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Ratios given with brief explanations."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Ratios given without explanation."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Ratios missing or wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Timeliness",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Neat, compiled in order with cover and table of contents; on time."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Neat and in order; on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Unordered or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very messy or very late."
+                  }
+                ]
+              }
+            ]
+          }
         ]
       },
       {
@@ -61,10 +1917,475 @@
         "coverage": "Weeks 5–8",
         "maxScore": 100,
         "options": [
-          { "key": "A", "label": "DNA Model (molecular structure) — individual" },
-          { "key": "B", "label": "Protein Synthesis Flowchart — individual" },
-          { "key": "C", "label": "GMO Research Paper/Case Study — individual" },
-          { "key": "D", "label": "Recombinant DNA Poster — individual" }
+          {
+            "key": "A",
+            "label": "DNA Model (molecular structure) — individual",
+            "type": "Model",
+            "guide": "Build a 3D DNA double helix model. Show the sugar-phosphate backbone, complementary base pairs (A–T, G–C) with hydrogen bonds, and antiparallel strands.",
+            "deliverables": [
+              "DNA model (at least 10 base pairs)",
+              "Legend/color key for A, T, G, C, sugar and phosphate",
+              "Explanation card on base pairing and antiparallel strands"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Correct base pairing, twist, antiparallel strands (5′→3′), and backbone structure."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors (e.g., wrong pairing)."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Craftsmanship & Materials",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Neat, sturdy and carefully built; uses recyclable/safe materials creatively."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Neat and sturdy with minor flaws; appropriate materials."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some parts loose or messy; materials partly suitable."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Fragile or unfinished; materials poorly chosen."
+                  }
+                ]
+              },
+              {
+                "name": "Labels & Explanation Card",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "All parts labeled correctly; explanation card clearly states each part's function."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Most parts labeled; explanation mostly clear."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several labels missing or unclear; explanation brief."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Few or no labels; no explanation."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Submitted on time; clearly the student's own work and design."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Submitted on time; mostly original."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or largely copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "B",
+            "label": "Protein Synthesis Flowchart — individual",
+            "type": "Diagram / Map",
+            "guide": "Make a flowchart of protein synthesis from DNA to protein: transcription (in the nucleus) and translation (at the ribosome). Include a sample DNA sequence translated into amino acids using the codon table.",
+            "deliverables": [
+              "Flowchart",
+              "Sample: DNA → mRNA → amino acid sequence (at least 4 codons)",
+              "Roles of mRNA, tRNA, ribosome, start and stop codons"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All steps, molecules and the sample transcription/translation correct."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Structure & Links",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear hierarchy; every link has a correct linking word/arrow showing the relationship."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear structure; most links labeled correctly."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some links missing or unlabeled; structure unclear in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Few links; relationships not shown."
+                  }
+                ]
+              },
+              {
+                "name": "Neatness & Readability",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Neat, readable, well-spaced; color or symbols used meaningfully."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Neat and readable with minor issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Crowded or hard to read in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Messy and hard to read."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "On time; own work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "On time; mostly own work."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "C",
+            "label": "GMO Research Paper/Case Study — individual",
+            "type": "Research Paper",
+            "guide": "Write a 500–800 word research paper or case study about ONE genetically modified organism (e.g., Golden Rice, Bt corn, Bt eggplant). Explain how it was made, its benefits, risks, and your evidence-based position.",
+            "deliverables": [
+              "Paper (500–800 words)",
+              "How the GMO was made (gene, source organism, method)",
+              "Benefits, risks, and your position with evidence",
+              "At least 3 references"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Content",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Correctly explains the gene transfer process and gives balanced, evidence-based benefits and risks."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one side less developed."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Process vague or one-sided."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Inaccurate or missing."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Writing",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear introduction, body and conclusion; correct grammar; 500–800 words."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Well organized; few grammar errors; length met."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Weak structure or many errors; length short."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Disorganized; very short."
+                  }
+                ]
+              },
+              {
+                "name": "Use of Evidence & Sources",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Uses at least 3 reliable sources, cited properly; evidence supports each point."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "2 reliable sources cited; evidence mostly relevant."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "1 source or citations incomplete."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "No sources."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "On time; written in own words (no copy-paste)."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "On time; mostly own words."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "D",
+            "label": "Recombinant DNA Poster — individual",
+            "type": "Poster",
+            "guide": "Make a poster showing the steps of recombinant DNA technology (e.g., making human insulin in bacteria): cut with restriction enzymes, insert into a plasmid with ligase, transform the bacteria, select and express.",
+            "deliverables": [
+              "Poster with a step-by-step diagram",
+              "Names and roles of the tools (restriction enzyme, ligase, plasmid vector, host)",
+              "One real application"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Every step and tool correct and in order."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors or a step missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Visual Design",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear title, logical layout, readable text, effective use of color and visuals."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Organized and readable with minor layout issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Somewhat cluttered; some parts hard to read."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Disorganized; hard to follow."
+                  }
+                ]
+              },
+              {
+                "name": "Use of Scientific Terms & Labels",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Correct terms and labels throughout; key terms explained."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Mostly correct terms; few minor errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several wrong or missing terms."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Terms mostly wrong or absent."
+                  }
+                ]
+              },
+              {
+                "name": "Sources, Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Cites at least 2 reliable sources; on time; original work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Cites 1 source; on time; mostly original."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "No sources but original; or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or largely copied."
+                  }
+                ]
+              }
+            ]
+          }
         ]
       },
       {
@@ -73,12 +2394,477 @@
         "coverage": "Weeks 9–10",
         "maxScore": 100,
         "options": [
-          { "key": "A", "label": "Phylogenetic Tree/Cladogram Construction — individual" },
-          { "key": "B", "label": "Fossil Evidence Analysis — individual" },
-          { "key": "C", "label": "Descent with Modification Diagram — individual" },
-          { "key": "D", "label": "3-Domain vs 5-Kingdom Comparison — individual" }
+          {
+            "key": "A",
+            "label": "Phylogenetic Tree/Cladogram Construction — individual",
+            "type": "Diagram / Map",
+            "guide": "Construct a cladogram of at least 6 organisms using shared derived traits (e.g., vertebrae, jaws, lungs, amniotic egg, hair). Mark the traits on the branches.",
+            "deliverables": [
+              "Cladogram",
+              "Trait table (organism × trait, ✓/✗)",
+              "Short explanation: which two organisms are most closely related and why"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Branching correct and matches the trait table; traits placed at the right nodes."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one misplaced trait or branch."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Structure & Links",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear hierarchy; every link has a correct linking word/arrow showing the relationship."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear structure; most links labeled correctly."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Some links missing or unlabeled; structure unclear in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Few links; relationships not shown."
+                  }
+                ]
+              },
+              {
+                "name": "Neatness & Readability",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Neat, readable, well-spaced; color or symbols used meaningfully."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Neat and readable with minor issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Crowded or hard to read in parts."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Messy and hard to read."
+                  }
+                ]
+              },
+              {
+                "name": "Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "On time; own work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "On time; mostly own work."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Late by 1–2 days or partly copied."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "B",
+            "label": "Fossil Evidence Analysis — individual",
+            "type": "Report",
+            "guide": "Analyze fossil evidence for evolution (e.g., the horse or whale sequence). Describe changes over time and explain how fossils, the age of rock layers, and transitional forms support evolution.",
+            "deliverables": [
+              "Analysis report with pictures/diagrams of the fossil sequence",
+              "Table: time period, key changes",
+              "Conclusion: what the fossils show about evolution"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Concepts",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Correctly describes the changes, explains relative/absolute dating and transitional forms, and links them to natural selection."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; explanation brief."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Partly wrong or vague."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "No correct explanation."
+                  }
+                ]
+              },
+              {
+                "name": "Procedure & Data",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Steps clear enough to repeat; data recorded in a complete, labeled table/graph."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Steps mostly clear; data table complete with small gaps."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Steps unclear; data incomplete or poorly labeled."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Little or no procedure or data."
+                  }
+                ]
+              },
+              {
+                "name": "Analysis & Conclusion",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Explains results using biology concepts; answers the question; notes sources of error."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Explains results with some concepts; conclusion answers the question."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Conclusion only restates data; little explanation."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "No analysis or conclusion."
+                  }
+                ]
+              },
+              {
+                "name": "Format, Safety & Timeliness",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Complete parts (title, objective, materials, procedure, results, conclusion); safety followed; on time."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "One part missing or minor format errors; on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "Several parts missing or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very incomplete or very late."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "C",
+            "label": "Descent with Modification Diagram — individual",
+            "type": "Poster",
+            "guide": "Make a diagram showing descent with modification: how a population changes over generations through variation, overproduction, selection and inheritance (e.g., Darwin's finches or peppered moths).",
+            "deliverables": [
+              "Diagram (at least 4 panels/generations)",
+              "Labels for variation, selection pressure, survival and reproduction, inheritance",
+              "Short caption for each panel"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "Correctly shows all parts of natural selection and how the trait frequency changes over generations."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; one minor error."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors or a part missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Visual Design",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear title, logical layout, readable text, effective use of color and visuals."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Organized and readable with minor layout issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Somewhat cluttered; some parts hard to read."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Disorganized; hard to follow."
+                  }
+                ]
+              },
+              {
+                "name": "Use of Scientific Terms & Labels",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Correct terms and labels throughout; key terms explained."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Mostly correct terms; few minor errors."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several wrong or missing terms."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Terms mostly wrong or absent."
+                  }
+                ]
+              },
+              {
+                "name": "Sources, Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Cites at least 2 reliable sources; on time; original work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Cites 1 source; on time; mostly original."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "No sources but original; or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or largely copied."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "key": "D",
+            "label": "3-Domain vs 5-Kingdom Comparison — individual",
+            "type": "Chart",
+            "guide": "Compare Whittaker's 5-Kingdom system with Woese's 3-Domain system. Show where organisms are placed in each and explain why the 3-Domain system was proposed.",
+            "deliverables": [
+              "Comparison chart or table",
+              "Example organisms placed in both systems",
+              "Explanation: rRNA evidence and the split of prokaryotes into Bacteria and Archaea"
+            ],
+            "rubric": [
+              {
+                "name": "Scientific Accuracy",
+                "points": 50,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 50,
+                    "desc": "All groups and placements correct; reason (rRNA sequences) explained clearly."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 40,
+                    "desc": "Mostly correct; reason brief."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 30,
+                    "desc": "Several errors."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 20,
+                    "desc": "Mostly wrong."
+                  }
+                ]
+              },
+              {
+                "name": "Completeness of Comparison",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "All required organisms/systems and all comparison points filled in."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "One or two cells missing."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Several cells missing."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Mostly empty."
+                  }
+                ]
+              },
+              {
+                "name": "Organization & Readability",
+                "points": 20,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 20,
+                    "desc": "Clear table with headings; easy to compare across rows/columns."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 16,
+                    "desc": "Clear table with minor issues."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 12,
+                    "desc": "Hard to compare; headings unclear."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 8,
+                    "desc": "Disorganized."
+                  }
+                ]
+              },
+              {
+                "name": "Sources, Timeliness & Originality",
+                "points": 10,
+                "levels": [
+                  {
+                    "label": "Excellent",
+                    "points": 10,
+                    "desc": "Cites at least 2 reliable sources; on time; own work."
+                  },
+                  {
+                    "label": "Proficient",
+                    "points": 8,
+                    "desc": "Cites 1 source; on time."
+                  },
+                  {
+                    "label": "Developing",
+                    "points": 6,
+                    "desc": "No sources or late by 1–2 days."
+                  },
+                  {
+                    "label": "Beginning",
+                    "points": 4,
+                    "desc": "Very late or copied."
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ]
-  }
+  },
+  "_rubricNote": "Analytic rubric per option, 100 points: content 50 + 3 criteria (20, 20, 10) by output type. Levels: Excellent 100%, Proficient 80%, Developing 60%, Beginning 40% of the criterion points."
 }
