@@ -101,7 +101,7 @@
     <div class="container flex-between">
       <div>
         <h1>📝 Assessments</h1>
-        <span class="version">v2.6.0</span>
+        <span class="version">v2.5.5</span>
       </div>
       <a href="../dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -137,13 +137,13 @@
 
   </main>
 
-  <footer class="app-footer"><p>Assessments · <span class="version">v2.6.0</span></p></footer>
+  <footer class="app-footer"><p>Assessments · <span class="version">v2.5.5</span></p></footer>
 
-  <script src="../../config.js?v=2.4.2-4b8c4cb"></script>
-  <script src="../../assets/js/app.js?v=2.4.2-4b8c4cb"></script>
-  <script src="../../assets/js/store.js?v=2.4.2-4b8c4cb"></script>
-  <script src="../../assets/js/security.js?v=2.4.2-4b8c4cb"></script>
-  <script src="../../assets/js/sync.js?v=2.4.2-4b8c4cb"></script>
+  <script src="../../config.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/app.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/store.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/security.js?v=2.4.2-4a6e810"></script>
+  <script src="../../assets/js/sync.js?v=2.4.2-4a6e810"></script>
   <script>
     const MAX_RETAKES = 2;
 
@@ -208,18 +208,22 @@
         } catch (e) { return null; }
       }
 
+      const isTeacherIssued = (r) => /^teacher-issued/i.test(String(r.reason || '')) || /^TCH-/.test(String(r.requestId || ''));
+      const codeOpen = (r) => r.status === 'approved' && r.unlockCode && (!r.codeExpiresAt || Date.parse(r.codeExpiresAt) > Date.now());
+
       function getPendingRequestFor(assessmentId) {
         const fullId = `${currentSubject}-${assessmentId}`;
-        return allRequests.find((r) =>
-          r.assessmentId === fullId &&
-          (r.status === 'pending' || r.status === 'approved')
-        ) || null;
+        const mine = allRequests.filter((r) => r.assessmentId === fullId);
+        // an unused code first (a teacher's code may come after an older request)
+        return mine.find(codeOpen) || mine.find((r) => r.status === 'pending') || null;
       }
 
+      // Retakes the student asked for. A code the teacher gave on their own (no internet,
+      // device problem, ...) is the teacher's decision and does not use up the student's retakes.
       function countRetakesUsed(assessmentId) {
         const fullId = `${currentSubject}-${assessmentId}`;
         return allRequests.filter((r) =>
-          r.assessmentId === fullId &&
+          r.assessmentId === fullId && !isTeacherIssued(r) &&
           (r.status === 'applied' || r.status === 'approved')
         ).length;
       }
@@ -254,21 +258,21 @@
           let here = null;
           try { here = localStorage.getItem(`gba_v1_attempt_${user.lrn}_${scoreId}`); } catch (e) { /* ignore */ }
           if (here) return { status: 'in-progress', score };
-          if (retakesUsed >= MAX_RETAKES) return { status: 'maxed', score, retakesUsed };
           if (request && request.status === 'approved' && request.unlockCode) return { status: 'awaiting-code', score, request, retakesUsed };
+          if (retakesUsed >= MAX_RETAKES) return { status: 'maxed', score, retakesUsed };
           if (request && request.status === 'pending') return { status: 'waiting', score, request, retakesUsed };
           return { status: 'started-elsewhere', score, retakesUsed };
         }
 
         // Priority 3: Locked (has score) — retake flow
         if (hasLocalLock || (score && score.score !== undefined && score.score !== null)) {
+          // Approved code waiting to be entered (also after max retakes: the teacher decided)
+          if (request && request.status === 'approved' && request.unlockCode) {
+            return { status: 'awaiting-code', score, request, retakesUsed };
+          }
           // Max retakes reached?
           if (retakesUsed >= MAX_RETAKES) {
             return { status: 'maxed', score, retakesUsed };
-          }
-          // Approved code waiting to be entered
-          if (request && request.status === 'approved' && request.unlockCode) {
-            return { status: 'awaiting-code', score, request, retakesUsed };
           }
           // Pending request
           if (request && request.status === 'pending') {
@@ -311,6 +315,7 @@
 
           const retakePill = (num) => {
             if (!num) return '';
+            if (num > MAX_RETAKES) return '<span class="retake-pill">Extra retake from your teacher</span>';
             const isFinal = num >= MAX_RETAKES;
             return `<span class="retake-pill ${isFinal ? 'final' : ''}">Retake ${num} of ${MAX_RETAKES}</span>`;
           };
@@ -330,8 +335,8 @@
             borderColor = '#2e7d32';
             extra = `
               <div class="retake-request-box approved">
-                <strong>🎉 Your teacher approved your retake!</strong>
-                ${retakePill(info.retakesUsed + 1)}
+                <strong>🎉 ${isTeacherIssued(info.request) ? 'Your teacher gave you a retake code!' : 'Your teacher approved your retake!'}</strong>
+                ${isTeacherIssued(info.request) ? '<span class="retake-pill">Extra retake from your teacher</span>' : retakePill(info.retakesUsed + 1)}
                 <p style="margin:6px 0 0;color:#37474f;">Enter the code they sent you:</p>
                 <div class="retake-code-input">
                   <input type="text" data-code-input="${a.id}" placeholder="RTK-XXXX-XXXX" maxlength="13" />
