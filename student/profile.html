@@ -13,7 +13,7 @@
     <div class="container flex-between">
       <div>
         <h1>👤 My Profile</h1>
-        <span class="version">v2.5.5</span>
+        <span class="version">v2.6.1</span>
       </div>
       <a href="dashboard.html" class="btn btn-outline" style="color:#fff;border-color:#fff;font-size:0.85rem;">← Dashboard</a>
     </div>
@@ -44,7 +44,7 @@
       </div>
 
       <p class="text-muted text-small" style="margin-bottom:16px;">
-        You can update your name, grade level, section, and sex. Your <strong>LRN cannot be changed</strong> since it is your unique identifier.
+        Your details are filled in from your registration. Your <strong>LRN cannot be changed</strong> since it is your unique identifier.
       </p>
 
       <form id="profile-form">
@@ -145,13 +145,215 @@
   </main>
 
   <footer class="app-footer">
-    <p>General Biology Online Modular Application · v2.5.5</p>
+    <p>General Biology Online Modular Application · v2.6.1</p>
   </footer>
 
   <script src="../config.js?v=2.4.2-4a6e810"></script>
   <script src="../assets/js/app.js?v=2.4.2-4a6e810"></script>
   <script src="../assets/js/store.js?v=2.4.2-4a6e810"></script>
   <script src="../assets/js/backup.js?v=2.4.2-4a6e810"></script>
-  <script src="profile.js?v=2.6.1"></script>
+  <script>
+/* ============================================================
+   profile.js — Student profile edit logic
+   Version: 2.1.1
+   ============================================================ */
+
+(() => {
+  'use strict';
+
+  const user = Store.getCurrentUser();
+  if (!user) {
+    window.location.replace('login.html');
+    return;
+  }
+
+  const form = document.getElementById('profile-form');
+  const fLrn = document.getElementById('pf-lrn');
+  const fLast = document.getElementById('pf-lastname');
+  const fFirst = document.getElementById('pf-firstname');
+  const fMiddle = document.getElementById('pf-middlename');
+  const fSex = document.getElementById('pf-sex');
+  const fGrade = document.getElementById('pf-grade');
+  const fSection = document.getElementById('pf-section');
+  const preview = document.getElementById('pf-preview');
+  const errEl = document.getElementById('profile-error');
+  const okEl = document.getElementById('profile-success');
+
+  function renderHeader() {
+    const initials = `${(user.firstName || '?').charAt(0)}${(user.lastName || '?').charAt(0)}`.toUpperCase();
+    document.getElementById('profile-avatar').textContent = initials;
+    document.getElementById('profile-name').textContent =
+      APP.formatFullName(user.lastName, user.firstName, user.middleName);
+    document.getElementById('profile-meta').innerHTML =
+      `LRN: ${APP.formatLRN(user.lrn)} · Grade ${user.gradeLevel} — ${user.section}` +
+      (user.sex ? ` · ${APP.getSexBadge(user.sex)}` : '');
+  }
+
+  function populateForm() {
+    fLrn.value = APP.formatLRN(user.lrn);
+    fLast.value = user.lastName || '';
+    fFirst.value = user.firstName || '';
+    fMiddle.value = user.middleName || '';
+    fSex.value = APP.getSexValue(user.sex) || '';
+    fGrade.value = user.gradeLevel || '';
+    fSection.value = user.section || '';
+    updatePreview();
+  }
+
+  function updatePreview() {
+    const last = APP.toLastNameFormat(fLast.value.trim());
+    const first = APP.toTitleCase(fFirst.value.trim());
+    const middle = APP.toTitleCase(fMiddle.value.trim());
+    const sex = APP.getSexValue(fSex.value);
+    if (!last && !first) {
+      preview.textContent = '—';
+      return;
+    }
+    const sexIcon = sex === 'Female' ? '♀' : sex === 'Male' ? '♂' : '';
+    preview.textContent = `${sexIcon ? sexIcon + ' ' : ''}${APP.formatFullName(last, first, middle)}`;
+  }
+
+  fLast.addEventListener('blur', () => { fLast.value = APP.toLastNameFormat(fLast.value); updatePreview(); });
+  fFirst.addEventListener('blur', () => { fFirst.value = APP.toTitleCase(fFirst.value); updatePreview(); });
+  fMiddle.addEventListener('blur', () => { fMiddle.value = APP.toTitleCase(fMiddle.value); updatePreview(); });
+  fSex.addEventListener('change', updatePreview);
+
+  [fLast, fFirst, fMiddle].forEach((el) => el.addEventListener('input', updatePreview));
+
+  function showError(msg) {
+    errEl.textContent = msg;
+    errEl.classList.remove('hidden');
+    okEl.classList.add('hidden');
+    APP.toast(msg, 'danger', 3000);
+  }
+
+  function showSuccess(msg) {
+    okEl.textContent = msg;
+    okEl.classList.remove('hidden');
+    errEl.classList.add('hidden');
+    APP.toast(msg, 'success', 3000);
+  }
+
+  function clearAlerts() {
+    errEl.classList.add('hidden');
+    okEl.classList.add('hidden');
+  }
+
+  function validate() {
+    const last = APP.toLastNameFormat(fLast.value.trim());
+    const first = APP.toTitleCase(fFirst.value.trim());
+    const middle = APP.toTitleCase(fMiddle.value.trim());
+    const sex = APP.getSexValue(fSex.value);
+    const grade = fGrade.value;
+    const section = fSection.value;
+
+    if (!APP.validateName(last)) return { error: 'Please enter a valid last name (at least 2 characters).' };
+    if (!APP.validateName(first)) return { error: 'Please enter a valid first name (at least 2 characters).' };
+    if (!sex) return { error: 'Please select your sex.' };
+    if (!grade) return { error: 'Please select a grade level.' };
+    if (!section) return { error: 'Please select a section.' };
+
+    return { last, first, middle, sex, grade, section };
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearAlerts();
+
+    const v = validate();
+    if (v.error) return showError(v.error);
+
+    const changed =
+      user.lastName !== v.last ||
+      user.firstName !== v.first ||
+      (user.middleName || '') !== v.middle ||
+      (user.sex || '') !== v.sex ||
+      user.gradeLevel !== v.grade ||
+      user.section !== v.section;
+
+    if (!changed) return showError('No changes to save.');
+
+    const updated = {
+      ...user,
+      lastName: v.last,
+      firstName: v.first,
+      middleName: v.middle,
+      sex: v.sex,
+      gradeLevel: v.grade,
+      section: v.section,
+      updatedAt: new Date().toISOString()
+    };
+
+    Store.saveUser(updated);
+    Object.assign(user, updated);
+
+    renderHeader();
+    if (APP.getSexValue(user.sex)) {
+      fSex.disabled = true;
+      const sb = form.querySelector('button[type="submit"]'); if (sb) sb.style.display = 'none';
+    }
+    showSuccess('✅ Saved! It will be sent to your teacher on the next sync (open your Dashboard).');
+    APP.toast('Profile saved!', 'success', 2500);
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    clearAlerts();
+    populateForm();
+    APP.toast('Form reset to saved values.', 'info', 2000);
+  });
+
+  document.getElementById('btn-logout-clean').addEventListener('click', () => {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position:fixed;inset:0;background:rgba(255,255,255,0.95);
+      display:flex;align-items:center;justify-content:center;
+      z-index:99999;font-family:'Segoe UI',sans-serif;
+    `;
+    overlay.innerHTML = `
+      <div style="text-align:center;">
+        <div style="font-size:2rem;">👋</div>
+        <div style="font-weight:600;color:#1b7a3d;margin-top:8px;">Logging out...</div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    sessionStorage.setItem('gba_logout_pending', JSON.stringify({
+      lrn: user.lrn,
+      at: Date.now()
+    }));
+
+    Store.clearSession();
+    setTimeout(() => window.location.replace('login.html'), 150);
+  });
+
+  renderHeader();
+  populateForm();
+
+  // The class list in the Google Sheet is the official record: a student device can no longer
+  // rename itself (any device can send data with any LRN). Corrections are made by the teacher.
+  (function lockForm() {
+    // Sex is the one exception: while it is still blank, the student may fill it in once.
+    // (The backend also keeps a Sex that is already on the class list.)
+    const sexOpen = !APP.getSexValue(user.sex);
+    form.querySelectorAll('input, select').forEach((el) => { el.disabled = !(sexOpen && el === fSex); });
+    const submit = form.querySelector('button[type="submit"]');
+    if (submit) {
+      if (sexOpen) submit.textContent = '💾 Save Sex';
+      else submit.style.display = 'none';
+    }
+    const reset = document.getElementById('btn-reset');
+    if (reset) reset.style.display = 'none';
+    const note = document.createElement('div');
+    note.className = 'alert alert-info';
+    note.style.marginBottom = '12px';
+    note.textContent = sexOpen
+      ? 'ℹ️ Please select your Sex, then tap Save. Your name, grade and section come from your teacher\'s class list — if something is wrong, ask your teacher to correct it.'
+      : 'ℹ️ Your name, sex, grade and section come from your teacher\'s class list. If something is wrong, ask your teacher to correct it — the change will appear here after the next sync.';
+    form.insertBefore(note, form.firstChild);
+  })();
+
+})();
+
+</script>
 </body>
 </html>
